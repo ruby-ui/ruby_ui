@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
-  get 'components/typography', to: 'components#typography', as: 'typography_components'
+  namespace :components do
+    get 'typography', to: 'components#typography'
+  end
   root "pages#home"
 end
