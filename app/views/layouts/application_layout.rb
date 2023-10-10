@@ -18,6 +18,7 @@ class ApplicationLayout < ApplicationView
 			end
 
 			body do
+				render Shared::Navbar.new
 				main(&block)
 			end
 		end

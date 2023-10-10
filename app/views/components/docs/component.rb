@@ -7,7 +7,7 @@ class Docs::Component < ApplicationComponent
     end
 
     def template(&)
-        div do
+        div(id: @title) do
             div(class: 'space-y-1 mb-4') do
                 render Typography::H4.new { @title }
                 render Typography::P.new { @description } if @description
