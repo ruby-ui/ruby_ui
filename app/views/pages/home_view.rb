@@ -33,6 +33,9 @@ class Pages::HomeView < ApplicationView
         render Typography::Lead.new { "A modal dialog that interrupts the user with important content and expects
       a response." }
       end
+      render Docs::Component.new(title: "Large") do
+        render Typography::Large.new { "Are you sure absolutely sure?" }
+      end
     end
   end
 end
