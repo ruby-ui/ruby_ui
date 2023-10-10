@@ -36,6 +36,9 @@ class Pages::HomeView < ApplicationView
       render Docs::Component.new(title: "Large") do
         render Typography::Large.new { "Are you sure absolutely sure?" }
       end
+      render Docs::Component.new(title: "Small") do
+        render Typography::Small.new { "Email address" }
+      end
     end
   end
 end
