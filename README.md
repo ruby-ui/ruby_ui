@@ -1,24 +1,4 @@
-# README
+Rails need a plug n play system for creating streamlined ui components.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Phlex looks fun and fast, so I thought I'd start creating ui components with it.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
