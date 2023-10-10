@@ -3,7 +3,7 @@
 class Pages::HomeView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto py-10 space-y-8") do
-      render Typography::H1.new { "Components Library" }
+      render Typography::H1.new { "Typography" }
       render Docs::Component.new(title: "h1", description: "This is an h1 title") do
         render Typography::H1.new { "This is an H1 title" }
       end
@@ -28,6 +28,10 @@ class Pages::HomeView < ApplicationView
       end
       render Docs::Component.new(title: "Inline Code", description: "This is an inline code block") do
         render Typography::InlineCode.new { "This is an inline code block" }
+      end
+      render Docs::Component.new(title: "Lead") do
+        render Typography::Lead.new { "A modal dialog that interrupts the user with important content and expects
+      a response." }
       end
     end
   end
