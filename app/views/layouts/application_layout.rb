@@ -8,7 +8,7 @@ class ApplicationLayout < ApplicationView
 
 		html do
 			head do
-				title { "Phlex Components Library" }
+				title { "PhlexUI - Component Library" }
 				meta name: "viewport", content: "width=device-width,initial-scale=1"
 				csp_meta_tag
 				csrf_meta_tags

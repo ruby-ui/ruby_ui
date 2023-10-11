@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class ComponentsController < ApplicationController
+class DocsController < ApplicationController
   layout -> { ApplicationLayout }
   
   def typography
-    render Components::TypographyView.new
+    render Docs::TypographyView.new
   end
 end
