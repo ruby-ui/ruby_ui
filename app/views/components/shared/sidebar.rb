@@ -20,6 +20,7 @@ class Shared::Sidebar < ApplicationComponent
 
     def components
         [
+            { name: "Accordion", path: helpers.docs_accordion_path },
             { name: "Link", path: helpers.docs_link_path },
             { name: "Typography", path: helpers.docs_typography_path },
         ]
