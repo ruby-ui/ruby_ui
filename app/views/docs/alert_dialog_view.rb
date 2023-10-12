@@ -20,11 +20,7 @@ class Docs::AlertDialogView < ApplicationView
             end
             render AlertDialogFooter.new do
               render AlertDialogCancel.new { "Cancel" }
-              button(
-                type: "button",
-                class:
-                  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
-              ) { "Continue" }
+              render AlertDialogAction.new { "Continue" } # Will probably be a link to a controller action (e.g. delete account)
             end
           end
         end
