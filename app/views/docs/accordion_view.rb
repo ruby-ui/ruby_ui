@@ -25,7 +25,7 @@ class Docs::AccordionView < ApplicationView
           render AccordionItem.new(open: false) do
             render AccordionTrigger.new { "Is it animated?" }
             render AccordionContent.new do
-              render Typography::P.new { "No not yet..." }
+              render Typography::P.new { "Yes. Using Motion One" }
             end
           end
         end 

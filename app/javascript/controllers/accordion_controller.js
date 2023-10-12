@@ -14,8 +14,12 @@ export default class extends Controller {
     },
     animationDuration: {
       type: Number,
-      default: 0.3, // Default animation duration (in seconds)
-    }
+      default: 0.15, // Default animation duration (in seconds)
+    },
+    animationEasing: {
+      type: String,
+      default: 'ease-in-out', // Default animation easing
+    },
   }
 
   // Toggle the 'open' value
@@ -36,7 +40,7 @@ export default class extends Controller {
   open() {
     if (this.hasContentTarget) {
       this.revealContent()
-      this.hasIconTarget && this.iconTarget.classList.add('rotate-180')
+      this.hasIconTarget && this.rotateIcon()
       this.openValue = true
     }
   }
@@ -45,7 +49,7 @@ export default class extends Controller {
   close() {
     if (this.hasContentTarget) {
       this.hideContent()
-      this.hasIconTarget && this.iconTarget.classList.remove('rotate-180')
+      this.hasIconTarget && this.rotateIcon()
       this.openValue = false
     }
   }
@@ -54,14 +58,19 @@ export default class extends Controller {
   revealContent() {
     const contentHeight = this.contentTarget.scrollHeight;
     const duration = initialStateSet ? this.animationDurationValue : 0
-    animate(this.contentTarget, { height: `${contentHeight}px` }, { duration: duration })
+    animate(this.contentTarget, { height: `${contentHeight}px` }, { duration: duration, easing: this.animationEasingValue })
     initialStateSet = true
   }
 
   // Hide the accordion content with animation
   hideContent() {
     const duration = initialStateSet ? this.animationDurationValue : 0
-    animate(this.contentTarget, { height: 0 }, { duration: duration })
+    animate(this.contentTarget, { height: 0 }, { duration: duration, easing: this.animationEasingValue })
     initialStateSet = true
+  }
+
+  // Rotate the accordion icon 180deg using animate function
+  rotateIcon() {
+    animate(this.iconTarget, { rotate: `${this.openValue ? 180 : 0}deg` })
   }
 }
