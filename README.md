@@ -5,12 +5,12 @@ Phlex looks fun and fast, so I thought I'd start creating ui components with it.
 Here is the list of components that are being built. For reference, see here https://ui.shadcn.com/docs/components/accordion
 
 ✅ Accordion
-⚪️ Alert
+✅ Alert
 ⚪️ Alert Dialog
 ⚪️ Aspect Ratio
 ⚪️ Avatar
 ⚪️ Badge
-⚪️ Button
+✅ Button
 ⚪️ Calendar
 ⚪️ Card
 ⚪️ Checkbox
