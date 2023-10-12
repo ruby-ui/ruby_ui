@@ -15,9 +15,7 @@ class Docs::AlertDialogView < ApplicationView
           end
           render AlertDialogContent.new() do
             render AlertDialogHeader.new do
-              h2(class: "text-lg font-semibold") do
-                "Are you absolutely sure?"
-              end
+              render AlertDialogTitle.new { "Are you absolutely sure?" }
               p(id: "radix-:r4p:", class: "text-sm text-muted-foreground") do
                 "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
               end
