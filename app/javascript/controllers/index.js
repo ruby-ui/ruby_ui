@@ -7,5 +7,14 @@ import { application } from "./application"
 import AccordionController from "./accordion_controller"
 application.register("accordion", AccordionController)
 
+import AlertDialogController from "./alert_dialog_controller"
+application.register("alert-dialog", AlertDialogController)
+
+import DismissableController from "./dismissable_controller"
+application.register("dismissable", DismissableController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)

@@ -22,6 +22,7 @@ class Shared::Sidebar < ApplicationComponent
         [
             { name: "Accordion", path: helpers.docs_accordion_path },
             { name: "Alert", path: helpers.docs_alert_path },
+            { name: "Alert Dialog", path: helpers.docs_alert_dialog_path },
             { name: "Button", path: helpers.docs_button_path },
             { name: "Link", path: helpers.docs_link_path },
             { name: "Typography", path: helpers.docs_typography_path },

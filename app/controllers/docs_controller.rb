@@ -11,6 +11,10 @@ class DocsController < ApplicationController
     render Docs::AlertView.new
   end
 
+  def alert_dialog
+    render Docs::AlertDialogView.new
+  end
+
   def button
     render Docs::ButtonView.new
   end
