@@ -10,9 +10,6 @@ application.register("accordion", AccordionController)
 import AlertDialogController from "./alert_dialog_controller"
 application.register("alert-dialog", AlertDialogController)
 
-import AspectRatioController from "./aspect_ratio_controller"
-application.register("aspect-ratio", AspectRatioController)
-
 import DismissableController from "./dismissable_controller"
 application.register("dismissable", DismissableController)
 
