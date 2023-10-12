@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     get 'accordion', to: 'docs#accordion', as: :docs_accordion
     get 'alert', to: 'docs#alert_component', as: :docs_alert # alert is a reserved word for controller action
     get 'alert_dialog', to: 'docs#alert_dialog', as: :docs_alert_dialog
+    get 'aspect_ratio', to: 'docs#aspect_ratio', as: :docs_aspect_ratio
     get 'button', to: 'docs#button', as: :docs_button
     get 'link', to: 'docs#link', as: :docs_link
     get 'typography', to: 'docs#typography', as: :docs_typography

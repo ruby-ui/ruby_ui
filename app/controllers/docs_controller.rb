@@ -15,6 +15,10 @@ class DocsController < ApplicationController
     render Docs::AlertDialogView.new
   end
 
+  def aspect_ratio
+    render Docs::AspectRatioView.new
+  end
+
   def button
     render Docs::ButtonView.new
   end

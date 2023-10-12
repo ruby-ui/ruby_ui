@@ -11,7 +11,7 @@ class Shared::Navbar < ApplicationComponent
             }
           end
 
-          render Link.new(href: helpers.docs_typography_path, variant: 'ghost')  do
+          render Link.new(href: helpers.docs_typography_path, variant: :ghost)  do
             "Components"
           end
         end
