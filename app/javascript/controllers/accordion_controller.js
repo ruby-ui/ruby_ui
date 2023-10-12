@@ -1,9 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { animate } from "motion"
 
-// Define a flag to check if the initial state is set
-let initialStateSet = false
-
 // Connects to data-controller="accordion"
 export default class extends Controller {
   static targets = ['icon', 'content']
@@ -20,6 +17,14 @@ export default class extends Controller {
       type: String,
       default: 'ease-in-out', // Default animation easing
     },
+  }
+
+  connect() {
+    // Set the initial state of the accordion
+    let originalAnimationDuration = this.animationDurationValue
+    this.animationDurationValue = 0
+    this.openValue ? this.open() : this.close()
+    this.animationDurationValue = originalAnimationDuration
   }
 
   // Toggle the 'open' value
@@ -57,16 +62,12 @@ export default class extends Controller {
   // Reveal the accordion content with animation
   revealContent() {
     const contentHeight = this.contentTarget.scrollHeight;
-    const duration = initialStateSet ? this.animationDurationValue : 0
-    animate(this.contentTarget, { height: `${contentHeight}px` }, { duration: duration, easing: this.animationEasingValue })
-    initialStateSet = true
+    animate(this.contentTarget, { height: `${contentHeight}px` }, { duration: this.animationDurationValue, easing: this.animationEasingValue })
   }
 
   // Hide the accordion content with animation
   hideContent() {
-    const duration = initialStateSet ? this.animationDurationValue : 0
-    animate(this.contentTarget, { height: 0 }, { duration: duration, easing: this.animationEasingValue })
-    initialStateSet = true
+    animate(this.contentTarget, { height: 0 }, { duration: this.animationDurationValue, easing: this.animationEasingValue })
   }
 
   // Rotate the accordion icon 180deg using animate function
