@@ -6,7 +6,7 @@ Here is the list of components that are being built. For reference, see here htt
 
 ✅ Accordion
 ✅ Alert
-⚪️ Alert Dialog
+✅ Alert Dialog
 ⚪️ Aspect Ratio
 ⚪️ Avatar
 ⚪️ Badge
