@@ -17,7 +17,13 @@ class Docs::AccordionView < ApplicationView
             end
           end
           render AccordionItem.new(open: false) do
-            render AccordionTrigger.new { "Is it accessbile?" }
+            render AccordionTrigger.new { "Is it styled?" }
+            render AccordionContent.new do
+              render Typography::P.new { "Yes. It comes with default styles that matches the other components' aesthetic." }
+            end
+          end
+          render AccordionItem.new(open: false) do
+            render AccordionTrigger.new { "Is it animated?" }
             render AccordionContent.new do
               render Typography::P.new { "No not yet..." }
             end
