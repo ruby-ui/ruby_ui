@@ -16,11 +16,9 @@ class Docs::AlertDialogView < ApplicationView
           render AlertDialogContent.new() do
             render AlertDialogHeader.new do
               render AlertDialogTitle.new { "Are you absolutely sure?" }
-              p(id: "radix-:r4p:", class: "text-sm text-muted-foreground") do
-                "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
-              end
+              render AlertDialogDescription.new { "This action cannot be undone. This will permanently delete your account and remove your data from our servers." }
             end
-            div(class: "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2") do
+            render AlertDialogFooter.new do
               button(
                 type: "button",
                 class: "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 mt-2 sm:mt-0",
