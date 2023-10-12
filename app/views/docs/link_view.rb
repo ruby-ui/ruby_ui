@@ -13,19 +13,19 @@ class Docs::LinkView < ApplicationView
       end
 
       render Docs::Component.new(title: "Primary", description: "This is the primary variant of a Link") do
-        render Link.new(href: "#", variant: "primary") { "Primary" }
+        render Link.new(href: "#", variant: :primary) { "Primary" }
       end
 
       render Docs::Component.new(title: "Secondary", description: "This is the secondary variant of a Link") do
-        render Link.new(href: "#", variant: "secondary") { "Secondary" }
+        render Link.new(href: "#", variant: :secondary) { "Secondary" }
       end
 
       render Docs::Component.new(title: "Destructive", description: "This is the destructive variant of a Link") do
-        render Link.new(href: "#", variant: "destructive") { "Destructive" }
+        render Link.new(href: "#", variant: :destructive) { "Destructive" }
       end
 
       render Docs::Component.new(title: "Icon", description: "This is the icon variant of a Link") do
-        render Link.new(href: "#", variant: "outline", size: 'icon') do 
+        render Link.new(href: "#", variant: :outline, size: 'icon') do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 20 20",
@@ -43,7 +43,7 @@ class Docs::LinkView < ApplicationView
       end
 
       render Docs::Component.new(title: "With Icon", description: "This is the primary variant of a Link with an icon") do
-        render Link.new(href: "#", variant: "primary") do 
+        render Link.new(href: "#", variant: :primary) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             fill: "none",
@@ -64,7 +64,7 @@ class Docs::LinkView < ApplicationView
       end
 
       render Docs::Component.new(title: "Ghost", description: "This is the ghost variant of a Link") do
-        render Link.new(href: "#", variant: "ghost") { "Ghost" }
+        render Link.new(href: "#", variant: :ghost) { "Ghost" }
       end
     end
   end
