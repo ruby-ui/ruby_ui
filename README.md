@@ -7,12 +7,12 @@ Here is the list of components that are being built. For reference, see here htt
 ✅ Accordion
 ✅ Alert
 ✅ Alert Dialog
-⚪️ Aspect Ratio
-⚪️ Avatar
-⚪️ Badge
+✅ Aspect Ratio
+✅ Avatar
+✅ Badge
 ✅ Button
 ⚪️ Calendar
-⚪️ Card
+✅ Card
 ⚪️ Checkbox
 ⚪️ Collapsible
 ⚪️ Combobox
@@ -40,7 +40,7 @@ Here is the list of components that are being built. For reference, see here htt
 ⚪️ Slider
 ⚪️ Switch
 ⚪️ Table
-⚪️ Tabs
+✅ Tabs
 ⚪️ Textarea
 ⚪️ Toast
 ⚪️ Toggle
