@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'badge', to: 'docs#badge', as: :docs_badge
     get 'button', to: 'docs#button', as: :docs_button
     get 'link', to: 'docs#link', as: :docs_link
+    get 'tabs', to: 'docs#tabs', as: :docs_tabs
     get 'theme_toggle', to: 'docs#theme_toggle', as: :docs_theme_toggle
     get 'typography', to: 'docs#typography', as: :docs_typography
   end

@@ -28,6 +28,7 @@ class Shared::Sidebar < ApplicationComponent
             { name: "Badge", path: helpers.docs_badge_path },
             { name: "Button", path: helpers.docs_button_path },
             { name: "Link", path: helpers.docs_link_path },
+            { name: "Tabs", path: helpers.docs_tabs_path },
             { name: "Theme Toggle", path: helpers.docs_theme_toggle_path },
             { name: "Typography", path: helpers.docs_typography_path },
         ]

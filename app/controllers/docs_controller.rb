@@ -35,6 +35,10 @@ class DocsController < ApplicationController
     render Docs::LinkView.new
   end
 
+  def tabs
+    render Docs::TabsView.new
+  end
+
   def theme_toggle
     render Docs::ThemeToggleView.new
   end
