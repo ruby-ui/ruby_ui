@@ -8,9 +8,15 @@ class Docs::AvatarView < ApplicationView
         render Typography::P.new { "An image element with a fallback for representing the user." }
       end
 
-      render Docs::Component.new do
+      render Docs::Component.new(title: 'Image & Fallback') do
         render Avatar.new do
           render AvatarImage.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+          render AvatarFallback.new { "JD" }
+        end
+      end
+
+      render Docs::Component.new(title: 'Only Fallback') do
+        render Avatar.new do
           render AvatarFallback.new { "JD" }
         end
       end
