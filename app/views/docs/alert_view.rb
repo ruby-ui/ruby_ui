@@ -8,7 +8,7 @@ class Docs::AlertView < ApplicationView
         render Typography::P.new { "Displays a callout for user attention." }
       end
 
-      render Docs::Component.new(title: "Default") do
+      render Docs::VisualCodeExample.new(title: "Default") do
         render Alert.new do
           icon
           render AlertTitle.new { "Alert Title" }
@@ -16,7 +16,7 @@ class Docs::AlertView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "Destructive") do
+      render Docs::VisualCodeExample.new(title: "Destructive") do
         render Alert.new(variant: :destructive) do
           icon
           render AlertTitle.new { "Alert Title" }

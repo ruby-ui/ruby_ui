@@ -8,23 +8,23 @@ class Docs::LinkView < ApplicationView
         render Typography::P.new { "Displays a link that looks like a button or underline link." }
       end
 
-      render Docs::Component.new(title: "Default", description: "This is the default appearance of a Link") do
+      render Docs::VisualCodeExample.new(title: "Default", description: "This is the default appearance of a Link") do
         render Link.new(href: "#") { "Link" }
       end
 
-      render Docs::Component.new(title: "Primary", description: "This is the primary variant of a Link") do
+      render Docs::VisualCodeExample.new(title: "Primary", description: "This is the primary variant of a Link") do
         render Link.new(href: "#", variant: :primary) { "Primary" }
       end
 
-      render Docs::Component.new(title: "Secondary", description: "This is the secondary variant of a Link") do
+      render Docs::VisualCodeExample.new(title: "Secondary", description: "This is the secondary variant of a Link") do
         render Link.new(href: "#", variant: :secondary) { "Secondary" }
       end
 
-      render Docs::Component.new(title: "Destructive", description: "This is the destructive variant of a Link") do
+      render Docs::VisualCodeExample.new(title: "Destructive", description: "This is the destructive variant of a Link") do
         render Link.new(href: "#", variant: :destructive) { "Destructive" }
       end
 
-      render Docs::Component.new(title: "Icon", description: "This is the icon variant of a Link") do
+      render Docs::VisualCodeExample.new(title: "Icon", description: "This is the icon variant of a Link") do
         render Link.new(href: "#", variant: :outline, size: :icon) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
@@ -42,7 +42,7 @@ class Docs::LinkView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "With Icon", description: "This is the primary variant of a Link with an icon") do
+      render Docs::VisualCodeExample.new(title: "With Icon", description: "This is the primary variant of a Link with an icon") do
         render Link.new(href: "#", variant: :primary) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
@@ -63,7 +63,7 @@ class Docs::LinkView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "Ghost", description: "This is the ghost variant of a Link") do
+      render Docs::VisualCodeExample.new(title: "Ghost", description: "This is the ghost variant of a Link") do
         render Link.new(href: "#", variant: :ghost) { "Ghost" }
       end
     end

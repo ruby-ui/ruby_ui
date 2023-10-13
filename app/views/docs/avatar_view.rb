@@ -8,20 +8,20 @@ class Docs::AvatarView < ApplicationView
         render Typography::P.new { "An image element with a fallback for representing the user." }
       end
 
-      render Docs::Component.new(title: 'Image & fallback') do
+      render Docs::VisualCodeExample.new(title: 'Image & fallback') do
         render Avatar.new do
           render AvatarImage.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
           render AvatarFallback.new { "JD" }
         end
       end
 
-      render Docs::Component.new(title: 'Only fallback') do
+      render Docs::VisualCodeExample.new(title: 'Only fallback') do
         render Avatar.new do
           render AvatarFallback.new { "JD" }
         end
       end
 
-      render Docs::Component.new(title: 'Sizes') do
+      render Docs::VisualCodeExample.new(title: 'Sizes') do
         div(class: 'flex items-center space-x-2') do
           default_avatar(size: :xs)
           default_avatar(size: :sm)
@@ -31,7 +31,7 @@ class Docs::AvatarView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: 'Sizes (only fallback)') do
+      render Docs::VisualCodeExample.new(title: 'Sizes (only fallback)') do
         div(class: 'flex items-center space-x-2') do
           default_avatar(size: :xs, image: false)
           default_avatar(size: :sm, image: false)

@@ -8,35 +8,35 @@ class Docs::ButtonView < ApplicationView
         render Typography::P.new { "Displays a button or a component that looks like a button." }
       end
 
-      render Docs::Component.new(title: "Default") do
+      render Docs::VisualCodeExample.new(title: "Default") do
         render Button.new { "Button" }
       end
       
-      render Docs::Component.new(title: "Primary") do
+      render Docs::VisualCodeExample.new(title: "Primary") do
         render Button.new(variant: :primary) { "Primary" }
       end
 
-      render Docs::Component.new(title: "Secondary") do
+      render Docs::VisualCodeExample.new(title: "Secondary") do
         render Button.new(variant: :secondary) { "Secondary" }
       end
 
-      render Docs::Component.new(title: "Destructive") do
+      render Docs::VisualCodeExample.new(title: "Destructive") do
         render Button.new(variant: :destructive) { "Destructive" }
       end
 
-      render Docs::Component.new(title: "Outline") do
+      render Docs::VisualCodeExample.new(title: "Outline") do
         render Button.new(variant: :outline) { "Outline" }
       end
 
-      render Docs::Component.new(title: "Ghost") do
+      render Docs::VisualCodeExample.new(title: "Ghost") do
         render Button.new(variant: :ghost) { "Ghost" }
       end
 
-      render Docs::Component.new(title: "Link") do
+      render Docs::VisualCodeExample.new(title: "Link") do
         render Button.new(variant: :link) { "Link" }
       end
 
-      render Docs::Component.new(title: "Icon") do
+      render Docs::VisualCodeExample.new(title: "Icon") do
         render Button.new(variant: :outline, size: :icon) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
@@ -54,7 +54,7 @@ class Docs::ButtonView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "With Icon") do
+      render Docs::VisualCodeExample.new(title: "With Icon") do
         render Button.new(variant: :primary) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
@@ -75,7 +75,7 @@ class Docs::ButtonView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "With Icon") do
+      render Docs::VisualCodeExample.new(title: "With Icon") do
         render Button.new(variant: :primary, disabled: true) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
@@ -94,7 +94,7 @@ class Docs::ButtonView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "Submit") do
+      render Docs::VisualCodeExample.new(title: "Submit") do
         render Button.new(variant: :primary, type: :submit) do 
           span { "Submit application" }
         end

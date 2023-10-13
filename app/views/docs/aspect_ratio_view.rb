@@ -8,7 +8,7 @@ class Docs::AspectRatioView < ApplicationView
         render Typography::P.new { "Displays content within a desired ratio." }
       end
 
-      render Docs::Component.new(title: "16/9") do
+      render Docs::VisualCodeExample.new(title: "16/9") do
         render AspectRatio.new(aspect_ratio: "16/9") do
           img(
             alt: "Placeholder",
@@ -22,7 +22,7 @@ class Docs::AspectRatioView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "4/3") do
+      render Docs::VisualCodeExample.new(title: "4/3") do
         render AspectRatio.new(aspect_ratio: "4/3") do
           img(
             alt: "Placeholder",
@@ -36,7 +36,7 @@ class Docs::AspectRatioView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "1/1") do
+      render Docs::VisualCodeExample.new(title: "1/1") do
         render AspectRatio.new(aspect_ratio: "1/1") do
           img(
             alt: "Placeholder",
@@ -50,7 +50,7 @@ class Docs::AspectRatioView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "21/9") do
+      render Docs::VisualCodeExample.new(title: "21/9") do
         render AspectRatio.new(aspect_ratio: "21/9") do
           img(
             alt: "Placeholder",

@@ -8,12 +8,12 @@ class Docs::BadgeView < ApplicationView
         render Typography::P.new { "Displays a badge or a component that looks like a badge." }
       end
 
-      render Docs::Component.new(title: 'Default') do
+      render Docs::VisualCodeExample.new(title: 'Default') do
         render Badge.new { "Badge" }
       end
 
       [ :primary, :secondary, :outline, :destructive ].each do |variant|
-        render Docs::Component.new(title: variant.to_s.capitalize) do
+        render Docs::VisualCodeExample.new(title: variant.to_s.capitalize) do
           render Badge.new(variant: variant) { variant.to_s.capitalize }
         end
       end

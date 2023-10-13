@@ -8,7 +8,7 @@ class Docs::ThemeToggleView < ApplicationView
         render Typography::P.new { "Toggle between dark/light theme." }
       end
 
-      render Docs::Component.new(title: "With icon") do
+      render Docs::VisualCodeExample.new(title: "With icon") do
         render ThemeToggle.new do |toggle|
           toggle.light_mode do
             render Button.new(variant: :ghost, size: :icon) do
@@ -46,7 +46,7 @@ class Docs::ThemeToggleView < ApplicationView
         end
       end
 
-      render Docs::Component.new(title: "With text") do
+      render Docs::VisualCodeExample.new(title: "With text") do
         render ThemeToggle.new do |toggle|
           toggle.light_mode do
             render Button.new(variant: :primary) { "Light" }

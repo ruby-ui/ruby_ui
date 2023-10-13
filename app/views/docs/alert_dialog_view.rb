@@ -8,7 +8,7 @@ class Docs::AlertDialogView < ApplicationView
         render Typography::P.new { "A modal dialog that interrupts the user with important content and expects a response." }
       end
 
-      render Docs::Component.new(title: "Default") do
+      render Docs::VisualCodeExample.new(title: "Default") do
         render AlertDialog.new do |alert_dialog|
           render AlertDialogTrigger.new do
             render Button.new { "Show dialog" }
