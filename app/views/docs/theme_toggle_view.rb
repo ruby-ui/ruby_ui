@@ -11,7 +11,7 @@ class Docs::ThemeToggleView < ApplicationView
       render Docs::Component.new(title: "With icon") do
         render ThemeToggle.new do |toggle|
           toggle.light_mode do
-            render Button.new(variant: :ghost, size: :icon, class: 'dark:hidden') do
+            render Button.new(variant: :ghost, size: :icon) do
               svg(
                 xmlns: "http://www.w3.org/2000/svg",
                 viewbox: "0 0 24 24",
@@ -42,6 +42,18 @@ class Docs::ThemeToggleView < ApplicationView
                 )
               end
             end
+          end
+        end
+      end
+
+      render Docs::Component.new(title: "With text") do
+        render ThemeToggle.new do |toggle|
+          toggle.light_mode do
+            render Button.new(variant: :primary) { "Light" }
+          end
+
+          toggle.dark_mode do
+            render Button.new(variant: :primary) { "Dark" }
           end
         end
       end
