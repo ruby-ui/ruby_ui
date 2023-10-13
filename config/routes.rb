@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'aspect_ratio', to: 'docs#aspect_ratio', as: :docs_aspect_ratio
     get 'button', to: 'docs#button', as: :docs_button
     get 'link', to: 'docs#link', as: :docs_link
+    get 'theme_toggle', to: 'docs#theme_toggle', as: :docs_theme_toggle
     get 'typography', to: 'docs#typography', as: :docs_typography
   end
   root "pages#home"

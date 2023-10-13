@@ -26,6 +26,10 @@ class DocsController < ApplicationController
   def link
     render Docs::LinkView.new
   end
+
+  def theme_toggle
+    render Docs::ThemeToggleView.new
+  end
   
   def typography
     render Docs::TypographyView.new
