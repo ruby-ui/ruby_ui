@@ -25,7 +25,7 @@ class Docs::LinkView < ApplicationView
       end
 
       render Docs::Component.new(title: "Icon", description: "This is the icon variant of a Link") do
-        render Link.new(href: "#", variant: :outline, size: 'icon') do 
+        render Link.new(href: "#", variant: :outline, size: :icon) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 20 20",

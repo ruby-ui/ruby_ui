@@ -37,7 +37,7 @@ class Docs::ButtonView < ApplicationView
       end
 
       render Docs::Component.new(title: "Icon") do
-        render Button.new(variant: :outline, size: 'icon') do 
+        render Button.new(variant: :outline, size: :icon) do 
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 20 20",
