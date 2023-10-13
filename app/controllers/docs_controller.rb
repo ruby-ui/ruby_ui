@@ -19,6 +19,10 @@ class DocsController < ApplicationController
     render Docs::AspectRatioView.new
   end
 
+  def avatar
+    render Docs::AvatarView.new
+  end
+
   def button
     render Docs::ButtonView.new
   end
