@@ -25,6 +25,7 @@ class Shared::Sidebar < ApplicationComponent
             { name: "Alert Dialog", path: helpers.docs_alert_dialog_path },
             { name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path },
             { name: "Avatar", path: helpers.docs_avatar_path },
+            { name: "Badge", path: helpers.docs_badge_path },
             { name: "Button", path: helpers.docs_button_path },
             { name: "Link", path: helpers.docs_link_path },
             { name: "Theme Toggle", path: helpers.docs_theme_toggle_path },

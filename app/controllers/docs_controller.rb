@@ -23,6 +23,10 @@ class DocsController < ApplicationController
     render Docs::AvatarView.new
   end
 
+  def badge
+    render Docs::BadgeView.new
+  end
+
   def button
     render Docs::ButtonView.new
   end

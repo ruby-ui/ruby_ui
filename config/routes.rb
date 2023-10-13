@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get 'alert_dialog', to: 'docs#alert_dialog', as: :docs_alert_dialog
     get 'aspect_ratio', to: 'docs#aspect_ratio', as: :docs_aspect_ratio
     get 'avatar', to: 'docs#avatar', as: :docs_avatar
+    get 'badge', to: 'docs#badge', as: :docs_badge
     get 'button', to: 'docs#button', as: :docs_button
     get 'link', to: 'docs#link', as: :docs_link
     get 'theme_toggle', to: 'docs#theme_toggle', as: :docs_theme_toggle
