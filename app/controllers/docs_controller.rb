@@ -31,6 +31,10 @@ class DocsController < ApplicationController
     render Docs::ButtonView.new
   end
 
+  def card
+    render Docs::CardView.new
+  end
+
   def link
     render Docs::LinkView.new
   end
