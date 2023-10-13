@@ -15,3 +15,6 @@ application.register("dismissable", DismissableController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import ToggleThemeController from "./toggle_theme_controller"
+application.register("toggle-theme", ToggleThemeController)
