@@ -12,16 +12,29 @@ export default class extends Controller {
   }
 
   show(e) {
-    this.activeValue = e.target.dataset.value
+    this.activeValue = e.currentTarget.dataset.value
   }
 
   activeValueChanged(currentValue, previousValue) {
+    if (currentValue == '' || currentValue == previousValue) return
+
     this.contentTargets.forEach((el) => {
-      el.dataset.value == currentValue ? el.classList.remove("hidden") : el.classList.add("hidden")
+      el.classList.add("hidden")
     })
 
     this.triggerTargets.forEach((el) => {
-      el.dataset.value == currentValue ? el.dataset.state = "active" : el.dataset.state = "inactive"
+      el.dataset.state = "inactive"
     })
+
+    this.activeContentTarget() && this.activeContentTarget().classList.remove("hidden")
+    this.activeTriggerTarget().dataset.state = "active"
+  }
+
+  activeTriggerTarget() {
+    return this.triggerTargets.find((el) => el.dataset.value == this.activeValue)
+  }
+
+  activeContentTarget() {
+    return this.contentTargets.find((el) => el.dataset.value == this.activeValue)
   }
 }
