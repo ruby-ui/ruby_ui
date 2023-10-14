@@ -10,6 +10,9 @@ application.register("accordion", AccordionController)
 import AlertDialogController from "./alert_dialog_controller"
 application.register("alert-dialog", AlertDialogController)
 
+import DialogController from "./dialog_controller"
+application.register("dialog", DialogController)
+
 import DismissableController from "./dismissable_controller"
 application.register("dismissable", DismissableController)
 

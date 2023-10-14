@@ -35,6 +35,10 @@ class DocsController < ApplicationController
     render Docs::CardView.new
   end
 
+  def dialog
+    render Docs::DialogView.new
+  end
+
   def link
     render Docs::LinkView.new
   end
