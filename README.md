@@ -20,7 +20,7 @@ Here is the list of components that are being built. For reference, see here htt
 ⚪️ Context Menu
 ⚪️ Data Table
 ⚪️ Date Picker
-⚪️ Dialog
+✅ Dialog
 ⚪️ Dropdown Menu
 ⚪️ Form
 ⚪️ Hover Card
