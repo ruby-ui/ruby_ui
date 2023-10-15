@@ -13,8 +13,8 @@ Here is the list of components that are being built. For reference, see here htt
 ✅ Button
 ⚪️ Calendar
 ✅ Card
-⚪️ Checkbox
-⚪️ Collapsible
+✅ Checkbox
+✅ Collapsible
 ⚪️ Combobox
 ⚪️ Command
 ⚪️ Context Menu
