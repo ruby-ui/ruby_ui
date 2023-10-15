@@ -35,6 +35,10 @@ class DocsController < ApplicationController
     render Docs::CardView.new
   end
 
+  def checkbox
+    render Docs::CheckboxView.new
+  end
+
   def dialog
     render Docs::DialogView.new
   end

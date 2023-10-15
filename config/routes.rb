@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'badge', to: 'docs#badge', as: :docs_badge
     get 'button', to: 'docs#button', as: :docs_button
     get 'card', to: 'docs#card', as: :docs_card
+    get 'checkbox', to: 'docs#checkbox', as: :docs_checkbox
     get 'dialog', to: 'docs#dialog', as: :docs_dialog
     get 'link', to: 'docs#link', as: :docs_link
     get 'tabs', to: 'docs#tabs', as: :docs_tabs
