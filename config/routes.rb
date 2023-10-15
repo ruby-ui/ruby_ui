@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'button', to: 'docs#button', as: :docs_button
     get 'card', to: 'docs#card', as: :docs_card
     get 'checkbox', to: 'docs#checkbox', as: :docs_checkbox
+    get 'collapsible', to: 'docs#collapsible', as: :docs_collapsible
     get 'dialog', to: 'docs#dialog', as: :docs_dialog
     get 'link', to: 'docs#link', as: :docs_link
     get 'tabs', to: 'docs#tabs', as: :docs_tabs

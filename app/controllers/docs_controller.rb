@@ -39,6 +39,10 @@ class DocsController < ApplicationController
     render Docs::CheckboxView.new
   end
 
+  def collapsible
+    render Docs::CollapsibleView.new
+  end
+
   def dialog
     render Docs::DialogView.new
   end
