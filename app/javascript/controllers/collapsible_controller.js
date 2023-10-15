@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import { animate } from "motion"
 
 // Connects to data-controller="accordion"
 export default class extends Controller {
@@ -9,22 +8,11 @@ export default class extends Controller {
       type: Boolean,
       default: false,
     },
-    animationDuration: {
-      type: Number,
-      default: 0.15, // Default animation duration (in seconds)
-    },
-    animationEasing: {
-      type: String,
-      default: 'ease-in-out', // Default animation easing
-    },
   }
 
   connect() {
     // Set the initial state of the accordion
-    let originalAnimationDuration = this.animationDurationValue
-    this.animationDurationValue = 0
     this.openValue ? this.open() : this.close()
-    this.animationDurationValue = originalAnimationDuration
   }
 
   // Toggle the 'open' value
@@ -44,7 +32,7 @@ export default class extends Controller {
   // Open the accordion content
   open() {
     if (this.hasContentTarget) {
-      this.revealContent()
+      this.contentTarget.classList.remove('hidden')
       this.openValue = true
     }
   }
@@ -52,19 +40,8 @@ export default class extends Controller {
   // Close the accordion content
   close() {
     if (this.hasContentTarget) {
-      this.hideContent()
+      this.contentTarget.classList.add('hidden')
       this.openValue = false
     }
-  }
-
-  // Reveal the accordion content with animation
-  revealContent() {
-    const contentHeight = this.contentTarget.scrollHeight;
-    animate(this.contentTarget, { height: `${contentHeight}px` }, { duration: this.animationDurationValue, easing: this.animationEasingValue })
-  }
-
-  // Hide the accordion content with animation
-  hideContent() {
-    animate(this.contentTarget, { height: 0 }, { duration: this.animationDurationValue, easing: this.animationEasingValue })
   }
 }

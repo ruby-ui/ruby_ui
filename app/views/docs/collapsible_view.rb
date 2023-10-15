@@ -8,7 +8,36 @@ class Docs::CollapsibleView < ApplicationView
         render Typography::P.new { "An interactive component which expands/collapses a panel." }
       end
 
-      render Docs::VisualCodeExample.new do
+      render Docs::VisualCodeExample.new(title: "Default") do
+        render Collapsible.new do
+          div(class: "flex items-center justify-between space-x-4 px-4 py-2") do
+            h4(class: "text-sm font-semibold") { " @joeldrapper starred 3 repositories" }
+            render CollapsibleTrigger.new do
+              render Button.new(variant: :ghost, size: :icon) do
+                chevron_icon
+                span(class: "sr-only") { "Toggle" }
+              end
+            end
+          end
+
+          div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
+            "phlex-ruby/phlex"
+          end
+
+          render CollapsibleContent.new do
+            div(class: 'space-y-2 mt-2') do
+              div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
+                "phlex-ruby/phlex-rails"
+              end
+              div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
+                "georgekettle/phlexui"
+              end
+            end
+          end
+        end 
+      end
+
+      render Docs::VisualCodeExample.new(title: "Open") do
         render Collapsible.new(open: true) do
           div(class: "flex items-center justify-between space-x-4 px-4 py-2") do
             h4(class: "text-sm font-semibold") { " @joeldrapper starred 3 repositories" }
