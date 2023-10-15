@@ -20,7 +20,7 @@ class Docs::CheckboxView < ApplicationView
           render Checkbox.new(id: 'terms1', checked: true)
           div(class: "grid gap-1.5 leading-none") do
             label(
-              htmlfor: "terms1",
+              for: "terms1",
               class:
                 "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             ) { " Accept terms and conditions " }
