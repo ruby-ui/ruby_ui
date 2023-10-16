@@ -16,8 +16,10 @@ class Docs::CalendarView < ApplicationView
       end
 
       render Docs::VisualCodeExample.new do
-        input(type: 'string', class: 'rounded-md border shadow', id: 'date', data_controller: 'input')
-        render Calendar.new(class: 'rounded-md border shadow', data_calendar_input_outlet: '#date')
+        div(class: 'space-y-4') do
+          render Input.new(type: 'string', placeholder: "Select a date", class: 'rounded-md border shadow', id: 'date', data_controller: 'input')
+          render Calendar.new(class: 'rounded-md border shadow', data_calendar_input_outlet: '#date')
+        end
       end
     end
   end
