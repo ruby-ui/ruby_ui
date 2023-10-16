@@ -5,12 +5,12 @@ export default class extends Controller {
   static values = { 
     selectedDate: {
       type: String,
-      default: new Date().toISOString().slice(0, 10)
+      default: null
     },
     viewDate: {
       type: String,
       // selectedDateValue || today
-      default: null
+      default: new Date().toISOString().slice(0, 10)
     }
   };
 
@@ -40,12 +40,10 @@ export default class extends Controller {
   }
 
   selectedDateValueChanged(value, prevValue) {
-    console.log('this.selectedDateValue', this.selectedDateValue)
     this.updateCalendar()
   }
 
   viewDateValueChanged(value, prevValue) {
-    console.log('this.viewDateValue', this.viewDateValue)
     this.updateCalendar()
   }
 

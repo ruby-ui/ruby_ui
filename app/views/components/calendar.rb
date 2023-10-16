@@ -2,8 +2,8 @@
 
 class Calendar < ApplicationComponent
     def initialize(selected_date: nil, **attributes)
-        @selected_date = selected_date
         @attributes = attributes
+        @selected_date = selected_date
     end
 
     def template
