@@ -10,6 +10,9 @@ application.register("accordion", AccordionController)
 import AlertDialogController from "./alert_dialog_controller"
 application.register("alert-dialog", AlertDialogController)
 
+import CalendarController from "./calendar_controller"
+application.register("calendar", CalendarController)
+
 import CollapsibleController from "./collapsible_controller"
 application.register("collapsible", CollapsibleController)
 

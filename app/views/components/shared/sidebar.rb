@@ -28,6 +28,7 @@ class Shared::Sidebar < ApplicationComponent
             { name: "Badge", path: helpers.docs_badge_path },
             { name: "Button", path: helpers.docs_button_path },
             { name: "Card", path: helpers.docs_card_path },
+            { name: "Calendar", path: helpers.docs_calendar_path },
             { name: "Checkbox", path: helpers.docs_checkbox_path },
             { name: "Collapsible", path: helpers.docs_collapsible_path },
             { name: "Dialog", path: helpers.docs_dialog_path },

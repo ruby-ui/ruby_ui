@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'badge', to: 'docs#badge', as: :docs_badge
     get 'button', to: 'docs#button', as: :docs_button
     get 'card', to: 'docs#card', as: :docs_card
+    get 'calendar', to: 'docs#calendar', as: :docs_calendar
     get 'checkbox', to: 'docs#checkbox', as: :docs_checkbox
     get 'collapsible', to: 'docs#collapsible', as: :docs_collapsible
     get 'dialog', to: 'docs#dialog', as: :docs_dialog
