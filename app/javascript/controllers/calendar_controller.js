@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { format } from "date-fns";
 
 export default class extends Controller {
   static targets = ["calendar", "title"];
@@ -9,10 +10,14 @@ export default class extends Controller {
     },
     viewDate: {
       type: String,
-      // selectedDateValue || today
       default: new Date().toISOString().slice(0, 10)
+    },
+    format: {
+      type: String,
+      default: "yyyy-MM-dd"
     }
   };
+  static outlets = ["input"]
 
   initialize() {
     this.updateCalendar() // Initial calendar render
@@ -41,6 +46,10 @@ export default class extends Controller {
 
   selectedDateValueChanged(value, prevValue) {
     this.updateCalendar()
+    this.inputOutlets.forEach(outlet => {
+      const formattedDate = this.formatDate(this.selectedDate())
+      outlet.setValue(formattedDate)
+    })
   }
 
   viewDateValueChanged(value, prevValue) {
@@ -167,5 +176,9 @@ export default class extends Controller {
               return date;
           });
       })//.flat(Infinity);
+  }
+
+  formatDate(date) {
+    return format(date, this.formatValue);
   }
 }

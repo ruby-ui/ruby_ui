@@ -7,6 +7,7 @@
     "autoprefixer": "^10.4.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
     "esbuild": "^0.19.4",
     "motion": "^10.16.4",
     "mustache": "^4.2.0",
