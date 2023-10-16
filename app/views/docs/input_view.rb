@@ -43,12 +43,14 @@ class Docs::InputView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: 'Form') do
         render Form.new(class: 'w-full max-w-sm') do
-          render FormItem.new do
-            render Label.new(for: "username") { "Username" }
-            render Input.new(type: "string", placeholder: "Username", id: "username")
-            render Hint.new { "We'll never share your email with anyone else." }
+          render FormSpacer.new do
+            render FormItem.new do
+              render Label.new(for: "username") { "Username" }
+              render Input.new(type: "string", placeholder: "Username", id: "username")
+              render Hint.new { "We'll never share your email with anyone else." }
+            end
+            render Button.new(type: "submit") { "Submit" }
           end
-          render Button.new(type: "submit") { "Submit" }
         end
       end
     end

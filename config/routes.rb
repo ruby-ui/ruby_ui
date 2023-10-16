@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'dialog', to: 'docs#dialog', as: :docs_dialog
     get 'input', to: 'docs#input', as: :docs_input
     get 'link', to: 'docs#link', as: :docs_link
+    get 'sheet', to: 'docs#sheet', as: :docs_sheet
     get 'tabs', to: 'docs#tabs', as: :docs_tabs
     get 'theme_toggle', to: 'docs#theme_toggle', as: :docs_theme_toggle
     get 'typography', to: 'docs#typography', as: :docs_typography

@@ -34,6 +34,7 @@ class Shared::Sidebar < ApplicationComponent
             { name: "Dialog", path: helpers.docs_dialog_path },
             { name: "Input", path: helpers.docs_input_path },
             { name: "Link", path: helpers.docs_link_path },
+            { name: "Sheet", path: helpers.docs_sheet_path },
             { name: "Tabs", path: helpers.docs_tabs_path },
             { name: "Theme Toggle", path: helpers.docs_theme_toggle_path },
             { name: "Typography", path: helpers.docs_typography_path },

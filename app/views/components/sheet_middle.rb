@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class DialogTrigger < ApplicationComponent
+class SheetMiddle < ApplicationComponent
     def initialize(**attributes)
         @attributes = attributes
     end
 
     def template(&)
-        div(**@attributes, data: { action: "click->dialog#open"}, &)
+        div(**@attributes, class: tokens("py-4", @attributes[:class]), &)
     end
 end

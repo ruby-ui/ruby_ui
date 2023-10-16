@@ -59,6 +59,10 @@ class DocsController < ApplicationController
     render Docs::LinkView.new
   end
 
+  def sheet
+    render Docs::SheetView.new
+  end
+
   def tabs
     render Docs::TabsView.new
   end
