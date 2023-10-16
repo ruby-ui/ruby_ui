@@ -51,6 +51,10 @@ class DocsController < ApplicationController
     render Docs::DialogView.new
   end
 
+  def input
+    render Docs::InputView.new
+  end
+
   def link
     render Docs::LinkView.new
   end

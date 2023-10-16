@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'checkbox', to: 'docs#checkbox', as: :docs_checkbox
     get 'collapsible', to: 'docs#collapsible', as: :docs_collapsible
     get 'dialog', to: 'docs#dialog', as: :docs_dialog
+    get 'input', to: 'docs#input', as: :docs_input
     get 'link', to: 'docs#link', as: :docs_link
     get 'tabs', to: 'docs#tabs', as: :docs_tabs
     get 'theme_toggle', to: 'docs#theme_toggle', as: :docs_theme_toggle
