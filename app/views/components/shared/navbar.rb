@@ -3,15 +3,12 @@
 class Shared::Navbar < ApplicationComponent
   def template
     header(class: 'supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur') do
-      div(class: 'container flex h-14 items-center justify-between') do
+      div(class: 'px-2 sm:px-4 sm:container flex h-14 items-center justify-between') do
         div(class: 'mr-4 flex items-center') do
-          a(href: helpers.root_path, class: 'mr-6 flex items-center space-x-2') do
-            render Typography::H4.new {
-              "PhlexUI"
-            }
-          end
+          render Shared::MobileMenu.new(class: 'sm:hidden')
+          render Shared::Logo.new
 
-          render Link.new(href: helpers.docs_typography_path, variant: :ghost)  do
+          render Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden sm:inline-block')  do
             "Components"
           end
         end
