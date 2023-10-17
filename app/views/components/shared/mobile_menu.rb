@@ -13,13 +13,17 @@ class Shared::MobileMenu < ApplicationComponent
                 end
             end
             render SheetContent.new(class: 'w-[300px]', side: :left) do
-                render SheetHeader.new do
-                    div(class: 'pl-2') do
-                        render Shared::Logo.new
+                div(class: 'flex flex-col h-full') do
+                    render SheetHeader.new do
+                        div(class: 'pl-2') do
+                            render Shared::Logo.new
+                        end
                     end
-                end
-                render SheetMiddle.new do
-                    render Shared::Menu.new
+                    div(class: 'flex-grow overflow-y-scroll') do
+                        render SheetMiddle.new do
+                            render Shared::Menu.new
+                        end
+                    end
                 end
             end
         end
