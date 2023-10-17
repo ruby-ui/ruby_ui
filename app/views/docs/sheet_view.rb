@@ -63,7 +63,7 @@ class Docs::SheetView < ApplicationView
           end
           render FormItem.new do
             render Label.new { "Email" }
-            render Input.new(placeholder: "joeldrapper@mail.com")
+            render Input.new(placeholder: "joel@drapper.me")
           end
         end
       end
