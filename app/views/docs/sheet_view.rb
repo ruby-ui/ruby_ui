@@ -26,7 +26,7 @@ class Docs::SheetView < ApplicationView
           sides.each do |side|
             render Sheet.new do
               render SheetTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full') { side }
+                render Button.new(variant: :outline, class: 'w-full justify-center') { side }
               end
               render SheetContent.new(side: side, class: tokens(-> { [:left, :right].include?(side) } => "sm:max-w-sm")) do
                 profile_form

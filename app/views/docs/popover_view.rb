@@ -31,7 +31,7 @@ class Docs::PopoverView < ApplicationView
             position_variants.each do |position_variant|
               render Popover.new(options: { placement: position_variant }) do
                 render PopoverTrigger.new do
-                  render Button.new(variant: :outline, class: 'w-full') { position_variant }
+                  render Button.new(variant: :outline, class: 'w-full justify-center') { position_variant }
                 end
                 popover_content
               end
@@ -53,7 +53,7 @@ class Docs::PopoverView < ApplicationView
 
   def popover_content
     render PopoverContent.new(class: 'w-40') do
-      render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start') do
+      render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
         svg(
           xmlns: "http://www.w3.org/2000/svg",
           fill: "none",
@@ -71,7 +71,7 @@ class Docs::PopoverView < ApplicationView
         end
         plain "Profile"
       end
-      render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start') do
+      render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
         svg(
           xmlns: "http://www.w3.org/2000/svg",
           fill: "none",
@@ -94,7 +94,7 @@ class Docs::PopoverView < ApplicationView
         end
         plain "Settings"
       end
-      render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start') do
+      render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
         svg(
           xmlns: "http://www.w3.org/2000/svg",
           fill: "none",
