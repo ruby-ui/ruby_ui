@@ -28,6 +28,9 @@ application.register("hello", HelloController)
 import InputController from "./input_controller"
 application.register("input", InputController)
 
+import PopoverController from "./popover_controller"
+application.register("popover", PopoverController)
+
 import SheetController from "./sheet_controller"
 application.register("sheet", SheetController)
 

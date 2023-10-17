@@ -59,6 +59,10 @@ class DocsController < ApplicationController
     render Docs::LinkView.new
   end
 
+  def popover
+    render Docs::PopoverView.new
+  end
+
   def sheet
     render Docs::SheetView.new
   end
