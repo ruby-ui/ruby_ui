@@ -47,6 +47,10 @@ class DocsController < ApplicationController
     render Docs::CollapsibleView.new
   end
 
+  def date_picker
+    render Docs::DatePickerView.new
+  end
+
   def dialog
     render Docs::DialogView.new
   end

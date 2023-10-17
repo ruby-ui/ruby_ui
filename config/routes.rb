@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'calendar', to: 'docs#calendar', as: :docs_calendar
     get 'checkbox', to: 'docs#checkbox', as: :docs_checkbox
     get 'collapsible', to: 'docs#collapsible', as: :docs_collapsible
+    get 'date_picker', to: 'docs#date_picker', as: :docs_date_picker
     get 'dialog', to: 'docs#dialog', as: :docs_dialog
     get 'input', to: 'docs#input', as: :docs_input
     get 'link', to: 'docs#link', as: :docs_link
