@@ -59,6 +59,10 @@ class DocsController < ApplicationController
     render Docs::DropdownMenuView.new
   end
 
+  def hover_card
+    render Docs::HoverCardView.new
+  end
+
   def input
     render Docs::InputView.new
   end
