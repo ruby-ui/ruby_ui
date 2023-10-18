@@ -23,7 +23,7 @@ Here is the list of components that are being built. For reference, see here htt
 ✅ Dialog
 ✅ Dropdown Menu
 ⚪️ Form
-⚪️ Hover Card
+✅ Hover Card
 ✅ Input
 ✅ Label
 ✅ Link
