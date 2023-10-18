@@ -19,9 +19,9 @@ Here is the list of components that are being built. For reference, see here htt
 ⚪️ Command
 ⚪️ Context Menu
 ⚪️ Data Table
-⚪️ Date Picker
+✅ Date Picker
 ✅ Dialog
-⚪️ Dropdown Menu
+✅ Dropdown Menu
 ⚪️ Form
 ⚪️ Hover Card
 ✅ Input
@@ -29,13 +29,13 @@ Here is the list of components that are being built. For reference, see here htt
 ✅ Link
 ⚪️ Menubar
 ⚪️ Navigation Menu
-⚪️ Popover
+✅ Popover
 ⚪️ Progress
 ⚪️ Radio Group
 ⚪️ Scroll Area
 ⚪️ Select
 ⚪️ Separator
-⚪️ Sheet
+✅ Sheet
 ⚪️ Skeleton
 ⚪️ Slider
 ⚪️ Switch
