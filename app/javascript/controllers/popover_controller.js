@@ -14,6 +14,10 @@ export default class extends Controller {
     this.initializeTippy();
   }
 
+  disconnect() {
+    this.destroyTippy();
+  }
+
   initializeTippy() {
     const defaultOptions = {
       content: this.contentTarget.innerHTML,
@@ -23,6 +27,16 @@ export default class extends Controller {
 
     const mergedOptions = { ...this.optionsValue, ...defaultOptions };
 
-    tippy(this.triggerTarget, mergedOptions);
+    this.tippy = tippy(this.triggerTarget, mergedOptions);
+  }
+
+  destroyTippy() {
+    if (this.tippy) {
+      this.tippy.destroy();
+    }
+  }
+
+  close() {
+    this.tippy.hide();
   }
 }

@@ -55,6 +55,10 @@ class DocsController < ApplicationController
     render Docs::DialogView.new
   end
 
+  def dropdown_menu
+    render Docs::DropdownMenuView.new
+  end
+
   def input
     render Docs::InputView.new
   end

@@ -20,7 +20,7 @@ class Docs::PopoverView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Placement") do
         positions = %w[top right left bottom]
         
-        div(class: 'grid grid-cols-3 gap-4') do
+        div(class: 'grid grid-cols-1 sm:grid-cols-3 gap-4') do
           positions.each do |position|
             position_variants = [
               position,
