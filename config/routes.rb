@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     get 'sheet', to: 'docs#sheet', as: :docs_sheet
     get 'tabs', to: 'docs#tabs', as: :docs_tabs
     get 'theme_toggle', to: 'docs#theme_toggle', as: :docs_theme_toggle
+    get 'tooltip', to: 'docs#tooltip', as: :docs_tooltip
     get 'typography', to: 'docs#typography', as: :docs_typography
   end
   root "pages#home"

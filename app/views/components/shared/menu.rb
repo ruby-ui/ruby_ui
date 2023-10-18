@@ -35,6 +35,7 @@ class Shared::Menu < ApplicationComponent
             { name: "Sheet", path: helpers.docs_sheet_path },
             { name: "Tabs", path: helpers.docs_tabs_path },
             { name: "Theme Toggle", path: helpers.docs_theme_toggle_path },
+            { name: "Tooltip", path: helpers.docs_tooltip_path },
             { name: "Typography", path: helpers.docs_typography_path },
         ]
     end

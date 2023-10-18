@@ -86,6 +86,10 @@ class DocsController < ApplicationController
   def theme_toggle
     render Docs::ThemeToggleView.new
   end
+
+  def tooltip
+    render Docs::TooltipView.new
+  end
   
   def typography
     render Docs::TypographyView.new
