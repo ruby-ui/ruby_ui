@@ -1,59 +1,100 @@
-import { Controller } from "@hotwired/stimulus"
-import Fuse from 'fuse.js'
+import { Controller } from "@hotwired/stimulus";
+import Fuse from 'fuse.js';
 
 // Connects to data-controller="command"
 export default class extends Controller {
-    static targets = ["input", "group", "item"]
+    static targets = ["input", "group", "item", "empty"]
 
     connect() {
-        this.inputTarget.focus()
-        this.searchIndex = this.buildSearchIndex()
+        this.inputTarget.focus();
+        this.searchIndex = this.buildSearchIndex();
+        this.toggleVisibility(this.emptyTargets, false);
+        this.selectedIndex = -1;
     }
 
     filter(e) {
-        const query = e.target.value.toLowerCase()
-        // if the length is zero, show all items
+        // Deselect any previously selected item
+        this.deselectAll();
+
+        const query = e.target.value.toLowerCase();
         if (query.length === 0) {
-            this.showAllItems()
-            this.showAllGroups()
-            return
+            this.resetVisibility();
+            return;
         }
-        this.hideAllItems()
-        this.searchIndex.search(query).forEach((result) => {
-            result.item.element.classList.remove("hidden")
-        })
-        this.hideEmptyGroups()
+
+        this.toggleVisibility(this.itemTargets, false);
+
+        const results = this.searchIndex.search(query);
+        results.forEach(result => this.toggleVisibility([result.item.element], true));
+
+        this.toggleVisibility(this.emptyTargets, results.length === 0);
+        this.updateGroupVisibility();
     }
 
-    hideAllItems() {
-        this.itemTargets.forEach((el) => el.classList.add("hidden"))
+    toggleVisibility(elements, isVisible) {
+        elements.forEach(el => el.classList.toggle("hidden", !isVisible));
     }
 
-    showAllItems() {
-        this.itemTargets.forEach((el) => el.classList.remove("hidden"))
+    updateGroupVisibility() {
+        this.groupTargets.forEach(group => {
+            const hasVisibleItems = group.querySelectorAll("[data-command-target='item']:not(.hidden)").length > 0;
+            this.toggleVisibility([group], hasVisibleItems);
+        });
     }
 
-    hideEmptyGroups() {
-        this.groupTargets.forEach((el) => {
-            const hidden = el.querySelectorAll("[data-command-target='item']:not(.hidden)").length === 0
-            el.classList.toggle("hidden", hidden)
-        })
-    }
-
-    showAllGroups() {
-        this.groupTargets.forEach((el) => el.classList.remove("hidden"))
+    resetVisibility() {
+        this.toggleVisibility(this.itemTargets, true);
+        this.toggleVisibility(this.groupTargets, true);
+        this.toggleVisibility(this.emptyTargets, false);
     }
 
     buildSearchIndex() {
-        // Build a search index from the data-value attributes of the item targets
         const options = {
             keys: ["value"],
             threshold: 0.2,
             includeMatches: true,
+        };
+        const items = this.itemTargets.map(el => ({ value: el.dataset.value, element: el }));
+        return new Fuse(items, options);
+    }
+
+    handleKeydown(e) {
+        const visibleItems = this.itemTargets.filter(item => !item.classList.contains('hidden'));
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            this.updateSelectedItem(visibleItems, 1);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            this.updateSelectedItem(visibleItems, -1);
+        } else if (e.key === 'Enter' && this.selectedIndex !== -1) {
+            e.preventDefault();
+            visibleItems[this.selectedIndex].click();
         }
-        const items = this.itemTargets.map((el) => {
-            return { value: el.dataset.value, element: el }
-        })
-        return new Fuse(items, options)
+    }
+
+    updateSelectedItem(visibleItems, direction) {
+        if (this.selectedIndex >= 0) {
+            this.toggleAriaSelected(visibleItems[this.selectedIndex], false);
+        }
+
+        this.selectedIndex += direction;
+
+        // Ensure the selected index is within the bounds of the visible items
+        if (this.selectedIndex < 0) {
+            this.selectedIndex = visibleItems.length - 1;
+        } else if (this.selectedIndex >= visibleItems.length) {
+            this.selectedIndex = 0;
+        }
+
+        this.toggleAriaSelected(visibleItems[this.selectedIndex], true);
+    }
+
+    toggleAriaSelected(element, isSelected) {
+        element.setAttribute('aria-selected', isSelected.toString());
+    }
+
+    deselectAll() {
+        this.itemTargets.forEach(item => this.toggleAriaSelected(item, false));
+        this.selectedIndex = -1;
     }
 }

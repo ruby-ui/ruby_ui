@@ -20,8 +20,9 @@ class Docs::CommandView < ApplicationView
             render Command.new do
               render CommandInput.new(placeholder: "Type a command or search...")
               render CommandList.new do
+                render CommandEmpty.new { "No results found." }
                 render CommandGroup.new(title: "Suggestions") do
-                  render CommandItem.new(value: "calendar") do
+                  render CommandItem.new(value: "calendar", href: helpers.docs_calendar_path) do
                     calendar_icon
                     plain "Calendar"
                   end
