@@ -6,6 +6,6 @@ class CommandList < ApplicationComponent
     end
 
     def template(&)
-        div(**@attributes, &)
+        div(**@attributes, class: tokens("divide-y divide-border", @attributes[:class]), &)
     end
 end
