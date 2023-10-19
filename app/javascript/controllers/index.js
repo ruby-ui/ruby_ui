@@ -16,6 +16,9 @@ application.register("calendar", CalendarController)
 import CollapsibleController from "./collapsible_controller"
 application.register("collapsible", CollapsibleController)
 
+import CommandController from "./command_controller"
+application.register("command", CommandController)
+
 import DialogController from "./dialog_controller"
 application.register("dialog", DialogController)
 

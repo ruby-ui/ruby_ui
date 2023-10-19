@@ -2,7 +2,7 @@
 
 class Button < ApplicationComponent
     def initialize(**attributes)
-        @variant = attributes[:variant] || :primary
+        @variant = attributes[:variant]&.to_sym || :primary
         @size = attributes[:size]
         @attributes = attributes
         @attributes[:type] ||= "button"

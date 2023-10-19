@@ -25,6 +25,7 @@ class Shared::Menu < ApplicationComponent
             { name: "Calendar", path: helpers.docs_calendar_path },
             { name: "Checkbox", path: helpers.docs_checkbox_path },
             { name: "Collapsible", path: helpers.docs_collapsible_path },
+            { name: "Command", path: helpers.docs_command_path },
             { name: "Date Picker", path: helpers.docs_date_picker_path },
             { name: "Dialog", path: helpers.docs_dialog_path },
             { name: "Dropdown Menu", path: helpers.docs_dropdown_menu_path },

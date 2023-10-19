@@ -3,7 +3,7 @@
 class Link < ApplicationComponent
     def initialize(**attributes)
         @href = attributes[:href]
-        @variant = attributes[:variant] || :link
+        @variant = attributes[:variant]&.to_sym || :link
         @size = attributes[:size]
         @attributes = attributes
     end
