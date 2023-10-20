@@ -83,6 +83,10 @@ class DocsController < ApplicationController
     render Docs::SheetView.new
   end
 
+  def shortcut_key
+    render Docs::ShortcutKeyView.new
+  end
+
   def tabs
     render Docs::TabsView.new
   end

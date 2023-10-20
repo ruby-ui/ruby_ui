@@ -13,7 +13,9 @@ class Docs::CommandView < ApplicationView
           render CommandDialogTrigger.new do
             render Button.new(variant: "outline", class: 'pr-32') do
               search_icon
-              plain "Search"
+              span(class: "text-muted-foreground font-normal") do
+                plain "Search"
+              end
             end
           end
           render CommandDialogContent.new do
@@ -21,42 +23,68 @@ class Docs::CommandView < ApplicationView
               render CommandInput.new(placeholder: "Type a command or search...")
               render CommandEmpty.new { "No results found." }
               render CommandList.new do
-                render CommandGroup.new(title: "Suggestions") do
-                  render CommandItem.new(value: "calendar", href: helpers.docs_calendar_path) do
-                    default_icon
-                    plain "Calendar"
-                  end
-                  render CommandItem.new(value: "chat") do
-                    default_icon
-                    plain "Chat"
-                  end
-                  render CommandItem.new(value: "search-emoji") do
-                    default_icon
-                    plain "Search Emoji"
-                  end
-                  render CommandItem.new(value: "launch") do
-                    default_icon
-                    plain "Launch Phlex"
+                render CommandGroup.new(title: "Components") do
+                  components.each do |component|
+                    render CommandItem.new(value: component[:name], href: component[:path]) do
+                      default_icon
+                      plain component[:name]
+                    end
                   end
                 end
                 render CommandGroup.new(title: "Settings") do
-                  render CommandItem.new(value: "profile") do
-                    default_icon
-                    plain "Profile"
-                  end
-                  render CommandItem.new(value: "mail") do
-                    default_icon
-                    plain "Mail"
-                  end
-                  render CommandItem.new(value: "settings") do
-                    default_icon
-                    plain "Settings"
+                  settings.each do |setting|
+                    render CommandItem.new(value: setting[:name], href: setting[:path]) do
+                      default_icon
+                      plain setting[:name]
+                    end
                   end
                 end
               end
             end
           end
         end
+      end
+
+      code_example = <<~RUBY
+        render CommandDialog.new do
+            render CommandDialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
+              p(class: "text-sm text-muted-foreground") do
+                span(class: 'mr-1') { "Press" }
+                render ShortcutKey.new do
+                  span(class: "text-xs") { "⌘" }
+                  plain "J"
+                end
+              end
+            end
+            render CommandDialogContent.new do
+              render Command.new do
+                render CommandInput.new(placeholder: "Type a command or search...")
+                render CommandEmpty.new { "No results found." }
+                render CommandList.new do
+                  render CommandGroup.new(title: "Components") do
+                    components.each do |component|
+                      render CommandItem.new(value: component[:name], href: component[:path]) do
+                        default_icon
+                        plain component[:name]
+                      end
+                    end
+                  end
+                  render CommandGroup.new(title: "Settings") do
+                    settings.each do |setting|
+                      render CommandItem.new(value: setting[:name], href: setting[:path]) do
+                        default_icon
+                        plain setting[:name]
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+      RUBY
+
+      render Docs::VisualCodeExample.new(title: "With keybinding", code: code_example) do
+        eval(code_example)
       end
     end
   end
@@ -80,17 +108,35 @@ class Docs::CommandView < ApplicationView
   def default_icon
     svg(
       xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
       viewbox: "0 0 24 24",
-      stroke_width: "1.5",
-      stroke: "currentColor",
+      fill: "currentColor",
       class: "w-5 h-5"
     ) do |s|
       s.path(
-        stroke_linecap: "round",
-        stroke_linejoin: "round",
-        d: "M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+        fill_rule: "evenodd",
+        d:
+          "M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z",
+        clip_rule: "evenodd"
       )
     end
+  end
+
+  def components
+    [
+      { name: "Accordion", path: helpers.docs_accordion_path },
+      { name: "Alert", path: helpers.docs_alert_path },
+      { name: "Alert Dialog", path: helpers.docs_alert_dialog_path },
+      { name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path },
+      { name: "Avatar", path: helpers.docs_avatar_path },
+      { name: "Badge", path: helpers.docs_badge_path }
+    ]
+  end
+
+  def settings
+    [
+      { name: "Profile", path: "#" },
+      { name: "Mail", path: "#" },
+      { name: "Settings", path: "#" }
+    ]
   end
 end

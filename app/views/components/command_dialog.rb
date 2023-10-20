@@ -6,6 +6,6 @@ class CommandDialog < ApplicationComponent
     end
 
     def template(&)
-        div(**@attributes, data: { controller: "dialog"}, &)
+        div(**@attributes, data: { controller: "dialog" }, &)
     end
 end

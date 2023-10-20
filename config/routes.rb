@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get 'link', to: 'docs#link', as: :docs_link
     get 'popover', to: 'docs#popover', as: :docs_popover
     get 'sheet', to: 'docs#sheet', as: :docs_sheet
+    get 'shortcut_key', to: 'docs#shortcut_key', as: :docs_shortcut_key
     get 'tabs', to: 'docs#tabs', as: :docs_tabs
     get 'theme_toggle', to: 'docs#theme_toggle', as: :docs_theme_toggle
     get 'tooltip', to: 'docs#tooltip', as: :docs_tooltip

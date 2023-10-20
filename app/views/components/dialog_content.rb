@@ -10,7 +10,7 @@ class DialogContent < ApplicationComponent
       div(data: { controller: 'dismissable' }) do
         div(
           data_state: "open",
-          data_action: "click->dismissable#dismiss",
+          data_action: "click->dismissable#dismiss esc->dismissable#dismiss",
           class:
             "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
           style: "pointer-events:auto",

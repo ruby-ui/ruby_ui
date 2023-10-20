@@ -13,7 +13,7 @@ class CommandInput < ApplicationComponent
                 class:
                     "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
                 placeholder: @placeholder,
-                data_action: "input->command#filter keydown->command#handleKeydown",
+                data_action: "input->command#filter keydown.down->command#handleKeydown keydown.up->command#handleKeydown keydown.enter->command#handleKeydown keydown.esc->dismissable#dismiss",
                 data_command_target: "input",
                 autocomplete: "off",
                 autocorrect: "off",
