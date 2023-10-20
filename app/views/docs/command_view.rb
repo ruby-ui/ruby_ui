@@ -56,40 +56,40 @@ class Docs::CommandView < ApplicationView
 
       code_example = <<~RUBY
         render CommandDialog.new do
-            render CommandDialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
-              p(class: "text-sm text-muted-foreground") do
-                span(class: 'mr-1') { "Press" }
-                render ShortcutKey.new do
-                  span(class: "text-xs") { "⌘" }
-                  plain "J"
-                end
+          render CommandDialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
+            p(class: "text-sm text-muted-foreground") do
+              span(class: 'mr-1') { "Press" }
+              render ShortcutKey.new do
+                span(class: "text-xs") { "⌘" }
+                plain "J"
               end
             end
-            render CommandDialogContent.new do
-              render Command.new do
-                render CommandInput.new(placeholder: "Type a command or search...")
-                render CommandEmpty.new { "No results found." }
-                render CommandList.new do
-                  render CommandGroup.new(title: "Components") do
-                    components.each do |component|
-                      render CommandItem.new(value: component[:name], href: component[:path]) do
-                        default_icon
-                        plain component[:name]
-                      end
+          end
+          render CommandDialogContent.new do
+            render Command.new do
+              render CommandInput.new(placeholder: "Type a command or search...")
+              render CommandEmpty.new { "No results found." }
+              render CommandList.new do
+                render CommandGroup.new(title: "Components") do
+                  components.each do |component|
+                    render CommandItem.new(value: component[:name], href: component[:path]) do
+                      default_icon
+                      plain component[:name]
                     end
                   end
-                  render CommandGroup.new(title: "Settings") do
-                    settings.each do |setting|
-                      render CommandItem.new(value: setting[:name], href: setting[:path]) do
-                        default_icon
-                        plain setting[:name]
-                      end
+                end
+                render CommandGroup.new(title: "Settings") do
+                  settings.each do |setting|
+                    render CommandItem.new(value: setting[:name], href: setting[:path]) do
+                      default_icon
+                      plain setting[:name]
                     end
                   end
                 end
               end
             end
           end
+        end
       RUBY
       render Docs::VisualCodeExample.new(title: "With keybinding", code: code_example) do
         eval(code_example)

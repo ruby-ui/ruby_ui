@@ -55,6 +55,10 @@ class DocsController < ApplicationController
     render Docs::CommandView.new
   end
 
+  def context_menu
+    render Docs::ContextMenuView.new
+  end
+
   def date_picker
     render Docs::DatePickerView.new
   end

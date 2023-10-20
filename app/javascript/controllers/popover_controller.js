@@ -36,6 +36,15 @@ export default class extends Controller {
     }
   }
 
+  handleContextMenu(event) {
+    event.preventDefault();
+    this.open();
+  }
+
+  open() {
+    this.tippy.show();
+  }
+
   close() {
     this.tippy.hide();
   }
