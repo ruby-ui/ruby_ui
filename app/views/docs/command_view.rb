@@ -8,13 +8,19 @@ class Docs::CommandView < ApplicationView
         render Typography::P.new { "Fast, composable, unstyled command menu for Phlex." }
       end
 
-      render Docs::VisualCodeExample.new(title: "Default") do
+      code_example = <<~RUBY
         render CommandDialog.new do
           render CommandDialogTrigger.new do
-            render Button.new(variant: "outline", class: 'pr-32') do
-              search_icon
-              span(class: "text-muted-foreground font-normal") do
-                plain "Search"
+            render Button.new(variant: "outline", class: 'w-56 pr-2 justify-between') do
+              div(class: "flex items-center space-x-1") do
+                search_icon
+                span(class: "text-muted-foreground font-normal") do
+                  plain "Search"
+                end
+              end
+              render ShortcutKey.new do
+                span(class: "text-xs") { "⌘" }
+                plain "K"
               end
             end
           end
@@ -43,6 +49,9 @@ class Docs::CommandView < ApplicationView
             end
           end
         end
+      RUBY
+      render Docs::VisualCodeExample.new(title: "Default", code: code_example) do
+        eval(code_example)
       end
 
       code_example = <<~RUBY
@@ -82,7 +91,6 @@ class Docs::CommandView < ApplicationView
             end
           end
       RUBY
-
       render Docs::VisualCodeExample.new(title: "With keybinding", code: code_example) do
         eval(code_example)
       end
