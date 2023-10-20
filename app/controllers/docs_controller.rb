@@ -43,6 +43,10 @@ class DocsController < ApplicationController
     render Docs::CheckboxView.new
   end
 
+  def codeblock
+    render Docs::CodeblockView.new
+  end
+
   def collapsible
     render Docs::CollapsibleView.new
   end

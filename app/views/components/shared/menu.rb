@@ -24,6 +24,7 @@ class Shared::Menu < ApplicationComponent
             { name: "Card", path: helpers.docs_card_path },
             { name: "Calendar", path: helpers.docs_calendar_path },
             { name: "Checkbox", path: helpers.docs_checkbox_path },
+            { name: "Codeblock", path: helpers.docs_codeblock_path },
             { name: "Collapsible", path: helpers.docs_collapsible_path },
             { name: "Command", path: helpers.docs_command_path },
             { name: "Date Picker", path: helpers.docs_date_picker_path },

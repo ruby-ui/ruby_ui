@@ -10,6 +10,7 @@
     "date-fns": "^2.30.0",
     "esbuild": "^0.19.4",
     "fuse.js": "^6.6.2",
+    "highlight.js": "^11.9.0",
     "motion": "^10.16.4",
     "mustache": "^4.2.0",
     "postcss": "^8.4.31",
