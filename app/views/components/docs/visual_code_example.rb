@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class Docs::VisualCodeExample < ApplicationComponent
-    def initialize(title: nil, description: nil, code: "No code snippet given...")
+    def initialize(title: nil, description: nil, context: nil)
         @title = title
         @description = description
-        @code = code
+        @context = context
     end
 
     def template(&block)
+        @display_code = capture(&block)
+
         div(id: @title) do
             render_header if @title || @description
             render_tabs(&block)
@@ -51,20 +53,16 @@ class Docs::VisualCodeExample < ApplicationComponent
 
     def render_preview_tab(&block)
         div(class: 'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border') do
-            div(class: 'preview flex min-h-[350px] w-full justify-center p-10 items-center', &block)
+            div(class: 'preview flex min-h-[350px] w-full justify-center p-10 items-center') do
+                decoded_code = CGI.unescapeHTML(@display_code)
+                @context.instance_eval(decoded_code)
+            end
         end
     end
 
     def render_code_tab
         div(class: 'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border') do
-            render Codeblock.new { @code }
-            # div(class: "w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto") do
-            #     div(data_rehype_pretty_code_fragment: "") do
-            #         pre(class: "mb-4 mt-6 max-h-[650px] overflow-x-auto rounded-md border text-white bg-zinc-950 py-4 dark:bg-zinc-900") do
-            #             code(class: "relative rounded px-6 py-[0.2rem] font-mono text-sm") { @code }
-            #         end
-            #     end
-            # end
+            render Codeblock.new { @display_code }
         end
     end
 

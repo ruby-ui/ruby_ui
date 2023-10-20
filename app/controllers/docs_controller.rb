@@ -95,6 +95,10 @@ class DocsController < ApplicationController
     render Docs::ShortcutKeyView.new
   end
 
+  def table
+    render Docs::TableView.new
+  end
+
   def tabs
     render Docs::TabsView.new
   end
