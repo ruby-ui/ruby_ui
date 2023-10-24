@@ -8,20 +8,24 @@ class Docs::AlertView < ApplicationView
         render Typography::P.new { "Displays a callout for user attention." }
       end
 
-      render Docs::VisualCodeExample.new(title: "Default") do
-        render Alert.new do
-          icon
-          render AlertTitle.new { "Alert Title" }
-          render AlertDescription.new { "Alert description" }
-        end
+      render Docs::VisualCodeExample.new(title: "Default", context: self) do
+        <<~RUBY
+          render Alert.new do
+            icon
+            render AlertTitle.new { "Alert Title" }
+            render AlertDescription.new { "Alert description" }
+          end
+        RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Destructive") do
-        render Alert.new(variant: :destructive) do
-          icon
-          render AlertTitle.new { "Alert Title" }
-          render AlertDescription.new { "Alert description" }
-        end
+      render Docs::VisualCodeExample.new(title: "Destructive", context: self) do
+        <<~RUBY
+          render Alert.new(variant: :destructive) do
+            icon
+            render AlertTitle.new { "Alert Title" }
+            render AlertDescription.new { "Alert description" }
+          end
+        RUBY
       end
     end
   end

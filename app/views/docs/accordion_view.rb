@@ -8,27 +8,29 @@ class Docs::AccordionView < ApplicationView
         render Typography::P.new { "A vertically stacked set of interactive headings that each reveal a section of content." }
       end
 
-      render Docs::VisualCodeExample.new do
-        render Accordion.new do
-          render AccordionItem.new(open: false) do
-            render AccordionTrigger.new { "Is it accessbile?" }
-            render AccordionContent.new do
-              render Typography::P.new { "No not yet..." }
+      render Docs::VisualCodeExample.new(context: self) do
+        <<~RUBY
+          render Accordion.new do
+            render AccordionItem.new(open: false) do
+              render AccordionTrigger.new { "Is it accessbile?" }
+              render AccordionContent.new do
+                render Typography::P.new { "No not yet..." }
+              end
+            end
+            render AccordionItem.new(open: false) do
+              render AccordionTrigger.new { "Is it styled?" }
+              render AccordionContent.new do
+                render Typography::P.new { "Yes. It comes with default styles that matches the other components' aesthetic." }
+              end
+            end
+            render AccordionItem.new(open: false) do
+              render AccordionTrigger.new { "Is it animated?" }
+              render AccordionContent.new do
+                render Typography::P.new { "Yes. Using Motion One" }
+              end
             end
           end
-          render AccordionItem.new(open: false) do
-            render AccordionTrigger.new { "Is it styled?" }
-            render AccordionContent.new do
-              render Typography::P.new { "Yes. It comes with default styles that matches the other components' aesthetic." }
-            end
-          end
-          render AccordionItem.new(open: false) do
-            render AccordionTrigger.new { "Is it animated?" }
-            render AccordionContent.new do
-              render Typography::P.new { "Yes. Using Motion One" }
-            end
-          end
-        end 
+        RUBY
       end
     end
   end

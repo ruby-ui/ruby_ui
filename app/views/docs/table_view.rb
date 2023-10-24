@@ -11,7 +11,7 @@ class Docs::TableView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Default", context: self) do
         <<~RUBY
           render Table.new do
-            render TableCaption.new { "Table Caption goes here" }
+            render TableCaption.new { "Employees at Acme inc." }
             render TableHeader.new do
               render TableRow.new do
                 render TableHead.new { "Name" }

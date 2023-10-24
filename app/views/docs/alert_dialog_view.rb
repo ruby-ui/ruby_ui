@@ -8,22 +8,24 @@ class Docs::AlertDialogView < ApplicationView
         render Typography::P.new { "A modal dialog that interrupts the user with important content and expects a response." }
       end
 
-      render Docs::VisualCodeExample.new(title: "Default") do
-        render AlertDialog.new do |alert_dialog|
-          render AlertDialogTrigger.new do
-            render Button.new { "Show dialog" }
-          end
-          render AlertDialogContent.new() do
-            render AlertDialogHeader.new do
-              render AlertDialogTitle.new { "Are you absolutely sure?" }
-              render AlertDialogDescription.new { "This action cannot be undone. This will permanently delete your account and remove your data from our servers." }
+      render Docs::VisualCodeExample.new(title: "Default", context: self) do
+        <<~RUBY
+          render AlertDialog.new do |alert_dialog|
+            render AlertDialogTrigger.new do
+              render Button.new { "Show dialog" }
             end
-            render AlertDialogFooter.new do
-              render AlertDialogCancel.new { "Cancel" }
-              render AlertDialogAction.new { "Continue" } # Will probably be a link to a controller action (e.g. delete account)
+            render AlertDialogContent.new() do
+              render AlertDialogHeader.new do
+                render AlertDialogTitle.new { "Are you absolutely sure?" }
+                render AlertDialogDescription.new { "This action cannot be undone. This will permanently delete your account and remove your data from our servers." }
+              end
+              render AlertDialogFooter.new do
+                render AlertDialogCancel.new { "Cancel" }
+                render AlertDialogAction.new { "Continue" } # Will probably be a link to a controller action (e.g. delete account)
+              end
             end
           end
-        end
+        RUBY
       end
     end
   end
