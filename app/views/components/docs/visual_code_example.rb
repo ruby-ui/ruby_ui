@@ -1,34 +1,65 @@
 # frozen_string_literal: true
 
 class Docs::VisualCodeExample < ApplicationComponent
-    def initialize(title: nil, description: nil, code: "Code snippet coming soon...")
+    def initialize(title: nil, description: nil, code: "Code snippet coming soon...", locked: false)
         @title = title
         @description = description
-        @context = context
+        @code = code
+        @locked = locked
     end
 
     def template(&block)
         @display_code = capture(&block)
 
         div(id: @title) do
-            render_header if @title || @description
-            render_tabs(&block)
+            div(class: 'relative') do
+                render Tabs.new(default_value: "preview") do
+                    div(class: 'flex justify-between items-end mb-4 gap-x-2') do
+                        render_header
+                        div(class: 'flex-grow') # Spacer 
+                        if @locked
+                            render_unlock_component
+                        else
+                            render_tab_triggers
+                        end
+                    end
+                    if @locked
+                        render_preview_tab(&block)
+                    else
+                        render_tab_contents(&block)
+                    end
+                end
+            end
         end
     end
 
     private
 
-    def render_header
-        div(class: 'space-y-1 mb-4') do
-            render Typography::H4.new { @title } if @title
-            render Typography::P.new { @description } if @description
+    def render_unlock_component
+        div(class: 'flex justify-end') do
+            render Link.new(href: helpers.root_path(anchor: :pricing), variant: :ghost, class: 'text-violet-500 flex-shrink-0') do
+                plain "Get the code"
+                svg(
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewbox: "0 0 20 20",
+                    fill: "currentColor",
+                    class: "w-4 h-4 ml-1"
+                ) do |s|
+                    s.path(
+                        fill_rule: "evenodd",
+                        d:
+                        "M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z",
+                        clip_rule: "evenodd"
+                    )
+                end
+            end
         end
     end
 
-    def render_tabs(&block)
-        render Tabs.new(default_value: "preview") do
-            render_tab_triggers
-            render_tab_contents(&block)
+    def render_header
+        div do
+            h4(class: 'mb-1 font-medium text-lg') { @title } if @title
+            p { @description } if @description
         end
     end
 

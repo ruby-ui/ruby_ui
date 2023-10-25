@@ -2,7 +2,7 @@
 
 class Docs::DialogView < ApplicationView
   def template
-    div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
         render Typography::H1.new { "Dialog" }
         render Typography::P.new { "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert." }

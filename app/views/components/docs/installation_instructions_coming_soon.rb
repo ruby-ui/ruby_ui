@@ -11,13 +11,15 @@ class Docs::InstallationInstructionsComingSoon < ApplicationComponent
     end
 
     def render_header
-        div(class: 'space-y-1 mb-4') do
-            render Typography::H4.new { @title } if @title
-            render Typography::P.new { @description } if @description
-        end
-        div(class: 'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border') do
-            div(class: 'preview flex min-h-[350px] w-full justify-center p-10 items-center') do
-                render Typography::H3.new { "Coming soon..." }
+        div() do
+            div(class: 'space-y-1 mb-4') do
+                render Typography::H4.new { @title } if @title
+                render Typography::P.new { @description } if @description
+            end
+            div(class: 'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border') do
+                div(class: 'preview flex min-h-[350px] w-full justify-center p-10 items-center') do
+                    render Typography::P.new(class: 'text-muted-foreground') { "Coming soon..." }
+                end
             end
         end
     end

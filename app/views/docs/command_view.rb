@@ -2,8 +2,9 @@
 
 class Docs::CommandView < ApplicationView
   def template
-    div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
+        render Docs::PremiumBadge.new
         render Typography::H1.new { "Command" }
         render Typography::P.new { "Fast, composable, unstyled command menu for Phlex." }
       end
@@ -50,7 +51,7 @@ class Docs::CommandView < ApplicationView
           end
         end
       RUBY
-      render Docs::VisualCodeExample.new(title: "Default", code: code_example) do
+      render Docs::VisualCodeExample.new(title: "Default", code: code_example, locked: true) do
         eval(code_example)
       end
 
@@ -91,7 +92,7 @@ class Docs::CommandView < ApplicationView
           end
         end
       RUBY
-      render Docs::VisualCodeExample.new(title: "With keybinding", code: code_example) do
+      render Docs::VisualCodeExample.new(title: "With keybinding", code: code_example, locked: true) do
         eval(code_example)
       end
 

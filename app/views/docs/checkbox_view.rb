@@ -2,7 +2,7 @@
 
 class Docs::CheckboxView < ApplicationView
   def template
-    div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
         render Typography::H1.new { "Checkbox" }
         render Typography::P.new { "A control that allows the user to toggle between checked and not checked." }

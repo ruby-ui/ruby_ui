@@ -2,13 +2,14 @@
 
 class Docs::SheetView < ApplicationView
   def template
-    div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
+        render Docs::PremiumBadge.new
         render Typography::H1.new { "Sheet" }
         render Typography::P.new { "Extends the Sheet component to display content that complements the main content of the screen." }
       end
 
-      render Docs::VisualCodeExample.new(title: "Default") do
+      render Docs::VisualCodeExample.new(title: "Default", locked: true) do
         render Sheet.new do
           render SheetTrigger.new do
             render Button.new(variant: :outline) { "Open Sheet" }
@@ -19,7 +20,7 @@ class Docs::SheetView < ApplicationView
         end
       end
 
-      render Docs::VisualCodeExample.new(title: "Side", description: 'Use the side property to <SheetContent /> to indicate the edge of the screen where the component will appear. The values can be top, right, bottom or left.') do
+      render Docs::VisualCodeExample.new(title: "Side", description: 'Use the side property to indicate the edge of the screen where the component will appear.', locked: true) do
         sides = %i[top right bottom left]
         
         div(class: 'grid grid-cols-2 gap-4') do
@@ -36,7 +37,7 @@ class Docs::SheetView < ApplicationView
         end
       end
 
-      render Docs::VisualCodeExample.new(title: "Custom size") do
+      render Docs::VisualCodeExample.new(title: "Custom size", locked: true) do
         render Sheet.new do
           render SheetTrigger.new do
             render Button.new(variant: :outline) { "Open Sheet" }

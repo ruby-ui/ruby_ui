@@ -2,7 +2,7 @@
 
 class Docs::TabsView < ApplicationView
   def template
-    div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
         render Typography::H1.new { "Tabs" }
         render Typography::P.new { "A set of layered sections of content—known as tab panels—that are displayed one at a time." }

@@ -2,13 +2,14 @@
 
 class Docs::DatePickerView < ApplicationView
   def template
-    div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
+        render Docs::PremiumBadge.new
         render Typography::H1.new { "Date Picker" }
         render Typography::P.new { "A date picker component with input." }
       end
 
-      render Docs::VisualCodeExample.new(title: 'Single Date') do
+      render Docs::VisualCodeExample.new(title: 'Single Date', locked: true) do
         div(class: 'space-y-4 w-[200px]') do
           render Popover.new(options: { trigger: 'focusin' }) do
             render PopoverTrigger.new do

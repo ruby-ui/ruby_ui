@@ -5,11 +5,11 @@ class Pages::HomeView < ApplicationView
     render HomeView::Banner.new do |banner|
       banner.cta do
         render Link.new(variant: :outline, href: helpers.docs_accordion_path, class: 'text-center justify-center') { "Browse Components" }
-        render Link.new(variant: :primary, href: "#", class: 'text-center justify-center') { "Get Early Access" }
+        render Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'text-center justify-center') { "Get Early Access" }
       end
     end
     div(class: 'overflow-hidden') do
-      div(class: 'relative z-10 container mx-auto max-w-5xl py-24 lg:py-32 px-4') do
+      div(class: 'relative z-10 container mx-auto max-w-5xl pt-16 lg:pt-16 py-24 lg:py-32 px-4') do
         div(class: 'grid grid-cols-6 gap-4') do
           render HomeView::Card.new(class: 'col-span-6 sm:col-span-3 md:col-span-4', title: "Built for Speed", subtitle: "Dive into a world where your Rails UI development happens at light speed. Phlex is not just fast - it's blazing fast.", color: :secondary) do |card|
             card.icon do
@@ -177,7 +177,10 @@ class Pages::HomeView < ApplicationView
       div(class: 'relative h-72') do
         render HomeView::GridPattern.new(spacing: :xs)
       end
-      render HomeView::Pricing.new
+      div(class: 'relative') do
+        div(id: :pricing, class: 'block absolute -top-24 invisible')
+        render HomeView::Pricing.new
+      end
       div(class: 'relative') do
         render HomeView::Shapes.new(color: :lime, class: 'hidden md:block absolute top-0 right-0 -rotate-90 translate-x-1/2 -translate-y-full', size: :lg)
         render HomeView::MeetTheMaker.new

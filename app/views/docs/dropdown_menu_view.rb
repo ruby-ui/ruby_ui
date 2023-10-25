@@ -2,7 +2,7 @@
 
 class Docs::DropdownMenuView < ApplicationView
   def template
-    div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
         render Typography::H1.new { "Dropdown Menu" }
         render Typography::P.new { "Displays a menu to the user — such as a set of actions or functions — triggered by a button." }

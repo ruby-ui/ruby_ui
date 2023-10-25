@@ -14,7 +14,7 @@ class HomeView::Pricing < ApplicationComponent
 
     def render_header
         div(class: 'text-center flex flex-col items-center gap-y-3 mx-auto max-w-md pb-10') do
-            p(class: 'font-semibold text-sky-500') { "For a limited time only" }
+            p(class: 'font-semibold text-sky-500') { "Pricing" }
             render Typography::H2.new(class: 'text-center') { "Get everything, forever." }
             p { "Get lifetime access to all components, plus any new content we add in the future for a simple one-time price." }
         end
@@ -62,7 +62,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
-                        render Link.new(variant: :primary, href: "https://buy.stripe.com/eVa6pw25J6RR9l6dQR", class: 'w-full justify-center') { "Get all-access" }
+                        render Link.new(variant: :primary, href: "https://buy.stripe.com/eVa6pw25J6RR9l6dQR", class: 'w-full justify-center') { "Pay now" }
                         p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
@@ -179,7 +179,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
-                        render Link.new(variant: :primary, href: "https://buy.stripe.com/5kA4ho5hVgsr54QaEG", class: 'w-full justify-center') { "Get all-access" }
+                        render Link.new(variant: :primary, href: "https://buy.stripe.com/5kA4ho5hVgsr54QaEG", class: 'w-full justify-center') { "Pay now" }
                         p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
