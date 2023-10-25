@@ -57,6 +57,8 @@ class Docs::ThemeToggleView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

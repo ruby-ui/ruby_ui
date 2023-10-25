@@ -27,6 +27,8 @@ class Docs::AlertView < ApplicationView
           end
         RUBY
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  layout -> { ApplicationLayout }
+  layout -> { PagesLayout }
   
   def home
     render Pages::HomeView.new

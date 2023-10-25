@@ -21,6 +21,8 @@ class Docs::CalendarView < ApplicationView
           render Calendar.new(class: 'rounded-md border shadow', data_calendar_input_outlet: '#formatted-date', data_calendar_format_value: 'PPPP')
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

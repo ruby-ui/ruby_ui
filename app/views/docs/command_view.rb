@@ -94,6 +94,8 @@ class Docs::CommandView < ApplicationView
       render Docs::VisualCodeExample.new(title: "With keybinding", code: code_example) do
         eval(code_example)
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

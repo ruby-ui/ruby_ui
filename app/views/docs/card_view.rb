@@ -33,6 +33,8 @@ class Docs::CardView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

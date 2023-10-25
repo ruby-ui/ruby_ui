@@ -71,6 +71,8 @@ class Docs::AspectRatioView < ApplicationView
           end
         RUBY
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

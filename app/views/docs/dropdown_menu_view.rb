@@ -47,6 +47,8 @@ class Docs::DropdownMenuView < ApplicationView
           dropdown_content
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

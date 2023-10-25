@@ -20,6 +20,8 @@ class Docs::CodeblockView < ApplicationView
       render Docs::VisualCodeExample.new(code: code_example) do
         eval(code_example)
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

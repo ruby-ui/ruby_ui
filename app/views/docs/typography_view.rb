@@ -53,6 +53,8 @@ class Docs::TypographyView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Muted") do
         render Typography::Muted.new { "Enter your email address." }
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

@@ -33,6 +33,8 @@ class Docs::ContextMenuView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

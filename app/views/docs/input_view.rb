@@ -53,6 +53,8 @@ class Docs::InputView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

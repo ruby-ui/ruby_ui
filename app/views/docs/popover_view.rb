@@ -48,6 +48,8 @@ class Docs::PopoverView < ApplicationView
           popover_content
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

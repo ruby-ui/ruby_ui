@@ -9,14 +9,19 @@ class Docs::ShortcutKeyView < ApplicationView
       end
 
       code_example = <<~RUBY
-        render ShortcutKey.new do
-          span(class: "text-xs") { "⌘" }
-          plain "K"
+        div(class: "flex flex-col items-center gap-y-4") do
+          render ShortcutKey.new do
+            span(class: "text-xs") { "⌘" }
+            plain "K"
+          end
+          p(class: "text-muted-foreground text-sm text-center") { "Note this is just for visualisation" }
         end
       RUBY
       render Docs::VisualCodeExample.new(code: code_example) do
         eval(code_example)
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

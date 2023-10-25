@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::VisualCodeExample < ApplicationComponent
-    def initialize(title: nil, description: nil, context: nil)
+    def initialize(title: nil, description: nil, code: "Code snippet coming soon...")
         @title = title
         @description = description
         @context = context

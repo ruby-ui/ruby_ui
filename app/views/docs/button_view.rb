@@ -99,6 +99,8 @@ class Docs::ButtonView < ApplicationView
           span { "Submit application" }
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

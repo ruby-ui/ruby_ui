@@ -66,6 +66,8 @@ class Docs::LinkView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Ghost", description: "This is the ghost variant of a Link") do
         render Link.new(href: "#", variant: :ghost) { "Ghost" }
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

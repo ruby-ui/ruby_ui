@@ -46,6 +46,8 @@ class Docs::SheetView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

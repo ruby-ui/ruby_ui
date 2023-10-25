@@ -37,6 +37,8 @@ class Docs::TabsView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

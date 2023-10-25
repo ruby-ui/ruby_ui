@@ -38,6 +38,8 @@ class Docs::DialogView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

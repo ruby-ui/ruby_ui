@@ -48,6 +48,8 @@ class Docs::AvatarView < ApplicationView
           end
         RUBY
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 

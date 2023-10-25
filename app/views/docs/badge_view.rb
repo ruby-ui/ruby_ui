@@ -17,6 +17,8 @@ class Docs::BadgeView < ApplicationView
           render Badge.new(variant: variant) { variant.to_s.capitalize }
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 end

@@ -18,6 +18,8 @@ class Docs::HoverCardView < ApplicationView
           end
         end
       end
+
+      render Docs::InstallationInstructionsComingSoon.new
     end
   end
 
