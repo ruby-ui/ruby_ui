@@ -8,7 +8,7 @@ class Docs::AccordionView < ApplicationView
         render Typography::P.new { "A vertically stacked set of interactive headings that each reveal a section of content." }
       end
 
-      render Docs::VisualCodeExample.new(context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           render Accordion.new do
             render AccordionItem.new(open: false) do
