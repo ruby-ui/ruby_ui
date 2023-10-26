@@ -9,91 +9,89 @@ class Docs::CommandView < ApplicationView
         render Typography::P.new { "Fast, composable, unstyled command menu for Phlex." }
       end
 
-      code_example = <<~RUBY
-        render CommandDialog.new do
-          render CommandDialogTrigger.new do
-            render Button.new(variant: "outline", class: 'w-56 pr-2 justify-between') do
-              div(class: "flex items-center space-x-1") do
-                search_icon
-                span(class: "text-muted-foreground font-normal") do
-                  plain "Search"
-                end
-              end
-              render ShortcutKey.new do
-                span(class: "text-xs") { "⌘" }
-                plain "K"
-              end
-            end
-          end
-          render CommandDialogContent.new do
-            render Command.new do
-              render CommandInput.new(placeholder: "Type a command or search...")
-              render CommandEmpty.new { "No results found." }
-              render CommandList.new do
-                render CommandGroup.new(title: "Components") do
-                  components.each do |component|
-                    render CommandItem.new(value: component[:name], href: component[:path]) do
-                      default_icon
-                      plain component[:name]
-                    end
+      render Docs::VisualCodeExample.new(title: "Example", locked: true, context: self) do
+        <<~RUBY
+          render CommandDialog.new do
+            render CommandDialogTrigger.new do
+              render Button.new(variant: "outline", class: 'w-56 pr-2 justify-between') do
+                div(class: "flex items-center space-x-1") do
+                  search_icon
+                  span(class: "text-muted-foreground font-normal") do
+                    plain "Search"
                   end
                 end
-                render CommandGroup.new(title: "Settings") do
-                  settings.each do |setting|
-                    render CommandItem.new(value: setting[:name], href: setting[:path]) do
-                      default_icon
-                      plain setting[:name]
-                    end
-                  end
+                render ShortcutKey.new do
+                  span(class: "text-xs") { "⌘" }
+                  plain "K"
                 end
               end
             end
+            render CommandDialogContent.new do
+              render Command.new do
+                render CommandInput.new(placeholder: "Type a command or search...")
+                render CommandEmpty.new { "No results found." }
+                render CommandList.new do
+                  render CommandGroup.new(title: "Components") do
+                    components.each do |component|
+                      render CommandItem.new(value: component[:name], href: component[:path]) do
+                        default_icon
+                        plain component[:name]
+                      end
+                    end
+                  end
+                  render CommandGroup.new(title: "Settings") do
+                    settings.each do |setting|
+                      render CommandItem.new(value: setting[:name], href: setting[:path]) do
+                        default_icon
+                        plain setting[:name]
+                      end
+                    end
+                  end
+                end
+              end
+            end
           end
-        end
-      RUBY
-      render Docs::VisualCodeExample.new(title: "Default", code: code_example, locked: true) do
-        eval(code_example)
+        RUBY
       end
 
-      code_example = <<~RUBY
-        render CommandDialog.new do
-          render CommandDialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
-            p(class: "text-sm text-muted-foreground") do
-              span(class: 'mr-1') { "Press" }
-              render ShortcutKey.new do
-                span(class: "text-xs") { "⌘" }
-                plain "J"
-              end
-            end
-          end
-          render CommandDialogContent.new do
-            render Command.new do
-              render CommandInput.new(placeholder: "Type a command or search...")
-              render CommandEmpty.new { "No results found." }
-              render CommandList.new do
-                render CommandGroup.new(title: "Components") do
-                  components.each do |component|
-                    render CommandItem.new(value: component[:name], href: component[:path]) do
-                      default_icon
-                      plain component[:name]
-                    end
-                  end
-                end
-                render CommandGroup.new(title: "Settings") do
-                  settings.each do |setting|
-                    render CommandItem.new(value: setting[:name], href: setting[:path]) do
-                      default_icon
-                      plain setting[:name]
-                    end
-                  end
+      render Docs::VisualCodeExample.new(title: "With keybinding", locked: true, context: self) do
+        <<~RUBY
+          render CommandDialog.new do
+            render CommandDialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
+              p(class: "text-sm text-muted-foreground") do
+                span(class: 'mr-1') { "Press" }
+                render ShortcutKey.new do
+                  span(class: "text-xs") { "⌘" }
+                  plain "J"
                 end
               end
             end
+            render CommandDialogContent.new do
+              render Command.new do
+                render CommandInput.new(placeholder: "Type a command or search...")
+                render CommandEmpty.new { "No results found." }
+                render CommandList.new do
+                  render CommandGroup.new(title: "Components") do
+                    components.each do |component|
+                      render CommandItem.new(value: component[:name], href: component[:path]) do
+                        default_icon
+                        plain component[:name]
+                      end
+                    end
+                  end
+                  render CommandGroup.new(title: "Settings") do
+                    settings.each do |setting|
+                      render CommandItem.new(value: setting[:name], href: setting[:path]) do
+                        default_icon
+                        plain setting[:name]
+                      end
+                    end
+                  end
+                end
+              end
+            end
           end
-        end
-      RUBY
-      render Docs::VisualCodeExample.new(title: "With keybinding", code: code_example, locked: true) do
-        eval(code_example)
+        RUBY
       end
 
       render Docs::InstallationInstructionsComingSoon.new

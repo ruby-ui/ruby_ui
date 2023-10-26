@@ -8,15 +8,17 @@ class Docs::HoverCardView < ApplicationView
         render Typography::P.new { "For sighted users to preview content available behind a link." }
       end
 
-      render Docs::VisualCodeExample.new(title: "Default") do
-        render HoverCard.new do
-          render PopoverTrigger.new do
-            render Button.new(variant: :link) { "@joeldrapper" }
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+        <<~RUBY
+          render HoverCard.new do
+            render PopoverTrigger.new do
+              render Button.new(variant: :link) { "@joeldrapper" }
+            end
+            render HoverCardContent.new do
+              hover_card_content # -- Replace with your own content --
+            end
           end
-          render HoverCardContent.new do
-            hover_card_content
-          end
-        end
+        RUBY
       end
 
       render Docs::InstallationInstructionsComingSoon.new

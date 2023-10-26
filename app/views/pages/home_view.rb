@@ -5,7 +5,22 @@ class Pages::HomeView < ApplicationView
     render HomeView::Banner.new do |banner|
       banner.cta do
         render Link.new(variant: :outline, href: helpers.docs_accordion_path, class: 'text-center justify-center') { "Browse Components" }
-        render Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'text-center justify-center') { "Get Early Access" }
+        render Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'text-center justify-center') do
+          plain "Get Early Access"
+          svg(
+            xmlns: "http://www.w3.org/2000/svg",
+            viewbox: "0 0 20 20",
+            fill: "currentColor",
+            class: "w-5 h-5 ml-1"
+          ) do |s|
+            s.path(
+              fill_rule: "evenodd",
+              d:
+                "M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z",
+              clip_rule: "evenodd"
+            )
+          end
+        end
       end
     end
     div(class: 'overflow-hidden') do

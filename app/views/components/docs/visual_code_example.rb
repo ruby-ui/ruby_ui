@@ -58,7 +58,12 @@ class Docs::VisualCodeExample < ApplicationComponent
 
     def render_header
         div do
-            h4(class: 'mb-1 font-medium text-lg') { @title } if @title
+            if @title
+                div(class: 'flex items-center gap-x-2 mb-1') do
+                    render Typography::H4.new { @title }
+                    render Badge.new(variant: :secondary, size: :sm) { "Preview" } if @locked
+                end
+            end
             p { @description } if @description
         end
     end

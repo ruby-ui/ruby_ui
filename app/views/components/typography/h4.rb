@@ -6,6 +6,6 @@ class Typography::H4 < ApplicationComponent
   end
 
   def template(&)
-    h4(class: tokens("scroll-m-20 text-xl font-semibold tracking-tight", @attributes[:class]), &)
+    h4(class: tokens("scroll-m-20 text-lg font-medium tracking-tight", @attributes[:class]), &)
   end
 end
