@@ -50,7 +50,7 @@ class Docs::TableView < ApplicationView
     when "active"
       render Badge.new(variant: :primary) { status }
     when "inactive"
-      render Badge.new(variant: :destructive) { status }
+      render Badge.new(variant: :rose, size: :sm) { status }
     when "pending"
       render Badge.new(variant: :secondary) { status }
     end
