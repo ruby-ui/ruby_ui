@@ -149,6 +149,8 @@ GEM
     nio4r (2.6.1)
     nokogiri (1.15.5-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.15.5-x86_64-linux)
+      racc (~> 1.4)
     pg (1.5.4)
     phlex (1.8.1)
       concurrent-ruby (~> 1.2)
@@ -242,6 +244,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
