@@ -35,5 +35,4 @@
 
 /node_modules
 
-/.npmrc
 .env*
