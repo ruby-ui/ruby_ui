@@ -2,6 +2,6 @@
 
 class Typography::Muted < ApplicationComponent
   def template(&)
-    p(class: "text-sm text-muted-foreground", &)
+    p(class: "text-sm text-muted-text", &)
   end
 end

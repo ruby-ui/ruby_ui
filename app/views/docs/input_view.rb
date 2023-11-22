@@ -4,14 +4,14 @@ class Docs::InputView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Input" }
-        render Typography::P.new { "Displays a form input field or a component that looks like an input field." }
+        render PhlexUI::Typography::H1.new { "Input" }
+        render PhlexUI::Typography::P.new { "Displays a form input field or a component that looks like an input field." }
       end
 
       render Docs::VisualCodeExample.new(title: 'Email', context: self) do
         <<~RUBY
           div(class: 'grid w-full max-w-sm items-center gap-1.5') do
-            render Input.new(type: "email", placeholder: "Email")
+            render PhlexUI::Input.new(type: "email", placeholder: "Email")
           end
         RUBY
       end
@@ -19,8 +19,10 @@ class Docs::InputView < ApplicationView
       render Docs::VisualCodeExample.new(title: 'File', context: self) do
         <<~RUBY
           div(class: "grid w-full max-w-sm items-center gap-1.5") do
-            render Label.new(for: "picture") { "Picture" }
-            render Input.new(type: "file", id: "picture")
+            render PhlexUI::Form::Item.new do
+              render PhlexUI::Label.new(for: "picture") { "Picture" }
+              render PhlexUI::Input.new(type: "file", id: "picture")
+            end
           end
         RUBY
       end
@@ -28,7 +30,7 @@ class Docs::InputView < ApplicationView
       render Docs::VisualCodeExample.new(title: 'Disabled', context: self) do
         <<~RUBY
           div(class: 'grid w-full max-w-sm items-center gap-1.5') do
-            render Input.new(disabled: true, type: "email", placeholder: "Email")
+            render PhlexUI::Input.new(disabled: true, type: "email", placeholder: "Email")
           end
         RUBY
       end
@@ -36,8 +38,21 @@ class Docs::InputView < ApplicationView
       render Docs::VisualCodeExample.new(title: 'With label', context: self) do
         <<~RUBY
           div(class: 'grid w-full max-w-sm items-center gap-1.5') do
-            render Label.new(for: "email") { "Email" }
-            render Input.new(type: "email", placeholder: "Email", id: "email")
+            render PhlexUI::Form::Item.new do
+              render PhlexUI::Label.new(for: "email1") { "Email" }
+              render PhlexUI::Input.new(type: "email", placeholder: "Email", id: "email1")
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: 'With error', context: self) do
+        <<~RUBY
+          div(class: 'grid w-full max-w-sm items-center gap-1.5') do
+            render PhlexUI::Form::Item.new do
+              render PhlexUI::Label.new(for: "email1") { "Email" }
+              render PhlexUI::Input.new(type: "email", placeholder: "Email", id: "email1", value: "joel@mail", error: "Invalid email address")
+            end
           end
         RUBY
       end
@@ -45,22 +60,34 @@ class Docs::InputView < ApplicationView
       render Docs::VisualCodeExample.new(title: 'With button', context: self) do
         <<~RUBY
           div(class: 'flex w-full max-w-sm items-center space-x-2') do
-            render Input.new(type: "email", placeholder: "Email")
-            render Button.new { "Subscribe" }
+            render PhlexUI::Input.new(type: "email", placeholder: "Email")
+            render PhlexUI::Button.new { "Subscribe" }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: 'Form', context: self) do
         <<~RUBY
-          render Form.new(class: 'w-full max-w-sm') do
-            render FormSpacer.new do
-              render FormItem.new do
-                render Label.new(for: "username") { "Username" }
-                render Input.new(type: "string", placeholder: "Username", id: "username")
-                render Hint.new { "We'll never share your email with anyone else." }
+          render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
+            render PhlexUI::Form::Spacer.new do
+              f.input "name", type: :string, placeholder: "Joel Drapper"
+              f.input "email", type: :email, placeholder: "joel@drapper.me"
+              f.button { "Update" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: 'Form (Deconstructed)', context: self) do
+        <<~RUBY
+          render PhlexUI::Form.new(class: 'w-full max-w-sm') do
+            render PhlexUI::Form::Spacer.new do
+              render PhlexUI::Form::Item.new do
+                render PhlexUI::Label.new(for: "username") { "Username" }
+                render PhlexUI::Input.new(type: "string", placeholder: "Username", id: "username")
+                render PhlexUI::Hint.new { "Can only contain letters, numbers, and underscores." }
               end
-              render Button.new(type: "submit") { "Submit" }
+              render PhlexUI::Button.new(type: "submit") { "Submit" }
             end
           end
         RUBY

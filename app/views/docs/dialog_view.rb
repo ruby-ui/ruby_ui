@@ -4,37 +4,92 @@ class Docs::DialogView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Dialog" }
-        render Typography::P.new { "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert." }
+        render PhlexUI::Typography::H1.new { "Dialog" }
+        render PhlexUI::Typography::P.new { "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render Dialog.new do
-            render DialogTrigger.new do
-              render Button.new { "Open Dialog" }
+          render PhlexUI::Dialog.new do
+            render PhlexUI::Dialog::Trigger.new do
+              render PhlexUI::Button.new { "Open Dialog" }
             end
-            render DialogContent.new do
-              render DialogHeader.new do
-                render DialogTitle.new { "Edit profile" }
-                render DialogDescription.new { "Make changes to your profile here. Click save when you're done." }
+            render PhlexUI::Dialog::Content.new do
+              render PhlexUI::Dialog::Header.new do
+                render PhlexUI::Dialog::Title.new { "PhlexUI to the rescue" }
+                render PhlexUI::Dialog::Description.new { "PhlexUI helps you build accessible standard compliant web apps with ease" }
               end
-              render DialogMiddle.new do
-                render AspectRatio.new(aspect_ratio: "16/9") do
+              render PhlexUI::Dialog::Middle.new do
+                render PhlexUI::AspectRatio.new(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
                   img(
                     alt: "Placeholder",
                     loading: "lazy",
-                    class: "rounded-md object-cover",
-                    style:
-                      "position:absolute;height:100%;width:100%;inset:0;color:transparent",
                     src:
-                      "https://images.unsplash.com/photo-1667373509687-4c4574541218?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3132&q=80"
+                      helpers.image_path("pattern.jpg")
                   )
                 end
               end
-              render DialogFooter.new do
-                render Button.new(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
-                render Button.new { "Save" }
+              render PhlexUI::Dialog::Footer.new do
+                render PhlexUI::Button.new(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
+                render PhlexUI::Button.new { "Save" }
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Size", description: "Applicable for wider screens", context: self) do
+        <<~RUBY
+          div(class: 'flex flex-wrap justify-center gap-2') do
+            render PhlexUI::Dialog.new do
+              render PhlexUI::Dialog::Trigger.new do
+                render PhlexUI::Button.new { "Small Dialog" }
+              end
+              render PhlexUI::Dialog::Content.new(size: :sm) do
+                render PhlexUI::Dialog::Header.new do
+                  render PhlexUI::Dialog::Title.new { "PhlexUI to the rescue" }
+                  render PhlexUI::Dialog::Description.new { "PhlexUI helps you build accessible standard compliant web apps with ease" }
+                end
+                render PhlexUI::Dialog::Middle.new do
+                  render PhlexUI::AspectRatio.new(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                    img(
+                      alt: "Placeholder",
+                      loading: "lazy",
+                      src:
+                        helpers.image_path("pattern.jpg")
+                    )
+                  end
+                end
+                render PhlexUI::Dialog::Footer.new do
+                  render PhlexUI::Button.new(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
+                  render PhlexUI::Button.new { "Save" }
+                end
+              end
+            end
+
+            render PhlexUI::Dialog.new do
+              render PhlexUI::Dialog::Trigger.new do
+                render PhlexUI::Button.new { "Large Dialog" }
+              end
+              render PhlexUI::Dialog::Content.new(size: :lg) do
+                render PhlexUI::Dialog::Header.new do
+                  render PhlexUI::Dialog::Title.new { "PhlexUI to the rescue" }
+                  render PhlexUI::Dialog::Description.new { "PhlexUI helps you build accessible standard compliant web apps with ease" }
+                end
+                render PhlexUI::Dialog::Middle.new do
+                  render PhlexUI::AspectRatio.new(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                    img(
+                      alt: "Placeholder",
+                      loading: "lazy",
+                      src:
+                        helpers.image_path("pattern.jpg")
+                    )
+                  end
+                end
+                render PhlexUI::Dialog::Footer.new do
+                  render PhlexUI::Button.new(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
+                  render PhlexUI::Button.new { "Save" }
+                end
               end
             end
           end

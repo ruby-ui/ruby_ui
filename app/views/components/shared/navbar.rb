@@ -5,10 +5,10 @@ class Shared::Navbar < ApplicationComponent
     header(class: 'supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur') do
       div(class: 'px-2 sm:px-4 sm:container flex h-14 items-center justify-between') do
         div(class: 'mr-4 flex items-center') do
-          render Shared::MobileMenu.new(class: 'sm:hidden')
+          render Shared::MobileMenu.new(class: 'md:hidden')
           render Shared::Logo.new
 
-          render Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden sm:inline-block')  do
+          render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden sm:inline-block')  do
             "Components"
           end
         end
@@ -17,7 +17,7 @@ class Shared::Navbar < ApplicationComponent
             twitter_link
             dark_mode_toggle
           end
-          render Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
+          render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
             plain "Get Early Access"
             svg(
               xmlns: "http://www.w3.org/2000/svg",
@@ -39,9 +39,9 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def dark_mode_toggle
-    render ThemeToggle.new do |toggle|
+    render PhlexUI::ThemeToggle.new do |toggle|
       toggle.light_mode do
-        render Button.new(variant: :ghost, size: :icon) do
+        render PhlexUI::Button.new(variant: :ghost, icon: true) do
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 24 24",
@@ -57,7 +57,7 @@ class Shared::Navbar < ApplicationComponent
       end
 
       toggle.dark_mode do
-        render Button.new(variant: :ghost, size: :icon) do
+        render PhlexUI::Button.new(variant: :ghost, icon: true) do
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 24 24",
@@ -77,7 +77,7 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def twitter_link
-    render Link.new(href: "https://twitter.com/phlexui", variant: :ghost, size: :icon) do
+    render PhlexUI::Link.new(href: "https://twitter.com/phlexui", variant: :ghost, icon: true) do
       svg(
         viewbox: "0 0 20 20",
         aria_hidden: "true",

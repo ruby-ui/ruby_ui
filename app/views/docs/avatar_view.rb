@@ -4,23 +4,35 @@ class Docs::AvatarView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Avatar" }
-        render Typography::P.new { "An image element with a fallback for representing the user." }
+        render PhlexUI::Typography::H1.new { "Avatar" }
+        render PhlexUI::Typography::P.new { "An image element with a fallback for representing the user." }
+      end
+
+      render Docs::VisualCodeExample.new(title: 'Simple with Image', context: self) do
+        <<~RUBY
+          render PhlexUI::Avatar.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper", initials: "JD")
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: 'Simple with Initials', context: self) do
+        <<~RUBY
+          render PhlexUI::Avatar.new(initials: "JD")
+        RUBY
       end
 
       render Docs::VisualCodeExample.new(title: 'Image & fallback', context: self) do
         <<~RUBY
-          render Avatar.new do
-            render AvatarImage.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-            render AvatarFallback.new { "JD" }
+          render PhlexUI::Avatar.new do
+            render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+            render PhlexUI::Avatar::Fallback.new { "JD" }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: 'Only fallback', context: self) do
         <<~RUBY
-          render Avatar.new do
-            render AvatarFallback.new { "JD" }
+          render PhlexUI::Avatar.new do
+            render PhlexUI::Avatar::Fallback.new { "JD" }
           end
         RUBY
       end
@@ -54,9 +66,9 @@ class Docs::AvatarView < ApplicationView
   end
 
   def default_avatar(size: :md, image: true)
-    render Avatar.new(size: size) do
-      render AvatarImage.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper") if image
-      render AvatarFallback.new { "JD" }
+    render PhlexUI::Avatar.new(size: size) do
+      render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper") if image
+      render PhlexUI::Avatar::Fallback.new { "JD" }
     end
   end
 end

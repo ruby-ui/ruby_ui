@@ -10,9 +10,9 @@ class HomeView::Card < ApplicationComponent
         @color = attributes.delete(:color) || :card
 
         @color_classes = {
-            card: 'bg-card text-card-foreground border',
-            primary: 'bg-primary text-primary-foreground',
-            secondary: 'bg-secondary text-secondary-foreground',
+            card: 'bg-background border',
+            primary: 'bg-primary text-white',
+            secondary: 'bg-accent-background text-accent-text',
             # Add sky, violet, amber, lime, pink
             sky: 'bg-sky-100 text-sky-950',
             violet: 'bg-violet-100 text-violet-950',

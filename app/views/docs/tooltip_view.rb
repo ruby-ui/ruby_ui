@@ -4,20 +4,20 @@ class Docs::TooltipView < ApplicationView
   def template
      div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Tooltip" }
-        render Typography::P.new { "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it." }
+        render PhlexUI::Typography::H1.new { "Tooltip" }
+        render PhlexUI::Typography::P.new { "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render Tooltip.new do
-            render TooltipTrigger.new do
-              render Button.new(variant: :outline, size: :icon) do
+          render PhlexUI::Tooltip.new do
+            render PhlexUI::Tooltip::Trigger.new do
+              render PhlexUI::Button.new(variant: :outline, icon: true) do
                 bookmark_icon
               end
             end
-            render TooltipContent.new do
-              render Typography::P.new { "Add to library" }
+            render PhlexUI::Tooltip::Content.new do
+              render PhlexUI::Typography::P.new { "Add to library" }
             end
           end
         RUBY

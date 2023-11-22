@@ -4,37 +4,37 @@ class Docs::LinkView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Link" }
-        render Typography::P.new { "Displays a link that looks like a button or underline link." }
+        render PhlexUI::Typography::H1.new { "Link" }
+        render PhlexUI::Typography::P.new { "Displays a link that looks like a button or underline link." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", description: "This is the default appearance of a Link", context: self) do
         <<~RUBY
-          render Link.new(href: "#") { "Link" }
+          render PhlexUI::Link.new(href: "#") { "Link" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Primary", description: "This is the primary variant of a Link", context: self) do
         <<~RUBY
-          render Link.new(href: "#", variant: :primary) { "Primary" }
+          render PhlexUI::Link.new(href: "#", variant: :primary) { "Primary" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Secondary", description: "This is the secondary variant of a Link", context: self) do
         <<~RUBY
-          render Link.new(href: "#", variant: :secondary) { "Secondary" }
+          render PhlexUI::Link.new(href: "#", variant: :secondary) { "Secondary" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Destructive", description: "This is the destructive variant of a Link", context: self) do
         <<~RUBY
-          render Link.new(href: "#", variant: :destructive) { "Destructive" }
+          render PhlexUI::Link.new(href: "#", variant: :destructive) { "Destructive" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Icon", description: "This is the icon variant of a Link", context: self) do
         <<~RUBY
-          render Link.new(href: "#", variant: :outline, size: :icon) do 
+          render PhlexUI::Link.new(href: "#", variant: :outline, icon: true) do 
             chevron_icon
           end
         RUBY
@@ -42,7 +42,7 @@ class Docs::LinkView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With Icon", description: "This is the primary variant of a Link with an icon", context: self) do
         <<~RUBY
-          render Link.new(href: "#", variant: :primary) do 
+          render PhlexUI::Link.new(href: "#", variant: :primary) do 
             email_icon
             span { "Login with Email" }
           end
@@ -51,7 +51,7 @@ class Docs::LinkView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Ghost", description: "This is the ghost variant of a Link", context: self) do
         <<~RUBY
-          render Link.new(href: "#", variant: :ghost) { "Ghost" }
+          render PhlexUI::Link.new(href: "#", variant: :ghost) { "Ghost" }
         RUBY
       end
 

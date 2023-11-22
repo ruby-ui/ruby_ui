@@ -4,17 +4,17 @@ class Docs::PopoverView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Popover" }
-        render Typography::P.new { "Displays rich content in a portal, triggered by a button." }
+        render PhlexUI::Typography::H1.new { "Popover" }
+        render PhlexUI::Typography::P.new { "Displays rich content in a portal, triggered by a button." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render Popover.new do
-            render PopoverTrigger.new do
-              render Button.new(variant: :outline) { "Open Popover" }
+          render PhlexUI::Popover.new do
+            render PhlexUI::Popover::Trigger.new do
+              render PhlexUI::Button.new(variant: :outline) { "Open Popover" }
             end
-            render PopoverContent.new(class: 'w-40') do
+            render PhlexUI::Popover::Content.new(class: 'w-40') do
               popover_content
             end
           end
@@ -25,113 +25,113 @@ class Docs::PopoverView < ApplicationView
         <<~RUBY          
           div(class: 'grid grid-cols-1 sm:grid-cols-3 gap-4') do
             # -- TOP --
-            render Popover.new(options: { placement: 'top' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'top' }
+            render PhlexUI::Popover.new(options: { placement: 'top' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'top-start' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'top-start' }
+            render PhlexUI::Popover.new(options: { placement: 'top-start' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top-start' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'top-end' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'top-end' }
+            render PhlexUI::Popover.new(options: { placement: 'top-end' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top-end' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
             # -- RIGHT --
-            render Popover.new(options: { placement: 'right' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'right' }
+            render PhlexUI::Popover.new(options: { placement: 'right' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'right-start' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'right-start' }
+            render PhlexUI::Popover.new(options: { placement: 'right-start' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right-start' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'right-end' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'right-end' }
+            render PhlexUI::Popover.new(options: { placement: 'right-end' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right-end' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
             # -- LEFT --
-            render Popover.new(options: { placement: 'left' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'left' }
+            render PhlexUI::Popover.new(options: { placement: 'left' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'left-start' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'left-start' }
+            render PhlexUI::Popover.new(options: { placement: 'left-start' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left-start' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'left-end' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'left-end' }
+            render PhlexUI::Popover.new(options: { placement: 'left-end' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left-end' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
             # -- BOTTOM --
-            render Popover.new(options: { placement: 'bottom' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom' }
+            render PhlexUI::Popover.new(options: { placement: 'bottom' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'bottom-start' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-start' }
+            render PhlexUI::Popover.new(options: { placement: 'bottom-start' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-start' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
 
-            render Popover.new(options: { placement: 'bottom-end' }) do
-              render PopoverTrigger.new do
-                render Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-end' }
+            render PhlexUI::Popover.new(options: { placement: 'bottom-end' }) do
+              render PhlexUI::Popover::Trigger.new do
+                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-end' }
               end
-              render PopoverContent.new(class: 'w-40') do
+              render PhlexUI::Popover::Content.new(class: 'w-40') do
                 popover_content
               end
             end
@@ -141,11 +141,11 @@ class Docs::PopoverView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Trigger", context: self) do
         <<~RUBY
-          render Popover.new(options: { trigger: 'click' }) do
-            render PopoverTrigger.new do
-              render Button.new(variant: :outline) { "Click" }
+          render PhlexUI::Popover.new(options: { trigger: 'click' }) do
+            render PhlexUI::Popover::Trigger.new do
+              render PhlexUI::Button.new(variant: :outline) { "Click" }
             end
-            render PopoverContent.new(class: 'w-40') do
+            render PhlexUI::Popover::Content.new(class: 'w-40') do
               popover_content
             end
           end
@@ -157,7 +157,7 @@ class Docs::PopoverView < ApplicationView
   end
 
   def popover_content
-    render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+    render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
       svg(
         xmlns: "http://www.w3.org/2000/svg",
         fill: "none",
@@ -175,7 +175,7 @@ class Docs::PopoverView < ApplicationView
       end
       plain "Profile"
     end
-    render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+    render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
       svg(
         xmlns: "http://www.w3.org/2000/svg",
         fill: "none",
@@ -198,7 +198,7 @@ class Docs::PopoverView < ApplicationView
       end
       plain "Settings"
     end
-    render Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+    render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
       svg(
         xmlns: "http://www.w3.org/2000/svg",
         fill: "none",

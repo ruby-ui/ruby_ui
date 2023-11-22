@@ -5,43 +5,43 @@ class Docs::CommandView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
         render Docs::PremiumBadge.new
-        render Typography::H1.new { "Command" }
-        render Typography::P.new { "Fast, composable, unstyled command menu for Phlex." }
+        render PhlexUI::Typography::H1.new { "Command" }
+        render PhlexUI::Typography::P.new { "Fast, composable, unstyled command menu for Phlex." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", locked: true, context: self) do
         <<~RUBY
-          render CommandDialog.new do
-            render CommandDialogTrigger.new do
-              render Button.new(variant: "outline", class: 'w-56 pr-2 justify-between') do
+          render PhlexUI::Command::Dialog.new do
+            render PhlexUI::Command::DialogTrigger.new do
+              render PhlexUI::Button.new(variant: "outline", class: 'w-56 pr-2 pl-3 justify-between') do
                 div(class: "flex items-center space-x-1") do
                   search_icon
-                  span(class: "text-muted-foreground font-normal") do
+                  span(class: "text-muted-text font-normal") do
                     plain "Search"
                   end
                 end
-                render ShortcutKey.new do
+                render PhlexUI::ShortcutKey.new do
                   span(class: "text-xs") { "⌘" }
                   plain "K"
                 end
               end
             end
-            render CommandDialogContent.new do
-              render Command.new do
-                render CommandInput.new(placeholder: "Type a command or search...")
-                render CommandEmpty.new { "No results found." }
-                render CommandList.new do
-                  render CommandGroup.new(title: "Components") do
+            render PhlexUI::Command::DialogContent.new do
+              render PhlexUI::Command.new do
+                render PhlexUI::Command::Input.new(placeholder: "Type a command or search...")
+                render PhlexUI::Command::Empty.new { "No results found." }
+                render PhlexUI::Command::List.new do
+                  render PhlexUI::Command::Group.new(title: "Components") do
                     components.each do |component|
-                      render CommandItem.new(value: component[:name], href: component[:path]) do
+                      render PhlexUI::Command::Item.new(value: component[:name], href: component[:path]) do
                         default_icon
                         plain component[:name]
                       end
                     end
                   end
-                  render CommandGroup.new(title: "Settings") do
+                  render PhlexUI::Command::Group.new(title: "Settings") do
                     settings.each do |setting|
-                      render CommandItem.new(value: setting[:name], href: setting[:path]) do
+                      render PhlexUI::Command::Item.new(value: setting[:name], href: setting[:path]) do
                         default_icon
                         plain setting[:name]
                       end
@@ -56,32 +56,32 @@ class Docs::CommandView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With keybinding", locked: true, context: self) do
         <<~RUBY
-          render CommandDialog.new do
-            render CommandDialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
-              p(class: "text-sm text-muted-foreground") do
+          render PhlexUI::Command::Dialog.new do
+            render PhlexUI::Command::DialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
+              p(class: "text-sm text-muted-text") do
                 span(class: 'mr-1') { "Press" }
-                render ShortcutKey.new do
+                render PhlexUI::ShortcutKey.new do
                   span(class: "text-xs") { "⌘" }
                   plain "J"
                 end
               end
             end
-            render CommandDialogContent.new do
-              render Command.new do
-                render CommandInput.new(placeholder: "Type a command or search...")
-                render CommandEmpty.new { "No results found." }
-                render CommandList.new do
-                  render CommandGroup.new(title: "Components") do
+            render PhlexUI::Command::DialogContent.new do
+              render PhlexUI::Command.new do
+                render PhlexUI::Command::Input.new(placeholder: "Type a command or search...")
+                render PhlexUI::Command::Empty.new { "No results found." }
+                render PhlexUI::Command::List.new do
+                  render PhlexUI::Command::Group.new(title: "Components") do
                     components.each do |component|
-                      render CommandItem.new(value: component[:name], href: component[:path]) do
+                      render PhlexUI::Command::Item.new(value: component[:name], href: component[:path]) do
                         default_icon
                         plain component[:name]
                       end
                     end
                   end
-                  render CommandGroup.new(title: "Settings") do
+                  render PhlexUI::Command::Group.new(title: "Settings") do
                     settings.each do |setting|
-                      render CommandItem.new(value: setting[:name], href: setting[:path]) do
+                      render PhlexUI::Command::Item.new(value: setting[:name], href: setting[:path]) do
                         default_icon
                         plain setting[:name]
                       end

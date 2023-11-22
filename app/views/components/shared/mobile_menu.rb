@@ -6,21 +6,21 @@ class Shared::MobileMenu < ApplicationComponent
     end
 
     def template
-        render Sheet.new(class: @attributes[:class]) do
-            render SheetTrigger.new do
-                render Button.new(variant: :ghost, size: :icon) do
+        render PhlexUI::Sheet.new(class: @attributes[:class]) do
+            render PhlexUI::Sheet::Trigger.new do
+                render PhlexUI::Button.new(variant: :ghost, icon: true) do
                     menu_icon
                 end
             end
-            render SheetContent.new(class: 'w-[300px]', side: :left) do
+            render PhlexUI::Sheet::Content.new(class: 'w-[300px]', side: :left) do
                 div(class: 'flex flex-col h-full') do
-                    render SheetHeader.new do
+                    render PhlexUI::Sheet::Header.new do
                         div(class: 'pl-2') do
                             render Shared::Logo.new
                         end
                     end
                     div(class: 'flex-grow overflow-y-scroll') do
-                        render SheetMiddle.new do
+                        render PhlexUI::Sheet::Middle.new do
                             render Shared::Menu.new
                         end
                     end

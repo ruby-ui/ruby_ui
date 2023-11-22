@@ -4,24 +4,24 @@ class Docs::AlertDialogView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Alert Dialog" }
-        render Typography::P.new { "A modal dialog that interrupts the user with important content and expects a response." }
+        render PhlexUI::Typography::H1.new { "Alert Dialog" }
+        render PhlexUI::Typography::P.new { "A modal dialog that interrupts the user with important content and expects a response." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render AlertDialog.new do |alert_dialog|
-            render AlertDialogTrigger.new do
-              render Button.new { "Show dialog" }
+          render PhlexUI::AlertDialog.new do
+            render PhlexUI::AlertDialog::Trigger.new do
+              render PhlexUI::Button.new { "Show dialog" }
             end
-            render AlertDialogContent.new() do
-              render AlertDialogHeader.new do
-                render AlertDialogTitle.new { "Are you absolutely sure?" }
-                render AlertDialogDescription.new { "This action cannot be undone. This will permanently delete your account and remove your data from our servers." }
+            render PhlexUI::AlertDialog::Content.new do
+              render PhlexUI::AlertDialog::Header.new do
+                render PhlexUI::AlertDialog::Title.new { "Are you absolutely sure?" }
+                render PhlexUI::AlertDialog::Description.new { "This action cannot be undone. This will permanently delete your account and remove your data from our servers." }
               end
-              render AlertDialogFooter.new do
-                render AlertDialogCancel.new { "Cancel" }
-                render AlertDialogAction.new { "Continue" } # Will probably be a link to a controller action (e.g. delete account)
+              render PhlexUI::AlertDialog::Footer.new do
+                render PhlexUI::AlertDialog::Cancel.new { "Cancel" }
+                render PhlexUI::AlertDialog::Action.new { "Continue" } # Will probably be a link to a controller action (e.g. delete account)
               end
             end
           end

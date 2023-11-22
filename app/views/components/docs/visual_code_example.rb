@@ -9,11 +9,11 @@ class Docs::VisualCodeExample < ApplicationComponent
     end
 
     def template(&block)
-        @display_code = capture(&block)
+        @display_code = CGI.unescapeHTML(capture(&block))
 
         div(id: @title) do
             div(class: 'relative') do
-                render Tabs.new(default_value: "preview") do
+                render PhlexUI::Tabs.new(default_value: "preview") do
                     div(class: 'flex justify-between items-end mb-4 gap-x-2') do
                         render_header
                         div(class: 'flex-grow') # Spacer 
@@ -37,7 +37,7 @@ class Docs::VisualCodeExample < ApplicationComponent
 
     def render_unlock_component
         div(class: 'flex justify-end') do
-            render Link.new(href: helpers.root_path(anchor: :pricing), variant: :ghost, class: 'text-violet-500 flex-shrink-0') do
+            render PhlexUI::Link.new(href: helpers.root_path(anchor: :pricing), variant: :ghost, class: 'text-violet-500 flex-shrink-0') do
                 plain "Get the code"
                 svg(
                     xmlns: "http://www.w3.org/2000/svg",
@@ -60,8 +60,8 @@ class Docs::VisualCodeExample < ApplicationComponent
         div do
             if @title
                 div(class: 'flex items-center gap-x-2 mb-1') do
-                    render Typography::H4.new { @title }
-                    render Badge.new(variant: :secondary, size: :sm) { "Preview" } if @locked
+                    render PhlexUI::Typography::H4.new { @title.capitalize }
+                    render PhlexUI::Badge.new(variant: :secondary, size: :sm) { "Preview" } if @locked
                 end
             end
             p { @description } if @description
@@ -69,22 +69,22 @@ class Docs::VisualCodeExample < ApplicationComponent
     end
 
     def render_tab_triggers
-        render TabsList.new do
+        render PhlexUI::Tabs::List.new do
             render_tab_trigger("preview", "Preview", method(:eye_icon))
             render_tab_trigger("code", "Code", method(:code_icon))
         end
     end
 
     def render_tab_trigger(value, label, icon_method)
-        render TabsTrigger.new(value: value) do
+        render PhlexUI::Tabs::Trigger.new(value: value) do
             icon_method.call
             span { label }
         end
     end
 
     def render_tab_contents(&block)
-        render TabsContent.new(value: "preview") { render_preview_tab(&block) }
-        render TabsContent.new(value: "code") { render_code_tab }
+        render PhlexUI::Tabs::Content.new(value: "preview") { render_preview_tab(&block) }
+        render PhlexUI::Tabs::Content.new(value: "code") { render_code_tab }
     end
 
     def render_preview_tab(&block)
@@ -98,7 +98,7 @@ class Docs::VisualCodeExample < ApplicationComponent
 
     def render_code_tab
         div(class: 'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border') do
-            render Codeblock.new { @display_code }
+            render PhlexUI::Codeblock.new(@display_code, syntax: :ruby, class: '-m-px')
         end
     end
 
@@ -178,35 +178,35 @@ end
 
 #     def render_header
 #         div(class: 'space-y-1 mb-4') do
-#             render Typography::H4.new { @title } if @title
-#             render Typography::P.new { @description } if @description
+#             render PhlexUI::Typography::H4.new { @title } if @title
+#             render PhlexUI::Typography::P.new { @description } if @description
 #         end
 #     end
 
 #     def render_tabs(&block)
-#         render Tabs.new(default_value: "preview") do
+#         render PhlexUI::Tabs.new(default_value: "preview") do
 #             render_tab_triggers
 #             render_tab_contents(&block)
 #         end
 #     end
 
 #     def render_tab_triggers
-#         render TabsList.new do
+#         render PhlexUI::Tabs::List.new do
 #             render_tab_trigger("preview", "Preview", method(:eye_icon))
 #             render_tab_trigger("code", "Code", method(:code_icon))
 #         end
 #     end
 
 #     def render_tab_trigger(value, label, icon_method)
-#         render TabsTrigger.new(value: value) do
+#         render PhlexUI::Tabs::Trigger.new(value: value) do
 #             icon_method.call
 #             span { label }
 #         end
 #     end
 
 #     def render_tab_contents(&block)
-#         render TabsContent.new(value: "preview") { render_preview_tab(&block) }
-#         render TabsContent.new(value: "code") { render_code_tab }
+#         render PhlexUI::Tabs::Content.new(value: "preview") { render_preview_tab(&block) }
+#         render PhlexUI::Tabs::Content.new(value: "code") { render_code_tab }
 #     end
 
 #     def render_preview_tab(&block)

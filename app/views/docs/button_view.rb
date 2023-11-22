@@ -4,55 +4,55 @@ class Docs::ButtonView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Button" }
-        render Typography::P.new { "Displays a button or a component that looks like a button." }
+        render PhlexUI::Typography::H1.new { "Button" }
+        render PhlexUI::Typography::P.new { "Displays a button or a component that looks like a button." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render Button.new { "Button" }
+          render PhlexUI::Button.new { "Button" }
         RUBY
       end
       
       render Docs::VisualCodeExample.new(title: "Primary", context: self) do
         <<~RUBY
-          render Button.new(variant: :primary) { "Primary" }
+          render PhlexUI::Button.new(variant: :primary) { "Primary" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Secondary", context: self) do
         <<~RUBY
-          render Button.new(variant: :secondary) { "Secondary" }
+          render PhlexUI::Button.new(variant: :secondary) { "Secondary" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Destructive", context: self) do
         <<~RUBY
-          render Button.new(variant: :destructive) { "Destructive" }
+          render PhlexUI::Button.new(variant: :destructive) { "Destructive" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Outline", context: self) do
         <<~RUBY
-          render Button.new(variant: :outline) { "Outline" }
+          render PhlexUI::Button.new(variant: :outline) { "Outline" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Ghost", context: self) do
         <<~RUBY
-          render Button.new(variant: :ghost) { "Ghost" }
+          render PhlexUI::Button.new(variant: :ghost) { "Ghost" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Link", context: self) do
         <<~RUBY
-          render Button.new(variant: :link) { "Link" }
+          render PhlexUI::Button.new(variant: :link) { "Link" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Icon", context: self) do
         <<~RUBY
-          render Button.new(variant: :outline, size: :icon) do 
+          render PhlexUI::Button.new(variant: :outline, icon: true) do 
             svg(
               xmlns: "http://www.w3.org/2000/svg",
               viewbox: "0 0 20 20",
@@ -72,7 +72,7 @@ class Docs::ButtonView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With Icon", context: self) do
         <<~RUBY
-          render Button.new(variant: :primary) do 
+          render PhlexUI::Button.new(variant: :primary) do 
             svg(
               xmlns: "http://www.w3.org/2000/svg",
               fill: "none",
@@ -95,7 +95,7 @@ class Docs::ButtonView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With Icon", context: self) do
         <<~RUBY
-          render Button.new(variant: :primary, disabled: true) do 
+          render PhlexUI::Button.new(variant: :primary, disabled: true) do 
             svg(
               xmlns: "http://www.w3.org/2000/svg",
               viewbox: "0 0 20 20",
@@ -116,7 +116,7 @@ class Docs::ButtonView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Submit", context: self) do
         <<~RUBY
-          render Button.new(variant: :primary, type: :submit) do 
+          render PhlexUI::Button.new(variant: :primary, type: :submit) do 
             span { "Submit application" }
           end
         RUBY

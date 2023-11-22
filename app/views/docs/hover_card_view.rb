@@ -4,17 +4,17 @@ class Docs::HoverCardView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Hover Card" }
-        render Typography::P.new { "For sighted users to preview content available behind a link." }
+        render PhlexUI::Typography::H1.new { "Hover Card" }
+        render PhlexUI::Typography::P.new { "For sighted users to preview content available behind a link." }
       end
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render HoverCard.new do
-            render PopoverTrigger.new do
-              render Button.new(variant: :link) { "@joeldrapper" }
+          render PhlexUI::HoverCard.new do
+            render PhlexUI::HoverCard::Trigger.new do
+              render PhlexUI::Button.new(variant: :link) { "@joeldrapper" }
             end
-            render HoverCardContent.new do
+            render PhlexUI::HoverCard::Content.new do
               hover_card_content # -- Replace with your own content --
             end
           end
@@ -27,9 +27,9 @@ class Docs::HoverCardView < ApplicationView
 
   def hover_card_content
     div(class: "flex justify-between space-x-4") do
-      render Avatar.new do
-        render AvatarImage.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-        render AvatarFallback.new { "JD" }
+      render PhlexUI::Avatar.new do
+        render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+        render PhlexUI::Avatar::Fallback.new { "JD" }
       end
       div(class: "space-y-1") do
         h4(class: "text-sm font-medium") { "@joeldrapper" }
@@ -53,7 +53,7 @@ class Docs::HoverCardView < ApplicationView
               clip_rule: "evenodd"
             )
           end
-          span(class: "text-xs text-muted-foreground") { "Joined December 2021" }
+          span(class: "text-xs text-muted-text") { "Joined December 2021" }
         end
       end
     end

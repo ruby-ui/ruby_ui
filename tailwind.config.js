@@ -1,12 +1,31 @@
-const { fontFamily } = require("tailwindcss/defaultTheme")
+// For importing tailwind styles from phlex_ui/phlex_ui_pro gem
+const execSync = require('child_process').execSync;
+
+// Import phlex_ui gem path
+const outputPhlexUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
+const phlex_ui_path = outputPhlexUI.trim() + '/**/*.rb';
+
+// Import phlex_ui_pro gem path
+const outputPhlexUIPro = execSync('bundle show phlex_ui_pro', { encoding: 'utf-8' });
+const phlex_ui_pro_path = outputPhlexUIPro.trim() + '/**/*.rb';
+
+const colors = require('tailwindcss/colors')
+const { createThemes } = require('tw-colors'); // For color theme to accomodate dark mode more easily (https://www.npmjs.com/package/tw-colors)
+const defaultTheme = require('tailwindcss/defaultTheme')
+
+const gray = colors.neutral // Set gray to neutral color palette. Select between [slate, gray, zinc, neutral, stone]. See https://tailwindcss.com/docs/customizing-colors
 
 module.exports = {
   darkMode: ["class"],
   content: [
+    './app/views/**/*.rb',
+    './app/components/**/*rb',
     './app/views/**/*.{erb,haml,html,slim,rb}',
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
-    './app/javascript/**/*.js'
+    './app/javascript/**/*.js',
+    phlex_ui_path,
+    phlex_ui_pro_path
   ],
   theme: {
     container: {
@@ -17,64 +36,86 @@ module.exports = {
       },
     },
     extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
-        sm: "calc(var(--radius) - 4px)",
-      },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: 0 },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
+        sans: ['General Sans', ...defaultTheme.fontFamily.sans],
+      }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    createThemes({
+      light: {
+        primary: {
+          DEFAULT: gray[900],
+          text: colors.white,
+          ...gray,
+        },
+        destructive: {
+          DEFAULT: colors.rose[500],
+          ...colors.rose,
+        },
+        success: {
+          DEFAULT: colors.lime[500],
+          ...colors.lime,
+        },
+        warning: {
+          DEFAULT: colors.amber[500],
+          ...colors.amber,
+        },
+        background: colors.white,
+        text: gray[900],
+        muted: {
+          background: gray[100],
+          text: gray[500],
+        },
+        accent: {
+          background: gray[100],
+          text: gray[900],
+        },
+        ring: gray[900],
+        border: gray[200]
+      },
+      dark: {
+        primary: {
+          DEFAULT: colors.white,
+          text: gray[900],
+          50: 'rgb(255 255 255 / 5%)',
+          100: 'rgb(255 255 255 / 10%)',
+          200: 'rgb(255 255 255 / 20%)',
+          300: 'rgb(255 255 255 / 30%)',
+          400: 'rgb(255 255 255 / 40%)',
+          500: 'rgb(255 255 255 / 50%)',
+          600: 'rgb(255 255 255 / 60%)',
+          700: 'rgb(255 255 255 / 70%)',
+          800: 'rgb(255 255 255 / 80%)',
+          900: 'rgb(255 255 255 / 90%)',
+          950: 'rgb(255 255 255 / 95%)',
+        },
+        destructive: {
+          DEFAULT: colors.rose[500],
+          ...colors.rose,
+        },
+        success: {
+          DEFAULT: colors.lime[500],
+          ...colors.lime,
+        },
+        warning: {
+          DEFAULT: colors.amber[500],
+          ...colors.amber,
+        },
+        background: gray[950],
+        text: colors.white,
+        muted: {
+          background: 'rgb(255 255 255 / 7%)',
+          text: 'rgb(255 255 255 / 50%)',
+        },
+        accent: {
+          background: 'rgb(255 255 255 / 7%)',
+          text: 'rgb(255 255 255 / 90%)',
+        },
+        ring: colors.white,
+        border: 'rgb(255 255 255 / 20%)'
+      }
+    })
+  ],
 }

@@ -4,21 +4,18 @@ class Docs::AspectRatioView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Aspect Ratio" }
-        render Typography::P.new { "Displays content within a desired ratio." }
+        render PhlexUI::Typography::H1.new { "Aspect Ratio" }
+        render PhlexUI::Typography::P.new { "Displays content within a desired ratio." }
       end
 
       render Docs::VisualCodeExample.new(title: "16/9", context: self) do
         <<~RUBY
-          render AspectRatio.new(aspect_ratio: "16/9") do
+          render PhlexUI::AspectRatio.new(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
-              class: "rounded-md object-cover",
-              style:
-                "position:absolute;height:100%;width:100%;inset:0;color:transparent",
               src:
-                "https://images.unsplash.com/photo-1667373509687-4c4574541218?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3132&q=80"
+                helpers.image_path('pattern.jpg')
             )
           end
         RUBY
@@ -26,15 +23,12 @@ class Docs::AspectRatioView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "4/3", context: self) do
         <<~RUBY
-          render AspectRatio.new(aspect_ratio: "4/3") do
+          render PhlexUI::AspectRatio.new(aspect_ratio: "4/3", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
-              class: "rounded-md object-cover",
-              style:
-                "position:absolute;height:100%;width:100%;inset:0;color:transparent",
               src:
-                "https://images.unsplash.com/photo-1667373509687-4c4574541218?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3132&q=80"
+                helpers.image_path('pattern.jpg')
             )
           end
         RUBY
@@ -42,15 +36,12 @@ class Docs::AspectRatioView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "1/1", context: self) do
         <<~RUBY
-          render AspectRatio.new(aspect_ratio: "1/1") do
+          render PhlexUI::AspectRatio.new(aspect_ratio: "1/1", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
-              class: "rounded-md object-cover",
-              style:
-                "position:absolute;height:100%;width:100%;inset:0;color:transparent",
               src:
-                "https://images.unsplash.com/photo-1667373509687-4c4574541218?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3132&q=80"
+                helpers.image_path('pattern.jpg')
             )
           end
         RUBY
@@ -58,15 +49,12 @@ class Docs::AspectRatioView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "21/9", context: self) do
         <<~RUBY
-          render AspectRatio.new(aspect_ratio: "21/9") do
+          render PhlexUI::AspectRatio.new(aspect_ratio: "21/9", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
-              class: "rounded-md object-cover",
-              style:
-                "position:absolute;height:100%;width:100%;inset:0;color:transparent",
               src:
-                "https://images.unsplash.com/photo-1667373509687-4c4574541218?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3132&q=80"
+                helpers.image_path('pattern.jpg')
             )
           end
         RUBY

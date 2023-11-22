@@ -4,15 +4,15 @@ class Docs::ThemeToggleView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       div(class: 'space-y-2') do
-        render Typography::H1.new { "Theme Toggle" }
-        render Typography::P.new { "Toggle between dark/light theme." }
+        render PhlexUI::Typography::H1.new { "Theme Toggle" }
+        render PhlexUI::Typography::P.new { "Toggle between dark/light theme." }
       end
 
       render Docs::VisualCodeExample.new(title: "With icon", context: self) do
         <<~RUBY
-          render ThemeToggle.new do |toggle|
+          render PhlexUI::ThemeToggle.new do |toggle|
             toggle.light_mode do
-              render Button.new(variant: :ghost, size: :icon) do
+              render PhlexUI::Button.new(variant: :ghost, icon: true) do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   viewbox: "0 0 24 24",
@@ -28,7 +28,7 @@ class Docs::ThemeToggleView < ApplicationView
             end
 
             toggle.dark_mode do
-              render Button.new(variant: :ghost, size: :icon) do
+              render PhlexUI::Button.new(variant: :ghost, icon: true) do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   viewbox: "0 0 24 24",
@@ -50,13 +50,13 @@ class Docs::ThemeToggleView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With text", context: self) do
         <<~RUBY
-          render ThemeToggle.new do |toggle|
+          render PhlexUI::ThemeToggle.new do |toggle|
             toggle.light_mode do
-              render Button.new(variant: :primary) { "Light" }
+              render PhlexUI::Button.new(variant: :primary) { "Light" }
             end
 
             toggle.dark_mode do
-              render Button.new(variant: :primary) { "Dark" }
+              render PhlexUI::Button.new(variant: :primary) { "Dark" }
             end
           end
         RUBY
