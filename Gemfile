@@ -77,4 +77,6 @@ group :test do
 end
 
 gem "phlex-rails"
-gem "phlex_ui_pro", "~> 0.1.0", source: 'https://phlexui.fury.site/gem/'
+gem "phlex_ui_pro", "~> 0.1.1", source: 'https://phlexui.fury.site/gem/'
+# gem "phlex_ui", path: '../phlex_ui_gem'
+# gem "phlex_ui_pro", path: '../phlex_ui_gem_pro'

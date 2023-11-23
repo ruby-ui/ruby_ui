@@ -23,7 +23,7 @@ class Docs::AccordionView < ApplicationView
           render PhlexUI::Accordion.new(class: 'space-y-1') do
             render PhlexUI::Accordion::Item.new(
                     class!:
-                      "data-[accordion-open-value=true]:bg-muted-background hover:bg-muted-background rounded-lg pb-3",
+                      "data-[accordion-open-value=true]:bg-muted hover:bg-muted rounded-lg pb-3",
                     rotate_icon: 135
                   ) do
               render PhlexUI::Accordion::Trigger.new(class!: "w-full rounded-lg") do
@@ -49,7 +49,7 @@ class Docs::AccordionView < ApplicationView
               end
 
               render PhlexUI::Accordion::Content.new do
-                p(class: "pl-16 pr-4 pb-4 text-muted-text") do
+                p(class: "pl-16 pr-4 pb-4 text-muted-foreground") do
                   "PhlexUI is a UI component library for Ruby devs who want to build better, faster."
                 end
               end
@@ -57,7 +57,7 @@ class Docs::AccordionView < ApplicationView
 
             render PhlexUI::Accordion::Item.new(
                     class!:
-                      "data-[accordion-open-value=true]:bg-muted-background hover:bg-muted-background rounded-lg pb-3",
+                      "data-[accordion-open-value=true]:bg-muted hover:bg-muted rounded-lg pb-3",
                     rotate_icon: 135
                   ) do
               render PhlexUI::Accordion::Trigger.new(class!: "w-full rounded-lg") do
@@ -83,7 +83,7 @@ class Docs::AccordionView < ApplicationView
               end
 
               render PhlexUI::Accordion::Content.new do
-                p(class: "pl-16 pr-4 pb-4 text-muted-text") do
+                p(class: "pl-16 pr-4 pb-4 text-muted-foreground") do
                   "Yes, PhlexUI is pure Ruby and works great with Rails. It's a Ruby gem that you can install into your Rails app."
                 end
               end

@@ -16,7 +16,7 @@ class Docs::CommandView < ApplicationView
               render PhlexUI::Button.new(variant: "outline", class: 'w-56 pr-2 pl-3 justify-between') do
                 div(class: "flex items-center space-x-1") do
                   search_icon
-                  span(class: "text-muted-text font-normal") do
+                  span(class: "text-muted-foreground font-normal") do
                     plain "Search"
                   end
                 end
@@ -58,7 +58,7 @@ class Docs::CommandView < ApplicationView
         <<~RUBY
           render PhlexUI::Command::Dialog.new do
             render PhlexUI::Command::DialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
-              p(class: "text-sm text-muted-text") do
+              p(class: "text-sm text-muted-foreground") do
                 span(class: 'mr-1') { "Press" }
                 render PhlexUI::ShortcutKey.new do
                   span(class: "text-xs") { "⌘" }

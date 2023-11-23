@@ -5,7 +5,7 @@ class Shared::Menu < ApplicationComponent
         div(class: 'pb-4') do
             h4(class: 'mb-1 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2') do
                 plain "Components"
-                render PhlexUI::Badge.new(variant: :neutral, size: :sm) { components.count.to_s }
+                render PhlexUI::Badge.new(variant: :primary, size: :sm) { components.count.to_s }
             end
             div(class: 'grid grid-flow-row auto-rows-max text-sm') do
                 components.each do |component|
@@ -14,7 +14,7 @@ class Shared::Menu < ApplicationComponent
             end
             h4(class: 'mb-1 mt-6 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2') do
                 plain "Coming Soon"
-                render PhlexUI::Badge.new(variant: :neutral, size: :sm) { components_coming_soon.count.to_s }
+                render PhlexUI::Badge.new(variant: :primary, size: :sm) { components_coming_soon.count.to_s }
                 svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     viewbox: "0 0 24 24",
@@ -104,7 +104,7 @@ class Shared::Menu < ApplicationComponent
 
     def component_link(component)
         current_path = component[:path] == helpers.request.path
-        return a(href: component[:path], class: tokens('group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline', -> { current_path } => "text-text font-medium", -> { !current_path } => "text-muted-text")) do
+        return a(href: component[:path], class: tokens('group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline', -> { current_path } => "text-foreground font-medium", -> { !current_path } => "text-muted-foreground")) do
             span(class: 'flex items-center gap-x-1') do
                 span { component[:name] }
                 premium_status(component) if component[:premium]

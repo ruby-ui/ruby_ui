@@ -47,23 +47,23 @@ class HomeView::Pricing < ApplicationComponent
                     end
                 end
                 # Price
-                div(class: 'relative p-6 md:p-10 rounded-2xl space-y-6 overflow-hidden bg-accent-background text-accent-text') do
+                div(class: 'relative p-6 md:p-10 rounded-2xl space-y-6 overflow-hidden bg-accent text-accent-foreground') do
                     div(class: 'flex items-center justify-center space-x-4') do
                         # Price
                         div(class: 'relative') do
-                            p(class: 'absolute text-sm line-through text-muted-text top-1 -left-2 -translate-y-full -rotate-6') { "$99" }
+                            p(class: 'absolute text-sm line-through text-muted-foreground top-1 -left-2 -translate-y-full -rotate-6') { "$99" }
                             p(class: 'text-5xl font-') { "$49" }
                         end
                         div(class: 'text-sm') do
                             # one time payment
                             p(class: 'font-medium') { "One time payment" }
                             # Plus local taxes
-                            p(class: 'text-muted-text') { "Plus local taxes" }
+                            p(class: 'text-muted-foreground') { "Plus local taxes" }
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
                         render PhlexUI::Link.new(variant: :primary, href: "https://buy.stripe.com/eVa6pw25J6RR9l6dQR", class: 'w-full justify-center') { "Pay now" }
-                        p(class: 'text-sm text-center text-muted-text') { "Lifetime access.  Unlimited projects.  Free updates." }
+                        p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
                 # Features
@@ -75,7 +75,7 @@ class HomeView::Pricing < ApplicationComponent
                             xmlns: "http://www.w3.org/2000/svg",
                             viewbox: "0 0 24 24",
                             fill: "currentColor",
-                            class: "w-6 h-6 flex-shrink-0 text-muted-text"
+                            class: "w-6 h-6 flex-shrink-0 text-muted-foreground"
                         ) do |s|
                             s.path(
                                 fill_rule: "evenodd",
@@ -86,7 +86,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                         div(class: 'space-y-2 text-sm') do
                             h3(class: "font-medium leading-none tracking-tight") { "Access to all components" }
-                            p(class: 'text-muted-text') { "Everything you need to build beautiful application UIs, easier and faster than ever before." }
+                            p(class: 'text-muted-foreground') { "Everything you need to build beautiful application UIs, easier and faster than ever before." }
                         end
                     end
                     # Lifetime Access
@@ -98,7 +98,7 @@ class HomeView::Pricing < ApplicationComponent
                             viewbox: "0 0 24 24",
                             stroke_width: "1.5",
                             stroke: "currentColor",
-                            class: "w-6 h-6 flex-shrink-0 text-muted-text"
+                            class: "w-6 h-6 flex-shrink-0 text-muted-foreground"
                         ) do |s|
                             s.path(
                                 stroke_linecap: "round",
@@ -109,7 +109,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                         div(class: 'space-y-2 text-sm') do
                             h3(class: "font-medium leading-none tracking-tight") { "Lifetime Access" }
-                            p(class: 'text-muted-text') { "Get access to all premium components, plus any new content we add in the future." }
+                            p(class: 'text-muted-foreground') { "Get access to all premium components, plus any new content we add in the future." }
                         end
                     end
                     # Money back guarantee
@@ -121,7 +121,7 @@ class HomeView::Pricing < ApplicationComponent
                             viewbox: "0 0 24 24",
                             stroke_width: "1.5",
                             stroke: "currentColor",
-                            class: "w-6 h-6 flex-shrink-0 text-muted-text"
+                            class: "w-6 h-6 flex-shrink-0 text-muted-foreground"
                         ) do |s|
                             s.path(
                                 stroke_linecap: "round",
@@ -132,7 +132,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                         div(class: 'space-y-2 text-sm') do
                             h3(class: "font-medium leading-none tracking-tight") { "Money back guarantee" }
-                            p(class: 'text-muted-text') { "If you're not happy with your purchase, we'll refund you in full straight away." }
+                            p(class: 'text-muted-foreground') { "If you're not happy with your purchase, we'll refund you in full straight away." }
                         end
                     end
                 end
@@ -142,7 +142,7 @@ class HomeView::Pricing < ApplicationComponent
 
     def render_teams
         div do
-            div(class: 'relative flex flex-col p-6 md:p-10 rounded-2xl space-y-6 overflow-hidden bg-accent-background text-accent-text') do
+            div(class: 'relative flex flex-col p-6 md:p-10 rounded-2xl space-y-6 overflow-hidden bg-accent text-accent-foreground') do
                 # Plan info
                 render_pricing_header(name: 'Teams', description: 'For product teams and agencies.') do
                     svg(
@@ -168,19 +168,19 @@ class HomeView::Pricing < ApplicationComponent
                     div(class: 'flex items-center justify-center space-x-4') do
                         # Price
                         div(class: 'relative') do
-                            p(class: 'absolute text-sm line-through text-muted-text top-1 -left-2 -translate-y-full -rotate-6') { "$199" }
+                            p(class: 'absolute text-sm line-through text-muted-foreground top-1 -left-2 -translate-y-full -rotate-6') { "$199" }
                             p(class: 'text-5xl font-') { "$99" }
                         end
                         div(class: 'text-sm') do
                             # one time payment
                             p(class: 'font-medium') { "One time payment" }
                             # Plus local taxes
-                            p(class: 'text-muted-text') { "Plus local taxes" }
+                            p(class: 'text-muted-foreground') { "Plus local taxes" }
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
                         render PhlexUI::Link.new(variant: :primary, href: "https://buy.stripe.com/5kA4ho5hVgsr54QaEG", class: 'w-full justify-center') { "Pay now" }
-                        p(class: 'text-sm text-center text-muted-text') { "Lifetime access.  Unlimited projects.  Free updates." }
+                        p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
                 # Features
@@ -194,7 +194,7 @@ class HomeView::Pricing < ApplicationComponent
                             viewbox: "0 0 24 24",
                             stroke_width: "1.5",
                             stroke: "currentColor",
-                            class: "w-6 h-6 flex-shrink-0 text-muted-text"
+                            class: "w-6 h-6 flex-shrink-0 text-muted-foreground"
                         ) do |s|
                             s.path(
                                 stroke_linecap: "round",
@@ -205,7 +205,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                         div(class: 'space-y-2 text-sm') do
                             h3(class: "font-medium leading-none tracking-tight") { "Everything in Personal" }
-                            p(class: 'text-muted-text') { "Access to all Components, Lifetime Access, Money Back Guarantee plus..." }
+                            p(class: 'text-muted-foreground') { "Access to all Components, Lifetime Access, Money Back Guarantee plus..." }
                         end
                     end
                     # Unlock access for your entire team
@@ -217,7 +217,7 @@ class HomeView::Pricing < ApplicationComponent
                             viewbox: "0 0 24 24",
                             stroke_width: "1.5",
                             stroke: "currentColor",
-                            class: "w-6 h-6 flex-shrink-0 text-muted-text"
+                            class: "w-6 h-6 flex-shrink-0 text-muted-foreground"
                         ) do |s|
                             s.path(
                                 stroke_linecap: "round",
@@ -228,7 +228,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                         div(class: 'space-y-2 text-sm') do
                             h3(class: "font-medium leading-none tracking-tight") { "Unlock access for your entire team" }
-                            p(class: 'text-muted-text') { "Our team licenses include access for up to 25 people to accommodate even the largest teams at your company." }
+                            p(class: 'text-muted-foreground') { "Our team licenses include access for up to 25 people to accommodate even the largest teams at your company." }
                         end
                     end
                 end
@@ -245,7 +245,7 @@ class HomeView::Pricing < ApplicationComponent
             end
             div(class: 'space-y-1 text-left') do
                 h3(class: "font-semibold leading-none tracking-tight") { name } if name
-                p(class: 'text-muted-text') { description } if description
+                p(class: 'text-muted-foreground') { description } if description
             end
         end
     end

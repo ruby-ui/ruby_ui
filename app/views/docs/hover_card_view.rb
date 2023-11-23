@@ -53,7 +53,7 @@ class Docs::HoverCardView < ApplicationView
               clip_rule: "evenodd"
             )
           end
-          span(class: "text-xs text-muted-text") { "Joined December 2021" }
+          span(class: "text-xs text-muted-foreground") { "Joined December 2021" }
         end
       end
     end

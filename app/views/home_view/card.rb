@@ -12,7 +12,7 @@ class HomeView::Card < ApplicationComponent
         @color_classes = {
             card: 'bg-background border',
             primary: 'bg-primary text-white',
-            secondary: 'bg-accent-background text-accent-text',
+            secondary: 'bg-accent text-accent-foreground',
             # Add sky, violet, amber, lime, pink
             sky: 'bg-sky-100 text-sky-950',
             violet: 'bg-violet-100 text-violet-950',

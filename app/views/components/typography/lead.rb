@@ -2,6 +2,6 @@
 
 class Typography::Lead < ApplicationComponent
   def template(&)
-    p(class: "text-xl text-muted-text", &)
+    p(class: "text-xl text-muted-foreground", &)
   end
 end

@@ -10,7 +10,7 @@ class HomeView::Banner < ApplicationComponent
             div(class: "relative container mx-auto max-w-3xl py-24 lg:py-32 px-4 text-center flex flex-col items-center gap-y-6") do
                 render PhlexUI::Typography::H1.new(class: 'text-center') do
                     plain "A UI component library, crafted precisely for Ruby devs"
-                    span(class: 'text-text opacity-30') { " who want to stay organised and build modern apps, fast." }
+                    span(class: 'text-foreground opacity-30') { " who want to stay organised and build modern apps, fast." }
                 end
                 if @cta
                     div(class: 'grid grid-cols-1 sm:grid-cols-2 gap-4', &@cta)

@@ -27,7 +27,7 @@ class Docs::CheckboxView < ApplicationView
                 class:
                   "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               ) { " Accept terms and conditions " }
-              p(class: "text-sm text-muted-text") { " You agree to our Terms of Service and Privacy Policy." }
+              p(class: "text-sm text-muted-foreground") { " You agree to our Terms of Service and Privacy Policy." }
             end
           end
         RUBY

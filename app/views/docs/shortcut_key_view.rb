@@ -15,7 +15,7 @@ class Docs::ShortcutKeyView < ApplicationView
               span(class: "text-xs") { "⌘" }
               plain "K"
             end
-            p(class: "text-muted-text text-sm text-center") { "Note this does not trigger anything, it is purely a visual prompt" }
+            p(class: "text-muted-foreground text-sm text-center") { "Note this does not trigger anything, it is purely a visual prompt" }
           end
         RUBY
       end
