@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DocsController < ApplicationController
-  layout -> { ApplicationLayout }
+  layout -> { DocsLayout }
 
   def accordion
     render Docs::AccordionView.new
