@@ -8,17 +8,16 @@ module Mailers
             end
             
             def template
-                
                 render Shared::Logo.new
-                p do
-                    plain " Here is your "
-                    render PhlexUI::Link.new(variant: :link, href: helpers.signin_authenticate_url(
-                                token: @token,
-                                redirect_path: @redirect_path
-                            )) { "link to sign-in" }
-                    plain " for PhlexUI. It expires in "
-                    plain EmailAuth::GeneratesToken::TOKEN_SHELF_LIFE
-                    plain " minutes."
+                render PhlexUI::Card.new(class: "p-6 flex flex-col items-center gap-y-4") do
+                    render PhlexUI::Typography::Muted.new { "Here is your sign-in link for PhlexUI. It expires in #{EmailAuth::GeneratesToken::TOKEN_SHELF_LIFE} minutes." }
+                    render PhlexUI::Link.new(
+                        variant: :primary, 
+                        href: helpers.signin_authenticate_url(
+                            token: @token,
+                            redirect_path: @redirect_path
+                        )
+                    ) { "Sign in" }
                 end
             end
         end
