@@ -8,7 +8,9 @@ module Mailers
             end
             
             def template
-                render Shared::Logo.new
+                div(class: '!block flex justify-center', style: 'display: none;') do
+                    render Shared::Logo.new
+                end
                 render PhlexUI::Card.new(class: "p-6 flex flex-col items-center gap-y-4") do
                     render PhlexUI::Typography::Muted.new { "Here is your sign-in link for PhlexUI. It expires in #{EmailAuth::GeneratesToken::TOKEN_SHELF_LIFE} minutes." }
                     render PhlexUI::Link.new(

@@ -123,6 +123,7 @@ GEM
       activesupport (>= 5.0.0)
     jsbundling-rails (1.2.1)
       railties (>= 6.0.0)
+    json (2.6.3)
     launchy (2.5.2)
       addressable (~> 2.8)
     letter_opener (1.8.1)
@@ -164,6 +165,11 @@ GEM
       phlex (~> 1.7)
       rails (>= 6.1, < 8)
       zeitwerk (~> 2.6)
+    postmark (1.24.0)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
     psych (5.1.1.1)
       stringio
     public_suffix (5.0.4)
@@ -262,6 +268,7 @@ DEPENDENCIES
   pg (~> 1.1)
   phlex-rails
   phlex_ui_pro (~> 0.1.1)!
+  postmark-rails
   puma (~> 5.0)
   rails (~> 7.0.8)
   redis (~> 4.0)

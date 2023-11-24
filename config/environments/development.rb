@@ -42,6 +42,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :postmark # For testing out in development
+  # config.action_mailer.postmark_settings = { api_token: ENV["POSTMARK_API_KEY"] } # For testing out in development
+
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.default_url_options = { host: ENV["HOST"] }
