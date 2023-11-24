@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HomeView::GridPattern < ApplicationComponent
+class Shared::GridPattern < ApplicationComponent
     def initialize(spacing: :md)
         sizes = {
             xs: 15,

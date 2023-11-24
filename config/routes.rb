@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resource :signin
   scope 'docs' do
     get 'accordion', to: 'docs#accordion', as: :docs_accordion
     get 'alert', to: 'docs#alert_component', as: :docs_alert # alert is a reserved word for controller action

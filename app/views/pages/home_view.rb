@@ -187,10 +187,10 @@ class Pages::HomeView < ApplicationView
         end
       end
       div(class: 'relative z-0 h-72 rotate-180 -mt-56 -mr-px') do
-        render HomeView::GridPattern.new(spacing: :xs)
+        render Shared::GridPattern.new(spacing: :xs)
       end
       div(class: 'relative h-72') do
-        render HomeView::GridPattern.new(spacing: :xs)
+        render Shared::GridPattern.new(spacing: :xs)
       end
       div(class: 'relative') do
         div(id: :pricing, class: 'block absolute -top-24 invisible')

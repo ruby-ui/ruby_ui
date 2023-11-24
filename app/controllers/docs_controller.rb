@@ -2,6 +2,7 @@
 
 class DocsController < ApplicationController
   layout -> { DocsLayout }
+  skip_before_action :authenticate_user!
 
   def accordion
     render Docs::AccordionView.new

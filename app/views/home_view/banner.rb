@@ -5,7 +5,7 @@ class HomeView::Banner < ApplicationComponent
 
     def template(&)
         div(class: 'relative overflow-hidden') do
-            render HomeView::GridPattern.new(spacing: :md)
+            render Shared::GridPattern.new(spacing: :md)
             render HomeView::Shapes.new(size: :xl, color: :pink, class: 'hidden sm:block absolute right-0 top-1/2 transform -translate-y-1/2 sm:translate-x-2/3 md:translate-x-1/2')
             div(class: "relative container mx-auto max-w-3xl py-24 lg:py-32 px-4 text-center flex flex-col items-center gap-y-6") do
                 render PhlexUI::Typography::H1.new(class: 'text-center') do

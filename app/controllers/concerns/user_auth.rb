@@ -2,19 +2,15 @@ module UserAuth
     extend ActiveSupport::Concern
 
     included do
-        before_action :require_login
+        before_action :authenticate_user!
     end
 
-    def require_login
+    def authenticate_user!
         @current_user = User.find_by(id: session[:user_id])
-        return if @current_user.present?
+        raise "No user is present" unless @current_user.present?
 
-        redirect_to new_login_email_path(
+        redirect_to new_login_path(
         redirect_path: request.original_fullpath
         )
-    end
-
-    def self.skip_require_login!
-        skip_before_action :require_login
     end
 end
