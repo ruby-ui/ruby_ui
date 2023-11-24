@@ -123,6 +123,10 @@ GEM
       activesupport (>= 5.0.0)
     jsbundling-rails (1.2.1)
       railties (>= 6.0.0)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -254,6 +258,7 @@ DEPENDENCIES
   dotenv-rails
   jbuilder
   jsbundling-rails
+  letter_opener
   pg (~> 1.1)
   phlex-rails
   phlex_ui_pro (~> 0.1.1)!

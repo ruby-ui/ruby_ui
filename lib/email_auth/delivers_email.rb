@@ -11,7 +11,7 @@ module EmailAuth
                 user: @user,
                 token: @token,
                 redirect_path: @redirect_path
-            ).login_link.deliver_now # change to deliver_later if you want to send it asynchronously
+            ).signin_link.deliver_now # change to deliver_later if you want to send it asynchronously
         end
     end
 end

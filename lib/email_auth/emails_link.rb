@@ -1,8 +1,8 @@
 module EmailAuth
   class EmailsLink
     def initialize(email:, redirect_path:)
-        @email
-        @redirect_path
+        @email = email
+        @redirect_path = redirect_path
     end
 
     def call

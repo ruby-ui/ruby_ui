@@ -76,6 +76,8 @@ group :test do
 
 end
 
+gem "letter_opener", group: :development
+
 gem "phlex-rails"
 gem "phlex_ui_pro", "~> 0.1.1", source: 'https://phlexui.fury.site/gem/'
 # gem "phlex_ui", path: '../phlex_ui_gem'

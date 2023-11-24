@@ -18,7 +18,11 @@ class Shared::Navbar < ApplicationComponent
             dark_mode_toggle
           end
           div(class: 'flex items-center gap-x-2 pl-2') do
-            render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
+            if helpers.session[:user_id]
+              render PhlexUI::Link.new(href: helpers.signin_path, variant: :ghost, data: { turbo_method: :delete }, class: 'hidden sm:inline-block') { "Sign out" }
+            else
+              render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
+            end
             render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
               plain "Get Early Access"
               svg(

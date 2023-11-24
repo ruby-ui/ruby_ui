@@ -6,7 +6,7 @@ module EmailAuth
             @user = user
         end
 
-        def generate
+        def call
             unless @user.auth_token.present? && @user.auth_token_expires_at.future?
                 @user.update!(
                     auth_token: SecureRandom.urlsafe_base64,
