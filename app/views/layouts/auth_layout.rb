@@ -16,6 +16,7 @@ class AuthLayout < ApplicationView
                     render Shared::Logo.new
                     div(class: "container w-full max-w-md", &block)
                 end
+				render Shared::Flashes.new(notice: helpers.flash[:notice], alert: helpers.flash[:alert])
 			end
 		end
 	end

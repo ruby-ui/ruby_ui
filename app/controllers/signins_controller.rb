@@ -13,7 +13,7 @@ class SigninsController < ApplicationController
             redirect_path: params[:redirect_path]
         ).call
 
-        flash[:notice] = "Check your email to sign in! (#{params[:email]})"
+        flash[:notice] = "Check your email to sign in!"
         redirect_to new_signin_path
     end
 

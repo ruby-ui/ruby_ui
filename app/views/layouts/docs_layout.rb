@@ -19,6 +19,7 @@ class DocsLayout < ApplicationView
 						end
 					end
 				end
+				render Shared::Flashes.new(notice: helpers.flash[:notice], alert: helpers.flash[:alert])
 			end
 		end
 	end

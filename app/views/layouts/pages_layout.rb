@@ -12,6 +12,7 @@ class PagesLayout < ApplicationView
 			body do
 				render Shared::Navbar.new
 			    main(class: 'relative', &block)
+				render Shared::Flashes.new(notice: helpers.flash[:notice], alert: helpers.flash[:alert])
 			end
 		end
 	end
