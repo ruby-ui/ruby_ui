@@ -62,7 +62,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
-                        render PhlexUI::Link.new(variant: :primary, href: "https://buy.stripe.com/eVa6pw25J6RR9l6dQR", class: 'w-full justify-center') { "Pay now" }
+                        render PhlexUI::Link.new(variant: :primary, href: ENV['PERSONAL_STRIPE_LINK'], class: 'w-full justify-center') { "Pay now" }
                         p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
@@ -179,7 +179,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
-                        render PhlexUI::Link.new(variant: :primary, href: "https://buy.stripe.com/5kA4ho5hVgsr54QaEG", class: 'w-full justify-center') { "Pay now" }
+                        render PhlexUI::Link.new(variant: :primary, href: ENV['TEAM_STRIPE_LINK'], class: 'w-full justify-center') { "Pay now" }
                         p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
