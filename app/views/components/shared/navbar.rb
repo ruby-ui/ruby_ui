@@ -12,16 +12,18 @@ class Shared::Navbar < ApplicationComponent
             "Components"
           end
         end
-        div(class: 'flex items-center gap-x-2 divide-x') do
+        div(class: 'flex items-center gap-x-2 md:divide-x') do
           div(class: 'flex items-center') do
             twitter_link
             dark_mode_toggle
           end
           div(class: 'flex items-center gap-x-2 pl-2') do
-            if helpers.session[:user_id]
-              render Shared::AccountDropdown.new(user_id: helpers.session[:user_id])
-            else
-              render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
+            div(class: 'hidden md:block') do
+              if helpers.session[:user_id]
+                  render Shared::AccountDropdown.new(user_id: helpers.session[:user_id])
+              else
+                render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
+              end
             end
             render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
               plain "Get Early Access"
