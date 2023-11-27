@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   match "signin/authenticate", to: "signins#authenticate", via: [:get, :post], as: :signin_authenticate
+  match "signin/check_your_email", to: "signins#check_your_email", via: [:get, :post], as: :signin_check_your_email
   resource :signin
 
   scope 'docs' do

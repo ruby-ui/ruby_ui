@@ -16,7 +16,7 @@ class Signins::NewView < ApplicationView
             end
             render PhlexUI::Typography::Muted.new(class: 'text-muted-foreground text-center mt-4 flex items-center justify-center') do
                 sparkle_icon
-                span { "We'll send you a magic link to sign in" }
+                span { "We'll email a sign-in link" }
             end
         end
     end

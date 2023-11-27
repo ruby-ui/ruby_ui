@@ -14,13 +14,17 @@ class SigninsController < ApplicationController
         ).call
 
         flash[:notice] = "Check your email to sign in!"
-        redirect_to new_signin_path
+        redirect_to signin_check_your_email_path(email: params[:email])
     end
 
     def destroy
         reset_session
         flash[:notice] = "Your account has been successfully logged out."
         redirect_back fallback_location: root_path
+    end
+
+    def check_your_email
+        render Signins::CheckYourEmailView.new(email: params[:email])
     end
 
     def authenticate
