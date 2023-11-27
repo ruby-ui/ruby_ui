@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 class Shared::AccountDropdown < ApplicationComponent
-    def initialize(user_id:)
-        @user_id = user_id
-        @email = User.find(@user_id)&.email
-    end
-
     def template
         render PhlexUI::DropdownMenu.new(options: { placement: 'bottom-end' }) do
             render PhlexUI::DropdownMenu::Trigger.new do
@@ -17,7 +12,19 @@ class Shared::AccountDropdown < ApplicationComponent
             render PhlexUI::DropdownMenu::Content.new do
                 div(class: 'px-2 py-1.5') do
                     span(class: 'text-muted-foreground text-sm') { "Signed in as" }
-                    p(class: 'text-sm font-semibold') { @email }
+                    p(class: 'text-sm font-medium') { current_user&.email }
+                end
+                render PhlexUI::DropdownMenu::Separator.new
+                render PhlexUI::DropdownMenu::Item.new(href: "#") { "Support" }
+                render PhlexUI::DropdownMenu::Item.new(href: "#") { "License" }
+                render PhlexUI::DropdownMenu::Separator.new
+                case current_user&.plan
+                when "personal"
+                    render PhlexUI::DropdownMenu::Item.new(href: ENV['TEAM_STRIPE_LINK']) { "Upgrade to Team license" }
+                when "team"
+                    render PhlexUI::DropdownMenu::Item.new(href: "#") { "Add team members" }
+                else
+                    render PhlexUI::DropdownMenu::Item.new(href: helpers.root_path(anchor: :pricing)) { "Get all access" }
                 end
                 render PhlexUI::DropdownMenu::Separator.new
                 render PhlexUI::DropdownMenu::Item.new(href: helpers.signin_path, data: { turbo_method: :delete }) { "Sign out" }
@@ -32,7 +39,7 @@ class Shared::AccountDropdown < ApplicationComponent
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 20 20",
             fill: "currentColor",
-            class: "w-4 h-4 ml-1"
+            class: "w-4 h-4 ml-1 -mr-1"
         ) do |s|
             s.path(
                 fill_rule: "evenodd",

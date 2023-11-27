@@ -19,26 +19,17 @@ class Shared::Navbar < ApplicationComponent
           end
           div(class: 'flex items-center gap-x-2 pl-2') do
             div(class: 'hidden md:block') do
-              if helpers.session[:user_id]
-                  render Shared::AccountDropdown.new(user_id: helpers.session[:user_id])
+              if current_user
+                  render Shared::AccountDropdown.new
               else
                 render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
               end
             end
-            render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
-              plain "Get Early Access"
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 20 20",
-                fill: "currentColor",
-                class: "w-5 h-5 ml-1"
-              ) do |s|
-                s.path(
-                  fill_rule: "evenodd",
-                  d:
-                    "M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z",
-                  clip_rule: "evenodd"
-                )
+            case current_user&.plan
+            when "free", nil
+              render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
+                plain "Get all access"
+                arrow_right_icon
               end
             end
           end
@@ -98,6 +89,22 @@ class Shared::Navbar < ApplicationComponent
             "M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0 0 20 3.92a8.19 8.19 0 0 1-2.357.646 4.118 4.118 0 0 0 1.804-2.27 8.224 8.224 0 0 1-2.605.996 4.107 4.107 0 0 0-6.993 3.743 11.65 11.65 0 0 1-8.457-4.287 4.106 4.106 0 0 0 1.27 5.477A4.073 4.073 0 0 1 .8 7.713v.052a4.105 4.105 0 0 0 3.292 4.022 4.095 4.095 0 0 1-1.853.07 4.108 4.108 0 0 0 3.834 2.85A8.233 8.233 0 0 1 0 16.407a11.615 11.615 0 0 0 6.29 1.84"
         )
       end
+    end
+  end
+
+  def arrow_right_icon
+    svg(
+      xmlns: "http://www.w3.org/2000/svg",
+      viewbox: "0 0 20 20",
+      fill: "currentColor",
+      class: "w-5 h-5 ml-1 -mr-1"
+    ) do |s|
+      s.path(
+        fill_rule: "evenodd",
+        d:
+          "M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z",
+        clip_rule: "evenodd"
+      )
     end
   end
 end
