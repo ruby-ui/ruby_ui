@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_23_053447) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_040224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_053447) do
     t.datetime "auth_token_expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "plan", default: 0
   end
 
 end
