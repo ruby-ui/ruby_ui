@@ -76,6 +76,7 @@ group :test do
 
 end
 
+gem 'stripe'
 gem "letter_opener", group: :development
 gem 'postmark-rails' # used in production
 
