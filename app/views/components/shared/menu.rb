@@ -3,23 +3,6 @@
 class Shared::Menu < ApplicationComponent
     def template
         div(class: 'pb-4') do
-            # ACCOUNT DETAILS
-            div(class: 'md:hidden') do
-                h4(class: 'mb-1 mt-2 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2') do
-                    plain "Account"
-                end
-                div(class: 'grid grid-flow-row auto-rows-max text-sm') do
-                    if helpers.session[:user_id]
-                        a(href: helpers.signin_path, data: { turbo_method: :delete }, class: 'group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground') do
-                            span(class: 'flex items-center gap-x-1') { "Sign out" }
-                        end
-                    else
-                        a(href: helpers.new_signin_path, class: 'group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline text-muted-foreground') do
-                            span(class: 'flex items-center gap-x-1') { "Sign in" }
-                        end
-                    end
-                end
-            end
             # COMPONENTS
             h4(class: 'mb-1 mt-4 md:mt-0 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2') do
                 plain "Components"

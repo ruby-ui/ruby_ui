@@ -1,52 +1,35 @@
 # frozen_string_literal: true
 
 class Shared::AccountDropdown < ApplicationComponent
-    def template
+    def template(&block)
         render PhlexUI::DropdownMenu.new(options: { placement: 'bottom-end' }) do
             render PhlexUI::DropdownMenu::Trigger.new do
-                render PhlexUI::Button.new(variant: :ghost, class: 'hidden sm:inline-flex') do
-                    plain "Account"
-                    chevron_down_icon
-                end
+                block.call
             end
             render PhlexUI::DropdownMenu::Content.new do
-                div(class: 'px-2 py-1.5') do
-                    span(class: 'text-muted-foreground text-sm') { "Signed in as" }
-                    p(class: 'text-sm font-medium') { current_user&.email }
-                end
-                render PhlexUI::DropdownMenu::Separator.new
-                render PhlexUI::DropdownMenu::Item.new(href: "#") { "Support" }
-                render PhlexUI::DropdownMenu::Item.new(href: "#") { "License" }
-                render PhlexUI::DropdownMenu::Separator.new
-                case current_user&.plan
-                when "personal"
-                    render PhlexUI::DropdownMenu::Item.new(href: ENV['TEAM_STRIPE_LINK']) { "Upgrade to Team license" }
-                when "team"
-                    render PhlexUI::DropdownMenu::Item.new(href: "#") { "Add team members" }
+                if current_user
+                    div(class: 'px-2 py-1.5') do
+                        span(class: 'text-muted-foreground text-sm') { "Signed in as" }
+                        p(class: 'text-sm font-medium') { current_user&.email }
+                    end
+                    render PhlexUI::DropdownMenu::Separator.new
+                    render PhlexUI::DropdownMenu::Item.new(href: "#") { "Support" }
+                    render PhlexUI::DropdownMenu::Item.new(href: "#") { "License" }
+                    render PhlexUI::DropdownMenu::Separator.new
+                    case current_user&.plan
+                    when "personal"
+                        render PhlexUI::DropdownMenu::Item.new(href: ENV['TEAM_STRIPE_LINK']) { "Upgrade to Team license" }
+                    when "team"
+                        render PhlexUI::DropdownMenu::Item.new(href: "#") { "Add team members" }
+                    else
+                        render PhlexUI::DropdownMenu::Item.new(href: helpers.root_path(anchor: :pricing)) { "Get all access" }
+                    end
+                    render PhlexUI::DropdownMenu::Separator.new
+                    render PhlexUI::DropdownMenu::Item.new(href: helpers.signin_path, data: { turbo_method: :delete }) { "Sign out" }
                 else
-                    render PhlexUI::DropdownMenu::Item.new(href: helpers.root_path(anchor: :pricing)) { "Get all access" }
+                    render PhlexUI::DropdownMenu::Item.new(href: helpers.new_signin_path) { "Sign in" }
                 end
-                render PhlexUI::DropdownMenu::Separator.new
-                render PhlexUI::DropdownMenu::Item.new(href: helpers.signin_path, data: { turbo_method: :delete }) { "Sign out" }
             end
-        end
-    end
-
-    private
-
-    def chevron_down_icon
-        svg(
-            xmlns: "http://www.w3.org/2000/svg",
-            viewbox: "0 0 20 20",
-            fill: "currentColor",
-            class: "w-4 h-4 ml-1 -mr-1"
-        ) do |s|
-            s.path(
-                fill_rule: "evenodd",
-                d:
-                "M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z",
-                clip_rule: "evenodd"
-            )
         end
     end
 end

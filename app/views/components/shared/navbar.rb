@@ -16,11 +16,21 @@ class Shared::Navbar < ApplicationComponent
           div(class: 'flex items-center') do
             twitter_link
             dark_mode_toggle
+            render Shared::AccountDropdown.new do
+              render PhlexUI::Button.new(variant: :ghost, icon: true) do
+                account_icon
+              end
+            end
           end
           div(class: 'flex items-center gap-x-2 pl-2') do
             div(class: 'hidden md:block') do
               if current_user
-                  render Shared::AccountDropdown.new
+                  render Shared::AccountDropdown.new do
+                    render PhlexUI::Button.new(variant: :ghost, class: 'hidden sm:inline-flex') do
+                        plain "Account"
+                        chevron_down_icon
+                    end
+                  end
               else
                 render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
               end
@@ -92,6 +102,8 @@ class Shared::Navbar < ApplicationComponent
     end
   end
 
+  private
+
   def arrow_right_icon
     svg(
       xmlns: "http://www.w3.org/2000/svg",
@@ -103,6 +115,38 @@ class Shared::Navbar < ApplicationComponent
         fill_rule: "evenodd",
         d:
           "M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z",
+        clip_rule: "evenodd"
+      )
+    end
+  end
+
+  def chevron_down_icon
+      svg(
+          xmlns: "http://www.w3.org/2000/svg",
+          viewbox: "0 0 20 20",
+          fill: "currentColor",
+          class: "w-4 h-4 ml-1 -mr-1"
+      ) do |s|
+          s.path(
+              fill_rule: "evenodd",
+              d:
+              "M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z",
+              clip_rule: "evenodd"
+          )
+      end
+  end
+
+  def account_icon
+    svg(
+      xmlns: "http://www.w3.org/2000/svg",
+      viewbox: "0 0 24 24",
+      fill: "currentColor",
+      class: "w-5 h-5"
+    ) do |s|
+      s.path(
+        fill_rule: "evenodd",
+        d:
+          "M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z",
         clip_rule: "evenodd"
       )
     end
