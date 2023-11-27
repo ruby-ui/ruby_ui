@@ -19,7 +19,7 @@ class Shared::Navbar < ApplicationComponent
           end
           div(class: 'flex items-center gap-x-2 pl-2') do
             if helpers.session[:user_id]
-              render PhlexUI::Link.new(href: helpers.signin_path, variant: :ghost, data: { turbo_method: :delete }, class: 'hidden sm:inline-block') { "Sign out" }
+              render Shared::AccountDropdown.new(user_id: helpers.session[:user_id])
             else
               render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
             end
