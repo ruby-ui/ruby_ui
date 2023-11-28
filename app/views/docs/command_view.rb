@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class Docs::CommandView < ApplicationView
+  def initialize
+    @premium = true
+  end
+
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render Docs::PremiumBadge.new
-        render PhlexUI::Typography::H1.new { "Command" }
-        render PhlexUI::Typography::P.new { "Fast, composable, unstyled command menu for Phlex." }
-      end
+      render Docs::Header.new(title: "Command", description: "Fast, composable, unstyled command menu for Phlex.", premium: @premium)
 
-      render Docs::VisualCodeExample.new(title: "Example", locked: true, context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", context: self, premium: @premium) do
         <<~RUBY
           render PhlexUI::Command::Dialog.new do
             render PhlexUI::Command::DialogTrigger.new do
@@ -54,7 +54,7 @@ class Docs::CommandView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "With keybinding", locked: true, context: self) do
+      render Docs::VisualCodeExample.new(title: "With keybinding", context: self, premium: @premium) do
         <<~RUBY
           render PhlexUI::Command::Dialog.new do
             render PhlexUI::Command::DialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do

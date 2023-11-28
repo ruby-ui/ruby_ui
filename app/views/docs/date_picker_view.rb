@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class Docs::DatePickerView < ApplicationView
+  def initialize
+    @premium = true
+  end
+
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render Docs::PremiumBadge.new
-        render PhlexUI::Typography::H1.new { "Date Picker" }
-        render PhlexUI::Typography::P.new { "A date picker component with input." }
-      end
+      render Docs::Header.new(title: "Date Picker", description: "A date picker component with input.", premium: @premium)
 
-      render Docs::VisualCodeExample.new(title: 'Single Date', locked: true, context: self) do
+      render Docs::VisualCodeExample.new(title: 'Single Date', context: self, premium: @premium) do
         <<~RUBY
           div(class: 'space-y-4 w-[200px]') do
             render PhlexUI::Popover.new(options: { trigger: 'focusin' }) do

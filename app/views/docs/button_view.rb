@@ -3,10 +3,7 @@
 class Docs::ButtonView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Button" }
-        render PhlexUI::Typography::P.new { "Displays a button or a component that looks like a button." }
-      end
+      render Docs::Header.new(title: "Button", description: "Displays a button or a component that looks like a button.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

@@ -3,16 +3,13 @@
 class Docs::HoverCardView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Hover Card" }
-        render PhlexUI::Typography::P.new { "For sighted users to preview content available behind a link." }
-      end
+      render Docs::Header.new(title: "Hover Card", description: "For sighted users to preview content available behind a link.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           render PhlexUI::HoverCard.new do
             render PhlexUI::HoverCard::Trigger.new do
-              render PhlexUI::Button.new(variant: :link) { "@joeldrapper" }
+              render PhlexUI::Button.new(variant: :link) { "@joeldrapper" } # Make this a link in order to navigate somewhere
             end
             render PhlexUI::HoverCard::Content.new do
               hover_card_content # -- Replace with your own content --

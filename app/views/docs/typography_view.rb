@@ -3,10 +3,7 @@
 class Docs::TypographyView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Typography" }
-        render PhlexUI::Typography::P.new { "Sensible defaults to use for text." }
-      end
+      render Docs::Header.new(title: "Typography", description: "Sensible defaults to use for text.")
 
       render Docs::VisualCodeExample.new(title: "h1", context: self) do
         <<~RUBY

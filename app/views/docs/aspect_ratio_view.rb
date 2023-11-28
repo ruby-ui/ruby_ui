@@ -3,10 +3,7 @@
 class Docs::AspectRatioView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Aspect Ratio" }
-        render PhlexUI::Typography::P.new { "Displays content within a desired ratio." }
-      end
+      render Docs::Header.new(title: "Aspect Ratio", description: "Displays content within a desired ratio.")
 
       render Docs::VisualCodeExample.new(title: "16/9", context: self) do
         <<~RUBY

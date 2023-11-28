@@ -5,10 +5,7 @@ class Docs::TabsView < ApplicationView
 
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Tabs" }
-        render PhlexUI::Typography::P.new { "A set of layered sections of content—known as tab panels—that are displayed one at a time." }
-      end
+      render Docs::Header.new(title: "Tabs", description: "A set of layered sections of content—known as tab panels—that are displayed one at a time.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

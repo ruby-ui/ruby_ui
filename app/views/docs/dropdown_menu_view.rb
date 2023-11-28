@@ -3,10 +3,7 @@
 class Docs::DropdownMenuView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Dropdown Menu" }
-        render PhlexUI::Typography::P.new { "Displays a menu to the user — such as a set of actions or functions — triggered by a button." }
-      end
+      render Docs::Header.new(title: "Dropdown Menu", description: "Displays a menu to the user — such as a set of actions or functions — triggered by a button.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

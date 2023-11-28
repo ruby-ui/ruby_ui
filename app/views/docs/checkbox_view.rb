@@ -3,10 +3,7 @@
 class Docs::CheckboxView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Checkbox" }
-        render PhlexUI::Typography::P.new { "A control that allows the user to toggle between checked and not checked." }
-      end
+      render Docs::Header.new(title: "Checkbox", description: "A control that allows the user to toggle between checked and not checked.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

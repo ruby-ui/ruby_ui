@@ -3,10 +3,7 @@
 class Docs::DialogView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Dialog" }
-        render PhlexUI::Typography::P.new { "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert." }
-      end
+      render Docs::Header.new(title: "Dialog", description: "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

@@ -3,10 +3,7 @@
 class Docs::CodeblockView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Codeblock" }
-        render PhlexUI::Typography::P.new { "A component for displaying highlighted code." }
-      end
+      render Docs::Header.new(title: "Codeblock", description: "A component for displaying highlighted code.")
 
       render Docs::VisualCodeExample.new(title: "With clipboard", context: self) do
         <<~RUBY

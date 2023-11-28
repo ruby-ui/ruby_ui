@@ -3,10 +3,7 @@
 class Docs::LinkView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Link" }
-        render PhlexUI::Typography::P.new { "Displays a link that looks like a button or underline link." }
-      end
+      render Docs::Header.new(title: "Link", description: "Displays a link that looks like a button or underline link.")
 
       render Docs::VisualCodeExample.new(title: "Example", description: "This is the default appearance of a Link", context: self) do
         <<~RUBY

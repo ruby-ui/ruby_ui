@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Docs::VisualCodeExample < ApplicationComponent
-    def initialize(title: nil, description: nil, context: nil, locked: false)
+    def initialize(title: nil, description: nil, context: nil, premium: false)
         @title = title
         @description = description
-        @locked = locked
+        @premium = premium
         @context = context
     end
 
@@ -16,14 +16,14 @@ class Docs::VisualCodeExample < ApplicationComponent
                 render PhlexUI::Tabs.new(default_value: "preview") do
                     div(class: 'flex justify-between items-end mb-4 gap-x-2') do
                         render_header
-                        div(class: 'flex-grow') # Spacer 
-                        if @locked
+                        div(class: 'flex-grow') # Spacer
+                        if locked?
                             render_unlock_component
                         else
                             render_tab_triggers
                         end
                     end
-                    if @locked
+                    if locked?
                         render_preview_tab(&block)
                     else
                         render_tab_contents(&block)
@@ -61,7 +61,7 @@ class Docs::VisualCodeExample < ApplicationComponent
             if @title
                 div(class: 'flex items-center gap-x-2 mb-1') do
                     render PhlexUI::Typography::H4.new { @title.capitalize }
-                    render PhlexUI::Badge.new(variant: :secondary, size: :sm) { "Preview" } if @locked
+                    render PhlexUI::Badge.new(variant: :outline, size: :sm) { "Preview" } if locked?
                 end
             end
             p { @description } if @description
@@ -100,6 +100,12 @@ class Docs::VisualCodeExample < ApplicationComponent
         div(class: 'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border') do
             render PhlexUI::Codeblock.new(@display_code, syntax: :ruby, class: '-m-px')
         end
+    end
+
+    def locked?
+        return false unless @premium
+        return true if current_user.nil?
+        current_user.not_subscribed?
     end
 
     def eye_icon

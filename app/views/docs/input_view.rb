@@ -3,10 +3,7 @@
 class Docs::InputView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Input" }
-        render PhlexUI::Typography::P.new { "Displays a form input field or a component that looks like an input field." }
-      end
+      render Docs::Header.new(title: "Input", description: "Displays a form input field or a component that looks like an input field.")
 
       render Docs::VisualCodeExample.new(title: 'Email', context: self) do
         <<~RUBY

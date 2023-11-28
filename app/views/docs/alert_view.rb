@@ -3,10 +3,7 @@
 class Docs::AlertView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Alert" }
-        render PhlexUI::Typography::P.new { "Displays a callout for user attention." }
-      end
+      render Docs::Header.new(title: "Alert", description: "Displays a callout for user attention.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

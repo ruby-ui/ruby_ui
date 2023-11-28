@@ -3,10 +3,7 @@
 class Docs::CardView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Card" }
-        render PhlexUI::Typography::P.new { "Displays a card with header, content, and footer." }
-      end
+      render Docs::Header.new(title: "Card", description: "Displays a card with header, content, and footer.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

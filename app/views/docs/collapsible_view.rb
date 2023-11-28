@@ -3,10 +3,7 @@
 class Docs::CollapsibleView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Typography::H1.new { "Collapsible" }
-        render PhlexUI::Typography::P.new { "An interactive component which expands/collapses a panel." }
-      end
+      render Docs::Header.new(title: "Collapsible", description: "An interactive component which expands/collapses a panel.")
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
