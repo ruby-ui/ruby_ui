@@ -16,9 +16,11 @@ class Shared::Navbar < ApplicationComponent
           div(class: 'flex items-center') do
             twitter_link
             dark_mode_toggle
-            render Shared::AccountDropdown.new do
-              render PhlexUI::Button.new(variant: :ghost, icon: true) do
-                account_icon
+            div(class: 'md:hidden') do
+              render Shared::AccountDropdown.new do
+                render PhlexUI::Button.new(variant: :ghost, icon: true) do
+                  account_icon
+                end
               end
             end
           end
