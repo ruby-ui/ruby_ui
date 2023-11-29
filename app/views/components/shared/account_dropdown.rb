@@ -17,10 +17,8 @@ class Shared::AccountDropdown < ApplicationComponent
                     render PhlexUI::DropdownMenu::Item.new(href: helpers.license_path) { "License" }
                     render PhlexUI::DropdownMenu::Separator.new
                     case current_user&.plan
-                    when "personal"
-                        render PhlexUI::DropdownMenu::Item.new(href: ENV['TEAM_STRIPE_LINK']) { "Upgrade to Team license" }
-                    when "team"
-                        render PhlexUI::DropdownMenu::Item.new(href: "#") { "Add team members" }
+                    when "personal", "team"
+                        render PhlexUI::DropdownMenu::Item.new(href: helpers.account_path) { "Account" }
                     else
                         render PhlexUI::DropdownMenu::Item.new(href: helpers.root_path(anchor: :pricing)) { "Get all access" }
                     end
