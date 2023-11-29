@@ -11,4 +11,8 @@ class PagesController < ApplicationController
   def license
     render Pages::LicenseView.new
   end
+
+  def support
+    render Pages::SupportView.new
+  end
 end

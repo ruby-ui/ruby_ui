@@ -13,7 +13,7 @@ class Shared::AccountDropdown < ApplicationComponent
                         p(class: 'text-sm font-medium') { current_user&.email }
                     end
                     render PhlexUI::DropdownMenu::Separator.new
-                    render PhlexUI::DropdownMenu::Item.new(href: "#") { "Support" }
+                    render PhlexUI::DropdownMenu::Item.new(href: helpers.support_path) { "Support" }
                     render PhlexUI::DropdownMenu::Item.new(href: helpers.license_path) { "License" }
                     render PhlexUI::DropdownMenu::Separator.new
                     case current_user&.plan

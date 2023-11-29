@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'license', to: 'pages#license', as: :license
+  get 'support', to: 'pages#support', as: :support
 
   match "signin/authenticate", to: "signins#authenticate", via: [:get, :post], as: :signin_authenticate
   match "signin/check_your_email", to: "signins#check_your_email", via: [:get, :post], as: :signin_check_your_email
