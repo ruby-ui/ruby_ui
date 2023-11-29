@@ -16,7 +16,7 @@ class Shared::GridPattern < ApplicationComponent
     def template
         svg(
             class:
-                "absolute inset-0 -z-10 h-full w-full stroke-border [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]",
+                "absolute inset-0 -z-10 h-screen w-full stroke-border [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]",
             aria_hidden: "true"
         ) do |s|
             s.defs do

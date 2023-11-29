@@ -14,7 +14,7 @@ class Shared::AccountDropdown < ApplicationComponent
                     end
                     render PhlexUI::DropdownMenu::Separator.new
                     render PhlexUI::DropdownMenu::Item.new(href: "#") { "Support" }
-                    render PhlexUI::DropdownMenu::Item.new(href: "#") { "License" }
+                    render PhlexUI::DropdownMenu::Item.new(href: helpers.license_path) { "License" }
                     render PhlexUI::DropdownMenu::Separator.new
                     case current_user&.plan
                     when "personal"
