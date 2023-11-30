@@ -1,17 +1,17 @@
 module Payment
-    class CheckoutSessionCompleted
+    class SyncCheckoutSessionWithUser
         PLAN_TYPES = {
             ENV['STRIPE_PERSONAL_PRODUCT_ID'] => 'personal',
             ENV['STRIPE_TEAM_PRODUCT_ID'] => 'team'
         }
         
-        def initialize(event)
-            @event = event
+        def initialize(id)
+            @id = id
         end
 
         def call
             checkout_session = Stripe::Checkout::Session.retrieve({
-                id: @event.data.object.id,
+                id: @id,
                 expand: ['line_items']
             })
             email = checkout_session.customer_details.email

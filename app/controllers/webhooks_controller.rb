@@ -9,7 +9,7 @@ class WebhooksController < ApplicationController
 
         begin
             event = Stripe::Event.construct_from(
-            JSON.parse(payload, symbolize_names: true)
+                JSON.parse(payload, symbolize_names: true)
             )
         rescue JSON::ParserError => e
             # Invalid payload
@@ -45,6 +45,7 @@ class WebhooksController < ApplicationController
     private
 
     def handle_checkout_session_completed(event)
-        Payment::CheckoutSessionCompleted.new(event).call
+        id = event.data.object.id
+        Payment::SyncCheckoutSessionWithUser.new(id).call
     end
 end
