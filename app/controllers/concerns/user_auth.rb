@@ -3,6 +3,7 @@ module UserAuth
 
     included do
         before_action :authenticate_user!
+        attr_reader :current_user
     end
 
     def authenticate_user!

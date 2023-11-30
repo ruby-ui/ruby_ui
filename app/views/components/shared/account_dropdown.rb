@@ -18,7 +18,7 @@ class Shared::AccountDropdown < ApplicationComponent
                     render PhlexUI::DropdownMenu::Separator.new
                     case current_user&.plan
                     when "personal", "team"
-                        render PhlexUI::DropdownMenu::Item.new(href: helpers.account_path) { "Account" }
+                        render PhlexUI::DropdownMenu::Item.new(href: helpers.account_path) { "Account Settings" }
                     else
                         render PhlexUI::DropdownMenu::Item.new(href: helpers.root_path(anchor: :pricing)) { "Get all access" }
                     end

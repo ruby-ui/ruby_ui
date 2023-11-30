@@ -10,7 +10,7 @@ class Signins::NewView < ApplicationView
             render PhlexUI::Form.new(action: helpers.signin_path, method: :post, class: 'w-full') do |f|
                 render PhlexUI::Input.new(type: "hidden", value: @redirect_path, name: "redirect_path")
                 render PhlexUI::Form::Spacer.new do
-                    f.input :email, type: "email", placeholder: "Email"
+                    f.input :email, type: "email", placeholder: "Email", value: helpers.params[:email] || "", required: true
                     render PhlexUI::Button.new(type: "submit", class: "w-full") { "Send sign-in link" }
                 end
             end
