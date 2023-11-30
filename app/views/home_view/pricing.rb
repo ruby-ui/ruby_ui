@@ -62,7 +62,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
-                        render PhlexUI::Link.new(variant: :primary, href: ENV['PERSONAL_STRIPE_LINK'], class: 'w-full justify-center') { "Pay now" }
+                        render PhlexUI::Link.new(variant: :primary, href: personal_stripe_link, class: 'w-full justify-center') { "Pay now" }
                         p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
@@ -179,7 +179,7 @@ class HomeView::Pricing < ApplicationComponent
                         end
                     end
                     div(class: 'flex flex-col gap-y-2') do
-                        render PhlexUI::Link.new(variant: :primary, href: ENV['TEAM_STRIPE_LINK'], class: 'w-full justify-center') { "Pay now" }
+                        render PhlexUI::Link.new(variant: :primary, href: team_stripe_link, class: 'w-full justify-center') { "Pay now" }
                         p(class: 'text-sm text-center text-muted-foreground') { "Lifetime access.  Unlimited projects.  Free updates." }
                     end
                 end
@@ -247,6 +247,22 @@ class HomeView::Pricing < ApplicationComponent
                 h3(class: "font-semibold leading-none tracking-tight") { name } if name
                 p(class: 'text-muted-foreground') { description } if description
             end
+        end
+    end
+
+    def personal_stripe_link
+        if current_user
+            ENV['PERSONAL_STRIPE_LINK'] + "?prefilled_email=#{current_user.email}"
+        else
+            ENV['PERSONAL_STRIPE_LINK']
+        end
+    end
+
+    def team_stripe_link
+        if current_user
+            ENV['TEAM_STRIPE_LINK'] + "?prefilled_email=#{current_user.email}"
+        else
+            ENV['TEAM_STRIPE_LINK']
         end
     end
 end
