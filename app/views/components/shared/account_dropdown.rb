@@ -16,11 +16,8 @@ class Shared::AccountDropdown < ApplicationComponent
                     render PhlexUI::DropdownMenu::Item.new(href: helpers.support_path) { "Support" }
                     render PhlexUI::DropdownMenu::Item.new(href: helpers.license_path) { "License" }
                     render PhlexUI::DropdownMenu::Separator.new
-                    case current_user&.plan
-                    when "personal", "team"
+                    if current_user
                         render PhlexUI::DropdownMenu::Item.new(href: helpers.account_path) { "Account Settings" }
-                    else
-                        render PhlexUI::DropdownMenu::Item.new(href: helpers.root_path(anchor: :pricing)) { "Get all access" }
                     end
                     render PhlexUI::DropdownMenu::Separator.new
                     render PhlexUI::DropdownMenu::Item.new(href: helpers.signin_path, data: { turbo_method: :delete }) { "Sign out" }

@@ -9,7 +9,7 @@ class Accounts::ShowView < ApplicationView
       end
       account_details
       current_plan
-      upgrade_plan if ["free", "personal"].include?(current_user.plan)
+      upgrade_plan if ["free", "personal"].include?(current_user.plan) && !current_user.is_team_member?
       invite_team_members if current_user.plan == "team"
     end
   end
@@ -33,10 +33,18 @@ class Accounts::ShowView < ApplicationView
   def current_plan
     div(class: 'space-y-4') do
       render PhlexUI::Typography::H2.new(class: 'text-xl') { "Current plan" }
-      render PhlexUI::Typography::P.new(class: 'text-muted-foreground')  do
-        plain "Currently you are on the "
-        render PhlexUI::Badge.new(variant: :primary, size: :sm) { current_user.plan.capitalize }
-        plain " plan."
+      if current_user.is_team_member?
+        render PhlexUI::Typography::P.new(class: 'text-muted-foreground') do
+          plain "You are currently a team member of "
+          render PhlexUI::Badge.new(variant: :primary, size: :sm) { current_user.team_member&.user&.email }
+          plain " and have access to all components."
+        end
+      else
+        render PhlexUI::Typography::P.new(class: 'text-muted-foreground')  do
+          plain "Currently you are on the "
+          render PhlexUI::Badge.new(variant: :primary, size: :sm) { current_user.plan.capitalize }
+          plain " plan."
+        end
       end
     end
   end

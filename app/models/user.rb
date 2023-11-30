@@ -14,13 +14,17 @@ class User < ApplicationRecord
         !subscribed?
     end
 
+    def is_team_member?
+        TeamMember.exists?(email: email)
+    end
+
+    def team_member
+        TeamMember.find_by(email: email)
+    end
+
     private
 
     def team_members_limit
         errors.add(:team_members, "limit is 25") if team_members.size > 25
-    end
-
-    def is_team_member?
-        TeamMember.exists?(email: email)
     end
 end
