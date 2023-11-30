@@ -37,8 +37,7 @@ class Shared::Navbar < ApplicationComponent
                 render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
               end
             end
-            case current_user&.plan
-            when "free", nil
+            if current_user.nil? || current_user.not_subscribed?
               render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
                 plain "Get all access"
                 arrow_right_icon
