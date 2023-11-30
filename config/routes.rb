@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   resource :webhooks, only: [:create]
 
   scope 'docs' do
+    # GETTING STARTED
+    get 'installation', to: 'docs#installation', as: :docs_installation
+    
+    # COMPONENTS
     get 'accordion', to: 'docs#accordion', as: :docs_accordion
     get 'alert', to: 'docs#alert_component', as: :docs_alert # alert is a reserved word for controller action
     get 'alert_dialog', to: 'docs#alert_dialog', as: :docs_alert_dialog

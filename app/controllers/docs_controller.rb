@@ -4,6 +4,12 @@ class DocsController < ApplicationController
   layout -> { DocsLayout }
   skip_before_action :authenticate_user!
 
+  # GETTING STARTED
+  def installation
+    render Docs::InstallationView.new
+  end
+
+  # COMPONENTS
   def accordion
     render Docs::AccordionView.new
   end

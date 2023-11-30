@@ -8,9 +8,8 @@ class Shared::Navbar < ApplicationComponent
           render Shared::MobileMenu.new(class: 'md:hidden')
           render Shared::Logo.new
 
-          render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden sm:inline-block')  do
-            "Components"
-          end
+          render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden sm:inline-block') { "Components" }
+          render PhlexUI::Link.new(href: helpers.docs_installation_path, variant: :ghost, class: 'hidden sm:inline-block') { "Docs" }
         end
         div(class: 'flex items-center gap-x-2 md:divide-x') do
           div(class: 'flex items-center') do
