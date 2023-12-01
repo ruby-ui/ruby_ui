@@ -7,7 +7,15 @@ class Shared::Menu < ApplicationComponent
             h4(class: 'mb-1 mt-4 md:mt-0 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
             div(class: 'grid grid-flow-row auto-rows-max text-sm') do
                 getting_started_links.each do |getting_started|
-                    component_link(getting_started)
+                    menu_link(getting_started)
+                end
+            end
+
+            # INSTALLATION
+            h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Installation" }
+            div(class: 'grid grid-flow-row auto-rows-max text-sm') do
+                installation_links.each do |installation|
+                    menu_link(installation)
                 end
             end
 
@@ -18,7 +26,7 @@ class Shared::Menu < ApplicationComponent
             end
             div(class: 'grid grid-flow-row auto-rows-max text-sm') do
                 components.each do |component|
-                    component_link(component)
+                    menu_link(component)
                 end
             end
 
@@ -42,7 +50,7 @@ class Shared::Menu < ApplicationComponent
             end
             div(class: 'grid grid-flow-row auto-rows-max text-sm') do
                 components_coming_soon.each do |component|
-                    component_link(component)
+                    menu_link(component)
                 end
             end
         end
@@ -51,6 +59,12 @@ class Shared::Menu < ApplicationComponent
     def getting_started_links
         [
             { name: "Installation", path: helpers.docs_installation_path },
+        ]
+    end
+
+    def installation_links
+        [
+            { name: "Rails", path: helpers.docs_installation_rails_path },
         ]
     end
 
@@ -119,7 +133,7 @@ class Shared::Menu < ApplicationComponent
         ]
     end
 
-    def component_link(component)
+    def menu_link(component)
         component[:premium] ||= false
         current_path = component[:path] == helpers.request.path
         return a(href: component[:path], class: tokens('group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline', -> { current_path } => "text-foreground font-medium", -> { !current_path } => "text-muted-foreground")) do

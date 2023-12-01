@@ -6,7 +6,12 @@ class DocsController < ApplicationController
 
   # GETTING STARTED
   def installation
-    render Docs::InstallationView.new
+    render Docs::GettingStarted::InstallationView.new
+  end
+
+  # INSTALLATION
+  def installation_rails
+    render Docs::Installation::RailsView.new
   end
 
   # COMPONENTS

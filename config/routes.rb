@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   scope 'docs' do
     # GETTING STARTED
     get 'installation', to: 'docs#installation', as: :docs_installation
+
+    # INSTALLATION
+    get 'installation/rails', to: 'docs#installation_rails', as: :docs_installation_rails
     
     # COMPONENTS
     get 'accordion', to: 'docs#accordion', as: :docs_accordion
