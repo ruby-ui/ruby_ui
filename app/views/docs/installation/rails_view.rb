@@ -160,13 +160,7 @@ class Docs::Installation::RailsView < ApplicationView
               plain " file"
             end
 
-            render PhlexUI::Alert.new(variant: :warning) do
-              info_icon
-              render PhlexUI::Alert::Title.new { "Tip for using Pro Version" }
-              render PhlexUI::Alert::Description.new { "Make sure you uncomment the necessary lines after updating your tailwind.config.js" }
-            end
-
-            code = tailwind_config
+            code = current_user&.subscribed? ? tailwind_config_pro : tailwind_config
             render PhlexUI::Codeblock.new(code, syntax: :javascript)
           end
         end
@@ -230,27 +224,9 @@ class Docs::Installation::RailsView < ApplicationView
   def phlex_ui_js_installation(plan)
     case plan
     when "free"
-      render PhlexUI::Typography::P.new do
-        plain "Firstly, we must tell yarn where to source this package from. So let's create a "
-        render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { ".yarnrc" }
-        plain " file"
-      end
-      code = <<~CODE
-          touch .yarnrc
-        CODE
-      render PhlexUI::Codeblock.new(code, syntax: :javascript)
-      render PhlexUI::Typography::P.new do
-        plain "In the "
-        render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { ".yarnrc" }
-        plain " file, let's add the following source"
-      end
-      code = <<~CODE
-          registry=https://npm-proxy.fury.io/phlexui/
-        CODE
-      render PhlexUI::Codeblock.new(code, syntax: :javascript)
       render PhlexUI::Typography::P.new { "Run the following in the terminal to install PhlexUI JS package" }
       code = <<~CODE 
-          yarn add phlex_ui
+          yarn add phlex_ui --registry https://npm-proxy.fury.io/phlexui/
         CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
       render PhlexUI::Typography::P.new do
@@ -265,16 +241,16 @@ class Docs::Installation::RailsView < ApplicationView
     when "pro"
       render PhlexUI::Typography::P.new do
         plain "First we must tell yarn where to source this package from. So let's create a "
-        render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { ".yarnrc" }
+        render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { ".npmrc" }
         plain " file"
       end
       code = <<~CODE
-          touch .yarnrc
+          touch .npmrc
         CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
       render PhlexUI::Typography::P.new do
         plain "In the "
-        render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { ".yarnrc" }
+        render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { ".npmrc" }
         plain " file, let's add the following code to tell yarn where to source the package from. We will also tell yarn to use our license key for authentication"
       end
       code = <<~CODE
@@ -340,20 +316,16 @@ class Docs::Installation::RailsView < ApplicationView
       const outputPhlexUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
       const phlex_ui_path = outputPhlexUI.trim() + '/**/*.rb';
 
-      // Import phlex_ui_pro gem path (To make sure Tailwind loads classes used by phlex_ui_pro gem)
-      // Uncomment the next 2 lines if you are using the pro version
-      // const outputPhlexUIPro = execSync('bundle show phlex_ui_pro', { encoding: 'utf-8' });
-      // const phlex_ui_pro_path = outputPhlexUIPro.trim() + '/**/*.rb';
-
       const defaultTheme = require('tailwindcss/defaultTheme')
 
       module.exports = {
         darkMode: ["class"],
         content: [
-          // ... All other paths
-          phlex_ui_path,
-          // Uncomment the next line if you are using the pro version
-          // phlex_ui_pro_path
+          './app/views/**/*.{erb,haml,html,slim,rb}',
+          './app/helpers/**/*.rb',
+          './app/assets/stylesheets/**/*.css',
+          './app/javascript/**/*.js',
+          phlex_ui_path
         ],
         theme: {
           container: {
@@ -405,7 +377,93 @@ class Docs::Installation::RailsView < ApplicationView
               sm: "calc(var(--radius) - 4px)",
             },
             fontFamily: {
-              sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
+              sans: defaultTheme.fontFamily.sans,
+            },
+          },
+        },
+        plugins: [
+          require("tailwindcss-animate"),
+        ],
+      }
+    CODE
+  end
+
+  def tailwind_config_pro
+    <<~CODE
+      // For importing tailwind styles from phlex_ui/phlex_ui_pro gem
+      const execSync = require('child_process').execSync;
+
+      // Import phlex_ui gem path (To make sure Tailwind loads classes used by phlex_ui gem)
+      const outputPhlexUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
+      const phlex_ui_path = outputPhlexUI.trim() + '/**/*.rb';
+
+      // Import phlex_ui_pro gem path (To make sure Tailwind loads classes used by phlex_ui_pro gem)
+      const outputPhlexUIPro = execSync('bundle show phlex_ui_pro', { encoding: 'utf-8' });
+      const phlex_ui_pro_path = outputPhlexUIPro.trim() + '/**/*.rb';
+
+      const defaultTheme = require('tailwindcss/defaultTheme')
+
+      module.exports = {
+        darkMode: ["class"],
+        content: [
+          './app/views/**/*.{erb,haml,html,slim,rb}',
+          './app/helpers/**/*.rb',
+          './app/assets/stylesheets/**/*.css',
+          './app/javascript/**/*.js',
+          phlex_ui_path,
+          phlex_ui_pro_path
+        ],
+        theme: {
+          container: {
+            center: true,
+            padding: "2rem",
+            screens: {
+              "2xl": "1400px",
+            },
+          },
+          extend: {
+            colors: {
+              border: "hsl(var(--border))",
+              input: "hsl(var(--input))",
+              ring: "hsl(var(--ring))",
+              background: "hsl(var(--background))",
+              foreground: "hsl(var(--foreground))",
+              primary: {
+                DEFAULT: "hsl(var(--primary))",
+                foreground: "hsl(var(--primary-foreground))",
+              },
+              secondary: {
+                DEFAULT: "hsl(var(--secondary))",
+                foreground: "hsl(var(--secondary-foreground))",
+              },
+              destructive: {
+                DEFAULT: "hsl(var(--destructive))",
+                foreground: "hsl(var(--destructive-foreground))",
+              },
+              warning: {
+                DEFAULT: "hsl(var(--warning))",
+                foreground: "hsl(var(--warning-foreground))",
+              },
+              success: {
+                DEFAULT: "hsl(var(--success))",
+                foreground: "hsl(var(--success-foreground))",
+              },
+              muted: {
+                DEFAULT: "hsl(var(--muted))",
+                foreground: "hsl(var(--muted-foreground))",
+              },
+              accent: {
+                DEFAULT: "hsl(var(--accent))",
+                foreground: "hsl(var(--accent-foreground))",
+              },
+            },
+            borderRadius: {
+              lg: `var(--radius)`,
+              md: `calc(var(--radius) - 2px)`,
+              sm: "calc(var(--radius) - 4px)",
+            },
+            fontFamily: {
+              sans: defaultTheme.fontFamily.sans,
             },
           },
         },
@@ -445,7 +503,6 @@ class Docs::Installation::RailsView < ApplicationView
           --input: 0 0% 89.8%;
           --ring: 0 0% 3.9%;
           --radius: 0.5rem;
-          --font-sans: 'General Sans';
         }
       
         .dark {
