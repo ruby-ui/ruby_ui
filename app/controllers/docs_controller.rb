@@ -9,6 +9,10 @@ class DocsController < ApplicationController
     render Docs::GettingStarted::InstallationView.new
   end
 
+  def theming
+    render Docs::GettingStarted::ThemingView.new
+  end
+
   # INSTALLATION
   def installation_rails
     render Docs::Installation::RailsView.new

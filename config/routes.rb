@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   scope 'docs' do
     # GETTING STARTED
     get 'installation', to: 'docs#installation', as: :docs_installation
+    get 'theming', to: 'docs#theming', as: :docs_theming
 
     # INSTALLATION
     get 'installation/rails', to: 'docs#installation_rails', as: :docs_installation_rails
