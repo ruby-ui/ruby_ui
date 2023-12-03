@@ -60,6 +60,7 @@ class Shared::Menu < ApplicationComponent
         [
             { name: "Installation", path: helpers.docs_installation_path },
             { name: "Theming", path: helpers.docs_theming_path },
+            { name: "Dark mode", path: helpers.docs_dark_mode_path },
         ]
     end
 

@@ -13,6 +13,10 @@ class DocsController < ApplicationController
     render Docs::GettingStarted::ThemingView.new
   end
 
+  def dark_mode
+    render Docs::GettingStarted::DarkModeView.new
+  end
+
   # INSTALLATION
   def installation_rails
     render Docs::Installation::RailsView.new

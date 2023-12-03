@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     # GETTING STARTED
     get 'installation', to: 'docs#installation', as: :docs_installation
     get 'theming', to: 'docs#theming', as: :docs_theming
+    get 'dark_mode', to: 'docs#dark_mode', as: :docs_dark_mode
 
     # INSTALLATION
     get 'installation/rails', to: 'docs#installation_rails', as: :docs_installation_rails
