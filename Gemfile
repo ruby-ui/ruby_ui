@@ -81,6 +81,6 @@ gem "letter_opener", group: :development
 gem 'postmark-rails' # used in production
 
 gem "phlex-rails"
-gem "phlex_ui_pro", "~> 0.1.1", source: 'https://phlexui.fury.site/gem/'
-# gem "phlex_ui", path: '../phlex_ui_gem'
-# gem "phlex_ui_pro", path: '../phlex_ui_gem_pro'
+# gem "phlex_ui_pro", "~> 0.1.1", source: 'https://phlexui.fury.site/gem/'
+gem "phlex_ui", path: '../phlex_ui_gem'
+gem "phlex_ui_pro", path: '../phlex_ui_gem_pro'

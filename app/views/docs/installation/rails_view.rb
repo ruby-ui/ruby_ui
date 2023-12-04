@@ -64,7 +64,7 @@ class Docs::Installation::RailsView < ApplicationView
         steps.add_step do
           step_container do
             render PhlexUI::Typography::Large.new { "Install PhlexUI gem" }
-            render PhlexUI::Tabs.new(data_tabs_active_value: free_or_pro) do
+            render PhlexUI::Tabs.new(default: free_or_pro) do
               render PhlexUI::Tabs::List.new do
                 render PhlexUI::Tabs::Trigger.new(value: "free", class: 'w-24') { "Free" }
                 render PhlexUI::Tabs::Trigger.new(value: "pro", class: 'w-24') { "Pro" }
@@ -100,7 +100,7 @@ class Docs::Installation::RailsView < ApplicationView
         steps.add_step do
           step_container do
             render PhlexUI::Typography::Large.new { "Install PhlexUI package" }
-            render PhlexUI::Tabs.new(data_tabs_active_value: free_or_pro) do
+            render PhlexUI::Tabs.new(default: free_or_pro) do
               render PhlexUI::Tabs::List.new do
                 render PhlexUI::Tabs::Trigger.new(value: "free", class: 'w-24') { "Free" }
                 render PhlexUI::Tabs::Trigger.new(value: "pro", class: 'w-24') { "Pro" }

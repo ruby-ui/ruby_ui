@@ -36,7 +36,7 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
           render PhlexUI::Typography::InlineCode.new { "ToggleThemeController" }
           plain " Stimulus controller."
         end
-        render PhlexUI::Alert.new(class: 'bg-transparent') do
+        render PhlexUI::Alert.new do
           render PhlexUI::Alert::Title.new { "Pro tip" }
           render PhlexUI::Alert::Description.new do
             plain "You can hide the theme toggle on specific pages using classes, like so: "

@@ -103,6 +103,47 @@ class Docs::TabsView < ApplicationView
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Change default value", context: self) do
+        <<~RUBY
+          render PhlexUI::Tabs.new(default: "password", class: 'w-96') do
+            render PhlexUI::Tabs::List.new do
+              render PhlexUI::Tabs::Trigger.new(value: "account") { "Account" }
+              render PhlexUI::Tabs::Trigger.new(value: "password") { "Password" }
+            end
+            render PhlexUI::Tabs::Content.new(value: "account") do
+              div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
+                div(class: "space-y-0") do
+                  render PhlexUI::Typography::Large.new { "Account" }
+                  render PhlexUI::Typography::Muted.new { "Update your account details." }
+                end
+                render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
+                  render PhlexUI::Form::Spacer.new do
+                    f.input "name", type: :string, value: "Joel Drapper"
+                    f.input "username", type: :email, value: "@joeldrapper"
+                    f.button { "Save changes" }
+                  end
+                end
+              end
+            end
+            render PhlexUI::Tabs::Content.new(value: "password") do
+              div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
+                div do
+                  render PhlexUI::Typography::Large.new { "Password" }
+                  render PhlexUI::Typography::Muted.new { "Change your password here. After saving, you'll be logged out." }
+                end
+                render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
+                  render PhlexUI::Form::Spacer.new do
+                    f.input "current", type: :string, label: "Current password"
+                    f.input "new", type: :email, label: "New password"
+                    f.button { "Save password" }
+                  end
+                end
+              end
+            end
+          end
+        RUBY
+      end
+
       render Docs::InstallationInstructionsComingSoon.new
     end
   end
