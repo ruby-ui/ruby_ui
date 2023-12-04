@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'license', to: 'pages#license', as: :license
   get 'support', to: 'pages#support', as: :support
 
-  get 'account', to: 'accounts#show', as: :account
+  resource :account, only: [:show, :update]
   resources :team_members, only: [:create, :destroy]
 
   match "signin/authenticate", to: "signins#authenticate", via: [:get, :post], as: :signin_authenticate

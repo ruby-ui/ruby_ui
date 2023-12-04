@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+    include AfterSaveProvideGithubAccess
+
     has_many :team_members, dependent: :destroy
     
     validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }

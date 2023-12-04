@@ -2,6 +2,7 @@
 
 class Shared::Navbar < ApplicationComponent
   def template
+    access_github_banner if current_user&.subscribed? && current_user&.github_username.blank?
     header(class: 'supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-2xl backdrop-saturate-200') do
       div(class: 'px-2 sm:px-4 sm:container flex h-14 items-center justify-between') do
         div(class: 'mr-4 flex items-center') do
@@ -14,6 +15,7 @@ class Shared::Navbar < ApplicationComponent
         div(class: 'flex items-center gap-x-2 md:divide-x') do
           div(class: 'flex items-center') do
             twitter_link
+            github_link
             dark_mode_toggle
             div(class: 'md:hidden') do
               render Shared::AccountDropdown.new do
@@ -102,6 +104,33 @@ class Shared::Navbar < ApplicationComponent
     end
   end
 
+  def github_link
+    render PhlexUI::Link.new(href: ENV['PHLEXUI_GITHUB_LINK'], variant: :ghost, icon: true) do
+      github_icon
+    end
+  end
+
+  def access_github_banner
+    div(
+      class:
+        "flex justify-center items-center gap-x-2 px-6 py-2 sm:px-3.5 bg-gradient-to-r from-pink-200 dark:from-pink-300 from-10% via-rose-300 dark:via-rose-700 via-30% to-amber-200 dark:to-amber-400 to-90%",
+    ) do
+      github_icon
+      p(class: "text-sm leading-6") do
+        a(href: helpers.account_path) do
+          strong(class: "font-semibold") { "Update GitHub username" }
+          svg(
+            viewbox: "0 0 2 2",
+            class: "mx-2 inline h-0.5 w-0.5 fill-current",
+            aria_hidden: "true"
+          ) { |s| s.circle(cx: "1", cy: "1", r: "1") }
+          plain "to get access to the private repository "
+          span(aria_hidden: "true") { "→" }
+        end
+      end
+    end
+  end
+
   private
 
   def arrow_right_icon
@@ -134,6 +163,20 @@ class Shared::Navbar < ApplicationComponent
               clip_rule: "evenodd"
           )
       end
+  end
+
+  def github_icon
+    svg(
+      viewbox: "0 0 16 16",
+      class: "w-4 h-4",
+      fill: "currentColor",
+      aria_hidden: "true"
+    ) do |s|
+      s.path(
+        d:
+          "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+      )
+    end
   end
 
   def account_icon

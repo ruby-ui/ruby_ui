@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Accounts::ShowView < ApplicationView
+  register_element :turbo_frame
+
   def template
     render Shared::GridPattern.new
     div(class: 'container max-w-lg mx-auto px-4 pb-24 space-y-16') do
@@ -8,6 +10,7 @@ class Accounts::ShowView < ApplicationView
         render PhlexUI::Typography::H1.new(class: 'text-center') { "Account Settings" }
       end
       account_details
+      github_access if current_user.subscribed?
       current_plan
       upgrade_plan if ["free", "personal"].include?(current_user.plan) && !current_user.is_team_member?
       invite_team_members if current_user.plan == "team"
@@ -25,6 +28,36 @@ class Accounts::ShowView < ApplicationView
         render PhlexUI::Typography::Muted.new do
           plain "Change your email by contacting us at "
           a(href: support_email_link, class: 'text-foreground underline') { ENV['SUPPORT_EMAIL'] }
+        end
+      end
+    end
+  end
+
+  def github_access
+    turbo_frame(id: "github_access", class: 'block space-y-4') do
+      render PhlexUI::Typography::H2.new(class: 'text-xl') { "GitHub access" }
+      render PhlexUI::Typography::P.new(class: 'text-muted-foreground') { "By adding your github username, we will add you to the PhlexUI GitHub organization, giving you read access to all repositories." }
+        
+      render PhlexUI::Form.new(action: helpers.account_path, method: :patch, class: 'pt-2') do
+        render PhlexUI::Form::Spacer.new do
+          render PhlexUI::Form::Item.new do
+            render PhlexUI::Label.new(for: "github_username") { "GitHub username" }
+            render PhlexUI::Input.new(type: "string", name: "user[github_username]", placeholder: "eg. joeldrapper", id: "github_username", value: current_user.github_username)
+            render PhlexUI::Hint.new do
+              plain "Only use your own account please 🙏 "
+              a(href: "http://www.github.com", class: 'text-foreground underline') { "Find GitHub username" }
+            end
+          end
+          
+          div(class: 'flex gap-x-2') do
+            render PhlexUI::Button.new(type: :submit, variant: :primary) { "Update" }
+            if current_user.github_username.present?
+              render PhlexUI::Link.new(href: ENV['PHLEXUI_GITHUB_LINK'], variant: :secondary) do
+                github_icon
+                plain "Go to PhlexUI"
+              end
+            end
+          end
         end
       end
     end
@@ -187,7 +220,20 @@ class Accounts::ShowView < ApplicationView
         end
       end
     end
+  end
 
+  def github_icon
+    svg(
+      viewbox: "0 0 16 16",
+      class: "w-4 h-4 -ml-1 mr-2",
+      fill: "currentColor",
+      aria_hidden: "true"
+    ) do |s|
+      s.path(
+        d:
+          "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+      )
+    end
   end
 
   def chevron_down_icon
