@@ -113,7 +113,7 @@ class Shared::Navbar < ApplicationComponent
   def access_github_banner
     div(
       class:
-        "flex justify-center sm:items-center gap-x-2 px-6 py-2 sm:px-3.5 bg-gradient-to-r from-pink-200 dark:from-pink-300 from-10% via-rose-300 dark:via-rose-700 via-30% to-amber-200 dark:to-amber-400 to-90%",
+        "flex justify-center sm:items-center gap-x-2 px-6 py-2 sm:px-3.5 bg-gradient-to-r from-pink-100 dark:from-pink-200 from-10% via-rose-200 dark:via-rose-600 via-30% to-amber-100 dark:to-amber-300 to-90% saturate-200 dark:saturate-100 shadow-inner",
     ) do
       div(class: "shrink-0 hidden sm:inline-block") do
         github_icon
