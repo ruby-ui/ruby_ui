@@ -3,6 +3,8 @@ class User < ApplicationRecord
     
     validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
     validate :team_members_limit, if: :team?
+    validates :github_username, uniqueness: true, allow_blank: true
+    validate :github_username_exists, if: -> { github_username.present? && github_username_changed? }
     
     enum plan: { free: 0, personal: 1, team: 2 }
 
@@ -26,5 +28,11 @@ class User < ApplicationRecord
 
     def team_members_limit
         errors.add(:team_members, "limit is 25") if team_members.size > 25
+    end
+
+    def github_username_exists
+        GITHUB_CLIENT.user(github_username)
+    rescue Octokit::NotFound
+        errors.add(:github_username, 'does not exist on GitHub')
     end
 end
