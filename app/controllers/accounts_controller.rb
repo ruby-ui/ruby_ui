@@ -2,14 +2,15 @@ class AccountsController < ApplicationController
     layout -> { ApplicationLayout }
 
     def show
-        render Accounts::ShowView.new
+        render Accounts::ShowView.new(user: current_user)
     end
 
     def update
-        if current_user.update(user_params)
+        user = current_user
+        if user.update(user_params)
             redirect_to account_path, notice: 'Account was successfully updated.'
         else
-            render Accounts::ShowView.new, status: :unprocessable_entity
+            render Accounts::ShowView.new(user: user), status: :unprocessable_entity
         end
     end
 

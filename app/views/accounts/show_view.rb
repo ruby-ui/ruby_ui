@@ -3,6 +3,11 @@
 class Accounts::ShowView < ApplicationView
   register_element :turbo_frame
 
+  def initialize(user:)
+    @user = user
+    @github_errors = @user.errors.full_messages_for(:github_username).join(", ") if @user.errors[:github_username].present?
+  end
+
   def template
     render Shared::GridPattern.new
     div(class: 'container max-w-lg mx-auto px-4 pb-24 space-y-16') do
@@ -42,7 +47,7 @@ class Accounts::ShowView < ApplicationView
         render PhlexUI::Form::Spacer.new do
           render PhlexUI::Form::Item.new do
             render PhlexUI::Label.new(for: "github_username") { "GitHub username" }
-            render PhlexUI::Input.new(type: "string", name: "user[github_username]", placeholder: "eg. joeldrapper", id: "github_username", value: current_user.github_username)
+            render PhlexUI::Input.new(type: "string", name: "user[github_username]", placeholder: "eg. joeldrapper", id: "github_username", value: current_user.github_username, error: @github_errors)
             render PhlexUI::Hint.new do
               plain "Only use your own account please 🙏 "
               a(href: "http://www.github.com", class: 'text-foreground underline') { "Find GitHub username" }

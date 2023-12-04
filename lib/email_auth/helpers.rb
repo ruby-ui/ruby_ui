@@ -3,11 +3,13 @@ module EmailAuth
 
     module Helpers
         def current_user
-            return unless helpers.session[:user_id]
+            return @current_user if defined?(@current_user)
 
-            User.find(helpers.session[:user_id])
-        rescue ActiveRecord::RecordNotFound
-            nil
+            @current_user = begin
+                User.find(helpers.session[:user_id]) if helpers.session[:user_id]
+            rescue ActiveRecord::RecordNotFound
+                nil
+            end
         end
     end
 end

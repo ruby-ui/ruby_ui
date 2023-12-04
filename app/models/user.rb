@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-    include AfterSaveProvideGithubAccess
+    include GithubAccessHandler
 
     has_many :team_members, dependent: :destroy
     

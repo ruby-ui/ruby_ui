@@ -113,9 +113,11 @@ class Shared::Navbar < ApplicationComponent
   def access_github_banner
     div(
       class:
-        "flex justify-center items-center gap-x-2 px-6 py-2 sm:px-3.5 bg-gradient-to-r from-pink-200 dark:from-pink-300 from-10% via-rose-300 dark:via-rose-700 via-30% to-amber-200 dark:to-amber-400 to-90%",
+        "flex justify-center sm:items-center gap-x-2 px-6 py-2 sm:px-3.5 bg-gradient-to-r from-pink-200 dark:from-pink-300 from-10% via-rose-300 dark:via-rose-700 via-30% to-amber-200 dark:to-amber-400 to-90%",
     ) do
-      github_icon
+      div(class: "shrink-0 hidden sm:inline-block") do
+        github_icon
+      end
       p(class: "text-sm leading-6") do
         a(href: helpers.account_path) do
           strong(class: "font-semibold") { "Update GitHub username" }

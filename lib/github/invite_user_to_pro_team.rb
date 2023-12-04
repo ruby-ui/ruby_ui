@@ -1,34 +1,47 @@
-# require 'faraday'
-# require 'json'
-
 module Github
   class InviteUserToProTeam
-    def initialize(user)
-      @user = user
+    BASE_URL = 'https://api.github.com'
+    TEAM_SLUG = "Pro"
+    ORG = "PhlexUI"
+
+    def initialize(username)
+      @username = username
       @client = GITHUB_CLIENT
-      @team_slug = "Pro" # Pro team slug
-      @org = "PhlexUI" # Organization name
     end
 
     def call
-      conn = Faraday.new(url: 'https://api.github.com') do |faraday|
+      response = connection.put do |req|
+        req.url membership_url
+        req.body = { role: "member" }.to_json
+      end
+
+      handle_response(response)
+    end
+
+    private
+
+    def connection
+      Faraday.new(url: BASE_URL) do |faraday|
         faraday.request  :url_encoded
         faraday.response :logger
         faraday.adapter  Faraday.default_adapter
         faraday.headers['Authorization'] = "Bearer #{@client.access_token}"
         faraday.headers['Accept'] = "application/vnd.github+json"
       end
+    end
 
-      response = conn.put do |req|
-        req.url "/orgs/#{@org}/teams/#{@team_slug}/memberships/#{@user}"
-        req.body = { role: "member" }.to_json
-      end
+    def membership_url
+      "/orgs/#{ORG}/teams/#{TEAM_SLUG}/memberships/#{@username}"
+    end
 
+    def handle_response(response)
       if response.success?
-        puts "Successfully added #{@user} to #{@team_slug} team"
+        puts "Successfully added #{@username} to #{TEAM_SLUG} team"
       else
-        puts "Failed to add #{@user} to #{@team_slug} team: #{response.body}"
+        puts "Failed to add #{@username} to #{TEAM_SLUG} team: #{response.body}"
       end
+    rescue Faraday::Error => e
+      puts "An error occurred: #{e.message}"
     end
   end
 end
