@@ -35,7 +35,7 @@ class Docs::GettingStarted::CoreConceptsView < ApplicationView
           plain " components, and provides a more efficient interface for building forms."
         end
 
-        render PhlexUI::Typography::H3.new { "Same form, different approaches" }
+        render PhlexUI::Typography::Large.new { "Same form, different approaches" }
 
         render Docs::VisualCodeExample.new(title: 'Without Builder', context: self) do
           <<~RUBY
