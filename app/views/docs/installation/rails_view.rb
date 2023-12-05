@@ -185,7 +185,7 @@ class Docs::Installation::RailsView < ApplicationView
   private
 
   def step_container(&)
-    div(class: "-mt-0.5 space-y-4", &)
+    div(class: "space-y-4", &)
   end
 
   def phlex_ui_installation(plan)
