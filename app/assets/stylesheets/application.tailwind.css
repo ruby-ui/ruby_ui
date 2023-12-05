@@ -26,6 +26,7 @@
     --ring: 0 0% 3.9%;
     --radius: 0.5rem;
     --font-sans: 'General Sans';
+    /* --font-sans: system-ui; */
   }
  
   .dark {
@@ -58,5 +59,15 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .font-bold {
+    font-weight: 620;
+  }
+
+  .font-semibold {
+    font-weight: 580;
   }
 }
