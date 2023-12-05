@@ -35,7 +35,7 @@ class Docs::TypographyView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "InlineLink", context: self) do
+      render Docs::VisualCodeExample.new(title: "Inline Link", context: self) do
         <<~RUBY
           render PhlexUI::Typography::P.new(class: 'text-center') do
             plain "Checkout our "
