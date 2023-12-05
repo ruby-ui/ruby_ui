@@ -20,7 +20,7 @@ module Steps
                     # vertical line unless last
                     hr(class: 'absolute left-3 top-6 -ml-px h-full w-px bg-amber-500/20') unless @last
                 end
-                div(class: 'flex-1 space-y-2 pb-10 overflow-hidden', &)
+                div(class: 'flex-1 space-y-2 pb-10 overflow-hidden -mt-0.5', &)
             end
         end
     end

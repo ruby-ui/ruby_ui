@@ -17,6 +17,14 @@ class DocsController < ApplicationController
     render Docs::GettingStarted::DarkModeView.new
   end
 
+  def customizing_components
+    render Docs::GettingStarted::CustomizingComponentsView.new
+  end
+
+  def core_concepts
+    render Docs::GettingStarted::CoreConceptsView.new
+  end
+
   # INSTALLATION
   def installation_rails
     render Docs::Installation::RailsView.new

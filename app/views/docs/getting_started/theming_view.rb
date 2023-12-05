@@ -6,7 +6,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       render Docs::Header.new(title: "Theming", description: "Using CSS variables for theming.")
 
       div(class: "space-y-4") do
-        render heading2 { "Introduction" }
+        render PhlexUI::Typography::H2.new { "Introduction" }
         render PhlexUI::Typography::P.new do
           plain "Phlex UI uses CSS Variables like "
           render PhlexUI::Typography::InlineCode.new { "--primary: 0 0% 9%" }
@@ -39,7 +39,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
       
       div(class: "space-y-4") do
-        render heading2 { "Convention" }
+        render PhlexUI::Typography::H2.new { "Convention" }
         render PhlexUI::Typography::P.new do
           plain "We use a simple "
           render PhlexUI::Typography::InlineCode.new { "background" }
@@ -90,7 +90,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        render heading2 { "List of variables" }
+        render PhlexUI::Typography::H2.new { "List of variables" }
         render PhlexUI::Typography::P.new { "Here's the list of variables available for customization:" }
         render PhlexUI::Card.new(class: "space-y-4 shadow-none p-4 md:p-6") do
           css_variables
@@ -98,7 +98,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        render heading2 { "Adding new colors" }
+        render PhlexUI::Typography::H2.new { "Adding new colors" }
         render PhlexUI::Typography::P.new do
           plain "To add new colors, you need to add them to your "
           render PhlexUI::Typography::InlineCode.new { "application.tailwind.css" }
@@ -110,7 +110,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        render heading2 { "Other color formats" }
+        render PhlexUI::Typography::H2.new { "Other color formats" }
         render PhlexUI::Typography::P.new do
           plain "It's recommended to use "
           render Typography::InlineLink.new(href: "https://www.smashingmagazine.com/2021/07/hsl-colors-css/") { "HSL colors" }
@@ -272,10 +272,6 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         <div className="bg-contrast text-contrast-foreground">We love Ruby</div>
       CODE
     render PhlexUI::Codeblock.new(code, syntax: :html)
-  end
-
-  def heading2(&)
-    PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b', &)
   end
 
   def space_y_4(&)

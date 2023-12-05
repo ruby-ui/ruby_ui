@@ -59,8 +59,10 @@ class Shared::Menu < ApplicationComponent
     def getting_started_links
         [
             { name: "Installation", path: helpers.docs_installation_path },
-            { name: "Theming", path: helpers.docs_theming_path },
+            { name: "Core concepts", path: helpers.docs_core_concepts_path },
             { name: "Dark mode", path: helpers.docs_dark_mode_path },
+            { name: "Theming", path: helpers.docs_theming_path },
+            { name: "Customizing components", path: helpers.docs_customizing_components_path },
         ]
     end
 
