@@ -7,7 +7,7 @@ class Docs::GettingStarted::InstallationView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Installation", description: "How to install dependencies and structure your app.")
 
-      render PhlexUI::Typography::H2.new(class: 'text-xl !font-semibold pb-4 border-b') { "Select a Framework" }
+      render PhlexUI::Typography::H2.new { "Select a Framework" }
       div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4") do
         framework_card(title: "Rails", link: helpers.docs_installation_rails_path) { rails_logo } 
       end

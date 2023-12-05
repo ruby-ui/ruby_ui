@@ -15,7 +15,7 @@ class HomeView::Pricing < ApplicationComponent
     def render_header
         div(class: 'text-center flex flex-col items-center gap-y-3 mx-auto max-w-md pb-10') do
             p(class: 'font-semibold text-sky-500') { "Pricing" }
-            render PhlexUI::Typography::H2.new(class: 'text-center') { "Get everything, forever." }
+            render PhlexUI::Typography::H2.new(class: 'text-center pb-0 border-none') { "Get everything, forever." }
             p { "Get lifetime access to all components, plus any new content we add in the future for a simple one-time price." }
         end
     end

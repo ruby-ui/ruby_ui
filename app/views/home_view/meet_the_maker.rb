@@ -9,7 +9,7 @@ class HomeView::MeetTheMaker < ApplicationComponent
         div(class: 'container mx-auto max-w-5xl pb-24 lg:pb-32 px-4') do
             div(class: 'text-center flex flex-col items-center gap-y-3 mx-auto max-w-md pb-16') do
                 p(class: 'font-semibold text-sky-500') { "Meet the Maker" }
-                render PhlexUI::Typography::H2.new(class: 'text-center') { "My name is George" }
+                render PhlexUI::Typography::H2.new(class: 'text-center pb-0 border-none') { "My name is George" }
                 p { "I've been building Rails apps for 5+ years, both professionally and as a hobby. I've taught 100's of students and also been trained professionally in graphic design." }
                 render PhlexUI::Link.new(variant: :outline, href: "https://twitter.com/george_kettle", class: 'mt-2') { "Find me on Twitter" }
             end
