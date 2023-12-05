@@ -26,7 +26,7 @@ class Accounts::ShowView < ApplicationView
 
   def account_details
     div(class: 'space-y-4') do
-      render PhlexUI::Typography::H2.new(class: 'text-xl') { "Account details" }
+      render PhlexUI::Typography::H2.new(class: 'text-xl border-none pb-0') { "Account details" }
       render PhlexUI::Form::Item.new do
         render PhlexUI::Label.new(for: "email") { "Email" }
         render PhlexUI::Input.new(type: "email", placeholder: "Email", id: "email", value: current_user.email, disabled: true, class: 'bg-background')
@@ -40,7 +40,7 @@ class Accounts::ShowView < ApplicationView
 
   def github_access
     turbo_frame(id: "github_access", class: 'block space-y-4') do
-      render PhlexUI::Typography::H2.new(class: 'text-xl') { "GitHub access" }
+      render PhlexUI::Typography::H2.new(class: 'text-xl border-none pb-0') { "GitHub access" }
       render PhlexUI::Typography::P.new(class: 'text-muted-foreground') { "By adding your github username, we will add you to the PhlexUI GitHub organization, giving you read access to all repositories." }
         
       render PhlexUI::Form.new(action: helpers.account_path, method: :patch, class: 'pt-2') do
@@ -70,7 +70,7 @@ class Accounts::ShowView < ApplicationView
 
   def current_plan
     div(class: 'space-y-4') do
-      render PhlexUI::Typography::H2.new(class: 'text-xl') { "Current plan" }
+      render PhlexUI::Typography::H2.new(class: 'text-xl border-none pb-0') { "Current plan" }
       if current_user.is_team_member?
         render PhlexUI::Typography::P.new(class: 'text-muted-foreground') do
           plain "You are currently a team member of "
@@ -91,7 +91,7 @@ class Accounts::ShowView < ApplicationView
     cta_link = current_user.plan == "free" ? helpers.root_path(anchor: :pricing) : ENV['TEAM_STRIPE_LINK'] + "?prefilled_email=#{current_user.email}"
 
     div(class: 'space-y-4') do
-      render PhlexUI::Typography::H2.new(class: 'text-xl') { "Upgrade plan" }
+      render PhlexUI::Typography::H2.new(class: 'text-xl border-none pb-0') { "Upgrade plan" }
       render PhlexUI::Card.new(class: 'overflow-hidden') do
         render PhlexUI::AspectRatio.new(aspect_ratio: "4/1", class: "-m-px") do
           img(
@@ -122,7 +122,7 @@ class Accounts::ShowView < ApplicationView
   def invite_team_members
     div(class: 'space-y-4') do
       div(class: 'flex items-center justify-between') do
-        render PhlexUI::Typography::H2.new(class: 'text-xl') { "Invite team members" }
+        render PhlexUI::Typography::H2.new(class: 'text-xl border-none pb-0') { "Invite team members" }
         invite_modal
       end
       render PhlexUI::Card.new(class: 'overflow-hidden') do
