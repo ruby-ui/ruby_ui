@@ -7,7 +7,7 @@ class Signins::NewView < ApplicationView
 
     def template
         render PhlexUI::Card.new(class: 'w-full p-8') do
-            render PhlexUI::Form.new(action: helpers.signin_path, method: :post, class: 'w-full') do |f|
+            render PhlexUI::Form::Builder.new(action: helpers.signin_path, method: :post, class: 'w-full') do |f|
                 render PhlexUI::Input.new(type: "hidden", value: @redirect_path, name: "redirect_path")
                 render PhlexUI::Form::Spacer.new do
                     f.input :email, type: "email", placeholder: "Email", value: helpers.params[:email] || "", required: true

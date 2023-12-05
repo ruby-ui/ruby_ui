@@ -177,7 +177,6 @@ class Accounts::ShowView < ApplicationView
           render PhlexUI::Dialog::Description.new { "Type their email below and we'll send them an invite." }
         end
         render PhlexUI::Form.new(action: helpers.team_members_path, method: :post, class: 'pt-2') do
-          
           render PhlexUI::Form::Item.new do
             render PhlexUI::Label.new(for: "emails") { "Emails" }
             render PhlexUI::Input.new(type: "string", name: "team_member[emails]", placeholder: "user1@mail.com, user2@mail.com", id: "emails")

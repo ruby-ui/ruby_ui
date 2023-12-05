@@ -20,12 +20,10 @@ class Docs::TabsView < ApplicationView
                   render PhlexUI::Typography::Large.new { "Account" }
                   render PhlexUI::Typography::Muted.new { "Update your account details." }
                 end
-                render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
-                  render PhlexUI::Form::Spacer.new do
-                    f.input "name", type: :string, value: "Joel Drapper"
-                    f.input "username", type: :email, value: "@joeldrapper"
-                    f.button { "Save changes" }
-                  end
+                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
+                  f.input "name", type: :string, value: "Joel Drapper"
+                  f.input "username", type: :email, value: "@joeldrapper"
+                  f.button { "Save changes" }
                 end
               end
             end
@@ -35,12 +33,10 @@ class Docs::TabsView < ApplicationView
                   render PhlexUI::Typography::Large.new { "Password" }
                   render PhlexUI::Typography::Muted.new { "Change your password here. After saving, you'll be logged out." }
                 end
-                render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
-                  render PhlexUI::Form::Spacer.new do
-                    f.input "current", type: :string, label: "Current password"
-                    f.input "new", type: :email, label: "New password"
-                    f.button { "Save password" }
-                  end
+                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
+                  f.input "current", type: :string, label: "Current password"
+                  f.input "new", type: :email, label: "New password"
+                  f.button { "Save password" }
                 end
               end
             end
@@ -116,12 +112,10 @@ class Docs::TabsView < ApplicationView
                   render PhlexUI::Typography::Large.new { "Account" }
                   render PhlexUI::Typography::Muted.new { "Update your account details." }
                 end
-                render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
-                  render PhlexUI::Form::Spacer.new do
-                    f.input "name", type: :string, value: "Joel Drapper"
-                    f.input "username", type: :email, value: "@joeldrapper"
-                    f.button { "Save changes" }
-                  end
+                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
+                  f.input "name", type: :string, value: "Joel Drapper"
+                  f.input "username", type: :email, value: "@joeldrapper"
+                  f.button { "Save changes" }
                 end
               end
             end
@@ -131,12 +125,10 @@ class Docs::TabsView < ApplicationView
                   render PhlexUI::Typography::Large.new { "Password" }
                   render PhlexUI::Typography::Muted.new { "Change your password here. After saving, you'll be logged out." }
                 end
-                render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
-                  render PhlexUI::Form::Spacer.new do
-                    f.input "current", type: :string, label: "Current password"
-                    f.input "new", type: :email, label: "New password"
-                    f.button { "Save password" }
-                  end
+                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
+                  f.input "current", type: :string, label: "Current password"
+                  f.input "new", type: :email, label: "New password"
+                  f.button { "Save password" }
                 end
               end
             end

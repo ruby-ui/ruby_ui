@@ -65,12 +65,10 @@ class Docs::InputView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: 'Form', context: self) do
         <<~RUBY
-          render PhlexUI::Form.new(class: 'w-full max-w-sm') do |f|
-            render PhlexUI::Form::Spacer.new do
-              f.input "name", type: :string, placeholder: "Joel Drapper"
-              f.input "email", type: :email, placeholder: "joel@drapper.me"
-              f.button { "Update" }
-            end
+          render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
+            f.input "name", type: :string, placeholder: "Joel Drapper"
+            f.input "email", type: :email, placeholder: "joel@drapper.me"
+            f.button { "Update" }
           end
         RUBY
       end
