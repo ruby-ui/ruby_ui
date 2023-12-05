@@ -8,7 +8,7 @@ class Docs::DropdownMenuView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           render PhlexUI::DropdownMenu.new do
-            render PhlexUI::DropdownMenu::Trigger.new do
+            render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
               render PhlexUI::Button.new(variant: :outline) { "Open" }
             end
             render PhlexUI::DropdownMenu::Content.new do
@@ -28,7 +28,7 @@ class Docs::DropdownMenuView < ApplicationView
           div(class: 'grid grid-cols-1 sm:grid-cols-3 gap-4') do
             # -- TOP --
             render PhlexUI::DropdownMenu.new(options: { placement: 'top' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -42,7 +42,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'top-start' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top-start' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -56,7 +56,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'top-end' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top-end' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -71,7 +71,7 @@ class Docs::DropdownMenuView < ApplicationView
 
             # -- BOTTOM --
             render PhlexUI::DropdownMenu.new(options: { placement: 'bottom' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -85,7 +85,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'bottom-start' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-start' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -99,7 +99,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'bottom-end' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-end' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -114,7 +114,7 @@ class Docs::DropdownMenuView < ApplicationView
 
             # -- LEFT --
             render PhlexUI::DropdownMenu.new(options: { placement: 'left' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -128,7 +128,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'left-start' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left-start' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -142,7 +142,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'left-end' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left-end' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -157,7 +157,7 @@ class Docs::DropdownMenuView < ApplicationView
 
             # -- RIGHT --
             render PhlexUI::DropdownMenu.new(options: { placement: 'right' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -171,7 +171,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'right-start' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right-start' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -185,7 +185,7 @@ class Docs::DropdownMenuView < ApplicationView
             end
 
             render PhlexUI::DropdownMenu.new(options: { placement: 'right-end' }) do
-              render PhlexUI::DropdownMenu::Trigger.new do
+              render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
                 render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right-end' }
               end
               render PhlexUI::DropdownMenu::Content.new do
@@ -204,7 +204,7 @@ class Docs::DropdownMenuView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Open on hover", context: self) do
         <<~RUBY
           render PhlexUI::DropdownMenu.new(options: { trigger: "mouseenter focus" }) do
-            render PhlexUI::DropdownMenu::Trigger.new do
+            render PhlexUI::DropdownMenu::Trigger.new(class: 'w-full') do
               render PhlexUI::Button.new(variant: :outline) { "Open" }
             end
             render PhlexUI::DropdownMenu::Content.new do
