@@ -10,7 +10,7 @@ class Shared::Navbar < ApplicationComponent
           render Shared::Logo.new
 
           render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden sm:inline-block') { "Components" }
-          render PhlexUI::Link.new(href: helpers.docs_installation_path, variant: :ghost, class: 'hidden sm:inline-block') { "Docs" }
+          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: 'hidden sm:inline-block') { "Docs" }
         end
         div(class: 'flex items-center gap-x-2 md:divide-x') do
           div(class: 'flex items-center') do

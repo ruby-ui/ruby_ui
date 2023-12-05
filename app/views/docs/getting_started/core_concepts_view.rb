@@ -6,25 +6,6 @@ class Docs::GettingStarted::CoreConceptsView < ApplicationView
       render Docs::Header.new(title: "Core concepts", description: "Below are some of the core concepts that will help you understand how PhlexUI works under the hood.")
 
       div(class: "space-y-4") do
-        render PhlexUI::Typography::H2.new { "The 3 Ingredients" }
-        render PhlexUI::Typography::P.new { "PhlexUI is built on top of 3 core ingredients: " }
-        render PhlexUI::Typography::List.new do
-          render PhlexUI::Typography::ListItem.new(class: 'space-y-2') do
-            span(class: 'font-bold') { "Phlex Components" }
-            plain " - A framework for building fast, reusable, testable views in pure Ruby."
-          end
-          render PhlexUI::Typography::ListItem.new(class: 'space-y-2') do
-            span(class: 'font-bold') { "TailwindCSS" }
-            plain " - A utility-first CSS framework for rapidly building custom designs."
-          end
-          render PhlexUI::Typography::ListItem.new(class: 'space-y-2') do
-            span(class: 'font-bold') { "Stimulus JS" }
-            plain " - A modest JavaScript framework for the HTML you already have."
-          end
-        end
-      end
-
-      div(class: "space-y-4") do
         render PhlexUI::Typography::H2.new(class: 'flex items-center gap-x-2') do 
           plain "Builder Components"
           render PhlexUI::Badge.new(variant: :primary, size: :sm) { "WIP" }

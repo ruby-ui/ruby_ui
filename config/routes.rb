@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   scope 'docs' do
     # GETTING STARTED
+    get 'introduction', to: 'docs#introduction', as: :docs_introduction
     get 'installation', to: 'docs#installation', as: :docs_installation
     get 'core_concepts', to: 'docs#core_concepts', as: :docs_core_concepts
     get 'theming', to: 'docs#theming', as: :docs_theming

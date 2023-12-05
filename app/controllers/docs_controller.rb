@@ -5,6 +5,10 @@ class DocsController < ApplicationController
   skip_before_action :authenticate_user!
 
   # GETTING STARTED
+  def introduction
+    render Docs::GettingStarted::IntroductionView.new
+  end
+
   def installation
     render Docs::GettingStarted::InstallationView.new
   end
