@@ -80,13 +80,7 @@ module Mailers
                         li do
                             plain "Join our "
                             a(href: "https://discord.gg/7r2t2GAvp7") { "Discord Community" }
-                            plain " for support, engaging discussions, and to showcase your PhlexUI projects. Currently I'm the only one there, so I'd love some friends."
-                        end
-                        # * Your ideas and project showcases are always welcome at support@phlexui.com.
-                        li do
-                            plain "Your ideas and project showcases are always welcome at "
-                            a(href: "mailto:support@phlexui.com") { "support@phlexui.com" }
-                            plain "."
+                            plain " for support, to provide ideas, and to showcase your PhlexUI projects. Currently I'm the only one there, so I'd love some friends."
                         end
                         # * Keep in mind that the library is subject to change lots before we get to v1.0.0
                         li { "Keep in mind that the library is subject to change lots before we get to v1.0.0" }
