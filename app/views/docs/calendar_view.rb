@@ -37,14 +37,15 @@ class Docs::CalendarView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::Calendar", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Calendar::Body", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/body.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Calendar::Days", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/days.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Calendar::Header", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/header.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Calendar::Next", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/next.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Calendar::Prev", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/prev.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Calendar::Title", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/title.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Calendar::Weekdays", "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/weekdays.rb"),
+      Docs::ComponentStruct.new(name: "CalendarController", source: "https://github.com/PhlexUI/phlex_ui_stimulus_pro/blob/main/controllers/calendar_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Body", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/body.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Days", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/days.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Header", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/header.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Next", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/next.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Prev", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/prev.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Title", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/title.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Weekdays", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/weekdays.rb", built_using: :phlex),
     ]
   end
 end

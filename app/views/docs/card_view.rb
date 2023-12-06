@@ -81,12 +81,12 @@ class Docs::CardView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::Card", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Card::Header", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/header.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Card::Content", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/content.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Card::Footer", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/footer.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Card::Title", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/title.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Card::Description", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/description.rb"),
+      Docs::ComponentStruct.new(name: "PhlexUI::Card", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Card::Header", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/header.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Card::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Card::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/footer.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Card::Title", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/title.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Card::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/description.rb", built_using: :phlex),
     ]
   end
 

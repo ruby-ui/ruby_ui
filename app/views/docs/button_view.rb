@@ -129,7 +129,7 @@ class Docs::ButtonView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::Button", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/button.rb"),
+      Docs::ComponentStruct.new(name: "PhlexUI::Button", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/button.rb", built_using: :phlex),
     ]
   end
 end

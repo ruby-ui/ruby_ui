@@ -99,12 +99,13 @@ class Docs::AccordionView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::Accordion", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Accordion::Builder", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/builder.rb", builder: true),
-      Docs::ComponentStruct.new("PhlexUI::Accordion::Item", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Accordion::Trigger", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Accordion::Content", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/content.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Accordion::Icon", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/icon.rb"),
+      Docs::ComponentStruct.new(name: "AccordionController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/accordion_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::Accordion", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/builder.rb", builder: true, built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Item", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Icon", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/icon.rb", built_using: :phlex),
     ]
   end
 end

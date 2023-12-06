@@ -103,10 +103,10 @@ class Docs::AvatarView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::Avatar::Builder", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/builder.rb", builder: true),
-      Docs::ComponentStruct.new("PhlexUI::Avatar", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Avatar::Image", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/image.rb"),
-      Docs::ComponentStruct.new("PhlexUI::Avatar::Fallback", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/fallback.rb"),
+      Docs::ComponentStruct.new(name: "PhlexUI::Avatar::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/builder.rb", builder: true, built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Avatar", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Avatar::Image", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/image.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Avatar::Fallback", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/fallback.rb", built_using: :phlex),
     ]
   end
 end

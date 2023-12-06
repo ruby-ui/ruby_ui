@@ -40,7 +40,7 @@ class Docs::CheckboxView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::Checkbox", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/checkbox.rb"),
+      Docs::ComponentStruct.new(name: "PhlexUI::Checkbox", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/checkbox.rb", built_using: :phlex),
     ]
   end
 end

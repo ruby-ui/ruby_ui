@@ -17,7 +17,16 @@ class Docs::ComponentsTable < ApplicationComponent
                         end
                     end
                 end
-                t.column("", header_attrs: {class: 'text-right'}) do |component| 
+                t.column("Built using", header_attrs: {class: 'w-full grow-1'}) do |component|
+                    component.built_using
+                    case component.built_using&.to_sym
+                    when :phlex
+                        render PhlexUI::Badge.new(size: :sm, variant: :rose) { "Phlex" }
+                    when :stimulus
+                        render PhlexUI::Badge.new(size: :sm, variant: :amber) { "Stimulus JS" }
+                    end
+                end
+                t.column("Source", header_attrs: {class: 'text-right'}) do |component| 
                     div(class: 'flex justify-end') do
                         render PhlexUI::Link.new(href: component.source, variant: :outline, size: :sm) do
                             github_icon

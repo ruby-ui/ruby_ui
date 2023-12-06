@@ -78,7 +78,7 @@ class Docs::BadgeView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::Badge", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb"),
+      Docs::ComponentStruct.new(name: "PhlexUI::Badge", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb", built_using: :phlex),
     ]
   end
 end

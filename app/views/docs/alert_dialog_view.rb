@@ -34,15 +34,16 @@ class Docs::AlertDialogView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Trigger", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/trigger.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Content", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/content.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Header", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/header.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Title", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/title.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Description", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/description.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Footer", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/footer.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Cancel", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/cancel.rb"),
-      Docs::ComponentStruct.new("PhlexUI::AlertDialog::Action", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/action.rb"),
+      Docs::ComponentStruct.new(name: "AlertDialogController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/alert_dialog_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Header", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/header.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Title", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/title.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/description.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/footer.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Cancel", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/cancel.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Action", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/action.rb", built_using: :phlex),
     ]
   end
 end
