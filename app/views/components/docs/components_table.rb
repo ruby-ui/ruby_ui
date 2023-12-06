@@ -13,7 +13,7 @@ class Docs::ComponentsTable < ApplicationComponent
                     div(class: 'flex items-center space-x-2') do
                         render PhlexUI::Typography::InlineCode.new { component.name }
                         if component.builder
-                            render PhlexUI::Badge.new(size: :sm, variant: :orange) { "Builder" }
+                            render PhlexUI::Badge.new(size: :sm, variant: :sky) { "Builder" }
                         end
                     end
                 end
