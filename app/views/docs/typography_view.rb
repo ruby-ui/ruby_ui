@@ -5,6 +5,8 @@ class Docs::TypographyView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Typography", description: "Sensible defaults to use for text.")
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "h1", context: self) do
         <<~RUBY
           render PhlexUI::Typography::H1.new { "This is an H1 title" }
@@ -95,7 +97,27 @@ class Docs::TypographyView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::H1", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/h1.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::H2", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/h2.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::H3", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/h3.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::H4", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/h4.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::P", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/p.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::InlineLink", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/inline_link.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::List", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/list.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::ListItem", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/list_item.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::InlineCode", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/inline_code.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::Lead", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/lead.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::Large", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/large.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::Small", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/small.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::Muted", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/muted.rb", built_using: :phlex),
+    ]
   end
 end
