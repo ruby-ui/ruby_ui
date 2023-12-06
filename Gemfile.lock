@@ -1,17 +1,13 @@
-PATH
-  remote: ../phlex_ui_gem_pro
+GEM
+  remote: https://phlexui.fury.site/gem/
   specs:
-    phlex_ui_pro (0.1.1)
+    phlex_ui (0.1.2)
       phlex (~> 1.7)
-      phlex_ui (~> 0.1.1)
       rouge (~> 4.2.0)
       zeitwerk (~> 2.6)
-
-PATH
-  remote: ../phlex_ui_gem
-  specs:
-    phlex_ui (0.1.1)
+    phlex_ui_pro (0.1.2)
       phlex (~> 1.7)
+      phlex_ui (~> 0.1.2)
       rouge (~> 4.2.0)
       zeitwerk (~> 2.6)
 
@@ -286,8 +282,7 @@ DEPENDENCIES
   octokit (~> 5.0)
   pg (~> 1.1)
   phlex-rails
-  phlex_ui!
-  phlex_ui_pro!
+  phlex_ui_pro (~> 0.1.2)!
   postmark-rails
   puma (~> 5.0)
   rails (~> 7.0.8)
