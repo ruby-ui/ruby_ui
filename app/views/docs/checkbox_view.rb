@@ -5,6 +5,8 @@ class Docs::CheckboxView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Checkbox", description: "A control that allows the user to toggle between checked and not checked.")
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           div(class: 'flex items-center space-x-3') do
@@ -30,7 +32,15 @@ class Docs::CheckboxView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new("PhlexUI::Checkbox", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/checkbox.rb"),
+    ]
   end
 end
