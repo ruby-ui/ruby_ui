@@ -7,7 +7,7 @@ class Shared::Logo < ApplicationComponent
                 img(src: helpers.image_url('logo.svg'), class: 'h-4 block dark:hidden')
                 img(src: helpers.image_url('logo_dark.svg'), class: 'h-4 hidden dark:block')
                 span(class: 'sr-only') { "PhlexUI" }
-                render PhlexUI::Badge.new(variant: :amber, size: :sm, class: 'ml-2') { "Pre Release" }
+                render PhlexUI::Badge.new(variant: :amber, size: :sm, class: 'ml-2 whitespace-nowrap') { "Pre Release" }
             }
         end
     end
