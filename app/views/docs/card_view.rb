@@ -73,7 +73,6 @@ class Docs::CardView < ApplicationView
         RUBY
       end
 
-      # components
       render Docs::ComponentsTable.new(components)
     end
   end
