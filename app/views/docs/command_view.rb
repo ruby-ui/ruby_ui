@@ -9,6 +9,8 @@ class Docs::CommandView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Command", description: "Fast, composable, unstyled command menu for Phlex.", premium: @premium)
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "Example", context: self, premium: @premium) do
         <<~RUBY
           render PhlexUI::Command::Dialog.new do
@@ -32,7 +34,7 @@ class Docs::CommandView < ApplicationView
                 render PhlexUI::Command::Empty.new { "No results found." }
                 render PhlexUI::Command::List.new do
                   render PhlexUI::Command::Group.new(title: "Components") do
-                    components.each do |component|
+                    components_list.each do |component|
                       render PhlexUI::Command::Item.new(value: component[:name], href: component[:path]) do
                         default_icon
                         plain component[:name]
@@ -40,7 +42,7 @@ class Docs::CommandView < ApplicationView
                     end
                   end
                   render PhlexUI::Command::Group.new(title: "Settings") do
-                    settings.each do |setting|
+                    settings_list.each do |setting|
                       render PhlexUI::Command::Item.new(value: setting[:name], href: setting[:path]) do
                         default_icon
                         plain setting[:name]
@@ -72,7 +74,7 @@ class Docs::CommandView < ApplicationView
                 render PhlexUI::Command::Empty.new { "No results found." }
                 render PhlexUI::Command::List.new do
                   render PhlexUI::Command::Group.new(title: "Components") do
-                    components.each do |component|
+                    components_list.each do |component|
                       render PhlexUI::Command::Item.new(value: component[:name], href: component[:path]) do
                         default_icon
                         plain component[:name]
@@ -80,7 +82,7 @@ class Docs::CommandView < ApplicationView
                     end
                   end
                   render PhlexUI::Command::Group.new(title: "Settings") do
-                    settings.each do |setting|
+                    settings_list.each do |setting|
                       render PhlexUI::Command::Item.new(value: setting[:name], href: setting[:path]) do
                         default_icon
                         plain setting[:name]
@@ -94,8 +96,25 @@ class Docs::CommandView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "CommandController", source: "https://github.com/PhlexUI/phlex_ui_stimulus_pro/blob/main/controllers/command_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::Dialog", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::DialogTrigger", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::DialogContent", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::Input", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/input.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::Empty", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/empty.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::List", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/list.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::Group", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/group.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::Item", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/item.rb", built_using: :phlex),
+    ]
   end
 
   def search_icon
@@ -130,7 +149,7 @@ class Docs::CommandView < ApplicationView
     end
   end
 
-  def components
+  def components_list
     [
       { name: "Accordion", path: helpers.docs_accordion_path },
       { name: "Alert", path: helpers.docs_alert_path },
@@ -141,7 +160,7 @@ class Docs::CommandView < ApplicationView
     ]
   end
 
-  def settings
+  def settings_list
     [
       { name: "Profile", path: "#" },
       { name: "Mail", path: "#" },
