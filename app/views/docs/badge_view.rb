@@ -5,6 +5,8 @@ class Docs::BadgeView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: 'Badge', description: 'Displays a badge or a component that looks like a badge.')
 
+      render PhlexUI::Typography::H2.new { 'Usage' }
+
       render Docs::VisualCodeExample.new(title: 'Default', context: self) do
         <<~RUBY
           render PhlexUI::Badge.new { "Badge" }
@@ -67,11 +69,16 @@ class Docs::BadgeView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      # components
+      render Docs::ComponentsTable.new(components)
     end
   end
 
-  def render_variant(variant)
-    render PhlexUI::Badge.new(variant: variant) { variant.to_s.capitalize }
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new("PhlexUI::Badge", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb"),
+    ]
   end
 end
