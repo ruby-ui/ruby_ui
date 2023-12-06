@@ -961,7 +961,18 @@ class Docs::PopoverView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::Popover", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/content.rb", built_using: :phlex),
+    ]
   end
 end
