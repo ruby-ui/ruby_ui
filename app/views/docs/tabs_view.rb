@@ -7,6 +7,8 @@ class Docs::TabsView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Tabs", description: "A set of layered sections of content—known as tab panels—that are displayed one at a time.")
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           render PhlexUI::Tabs.new(default_value: "account", class: 'w-96') do
@@ -136,11 +138,21 @@ class Docs::TabsView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
   end
 
   private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "TabsController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/tabs_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::List", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex),
+    ]
+  end
 
   def book_icon
     svg(
