@@ -5,6 +5,8 @@ class Docs::ButtonView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Button", description: "Displays a button or a component that looks like a button.")
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           render PhlexUI::Button.new { "Button" }
@@ -119,7 +121,15 @@ class Docs::ButtonView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new("PhlexUI::Button", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/button.rb"),
+    ]
   end
 end
