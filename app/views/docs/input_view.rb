@@ -5,6 +5,8 @@ class Docs::InputView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Input", description: "Displays a form input field or a component that looks like an input field.")
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: 'Email', context: self) do
         <<~RUBY
           div(class: 'grid w-full max-w-sm items-center gap-1.5') do
@@ -88,7 +90,22 @@ class Docs::InputView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "InputController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/input_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::Input", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/input.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Label", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/label.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Hint", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hint.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Form::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/form/builder.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Form", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/form.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Form::Spacer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/form/spacer.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Form::Item", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/form/item.rb", built_using: :phlex),
+    ]
   end
 end

@@ -2,7 +2,7 @@
 
 class Docs::ComponentsTable < ApplicationComponent
     def initialize(components)
-        @components = components
+        @components = components.sort_by { |component| [component.built_using, component.name] }
     end
 
     def template
