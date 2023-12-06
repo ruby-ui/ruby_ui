@@ -3,24 +3,26 @@
 class Shared::Menu < ApplicationComponent
     def template
         div(class: 'pb-4') do
-            # GETTING STARTED
-            h4(class: 'mb-1 mt-4 md:mt-0 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
-            div(class: 'grid grid-flow-row auto-rows-max text-sm') do
-                getting_started_links.each do |getting_started|
-                    menu_link(getting_started)
+            if current_user&.subscribed?
+                # GETTING STARTED
+                h4(class: 'mb-1 mt-4 md:mt-0 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
+                div(class: 'grid grid-flow-row auto-rows-max text-sm') do
+                    getting_started_links.each do |getting_started|
+                        menu_link(getting_started)
+                    end
                 end
-            end
 
-            # INSTALLATION
-            h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Installation" }
-            div(class: 'grid grid-flow-row auto-rows-max text-sm') do
-                installation_links.each do |installation|
-                    menu_link(installation)
+                # INSTALLATION
+                h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Installation" }
+                div(class: 'grid grid-flow-row auto-rows-max text-sm') do
+                    installation_links.each do |installation|
+                        menu_link(installation)
+                    end
                 end
             end
 
             # COMPONENTS
-            h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2') do
+            h4(class: tokens('mb-1 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2', -> { current_user&.subscribed? } => "mt-4")) do
                 plain "Components"
                 render PhlexUI::Badge.new(variant: :primary, size: :sm) { components.count.to_s }
             end

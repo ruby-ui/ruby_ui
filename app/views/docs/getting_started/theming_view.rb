@@ -3,7 +3,7 @@
 class Docs::GettingStarted::ThemingView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Theming", description: "Using CSS variables for theming.")
+      render Docs::Header.new(title: "Theming", description: "Using CSS variables for theming.", pre_release_only: true)
 
       div(class: "space-y-4") do
         render PhlexUI::Typography::H2.new { "Introduction" }

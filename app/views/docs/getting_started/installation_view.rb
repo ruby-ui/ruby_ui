@@ -5,7 +5,7 @@ class Docs::GettingStarted::InstallationView < ApplicationView
 
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Installation", description: "How to install dependencies and structure your app.")
+      render Docs::Header.new(title: "Installation", description: "How to install dependencies and structure your app.", pre_release_only: true)
 
       render PhlexUI::Typography::H2.new { "Select a Framework" }
       div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4") do
