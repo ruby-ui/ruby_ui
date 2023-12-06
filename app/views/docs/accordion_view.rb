@@ -5,9 +5,11 @@ class Docs::AccordionView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Accordion", description: "A vertically stacked set of interactive headings that each reveal a section of content.")
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      render PhlexUI::Typography::H2.new { "Usage" }
+
+      render Docs::VisualCodeExample.new(title: "With Builder", context: self) do
         <<~RUBY
-          render PhlexUI::Accordion.new do |accordion|
+          render PhlexUI::Accordion::Builder.new do |accordion|
             accordion.add_item("Item 1", "Content 1")
             accordion.add_item("Item 2", "Content 2")
             accordion.add_item("Item 3", "Content 3")
@@ -89,7 +91,20 @@ class Docs::AccordionView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new("PhlexUI::Accordion", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion.rb"),
+      Docs::ComponentStruct.new("PhlexUI::Accordion::Builder", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/builder.rb", builder: true),
+      Docs::ComponentStruct.new("PhlexUI::Accordion::Item", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb"),
+      Docs::ComponentStruct.new("PhlexUI::Accordion::Trigger", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb"),
+      Docs::ComponentStruct.new("PhlexUI::Accordion::Content", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/content.rb"),
+      Docs::ComponentStruct.new("PhlexUI::Accordion::Icon", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/icon.rb"),
+    ]
   end
 end

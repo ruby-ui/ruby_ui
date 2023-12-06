@@ -1,0 +1,1 @@
+Docs::ComponentStruct = Struct.new(:name, :source, :builder)
