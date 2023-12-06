@@ -5,6 +5,8 @@ class Docs::ThemeToggleView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Theme Toggle", description: "Toggle between dark/light theme.")
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "With icon", context: self) do
         <<~RUBY
           render PhlexUI::ThemeToggle.new do |toggle|
@@ -59,7 +61,16 @@ class Docs::ThemeToggleView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "ToggleThemeController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/toggle_theme_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::ThemeToggle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/theme_toggle.rb", built_using: :phlex),
+    ]
   end
 end
