@@ -9,6 +9,8 @@ class Docs::SheetView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Sheet", description: "Extends the Sheet component to display content that complements the main content of the screen.", premium: @premium)
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "Example", context: self, premium: @premium) do
         <<~RUBY
           render PhlexUI::Sheet.new do
@@ -207,7 +209,23 @@ class Docs::SheetView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "SheetController", source: "https://github.com/PhlexUI/phlex_ui_stimulus_pro/blob/main/controllers/sheet_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Trigger", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Content", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Header", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/header.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Title", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/title.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Description", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/description.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Middle", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/middle.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Footer", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/footer.rb", built_using: :phlex),
+    ]
   end
 end
