@@ -5,6 +5,8 @@ class Docs::AspectRatioView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Aspect Ratio", description: "Displays content within a desired ratio.")
 
+      render PhlexUI::Typography::H2.new { "Usage" }
+
       render Docs::VisualCodeExample.new(title: "16/9", context: self) do
         <<~RUBY
           render PhlexUI::AspectRatio.new(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border shadow-sm") do
@@ -57,7 +59,15 @@ class Docs::AspectRatioView < ApplicationView
         RUBY
       end
 
-      render Docs::InstallationInstructionsComingSoon.new
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new("PhlexUI::AspectRatio", "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/aspect_ratio.rb"),
+    ]
   end
 end
