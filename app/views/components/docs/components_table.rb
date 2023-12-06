@@ -6,7 +6,7 @@ class Docs::ComponentsTable < ApplicationComponent
     end
 
     def template
-        render PhlexUI::Typography::H2.new { "Component reference" }
+        render PhlexUI::Typography::H2.new { "Components" }
         div(class: 'border rounded-lg overflow-hidden') do
             render PhlexUI::Table::Builder.new(@components) do |t|
                 t.column("Component") do |component| 
