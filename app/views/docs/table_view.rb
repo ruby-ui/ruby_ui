@@ -8,7 +8,9 @@ class Docs::TableView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
       render Docs::Header.new(title: "Table", description: "A responsive table component.")
 
-      render Docs::VisualCodeExample.new(title: "Default", context: self) do
+      render PhlexUI::Typography::H2.new { "Usage" }
+
+      render Docs::VisualCodeExample.new(title: "Without builder", context: self) do
         <<~RUBY
           render PhlexUI::Table.new do
             render PhlexUI::Table::Caption.new { "Employees at Acme inc." }
@@ -56,7 +58,7 @@ class Docs::TableView < ApplicationView
           render PhlexUI::Table::Builder.new(users, caption: "Top contributors to Phlex") do |t|
             t.column("Name") do |user|
               div(class: 'flex items-center space-x-3') do
-                render PhlexUI::Avatar.new(src: user.avatar_url, size: :md)
+                render PhlexUI::Avatar::Builder.new(src: user.avatar_url, size: :md)
                 div do
                   p(class: 'text-sm font-medium') { user.name }
                   p(class: 'text-sm text-gray-500') { user.username }
@@ -75,7 +77,25 @@ class Docs::TableView < ApplicationView
           end
         RUBY
       end
+
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "PhlexUI::Table", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Caption", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/caption.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Header", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/header.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Body", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/body.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/footer.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Row", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/row.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Head", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/head.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Cell", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/cell.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/builder.rb", built_using: :phlex),
+    ]
   end
 
   def invoices
