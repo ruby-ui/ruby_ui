@@ -7,6 +7,7 @@ class User < ApplicationRecord
     validate :team_members_limit, if: :team?
     validates :github_username, uniqueness: true, allow_blank: true
     validate :github_username_exists, if: -> { github_username.present? && github_username_changed? }
+    validates :plan, presence: true
     
     enum plan: { free: 0, personal: 1, team: 2 }
 
