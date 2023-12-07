@@ -33,7 +33,11 @@ class SigninsController < ApplicationController
             reset_session
             session[:user_id] = result.user.id
             flash[:notice] = "Welcome, #{result.user.email}!"
-            redirect_to params[:redirect_path]
+            begin
+                redirect_to params[:redirect_path]
+            rescue ActionController::Redirecting::UnsafeRedirectError
+                redirect_to root_path
+            end
         else
             flash[:alert] = "We weren't able to log you in with that link. Try again?"
             redirect_to new_signin_path(redirect_path: params[:redirect_path])
