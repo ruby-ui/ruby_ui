@@ -19,8 +19,8 @@ class SigninsController < ApplicationController
 
     def destroy
         reset_session
-        flash[:notice] = "Your account has been successfully logged out."
-        redirect_back fallback_location: root_path
+        flash[:notice] = "You have successfully logged out."
+        redirect_to root_path
     end
 
     def check_your_email
@@ -33,7 +33,7 @@ class SigninsController < ApplicationController
             reset_session
             session[:user_id] = result.user.id
             flash[:notice] = "Welcome, #{result.user.email}!"
-            redirect_to params[:redirect_path], allow_other_host: true
+            redirect_to params[:redirect_path]
         else
             flash[:error] = "We weren't able to log you in with that link. Try again?"
             redirect_to new_signin_path(redirect_path: params[:redirect_path])
