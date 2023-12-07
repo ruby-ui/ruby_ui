@@ -18,8 +18,4 @@ module UserAuth
             )
         end
     end
-
-    def current_user
-        Current.user
-    end
 end

@@ -1,4 +1,4 @@
 class ApplicationController < ActionController::Base
     include UserAuth
-    include EarlyAccessCheck
+    include SubscriberStatus
 end
