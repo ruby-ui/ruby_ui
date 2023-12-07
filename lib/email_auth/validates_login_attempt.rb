@@ -4,7 +4,7 @@ module EmailAuth
 
     def validate(token)
       user = User.where(auth_token: token)
-        .where("auth_token_expires_at > ?", Time.zone.now)
+        .where("auth_token_expires_at > ?", Time.now.utc)
         .first
 
       if user.present?

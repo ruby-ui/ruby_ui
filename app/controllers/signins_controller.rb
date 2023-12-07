@@ -35,7 +35,7 @@ class SigninsController < ApplicationController
             flash[:notice] = "Welcome, #{result.user.email}!"
             redirect_to params[:redirect_path]
         else
-            flash[:error] = "We weren't able to log you in with that link. Try again?"
+            flash[:alert] = "We weren't able to log you in with that link. Try again?"
             redirect_to new_signin_path(redirect_path: params[:redirect_path])
         end
     end
