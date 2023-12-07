@@ -3,7 +3,7 @@
 class Shared::Menu < ApplicationComponent
     def template
         div(class: 'pb-4') do
-            if current_user&.subscribed?
+            if Current.user_subscribed?
                 # GETTING STARTED
                 h4(class: 'mb-1 mt-4 md:mt-0 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
                 div(class: 'grid grid-flow-row auto-rows-max text-sm') do
@@ -22,7 +22,7 @@ class Shared::Menu < ApplicationComponent
             end
 
             # COMPONENTS
-            h4(class: tokens('mb-1 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2', -> { current_user&.subscribed? } => "mt-4")) do
+            h4(class: tokens('mb-1 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2', -> { Current.user_subscribed? } => "mt-4")) do
                 plain "Components"
                 render PhlexUI::Badge.new(variant: :primary, size: :sm) { components.count.to_s }
             end
@@ -171,7 +171,7 @@ class Shared::Menu < ApplicationComponent
 
     def show_premium_badge?(component)
         return false unless component[:premium]
-        return true if current_user.nil?
-        current_user.not_subscribed?
+        return true if Current.user.nil?
+        !Current.user_subscribed?
     end
 end

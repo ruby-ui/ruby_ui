@@ -2,11 +2,11 @@ class AccountsController < ApplicationController
     layout -> { ApplicationLayout }
 
     def show
-        render Accounts::ShowView.new(user: current_user)
+        render Accounts::ShowView.new(user: Current.user)
     end
 
     def update
-        user = current_user
+        user = Current.user
         if user.update(user_params)
             redirect_to account_path, notice: 'Account was successfully updated.'
         else

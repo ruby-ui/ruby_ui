@@ -15,10 +15,10 @@ class Accounts::ShowView < ApplicationView
         render PhlexUI::Typography::H1.new(class: 'text-center') { "Account Settings" }
       end
       account_details
-      github_access if current_user.subscribed?
+      github_access if Current.user_subscribed?
       current_plan
-      upgrade_plan if ["free", "personal"].include?(current_user.plan) && !current_user.is_team_member?
-      invite_team_members if current_user.plan == "team"
+      upgrade_plan if ["free", "personal"].include?(Current.user.plan) && !Current.user.is_team_member?
+      invite_team_members if Current.user.plan == "team"
     end
   end
 
@@ -29,7 +29,7 @@ class Accounts::ShowView < ApplicationView
       render PhlexUI::Typography::H2.new(class: 'text-xl border-none !pb-0') { "Account details" }
       render PhlexUI::Form::Item.new do
         render PhlexUI::Label.new(for: "email") { "Email" }
-        render PhlexUI::Input.new(type: "email", placeholder: "Email", id: "email", value: current_user.email, disabled: true, class: 'bg-background')
+        render PhlexUI::Input.new(type: "email", placeholder: "Email", id: "email", value: Current.user.email, disabled: true, class: 'bg-background')
         render PhlexUI::Typography::Muted.new do
           plain "Change your email by contacting us at "
           a(href: support_email_link, class: 'text-foreground underline') { ENV['SUPPORT_EMAIL'] }
@@ -47,7 +47,7 @@ class Accounts::ShowView < ApplicationView
         render PhlexUI::Form::Spacer.new do
           render PhlexUI::Form::Item.new do
             render PhlexUI::Label.new(for: "github_username") { "GitHub username" }
-            render PhlexUI::Input.new(type: "string", name: "user[github_username]", placeholder: "eg. joeldrapper", id: "github_username", value: current_user.github_username, error: @github_errors)
+            render PhlexUI::Input.new(type: "string", name: "user[github_username]", placeholder: "eg. joeldrapper", id: "github_username", value: Current.user.github_username, error: @github_errors)
             render PhlexUI::Hint.new do
               plain "Only use your own account please 🙏 "
               a(href: "http://www.github.com", class: 'text-foreground underline') { "Find GitHub username" }
@@ -56,7 +56,7 @@ class Accounts::ShowView < ApplicationView
           
           div(class: 'flex gap-x-2') do
             render PhlexUI::Button.new(type: :submit, variant: :primary) { "Update" }
-            if current_user.github_username.present?
+            if Current.user.github_username.present?
               render PhlexUI::Link.new(href: ENV['PHLEXUI_GITHUB_LINK'], variant: :secondary) do
                 github_icon
                 plain "Go to PhlexUI"
@@ -71,16 +71,16 @@ class Accounts::ShowView < ApplicationView
   def current_plan
     div(class: 'space-y-4') do
       render PhlexUI::Typography::H2.new(class: 'text-xl border-none !pb-0') { "Current plan" }
-      if current_user.is_team_member?
+      if Current.user.is_team_member?
         render PhlexUI::Typography::P.new(class: 'text-muted-foreground') do
           plain "You are currently a team member of "
-          render PhlexUI::Badge.new(variant: :primary, size: :sm) { current_user.team_member&.user&.email }
+          render PhlexUI::Badge.new(variant: :primary, size: :sm) { Current.user.team_member&.user&.email }
           plain " and have access to all components."
         end
       else
         render PhlexUI::Typography::P.new(class: 'text-muted-foreground')  do
           plain "Currently you are on the "
-          render PhlexUI::Badge.new(variant: :primary, size: :sm) { current_user.plan.capitalize }
+          render PhlexUI::Badge.new(variant: :primary, size: :sm) { Current.user.plan.capitalize }
           plain " plan."
         end
       end
@@ -88,7 +88,7 @@ class Accounts::ShowView < ApplicationView
   end
 
   def upgrade_plan
-    cta_link = current_user.plan == "free" ? helpers.root_path(anchor: :pricing) : ENV['TEAM_STRIPE_LINK'] + "?prefilled_email=#{current_user.email}"
+    cta_link = Current.user.plan == "free" ? helpers.root_path(anchor: :pricing) : ENV['TEAM_STRIPE_LINK'] + "?prefilled_email=#{Current.user.email}"
 
     div(class: 'space-y-4') do
       render PhlexUI::Typography::H2.new(class: 'text-xl border-none !pb-0') { "Upgrade plan" }
@@ -103,7 +103,7 @@ class Accounts::ShowView < ApplicationView
         end
 
         div(class: 'p-6') do
-          case current_user.plan
+          case Current.user.plan
           when "free"
             render PhlexUI::Typography::P.new(class: 'font-semibold') { "Ready for unlimited access?" }
             render PhlexUI::Typography::P.new(class: '!mt-0 text-muted-foreground') { "Upgrade now to unlock all features and accelerate your productivity." }
@@ -134,7 +134,7 @@ class Accounts::ShowView < ApplicationView
             end
           end
           render PhlexUI::Table::Body.new do
-            current_user.team_members.each do |member|
+            Current.user.team_members.each do |member|
               render PhlexUI::Table::Row.new(class: 'group/row') do
                 render PhlexUI::Table::Cell.new(class: 'pl-4 font-medium') { member.email }
                 render PhlexUI::Table::Cell.new(class: "text-right opacity-0 group-hover/row:opacity-100 pr-4") do
@@ -144,7 +144,7 @@ class Accounts::ShowView < ApplicationView
             end
           end
         end
-        if current_user.team_members.empty?
+        if Current.user.team_members.empty?
           render PhlexUI::Typography::Muted.new(class: 'text-center p-4') { "You have no team members yet..." }
         end
       end
@@ -160,7 +160,7 @@ class Accounts::ShowView < ApplicationView
   end
 
   def email_body
-    "Hi George,%0A%0AI'd like to update the email for my account.%0A%0ACurrent email: #{current_user.email}%0ANew email: _INSERT_NEW_EMAIL_HERE_%0A%0ACheers"
+    "Hi George,%0A%0AI'd like to update the email for my account.%0A%0ACurrent email: #{Current.user.email}%0ANew email: _INSERT_NEW_EMAIL_HERE_%0A%0ACheers"
   end
 
   def invite_modal

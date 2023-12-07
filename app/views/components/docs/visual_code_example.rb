@@ -104,8 +104,8 @@ class Docs::VisualCodeExample < ApplicationComponent
 
     def locked?
         return false unless @premium
-        return true if current_user.nil?
-        current_user.not_subscribed?
+        return true if Current.user.nil?
+        !Current.user_subscribed?
     end
 
     def eye_icon

@@ -2,7 +2,7 @@
 
 class Shared::Navbar < ApplicationComponent
   def template
-    access_github_banner if current_user&.subscribed? && current_user&.github_username.blank?
+    access_github_banner if Current.user_subscribed? && Current.user&.github_username.blank?
     header(class: 'supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-2xl backdrop-saturate-200') do
       div(class: 'px-2 sm:px-4 sm:container flex h-14 items-center justify-between') do
         div(class: 'mr-4 flex items-center') do
@@ -10,7 +10,7 @@ class Shared::Navbar < ApplicationComponent
           render Shared::Logo.new
 
           render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden sm:inline-block') { "Components" }
-          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: 'hidden sm:inline-block') { "Docs" } if current_user&.subscribed?
+          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: 'hidden sm:inline-block') { "Docs" } if Current.user_subscribed?
         end
         div(class: 'flex items-center gap-x-2 md:divide-x') do
           div(class: 'flex items-center') do
@@ -27,7 +27,7 @@ class Shared::Navbar < ApplicationComponent
           end
           div(class: 'flex items-center gap-x-2 pl-2') do
             div(class: 'hidden md:block') do
-              if current_user
+              if Current.user
                   render Shared::AccountDropdown.new do
                     render PhlexUI::Button.new(variant: :ghost, class: 'hidden sm:inline-flex') do
                         plain "Account"
@@ -38,7 +38,7 @@ class Shared::Navbar < ApplicationComponent
                 render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
               end
             end
-            if current_user.nil? || current_user.not_subscribed?
+            if Current.user.nil? || !Current.user_subscribed?
               render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
                 plain "Get all access"
                 arrow_right_icon

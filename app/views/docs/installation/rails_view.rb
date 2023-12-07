@@ -74,7 +74,7 @@ class Docs::Installation::RailsView < ApplicationView
                   phlex_ui_installation("free")
                 end
                 render PhlexUI::Tabs::Content.new(value: "pro", class: 'space-y-4 !mt-0') do
-                  if current_user&.subscribed?
+                  if Current.user_subscribed?
                     phlex_ui_installation("pro")
                   else
                     upgrade_to_pro
@@ -110,7 +110,7 @@ class Docs::Installation::RailsView < ApplicationView
                   phlex_ui_js_installation("free")
                 end
                 render PhlexUI::Tabs::Content.new(value: "pro", class: 'space-y-4 !mt-0') do
-                  if current_user&.subscribed?
+                  if Current.user_subscribed?
                     phlex_ui_js_installation("pro")
                   else
                     upgrade_to_pro
@@ -160,7 +160,7 @@ class Docs::Installation::RailsView < ApplicationView
               plain " file"
             end
 
-            code = current_user&.subscribed? ? tailwind_config_pro : tailwind_config
+            code = Current.user_subscribed? ? tailwind_config_pro : tailwind_config
             render PhlexUI::Codeblock.new(code, syntax: :javascript)
           end
         end
@@ -541,7 +541,7 @@ class Docs::Installation::RailsView < ApplicationView
   end
 
   def free_or_pro
-    current_user&.subscribed? ? "pro" : "free"
+    Current.user_subscribed? ? "pro" : "free"
   end
 
   def info_icon

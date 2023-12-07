@@ -7,16 +7,16 @@ class Shared::AccountDropdown < ApplicationComponent
                 block.call
             end
             render PhlexUI::DropdownMenu::Content.new do
-                if current_user
+                if Current.user
                     div(class: 'px-2 py-1.5') do
                         span(class: 'text-muted-foreground text-sm') { "Signed in as" }
-                        p(class: 'text-sm font-medium') { current_user&.email }
+                        p(class: 'text-sm font-medium') { Current.user&.email }
                     end
                     render PhlexUI::DropdownMenu::Separator.new
                     render PhlexUI::DropdownMenu::Item.new(href: helpers.support_path) { "Support" }
                     render PhlexUI::DropdownMenu::Item.new(href: helpers.license_path) { "License" }
                     render PhlexUI::DropdownMenu::Separator.new
-                    if current_user
+                    if Current.user
                         render PhlexUI::DropdownMenu::Item.new(href: helpers.account_path) { "Account Settings" }
                     end
                     render PhlexUI::DropdownMenu::Separator.new

@@ -251,16 +251,16 @@ class HomeView::Pricing < ApplicationComponent
     end
 
     def personal_stripe_link
-        if current_user
-            ENV['PERSONAL_STRIPE_LINK'] + "?prefilled_email=#{current_user.email}"
+        if Current.user
+            ENV['PERSONAL_STRIPE_LINK'] + "?prefilled_email=#{Current.user.email}"
         else
             ENV['PERSONAL_STRIPE_LINK']
         end
     end
 
     def team_stripe_link
-        if current_user
-            ENV['TEAM_STRIPE_LINK'] + "?prefilled_email=#{current_user.email}"
+        if Current.user
+            ENV['TEAM_STRIPE_LINK'] + "?prefilled_email=#{Current.user.email}"
         else
             ENV['TEAM_STRIPE_LINK']
         end

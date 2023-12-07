@@ -6,8 +6,8 @@ class TeamMembersController < ApplicationController
         # redirects back to the account page
         emails = team_member_params[:emails].split(",").map(&:strip)
         emails.each do |email|
-            team_member = TeamMember.create!(email: email, user: current_user)
-            TeamMemberMailer.with(email: email, user: current_user).invite.deliver_now
+            team_member = TeamMember.create!(email: email, user: Current.user)
+            TeamMemberMailer.with(email: email, user: Current.user).invite.deliver_now
         end
         redirect_to account_path, notice: "Team members invited!"
 
