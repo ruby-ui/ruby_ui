@@ -226,6 +226,7 @@ GEM
     reline (0.4.1)
       io-console (~> 0.5)
     rexml (3.2.6)
+    rollbar (3.4.2)
     rouge (4.2.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -290,6 +291,7 @@ DEPENDENCIES
   rack-www
   rails (~> 7.0.8)
   redis (~> 4.0)
+  rollbar
   selenium-webdriver
   sprockets-rails
   stimulus-rails

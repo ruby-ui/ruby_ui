@@ -81,6 +81,7 @@ gem "letter_opener", group: :development
 gem 'postmark-rails' # used in production
 gem "octokit", "~> 5.0"
 gem 'rack-www' # used to redirect www to non-www subdomain
+gem 'rollbar'
 
 gem "phlex-rails"
 gem "phlex_ui_pro", "~> 0.1.2", source: 'https://phlexui.fury.site/gem/'
