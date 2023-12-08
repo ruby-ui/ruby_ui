@@ -119,7 +119,7 @@ class Shared::Navbar < ApplicationComponent
         github_icon
       end
       p(class: "text-sm leading-6") do
-        a(href: helpers.account_path) do
+        a(href: helpers.account_path(anchor: 'github_access')) do
           strong(class: "font-semibold") { "Update GitHub username" }
           svg(
             viewbox: "0 0 2 2",

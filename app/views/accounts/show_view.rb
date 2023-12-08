@@ -39,7 +39,7 @@ class Accounts::ShowView < ApplicationView
   end
 
   def github_access
-    turbo_frame(id: "github_access", class: 'block space-y-4') do
+    turbo_frame(id: "github_access", class: 'scroll-m-20 block space-y-4') do
       render PhlexUI::Typography::H2.new(class: 'text-xl border-none !pb-0') { "GitHub access" }
       render PhlexUI::Typography::P.new(class: 'text-muted-foreground') { "By adding your github username, we will add you to the PhlexUI GitHub organization, giving you read access to all repositories." }
         
