@@ -1,5 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV["MAILER_SENDER"]
+  default from: email_address_with_name(ENV["MAILER_SENDER"], ENV["APP_NAME"]),
+         reply_to: ENV["MAILER_SENDER"]
   layout "mailer"
 
   def self.template_path
