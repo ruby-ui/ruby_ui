@@ -7,18 +7,11 @@
     "autoprefixer": "^10.4.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "date-fns": "^2.30.0",
     "esbuild": "^0.19.4",
-    "fuse.js": "^6.6.2",
-    "highlight.js": "^11.9.0",
-    "motion": "^10.16.4",
-    "mustache": "^4.2.0",
-    "phlex_ui_pro": "^0.1.0",
+    "phlex_ui": "^0.1.1",
     "postcss": "^8.4.31",
-    "tailwind-merge": "^1.14.0",
     "tailwindcss": "^3.3.3",
-    "tailwindcss-animate": "^1.0.7",
-    "tippy.js": "^6.3.7"
+    "tailwindcss-animate": "^1.0.7"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
