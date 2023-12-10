@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::Installation::RailsView < ApplicationView
+class Docs::Installation::RailsBundlerView < ApplicationView
   def initialize
     @phlex_rails_link = "https://www.phlex.fun/rails/"
     @phlex_ui_pro_private_key = ENV['BUNDLE_PHLEXUI__FURY__SITE']
@@ -8,14 +8,17 @@ class Docs::Installation::RailsView < ApplicationView
 
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Rails", description: "How to install PhlexUI within a Rails app.", pre_release_only: true)
+      render Docs::Header.new(title: "Rails - Bundler", description: "How to install PhlexUI within a Rails app that employs JS bundling.", pre_release_only: true)
 
       render PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b') { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
         steps.add_step do
           step_container do
             render PhlexUI::Typography::Large.new { "Generate a new Rails application" }
-            render PhlexUI::Typography::P.new { "In case you don't have a Rails application set up yet, let's start by generating one." }
+            render PhlexUI::Typography::P.new do
+              plain "In case you don't have a Rails application set up yet, let's start by generating one. The demo uses esbuild, however feel free to change esbuild to use bun, webpack or rollup.js. "
+              render PhlexUI::Typography::InlineLink.new(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#adding-npm-packages-with-javascript-bundlers") { "Read more about JS bundlers in Rails here." }
+            end
             code = <<~CODE 
                 rails new CHANGE_TO_NAME_OF_APP --css=tailwind --javascript=esbuild
               CODE

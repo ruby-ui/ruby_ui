@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     get 'customizing_components', to: 'docs#customizing_components', as: :docs_customizing_components
 
     # INSTALLATION
-    get 'installation/rails', to: 'docs#installation_rails', as: :docs_installation_rails
+    get 'installation/rails_bundler', to: 'docs#installation_rails_bundler', as: :docs_installation_rails_bundler
     
     # COMPONENTS
     get 'accordion', to: 'docs#accordion', as: :docs_accordion

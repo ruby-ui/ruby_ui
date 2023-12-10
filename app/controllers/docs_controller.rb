@@ -31,8 +31,8 @@ class DocsController < ApplicationController
   end
 
   # INSTALLATION
-  def installation_rails
-    render Docs::Installation::RailsView.new
+  def installation_rails_bundler
+    render Docs::Installation::RailsBundlerView.new
   end
 
   # COMPONENTS
