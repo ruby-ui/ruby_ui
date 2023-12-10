@@ -8,7 +8,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
 
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Rails - Bundler", description: "How to install PhlexUI within a Rails app that employs JS bundling.", pre_release_only: true)
+      render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install PhlexUI within a Rails app that employs JS bundling.", pre_release_only: true)
 
       render PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b') { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
