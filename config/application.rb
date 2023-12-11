@@ -25,5 +25,7 @@ module PhlexComponentsLibrary
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.middleware.use Rack::WWW, :www => false # redirects all requests to naked domain
+
+    config.exceptions_app = self.routes # redirects all exceptions to custom error pages (See routes)
   end
 end

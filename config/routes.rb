@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :errors, only: [:not_found, :internal_server_error]
   get 'license', to: 'pages#license', as: :license
   get 'support', to: 'pages#support', as: :support
 
@@ -54,5 +55,9 @@ Rails.application.routes.draw do
     get 'tooltip', to: 'docs#tooltip', as: :docs_tooltip
     get 'typography', to: 'docs#typography', as: :docs_typography
   end
+
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+
   root "pages#home"
 end
