@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :errors, only: [:not_found, :internal_server_error]
+  get 'payments/confirmation', to: 'payments#confirmation', as: :payments_confirmation
+
   get 'license', to: 'pages#license', as: :license
   get 'support', to: 'pages#support', as: :support
 
