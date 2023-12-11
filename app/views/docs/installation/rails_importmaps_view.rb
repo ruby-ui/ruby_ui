@@ -10,6 +10,13 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - Importmaps", description: "How to install PhlexUI within a Rails app that uses Importmaps.", pre_release_only: true)
 
+      render PhlexUI::Alert.new(variant: :warning) do
+        alert_icon
+        render PhlexUI::Alert::Title.new { "Tailwind plugins not compatible with importmaps" }
+        render PhlexUI::Alert::Description.new { "This means that animation using tailwind-animate plugin will not work. I am thinking of a new way to implement this, most likely with a stimulus controller for animations." }
+      end
+
+
       render PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b') { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
         steps.add_step do
@@ -500,6 +507,24 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         d: "M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
       )
     end
+  end
+
+  def alert_icon
+      svg(
+          xmlns: "http://www.w3.org/2000/svg",
+          fill: "none",
+          viewbox: "0 0 24 24",
+          stroke_width: "1.5",
+          stroke: "currentColor",
+          class: "w-5 h-5"
+      ) do |s|
+          s.path(
+              stroke_linecap: "round",
+              stroke_linejoin: "round",
+              d:
+              "M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+          )
+      end
   end
 end
 
