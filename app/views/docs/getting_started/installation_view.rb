@@ -9,7 +9,8 @@ class Docs::GettingStarted::InstallationView < ApplicationView
 
       render PhlexUI::Typography::H2.new { "Select a Framework" }
       div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4") do
-        framework_card(title: "Rails", link: helpers.docs_installation_rails_path) { rails_logo } 
+        framework_card(title: "Rails --- JS Bundler", link: helpers.docs_installation_rails_bundler_path) { rails_logo }
+        framework_card(title: "Rails --- Importmaps", link: helpers.docs_installation_rails_importmaps_path) { rails_logo }
       end
     end
   end
