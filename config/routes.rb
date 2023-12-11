@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
     # INSTALLATION
     get 'installation/rails_bundler', to: 'docs#installation_rails_bundler', as: :docs_installation_rails_bundler
+    get 'installation/rails_importmaps', to: 'docs#installation_rails_importmaps', as: :docs_installation_rails_importmaps
     
     # COMPONENTS
     get 'accordion', to: 'docs#accordion', as: :docs_accordion

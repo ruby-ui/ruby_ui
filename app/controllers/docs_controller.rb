@@ -35,6 +35,10 @@ class DocsController < ApplicationController
     render Docs::Installation::RailsBundlerView.new
   end
 
+  def installation_rails_importmaps
+    render Docs::Installation::RailsImportmapsView.new
+  end
+
   # COMPONENTS
   def accordion
     render Docs::AccordionView.new
