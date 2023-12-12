@@ -11,22 +11,22 @@ class Payments::ConfirmationView < ApplicationView
   def template
     render Shared::GridPattern.new
     
-    div(class: "z-0 absolute inset-top grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 h-32 -mt-14") do
+    div(class: "z-0 absolute inset-top overflow-hidden grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 h-32 w-screen") do
       6.times do
-        render Animation.new(path: helpers.asset_path("confetti_animation.json"), delay: rand(5000), class: "h-full w-full col-span-1 rotate-12")
+        render Animation.new(path: helpers.asset_path("confetti_animation.json"), delay: rand(1000), class: "h-full w-full col-span-1 rotate-12")
       end
     end
 
     div(class: 'pt-32 relative') do
-      render PhlexUI::Card.new(class: 'p-4 sm:p-8 space-y-6 w-full rounded-none') do
-        render Shared::Container.new(class: 'pt-10 space-y-8') do
+      render PhlexUI::Card.new(class: 'pb-10 space-y-6 w-full rounded-t-3xl rounded-b-none') do
+        render Shared::Container.new(class: 'pt-16 space-y-8') do
           div(class: 'space-y-2 flex flex-col items-center') do
             render PhlexUI::Badge.new(variant: :success) { "Payment Successful" }
             render PhlexUI::Typography::H1.new(class: '!text-3xl') { "Welcome to PhlexUI!" }
             render PhlexUI::Typography::P.new(class: 'text-muted-foreground') { "Follow the steps below to get started." }
           end
           
-          div(class: 'flex flex-col space-y-12 pt-10') do
+          div(class: 'flex flex-col pt-10') do
             sign_in_step
             github_step
             installation_step
@@ -39,7 +39,7 @@ class Payments::ConfirmationView < ApplicationView
   private
 
   def installation_step
-    check_list_item(title: "Install PhlexUI", description: 'Install PhlexUI in your Ruby app.', checked: false) do
+    check_list_item(title: "Install PhlexUI", description: 'Install PhlexUI in your Ruby app.', checked: false, last: true) do
       render PhlexUI::Card.new(class: 'shadow-none p-6 space-y-4') do
         render PhlexUI::Typography::P.new { "Follow the installation guide to install PhlexUI in your Ruby app." }
         render PhlexUI::Link.new(href: helpers.docs_installation_path, variant: :primary, class: 'w-full') do 
@@ -119,10 +119,14 @@ class Payments::ConfirmationView < ApplicationView
     end
   end
 
-  def check_list_item(title:, description: nil, checked: false, &block)
-    div(class: 'flex space-x-4') do
-      render_check_state(checked)
-      div(class: 'space-y-4 -mt-0.5 flex-grow') do
+  def check_list_item(title:, description: nil, checked: false, last: false, &block)
+    div(class: 'relative flex space-x-4 md:space-x-8') do
+      div(class: 'flex-shrink-0 h-full') do
+        render_check_state(checked)
+        # vertical line unless last
+        hr(class: 'absolute left-3 top-6 -ml-px h-full w-px bg-border') unless last
+      end
+      div(class: 'flex-1 space-y-4 pb-10 overflow-hidden -mt-0.5') do
         div(class: 'space-y-1') do
           render PhlexUI::Typography::Large.new { title }
           render PhlexUI::Typography::P.new(class: 'text-muted-foreground') { description } if description.present?

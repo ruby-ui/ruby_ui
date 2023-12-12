@@ -2,7 +2,7 @@
 
 class Shared::Navbar < ApplicationComponent
   def template
-    header(class: 'supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-2xl backdrop-saturate-200') do
+    header(class: 'supports-backdrop-blur:bg-background/80 sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-2xl backdrop-saturate-200') do
       div(class: 'px-2 sm:px-4 sm:container flex h-14 items-center justify-between') do
         div(class: 'mr-4 flex items-center') do
           render Shared::MobileMenu.new(class: 'md:hidden')
@@ -110,6 +110,22 @@ class Shared::Navbar < ApplicationComponent
   end
 
   private
+
+  def arrow_right_icon
+    svg(
+      xmlns: "http://www.w3.org/2000/svg",
+      viewbox: "0 0 20 20",
+      fill: "currentColor",
+      class: "w-5 h-5 ml-1 -mr-1"
+    ) do |s|
+      s.path(
+        fill_rule: "evenodd",
+        d:
+          "M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z",
+        clip_rule: "evenodd"
+      )
+    end
+  end
 
   def chevron_down_icon
       svg(
