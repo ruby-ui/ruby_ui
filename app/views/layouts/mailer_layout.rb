@@ -9,10 +9,12 @@ class MailerLayout < Phlex::HTML
           --foreground: hsl(0, 0%, 3.9%);
           --primary: hsl(0, 0%, 9%);
           --primary-foreground: hsl(0, 0%, 98%);
+          --muted: hsl(0, 0%, 96.1%);
+          --muted-foreground: hsl(0, 0%, 45.1%);
         }
 
         body { 
-          font-family: Helvetica, sans-serif;
+          font-family: Arial, sans-serif;
           background-color: var(--background);
         }
 
@@ -24,13 +26,31 @@ class MailerLayout < Phlex::HTML
           font-size: 1rem;
           line-height: 1.5rem;
           font-weight: 400;
-          color: var(--foreground);
+          color: var(--muted-foreground);
           margin-top: 0;
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
+        }
+
+        p a {
+          font-weight: 500;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+          color: var(--primary);
         }
 
         strong {
           font-weight: 600;
+          color: var(--foreground);
+        }
+
+        h2 {
+          font-size: 1rem;
+          line-height: 1.75rem;
+          font-weight: 600;
+          color: var(--foreground);
+          margin-top: 1.5rem;
+          margin-bottom: 0.5rem;
+          letter-spacing: -0.1px;
         }
 
         .button {
