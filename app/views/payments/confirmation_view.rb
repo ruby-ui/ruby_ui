@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class Payments::ConfirmationView < ApplicationView
+  register_element :turbo_frame
+
+  def initialize(user:)
+    @user = user
+    @github_errors = @user.errors.full_messages_for(:github_username).join(", ") if @user.present?
+  end
+
   def template
     render Shared::GridPattern.new
     
@@ -11,7 +18,7 @@ class Payments::ConfirmationView < ApplicationView
     end
 
     div(class: 'pt-32 relative') do
-      render PhlexUI::Card.new(class: 'p-4 sm:p-8 space-y-6 w-full h-[calc(100vh-theme(space.32))] rounded-none') do
+      render PhlexUI::Card.new(class: 'p-4 sm:p-8 space-y-6 w-full rounded-none') do
         render Shared::Container.new(class: 'pt-10 space-y-8') do
           div(class: 'space-y-2 flex flex-col items-center') do
             render PhlexUI::Badge.new(variant: :success) { "Payment Successful" }
@@ -19,20 +26,9 @@ class Payments::ConfirmationView < ApplicationView
             render PhlexUI::Typography::P.new(class: 'text-muted-foreground') { "Follow the steps below to get started." }
           end
           
-          div(class: 'flex flex-col space-y-4 pt-10') do
-            check_list_item(title: "Sign in", description: 'Use the email you provided at payment to sign in to your account.', checked: Current.user.present?) do
-              if Current.user.present?
-                render PhlexUI::Alert.new(variant: :success) do
-                  thumbs_up_icon
-                  render PhlexUI::Alert::Title.new { "Nice work" }
-                  render PhlexUI::Alert::Description.new { "You're signed in!" }
-                end
-              else
-                render PhlexUI::Card.new(class: 'bg-muted shadow-none p-6') do
-                  sign_in_form
-                end
-              end
-            end
+          div(class: 'flex flex-col space-y-12 pt-10') do
+            sign_in_step
+            github_step
           end
         end
       end
@@ -40,6 +36,61 @@ class Payments::ConfirmationView < ApplicationView
   end
 
   private
+
+  def github_step
+    check_list_item(title: "Connect your Github", description: 'Access the private PhlexUI repositories on GitHub.', checked: Current.user&.github_username.present?) do
+      if Current.user&.github_username.present?
+        render PhlexUI::Alert.new do
+          render PhlexUI::Alert::Description.new { "Github connected. You can now access the private github repositories" }
+        end
+      else
+        render PhlexUI::Card.new(class: 'bg-muted shadow-none p-6') do
+          github_form
+        end
+      end
+    end
+  end
+
+  def sign_in_step
+    check_list_item(title: "Sign in", description: 'Use the email you provided at payment to sign in to your account.', checked: Current.user.present?) do
+      if Current.user.present?
+        render PhlexUI::Alert.new do
+          render PhlexUI::Alert::Description.new { "Nice work! You're signed in." }
+        end
+      else
+        render PhlexUI::Card.new(class: 'bg-muted shadow-none p-6') do
+          sign_in_form
+        end
+      end
+    end
+  end
+
+  def github_form
+    div(class: 'scroll-m-20 block space-y-4') do
+      render PhlexUI::Form.new(action: helpers.account_update_from_payment_confirmation_path, method: :patch) do
+        render PhlexUI::Form::Spacer.new do
+          render PhlexUI::Form::Item.new do
+            render PhlexUI::Label.new(for: "github_username") { "GitHub username" }
+            render PhlexUI::Input.new(type: "string", name: "user[github_username]", placeholder: "eg. joeldrapper", id: "github_username", value: @user&.github_username, error: @github_errors)
+            render PhlexUI::Hint.new do
+              plain "Only use your own account please 🙏 "
+              a(href: "http://www.github.com", class: 'text-foreground underline') { "Find GitHub username" }
+            end
+          end
+          
+          div(class: 'flex gap-x-2') do
+            render PhlexUI::Button.new(type: :submit, variant: :primary) { "Update" }
+            if @user&.github_username.present?
+              render PhlexUI::Link.new(href: ENV['PHLEXUI_GITHUB_LINK'], variant: :secondary) do
+                github_icon
+                plain "Go to PhlexUI"
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 
   def sign_in_form
     render PhlexUI::Form::Builder.new(action: helpers.signin_path, method: :post, class: 'w-full space-y-0') do |f|

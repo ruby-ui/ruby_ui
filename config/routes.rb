@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'support', to: 'pages#support', as: :support
 
   resource :account, only: [:show, :update]
+  patch 'account/update_from_payment_confirmation', to: 'accounts#update_from_payment_confirmation', as: :account_update_from_payment_confirmation
   resources :team_members, only: [:create, :destroy]
 
   match "signin/authenticate", to: "signins#authenticate", via: [:get, :post], as: :signin_authenticate

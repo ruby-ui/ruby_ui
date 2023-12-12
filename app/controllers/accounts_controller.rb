@@ -14,6 +14,15 @@ class AccountsController < ApplicationController
         end
     end
 
+    def update_from_payment_confirmation
+        user = Current.user
+        if user.update(user_params)
+            redirect_to payments_confirmation_path, notice: 'Github username was successfully updated'
+        else
+            render Payments::ConfirmationView.new(user: user), status: :unprocessable_entity
+        end
+    end
+
     private
 
     def user_params

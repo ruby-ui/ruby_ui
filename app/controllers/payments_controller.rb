@@ -5,6 +5,6 @@ class PaymentsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:confirmation]
   
   def confirmation
-    render Payments::ConfirmationView.new
+    render Payments::ConfirmationView.new(user: Current.user)
   end
 end
