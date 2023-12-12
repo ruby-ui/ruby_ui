@@ -112,7 +112,7 @@ class Accounts::ShowView < ApplicationView
             render PhlexUI::Typography::P.new(class: '!mt-0 text-muted-foreground') { "Upgrade to a Team Plan and empower your team with access to all components. Streamline your design process and boost your business efficiency." }
           end
           div(class: 'flex justify-end') do
-            render PhlexUI::Link.new(href: cta_link, variant: :primary, class: 'mt-4') { "Upgrade to all access" }
+            render PhlexUI::Link.new(href: cta_link, variant: :primary, class: 'mt-4') { "Upgrade now" }
           end
         end
       end
