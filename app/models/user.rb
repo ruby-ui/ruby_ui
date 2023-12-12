@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     include GithubAccessHandler
+    include WelcomeEmailSender
 
     has_many :team_members, dependent: :destroy
     
