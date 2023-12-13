@@ -3,9 +3,18 @@
 class Shared::Menu < ApplicationComponent
     def template
         div(class: 'pb-4') do
+            # Main routes (Docs, Components, Themes, Github, Discord, Twitter)
+            div(class: "md:hidden") do
+              main_link("Docs", helpers.docs_introduction_path) if Current.user_subscribed?
+              main_link("Components", helpers.docs_accordion_path)
+              main_link("Themes", helpers.themes_path)
+              main_link("Github", ENV['PHLEXUI_GITHUB_LINK'])
+              main_link("Discord", ENV['DISCORD_INVITE_LINK'])
+              main_link("Twitter", ENV['PHLEXUI_TWITTER_LINK'])
+            end
             if Current.user_subscribed?
                 # GETTING STARTED
-                h4(class: 'mb-1 mt-4 md:mt-0 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
+                h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
                 div(class: 'grid grid-flow-row auto-rows-max text-sm') do
                     getting_started_links.each do |getting_started|
                         menu_link(getting_started)
@@ -22,7 +31,7 @@ class Shared::Menu < ApplicationComponent
             end
 
             # COMPONENTS
-            h4(class: tokens('mb-1 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2', -> { Current.user_subscribed? } => "mt-4")) do
+            h4(class: tokens('mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2', -> { Current.user_subscribed? } => "mt-4")) do
                 plain "Components"
                 render PhlexUI::Badge.new(variant: :primary, size: :sm) { components.count.to_s }
             end
@@ -151,6 +160,14 @@ class Shared::Menu < ApplicationComponent
             end
         end
     end
+
+    def main_link(name, path)
+      current_path = path == helpers.request.path
+      a(href: path, class: tokens('group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline', -> { current_path } => "text-foreground font-medium", -> { !current_path } => "text-muted-foreground")) do
+        name
+      end
+    end
+
 
     def premium_status(component)
         if component[:premium]
