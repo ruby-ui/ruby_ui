@@ -1,6 +1,6 @@
 module Mailers
   module TeamMemberMailer
-    class Invite < Phlex::HTML
+    class Invite < ::Mailers::BaseMailer
       def initialize(user:, email:)
         @user = user
         @email = email
