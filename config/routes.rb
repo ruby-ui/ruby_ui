@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resource :signin
 
   resource :webhooks, only: [:create]
+  
+  resources :themes, only: [:index]
 
   scope 'docs' do
     # GETTING STARTED
