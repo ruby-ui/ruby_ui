@@ -95,6 +95,10 @@ class MailerLayout < Phlex::HTML
               margin-bottom: 16px;
               line-height: 1.7;
             }
+            strong {
+              font-weight: 600;
+              color: var(--foreground);
+            }
             h2 {
               font-size: 20px;
               letter-spacing: -0.5px;
