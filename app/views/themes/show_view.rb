@@ -18,8 +18,22 @@ class Themes::ShowView < ApplicationView
         end
       end
       
-      render PhlexUI::Card.new(class: 'mt-8 p-24 shadow-none') do
+      # Component grid
+      div(class: 'flex flex-wrap justify-between -mx-2 pt-16') do
+        div(class: 'flex flex-col gap-y-4 p-2 w-full sm:w-1/2 lg:w-1/3') do
+          render Themes::Grid::RepoTabs.new
+          render Themes::Grid::Card.new
+        end
+        div(class: 'flex flex-col gap-y-4 p-2 w-full sm:w-1/2 lg:w-1/3') do
+          render Themes::Grid::Calendar.new
+        end
+        div(class: 'flex flex-col gap-y-4 p-2 w-full sm:w-1/2 lg:w-1/3') do
+          render PhlexUI::Button.new(variant: :primary) { "Click me!" }
+          render Themes::Grid::Command.new
+        end
       end
     end
   end
+
+  private
 end
