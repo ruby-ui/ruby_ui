@@ -10,7 +10,7 @@ class Shared::Navbar < ApplicationComponent
 
           render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: 'hidden md:inline-block') { "Docs" } if Current.user_subscribed?
           render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden md:inline-block') { "Components" }
-          render PhlexUI::Link.new(href: helpers.themes_path, variant: :ghost, class: 'hidden md:inline-block') { "Themes" }
+          render PhlexUI::Link.new(href: helpers.theme_path('default'), variant: :ghost, class: 'hidden md:inline-block') { "Themes" }
         end
         div(class: 'flex items-center gap-x-2 md:divide-x') do
           div(class: 'flex items-center') do

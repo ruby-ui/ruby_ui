@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resource :webhooks, only: [:create]
   
-  resources :themes, only: [:index]
+  get 'themes/:theme', to: 'themes#show', as: :theme
 
   scope 'docs' do
     # GETTING STARTED

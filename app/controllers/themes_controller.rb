@@ -2,9 +2,10 @@
 
 class ThemesController < ApplicationController
   layout -> { ApplicationLayout }
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:show]
   
-  def index
-    render Themes::IndexView.new
+  # GET /themes/:theme
+  def show
+    render Themes::ShowView.new(theme: params[:theme])
   end
 end

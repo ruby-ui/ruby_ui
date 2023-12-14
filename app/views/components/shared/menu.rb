@@ -7,7 +7,7 @@ class Shared::Menu < ApplicationComponent
             div(class: "md:hidden") do
               main_link("Docs", helpers.docs_introduction_path) if Current.user_subscribed?
               main_link("Components", helpers.docs_accordion_path)
-              main_link("Themes", helpers.themes_path)
+              main_link("Themes", helpers.theme_path('default'))
               main_link("Github", ENV['PHLEXUI_GITHUB_LINK'])
               main_link("Discord", ENV['DISCORD_INVITE_LINK'])
               main_link("Twitter", ENV['PHLEXUI_TWITTER_LINK'])
