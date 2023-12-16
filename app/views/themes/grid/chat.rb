@@ -1,0 +1,94 @@
+module Themes
+  module Grid
+    class Chat < ApplicationComponent
+      MESSAGES = [
+        "You should checkout PhlexUI's new release, it makes life sooo much easier",
+        "Oh man, I'm still using Bootstrap, I need to switch to PhlexUI",
+        "Get on that ASAP, you'll thank me later",
+        "Ok, will check it out now, thanks for the tip!"
+      ]
+
+      def template
+        render PhlexUI::Card.new(class: 'p-8 space-y-6') do
+          header
+          messages(MESSAGES)
+          message_form
+        end
+      end
+
+      private
+
+      def header
+        div(class: 'flex items-center justify-between') do
+          div(class: 'flex items-center space-x-4') do
+            render PhlexUI::Avatar::Builder.new(src: "https://avatars.githubusercontent.com/u/246692?v=4")
+            div do
+              render PhlexUI::Typography::P.new(class: 'font-medium') { "Joel Drapper" }
+              render PhlexUI::Typography::Muted.new { "joel@drapper.me" }
+            end
+          end
+          render PhlexUI::Tooltip.new do
+            render PhlexUI::Tooltip::Trigger.new do
+              render PhlexUI::Button.new(variant: :outline, icon: true) do
+                bookmark_icon
+              end
+            end
+            render PhlexUI::Tooltip::Content.new do
+              render PhlexUI::Typography::P.new { "Save contact" }
+            end
+          end
+
+          # render PhlexUI::Button.new(variant: :outline, icon: true, class: '!rounded-full') do
+          #   plus_icon
+          # end
+        end
+      end
+
+      def messages(messages)
+        div(class: 'space-y-4') do
+          messages.each_with_index do |message, index|
+            message(message, right: index.odd?)
+          end
+        end
+      end
+
+      def message(content, right: false)
+        div(class: tokens('w-full flex', -> { right } => "justify-end")) do
+          div(class: 
+              tokens(
+                'rounded-2xl p-4 w-3/4',
+                -> { right } => "bg-primary text-primary-foreground rounded-br-sm",
+                -> { !right } => "bg-muted text-muted-foreground rounded-bl-sm"
+              )) do
+            content
+          end
+        end
+      end
+
+      def message_form
+        div(class: 'flex w-full items-center space-x-2') do
+          render PhlexUI::Input.new(type: "message", placeholder: "Write something...")
+          render PhlexUI::Button.new { "Send" }
+        end
+      end
+
+      def bookmark_icon
+        svg(
+          xmlns: "http://www.w3.org/2000/svg",
+          fill: "none",
+          viewbox: "0 0 24 24",
+          stroke_width: "1.5",
+          stroke: "currentColor",
+          class: "w-4 h-4"
+        ) do |s|
+          s.path(
+            stroke_linecap: "round",
+            stroke_linejoin: "round",
+            d:
+              "M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+          )
+        end
+      end
+    end
+  end
+end

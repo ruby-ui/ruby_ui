@@ -71,11 +71,11 @@ module Theme
           'foreground': '0 0% 98%',
           'primary': '0 0% 98%',
           'primary-foreground': '0 0% 9%',
-          'secondary': '0 0% 14.9%',
+          'secondary': '0 0% 18%',
           'secondary-foreground': '0 0% 98%',
-          'muted': '0 0% 14.9%',
+          'muted': '0 0% 18%',
           'muted-foreground': '0 0% 63.9%',
-          'accent': '0 0% 14.9%',
+          'accent': '0 0% 18%',
           'accent-foreground': '0 0% 98%',
           'destructive': '350 89% 60%',
           'destructive-foreground': '0 0% 100%',
@@ -83,8 +83,8 @@ module Theme
           'warning-foreground': '0 0% 100%',
           'success': '84 81% 44%',
           'success-foreground': '0 0% 100%',
-          'border': '0 0% 14.9%',
-          'input': '0 0% 14.9%',
+          'border': '0 0% 18%',
+          'input': '0 0% 18%',
           'ring': '0 0% 83.1%'
         }
       }
@@ -264,15 +264,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '207 90% 45%',
+          'primary': '187 90% 45%',
           'primary-foreground': '0 0% 98%',
-          'ring': '207 90% 45%'
+          'ring': '187 90% 45%'
         },
         dark: {
           **default_dark,
-          'primary': '207 90% 45%',
+          'primary': '187 90% 45%',
           'primary-foreground': '0 0% 100%',
-          'ring': '207 90% 45%'
+          'ring': '187 90% 45%'
         }
       }
     end
@@ -281,15 +281,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '220 90% 45%',
+          'primary': '218 90% 45%',
           'primary-foreground': '0 0% 100%',
-          'ring': '220 90% 45%'
+          'ring': '218 90% 45%'
         },
         dark: {
           **default_dark,
-          'primary': '220 90% 45%',
+          'primary': '218 90% 45%',
           'primary-foreground': '0 0% 100%',
-          'ring': '220 90% 45%'
+          'ring': '218 90% 45%'
         }
       }
     end
@@ -366,15 +366,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '320 90% 45%',
+          'primary': '318 90% 45%',
           'primary-foreground': '0 0% 100%',
-          'ring': '320 90% 45%'
+          'ring': '318 90% 45%'
         },
         dark: {
           **default_dark,
-          'primary': '320 90% 45%',
+          'primary': '318 90% 45%',
           'primary-foreground': '0 0% 100%',
-          'ring': '320 90% 45%'
+          'ring': '318 90% 45%'
         }
       }
     end
@@ -410,11 +410,11 @@ module Theme
         'foreground': '0 0% 98%',
         'primary': '0 84% 60%',
         'primary-foreground': '0 0% 100%',
-        'secondary': '0 0% 14.9%',
+        'secondary': '0 0% 18%',
         'secondary-foreground': '0 0% 98%',
-        'muted': '0 0% 14.9%',
+        'muted': '0 0% 18%',
         'muted-foreground': '0 0% 63.9%',
-        'accent': '0 0% 14.9%',
+        'accent': '0 0% 18%',
         'accent-foreground': '0 0% 98%',
         'destructive': '350 89% 60%',
         'destructive-foreground': '0 0% 100%',
@@ -422,8 +422,8 @@ module Theme
         'warning-foreground': '0 0% 100%',
         'success': '84 81% 44%',
         'success-foreground': '0 0% 100%',
-        'border': '0 0% 14.9%',
-        'input': '0 0% 14.9%',
+        'border': '0 0% 18%',
+        'input': '0 0% 18%',
         'ring': '0 0% 83.1%'
       }
     end
