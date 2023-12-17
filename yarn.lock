@@ -174,6 +174,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@kurkle/color@^0.3.0":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
+  integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
+
 "@motionone/animation@^10.16.3":
   version "10.16.3"
   resolved "https://registry.npmjs.org/@motionone/animation/-/animation-10.16.3.tgz#f5b71e27fd8b88b61f983adb0ed6c8e3e89281f9"
@@ -348,6 +353,13 @@ caniuse-lite@^1.0.30001538, caniuse-lite@^1.0.30001541:
   version "1.0.30001564"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001564.tgz"
   integrity sha512-DqAOf+rhof+6GVx1y+xzbFPeOumfQnhYzVnZD6LAXijR77yPtm9mfOcqOnT3mpnJiZVT+kwLAFnRlZcIz+c6bg==
+
+chart.js@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-4.4.1.tgz#ac5dc0e69a7758909158a96fe80ce43b3bb96a9f"
+  integrity sha512-C74QN1bxwV1v2PEujhmKjOZ7iUM4w6BWs23Md/6aOZZSlwMzeCIDGuZay++rBgChYru7/+QFeoQW0fQoP534Dg==
+  dependencies:
+    "@kurkle/color" "^0.3.0"
 
 chokidar@^3.5.3:
   version "3.5.3"

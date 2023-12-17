@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Themes
   module Grid
     class Signin < ApplicationComponent      

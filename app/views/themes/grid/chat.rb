@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Themes
   module Grid
     class Chat < ApplicationComponent
@@ -58,7 +60,7 @@ module Themes
               tokens(
                 'rounded-2xl p-4 w-3/4',
                 -> { right } => "bg-primary text-primary-foreground rounded-br-sm",
-                -> { !right } => "bg-muted text-muted-foreground rounded-bl-sm"
+                -> { !right } => "bg-muted text-foreground rounded-bl-sm"
               )) do
             content
           end
