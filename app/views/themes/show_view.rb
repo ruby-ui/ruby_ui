@@ -20,12 +20,13 @@ class Themes::ShowView < ApplicationView
       
       div(class: 'flex flex-wrap justify-between -mx-2 pt-16') do
         div(class: 'flex flex-col gap-y-6 p-3 w-full sm:w-1/2 lg:w-1/3') do
-          render Themes::Grid::Chart.new
+          render Themes::Grid::LineGraph.new
           render Themes::Grid::RepoTabs.new
           render Themes::Grid::Card.new
         end
         div(class: 'flex flex-col gap-y-6 p-3 w-full sm:w-1/2 lg:w-1/3') do
           render Themes::Grid::Chat.new
+          render Themes::Grid::Chart.new
           render Themes::Grid::CreateEvent.new
         end
         div(class: 'flex flex-col gap-y-6 p-3 w-full sm:w-1/2 lg:w-1/3') do

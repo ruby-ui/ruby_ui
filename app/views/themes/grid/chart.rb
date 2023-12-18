@@ -6,8 +6,8 @@ module Themes
       def template
         render PhlexUI::Card.new(class: 'p-8 space-y-6') do
           div do
-            render PhlexUI::Typography::Large.new { "Phlex Success" }
-            render PhlexUI::Typography::Muted.new { "Number of stars on the Phlex Github repo" }
+            render PhlexUI::Typography::Large.new { "Phlex Speed Tests" }
+            render PhlexUI::Typography::Muted.new { "Render time for a simple page" }
           end
           render ::Chart.new(options: chart_options)
         end
@@ -19,23 +19,19 @@ module Themes
         {
           type: 'bar',
           data: {
-            labels: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            labels: ['Phlex', 'VC', 'ERB'],
             datasets: [{
-              label: 'Github Stars',
-              data: [40, 30, 79, 140, 290, 550],
+              label: 'render time (ms)',
+              data: [100, 520, 1200],
             }]
           },
           options: {
+            indexAxis: 'y',
             scales: {
               y: {
                 beginAtZero: true
               }
             },
-            plugins: {
-              legend: {
-                display: false
-              }
-            }
           },
         }
       end

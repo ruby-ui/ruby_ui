@@ -94,15 +94,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '0 84% 60%',
+          'primary': '0 84.2% 60.2%',
           'primary-foreground': '0 0% 98%',
-          'ring': '0 84% 60%'
+          'ring': '0 84.2% 60.2%'
         },
         dark: {
           **default_dark,
-          'primary': '0 84% 60%',
+          'primary': '0 84.2% 60.2%',
           'primary-foreground': '0 0% 100%',
-          'ring': '0 84% 60%'
+          'ring': '0 84.2% 60.2%'
         }
       }
     end
@@ -111,15 +111,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '24 100% 54%',
+          'primary': '24.6 95% 53.1%',
           'primary-foreground': '0 0% 98%',
-          'ring': '24 100% 54%'
+          'ring': '24.6 95% 53.1%'
         },
         dark: {
           **default_dark,
-          'primary': '24 100% 54%',
+          'primary': '24.6 95% 53.1%',
           'primary-foreground': '0 0% 100%',
-          'ring': '24 100% 54%'
+          'ring': '24.6 95% 53.1%'
         }
       }
     end
@@ -128,15 +128,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '38 95% 56%',
+          'primary': '37.7 92.1% 50.2%',
           'primary-foreground': '0 0% 98%',
-          'ring': '38 95% 56%'
+          'ring': '37.7 92.1% 50.2%'
         },
         dark: {
           **default_dark,
-          'primary': '38 95% 56%',
+          'primary': '37.7 92.1% 50.2%',
           'primary-foreground': '0 0% 100%',
-          'ring': '38 95% 56%'
+          'ring': '37.7 92.1% 50.2%'
         }
       }
     end
@@ -145,15 +145,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '42 89% 53%',
-          'primary-foreground': '0 0% 98%',
-          'ring': '42 89% 53%'
+          'primary': '47.9 95.8% 53.1%',
+          'primary-foreground': '26 83% 14%',
+          'ring': '47.9 95.8% 53.1%'
         },
         dark: {
           **default_dark,
-          'primary': '42 89% 53%',
-          'primary-foreground': '0 0% 100%',
-          'ring': '42 89% 53%'
+          'primary': '47.9 95.8% 53.1%',
+          'primary-foreground': '0 0% 9%',
+          'ring': '47.9 95.8% 53.1%'
         }
       }
     end
@@ -162,15 +162,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '80 73% 45%',
+          'primary': '84 81% 44%',
           'primary-foreground': '0 0% 98%',
-          'ring': '80 73% 45%'
+          'ring': '84 81% 44%'
         },
         dark: {
           **default_dark,
-          'primary': '80 73% 45%',
+          'primary': '84 81% 44%',
           'primary-foreground': '0 0% 100%',
-          'ring': '80 73% 45%'
+          'ring': '84 81% 44%'
         }
       }
     end
@@ -179,15 +179,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '145 68% 45%',
+          'primary': '142 71% 45%',
           'primary-foreground': '0 0% 98%',
-          'ring': '145 68% 45%'
+          'ring': '142 71% 45%'
         },
         dark: {
           **default_dark,
-          'primary': '145 68% 45%',
+          'primary': '142 71% 45%',
           'primary-foreground': '0 0% 100%',
-          'ring': '145 68% 45%'
+          'ring': '142 71% 45%'
         }
       }
     end
@@ -196,15 +196,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '164 71% 45%',
+          'primary': '160 84% 39%',
           'primary-foreground': '0 0% 98%',
-          'ring': '164 71% 45%'
+          'ring': '160 84% 39%'
         },
         dark: {
           **default_dark,
-          'primary': '164 71% 45%',
+          'primary': '160 84% 39%',
           'primary-foreground': '0 0% 100%',
-          'ring': '164 71% 45%'
+          'ring': '160 84% 39%'
         }
       }
     end
@@ -213,15 +213,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '180 76% 45%',
+          'primary': '173 80% 40%',
           'primary-foreground': '0 0% 98%',
-          'ring': '180 76% 45%'
+          'ring': '173 80% 40%'
         },
         dark: {
           **default_dark,
-          'primary': '180 76% 45%',
+          'primary': '173 80% 40%',
           'primary-foreground': '0 0% 100%',
-          'ring': '180 76% 45%'
+          'ring': '173 80% 40%'
         }
       }
     end
@@ -230,15 +230,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '188 80% 45%',
+          'primary': '189 94% 43%',
           'primary-foreground': '0 0% 98%',
-          'ring': '188 80% 45%'
+          'ring': '189 94% 43%'
         },
         dark: {
           **default_dark,
-          'primary': '188 80% 45%',
+          'primary': '189 94% 43%',
           'primary-foreground': '0 0% 100%',
-          'ring': '188 80% 45%'
+          'ring': '189 94% 43%'
         }
       }
     end
@@ -247,15 +247,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '197 90% 45%',
+          'primary': '198.6 88.7% 48.4%',
           'primary-foreground': '0 0% 98%',
-          'ring': '197 90% 45%'
+          'ring': '198.6 88.7% 48.4%'
         },
         dark: {
           **default_dark,
-          'primary': '197 90% 45%',
+          'primary': '198.6 88.7% 48.4%',
           'primary-foreground': '0 0% 100%',
-          'ring': '197 90% 45%'
+          'ring': '198.6 88.7% 48.4%'
         }
       }
     end
@@ -264,15 +264,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '187 90% 45%',
+          'primary': '217.2 91.2% 59.8%',
           'primary-foreground': '0 0% 98%',
-          'ring': '187 90% 45%'
+          'ring': '217.2 91.2% 59.8%'
         },
         dark: {
           **default_dark,
-          'primary': '187 90% 45%',
+          'primary': '217.2 91.2% 59.8%',
           'primary-foreground': '0 0% 100%',
-          'ring': '187 90% 45%'
+          'ring': '217.2 91.2% 59.8%'
         }
       }
     end
@@ -281,15 +281,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '218 90% 45%',
+          'primary': '239 84% 67%',
           'primary-foreground': '0 0% 100%',
-          'ring': '218 90% 45%'
+          'ring': '239 84% 67%'
         },
         dark: {
           **default_dark,
-          'primary': '218 90% 45%',
+          'primary': '239 84% 67%',
           'primary-foreground': '0 0% 100%',
-          'ring': '218 90% 45%'
+          'ring': '239 84% 67%'
         }
       }
     end
@@ -298,15 +298,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '250 90% 45%',
+          'primary': '258 90% 66%',
           'primary-foreground': '0 0% 100%',
-          'ring': '250 90% 45%'
+          'ring': '258 90% 66%'
         },
         dark: {
           **default_dark,
-          'primary': '250 90% 45%',
+          'primary': '258 90% 66%',
           'primary-foreground': '0 0% 100%',
-          'ring': '250 90% 45%'
+          'ring': '258 90% 66%'
         }
       }
     end
@@ -315,15 +315,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '260 90% 45%',
+          'primary': '271 91% 65%',
           'primary-foreground': '0 0% 100%',
-          'ring': '260 90% 45%'
+          'ring': '271 91% 65%'
         },
         dark: {
           **default_dark,
-          'primary': '260 90% 45%',
+          'primary': '271 91% 65%',
           'primary-foreground': '0 0% 100%',
-          'ring': '260 90% 45%'
+          'ring': '271 91% 65%'
         }
       }
     end
@@ -332,15 +332,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '280 90% 45%',
+          'primary': '292 84% 61%',
           'primary-foreground': '0 0% 100%',
-          'ring': '280 90% 45%'
+          'ring': '292 84% 61%'
         },
         dark: {
           **default_dark,
-          'primary': '280 90% 45%',
+          'primary': '292 84% 61%',
           'primary-foreground': '0 0% 100%',
-          'ring': '280 90% 45%'
+          'ring': '292 84% 61%'
         }
       }
     end
@@ -349,15 +349,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '300 90% 45%',
+          'primary': '330 81% 60%',
           'primary-foreground': '0 0% 100%',
-          'ring': '300 90% 45%'
+          'ring': '330 81% 60%'
         },
         dark: {
           **default_dark,
-          'primary': '300 90% 45%',
+          'primary': '330 81% 60%',
           'primary-foreground': '0 0% 100%',
-          'ring': '300 90% 45%'
+          'ring': '330 81% 60%'
         }
       }
     end
@@ -366,15 +366,15 @@ module Theme
       {
         root: {
           **default_root,
-          'primary': '318 90% 45%',
+          'primary': '350 89% 60%',
           'primary-foreground': '0 0% 100%',
-          'ring': '318 90% 45%'
+          'ring': '350 89% 60%'
         },
         dark: {
           **default_dark,
-          'primary': '318 90% 45%',
+          'primary': '350 89% 60%',
           'primary-foreground': '0 0% 100%',
-          'ring': '318 90% 45%'
+          'ring': '350 89% 60%'
         }
       }
     end
@@ -408,7 +408,7 @@ module Theme
       {
         'background': '0 0% 3.9%',
         'foreground': '0 0% 98%',
-        'primary': '0 84% 60%',
+        'primary': '0 0% 98%',
         'primary-foreground': '0 0% 100%',
         'secondary': '0 0% 18%',
         'secondary-foreground': '0 0% 98%',
