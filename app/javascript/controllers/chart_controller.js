@@ -8,16 +8,12 @@ const getThemeColor = (name) => {
   return `hsl(${hue}, ${saturation}, ${lightness})`
 }
 
-// Function to set default properties for the chart
-const setDefaults = (propertyPath, value) => {
-  let currentProperty = Chart.defaults;
-  for (let index = 0; index < propertyPath.length; index++) {
-    const property = propertyPath[index];
-    if (index === propertyPath.length - 1) {
-      currentProperty[property] = value;
-    } else {
-      currentProperty = currentProperty[property];
-    }
+const defaultThemeColor = () => {
+  return {
+    backgroundColor: getThemeColor('background'),
+    hoverBackgroundColor: getThemeColor('accent'),
+    borderColor: getThemeColor('primary'),
+    borderWidth: 1,
   }
 }
 
@@ -27,100 +23,82 @@ export default class extends Controller {
     options: {
       type: Object,
       default: {},
-    },
+    }
   }
 
   // Function to initialize the chart when the controller is connected
   connect() {
-    this.setThemeDefaults()
     this.initDarkModeObserver()
     this.initChart()
   }
 
-  // Function to clean up when the controller is disconnected
   disconnect() {
-    this.observer.disconnect()
-    this.chart.destroy()
+    this.darkModeObserver?.disconnect()
+    this.chart?.destroy()
   }
 
   // Function to initialize the chart
   initChart() {
-    const editedDatasets = this.setDatasetColors(this.optionsValue.data.datasets)
+    this.setColors()
+    const ctx = this.element.getContext('2d');
+    this.chart = new Chart(ctx, this.mergeOptionsWithDefaults());
+  }
 
-    // Set the colors for the chart
-    this.optionsValue = {
-      ...this.optionsValue,
-      data: {
-        ...this.optionsValue.data,
-        datasets: editedDatasets,
-      },
-    };
+  setColors() {
+    this.setDefaultColorsForChart()
+  }
 
-    console.log(this.optionsValue); // Log the options
+  // Function to set chart default colors
+  setDefaultColorsForChart() {
+    Chart.defaults.color = getThemeColor('muted-foreground') // font color
+    Chart.defaults.borderColor = getThemeColor('border') // border color
+    Chart.defaults.backgroundColor = getThemeColor('background') // background color
 
-    this.chart = new Chart(this.element, this.optionsValue)
+    // tooltip colors
+    Chart.defaults.plugins.tooltip.backgroundColor = getThemeColor('background')
+    Chart.defaults.plugins.tooltip.borderColor = getThemeColor('border')
+    Chart.defaults.plugins.tooltip.titleColor = getThemeColor('foreground')
+    Chart.defaults.plugins.tooltip.bodyColor = getThemeColor('muted-foreground')
+    Chart.defaults.plugins.tooltip.borderWidth = 1
+
+    // legend
+    // options.plugins.legend.labels
+    Chart.defaults.plugins.legend.labels.boxWidth = 12
+    Chart.defaults.plugins.legend.labels.boxHeight = 12
+    Chart.defaults.plugins.legend.labels.borderWidth = 0
+    Chart.defaults.plugins.legend.labels.useBorderRadius = true
+    Chart.defaults.plugins.legend.labels.borderRadius = getThemeColor('radius')
   }
 
   // Function to refresh the chart
-  refresh() {
-    this.chart.destroy()
-    this.setThemeDefaults()
+  refreshChart() {
+    // Destroy the chart if it's a valid Chart.js instance
+    this.chart?.destroy()
+    // Reinitialize the chart
     this.initChart()
   }
 
-  // Function to set theme colors for the chart
-  setThemeDefaults() {
-    setDefaults(['color'], getThemeColor('muted-foreground'));
-    setDefaults(['borderColor'], getThemeColor('border'));
-
-    // tooltip
-    setDefaults(['plugins', 'tooltip', 'backgroundColor'], getThemeColor('background'));
-    setDefaults(['plugins', 'tooltip', 'borderColor'], getThemeColor('border'));
-    setDefaults(['plugins', 'tooltip', 'borderWidth'], 1);
-    setDefaults(['plugins', 'tooltip', 'titleColor'], getThemeColor('foreground'));
-    setDefaults(['plugins', 'tooltip', 'bodyColor'], getThemeColor('muted-foreground'));
-    setDefaults(['plugins', 'tooltip', 'titleFont', 'family'], 'inherit');
-
-    // legend
-    setDefaults(['plugins', 'legend', 'labels', 'color'], getThemeColor('foreground'));
-    
-    // line chart
-    Chart.defaults.elements.line.tension = 0.5;
-  }
-
-  // Function to set dataset colors
-  setDatasetColors(datasets = []) {
-    const color = getThemeColor('primary');
-
-    return datasets.map(dataset => {
-      let updatedDataset = {
-        ...dataset,
-        borderColor: color,
-        backgroundColor: color,
-        strokeColor: color,
-      };
-
-      if (updatedDataset.data && Array.isArray(updatedDataset.data)) {
-        updatedDataset.data = updatedDataset.data.map(dataPoint => (
-          typeof dataPoint === 'object'
-            ? { ...dataPoint, borderColor: color, backgroundColor: color, strokeColor: color }
-            : dataPoint
-        ));
-      }
-
-      return updatedDataset;
-    });
-  }
-
-  // Function to initialize dark mode observer
+  // Function to initialize the dark mode observer
   initDarkModeObserver() {
-    this.observer = new MutationObserver((mutationsList, observer) => {
-      for(let mutation of mutationsList) {
-        if(mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          this.refresh();
-        }
+    this.darkModeObserver = new MutationObserver(() => {
+      this.refreshChart()
+    })
+    this.darkModeObserver.observe(document.documentElement, { attributeFilter: ['class'] })
+  }
+
+  // Function to merge the options with the defaults
+  mergeOptionsWithDefaults() {
+    return {
+      ...this.optionsValue,
+      data: {
+        ...this.optionsValue.data,
+        datasets: this.optionsValue.data.datasets.map((dataset) => {
+          return {
+            ...defaultThemeColor(),
+            ...dataset,
+          }
+        })
       }
-    });
-    this.observer.observe(document.documentElement, { attributes: true });
+    }
   }
 }

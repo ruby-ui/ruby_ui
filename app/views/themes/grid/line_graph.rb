@@ -2,12 +2,12 @@
 
 module Themes
   module Grid
-    class Chart < ApplicationComponent
+    class LineGraph < ApplicationComponent
       def template
         render PhlexUI::Card.new(class: 'p-8 space-y-6') do
           div do
-            render PhlexUI::Typography::Large.new { "Phlex Success" }
-            render PhlexUI::Typography::Muted.new { "Number of stars on the Phlex Github repo" }
+            render PhlexUI::Typography::Large.new { "Phlex Github Stars" }
+            render PhlexUI::Typography::Muted.new { "This is a chart of the stars on the Phlex Github repo" }
           end
           render ::Chart.new(options: chart_options)
         end
@@ -17,12 +17,12 @@ module Themes
 
       def chart_options
         {
-          type: 'bar',
+          type: 'line',
           data: {
-            labels: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            labels: ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4', 'Wk 5', 'Wk 6'],
             datasets: [{
               label: 'Github Stars',
-              data: [40, 30, 79, 140, 290, 550],
+              data: [30, 37, 97, 225, 445, 612],
             }]
           },
           options: {
@@ -30,13 +30,8 @@ module Themes
               y: {
                 beginAtZero: true
               }
-            },
-            plugins: {
-              legend: {
-                display: false
-              }
             }
-          },
+          }
         }
       end
     end
