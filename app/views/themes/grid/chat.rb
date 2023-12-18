@@ -5,9 +5,9 @@ module Themes
     class Chat < ApplicationComponent
       MESSAGES = [
         "You should checkout PhlexUI's new release, it makes life sooo much easier",
-        "Oh man, I'm still using Bootstrap, I need to switch to PhlexUI",
-        "Get on that ASAP, you'll thank me later",
-        "Ok, will check it out now, thanks for the tip!"
+        "What's PhlexUI?",
+        "Don't ask questions, just get on that ASAP and thank me later",
+        "Alright, alright, I'll check it out",
       ]
 
       def template

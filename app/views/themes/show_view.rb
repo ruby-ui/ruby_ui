@@ -6,7 +6,7 @@ class Themes::ShowView < ApplicationView
   end
 
   def template
-    render Shared::Container.new(size: '2xl', class: 'py-8') do
+    render Shared::Container.new(size: '2xl', class: 'py-12') do
       div(class: 'flex items-center justify-between') do
         div do
           render PhlexUI::Typography::H1.new { 'Themes' }
@@ -18,7 +18,7 @@ class Themes::ShowView < ApplicationView
         end
       end
       
-      div(class: 'flex flex-wrap justify-between -mx-2 pt-16') do
+      div(class: 'flex flex-wrap justify-between -mx-2 pt-12') do
         div(class: 'flex flex-col gap-y-6 p-3 w-full sm:w-1/2 lg:w-1/3') do
           render Themes::Grid::LineGraph.new
           render Themes::Grid::RepoTabs.new
