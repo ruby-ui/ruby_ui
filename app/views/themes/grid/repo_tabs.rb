@@ -18,7 +18,7 @@ module Themes
             end
           end
           render PhlexUI::Tabs::Content.new(value: "overview") do
-            div(class: "rounded-lg border p-6 bg-background text-foreground flex justify-between space-x-4") do
+            render PhlexUI::Card.new(class: "p-6 space-y-4 shadow-none") do
               render PhlexUI::Avatar.new do
                 render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
                 render PhlexUI::Avatar::Fallback.new { "JD" }
@@ -36,7 +36,7 @@ module Themes
             end
           end
           render PhlexUI::Tabs::Content.new(value: "repositories") do
-            div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
+            render PhlexUI::Card.new(class: "p-6 space-y-4 shadow-none") do
               render PhlexUI::Table::Builder.new(repositories) do |t|
                 t.column("Name") do |repo|
                   render PhlexUI::Link.new(href: repo.github_url, variant: :link, class: "pl-0 !text-foreground") { repo.name }
