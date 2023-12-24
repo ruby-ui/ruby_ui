@@ -285,7 +285,7 @@ DEPENDENCIES
   octokit (~> 5.0)
   pg (~> 1.1)
   phlex-rails
-  phlex_ui_pro!
+  phlex_ui_pro (~> 0.1.3)!
   postmark-rails
   puma (~> 5.0)
   rack-www
