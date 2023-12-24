@@ -9,7 +9,7 @@ class Docs::SelectView < ApplicationView
 
       render PhlexUI::Typography::H2.new { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: 'Select with object (With Builder)', context: self) do
+      render Docs::VisualCodeExample.new(title: 'Select with object (With Builder)', description: "Change the Post object for your own", context: self) do
         <<~RUBY
           people = [
             ["John Doe", 1],
