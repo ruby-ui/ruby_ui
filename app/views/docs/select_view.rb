@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Docs::SelectView < ApplicationView
-  Person = Struct.new(:name, :id)
-
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Select", description: "Displays a list of options for the user to pick from—triggered by a button.")
