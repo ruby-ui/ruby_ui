@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     get 'input', to: 'docs#input', as: :docs_input
     get 'link', to: 'docs#link', as: :docs_link
     get 'popover', to: 'docs#popover', as: :docs_popover
+    get 'select', to: 'docs#select', as: :docs_select
     get 'sheet', to: 'docs#sheet', as: :docs_sheet
     get 'shortcut_key', to: 'docs#shortcut_key', as: :docs_shortcut_key
     get 'table', to: 'docs#table', as: :docs_table

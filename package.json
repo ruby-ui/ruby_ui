@@ -10,7 +10,7 @@
     "clsx": "^2.0.0",
     "esbuild": "^0.19.4",
     "lottie-web": "^5.12.2",
-    "phlex_ui": "^0.1.1",
+    "phlex_ui": "^0.1.2",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "tailwindcss-animate": "^1.0.7"

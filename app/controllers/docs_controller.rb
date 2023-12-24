@@ -124,6 +124,10 @@ class DocsController < ApplicationController
     render Docs::PopoverView.new
   end
 
+  def select
+    render Docs::SelectView.new
+  end
+
   def sheet
     render Docs::SheetView.new
   end
