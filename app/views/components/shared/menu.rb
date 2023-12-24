@@ -108,7 +108,7 @@ class Shared::Menu < ApplicationComponent
             { name: "Hover Card", path: helpers.docs_hover_card_path, premium: false },
             { name: "Link", path: helpers.docs_link_path, premium: false },
             { name: "Popover", path: helpers.docs_popover_path, premium: false },
-            { name: "Select", path: helpers.docs_select_path, premium: false },
+            { name: "Select", path: helpers.docs_select_path, premium: false, badge: "New" },
             { name: "Sheet", path: helpers.docs_sheet_path, premium: true },
             { name: "Shortcut Key", path: helpers.docs_shortcut_key_path, premium: false },
             { name: "Table", path: helpers.docs_table_path, premium: false },
@@ -156,6 +156,7 @@ class Shared::Menu < ApplicationComponent
         return a(href: component[:path], class: tokens('group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline', -> { current_path } => "text-foreground font-medium", -> { !current_path } => "text-muted-foreground")) do
             span(class: 'flex items-center gap-x-1') do
                 span { component[:name] }
+                render PhlexUI::Badge.new(variant: :amber, size: :sm, class: 'ml-1') { component[:badge] } if component[:badge]
                 premium_status(component) if show_premium_badge?(component)
             end
         end
@@ -175,7 +176,7 @@ class Shared::Menu < ApplicationComponent
                 xmlns: "http://www.w3.org/2000/svg",
                 viewbox: "0 0 24 24",
                 fill: "currentColor",
-                class: "w-3 h-3 text-violet-300 ml-2"
+                class: "w-3 h-3 text-violet-500 ml-2"
             ) do |s|
                 s.path(
                     fill_rule: "evenodd",
