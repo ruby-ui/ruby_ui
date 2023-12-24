@@ -58,6 +58,28 @@ class Docs::SelectView < ApplicationView
           end
         RUBY
       end
+
+      render Docs::ComponentsTable.new(components)
     end
+  end
+
+  private
+
+  def components
+    [
+      Docs::ComponentStruct.new(name: "SelectController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/select_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "TextController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/text_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "InputController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/input_controller.js", built_using: :stimulus),
+
+      Docs::ComponentStruct.new(name: "PhlexUI::Select", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Label", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/label.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Item", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/item.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Group", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/group.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Input", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/input.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Value", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/value.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/builder.rb", built_using: :phlex),
+    ]
   end
 end

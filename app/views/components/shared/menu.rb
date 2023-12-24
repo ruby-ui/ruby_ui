@@ -156,7 +156,7 @@ class Shared::Menu < ApplicationComponent
         return a(href: component[:path], class: tokens('group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline', -> { current_path } => "text-foreground font-medium", -> { !current_path } => "text-muted-foreground")) do
             span(class: 'flex items-center gap-x-1') do
                 span { component[:name] }
-                render PhlexUI::Badge.new(variant: :amber, size: :sm, class: 'ml-1') { component[:badge] } if component[:badge]
+                render PhlexUI::Badge.new(variant: :success, size: :sm, class: 'ml-1') { component[:badge] } if component[:badge]
                 premium_status(component) if show_premium_badge?(component)
             end
         end
