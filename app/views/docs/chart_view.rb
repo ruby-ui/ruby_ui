@@ -5,6 +5,14 @@ class Docs::ChartView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Chart", description: "Displays information in a visual way.")
 
+      render PhlexUI::Typography::H2.new { "Introduction" }
+
+      render PhlexUI::Typography::P.new do
+        plain "PhlexUI uses "
+        render PhlexUI::Typography::InlineLink.new(href: "https://www.chartjs.org/") { "Chart.js" }
+        plain " to render charts. Chart.js is a free open-source JavaScript library for data visualization, which supports 8 chart types: bar, line, area, pie, bubble, radar, polar, and scatter."
+      end
+
       render PhlexUI::Typography::H2.new { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Bar Chart", context: self) do
