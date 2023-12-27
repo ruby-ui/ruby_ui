@@ -1,0 +1,92 @@
+# frozen_string_literal: true
+
+class Docs::ChartView < ApplicationView
+  def template
+    div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
+      render Docs::Header.new(title: "Chart", description: "Displays information in a visual way.")
+
+      render PhlexUI::Typography::H2.new { "Usage" }
+
+      render Docs::VisualCodeExample.new(title: "Bar Chart", context: self) do
+        <<~RUBY
+          options = {
+            type: 'bar',
+            data: {
+              labels: ['Phlex', 'VC', 'ERB'],
+              datasets: [{
+                label: 'render time (ms)',
+                data: [100, 520, 1200],
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              },
+            },
+          }
+
+          render PhlexUI::Chart.new(options: options)
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Line Graph", context: self) do
+        <<~RUBY
+          options = {
+            type: 'line',
+            data: {
+              labels: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              datasets: [{
+                label: 'Github Stars',
+                data: [40, 30, 79, 140, 290, 550],
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              },
+              plugins: {
+                legend: {
+                  display: false
+                }
+              }
+            },
+          }
+
+          render PhlexUI::Chart.new(options: options)
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Pie Chart", description: 'Setting custom background color', context: self) do
+        <<~RUBY
+          options = {
+            type: 'pie',
+            data: {
+              labels: [
+                'Red',
+                'Blue',
+                'Yellow'
+              ],
+              datasets: [{
+                label: 'My First Dataset',
+                data: [300, 50, 100],
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+              }]
+            },
+          }
+
+          render PhlexUI::Chart.new(options: options)
+        RUBY
+      end
+    end
+  end
+end

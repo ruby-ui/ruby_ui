@@ -96,6 +96,7 @@ class Shared::Menu < ApplicationComponent
             { name: "Button", path: helpers.docs_button_path, premium: false },
             { name: "Card", path: helpers.docs_card_path, premium: false },
             { name: "Calendar", path: helpers.docs_calendar_path, premium: true },
+            { name: "Chart", path: helpers.docs_chart_path, premium: false },
             { name: "Checkbox", path: helpers.docs_checkbox_path, premium: false },
             { name: "Codeblock", path: helpers.docs_codeblock_path, premium: false },
             { name: "Collapsible", path: helpers.docs_collapsible_path, premium: false },
