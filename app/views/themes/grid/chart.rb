@@ -9,7 +9,7 @@ module Themes
             render PhlexUI::Typography::Large.new { "Phlex Speed Tests" }
             render PhlexUI::Typography::Muted.new { "Render time for a simple page" }
           end
-          render ::Chart.new(options: chart_options)
+          render PhlexUI::Chart.new(options: chart_options)
         end
       end
 

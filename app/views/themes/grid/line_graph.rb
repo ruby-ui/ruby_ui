@@ -9,7 +9,7 @@ module Themes
             render PhlexUI::Typography::Large.new { "Phlex Success" }
             render PhlexUI::Typography::Muted.new { "Number of stars on the Phlex Github repo" }
           end
-          render ::Chart.new(options: chart_options)
+          render PhlexUI::Chart.new(options: chart_options)
         end
       end
 
