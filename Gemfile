@@ -85,7 +85,7 @@ gem 'rack-www' # used to redirect www to non-www subdomain
 gem 'rollbar'
 
 gem "phlex-rails"
-gem "phlex_ui", "0.1.2", source: 'https://gem.fury.io/phlexui/'
-gem "phlex_ui_pro", "0.1.2", source: 'https://gem.fury.io/phlexui/'
+gem "phlex_ui", "0.1.4", source: 'https://gem.fury.io/phlexui/'
+gem "phlex_ui_pro", "0.1.4", source: 'https://gem.fury.io/phlexui/'
 # gem "phlex_ui", path: '../phlex_ui_gem'
 # gem "phlex_ui_pro", path: '../phlex_ui_gem_pro'
