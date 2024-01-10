@@ -110,7 +110,7 @@ class Shared::Menu < ApplicationComponent
             { name: "Hover Card", path: helpers.docs_hover_card_path, premium: false },
             { name: "Link", path: helpers.docs_link_path, premium: false },
             { name: "Popover", path: helpers.docs_popover_path, premium: false },
-            # { name: "Select", path: helpers.docs_select_path, premium: false, badge: "New" },
+            { name: "Select", path: helpers.docs_select_path, premium: false, badge: "New" },
             { name: "Sheet", path: helpers.docs_sheet_path, premium: true },
             { name: "Shortcut Key", path: helpers.docs_shortcut_key_path, premium: false },
             { name: "Table", path: helpers.docs_table_path, premium: false },
