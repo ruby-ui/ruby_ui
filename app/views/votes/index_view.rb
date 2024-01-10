@@ -60,7 +60,6 @@ class Votes::IndexView < ApplicationView
       { name: "Read more", slug: "read_more" },
       { name: "Rich text editor", slug: "rich_text_editor" },
       { name: "Scroll Area", slug: "scroll_area" },
-      { name: "Select", slug: "select" },
       { name: "Separator", slug: "separator" },
       { name: "Skeleton Loader", slug: "skeleton_loader" },
       { name: "Slider", slug: "slider" },
