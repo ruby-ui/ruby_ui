@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :votes, only: [:index]
+  post 'votes/:component_slug/toggle', to: 'votes#toggle', as: :toggle_vote
+
   get 'payments/confirmation', to: 'payments#confirmation', as: :payments_confirmation
 
   get 'license', to: 'pages#license', as: :license

@@ -13,21 +13,21 @@ class Shared::Menu < ApplicationComponent
               main_link("Twitter", ENV['PHLEXUI_TWITTER_LINK'])
             end
             if Current.user_subscribed?
-                # GETTING STARTED
-                h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
-                div(class: 'grid grid-flow-row auto-rows-max text-sm') do
-                    getting_started_links.each do |getting_started|
-                        menu_link(getting_started)
-                    end
+              # GETTING STARTED
+              h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
+              div(class: 'grid grid-flow-row auto-rows-max text-sm') do
+                getting_started_links.each do |getting_started|
+                  menu_link(getting_started)
                 end
+              end
 
-                # INSTALLATION
-                h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Installation" }
-                div(class: 'grid grid-flow-row auto-rows-max text-sm') do
-                    installation_links.each do |installation|
-                        menu_link(installation)
-                    end
+              # INSTALLATION
+              h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Installation" }
+              div(class: 'grid grid-flow-row auto-rows-max text-sm') do
+                installation_links.each do |installation|
+                  menu_link(installation)
                 end
+              end
             end
 
             # COMPONENTS
@@ -59,6 +59,7 @@ class Shared::Menu < ApplicationComponent
                     )
                 end
             end
+
             div(class: 'grid grid-flow-row auto-rows-max text-sm') do
                 components_coming_soon.each do |component|
                     menu_link(component)
