@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby "3.3.0-preview1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
@@ -85,7 +85,7 @@ gem 'rack-www' # used to redirect www to non-www subdomain
 gem 'rollbar'
 
 gem "phlex-rails"
-gem "phlex_ui", "0.1.4", source: 'https://gem.fury.io/phlexui/'
-gem "phlex_ui_pro", "0.1.4", source: 'https://gem.fury.io/phlexui/'
 # gem "phlex_ui", path: '../phlex_ui_gem'
+gem "phlex_ui", "0.1.5", source: 'https://gem.fury.io/phlexui/'
 # gem "phlex_ui_pro", path: '../phlex_ui_gem_pro'
+gem "phlex_ui_pro", "0.1.5", source: 'https://gem.fury.io/phlexui/'
