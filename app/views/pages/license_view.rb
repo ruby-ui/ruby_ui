@@ -203,8 +203,8 @@ class Pages::LicenseView < ApplicationView
   end
 
   # COMPONENTS
-  def section(&)
-    div(class: 'space-y-4', &)
+  def section(&block)
+    div(class: 'space-y-4', &block)
   end
 
   def heading(&block)

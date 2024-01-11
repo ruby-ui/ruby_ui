@@ -4,12 +4,12 @@ module Mailers
   class BaseMailer < Phlex::HTML    
     private
 
-    def para(&)
-      p(&) # See mailer_layout.rb to change styles
+    def para(&block)
+      p(&block) # See mailer_layout.rb to change styles
     end
 
-    def subheader(&)
-      h2(&) # See mailer_layout.rb to change styles
+    def subheader(&block)
+      h2(&block) # See mailer_layout.rb to change styles
     end
 
     def cta(href:, &block)

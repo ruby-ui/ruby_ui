@@ -68,8 +68,8 @@ class Pages::SupportView < ApplicationView
     end
   end
 
-  def card(&)
-    div(class: 'p-8 relative overflow-hidden space-y-4 border rounded-2xl bg-background', &)
+  def card(&block)
+    div(class: 'p-8 relative overflow-hidden space-y-4 border rounded-2xl bg-background', &block)
   end
 
   def arrow_right

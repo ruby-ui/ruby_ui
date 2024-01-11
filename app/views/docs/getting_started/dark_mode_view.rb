@@ -90,15 +90,15 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
     end
   end
 
-  def heading2(&)
-    PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b', &)
+  def heading2(&block)
+    PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b', &block)
   end
 
-  def space_y_4(&)
-    div(class: "space-y-4", &)
+  def space_y_4(&block)
+    div(class: "space-y-4", &block)
   end
 
-  def space_y_2(&)
-    div(class: "space-y-2", &)
+  def space_y_2(&block)
+    div(class: "space-y-2", &block)
   end
 end

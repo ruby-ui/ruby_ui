@@ -162,8 +162,8 @@ class Docs::Installation::RailsBundlerView < ApplicationView
 
   private
 
-  def step_container(&)
-    div(class: "space-y-4", &)
+  def step_container(&block)
+    div(class: "space-y-4", &block)
   end
 
   def phlex_ui_installation(plan)

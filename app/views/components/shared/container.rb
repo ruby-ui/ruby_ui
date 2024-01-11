@@ -15,7 +15,7 @@ class Shared::Container < ApplicationComponent
         @attrs[:class] = tokens(DEFAULT_CLASS, SIZE_CLASSES[size].to_s, @attrs[:class])
     end
 
-    def template(&)
-        div(**@attrs, &)
+    def template(&block)
+        div(**@attrs, &block)
     end
 end

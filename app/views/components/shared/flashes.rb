@@ -6,7 +6,7 @@ class Shared::Flashes < ApplicationComponent
     @alert = alert
   end
 
-  def template(&)
+  def template(&block)
     ol(
       tabindex: "-1",
       class:

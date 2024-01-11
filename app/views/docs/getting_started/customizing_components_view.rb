@@ -117,8 +117,8 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
             super(**attrs) # must be called after variant is set
           end
 
-          def template(&)
-            div(**attrs, &)
+          def template(&block)
+            div(**attrs, &block)
           end
 
           private

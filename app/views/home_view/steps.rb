@@ -6,7 +6,7 @@ class HomeView::Steps < ApplicationComponent
         @steps = attributes.delete(:steps) || []
     end
 
-    def template(&)
+    def template(&block)
         div(**@attributes) do
             @steps.each_with_index do |step, index|
                 render_step(step, index: index, last: index == @steps.length - 1)

@@ -18,9 +18,9 @@ module Steps
             end
         end
 
-        def add_step(&)
+        def add_step(&block)
             @step_number += 1
-            step = Step.new(number: @step_number, last: true, &)
+            step = Step.new(number: @step_number, last: true, &block)
             @steps << step
             # Last false for all steps except the last one
             @steps[0..-2].each { |s| s.last = false }

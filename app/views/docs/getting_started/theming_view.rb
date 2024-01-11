@@ -274,11 +274,11 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     render PhlexUI::Codeblock.new(code, syntax: :html)
   end
 
-  def space_y_4(&)
-    div(class: "space-y-4", &)
+  def space_y_4(&block)
+    div(class: "space-y-4", &block)
   end
 
-  def space_y_2(&)
-    div(class: "space-y-2", &)
+  def space_y_2(&block)
+    div(class: "space-y-2", &block)
   end
 end
