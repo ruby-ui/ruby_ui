@@ -15,7 +15,7 @@ class UserMailer < ApplicationMailer
 
         mail(
             to: @user.email,
-            subject: "Open Source and the Future of PhlexUI"
+            subject: "Open Source and the Future of PhlexUI (Retry)"
         ) do |format|
             format.html { render Mailers::UserMailer::FutureOfPhlexui.new(user: @user) }
         end
