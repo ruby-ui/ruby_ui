@@ -5,8 +5,8 @@ class Pages::HomeView < ApplicationView
     render HomeView::Banner.new do |banner|
       banner.cta do
         render PhlexUI::Link.new(variant: :outline, href: helpers.docs_accordion_path, class: 'text-center justify-center') { "Browse Components" }
-        render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'text-center justify-center') do
-          plain "Get all access"
+        render PhlexUI::Link.new(variant: :primary, href: helpers.docs_introduction_path, class: 'text-center justify-center') do
+          plain "Get Started"
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 20 20",
@@ -191,15 +191,6 @@ class Pages::HomeView < ApplicationView
       end
       div(class: 'relative h-72') do
         render Shared::GridPattern.new
-      end
-      div(class: 'relative') do
-        div(id: :pricing, class: 'block absolute -top-24 invisible')
-        render HomeView::Pricing.new
-      end
-      div(class: 'relative') do
-        render HomeView::Shapes.new(color: :lime, class: 'hidden md:block absolute top-0 right-0 -rotate-90 translate-x-1/2 -translate-y-full', size: :lg)
-        render HomeView::MeetTheMaker.new
-        render HomeView::Shapes.new(color: :amber, class: 'hidden md:block absolute bottom-0 left-0', size: :lg)
       end
     end
   end

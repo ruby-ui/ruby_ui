@@ -5,33 +5,32 @@ class Shared::Menu < ApplicationComponent
         div(class: 'pb-4') do
             # Main routes (Docs, Components, Themes, Github, Discord, Twitter)
             div(class: "md:hidden") do
-              main_link("Docs", helpers.docs_introduction_path) if Current.user_subscribed?
+              main_link("Docs", helpers.docs_introduction_path)
               main_link("Components", helpers.docs_accordion_path)
               main_link("Themes", helpers.theme_path('default'))
               main_link("Github", ENV['PHLEXUI_GITHUB_LINK'])
               main_link("Discord", ENV['DISCORD_INVITE_LINK'])
               main_link("Twitter", ENV['PHLEXUI_TWITTER_LINK'])
             end
-            if Current.user_subscribed?
-              # GETTING STARTED
-              h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
-              div(class: 'grid grid-flow-row auto-rows-max text-sm') do
-                getting_started_links.each do |getting_started|
-                  menu_link(getting_started)
-                end
-              end
 
-              # INSTALLATION
-              h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Installation" }
-              div(class: 'grid grid-flow-row auto-rows-max text-sm') do
-                installation_links.each do |installation|
-                  menu_link(installation)
-                end
+            # GETTING STARTED
+            h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Getting Started" }
+            div(class: 'grid grid-flow-row auto-rows-max text-sm') do
+              getting_started_links.each do |getting_started|
+                menu_link(getting_started)
+              end
+            end
+
+            # INSTALLATION
+            h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold') { "Installation" }
+            div(class: 'grid grid-flow-row auto-rows-max text-sm') do
+              installation_links.each do |installation|
+                menu_link(installation)
               end
             end
 
             # COMPONENTS
-            h4(class: tokens('mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2', -> { Current.user_subscribed? } => "mt-4")) do
+            h4(class: 'mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2') do
                 plain "Components"
                 render PhlexUI::Badge.new(variant: :primary, size: :sm) { components.count.to_s }
             end
@@ -88,69 +87,68 @@ class Shared::Menu < ApplicationComponent
 
     def components
         [
-            { name: "Accordion", path: helpers.docs_accordion_path, premium: false },
-            { name: "Alert", path: helpers.docs_alert_path, premium: false },
-            { name: "Alert Dialog", path: helpers.docs_alert_dialog_path, premium: false },
-            { name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path, premium: false },
-            { name: "Avatar", path: helpers.docs_avatar_path, premium: false },
-            { name: "Badge", path: helpers.docs_badge_path, premium: false },
-            { name: "Button", path: helpers.docs_button_path, premium: false },
-            { name: "Card", path: helpers.docs_card_path, premium: false },
-            { name: "Calendar", path: helpers.docs_calendar_path, premium: true },
-            # { name: "Chart", path: helpers.docs_chart_path, premium: false, badge: "New" },
-            { name: "Checkbox", path: helpers.docs_checkbox_path, premium: false },
-            { name: "Codeblock", path: helpers.docs_codeblock_path, premium: false },
-            { name: "Collapsible", path: helpers.docs_collapsible_path, premium: false },
-            { name: "Command", path: helpers.docs_command_path, premium: true },
-            { name: "Context Menu", path: helpers.docs_context_menu_path, premium: false },
-            { name: "Date Picker", path: helpers.docs_date_picker_path, premium: true },
-            { name: "Dialog / Modal", path: helpers.docs_dialog_path, premium: false },
-            { name: "Dropdown Menu", path: helpers.docs_dropdown_menu_path, premium: false },
-            { name: "Input", path: helpers.docs_input_path, premium: false },
-            { name: "Hover Card", path: helpers.docs_hover_card_path, premium: false },
-            { name: "Link", path: helpers.docs_link_path, premium: false },
-            { name: "Popover", path: helpers.docs_popover_path, premium: false },
-            { name: "Select", path: helpers.docs_select_path, premium: false, badge: "New" },
-            { name: "Sheet", path: helpers.docs_sheet_path, premium: true },
-            { name: "Shortcut Key", path: helpers.docs_shortcut_key_path, premium: false },
-            { name: "Table", path: helpers.docs_table_path, premium: false },
-            { name: "Tabs", path: helpers.docs_tabs_path, premium: false },
-            { name: "Theme Toggle", path: helpers.docs_theme_toggle_path, premium: false },
-            { name: "Tooltip", path: helpers.docs_tooltip_path, premium: false },
-            { name: "Typography", path: helpers.docs_typography_path, premium: false },
+            { name: "Accordion", path: helpers.docs_accordion_path},
+            { name: "Alert", path: helpers.docs_alert_path},
+            { name: "Alert Dialog", path: helpers.docs_alert_dialog_path},
+            { name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path},
+            { name: "Avatar", path: helpers.docs_avatar_path},
+            { name: "Badge", path: helpers.docs_badge_path},
+            { name: "Button", path: helpers.docs_button_path},
+            { name: "Card", path: helpers.docs_card_path},
+            { name: "Calendar", path: helpers.docs_calendar_path },
+            # { name: "Chart", path: helpers.docs_chart_path, badge: "New" },
+            { name: "Checkbox", path: helpers.docs_checkbox_path},
+            { name: "Codeblock", path: helpers.docs_codeblock_path},
+            { name: "Collapsible", path: helpers.docs_collapsible_path},
+            { name: "Command", path: helpers.docs_command_path },
+            { name: "Context Menu", path: helpers.docs_context_menu_path},
+            { name: "Date Picker", path: helpers.docs_date_picker_path },
+            { name: "Dialog / Modal", path: helpers.docs_dialog_path},
+            { name: "Dropdown Menu", path: helpers.docs_dropdown_menu_path},
+            { name: "Input", path: helpers.docs_input_path},
+            { name: "Hover Card", path: helpers.docs_hover_card_path},
+            { name: "Link", path: helpers.docs_link_path},
+            { name: "Popover", path: helpers.docs_popover_path},
+            { name: "Select", path: helpers.docs_select_path, badge: "New" },
+            { name: "Sheet", path: helpers.docs_sheet_path },
+            { name: "Shortcut Key", path: helpers.docs_shortcut_key_path},
+            { name: "Table", path: helpers.docs_table_path},
+            { name: "Tabs", path: helpers.docs_tabs_path},
+            { name: "Theme Toggle", path: helpers.docs_theme_toggle_path},
+            { name: "Tooltip", path: helpers.docs_tooltip_path},
+            { name: "Typography", path: helpers.docs_typography_path},
         ]
     end
 
     def components_coming_soon
         [
-            { name: "Autosave", path: '#', premium: false },
-            { name: "Carousel", path: '#', premium: true },
-            { name: "Chart", path: '#', premium: false },
-            { name: "Clipboard", path: '#', premium: false },
-            { name: "Color Picker", path: '#', premium: true },
-            { name: "Combobox", path: '#', premium: true },
-            { name: "Data Table", path: '#', premium: true },
-            { name: "Form", path: '#', premium: false },
-            { name: "Menu Bar", path: '#', premium: true },
-            { name: "Multi Select", path: '#', premium: true },
-            { name: "Navigation Menu", path: '#', premium: true },
-            { name: "Pagination", path: '#', premium: false },
-            { name: "Progress", path: '#', premium: false },
-            { name: "Radio Group", path: '#', premium: false },
-            { name: "Read more", path: '#', premium: false },
-            { name: "Rich text editor", path: '#', premium: true },
-            { name: "Scroll Area", path: '#', premium: false },
-            { name: "Select", path: '#', premium: false },
-            { name: "Separator", path: '#', premium: false },
-            { name: "Skeleton Loader", path: '#', premium: false },
-            { name: "Slider", path: '#', premium: false },
-            { name: "Switch", path: '#', premium: false },
-            { name: "Table", path: '#', premium: false },
-            { name: "Textarea (Autogrow)", path: '#', premium: false },
-            { name: "Toast (Swipe to dismiss)", path: '#', premium: true },
-            { name: "Toggle", path: '#', premium: false },
-            { name: "Turbo Dialog / Modal", path: '#', premium: true },
-            { name: "Video Player", path: '#', premium: true },
+            { name: "Autosave", path: '#' },
+            { name: "Carousel", path: '#' },
+            { name: "Chart", path: '#' },
+            { name: "Clipboard", path: '#' },
+            { name: "Color Picker", path: '#' },
+            { name: "Combobox", path: '#' },
+            { name: "Data Table", path: '#' },
+            { name: "Form", path: '#' },
+            { name: "Menu Bar", path: '#' },
+            { name: "Multi Select", path: '#' },
+            { name: "Navigation Menu", path: '#' },
+            { name: "Pagination", path: '#' },
+            { name: "Progress", path: '#' },
+            { name: "Radio Group", path: '#' },
+            { name: "Read more", path: '#' },
+            { name: "Rich text editor", path: '#' },
+            { name: "Scroll Area", path: '#' },
+            { name: "Select", path: '#' },
+            { name: "Separator", path: '#' },
+            { name: "Skeleton Loader", path: '#' },
+            { name: "Slider", path: '#' },
+            { name: "Switch", path: '#' },
+            { name: "Textarea (Autogrow)", path: '#' },
+            { name: "Toast (Swipe to dismiss)", path: '#' },
+            { name: "Toggle", path: '#' },
+            { name: "Turbo Dialog / Modal", path: '#' },
+            { name: "Video Player", path: '#' },
         ]
     end
 
@@ -161,7 +159,6 @@ class Shared::Menu < ApplicationComponent
             span(class: 'flex items-center gap-x-1') do
                 span { component[:name] }
                 render PhlexUI::Badge.new(variant: :success, size: :sm, class: 'ml-1') { component[:badge] } if component[:badge]
-                premium_status(component) if show_premium_badge?(component)
             end
         end
     end
@@ -190,11 +187,5 @@ class Shared::Menu < ApplicationComponent
                 )
             end
         end
-    end
-
-    def show_premium_badge?(component)
-        return false unless component[:premium]
-        return true if Current.user.nil?
-        !Current.user_subscribed?
     end
 end

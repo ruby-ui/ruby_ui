@@ -1,35 +1,20 @@
 # frozen_string_literal: true
 
 class Docs::Header < ApplicationComponent
-    def initialize(title: nil, description: nil, premium: false, pre_release_only: false)
+    def initialize(title: nil, description: nil, premium: false)
         @title = title
         @description = description
         @premium = premium
-        @pre_release_only = pre_release_only
     end
 
     def template
         div(class: 'space-y-2') do
-            if @pre_release_only
-                render PhlexUI::Alert.new(variant: :warning, class: 'mb-8') do
-                    alert_icon
-                    render PhlexUI::Alert::Title.new { "Early-access only" }
-                    render PhlexUI::Alert::Description.new { "This page is only available to paying users at this time." }
-                end
-            end
-            render Docs::PremiumBadge.new if locked?
             render PhlexUI::Typography::H1.new { @title }
             render PhlexUI::Typography::Lead.new { @description }
         end
     end
 
     private
-
-    def locked?
-        return false unless @premium
-        return true if Current.user.nil?
-        !Current.user_subscribed?
-    end
 
     def alert_icon
         svg(

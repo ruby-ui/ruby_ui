@@ -3,7 +3,7 @@
 class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, PhlexUI allows you to tailor the components to your specific needs.", pre_release_only: true)
+      render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, PhlexUI allows you to tailor the components to your specific needs.")
 
       div(class: "space-y-4") do
         render PhlexUI::Typography::H2.new { "Introduction" }

@@ -17,17 +17,9 @@ class Docs::VisualCodeExample < ApplicationComponent
                     div(class: 'flex justify-between items-end mb-4 gap-x-2') do
                         render_header
                         div(class: 'flex-grow') # Spacer
-                        if locked?
-                            render_unlock_component
-                        else
-                            render_tab_triggers
-                        end
+                        render_tab_triggers
                     end
-                    if locked?
-                        render_preview_tab(&block)
-                    else
-                        render_tab_contents(&block)
-                    end
+                    render_tab_contents(&block)
                 end
             end
         end
@@ -35,33 +27,11 @@ class Docs::VisualCodeExample < ApplicationComponent
 
     private
 
-    def render_unlock_component
-        div(class: 'flex justify-end') do
-            render PhlexUI::Link.new(href: helpers.root_path(anchor: :pricing), variant: :ghost, class: 'text-violet-500 flex-shrink-0') do
-                plain "Get the code"
-                svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewbox: "0 0 20 20",
-                    fill: "currentColor",
-                    class: "w-4 h-4 ml-1"
-                ) do |s|
-                    s.path(
-                        fill_rule: "evenodd",
-                        d:
-                        "M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z",
-                        clip_rule: "evenodd"
-                    )
-                end
-            end
-        end
-    end
-
     def render_header
         div do
             if @title
                 div(class: 'flex items-center gap-x-2 mb-1') do
                     render PhlexUI::Typography::H4.new { @title.capitalize }
-                    render PhlexUI::Badge.new(variant: :outline, size: :sm) { "Preview" } if locked?
                 end
             end
             p { @description } if @description
@@ -100,12 +70,6 @@ class Docs::VisualCodeExample < ApplicationComponent
         div(class: 'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border') do
             render PhlexUI::Codeblock.new(@display_code, syntax: :ruby, class: '-m-px')
         end
-    end
-
-    def locked?
-        return false unless @premium
-        return true if Current.user.nil?
-        !Current.user_subscribed?
     end
 
     def eye_icon

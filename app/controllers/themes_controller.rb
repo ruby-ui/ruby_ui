@@ -2,7 +2,6 @@
 
 class ThemesController < ApplicationController
   layout -> { ApplicationLayout }
-  skip_before_action :authenticate_user!, only: [:show]
   
   # GET /themes/:theme
   def show

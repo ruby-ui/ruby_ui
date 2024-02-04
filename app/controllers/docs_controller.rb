@@ -2,8 +2,6 @@
 
 class DocsController < ApplicationController
   layout -> { DocsLayout }
-  skip_before_action :authenticate_user!, except: [:introduction, :installation, :theming, :dark_mode, :customizing_components, :core_concepts, :installation_rails]
-  before_action :subscriber_only!, only: [:introduction, :installation, :theming, :dark_mode, :customizing_components, :core_concepts, :installation_rails]
 
   # GETTING STARTED
   def introduction

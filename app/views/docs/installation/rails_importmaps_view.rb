@@ -8,7 +8,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
 
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Rails - Importmaps", description: "How to install PhlexUI within a Rails app that uses Importmaps.", pre_release_only: true)
+      render Docs::Header.new(title: "Rails - Importmaps", description: "How to install PhlexUI within a Rails app that uses Importmaps.")
 
       render PhlexUI::Alert.new(variant: :warning) do
         alert_icon
@@ -74,24 +74,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         steps.add_step do
           step_container do
             render PhlexUI::Typography::Large.new { "Install PhlexUI gem" }
-            render PhlexUI::Tabs.new(default: free_or_pro) do
-              render PhlexUI::Tabs::List.new do
-                render PhlexUI::Tabs::Trigger.new(value: "free", class: 'w-24') { "Free" }
-                render PhlexUI::Tabs::Trigger.new(value: "pro", class: 'w-24') { "Pro" }
-              end
-              render PhlexUI::Card.new(class: 'p-4 md:p-6 mt-4 shadow-none') do
-                render PhlexUI::Tabs::Content.new(value: "free", class: 'space-y-4 !mt-0') do
-                  phlex_ui_installation("free")
-                end
-                render PhlexUI::Tabs::Content.new(value: "pro", class: 'space-y-4 !mt-0') do
-                  if Current.user_subscribed?
-                    phlex_ui_installation("pro")
-                  else
-                    upgrade_to_pro
-                  end
-                end
-              end
-            end
+            phlex_ui_installation("free")
           end
         end
       end
@@ -124,8 +107,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
               plain " file"
             end
 
-            code = Current.user_subscribed? ? tailwind_config_pro : tailwind_config
-            render PhlexUI::Codeblock.new(code, syntax: :javascript)
+            render PhlexUI::Codeblock.new(tailwind_config, syntax: :javascript)
           end
         end
 
@@ -470,10 +452,6 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         }
       }
     CODE
-  end
-
-  def free_or_pro
-    Current.user_subscribed? ? "pro" : "free"
   end
 
   def info_icon

@@ -3,7 +3,7 @@
 class Docs::GettingStarted::CoreConceptsView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Core concepts", description: "Below are some of the core concepts that will help you understand how PhlexUI works under the hood.", pre_release_only: true)
+      render Docs::Header.new(title: "Core concepts", description: "Below are some of the core concepts that will help you understand how PhlexUI works under the hood.")
 
       div(class: "space-y-4") do
         render PhlexUI::Typography::H2.new(class: 'flex items-center gap-x-2') do 

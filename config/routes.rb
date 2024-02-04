@@ -1,22 +1,4 @@
-Rails.application.routes.draw do
-  resources :votes, only: [:index]
-  post 'votes/:component_slug/toggle', to: 'votes#toggle', as: :toggle_vote
-
-  get 'payments/confirmation', to: 'payments#confirmation', as: :payments_confirmation
-
-  get 'license', to: 'pages#license', as: :license
-  get 'support', to: 'pages#support', as: :support
-
-  resource :account, only: [:show, :update]
-  patch 'account/update_from_payment_confirmation', to: 'accounts#update_from_payment_confirmation', as: :account_update_from_payment_confirmation
-  resources :team_members, only: [:create, :destroy]
-
-  match "signin/authenticate", to: "signins#authenticate", via: [:get, :post], as: :signin_authenticate
-  match "signin/check_your_email", to: "signins#check_your_email", via: [:get, :post], as: :signin_check_your_email
-  resource :signin
-
-  resource :webhooks, only: [:create]
-  
+Rails.application.routes.draw do  
   get 'themes/:theme', to: 'themes#show', as: :theme
 
   scope 'docs' do

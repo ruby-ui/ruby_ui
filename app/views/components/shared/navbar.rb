@@ -8,7 +8,7 @@ class Shared::Navbar < ApplicationComponent
           render Shared::MobileMenu.new(class: 'md:hidden')
           render Shared::Logo.new
 
-          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: 'hidden md:inline-block') { "Docs" } if Current.user_subscribed?
+          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: 'hidden md:inline-block') { "Docs" }
           render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden md:inline-block') { "Components" }
           render PhlexUI::Link.new(href: helpers.theme_path('default'), variant: :ghost, class: 'hidden md:inline-block') { "Themes" }
         end
@@ -17,33 +17,6 @@ class Shared::Navbar < ApplicationComponent
             twitter_link
             github_link
             dark_mode_toggle
-            div(class: 'md:hidden') do
-              render Shared::AccountDropdown.new do
-                render PhlexUI::Button.new(variant: :ghost, icon: true) do
-                  account_icon
-                end
-              end
-            end
-          end
-          div(class: 'flex items-center gap-x-2 pl-2') do
-            div(class: 'hidden md:block') do
-              if Current.user
-                  render Shared::AccountDropdown.new do
-                    render PhlexUI::Button.new(variant: :ghost, class: 'hidden sm:inline-flex') do
-                        plain "Account"
-                        chevron_down_icon
-                    end
-                  end
-              else
-                render PhlexUI::Link.new(href: helpers.new_signin_path, variant: :ghost, class: 'hidden sm:inline-block') { "Sign in" }
-              end
-            end
-            if Current.user.nil? || !Current.user_subscribed?
-              render PhlexUI::Link.new(variant: :primary, href: helpers.root_path(anchor: :pricing), class: 'hidden sm:flex') do
-                plain "Get all access"
-                arrow_right_icon
-              end
-            end
           end
         end
       end
