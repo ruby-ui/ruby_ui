@@ -153,7 +153,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
     when "free"
       render PhlexUI::Typography::P.new { "Run the following in the terminal to install the PhlexUI Component Library" }
       code = <<~CODE 
-          bundle add phlex_ui --source 'https://phlexui.fury.site/gem/'
+          bundle add phlex_ui
         CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
     when "pro"
@@ -175,7 +175,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
       
       render PhlexUI::Typography::P.new { "Now you can install the Pro version of PhlexUI" }
       code = <<~CODE 
-          bundle add phlex_ui_pro --source 'https://phlexui.fury.site/gem/'
+          bundle add phlex_ui
         CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
     end
