@@ -5,10 +5,6 @@ const execSync = require('child_process').execSync;
 const outputPhlexUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
 const phlex_ui_path = outputPhlexUI.trim() + '/**/*.rb';
 
-// Import phlex_ui_pro gem path
-const outputPhlexUIPro = execSync('bundle show phlex_ui_pro', { encoding: 'utf-8' });
-const phlex_ui_pro_path = outputPhlexUIPro.trim() + '/**/*.rb';
-
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
@@ -18,8 +14,7 @@ module.exports = {
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js',
-    phlex_ui_path,
-    phlex_ui_pro_path
+    phlex_ui_path
   ],
   theme: {
     container: {
