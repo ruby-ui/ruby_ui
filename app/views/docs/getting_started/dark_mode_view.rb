@@ -45,7 +45,7 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
           end
         end
 
-        div(class: 'pt-4') do
+        div(class: "pt-4") do
           render Docs::VisualCodeExample.new(title: "Toggle component", context: self) do
             <<~RUBY
               render PhlexUI::ThemeToggle.new do |toggle|
@@ -90,15 +90,15 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
     end
   end
 
-  def heading2(&block)
-    PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b', &block)
+  def heading2(&)
+    PhlexUI::Typography::H2.new(class: "!text-2xl pb-4 border-b", &)
   end
 
-  def space_y_4(&block)
-    div(class: "space-y-4", &block)
+  def space_y_4(&)
+    div(class: "space-y-4", &)
   end
 
-  def space_y_2(&block)
-    div(class: "space-y-2", &block)
+  def space_y_2(&)
+    div(class: "space-y-2", &)
   end
 end

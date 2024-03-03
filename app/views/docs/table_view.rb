@@ -94,7 +94,7 @@ class Docs::TableView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Table::Row", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/row.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Table::Head", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/head.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Table::Cell", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/cell.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/builder.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Table::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/builder.rb", built_using: :phlex)
     ]
   end
 
@@ -103,7 +103,7 @@ class Docs::TableView < ApplicationView
       Invoice.new(identifier: "INV-0001", status: "Active", method: "Credit Card", amount: 100),
       Invoice.new(identifier: "INV-0002", status: "Active", method: "Bank Transfer", amount: 230),
       Invoice.new(identifier: "INV-0003", status: "Pending", method: "PayPal", amount: 350),
-      Invoice.new(identifier: "INV-0004", status: "Inactive", method: "Credit Card", amount: 100),
+      Invoice.new(identifier: "INV-0004", status: "Inactive", method: "Credit Card", amount: 100)
     ]
   end
 
@@ -113,7 +113,7 @@ class Docs::TableView < ApplicationView
       User.new(avatar_url: "https://avatars.githubusercontent.com/u/33979976?v=4", name: "Alexandre Ruban", username: "alexandreruban", commits: 16),
       User.new(avatar_url: "https://avatars.githubusercontent.com/u/77887?v=4", name: "Will Cosgrove", username: "willcosgrove", commits: 12),
       User.new(avatar_url: "https://avatars.githubusercontent.com/u/3025661?v=4", name: "Stephann V.", username: "stephannv", commits: 8),
-      User.new(avatar_url: "https://avatars.githubusercontent.com/u/6411752?v=4", name: "Marco Roth", username: "marcoroth", commits: 8),
+      User.new(avatar_url: "https://avatars.githubusercontent.com/u/6411752?v=4", name: "Marco Roth", username: "marcoroth", commits: 8)
     ]
   end
 
@@ -132,7 +132,7 @@ class Docs::TableView < ApplicationView
   end
 
   def format_amount(amount)
-    "$#{amount.to_s}.00"
+    "$#{amount}.00"
   end
 
   def render_status_badge(status)

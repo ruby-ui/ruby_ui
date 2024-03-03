@@ -2,9 +2,9 @@
 
 module Themes
   module Grid
-    class Signin < ApplicationComponent      
+    class Signin < ApplicationComponent
       def template
-        render PhlexUI::Card.new(class: 'p-8 space-y-4') do
+        render PhlexUI::Card.new(class: "p-8 space-y-4") do
           div do
             render PhlexUI::Typography::Large.new { "Create an account" }
             render PhlexUI::Typography::Muted.new { "Enter your email below to create your account" }
@@ -18,16 +18,16 @@ module Themes
       private
 
       def oauth_buttons
-        div(class: 'grid grid-cols-2 gap-4 mt-4') do
+        div(class: "grid grid-cols-2 gap-4 mt-4") do
           # github
-          render PhlexUI::Button.new(variant: :outline, class: 'w-full') do
+          render PhlexUI::Button.new(variant: :outline, class: "w-full") do
             github_icon
-            span(class: 'ml-2') { "Github" }
+            span(class: "ml-2") { "Github" }
           end
           # google
-          render PhlexUI::Button.new(variant: :outline, class: 'w-full') do
+          render PhlexUI::Button.new(variant: :outline, class: "w-full") do
             google_icon
-            span(class: 'ml-2') { "Google" }
+            span(class: "ml-2") { "Google" }
           end
         end
       end
@@ -44,14 +44,14 @@ module Themes
       end
 
       def signin_form
-        render PhlexUI::Form::Builder.new(class: 'w-full') do |f|
+        render PhlexUI::Form::Builder.new(class: "w-full") do |f|
           f.input "email", type: :email, placeholder: "joel@drapper.me"
           f.input "password", type: :password, placeholder: "**********"
-          div(class: 'flex items-center space-x-3 py-2') do
-            render PhlexUI::Checkbox.new(id: 'terms')
-            label(for: 'terms', class: 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70') { "Accept terms and conditions" }
+          div(class: "flex items-center space-x-3 py-2") do
+            render PhlexUI::Checkbox.new(id: "terms")
+            label(for: "terms", class: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70") { "Accept terms and conditions" }
           end
-          f.button(class: 'w-full') { "Create account" }
+          f.button(class: "w-full") { "Create account" }
         end
       end
 

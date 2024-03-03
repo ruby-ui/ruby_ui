@@ -37,7 +37,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
           end
         end
       end
-      
+
       div(class: "space-y-4") do
         render PhlexUI::Typography::H2.new { "Convention" }
         render PhlexUI::Typography::P.new do
@@ -51,7 +51,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
           render PhlexUI::Typography::InlineCode.new { "foreground" }
           plain " variable is used for the text color. This is similar to other component libraries that are popular in React and elsewhere, and it works well in our experience."
         end
-        render PhlexUI::Alert.new(class: 'bg-transparent') do
+        render PhlexUI::Alert.new(class: "bg-transparent") do
           render PhlexUI::Alert::Description.new do
             plain "The "
             render PhlexUI::Typography::InlineCode.new { "background" }
@@ -60,11 +60,11 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         end
         render PhlexUI::Typography::P.new { "Given the following CSS variables:" }
         code = <<~CODE
-            --primary: 222.2 47.4% 11.2%;
-            --primary-foreground: 210 40% 98%;
-          CODE
+          --primary: 222.2 47.4% 11.2%;
+          --primary-foreground: 210 40% 98%;
+        CODE
         render PhlexUI::Codeblock.new(code, syntax: :css)
-        render PhlexUI::Typography::P.new do 
+        render PhlexUI::Typography::P.new do
           plain "The "
           render PhlexUI::Typography::InlineCode.new { "background" }
           plain " color of the following component will be "
@@ -76,10 +76,10 @@ class Docs::GettingStarted::ThemingView < ApplicationView
           plain "."
         end
         code = <<~CODE
-            <div className="bg-primary text-primary-foreground">We love Ruby</div>
-          CODE
+          <div className="bg-primary text-primary-foreground">We love Ruby</div>
+        CODE
         render PhlexUI::Codeblock.new(code, syntax: :html)
-        render PhlexUI::Alert.new(class: 'bg-transparent') do
+        render PhlexUI::Alert.new(class: "bg-transparent") do
           render PhlexUI::Alert::Description.new do
             span(class: "font-medium") { "CSS variables must be defined without color space function" }
             plain ". See the "
@@ -139,86 +139,86 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Default background color of <body>...etc" }
       code = <<~CODE
-          --background: 0 0% 100%;
-          --foreground: 222.2 47.4% 11.2%;
-        CODE
+        --background: 0 0% 100%;
+        --foreground: 222.2 47.4% 11.2%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Muted backgrounds such as PhlexUI::Tabs::List" }
       code = <<~CODE
-          --muted: 210 40% 96.1%;
-          --muted-foreground: 215.4 16.3% 46.9%;
-        CODE
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Default border color" }
       code = <<~CODE
-          --border: 214.3 31.8% 91.4%;
-        CODE
+        --border: 214.3 31.8% 91.4%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Border color for inputs such as PhlexUI::Input, PhlexUI::Select or PhlexUI::Textarea" }
       code = <<~CODE
-          --input: 214.3 31.8% 91.4%;
-        CODE
+        --input: 214.3 31.8% 91.4%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Primary colors for PhlexUI::Button" }
       code = <<~CODE
-          --primary: 222.2 47.4% 11.2%;
-          --primary-foreground: 210 40% 98%;
-        CODE
+        --primary: 222.2 47.4% 11.2%;
+        --primary-foreground: 210 40% 98%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Secondary colors for PhlexUI::Button" }
       code = <<~CODE
-          --secondary: 210 40% 96.1%;
-          --secondary-foreground: 222.2 47.4% 11.2%;
-        CODE
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Used for accents such as hover effects on PhlexUI::DropdownMenu::Item, PhlexUI::Select::Item... etc" }
       code = <<~CODE
-          --accent: 210 40% 96.1%;
-          --accent-foreground: 222.2 47.4% 11.2%;
-        CODE
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Used for destructive actions such as PhlexUI::Button.new(variant: :destructive)" }
       code = <<~CODE
-          --destructive: 0 100% 50%;
-          --destructive-foreground: 210 40% 98%;
-        CODE
+        --destructive: 0 100% 50%;
+        --destructive-foreground: 210 40% 98%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Used for focus ring" }
       code = <<~CODE
-          --ring: 215 20.2% 65.1%;
-        CODE
+        --ring: 215 20.2% 65.1%;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "Border radius for card, input and buttons" }
       code = <<~CODE
-          --radius: 0.5rem;
-        CODE
+        --radius: 0.5rem;
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
   end
@@ -226,37 +226,37 @@ class Docs::GettingStarted::ThemingView < ApplicationView
   def adding_a_color
     space_y_2 do
       render PhlexUI::Typography::Small.new do
-        span(class: 'text-muted-foreground') { "app/stylesheets/" }
+        span(class: "text-muted-foreground") { "app/stylesheets/" }
         plain "application.tailwind.css"
       end
       code = <<~CODE
-          :root {
-            --contrast: 38 92% 50%;
-            --contrast-foreground: 48 96% 89%;
-          }
+        :root {
+          --contrast: 38 92% 50%;
+          --contrast-foreground: 48 96% 89%;
+        }
 
-          .dark {
-            --contrast: 48 96% 89%;
-            --contrast-foreground: 38 92% 50%;
-          }
-        CODE
+        .dark {
+          --contrast: 48 96% 89%;
+          --contrast-foreground: 38 92% 50%;
+        }
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :css)
     end
 
     space_y_2 do
       render PhlexUI::Typography::Small.new { "tailwind.config.js" }
       code = <<~CODE
-          module.exports = {
-            theme: {
-              extend: {
-                colors: {
-                  contrast: "hsl(var(--contrast))",
-                  "contrast-foreground": "hsl(var(--contrast-foreground))",
-                },
+        module.exports = {
+          theme: {
+            extend: {
+              colors: {
+                contrast: "hsl(var(--contrast))",
+                "contrast-foreground": "hsl(var(--contrast-foreground))",
               },
             },
-          }
-        CODE
+          },
+        }
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
     end
 
@@ -269,16 +269,16 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     code = <<~CODE
-        <div className="bg-contrast text-contrast-foreground">We love Ruby</div>
-      CODE
+      <div className="bg-contrast text-contrast-foreground">We love Ruby</div>
+    CODE
     render PhlexUI::Codeblock.new(code, syntax: :html)
   end
 
-  def space_y_4(&block)
-    div(class: "space-y-4", &block)
+  def space_y_4(&)
+    div(class: "space-y-4", &)
   end
 
-  def space_y_2(&block)
-    div(class: "space-y-2", &block)
+  def space_y_2(&)
+    div(class: "space-y-2", &)
   end
 end

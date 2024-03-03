@@ -80,7 +80,7 @@ class Docs::CollapsibleView < ApplicationView
       Docs::ComponentStruct.new(name: "CollapsibleController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/collapsible_controller.js", built_using: :stimulus),
       Docs::ComponentStruct.new(name: "PhlexUI::Collapsible", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Collapsible::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Collapsible::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Collapsible::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/content.rb", built_using: :phlex)
     ]
   end
 

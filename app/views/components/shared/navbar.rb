@@ -2,18 +2,18 @@
 
 class Shared::Navbar < ApplicationComponent
   def template
-    header(class: 'supports-backdrop-blur:bg-background/80 sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-2xl backdrop-saturate-200') do
-      div(class: 'px-2 sm:px-4 sm:container flex h-14 items-center justify-between') do
-        div(class: 'mr-4 flex items-center') do
-          render Shared::MobileMenu.new(class: 'md:hidden')
+    header(class: "supports-backdrop-blur:bg-background/80 sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-2xl backdrop-saturate-200") do
+      div(class: "px-2 sm:px-4 sm:container flex h-14 items-center justify-between") do
+        div(class: "mr-4 flex items-center") do
+          render Shared::MobileMenu.new(class: "md:hidden")
           render Shared::Logo.new
 
-          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: 'hidden md:inline-block') { "Docs" }
-          render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: 'hidden md:inline-block') { "Components" }
-          render PhlexUI::Link.new(href: helpers.theme_path('default'), variant: :ghost, class: 'hidden md:inline-block') { "Themes" }
+          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: "hidden md:inline-block") { "Docs" }
+          render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: "hidden md:inline-block") { "Components" }
+          render PhlexUI::Link.new(href: helpers.theme_path("default"), variant: :ghost, class: "hidden md:inline-block") { "Themes" }
         end
-        div(class: 'flex items-center gap-x-2 md:divide-x') do
-          div(class: 'flex items-center') do
+        div(class: "flex items-center gap-x-2 md:divide-x") do
+          div(class: "flex items-center") do
             twitter_link
             github_link
             dark_mode_toggle
@@ -78,7 +78,7 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def github_link
-    render PhlexUI::Link.new(href: ENV['PHLEXUI_GITHUB_LINK'], variant: :ghost, icon: true) do
+    render PhlexUI::Link.new(href: ENV["PHLEXUI_GITHUB_LINK"], variant: :ghost, icon: true) do
       github_icon
     end
   end
@@ -102,19 +102,19 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def chevron_down_icon
-      svg(
-          xmlns: "http://www.w3.org/2000/svg",
-          viewbox: "0 0 20 20",
-          fill: "currentColor",
-          class: "w-4 h-4 ml-1 -mr-1"
-      ) do |s|
-          s.path(
-              fill_rule: "evenodd",
-              d:
-              "M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z",
-              clip_rule: "evenodd"
-          )
-      end
+    svg(
+      xmlns: "http://www.w3.org/2000/svg",
+      viewbox: "0 0 20 20",
+      fill: "currentColor",
+      class: "w-4 h-4 ml-1 -mr-1"
+    ) do |s|
+      s.path(
+        fill_rule: "evenodd",
+        d:
+          "M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z",
+        clip_rule: "evenodd"
+      )
+    end
   end
 
   def github_icon

@@ -70,7 +70,7 @@ class Docs::ThemeToggleView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "ToggleThemeController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/toggle_theme_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::ThemeToggle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/theme_toggle.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::ThemeToggle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/theme_toggle.rb", built_using: :phlex)
     ]
   end
 end

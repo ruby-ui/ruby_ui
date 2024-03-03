@@ -12,7 +12,7 @@ class Docs::ButtonView < ApplicationView
           render PhlexUI::Button.new { "Button" }
         RUBY
       end
-      
+
       render Docs::VisualCodeExample.new(title: "Primary", context: self) do
         <<~RUBY
           render PhlexUI::Button.new(variant: :primary) { "Primary" }
@@ -129,7 +129,7 @@ class Docs::ButtonView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Button", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/button.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Button", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/button.rb", built_using: :phlex)
     ]
   end
 end

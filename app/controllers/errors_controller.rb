@@ -2,7 +2,7 @@
 
 class ErrorsController < ApplicationController
   layout -> { ErrorsLayout }
-  
+
   def not_found
     render Errors::NotFoundView.new, status: :not_found
   end

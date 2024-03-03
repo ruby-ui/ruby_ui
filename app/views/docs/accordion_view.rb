@@ -105,7 +105,7 @@ class Docs::AccordionView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Item", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/item.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Icon", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/icon.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Accordion::Icon", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/accordion/icon.rb", built_using: :phlex)
     ]
   end
 end

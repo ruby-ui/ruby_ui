@@ -67,7 +67,7 @@ class Docs::AspectRatioView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::AspectRatio", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/aspect_ratio.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AspectRatio", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/aspect_ratio.rb", built_using: :phlex)
     ]
   end
 end

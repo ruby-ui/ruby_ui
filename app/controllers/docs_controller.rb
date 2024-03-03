@@ -153,7 +153,7 @@ class DocsController < ApplicationController
   def tooltip
     render Docs::TooltipView.new
   end
-  
+
   def typography
     render Docs::TypographyView.new
   end

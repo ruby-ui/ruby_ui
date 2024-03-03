@@ -61,7 +61,7 @@ class Docs::HoverCardView < ApplicationView
       Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
       Docs::ComponentStruct.new(name: "PhlexUI::HoverCard", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::HoverCard::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::HoverCard::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::HoverCard::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/content.rb", built_using: :phlex)
     ]
   end
 end

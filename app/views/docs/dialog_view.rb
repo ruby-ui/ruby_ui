@@ -112,7 +112,7 @@ class Docs::DialogView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Dialog::Title", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/title.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Dialog::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/description.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Dialog::Middle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/middle.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Dialog::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/footer.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Dialog::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/footer.rb", built_using: :phlex)
     ]
   end
 end

@@ -62,7 +62,7 @@ class Docs::LinkView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Link", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/link.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Link", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/link.rb", built_using: :phlex)
     ]
   end
 

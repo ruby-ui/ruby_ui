@@ -150,7 +150,7 @@ class Docs::TabsView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Tabs::List", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex)
     ]
   end
 
@@ -222,7 +222,7 @@ class Docs::TabsView < ApplicationView
     [
       Repo.new(github_url: "https://github.com/phlex-ruby/phlex", name: "phlex", stars: 961, version: "v1.8.1"),
       Repo.new(github_url: "https://github.com/joeldrapper/green_dots", name: "green_dots", stars: 40, version: "Pre Release"),
-      Repo.new(github_url: "https://github.com/joeldrapper/literal", name: "literal", stars: 96, version: "v0.1.0"),
+      Repo.new(github_url: "https://github.com/joeldrapper/literal", name: "literal", stars: 96, version: "v0.1.0")
     ]
   end
 end

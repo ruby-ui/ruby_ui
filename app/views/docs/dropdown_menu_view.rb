@@ -235,7 +235,7 @@ class Docs::DropdownMenuView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::DropdownMenu::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/content.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::DropdownMenu::Label", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/label.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::DropdownMenu::Item", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/item.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::DropdownMenu::Separator", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/separator.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::DropdownMenu::Separator", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/separator.rb", built_using: :phlex)
     ]
   end
 end

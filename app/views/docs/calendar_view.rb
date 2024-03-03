@@ -11,7 +11,7 @@ class Docs::CalendarView < ApplicationView
 
       render PhlexUI::Typography::H2.new { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: 'Connect to input', context: self, premium: @premium) do
+      render Docs::VisualCodeExample.new(title: "Connect to input", context: self, premium: @premium) do
         <<~RUBY
           div(class: 'space-y-4') do
             render PhlexUI::Input.new(type: 'string', placeholder: "Select a date", class: 'rounded-md border shadow', id: 'date', data_controller: 'input')
@@ -20,7 +20,7 @@ class Docs::CalendarView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Format date', description: 'Format dates with date-fns', context: self, premium: @premium) do
+      render Docs::VisualCodeExample.new(title: "Format date", description: "Format dates with date-fns", context: self, premium: @premium) do
         <<~RUBY
           div(class: 'space-y-4') do
             render PhlexUI::Input.new(type: 'string', placeholder: "Select a date", class: 'rounded-md border shadow', id: 'formatted-date', data_controller: 'input')
@@ -45,7 +45,7 @@ class Docs::CalendarView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Next", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/next.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Prev", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/prev.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Title", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Weekdays", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/weekdays.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Weekdays", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/weekdays.rb", built_using: :phlex)
     ]
   end
 end

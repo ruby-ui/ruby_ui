@@ -86,7 +86,7 @@ class Docs::CardView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Card::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/content.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Card::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/footer.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Card::Title", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Card::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/description.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Card::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/description.rb", built_using: :phlex)
     ]
   end
 

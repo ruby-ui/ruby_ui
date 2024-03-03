@@ -11,7 +11,7 @@ class Docs::DatePickerView < ApplicationView
 
       render PhlexUI::Typography::H2.new { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: 'Single Date', context: self, premium: @premium) do
+      render Docs::VisualCodeExample.new(title: "Single Date", context: self, premium: @premium) do
         <<~RUBY
           div(class: 'space-y-4 w-[260px]') do
             render PhlexUI::Popover.new(options: { trigger: 'focusin' }) do
@@ -49,7 +49,7 @@ class Docs::DatePickerView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Calendar::Weekdays", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/calendar/weekdays.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Popover", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Popover::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/content.rb", built_using: :phlex)
     ]
   end
 end

@@ -30,7 +30,7 @@ class Docs::GettingStarted::InstallationView < ApplicationView
       id: "Layer_1",
       viewbox: "0 0 395.9 139.2",
       fill: "currentColor",
-      class: 'w-20'
+      class: "w-20"
     ) do |s|
       s.path(
         class: "st0",

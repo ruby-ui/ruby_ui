@@ -90,7 +90,7 @@ class Docs::ContextMenuView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::ContextMenu::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/content.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::ContextMenu::Item", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/item.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::ContextMenu::Separator", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/separator.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::ContextMenu::Label", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/label.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::ContextMenu::Label", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/label.rb", built_using: :phlex)
     ]
   end
 end

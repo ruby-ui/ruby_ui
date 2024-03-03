@@ -113,7 +113,7 @@ class Docs::CommandView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Command::Empty", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/empty.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Command::List", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/list.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Command::Group", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/group.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::Item", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/item.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Command::Item", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/item.rb", built_using: :phlex)
     ]
   end
 
@@ -151,20 +151,20 @@ class Docs::CommandView < ApplicationView
 
   def components_list
     [
-      { name: "Accordion", path: helpers.docs_accordion_path },
-      { name: "Alert", path: helpers.docs_alert_path },
-      { name: "Alert Dialog", path: helpers.docs_alert_dialog_path },
-      { name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path },
-      { name: "Avatar", path: helpers.docs_avatar_path },
-      { name: "Badge", path: helpers.docs_badge_path }
+      {name: "Accordion", path: helpers.docs_accordion_path},
+      {name: "Alert", path: helpers.docs_alert_path},
+      {name: "Alert Dialog", path: helpers.docs_alert_dialog_path},
+      {name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path},
+      {name: "Avatar", path: helpers.docs_avatar_path},
+      {name: "Badge", path: helpers.docs_badge_path}
     ]
   end
 
   def settings_list
     [
-      { name: "Profile", path: "#" },
-      { name: "Mail", path: "#" },
-      { name: "Settings", path: "#" }
+      {name: "Profile", path: "#"},
+      {name: "Mail", path: "#"},
+      {name: "Settings", path: "#"}
     ]
   end
 end

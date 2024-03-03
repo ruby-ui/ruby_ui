@@ -7,7 +7,7 @@ class Docs::SelectView < ApplicationView
 
       render PhlexUI::Typography::H2.new { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: 'Select with object (With Builder)', description: "Change the Post object for your own", context: self) do
+      render Docs::VisualCodeExample.new(title: "Select with object (With Builder)", description: "Change the Post object for your own", context: self) do
         <<~RUBY
           people = [
             ["John Doe", 1],
@@ -21,7 +21,7 @@ class Docs::SelectView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Select with text (With Builder)', context: self) do
+      render Docs::VisualCodeExample.new(title: "Select with text (With Builder)", context: self) do
         <<~RUBY
           people = [
             ["John Doe", 1],
@@ -35,7 +35,7 @@ class Docs::SelectView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Select (Deconstructed)', context: self) do
+      render Docs::VisualCodeExample.new(title: "Select (Deconstructed)", context: self) do
         <<~RUBY
           div(class: 'w-56 flex items-center justify-center') do
             render PhlexUI::Select.new do
@@ -77,7 +77,7 @@ class Docs::SelectView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Select::Group", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/group.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Select::Input", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/input.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Select::Value", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/value.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Select::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/builder.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Select::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/select/builder.rb", built_using: :phlex)
     ]
   end
 end

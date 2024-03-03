@@ -27,7 +27,7 @@ class Docs::ShortcutKeyView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::ShortcutKey", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/shortcut_key.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::ShortcutKey", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/shortcut_key.rb", built_using: :phlex)
     ]
   end
 end

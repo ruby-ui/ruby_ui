@@ -22,16 +22,16 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
         render PhlexUI::Typography::H2.new { "Core ingredients" }
         render PhlexUI::Typography::P.new { "PhlexUI is built on top of 3 core ingredients: " }
         render PhlexUI::Typography::List.new do
-          render PhlexUI::Typography::ListItem.new(class: 'space-y-2') do
-            span(class: 'font-bold') { "Phlex" }
+          render PhlexUI::Typography::ListItem.new(class: "space-y-2") do
+            span(class: "font-bold") { "Phlex" }
             plain " - A framework for building fast, reusable, testable views in pure Ruby."
           end
-          render PhlexUI::Typography::ListItem.new(class: 'space-y-2') do
-            span(class: 'font-bold') { "TailwindCSS" }
+          render PhlexUI::Typography::ListItem.new(class: "space-y-2") do
+            span(class: "font-bold") { "TailwindCSS" }
             plain " - A utility-first CSS framework for rapidly building custom designs."
           end
-          render PhlexUI::Typography::ListItem.new(class: 'space-y-2') do
-            span(class: 'font-bold') { "Stimulus JS" }
+          render PhlexUI::Typography::ListItem.new(class: "space-y-2") do
+            span(class: "font-bold") { "Stimulus JS" }
             plain " - A modest JavaScript framework for the HTML you already have."
           end
         end
@@ -84,7 +84,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
         end
         render PhlexUI::Typography::P.new do
           plain "This is a simple example, but it's easy to see how this can be scaled up to more complex views. "
-          span(class: 'font-medium') { "It's only natural that we use logic to build HTML" }
+          span(class: "font-medium") { "It's only natural that we use logic to build HTML" }
           plain ". Phlex simplifies this process, making it easier to convert data structures into HTML."
         end
       end

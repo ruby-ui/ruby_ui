@@ -4,7 +4,7 @@ module Themes
   module Grid
     class Chart < ApplicationComponent
       def template
-        render PhlexUI::Card.new(class: 'p-8 space-y-6') do
+        render PhlexUI::Card.new(class: "p-8 space-y-6") do
           div do
             render PhlexUI::Typography::Large.new { "Phlex Speed Tests" }
             render PhlexUI::Typography::Muted.new { "Render time for a simple page" }
@@ -17,22 +17,22 @@ module Themes
 
       def chart_options
         {
-          type: 'bar',
+          type: "bar",
           data: {
-            labels: ['Phlex', 'VC', 'ERB'],
+            labels: ["Phlex", "VC", "ERB"],
             datasets: [{
-              label: 'render time (ms)',
-              data: [100, 520, 1200],
+              label: "render time (ms)",
+              data: [100, 520, 1200]
             }]
           },
           options: {
-            indexAxis: 'y',
+            indexAxis: "y",
             scales: {
               y: {
                 beginAtZero: true
               }
-            },
-          },
+            }
+          }
         }
       end
     end

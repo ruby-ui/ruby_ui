@@ -1,7 +1,7 @@
 class MailerLayout < Phlex::HTML
   include Phlex::Rails::Layout
 
-  def template(&block)    
+  def template(&block)
     html do
       head do
         meta(name: "viewport", content: "width=device-width, initial-scale=1.0")
@@ -273,12 +273,12 @@ class MailerLayout < Phlex::HTML
                 #   "This is preheader text. Some clients will show this text as a preview."
                 # end
 
-                div(class: 'logo-container') do
-                  a(href: ENV['HOST']) do
-                    img(src: helpers.image_url('logo.svg'), alt: ENV['APP_NAME'], height: "20")
+                div(class: "logo-container") do
+                  a(href: ENV["HOST"]) do
+                    img(src: helpers.image_url("logo.svg"), alt: ENV["APP_NAME"], height: "20")
                   end
                 end
-                
+
                 div(class: "main-wrapper") do
                   table(
                     role: "presentation",
@@ -307,7 +307,7 @@ class MailerLayout < Phlex::HTML
                     tr do
                       td(class: "content-block") do
                         span(class: "apple-link") do
-                          "#{ENV['APP_NAME']}, #{ENV['COMPANY_ADDRESS']}"
+                          "#{ENV["APP_NAME"]}, #{ENV["COMPANY_ADDRESS"]}"
                         end
                       end
                     end

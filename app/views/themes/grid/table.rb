@@ -6,23 +6,23 @@ module Themes
       User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
 
       def template
-        render PhlexUI::Card.new(class: 'p-6') do
+        render PhlexUI::Card.new(class: "p-6") do
           render PhlexUI::Table::Builder.new(users) do |t|
             t.column("Name") do |user|
-              div(class: 'flex items-center space-x-3') do
+              div(class: "flex items-center space-x-3") do
                 render PhlexUI::Avatar::Builder.new(src: user.avatar_url, size: :md)
                 div do
-                  p(class: 'text-sm font-medium') { user.name }
-                  p(class: 'text-sm text-gray-500') { user.username }
+                  p(class: "text-sm font-medium") { user.name }
+                  p(class: "text-sm text-gray-500") { user.username }
                 end
               end
             end
             t.column("Commits", &:commits)
-            t.column("Links", header_attrs: { class: 'text-right'}, footer_attrs: { class: 'text-right'}) do |user| 
-              div(class: 'flex items-center justify-end space-x-2') do
+            t.column("Links", header_attrs: {class: "text-right"}, footer_attrs: {class: "text-right"}) do |user|
+              div(class: "flex items-center justify-end space-x-2") do
                 render PhlexUI::Link.new(href: github_link(user), variant: :outline, size: :sm) do
                   github_icon
-                  span(class: 'ml-2') { "See profile" }
+                  span(class: "ml-2") { "See profile" }
                 end
               end
             end
@@ -38,7 +38,7 @@ module Themes
           User.new(avatar_url: "https://avatars.githubusercontent.com/u/33979976?v=4", name: "Alexandre Ruban", username: "alexandreruban", commits: 16),
           User.new(avatar_url: "https://avatars.githubusercontent.com/u/77887?v=4", name: "Will Cosgrove", username: "willcosgrove", commits: 12),
           User.new(avatar_url: "https://avatars.githubusercontent.com/u/3025661?v=4", name: "Stephann V.", username: "stephannv", commits: 8),
-          User.new(avatar_url: "https://avatars.githubusercontent.com/u/6411752?v=4", name: "Marco Roth", username: "marcoroth", commits: 8),
+          User.new(avatar_url: "https://avatars.githubusercontent.com/u/6411752?v=4", name: "Marco Roth", username: "marcoroth", commits: 8)
         ]
       end
 

@@ -47,7 +47,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_deliveries = true
 
-  config.action_mailer.default_url_options = { host: ENV["HOST"] }
+  config.action_mailer.default_url_options = {host: ENV["HOST"]}
   config.action_mailer.asset_host = ENV["HOST"]
 
   # Print deprecation notices to the Rails logger.

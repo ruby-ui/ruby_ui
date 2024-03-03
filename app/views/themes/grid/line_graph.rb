@@ -4,7 +4,7 @@ module Themes
   module Grid
     class LineGraph < ApplicationComponent
       def template
-        render PhlexUI::Card.new(class: 'p-8 space-y-6') do
+        render PhlexUI::Card.new(class: "p-8 space-y-6") do
           div do
             render PhlexUI::Typography::Large.new { "Phlex Success" }
             render PhlexUI::Typography::Muted.new { "Number of stars on the Phlex Github repo" }
@@ -17,12 +17,12 @@ module Themes
 
       def chart_options
         {
-          type: 'line',
+          type: "line",
           data: {
-            labels: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            labels: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
             datasets: [{
-              label: 'Github Stars',
-              data: [40, 30, 79, 140, 290, 550],
+              label: "Github Stars",
+              data: [40, 30, 79, 140, 290, 550]
             }]
           },
           options: {
@@ -36,7 +36,7 @@ module Themes
                 display: false
               }
             }
-          },
+          }
         }
       end
     end

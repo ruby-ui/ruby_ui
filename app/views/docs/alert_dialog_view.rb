@@ -43,7 +43,7 @@ class Docs::AlertDialogView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/description.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/footer.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Cancel", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/cancel.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Action", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/action.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::AlertDialog::Action", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert_dialog/action.rb", built_using: :phlex)
     ]
   end
 end

@@ -3,13 +3,13 @@
 class Errors::NotFoundView < ApplicationView
   def template
     render PhlexUI::Card.new(class: "p-8 space-y-6 flex flex-col items-center") do
-      div(class: 'space-y-2') do
-        render PhlexUI::Badge.new(variant: :purple, class: 'font-mono') { "STATUS: 404" }
-        render PhlexUI::Typography::H1.new(class: '!leading-tight') { "Oops! Page not found" }
-        render PhlexUI::Typography::P.new(class: 'text-muted-foreground') { "The page you were looking for doesn't exist." }
+      div(class: "space-y-2") do
+        render PhlexUI::Badge.new(variant: :purple, class: "font-mono") { "STATUS: 404" }
+        render PhlexUI::Typography::H1.new(class: "!leading-tight") { "Oops! Page not found" }
+        render PhlexUI::Typography::P.new(class: "text-muted-foreground") { "The page you were looking for doesn't exist." }
       end
 
-      render PhlexUI::Link.new(href: helpers.root_path, variant: :primary, class: 'w-full') do
+      render PhlexUI::Link.new(href: helpers.root_path, variant: :primary, class: "w-full") do
         house_icon
         plain "Go to home"
       end

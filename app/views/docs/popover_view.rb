@@ -77,7 +77,7 @@ class Docs::PopoverView < ApplicationView
       end
 
       render Docs::VisualCodeExample.new(title: "Placement", context: self) do
-        <<~RUBY          
+        <<~RUBY
           div(class: 'grid grid-cols-1 sm:grid-cols-3 gap-4') do
             # -- TOP --
             render PhlexUI::Popover.new(options: { placement: 'top' }) do
@@ -972,7 +972,7 @@ class Docs::PopoverView < ApplicationView
       Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
       Docs::ComponentStruct.new(name: "PhlexUI::Popover", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Popover::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/content.rb", built_using: :phlex)
     ]
   end
 end

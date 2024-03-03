@@ -55,7 +55,7 @@ class Docs::CodeblockView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "ClipboardController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/clipboard_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::Codeblock", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/codeblock.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Codeblock", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/codeblock.rb", built_using: :phlex)
     ]
   end
 end

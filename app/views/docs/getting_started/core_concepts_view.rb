@@ -6,7 +6,7 @@ class Docs::GettingStarted::CoreConceptsView < ApplicationView
       render Docs::Header.new(title: "Core concepts", description: "Below are some of the core concepts that will help you understand how PhlexUI works under the hood.")
 
       div(class: "space-y-4") do
-        render PhlexUI::Typography::H2.new(class: 'flex items-center gap-x-2') do 
+        render PhlexUI::Typography::H2.new(class: "flex items-center gap-x-2") do
           plain "Builder Components"
           render PhlexUI::Badge.new(variant: :primary, size: :sm) { "WIP" }
         end
@@ -16,7 +16,7 @@ class Docs::GettingStarted::CoreConceptsView < ApplicationView
           render PhlexUI::Alert::Title.new { "Work in progress" }
           render PhlexUI::Alert::Description.new { "Only recently added, Builder Components are still a work in progress. They are not yet available for all components." }
         end
-        
+
         render PhlexUI::Typography::P.new do
           plain "Drawing from Rails' emphasis on development speed, we've created "
           render PhlexUI::Typography::InlineCode.new { "::Builder" }
@@ -37,7 +37,7 @@ class Docs::GettingStarted::CoreConceptsView < ApplicationView
 
         render PhlexUI::Typography::Large.new { "Same form, different approaches" }
 
-        render Docs::VisualCodeExample.new(title: 'Without Builder', context: self) do
+        render Docs::VisualCodeExample.new(title: "Without Builder", context: self) do
           <<~RUBY
             render PhlexUI::Form.new(class: 'w-full max-w-sm') do
               render PhlexUI::Form::Spacer.new do
@@ -52,7 +52,7 @@ class Docs::GettingStarted::CoreConceptsView < ApplicationView
           RUBY
         end
 
-        render Docs::VisualCodeExample.new(title: 'With Builder', context: self) do
+        render Docs::VisualCodeExample.new(title: "With Builder", context: self) do
           <<~RUBY
             render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
               f.input "username", type: :string, placeholder: "@joeldrapper", hint: "Can only contain letters, numbers, and underscores."

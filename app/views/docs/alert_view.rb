@@ -66,7 +66,7 @@ class Docs::AlertView < ApplicationView
     [
       Docs::ComponentStruct.new(name: "PhlexUI::Alert", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Alert::Title", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Alert::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/description.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Alert::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/description.rb", built_using: :phlex)
     ]
   end
 

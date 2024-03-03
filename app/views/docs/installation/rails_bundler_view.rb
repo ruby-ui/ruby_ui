@@ -3,14 +3,14 @@
 class Docs::Installation::RailsBundlerView < ApplicationView
   def initialize
     @phlex_rails_link = "https://www.phlex.fun/rails/"
-    @phlex_ui_pro_private_key = ENV['BUNDLE_PHLEXUI__FURY__SITE']
+    @phlex_ui_pro_private_key = ENV["BUNDLE_PHLEXUI__FURY__SITE"]
   end
 
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install PhlexUI within a Rails app that employs JS bundling.")
 
-      render PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b') { "Creating a Rails app" }
+      render PhlexUI::Typography::H2.new(class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
         steps.add_step do
           step_container do
@@ -19,41 +19,41 @@ class Docs::Installation::RailsBundlerView < ApplicationView
               plain "In case you don't have a Rails application set up yet, let's start by generating one. The demo uses esbuild, however feel free to change esbuild to use bun, webpack or rollup.js. "
               render PhlexUI::Typography::InlineLink.new(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#adding-npm-packages-with-javascript-bundlers") { "Read more about JS bundlers in Rails here." }
             end
-            code = <<~CODE 
-                rails new CHANGE_TO_NAME_OF_APP --css=tailwind --javascript=esbuild
-              CODE
-            div(class: 'w-full') do
+            code = <<~CODE
+              rails new CHANGE_TO_NAME_OF_APP --css=tailwind --javascript=esbuild
+            CODE
+            div(class: "w-full") do
               render PhlexUI::Codeblock.new(code, syntax: :javascript)
             end
             render PhlexUI::Typography::P.new { "Once that is created, navigate to the app" }
-            code = <<~CODE 
-                cd CHANGE_TO_NAME_OF_APP
-              CODE
-            div(class: 'w-full') do
+            code = <<~CODE
+              cd CHANGE_TO_NAME_OF_APP
+            CODE
+            div(class: "w-full") do
               render PhlexUI::Codeblock.new(code, syntax: :javascript)
             end
           end
         end
       end
 
-      render PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b') { "Install the gem" }
+      render PhlexUI::Typography::H2.new(class: "!text-2xl pb-4 border-b") { "Install the gem" }
       render Steps::Builder.new do |steps|
         # STEP 1
         steps.add_step do
           step_container do
             render PhlexUI::Typography::Large.new { "Install Phlex" }
             render PhlexUI::Typography::P.new { "Run the following in the terminal to install phlex for Rails" }
-            code = <<~CODE 
-                bundle add phlex-rails
-              CODE
-            div(class: 'w-full') do
+            code = <<~CODE
+              bundle add phlex-rails
+            CODE
+            div(class: "w-full") do
               render PhlexUI::Codeblock.new(code, syntax: :javascript)
             end
             render PhlexUI::Typography::P.new { "After the gem is installed, run the generator to create necessary files." }
-            code = <<~CODE 
-                bin/rails generate phlex:install
-              CODE
-            div(class: 'w-full') do
+            code = <<~CODE
+              bin/rails generate phlex:install
+            CODE
+            div(class: "w-full") do
               render PhlexUI::Codeblock.new(code, syntax: :javascript)
             end
             render PhlexUI::Typography::P.new do
@@ -80,11 +80,11 @@ class Docs::Installation::RailsBundlerView < ApplicationView
       end
 
       # JS INSTALLATION
-      render PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b') { "Install JS" }
+      render PhlexUI::Typography::H2.new(class: "!text-2xl pb-4 border-b") { "Install JS" }
       js_installation
 
       # STYLE INSTALLATION
-      render PhlexUI::Typography::H2.new(class: '!text-2xl pb-4 border-b') { "Install Styles" }
+      render PhlexUI::Typography::H2.new(class: "!text-2xl pb-4 border-b") { "Install Styles" }
       render Steps::Builder.new do |steps|
         # STEP 1
         steps.add_step do
@@ -101,12 +101,12 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         steps.add_step do
           step_container do
             render PhlexUI::Typography::Large.new { "Install Dependencies" }
-            
+
             render PhlexUI::Typography::P.new { "Run the following in the terminal to install the dependencies" }
-            
+
             code = <<~CODE
-                yarn add tailwindcss-animate
-              CODE
+              yarn add tailwindcss-animate
+            CODE
             render PhlexUI::Codeblock.new(code, syntax: :javascript)
           end
         end
@@ -117,7 +117,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
             render PhlexUI::Typography::Large.new { "Update Tailwind Configuration" }
             render PhlexUI::Typography::P.new do
               plain "Add the following to your "
-              render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { "tailwind.config.js" }
+              render PhlexUI::Typography::InlineCode.new(class: "whitespace-nowrap") { "tailwind.config.js" }
               plain " file"
             end
 
@@ -144,39 +144,39 @@ class Docs::Installation::RailsBundlerView < ApplicationView
 
   private
 
-  def step_container(&block)
-    div(class: "space-y-4", &block)
+  def step_container(&)
+    div(class: "space-y-4", &)
   end
 
   def phlex_ui_installation(plan)
     case plan
     when "free"
       render PhlexUI::Typography::P.new { "Run the following in the terminal to install the PhlexUI Component Library" }
-      code = <<~CODE 
-          bundle add phlex_ui
-        CODE
+      code = <<~CODE
+        bundle add phlex_ui
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
     when "pro"
       render PhlexUI::Typography::P.new do
         plain "Your license key is "
-        render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { @phlex_ui_pro_private_key }
+        render PhlexUI::Typography::InlineCode.new(class: "whitespace-nowrap") { @phlex_ui_pro_private_key }
       end
       render PhlexUI::Typography::P.new { "Use it to set your license key in development" }
-      code = <<~CODE 
-          export BUNDLE_PHLEXUI__FURY__SITE=#{@phlex_ui_pro_private_key}
-        CODE
+      code = <<~CODE
+        export BUNDLE_PHLEXUI__FURY__SITE=#{@phlex_ui_pro_private_key}
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
       render PhlexUI::Typography::P.new { "Check that the key is set" }
       code = <<~CODE
-          echo $BUNDLE_PHLEXUI__FURY__SITE
-        CODE
+        echo $BUNDLE_PHLEXUI__FURY__SITE
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
       render PhlexUI::Typography::P.new { "If you see your key printed in the terminal, you're good to continue" }
-      
+
       render PhlexUI::Typography::P.new { "Now you can install the Pro version of PhlexUI" }
-      code = <<~CODE 
-          bundle add phlex_ui
-        CODE
+      code = <<~CODE
+        bundle add phlex_ui
+      CODE
       render PhlexUI::Codeblock.new(code, syntax: :javascript)
     end
   end
@@ -188,9 +188,9 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         step_container do
           render PhlexUI::Typography::Large.new { "Install package" }
           render PhlexUI::Typography::P.new { "Run the following in the terminal to install PhlexUI JS package" }
-          code = <<~CODE 
-              yarn add phlex_ui
-            CODE
+          code = <<~CODE
+            yarn add phlex_ui
+          CODE
           render PhlexUI::Codeblock.new(code, syntax: :javascript)
         end
       end
@@ -200,12 +200,12 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         render PhlexUI::Typography::Large.new { "Import package" }
         render PhlexUI::Typography::P.new do
           plain "Import the package in your "
-          render PhlexUI::Typography::InlineCode.new(class: 'whitespace-nowrap') { "app/javascript/application.js" }
+          render PhlexUI::Typography::InlineCode.new(class: "whitespace-nowrap") { "app/javascript/application.js" }
           plain " file"
         end
         code = <<~CODE
-            import 'phlex_ui';
-          CODE
+          import 'phlex_ui';
+        CODE
         render PhlexUI::Codeblock.new(code, syntax: :javascript)
       end
     end
@@ -218,18 +218,18 @@ class Docs::Installation::RailsBundlerView < ApplicationView
           alt: "Placeholder",
           loading: "lazy",
           src:
-            helpers.image_path('installation_blur.jpg'),
-          class: "opacity-20 blur-xl",
+            helpers.image_path("installation_blur.jpg"),
+          class: "opacity-20 blur-xl"
         )
         div(class: "absolute inset-0 p-6 flex flex-col items-center justify-center") do
-          render PhlexUI::Card.new(class: 'max-w-md mx-auto') do
+          render PhlexUI::Card.new(class: "max-w-md mx-auto") do
             render PhlexUI::Card::Header.new do
-              render PhlexUI::Card::Title.new { 'Upgrade to PhlexUI Pro' }
-              render PhlexUI::Card::Description.new do 
+              render PhlexUI::Card::Title.new { "Upgrade to PhlexUI Pro" }
+              render PhlexUI::Card::Description.new do
                 "Get access to all components, boost your productivity and take your projects to the next level."
               end
             end
-            render PhlexUI::Card::Footer.new(class: 'flex justify-end gap-x-2') do
+            render PhlexUI::Card::Footer.new(class: "flex justify-end gap-x-2") do
               render PhlexUI::Link.new(href: helpers.root_path(anchor: :pricing), variant: :primary) do
                 plain "Get all access"
                 arrow_icon

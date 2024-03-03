@@ -1,6 +1,6 @@
 module Github
   class InviteUserToProTeam
-    BASE_URL = 'https://api.github.com'
+    BASE_URL = "https://api.github.com"
     TEAM_SLUG = "Pro"
     ORG = "PhlexUI"
 
@@ -12,7 +12,7 @@ module Github
     def call
       response = connection.put do |req|
         req.url membership_url
-        req.body = { role: "member" }.to_json
+        req.body = {role: "member"}.to_json
       end
 
       handle_response(response)
@@ -22,11 +22,11 @@ module Github
 
     def connection
       Faraday.new(url: BASE_URL) do |faraday|
-        faraday.request  :url_encoded
+        faraday.request :url_encoded
         faraday.response :logger
-        faraday.adapter  Faraday.default_adapter
-        faraday.headers['Authorization'] = "Bearer #{@client.access_token}"
-        faraday.headers['Accept'] = "application/vnd.github+json"
+        faraday.adapter Faraday.default_adapter
+        faraday.headers["Authorization"] = "Bearer #{@client.access_token}"
+        faraday.headers["Accept"] = "application/vnd.github+json"
       end
     end
 

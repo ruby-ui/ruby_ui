@@ -45,7 +45,7 @@ class Docs::SheetView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Side", description: 'Use the side property to indicate the edge of the screen where the component will appear.', context: self, premium: @premium) do        
+      render Docs::VisualCodeExample.new(title: "Side", description: "Use the side property to indicate the edge of the screen where the component will appear.", context: self, premium: @premium) do
         <<~RUBY
           div(class: 'grid grid-cols-2 gap-4') do
             # -- TOP --
@@ -225,7 +225,7 @@ class Docs::SheetView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Title", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/title.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Description", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/description.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Middle", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/middle.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Footer", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/footer.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Sheet::Footer", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/footer.rb", built_using: :phlex)
     ]
   end
 end

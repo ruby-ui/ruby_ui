@@ -90,7 +90,7 @@ class Docs::TypographyView < ApplicationView
           render PhlexUI::Typography::Small.new { "Email address" }
         RUBY
       end
-      
+
       render Docs::VisualCodeExample.new(title: "Muted", context: self) do
         <<~RUBY
           render PhlexUI::Typography::Muted.new { "Enter your email address." }
@@ -117,7 +117,7 @@ class Docs::TypographyView < ApplicationView
       Docs::ComponentStruct.new(name: "PhlexUI::Typography::Lead", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/lead.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Typography::Large", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/large.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Typography::Small", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/small.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Typography::Muted", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/muted.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Typography::Muted", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/typography/muted.rb", built_using: :phlex)
     ]
   end
 end

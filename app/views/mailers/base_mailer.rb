@@ -1,15 +1,15 @@
 # Provides helper method for rendering CTA links
 
 module Mailers
-  class BaseMailer < Phlex::HTML    
+  class BaseMailer < Phlex::HTML
     private
 
-    def para(&block)
-      p(&block) # See mailer_layout.rb to change styles
+    def para(&)
+      p(&) # See mailer_layout.rb to change styles
     end
 
-    def subheader(&block)
-      h2(&block) # See mailer_layout.rb to change styles
+    def subheader(&)
+      h2(&) # See mailer_layout.rb to change styles
     end
 
     def cta(href:, &block)

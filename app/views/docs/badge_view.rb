@@ -3,29 +3,29 @@
 class Docs::BadgeView < ApplicationView
   def template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: 'Badge', description: 'Displays a badge or a component that looks like a badge.')
+      render Docs::Header.new(title: "Badge", description: "Displays a badge or a component that looks like a badge.")
 
-      render PhlexUI::Typography::H2.new { 'Usage' }
+      render PhlexUI::Typography::H2.new { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: 'Default', context: self) do
+      render Docs::VisualCodeExample.new(title: "Default", context: self) do
         <<~RUBY
           render PhlexUI::Badge.new { "Badge" }
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Primary', context: self) do
+      render Docs::VisualCodeExample.new(title: "Primary", context: self) do
         <<~RUBY
           render PhlexUI::Badge.new(variant: :primary) { 'Primary' }
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Outline', context: self) do
+      render Docs::VisualCodeExample.new(title: "Outline", context: self) do
         <<~RUBY
           render PhlexUI::Badge.new(variant: :outline) { 'Outline' }
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Variants', context: self) do
+      render Docs::VisualCodeExample.new(title: "Variants", context: self) do
         <<~RUBY
           div(class: 'flex flex-wrap gap-2 justify-center') do
             render PhlexUI::Badge.new(variant: :destructive) { 'Destructive' }
@@ -35,7 +35,7 @@ class Docs::BadgeView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Other Colors', context: self) do
+      render Docs::VisualCodeExample.new(title: "Other Colors", context: self) do
         <<~RUBY
           div(class: 'flex flex-wrap gap-2 justify-center') do
             render PhlexUI::Badge.new(variant: :red) { 'Red' }
@@ -59,7 +59,7 @@ class Docs::BadgeView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: 'Sizes', context: self) do
+      render Docs::VisualCodeExample.new(title: "Sizes", context: self) do
         <<~RUBY
           div(class: 'flex flex-wrap gap-2 justify-center items-center') do
             render PhlexUI::Badge.new(size: :sm) { "Small" }
@@ -78,7 +78,7 @@ class Docs::BadgeView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Badge", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Badge", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb", built_using: :phlex)
     ]
   end
 end
