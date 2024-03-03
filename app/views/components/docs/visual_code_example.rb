@@ -8,8 +8,9 @@ class Docs::VisualCodeExample < ApplicationComponent
     @context = context
   end
 
-  def template(&)
-    @display_code = CGI.unescapeHTML(capture(&))
+  # standard:disable Style/ArgumentsForwarding
+  def template(&block)
+    @display_code = CGI.unescapeHTML(capture(&block))
 
     div(id: @title) do
       div(class: "relative") do
@@ -24,6 +25,7 @@ class Docs::VisualCodeExample < ApplicationComponent
       end
     end
   end
+  # standard:enable Style/ArgumentsForwarding
 
   private
 
