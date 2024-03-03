@@ -36,3 +36,61 @@ jobs:
 
       - name: Lint code for consistent style
         run: bundle exec standardrb
+
+
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: yarn
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -qq libvips
+          yarn install --frozen-lockfile
+
+      - name: Run tests
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/test
+          REDIS_URL: redis://localhost:6379/0
+          RAILS_ENV: test
+          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |
+          bin/rails test:prepare
+          bin/rails db:test:prepare
+          bin/rails test
+          bin/rails test:system
