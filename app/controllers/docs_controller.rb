@@ -122,6 +122,10 @@ class DocsController < ApplicationController
     render Docs::LinkView.new
   end
 
+  def pagination
+    render Docs::PaginationView.new
+  end
+
   def popover
     render Docs::PopoverView.new
   end
