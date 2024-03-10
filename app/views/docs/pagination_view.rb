@@ -10,29 +10,29 @@ class Docs::PaginationView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Example", description: "This is the default appearance of a Pagination", context: self) do
         <<~RUBY
           render PhlexUI::Pagination.new do
-            render PhlexUI::Pagination::Pages.new do
-              render PhlexUI::Pagination::Page.new(href: "#") do
+            render PhlexUI::Pagination::Content.new do
+              render PhlexUI::Pagination::Item.new(href: "#") do
                 chevrons_left_icon
                 plain "First"
               end
-              render PhlexUI::Pagination::Page.new(href: "#") do
+              render PhlexUI::Pagination::Item.new(href: "#") do
                 chevron_left_icon
                 plain "Prev"
               end
 
               render PhlexUI::Pagination::Ellipsis.new
 
-              render PhlexUI::Pagination::Page.new(href: "#") { "4" }
-              render PhlexUI::Pagination::Page.new(href: "#", active: true) { "5" }
-              render PhlexUI::Pagination::Page.new(href: "#") { "6" }
+              render PhlexUI::Pagination::Item.new(href: "#") { "4" }
+              render PhlexUI::Pagination::Item.new(href: "#", active: true) { "5" }
+              render PhlexUI::Pagination::Item.new(href: "#") { "6" }
 
               render PhlexUI::Pagination::Ellipsis.new
 
-              render PhlexUI::Pagination::Page.new(href: "#") do
+              render PhlexUI::Pagination::Item.new(href: "#") do
                 plain "Next"
                 chevron_right_icon
               end
-              render PhlexUI::Pagination::Page.new(href: "#") do
+              render PhlexUI::Pagination::Item.new(href: "#") do
                 plain "Last"
                 chevrons_right_icon
               end
@@ -50,9 +50,9 @@ class Docs::PaginationView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "PhlexUI::Pagination", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PhlexUI::Pagination::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/content.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "PhlexUI::Pagination::Ellipsis", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/ellipsis.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Pagination::Page", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/page.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Pagination::Pages", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/pages.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "PhlexUI::Pagination::Item", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/item.rb", built_using: :phlex)
     ]
   end
 
