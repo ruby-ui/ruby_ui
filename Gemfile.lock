@@ -174,7 +174,7 @@ GEM
     phlex-rails (1.2.1)
       phlex (~> 1.10.0)
       railties (>= 6.1, < 8)
-    phlex_ui (0.1.7)
+    phlex_ui (0.1.8)
       phlex (~> 1.10)
       rouge (~> 4.2.0)
       ruby-next (~> 1.0)
