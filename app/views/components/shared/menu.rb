@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Shared::Menu < ApplicationComponent
-  def template
+  def view_template
     div(class: "pb-4") do
       # Main routes (Docs, Components, Themes, Github, Discord, Twitter)
       div(class: "md:hidden") do

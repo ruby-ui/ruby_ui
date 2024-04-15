@@ -6,7 +6,7 @@ module Themes
       @theme = theme
     end
 
-    def template
+    def view_template
       style do
         Theme::CSS.retrieve(@theme, with_directive: false)
       end

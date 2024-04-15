@@ -5,7 +5,7 @@ class Themes::ShowView < ApplicationView
     @theme = theme
   end
 
-  def template
+  def view_template
     render Shared::Container.new(size: "2xl", class: "py-12") do
       div(class: "md:flex items-center justify-between") do
         div do

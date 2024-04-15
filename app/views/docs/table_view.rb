@@ -4,7 +4,7 @@ class Docs::TableView < ApplicationView
   Invoice = Struct.new(:identifier, :status, :method, :amount, keyword_init: true)
   User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
 
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
       render Docs::Header.new(title: "Table", description: "A responsive table component.")
 

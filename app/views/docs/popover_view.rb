@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::PopoverView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Popover", description: "Displays rich content in a portal, triggered by a button.")
 

@@ -3,7 +3,7 @@
 class Docs::GettingStarted::InstallationView < ApplicationView
   include Phlex::DeferredRender
 
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Installation", description: "How to install dependencies and structure your app.")
 

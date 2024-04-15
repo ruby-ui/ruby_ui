@@ -1,7 +1,7 @@
 module Themes
   module Grid
     class Card < ApplicationComponent
-      def template
+      def view_template
         render PhlexUI::Card.new(class: "w-full") do
           render PhlexUI::Card::Header.new do
             render PhlexUI::Card::Title.new { 'You might like "PhlexUI"' }

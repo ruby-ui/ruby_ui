@@ -6,7 +6,7 @@ class Docs::InstallationInstructionsComingSoon < ApplicationComponent
     @description = description
   end
 
-  def template(&block)
+  def view_template(&block)
     render_header if @title || @description
   end
 

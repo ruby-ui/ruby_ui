@@ -24,7 +24,7 @@ class HomeView::Shapes < ApplicationComponent
     @color = @attributes.delete(:color) || @colors.sample
   end
 
-  def template
+  def view_template
     # Create one square and one circle of different colors
     # The square will be on a rotation of 15deg
     # the circle will be a solid color

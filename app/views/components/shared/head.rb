@@ -3,7 +3,7 @@
 class Shared::Head < ApplicationComponent
   include Phlex::Rails::Layout
 
-  def template
+  def view_template
     head do
       title { "PhlexUI - Component Library" }
       meta name: "viewport", content: "width=device-width,initial-scale=1"

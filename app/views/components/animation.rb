@@ -8,7 +8,7 @@ class Animation < ApplicationComponent
     @attrs = attrs
   end
 
-  def template(&)
+  def view_template(&)
     div(data_controller: "lottie", data_lottie_path_value: @path, data_lottie_options_value: @options, data_lottie_delay_value: @delay, **@attrs, &)
   end
 end

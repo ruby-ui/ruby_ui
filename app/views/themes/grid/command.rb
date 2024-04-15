@@ -3,7 +3,7 @@
 module Themes
   module Grid
     class Command < ApplicationComponent
-      def template
+      def view_template
         render PhlexUI::Command::Dialog.new do
           render PhlexUI::Command::DialogTrigger.new do
             render PhlexUI::Button.new(variant: "outline", class: "w-full pr-2 pl-3 justify-between") do

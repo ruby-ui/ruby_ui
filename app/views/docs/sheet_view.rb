@@ -5,7 +5,7 @@ class Docs::SheetView < ApplicationView
     @premium = true
   end
 
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Sheet", description: "Extends the Sheet component to display content that complements the main content of the screen.", premium: @premium)
 

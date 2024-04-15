@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::GettingStarted::DarkModeView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Dark mode", description: "How to use dark mode in your application")
 

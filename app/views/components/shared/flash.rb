@@ -13,7 +13,7 @@ class Shared::Flash < ApplicationComponent
     @title = title
   end
 
-  def template(&block)
+  def view_template(&block)
     li(
       role: "status",
       aria_live: "off",

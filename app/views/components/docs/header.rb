@@ -7,7 +7,7 @@ class Docs::Header < ApplicationComponent
     @premium = premium
   end
 
-  def template
+  def view_template
     div(class: "space-y-2") do
       render PhlexUI::Typography::H1.new { @title }
       render PhlexUI::Typography::Lead.new { @description }

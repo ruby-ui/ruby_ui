@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::GettingStarted::CoreConceptsView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Core concepts", description: "Below are some of the core concepts that will help you understand how PhlexUI works under the hood.")
 

@@ -6,7 +6,7 @@ module Themes
       @theme = theme
     end
 
-    def template
+    def view_template
       render PhlexUI::Popover.new(options: {trigger: "click", placement: "bottom-end"}) do
         render PhlexUI::Popover::Trigger.new do
           render PhlexUI::Button.new(variant: :outline) do

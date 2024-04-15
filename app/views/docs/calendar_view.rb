@@ -5,7 +5,7 @@ class Docs::CalendarView < ApplicationView
     @premium = true
   end
 
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Calendar", description: "A date field component that allows users to enter and edit date.", premium: @premium)
 

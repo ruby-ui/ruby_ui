@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::BadgeView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Badge", description: "Displays a badge or a component that looks like a badge.")
 

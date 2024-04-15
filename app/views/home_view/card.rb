@@ -22,7 +22,7 @@ class HomeView::Card < ApplicationComponent
     }
   end
 
-  def template(&block)
+  def view_template(&block)
     div(**@attributes, class: tokens("relative flex flex-col p-6 md:p-10 rounded-2xl space-y-8 overflow-hidden", @attributes[:class], @color_classes[@color.to_sym])) do
       if @icon
         div(&@icon)

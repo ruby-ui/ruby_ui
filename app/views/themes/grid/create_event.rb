@@ -3,7 +3,7 @@
 module Themes
   module Grid
     class CreateEvent < ApplicationComponent
-      def template
+      def view_template
         render PhlexUI::Card.new(class: "p-8 space-y-4") do
           div do
             render PhlexUI::Typography::Large.new { "Create an Event" }

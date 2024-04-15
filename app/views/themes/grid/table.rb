@@ -5,7 +5,7 @@ module Themes
     class Table < ApplicationComponent
       User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
 
-      def template
+      def view_template
         render PhlexUI::Card.new(class: "p-6") do
           render PhlexUI::Table::Builder.new(users) do |t|
             t.column("Name") do |user|

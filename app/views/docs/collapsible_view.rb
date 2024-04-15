@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::CollapsibleView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Collapsible", description: "An interactive component which expands/collapses a panel.")
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::AvatarView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Avatar", description: "An image element with a fallback for representing the user.")
 

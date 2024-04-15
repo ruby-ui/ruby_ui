@@ -10,7 +10,7 @@ module Steps
       @steps = []
     end
 
-    def template
+    def view_template
       div(**@attrs) do
         @steps.each do |step|
           render step

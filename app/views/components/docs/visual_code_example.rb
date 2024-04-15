@@ -9,7 +9,7 @@ class Docs::VisualCodeExample < ApplicationComponent
   end
 
   # standard:disable Style/ArgumentsForwarding
-  def template(&block)
+  def view_template(&block)
     @display_code = CGI.unescapeHTML(capture(&block))
 
     div(id: @title) do
@@ -124,7 +124,7 @@ end
 #         @context = context
 #     end
 
-#     def template(&block)
+#     def view_template(&block)
 #         @display_code = capture(&block)
 
 #         div(id: @title) do

@@ -6,7 +6,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
     @phlex_ui_pro_private_key = ENV["BUNDLE_PHLEXUI__FURY__SITE"]
   end
 
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install PhlexUI within a Rails app that employs JS bundling.")
 

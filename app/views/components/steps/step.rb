@@ -9,7 +9,7 @@ module Steps
 
     attr_writer :last
 
-    def template(&block)
+    def view_template(&block)
       div(class: "relative flex space-x-4 md:space-x-8") do
         div(class: "flex-shrink-0 h-full") do
           div(class: "flex-0 flex items-center justify-center h-6 w-6 rounded-md border border-amber-500/20 bg-amber-100 dark:bg-amber-100/20 text-amber-700 dark:text-amber-200") do

@@ -13,7 +13,7 @@ class Shared::GridPattern < ApplicationComponent
     @spacing = sizes[spacing]
   end
 
-  def template
+  def view_template
     svg(
       class:
             "absolute inset-0 -z-10 h-[calc(100vh_/_2)] w-full stroke-border [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]",

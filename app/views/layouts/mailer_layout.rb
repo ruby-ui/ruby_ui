@@ -1,7 +1,7 @@
 class MailerLayout < Phlex::HTML
   include Phlex::Rails::Layout
 
-  def template(&block)
+  def view_template(&block)
     html do
       head do
         meta(name: "viewport", content: "width=device-width, initial-scale=1.0")

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, PhlexUI allows you to tailor the components to your specific needs.")
 
@@ -117,7 +117,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
             super(**attrs) # must be called after variant is set
           end
 
-          def template(&block)
+          def view_template(&block)
             div(**attrs, &block)
           end
 

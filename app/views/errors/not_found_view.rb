@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Errors::NotFoundView < ApplicationView
-  def template
+  def view_template
     render PhlexUI::Card.new(class: "p-8 space-y-6 flex flex-col items-center") do
       div(class: "space-y-2") do
         render PhlexUI::Badge.new(variant: :purple, class: "font-mono") { "STATUS: 404" }

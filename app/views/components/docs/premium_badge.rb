@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::PremiumBadge < ApplicationComponent
-  def template
+  def view_template
     render PhlexUI::Badge.new(variant: :violet) do
       svg(
         xmlns: "http://www.w3.org/2000/svg",

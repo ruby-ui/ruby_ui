@@ -10,7 +10,7 @@ module Themes
         "Alright, alright, I'll check it out"
       ]
 
-      def template
+      def view_template
         render PhlexUI::Card.new(class: "p-8 space-y-6") do
           header
           messages(MESSAGES)

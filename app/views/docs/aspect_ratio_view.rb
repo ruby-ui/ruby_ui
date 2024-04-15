@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Docs::AspectRatioView < ApplicationView
-  def template
+  def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Aspect Ratio", description: "Displays content within a desired ratio.")
 

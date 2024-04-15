@@ -5,7 +5,7 @@ class Docs::ComponentsTable < ApplicationComponent
     @components = components.sort_by { |component| [component.built_using, component.name] }
   end
 
-  def template
+  def view_template
     render PhlexUI::Typography::H2.new { "Components" }
     div(class: "border rounded-lg overflow-hidden") do
       render PhlexUI::Table::Builder.new(@components) do |t|

@@ -5,7 +5,7 @@ class Shared::MobileMenu < ApplicationComponent
     @attributes = attributes
   end
 
-  def template
+  def view_template
     render PhlexUI::Sheet.new(class: @attributes[:class]) do
       render PhlexUI::Sheet::Trigger.new do
         render PhlexUI::Button.new(variant: :ghost, icon: true) do

@@ -5,7 +5,7 @@ module Themes
     class RepoTabs < ApplicationComponent
       Repo = Struct.new(:github_url, :name, :stars, :version, keyword_init: true)
 
-      def template
+      def view_template
         render PhlexUI::Tabs.new(default_value: "overview", class: "w-full") do
           render PhlexUI::Tabs::List.new(class: "w-full grid grid-cols-2") do
             render PhlexUI::Tabs::Trigger.new(value: "overview") do

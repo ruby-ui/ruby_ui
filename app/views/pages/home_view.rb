@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Pages::HomeView < ApplicationView
-  def template
+  def view_template
     render HomeView::Banner.new do |banner|
       banner.cta do
         render PhlexUI::Link.new(variant: :outline, href: helpers.docs_accordion_path, class: "text-center justify-center") { "Browse Components" }
