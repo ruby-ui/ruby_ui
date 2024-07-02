@@ -6,98 +6,98 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
       render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, PhlexUI allows you to tailor the components to your specific needs.")
 
       div(class: "space-y-4") do
-        render PhlexUI::Typography::H2.new { "Introduction" }
-        render PhlexUI::Typography::P.new { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. PhlexUI is designed to facilitate this process with ease." }
+        TypographyH2 { "Introduction" }
+        TypographyP { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. PhlexUI is designed to facilitate this process with ease." }
       end
 
       div(class: "space-y-4") do
-        render PhlexUI::Typography::H2.new { "Updating attributes & classes" }
-        render PhlexUI::Typography::P.new do
+        TypographyH2 { "Updating attributes & classes" }
+        TypographyP do
           plain "All components accept any HTML attribute, and will pass it through to the underlying HTML element. This is great for quick changes, or when you need to add a custom class for a one off situation."
         end
-        render PhlexUI::Alert.new do
+        Alert do
           puzzle_icon
-          render PhlexUI::Alert::Title.new { "How it works" }
-          render PhlexUI::Alert::Description.new do
+          AlertTitle { "How it works" }
+          AlertDescription do
             plain "When you pass an attribute to a PhlexUI component, it will be processed by the"
-            render PhlexUI::Typography::InlineCode.new { "PhlexUI::AttributeMerger" }
+            TypographyInlineCode { "PhlexUI::AttributeMerger" }
             plain " class. You can read more about the "
-            render PhlexUI::Typography::InlineLink.new(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/base.rb") { "PhlexUI::Base" }
+            TypographyInlineLink(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/base.rb") { "PhlexUI::Base" }
             plain " and the "
-            render PhlexUI::Typography::InlineLink.new(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/attribute_merger.rb") { "PhlexUI::AttributeMerger" }
+            TypographyInlineLink(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/attribute_merger.rb") { "PhlexUI::AttributeMerger" }
             plain " classes on Github."
           end
         end
-        render PhlexUI::Typography::Large.new { "Adding attributes" }
-        render PhlexUI::Typography::P.new do
+        TypographyLarge { "Adding attributes" }
+        TypographyP do
           plain "By default, attribute values are added to the existing values of the component. For instance, if you want to make a button span the full width of its container, you can do it like this: "
-          render PhlexUI::Typography::InlineCode.new { "render PhlexUI::Button.new(class: 'w-full')" }
+          TypographyInlineCode { "Button(class: 'w-full')" }
           plain ". This will add the "
-          render PhlexUI::Typography::InlineCode.new { "w-full" }
+          TypographyInlineCode { "w-full" }
           plain " class to the button, causing it to span the full width of its container."
         end
-        render PhlexUI::Typography::Large.new { "Overriding Classes" }
-        render PhlexUI::Typography::P.new do
+        TypographyLarge { "Overriding Classes" }
+        TypographyP do
           plain "There might be instances where you need to override a specific style attribute. For instance, if you wish to alter the color of a button while keeping the rest of the styles intact, you can achieve this as follows: "
-          render PhlexUI::Typography::InlineCode.new { "render PhlexUI::Button.new(class: '!bg-red-500')" }
+          TypographyInlineCode { "Button(class: '!bg-red-500')" }
           plain ". This will replace the default background color with red by utilizing the "
-          render PhlexUI::Typography::InlineCode.new { "!important" }
+          TypographyInlineCode { "!important" }
           plain " modifier."
         end
-        render PhlexUI::Typography::Large.new { "Replacing Attributes" }
-        render PhlexUI::Typography::P.new do
+        TypographyLarge { "Replacing Attributes" }
+        TypographyP do
           plain "In some rare cases, you might need to replace the default value of an attribute entirely. For instance, if you want to change all the styles of a button, you can do it as follows: "
-          render PhlexUI::Typography::InlineCode.new { "render PhlexUI::Button.new(class!: 'bg-red-500 text-white py-2 px-4 font-medium hover:bg-red-600')" }
+          TypographyInlineCode { "Button(class!: 'bg-red-500 text-white py-2 px-4 font-medium hover:bg-red-600')" }
           plain ". This will override all the default classes and apply only the ones you specify. In this case, it will apply "
-          render PhlexUI::Typography::InlineCode.new { "bg-red-500 text-white py-2 px-4 font-medium hover:bg-red-600" }
+          TypographyInlineCode { "bg-red-500 text-white py-2 px-4 font-medium hover:bg-red-600" }
           plain "."
         end
       end
 
       div(class: "space-y-4") do
-        render PhlexUI::Typography::H2.new { "Redefining components" }
-        render PhlexUI::Typography::P.new { "Redefining components is a powerful concept that allows you to redefine the underlying components through inheritance, or completely. This is useful when you need to make more complex changes to the components, that can't be achieved with attributes and classes alone. In other words, you can change the whole damn thing if you like." }
+        TypographyH2 { "Redefining components" }
+        TypographyP { "Redefining components is a powerful concept that allows you to redefine the underlying components through inheritance, or completely. This is useful when you need to make more complex changes to the components, that can't be achieved with attributes and classes alone. In other words, you can change the whole damn thing if you like." }
         # to redefine a component, find the component you want to redefine in the source code, and copy it into your application. Then, make the changes you need. For example, if you want to change the button component, you can copy the button component from the source code, and paste it into your application. Then, you can make the changes you need.
-        render PhlexUI::Typography::Large.new { "How it works" }
-        render PhlexUI::Typography::P.new do
+        TypographyLarge { "How it works" }
+        TypographyP do
           plain "To redefine a component, find the component you want to redefine in the source code, and copy it into your application. Then, make the changes you need. For example, if you want to change the button component, you can copy the button component from the source code, and paste it into your application. Then, you can make the changes you need."
         end
-        render PhlexUI::Typography::Large.new { "Let's redefine the Alert component" }
-        render PhlexUI::Typography::P.new do
+        TypographyLarge { "Let's redefine the Alert component" }
+        TypographyP do
           plain "Let's say you want to change the alert component to use a particular icon every time it is rendered. You can do this by redefining the component as follows:"
         end
         render Steps::Builder.new do |steps|
           # Find source code
           steps.add_step do
-            render PhlexUI::Typography::H4.new { "Find the source code" }
-            render PhlexUI::Typography::P.new do
+            TypographyH4 { "Find the source code" }
+            TypographyP do
               plain "First, find the source code for the component you want to redefine. In this case, we want to redefine the "
-              render PhlexUI::Typography::InlineCode.new { "PhlexUI::Alert" }
+              TypographyInlineCode { "Alert" }
               plain " component, so we'll find the source code for the alert component "
-              render PhlexUI::Typography::InlineLink.new(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb") { "here on Github" }
+              TypographyInlineLink(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb") { "here on Github" }
               plain "."
             end
           end
           # Copy source code to application
           steps.add_step do
-            render PhlexUI::Typography::H4.new { "Copy the source code" }
-            render PhlexUI::Typography::P.new do
+            TypographyH4 { "Copy the source code" }
+            TypographyP do
               plain "Next, copy the source code for the component into your application. You can do this by creating a new file at "
-              render PhlexUI::Typography::InlineCode.new { "app/views/components/phlex_u_i/alert.rb" }
+              TypographyInlineCode { "app/views/components/phlex_u_i/alert.rb" }
               plain ", and pasting the source code into it. When using the  "
-              render PhlexUI::Typography::InlineCode.new { "phlex-rails" }
+              TypographyInlineCode { "phlex-rails" }
               plain " gem, all components are loaded from this directory. So if you want to redefine a component, it will always sit somewhere inside the "
-              render PhlexUI::Typography::InlineCode.new { "app/views/components/phlex_u_i" }
+              TypographyInlineCode { "app/views/components/phlex_u_i" }
               plain " directory."
             end
-            render PhlexUI::Typography::P.new do
+            TypographyP do
               plain "Your new file should look something like this:"
             end
-            render PhlexUI::Codeblock.new(alert_component_definition, syntax: :ruby)
+            Codeblock(alert_component_definition, syntax: :ruby)
           end
           # Make changes
           steps.add_step do
-            render PhlexUI::Typography::H4.new { "Edit to perfection!" }
+            TypographyH4 { "Edit to perfection!" }
           end
         end
       end

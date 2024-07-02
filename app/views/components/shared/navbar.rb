@@ -8,9 +8,9 @@ class Shared::Navbar < ApplicationComponent
           render Shared::MobileMenu.new(class: "md:hidden")
           render Shared::Logo.new
 
-          render PhlexUI::Link.new(href: helpers.docs_introduction_path, variant: :ghost, class: "hidden md:inline-block") { "Docs" }
-          render PhlexUI::Link.new(href: helpers.docs_accordion_path, variant: :ghost, class: "hidden md:inline-block") { "Components" }
-          render PhlexUI::Link.new(href: helpers.theme_path("default"), variant: :ghost, class: "hidden md:inline-block") { "Themes" }
+          Link(href: helpers.docs_introduction_path, variant: :ghost, class: "hidden md:inline-block") { "Docs" }
+          Link(href: helpers.docs_accordion_path, variant: :ghost, class: "hidden md:inline-block") { "Components" }
+          Link(href: helpers.theme_path("default"), variant: :ghost, class: "hidden md:inline-block") { "Themes" }
         end
         div(class: "flex items-center gap-x-2 md:divide-x") do
           div(class: "flex items-center") do
@@ -24,9 +24,9 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def dark_mode_toggle
-    render PhlexUI::ThemeToggle.new do |toggle|
+    ThemeToggle do |toggle|
       toggle.light_mode do
-        render PhlexUI::Button.new(variant: :ghost, icon: true) do
+        Button(variant: :ghost, icon: true) do
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 24 24",
@@ -42,7 +42,7 @@ class Shared::Navbar < ApplicationComponent
       end
 
       toggle.dark_mode do
-        render PhlexUI::Button.new(variant: :ghost, icon: true) do
+        Button(variant: :ghost, icon: true) do
           svg(
             xmlns: "http://www.w3.org/2000/svg",
             viewbox: "0 0 24 24",
@@ -62,7 +62,7 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def twitter_link
-    render PhlexUI::Link.new(href: "https://twitter.com/phlexui", variant: :ghost, icon: true) do
+    Link(href: "https://twitter.com/phlexui", variant: :ghost, icon: true) do
       svg(
         viewbox: "0 0 20 20",
         aria_hidden: "true",
@@ -78,7 +78,7 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def github_link
-    render PhlexUI::Link.new(href: ENV["PHLEXUI_GITHUB_LINK"], variant: :ghost, icon: true) do
+    Link(href: "https://github.com/PhlexUI/phlex_ui", variant: :ghost, icon: true) do
       github_icon
     end
   end

@@ -8,7 +8,7 @@ class Shared::Menu < ApplicationComponent
         main_link("Docs", helpers.docs_introduction_path)
         main_link("Components", helpers.docs_accordion_path)
         main_link("Themes", helpers.theme_path("default"))
-        main_link("Github", ENV["PHLEXUI_GITHUB_LINK"])
+        main_link("Github", "https://github.com/PhlexUI/phlex_ui")
         main_link("Discord", ENV["DISCORD_INVITE_LINK"])
         main_link("Twitter", ENV["PHLEXUI_TWITTER_LINK"])
       end
@@ -32,7 +32,7 @@ class Shared::Menu < ApplicationComponent
       # COMPONENTS
       h4(class: "mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2") do
         plain "Components"
-        render PhlexUI::Badge.new(variant: :primary, size: :sm) { components.count.to_s }
+        Badge(variant: :primary, size: :sm) { components.count.to_s }
       end
       div(class: "grid grid-flow-row auto-rows-max text-sm") do
         components.each do |component|
@@ -43,7 +43,7 @@ class Shared::Menu < ApplicationComponent
       # COMPONENTS COMING SOON
       h4(class: "mb-1 mt-4 rounded-md px-2 py-1 text-sm font-semibold flex items-center gap-x-2") do
         plain "Coming Soon"
-        render PhlexUI::Badge.new(variant: :primary, size: :sm) { components_coming_soon.count.to_s }
+        Badge(variant: :primary, size: :sm) { components_coming_soon.count.to_s }
         svg(
           xmlns: "http://www.w3.org/2000/svg",
           viewbox: "0 0 24 24",
@@ -71,7 +71,6 @@ class Shared::Menu < ApplicationComponent
     [
       {name: "Introduction", path: helpers.docs_introduction_path},
       {name: "Installation", path: helpers.docs_installation_path},
-      {name: "Core concepts", path: helpers.docs_core_concepts_path},
       {name: "Dark mode", path: helpers.docs_dark_mode_path},
       {name: "Theming", path: helpers.docs_theming_path},
       {name: "Customizing components", path: helpers.docs_customizing_components_path}
@@ -158,7 +157,7 @@ class Shared::Menu < ApplicationComponent
     a(href: component[:path], class: tokens("group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline", -> { current_path } => "text-foreground font-medium", -> { !current_path } => "text-muted-foreground")) do
       span(class: "flex items-center gap-x-1") do
         span { component[:name] }
-        render PhlexUI::Badge.new(variant: :success, size: :sm, class: "ml-1") { component[:badge] } if component[:badge]
+        Badge(variant: :success, size: :sm, class: "ml-1") { component[:badge] } if component[:badge]
       end
     end
   end

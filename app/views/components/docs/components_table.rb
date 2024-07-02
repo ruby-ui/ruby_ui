@@ -6,9 +6,9 @@ class Docs::ComponentsTable < ApplicationComponent
   end
 
   def view_template
-    render PhlexUI::Typography::H2.new { "Components" }
+    TypographyH2 { "Components" }
     div(class: "border rounded-lg overflow-hidden") do
-      render PhlexUI::Table::Builder.new(@components) do |t|
+      Table::Builder.new(@components) do |t|
         t.column("Component") do |component|
           div(class: "flex items-center space-x-2") do
             render PhlexUI::Typography::InlineCode.new { component.name }

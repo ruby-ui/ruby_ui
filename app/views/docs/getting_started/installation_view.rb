@@ -7,7 +7,7 @@ class Docs::GettingStarted::InstallationView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Installation", description: "How to install dependencies and structure your app.")
 
-      render PhlexUI::Typography::H2.new { "Select a Framework" }
+      TypographyH2 { "Select a Framework" }
       div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4") do
         framework_card(title: "Rails --- JS Bundler", link: helpers.docs_installation_rails_bundler_path) { rails_logo }
         framework_card(title: "Rails --- Importmaps", link: helpers.docs_installation_rails_importmaps_path) { rails_logo }
@@ -17,7 +17,7 @@ class Docs::GettingStarted::InstallationView < ApplicationView
 
   def framework_card(title:, link:, &block)
     a(href: link) do
-      render PhlexUI::Card.new(class: "flex flex-col items-center gap-y-4 p-6 py-10 hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out") do
+      Card(class: "flex flex-col items-center gap-y-4 p-6 py-10 hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out") do
         block.call
         p(class: "text-lg font-medium") { title }
       end

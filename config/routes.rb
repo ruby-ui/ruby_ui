@@ -5,7 +5,6 @@ Rails.application.routes.draw do
     # GETTING STARTED
     get "introduction", to: "docs#introduction", as: :docs_introduction
     get "installation", to: "docs#installation", as: :docs_installation
-    get "core_concepts", to: "docs#core_concepts", as: :docs_core_concepts
     get "theming", to: "docs#theming", as: :docs_theming
     get "dark_mode", to: "docs#dark_mode", as: :docs_dark_mode
     get "customizing_components", to: "docs#customizing_components", as: :docs_customizing_components

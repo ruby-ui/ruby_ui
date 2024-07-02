@@ -13,8 +13,8 @@ class Docs::InstallationInstructionsComingSoon < ApplicationComponent
   def render_header
     div do
       div(class: "space-y-1 mb-4") do
-        render PhlexUI::Typography::H4.new { @title } if @title
-        render PhlexUI::Typography::P.new { @description } if @description
+        TypographyH4 { @title } if @title
+        TypographyP { @description } if @description
       end
       div(class: "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border") do
         div(class: "preview flex min-h-[350px] w-full justify-center p-10 items-center") do

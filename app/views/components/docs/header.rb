@@ -9,8 +9,8 @@ class Docs::Header < ApplicationComponent
 
   def view_template
     div(class: "space-y-2") do
-      render PhlexUI::Typography::H1.new { @title }
-      render PhlexUI::Typography::Lead.new { @description }
+      TypographyH1 { @title }
+      TypographyLead { @description }
     end
   end
 

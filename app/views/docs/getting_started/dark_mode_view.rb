@@ -6,41 +6,41 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
       render Docs::Header.new(title: "Dark mode", description: "How to use dark mode in your application")
 
       div(class: "space-y-4") do
-        render heading2 { "How it works" }
-        render PhlexUI::Typography::P.new { "PhlexUI seamlessly integrates dark mode, a crucial feature for modern applications, enhancing user experience and catering to diverse user preferences." }
-        render PhlexUI::Typography::P.new do
+        heading2 { "How it works" }
+        TypographyP { "PhlexUI seamlessly integrates dark mode, a crucial feature for modern applications, enhancing user experience and catering to diverse user preferences." }
+        TypographyP do
           plain "PhlexUI is setup to use the "
-          render Typography::InlineLink.new(href: "https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually") { "TailwindCSS 'class' strategy" }
+          TypographyInlineLink(href: "https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually") { "TailwindCSS 'class' strategy" }
           plain ". This means that you can toggle dark mode by adding or removing the "
-          render PhlexUI::Typography::InlineCode.new { "dark" }
+          TypographyInlineCode { "dark" }
           plain " class from the "
-          render PhlexUI::Typography::InlineCode.new { "<body>" }
+          TypographyInlineCode { "<body>" }
           plain " element."
         end
-        render PhlexUI::Typography::P.new { "To enable dark mode, follow the installation below." }
+        TypographyP { "To enable dark mode, follow the installation below." }
       end
 
       div(class: "space-y-4") do
-        render heading2 { "Installation" }
-        render PhlexUI::Typography::P.new do
+        heading2 { "Installation" }
+        TypographyP do
           plain "To implement Dark mode, add the "
-          render PhlexUI::Typography::InlineCode.new { "PhlexUI::ThemeToggle" }
+          TypographyInlineCode { "PhlexUI::ThemeToggle" }
           plain " component (below) to your application layout file. This ensures it's available on all pages."
         end
-        render PhlexUI::Typography::P.new do
+        TypographyP do
           plain "This component is a button that toggles the "
-          render PhlexUI::Typography::InlineCode.new { "dark" }
+          TypographyInlineCode { "dark" }
           plain " class on the "
-          render PhlexUI::Typography::InlineCode.new { "<body>" }
+          TypographyInlineCode { "<body>" }
           plain " element, using the "
-          render PhlexUI::Typography::InlineCode.new { "ToggleThemeController" }
+          TypographyInlineCode { "ToggleThemeController" }
           plain " Stimulus controller."
         end
-        render PhlexUI::Alert.new do
-          render PhlexUI::Alert::Title.new { "Pro tip" }
-          render PhlexUI::Alert::Description.new do
-            plain "You can hide the theme toggle on specific pages using classes, like so: "
-            render PhlexUI::Typography::InlineCode.new { "render PhlexUI::ThemeToggle.new(class: 'hidden')" }
+        Alert do
+          AlertTitle { "Pro tip" }
+          AlertDescription do
+            plain "You can hide the theme toggle on specific pages, like so: "
+            TypographyInlineCode { "ThemeToggle(class: 'hidden')" }
             plain "."
           end
         end
@@ -48,9 +48,9 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
         div(class: "pt-4") do
           render Docs::VisualCodeExample.new(title: "Toggle component", context: self) do
             <<~RUBY
-              render PhlexUI::ThemeToggle.new do |toggle|
+              ThemeToggle do |toggle|
                 toggle.light_mode do
-                  render PhlexUI::Button.new(variant: :outline, icon: true) do
+                  Button(variant: :outline, icon: true) do
                     svg(
                       xmlns: "http://www.w3.org/2000/svg",
                       viewbox: "0 0 24 24",
@@ -66,7 +66,7 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
                 end
 
                 toggle.dark_mode do
-                  render PhlexUI::Button.new(variant: :outline, icon: true) do
+                  Button(variant: :outline, icon: true) do
                     svg(
                       xmlns: "http://www.w3.org/2000/svg",
                       viewbox: "0 0 24 24",
@@ -91,7 +91,7 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
   end
 
   def heading2(&)
-    PhlexUI::Typography::H2.new(class: "!text-2xl pb-4 border-b", &)
+    TypographyH2(class: "!text-2xl pb-4 border-b", &)
   end
 
   def space_y_4(&)
