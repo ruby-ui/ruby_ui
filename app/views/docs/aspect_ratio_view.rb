@@ -5,11 +5,11 @@ class Docs::AspectRatioView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Aspect Ratio", description: "Displays content within a desired ratio.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "16/9", context: self) do
         <<~RUBY
-          render PhlexUI::AspectRatio.new(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
@@ -22,7 +22,7 @@ class Docs::AspectRatioView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "4/3", context: self) do
         <<~RUBY
-          render PhlexUI::AspectRatio.new(aspect_ratio: "4/3", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(aspect_ratio: "4/3", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
@@ -35,7 +35,7 @@ class Docs::AspectRatioView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "1/1", context: self) do
         <<~RUBY
-          render PhlexUI::AspectRatio.new(aspect_ratio: "1/1", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(aspect_ratio: "1/1", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
@@ -48,7 +48,7 @@ class Docs::AspectRatioView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "21/9", context: self) do
         <<~RUBY
-          render PhlexUI::AspectRatio.new(aspect_ratio: "21/9", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(aspect_ratio: "21/9", class: "rounded-md overflow-hidden border shadow-sm") do
             img(
               alt: "Placeholder",
               loading: "lazy",
@@ -67,7 +67,7 @@ class Docs::AspectRatioView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::AspectRatio", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/aspect_ratio.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "AspectRatio", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/aspect_ratio.rb", built_using: :phlex)
     ]
   end
 end

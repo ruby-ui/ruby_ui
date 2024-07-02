@@ -2,14 +2,14 @@
 
 class Errors::InternalServerErrorView < ApplicationView
   def view_template
-    render PhlexUI::Card.new(class: "p-8 space-y-6 flex flex-col items-center") do
+    Card(class: "p-8 space-y-6 flex flex-col items-center") do
       div(class: "space-y-2") do
-        render PhlexUI::Badge.new(variant: :destructive, class: "font-mono") { "STATUS: 500" }
-        render PhlexUI::Typography::H1.new(class: "!leading-tight") { "Oops! Something went wrong" }
-        render PhlexUI::Typography::P.new(class: "text-muted-foreground") { "Something unexpected happened. We're looking into it." }
+        Badge(variant: :destructive, class: "font-mono") { "STATUS: 500" }
+        TypographyH1(class: "!leading-tight") { "Oops! Something went wrong" }
+        TypographyP(class: "text-muted-foreground") { "Something unexpected happened. We're looking into it." }
       end
 
-      render PhlexUI::Link.new(href: helpers.root_path, variant: :primary, class: "w-full") do
+      Link(href: helpers.root_path, variant: :primary, class: "w-full") do
         house_icon
         plain "Go to home"
       end

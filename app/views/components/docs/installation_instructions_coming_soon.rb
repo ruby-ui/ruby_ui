@@ -18,7 +18,7 @@ class Docs::InstallationInstructionsComingSoon < ApplicationComponent
       end
       div(class: "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border") do
         div(class: "preview flex min-h-[350px] w-full justify-center p-10 items-center") do
-          render PhlexUI::Typography::P.new(class: "text-muted-foreground text-center flex flex-col sm:flex-row items-center gap-y-2 gap-x-2") do
+          TypographyP(class: "text-muted-foreground text-center flex flex-col sm:flex-row items-center gap-y-2 gap-x-2") do
             svg(
               xmlns: "http://www.w3.org/2000/svg",
               fill: "none",

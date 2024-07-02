@@ -11,7 +11,7 @@ module Themes
       ]
 
       def view_template
-        render PhlexUI::Card.new(class: "p-8 space-y-6") do
+        Card(class: "p-8 space-y-6") do
           header
           messages(MESSAGES)
           message_form
@@ -23,20 +23,20 @@ module Themes
       def header
         div(class: "flex items-center justify-between") do
           div(class: "flex items-center space-x-4") do
-            render PhlexUI::Avatar::Builder.new(src: "https://avatars.githubusercontent.com/u/246692?v=4")
+            # render PhlexUI::Avatar::Builder.new(src: "https://avatars.githubusercontent.com/u/246692?v=4")
             div do
-              render PhlexUI::Typography::P.new(class: "font-medium") { "Joel Drapper" }
-              render PhlexUI::Typography::Muted.new { "joel@drapper.me" }
+              TypographyP(class: "font-medium") { "Joel Drapper" }
+              TypographyMuted { "joel@drapper.me" }
             end
           end
-          render PhlexUI::Tooltip.new do
-            render PhlexUI::Tooltip::Trigger.new do
-              render PhlexUI::Button.new(variant: :outline, icon: true) do
+          Tooltip do
+            TooltipTrigger do
+              Button(variant: :outline, icon: true) do
                 bookmark_icon
               end
             end
-            render PhlexUI::Tooltip::Content.new do
-              render PhlexUI::Typography::P.new { "Save contact" }
+            TooltipContent do
+              TypographyP { "Save contact" }
             end
           end
 
@@ -69,8 +69,8 @@ module Themes
 
       def message_form
         div(class: "flex w-full items-center space-x-2") do
-          render PhlexUI::Input.new(type: "message", placeholder: "Write something...")
-          render PhlexUI::Button.new { "Send" }
+          Input(type: "message", placeholder: "Write something...")
+          Button { "Send" }
         end
       end
 

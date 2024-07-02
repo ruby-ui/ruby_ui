@@ -5,15 +5,15 @@ class Docs::CollapsibleView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Collapsible", description: "An interactive component which expands/collapses a panel.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render PhlexUI::Collapsible.new do
+          Collapsible do
             div(class: "flex items-center justify-between space-x-4 px-4 py-2") do
               h4(class: "text-sm font-semibold") { " @joeldrapper starred 3 repositories" }
-              render PhlexUI::Collapsible::Trigger.new do
-                render PhlexUI::Button.new(variant: :ghost, icon: true) do
+              CollapsibleTrigger do
+                Button(variant: :ghost, icon: true) do
                   chevron_icon
                   span(class: "sr-only") { "Toggle" }
                 end
@@ -24,7 +24,7 @@ class Docs::CollapsibleView < ApplicationView
               "phlex-ruby/phlex"
             end
 
-            render PhlexUI::Collapsible::Content.new do
+            CollapsibleContent do
               div(class: 'space-y-2 mt-2') do
                 div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
                   "phlex-ruby/phlex-rails"
@@ -40,11 +40,11 @@ class Docs::CollapsibleView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Open", context: self) do
         <<~RUBY
-          render PhlexUI::Collapsible.new(open: true) do
+          Collapsible(open: true) do
             div(class: "flex items-center justify-between space-x-4 px-4 py-2") do
               h4(class: "text-sm font-semibold") { " @joeldrapper starred 3 repositories" }
-              render PhlexUI::Collapsible::Trigger.new do
-                render PhlexUI::Button.new(variant: :ghost, icon: true) do
+              CollapsibleTrigger do
+                Button(variant: :ghost, icon: true) do
                   chevron_icon
                   span(class: "sr-only") { "Toggle" }
                 end
@@ -55,7 +55,7 @@ class Docs::CollapsibleView < ApplicationView
               "phlex-ruby/phlex"
             end
 
-            render PhlexUI::Collapsible::Content.new do
+            CollapsibleContent do
               div(class: 'space-y-2 mt-2') do
                 div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
                   "phlex-ruby/phlex-rails"
@@ -78,9 +78,9 @@ class Docs::CollapsibleView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "CollapsibleController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/collapsible_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::Collapsible", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Collapsible::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Collapsible::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/content.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Collapsible", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CollapsibleTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CollapsibleContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/content.rb", built_using: :phlex)
     ]
   end
 

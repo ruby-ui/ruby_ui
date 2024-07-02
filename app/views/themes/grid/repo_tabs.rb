@@ -6,51 +6,31 @@ module Themes
       Repo = Struct.new(:github_url, :name, :stars, :version, keyword_init: true)
 
       def view_template
-        render PhlexUI::Tabs.new(default_value: "overview", class: "w-full") do
-          render PhlexUI::Tabs::List.new(class: "w-full grid grid-cols-2") do
-            render PhlexUI::Tabs::Trigger.new(value: "overview") do
+        Tabs(default_value: "overview", class: "w-full") do
+          TabsList(class: "w-full grid grid-cols-2") do
+            TabsTrigger(value: "overview") do
               book_icon
               span(class: "ml-2") { "Overview" }
             end
-            render PhlexUI::Tabs::Trigger.new(value: "repositories") do
+            TabsTrigger(value: "repositories") do
               repo_icon
               span(class: "ml-2") { "Repositories" }
             end
           end
-          render PhlexUI::Tabs::Content.new(value: "overview") do
-            render PhlexUI::Card.new(class: "p-6 space-y-4 shadow-none") do
-              render PhlexUI::Avatar.new do
-                render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-                render PhlexUI::Avatar::Fallback.new { "JD" }
+          TabsContent(value: "overview") do
+            Card(class: "p-6 space-y-4 shadow-none") do
+              Avatar do
+                AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+                AvatarFallback { "JD" }
               end
               div(class: "space-y-4") do
                 div do
-                  render PhlexUI::Typography::Large.new { "Joel Drapper" }
-                  render PhlexUI::Typography::Muted.new { "Creator of Phlex Components. Ruby on Rails developer." }
+                  TypographyLarge { "Joel Drapper" }
+                  TypographyMuted { "Creator of Phlex Components. Ruby on Rails developer." }
                 end
-                render PhlexUI::Link.new(href: "https://github.com/joeldrapper", variant: :outline, size: :sm) do
+                Link(href: "https://github.com/joeldrapper", variant: :outline, size: :sm) do
                   github_icon
                   span(class: "ml-2") { "View profile" }
-                end
-              end
-            end
-          end
-          render PhlexUI::Tabs::Content.new(value: "repositories") do
-            render PhlexUI::Card.new(class: "p-6 space-y-4 shadow-none") do
-              render PhlexUI::Table::Builder.new(repositories) do |t|
-                t.column("Name") do |repo|
-                  render PhlexUI::Link.new(href: repo.github_url, variant: :link, class: "pl-0 !text-foreground") { repo.name }
-                end
-                t.column("Stars") do |repo|
-                  div(class: "flex items-center space-x-2") do
-                    star_icon
-                    span(class: "ml-2") { repo.stars }
-                  end
-                end
-                t.column("Version", header_attrs: {class: "text-right w-full"}) do |repo|
-                  div(class: "flex justify-end") do
-                    render PhlexUI::Badge.new(variant: :outline) { repo.version }
-                  end
                 end
               end
             end
@@ -63,10 +43,10 @@ module Themes
       def components
         [
           Docs::ComponentStruct.new(name: "TabsController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/tabs_controller.js", built_using: :stimulus),
-          Docs::ComponentStruct.new(name: "PhlexUI::Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "PhlexUI::Tabs::List", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex)
+          Docs::ComponentStruct.new(name: "Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
+          Docs::ComponentStruct.new(name: "TabsList", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
+          Docs::ComponentStruct.new(name: "TabsTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
+          Docs::ComponentStruct.new(name: "TabsContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex)
         ]
       end
 

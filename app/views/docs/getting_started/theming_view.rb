@@ -146,7 +146,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Muted backgrounds such as PhlexUI::Tabs::List" }
+      TypographySmall { "Muted backgrounds such as TabsList" }
       code = <<~CODE
         --muted: 210 40% 96.1%;
         --muted-foreground: 215.4 16.3% 46.9%;
@@ -163,7 +163,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Border color for inputs such as PhlexUI::Input, PhlexUI::Select or PhlexUI::Textarea" }
+      TypographySmall { "Border color for inputs such as Input, Select or Textarea" }
       code = <<~CODE
         --input: 214.3 31.8% 91.4%;
       CODE
@@ -171,7 +171,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Primary colors for PhlexUI::Button" }
+      TypographySmall { "Primary colors for Button" }
       code = <<~CODE
         --primary: 222.2 47.4% 11.2%;
         --primary-foreground: 210 40% 98%;
@@ -180,7 +180,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Secondary colors for PhlexUI::Button" }
+      TypographySmall { "Secondary colors for Button" }
       code = <<~CODE
         --secondary: 210 40% 96.1%;
         --secondary-foreground: 222.2 47.4% 11.2%;
@@ -189,7 +189,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Used for accents such as hover effects on PhlexUI::DropdownMenu::Item, PhlexUI::Select::Item... etc" }
+      TypographySmall { "Used for accents such as hover effects on DropdownMenu::Item, Select::Item... etc" }
       code = <<~CODE
         --accent: 210 40% 96.1%;
         --accent-foreground: 222.2 47.4% 11.2%;
@@ -198,7 +198,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Used for destructive actions such as PhlexUI::Button.new(variant: :destructive)" }
+      TypographySmall { "Used for destructive actions such as Button.new(variant: :destructive)" }
       code = <<~CODE
         --destructive: 0 100% 50%;
         --destructive-foreground: 210 40% 98%;

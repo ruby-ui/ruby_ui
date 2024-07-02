@@ -7,38 +7,28 @@ class Docs::TabsView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Tabs", description: "A set of layered sections of content—known as tab panels—that are displayed one at a time.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render PhlexUI::Tabs.new(default_value: "account", class: 'w-96') do
-            render PhlexUI::Tabs::List.new do
-              render PhlexUI::Tabs::Trigger.new(value: "account") { "Account" }
-              render PhlexUI::Tabs::Trigger.new(value: "password") { "Password" }
+          Tabs(default_value: "account", class: 'w-96') do
+            TabsList do
+              TabsTrigger(value: "account") { "Account" }
+              TabsTrigger(value: "password") { "Password" }
             end
-            render PhlexUI::Tabs::Content.new(value: "account") do
+            TabsContent(value: "account") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div(class: "space-y-0") do
-                  render PhlexUI::Typography::Large.new { "Account" }
-                  render PhlexUI::Typography::Muted.new { "Update your account details." }
-                end
-                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
-                  f.input "name", type: :string, value: "Joel Drapper"
-                  f.input "username", type: :email, value: "@joeldrapper"
-                  f.button { "Save changes" }
+                  TypographyLarge { "Account" }
+                  TypographyMuted { "Update your account details." }
                 end
               end
             end
-            render PhlexUI::Tabs::Content.new(value: "password") do
+            TabsContent(value: "password") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div do
-                  render PhlexUI::Typography::Large.new { "Password" }
-                  render PhlexUI::Typography::Muted.new { "Change your password here. After saving, you'll be logged out." }
-                end
-                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
-                  f.input "current", type: :string, label: "Current password"
-                  f.input "new", type: :email, label: "New password"
-                  f.button { "Save password" }
+                  TypographyLarge { "Password" }
+                  TypographyMuted { "Change your password here. After saving, you'll be logged out." }
                 end
               end
             end
@@ -48,53 +38,40 @@ class Docs::TabsView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Full width", context: self) do
         <<~RUBY
-          render PhlexUI::Tabs.new(default_value: "overview", class: 'w-96') do
-            render PhlexUI::Tabs::List.new(class: 'w-full grid grid-cols-2') do
-              render PhlexUI::Tabs::Trigger.new(value: "overview") do
+          Tabs(default_value: "overview", class: 'w-96') do
+            TabsList(class: 'w-full grid grid-cols-2') do
+              TabsTrigger(value: "overview") do
                 book_icon
                 span(class: 'ml-2') { "Overview" }
               end
-              render PhlexUI::Tabs::Trigger.new(value: "repositories") do
+              TabsTrigger(value: "repositories") do
                 repo_icon
                 span(class: 'ml-2') { "Repositories" }
               end
             end
-            render PhlexUI::Tabs::Content.new(value: "overview") do
+            TabsContent(value: "overview") do
               div(class: "rounded-lg border p-6 bg-background text-foreground flex justify-between space-x-4") do
-                render PhlexUI::Avatar.new do
-                  render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-                  render PhlexUI::Avatar::Fallback.new { "JD" }
+                Avatar do
+                  AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+                  AvatarFallback { "JD" }
                 end
                 div(class: "space-y-4") do
                   div do
-                    render PhlexUI::Typography::Large.new { "Joel Drapper" }
-                    render PhlexUI::Typography::Muted.new { "Creator of Phlex Components. Ruby on Rails developer." }
+                    TypographyLarge { "Joel Drapper" }
+                    TypographyMuted { "Creator of Phlex Components. Ruby on Rails developer." }
                   end
-                  render PhlexUI::Link.new(href: "https://github.com/joeldrapper", variant: :outline, size: :sm) do
+                  Link(href: "https://github.com/joeldrapper", variant: :outline, size: :sm) do
                     github_icon
                     span(class: 'ml-2') { "View profile" }
                   end
                 end
               end
             end
-            render PhlexUI::Tabs::Content.new(value: "repositories") do
+            TabsContent(value: "repositories") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
-                render PhlexUI::Table::Builder.new(repositories) do |t|
-                  t.column("Name") do |repo|
-                    render PhlexUI::Link.new(href: repo.github_url, variant: :link, class: "pl-0") { repo.name }
-                  end
-                  t.column("Stars") do |repo|
-                    div(class: 'flex items-center space-x-2') do
-                      star_icon
-                      span(class: "ml-2") { repo.stars }
-                    end
-                  end
-                  t.column("Version", header_attrs: { class: "text-right w-full" }) do |repo|
-                    div(class: 'flex justify-end') do
-                      render PhlexUI::Badge.new { repo.version }
-                    end
-                  end
-                end
+                repo = repositories.first
+                Link(href: repo.github_url, variant: :link, class: "pl-0") { repo.name }
+                Badge { repo.version }
               end
             end
           end
@@ -103,34 +80,24 @@ class Docs::TabsView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Change default value", context: self) do
         <<~RUBY
-          render PhlexUI::Tabs.new(default: "password", class: 'w-96') do
-            render PhlexUI::Tabs::List.new do
-              render PhlexUI::Tabs::Trigger.new(value: "account") { "Account" }
-              render PhlexUI::Tabs::Trigger.new(value: "password") { "Password" }
+          Tabs(default: "password", class: 'w-96') do
+            TabsList do
+              TabsTrigger(value: "account") { "Account" }
+              TabsTrigger(value: "password") { "Password" }
             end
-            render PhlexUI::Tabs::Content.new(value: "account") do
+            TabsContent(value: "account") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div(class: "space-y-0") do
-                  render PhlexUI::Typography::Large.new { "Account" }
-                  render PhlexUI::Typography::Muted.new { "Update your account details." }
-                end
-                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
-                  f.input "name", type: :string, value: "Joel Drapper"
-                  f.input "username", type: :email, value: "@joeldrapper"
-                  f.button { "Save changes" }
+                  TypographyLarge { "Account" }
+                  TypographyMuted { "Update your account details." }
                 end
               end
             end
-            render PhlexUI::Tabs::Content.new(value: "password") do
+            TabsContent(value: "password") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div do
-                  render PhlexUI::Typography::Large.new { "Password" }
-                  render PhlexUI::Typography::Muted.new { "Change your password here. After saving, you'll be logged out." }
-                end
-                render PhlexUI::Form::Builder.new(class: 'w-full max-w-sm') do |f|
-                  f.input "current", type: :string, label: "Current password"
-                  f.input "new", type: :email, label: "New password"
-                  f.button { "Save password" }
+                  TypographyLarge { "Password" }
+                  TypographyMuted { "Change your password here. After saving, you'll be logged out." }
                 end
               end
             end
@@ -147,10 +114,10 @@ class Docs::TabsView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "TabsController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/tabs_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::List", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tabs::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TabsList", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TabsTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TabsContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex)
     ]
   end
 

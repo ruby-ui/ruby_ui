@@ -5,32 +5,32 @@ class Docs::BadgeView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Badge", description: "Displays a badge or a component that looks like a badge.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Default", context: self) do
         <<~RUBY
-          render PhlexUI::Badge.new { "Badge" }
+          Badge { "Badge" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Primary", context: self) do
         <<~RUBY
-          render PhlexUI::Badge.new(variant: :primary) { 'Primary' }
+          Badge(variant: :primary) { 'Primary' }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Outline", context: self) do
         <<~RUBY
-          render PhlexUI::Badge.new(variant: :outline) { 'Outline' }
+          Badge(variant: :outline) { 'Outline' }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Variants", context: self) do
         <<~RUBY
           div(class: 'flex flex-wrap gap-2 justify-center') do
-            render PhlexUI::Badge.new(variant: :destructive) { 'Destructive' }
-            render PhlexUI::Badge.new(variant: :warning) { 'Warning' }
-            render PhlexUI::Badge.new(variant: :success) { 'Success' }
+            Badge(variant: :destructive) { 'Destructive' }
+            Badge(variant: :warning) { 'Warning' }
+            Badge(variant: :success) { 'Success' }
           end
         RUBY
       end
@@ -38,23 +38,23 @@ class Docs::BadgeView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Other Colors", context: self) do
         <<~RUBY
           div(class: 'flex flex-wrap gap-2 justify-center') do
-            render PhlexUI::Badge.new(variant: :red) { 'Red' }
-            render PhlexUI::Badge.new(variant: :orange) { 'Orange' }
-            render PhlexUI::Badge.new(variant: :amber) { 'Amber' }
-            render PhlexUI::Badge.new(variant: :yellow) { 'Yellow' }
-            render PhlexUI::Badge.new(variant: :lime) { 'Lime' }
-            render PhlexUI::Badge.new(variant: :green) { 'Green' }
-            render PhlexUI::Badge.new(variant: :emerald) { 'Emerald' }
-            render PhlexUI::Badge.new(variant: :teal) { 'Teal' }
-            render PhlexUI::Badge.new(variant: :cyan) { 'Cyan' }
-            render PhlexUI::Badge.new(variant: :sky) { 'Sky' }
-            render PhlexUI::Badge.new(variant: :blue) { 'Blue' }
-            render PhlexUI::Badge.new(variant: :indigo) { 'Indigo' }
-            render PhlexUI::Badge.new(variant: :violet) { 'Violet' }
-            render PhlexUI::Badge.new(variant: :purple) { 'Purple' }
-            render PhlexUI::Badge.new(variant: :fuchsia) { 'Fuchsia' }
-            render PhlexUI::Badge.new(variant: :pink) { 'Pink' }
-            render PhlexUI::Badge.new(variant: :rose) { 'Rose' }
+            Badge(variant: :red) { 'Red' }
+            Badge(variant: :orange) { 'Orange' }
+            Badge(variant: :amber) { 'Amber' }
+            Badge(variant: :yellow) { 'Yellow' }
+            Badge(variant: :lime) { 'Lime' }
+            Badge(variant: :green) { 'Green' }
+            Badge(variant: :emerald) { 'Emerald' }
+            Badge(variant: :teal) { 'Teal' }
+            Badge(variant: :cyan) { 'Cyan' }
+            Badge(variant: :sky) { 'Sky' }
+            Badge(variant: :blue) { 'Blue' }
+            Badge(variant: :indigo) { 'Indigo' }
+            Badge(variant: :violet) { 'Violet' }
+            Badge(variant: :purple) { 'Purple' }
+            Badge(variant: :fuchsia) { 'Fuchsia' }
+            Badge(variant: :pink) { 'Pink' }
+            Badge(variant: :rose) { 'Rose' }
           end
         RUBY
       end
@@ -62,9 +62,9 @@ class Docs::BadgeView < ApplicationView
       render Docs::VisualCodeExample.new(title: "Sizes", context: self) do
         <<~RUBY
           div(class: 'flex flex-wrap gap-2 justify-center items-center') do
-            render PhlexUI::Badge.new(size: :sm) { "Small" }
-            render PhlexUI::Badge.new(size: :md) { "Medium" }
-            render PhlexUI::Badge.new(size: :lg) { "Large" }
+            Badge(size: :sm) { "Small" }
+            Badge(size: :md) { "Medium" }
+            Badge(size: :lg) { "Large" }
           end
         RUBY
       end
@@ -78,7 +78,7 @@ class Docs::BadgeView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Badge", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Badge", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb", built_using: :phlex)
     ]
   end
 end

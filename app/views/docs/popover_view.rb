@@ -7,12 +7,12 @@ class Docs::PopoverView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render PhlexUI::Popover.new do
-            render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-              render PhlexUI::Button.new(variant: :outline) { "Open Popover" }
+          Popover do
+            PopoverTrigger(class: 'w-full') do
+              Button(variant: :outline) { "Open Popover" }
             end
-            render PhlexUI::Popover::Content.new(class: 'w-40') do
-              render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+            PopoverContent(class: 'w-40') do
+              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -30,7 +30,7 @@ class Docs::PopoverView < ApplicationView
                 end
                 plain "Profile"
               end
-              render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -53,7 +53,7 @@ class Docs::PopoverView < ApplicationView
                 end
                 plain "Settings"
               end
-              render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -80,12 +80,12 @@ class Docs::PopoverView < ApplicationView
         <<~RUBY
           div(class: 'grid grid-cols-1 sm:grid-cols-3 gap-4') do
             # -- TOP --
-            render PhlexUI::Popover.new(options: { placement: 'top' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top' }
+            Popover(options: { placement: 'top' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'top' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -103,7 +103,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -126,7 +126,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -147,12 +147,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'top-start' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top-start' }
+            Popover(options: { placement: 'top-start' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'top-start' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -170,7 +170,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -193,7 +193,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -214,12 +214,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'top-end' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'top-end' }
+            Popover(options: { placement: 'top-end' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'top-end' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -237,7 +237,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -260,7 +260,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -282,12 +282,12 @@ class Docs::PopoverView < ApplicationView
             end
 
             # -- RIGHT --
-            render PhlexUI::Popover.new(options: { placement: 'right' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right' }
+            Popover(options: { placement: 'right' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'right' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -305,7 +305,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -328,7 +328,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -349,12 +349,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'right-start' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right-start' }
+            Popover(options: { placement: 'right-start' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'right-start' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -372,7 +372,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -395,7 +395,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -416,12 +416,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'right-end' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'right-end' }
+            Popover(options: { placement: 'right-end' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'right-end' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -439,7 +439,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -462,7 +462,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -484,12 +484,12 @@ class Docs::PopoverView < ApplicationView
             end
 
             # -- LEFT --
-            render PhlexUI::Popover.new(options: { placement: 'left' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left' }
+            Popover(options: { placement: 'left' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'left' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -507,7 +507,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -530,7 +530,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -551,12 +551,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'left-start' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left-start' }
+            Popover(options: { placement: 'left-start' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'left-start' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -574,7 +574,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -597,7 +597,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -618,12 +618,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'left-end' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'left-end' }
+            Popover(options: { placement: 'left-end' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'left-end' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -641,7 +641,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -664,7 +664,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -686,12 +686,12 @@ class Docs::PopoverView < ApplicationView
             end
 
             # -- BOTTOM --
-            render PhlexUI::Popover.new(options: { placement: 'bottom' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom' }
+            Popover(options: { placement: 'bottom' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'bottom' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -709,7 +709,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -732,7 +732,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -753,12 +753,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'bottom-start' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-start' }
+            Popover(options: { placement: 'bottom-start' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'bottom-start' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -776,7 +776,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -799,7 +799,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -820,12 +820,12 @@ class Docs::PopoverView < ApplicationView
               end
             end
 
-            render PhlexUI::Popover.new(options: { placement: 'bottom-end' }) do
-              render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-                render PhlexUI::Button.new(variant: :outline, class: 'w-full justify-center') { 'bottom-end' }
+            Popover(options: { placement: 'bottom-end' }) do
+              PopoverTrigger(class: 'w-full') do
+                Button(variant: :outline, class: 'w-full justify-center') { 'bottom-end' }
               end
-              render PhlexUI::Popover::Content.new(class: 'w-40') do
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              PopoverContent(class: 'w-40') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -843,7 +843,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -866,7 +866,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -892,12 +892,12 @@ class Docs::PopoverView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Trigger", context: self) do
         <<~RUBY
-          render PhlexUI::Popover.new(options: { trigger: 'click' }) do
-            render PhlexUI::Popover::Trigger.new(class: 'w-full') do
-              render PhlexUI::Button.new(variant: :outline) { "Click" }
+          Popover(options: { trigger: 'click' }) do
+            PopoverTrigger(class: 'w-full') do
+              Button(variant: :outline) { "Click" }
             end
-            render PhlexUI::Popover::Content.new(class: 'w-40') do
-              render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+            PopoverContent(class: 'w-40') do
+              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -915,7 +915,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -938,7 +938,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                render PhlexUI::Link.new(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -970,9 +970,9 @@ class Docs::PopoverView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::Popover", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Popover::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/content.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Popover", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PopoverTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "PopoverContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/popover/content.rb", built_using: :phlex)
     ]
   end
 end

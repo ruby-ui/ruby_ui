@@ -4,12 +4,12 @@ module Themes
   module Grid
     class Chart < ApplicationComponent
       def view_template
-        render PhlexUI::Card.new(class: "p-8 space-y-6") do
+        Card(class: "p-8 space-y-6") do
           div do
-            render PhlexUI::Typography::Large.new { "Phlex Speed Tests" }
-            render PhlexUI::Typography::Muted.new { "Render time for a simple page" }
+            TypographyLarge { "Phlex Speed Tests" }
+            TypographyMuted { "Render time for a simple page" }
           end
-          render PhlexUI::Chart.new(options: chart_options)
+          Chart(options: chart_options)
         end
       end
 

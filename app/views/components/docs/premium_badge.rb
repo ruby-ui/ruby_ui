@@ -2,7 +2,7 @@
 
 class Docs::PremiumBadge < ApplicationComponent
   def view_template
-    render PhlexUI::Badge.new(variant: :violet) do
+    Badge(variant: :violet) do
       svg(
         xmlns: "http://www.w3.org/2000/svg",
         viewbox: "0 0 24 24",

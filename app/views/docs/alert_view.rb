@@ -5,53 +5,53 @@ class Docs::AlertView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Alert", description: "Displays a callout for user attention.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render PhlexUI::Alert.new do
+          Alert do
             rocket_icon
-            render PhlexUI::Alert::Title.new { "Pro tip" }
-            render PhlexUI::Alert::Description.new { "With PhlexUI you'll ship faster." }
+            AlertTitle { "Pro tip" }
+            AlertDescription { "With PhlexUI you'll ship faster." }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Without Icon", context: self) do
         <<~RUBY
-          render PhlexUI::Alert.new do
-            render PhlexUI::Alert::Title.new { "Pro tip" }
-            render PhlexUI::Alert::Description.new { "Simply, don't include an icon and your alert will look like this." }
+          Alert do
+            AlertTitle { "Pro tip" }
+            AlertDescription { "Simply, don't include an icon and your alert will look like this." }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Warning", context: self) do
         <<~RUBY
-          render PhlexUI::Alert.new(variant: :warning) do
+          Alert(variant: :warning) do
             info_icon
-            render PhlexUI::Alert::Title.new { "Ship often" }
-            render PhlexUI::Alert::Description.new { "Shipping is good, your users will thank you for it." }
+            AlertTitle { "Ship often" }
+            AlertDescription { "Shipping is good, your users will thank you for it." }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Destructive", context: self) do
         <<~RUBY
-          render PhlexUI::Alert.new(variant: :destructive) do
+          Alert(variant: :destructive) do
             alert_icon
-            render PhlexUI::Alert::Title.new { "Oopsie daisy!" }
-            render PhlexUI::Alert::Description.new { "Your design system is non-existent." }
+            AlertTitle { "Oopsie daisy!" }
+            AlertDescription { "Your design system is non-existent." }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Success", context: self) do
         <<~RUBY
-          render PhlexUI::Alert.new(variant: :success) do
+          Alert(variant: :success) do
             check_icon
-            render PhlexUI::Alert::Title.new { "Installation successful" }
-            render PhlexUI::Alert::Description.new { "You're all set to start using PhlexUI in your application." }
+            AlertTitle { "Installation successful" }
+            AlertDescription { "You're all set to start using PhlexUI in your application." }
           end
         RUBY
       end
@@ -64,9 +64,9 @@ class Docs::AlertView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Alert", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Alert::Title", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Alert::Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/description.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Alert", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "AlertTitle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/title.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "AlertDescription", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/description.rb", built_using: :phlex)
     ]
   end
 

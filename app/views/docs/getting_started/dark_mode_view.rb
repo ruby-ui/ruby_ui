@@ -24,7 +24,7 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
         heading2 { "Installation" }
         TypographyP do
           plain "To implement Dark mode, add the "
-          TypographyInlineCode { "PhlexUI::ThemeToggle" }
+          TypographyInlineCode { "ThemeToggle" }
           plain " component (below) to your application layout file. This ensures it's available on all pages."
         end
         TypographyP do

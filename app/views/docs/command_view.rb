@@ -9,41 +9,41 @@ class Docs::CommandView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Command", description: "Fast, composable, unstyled command menu for Phlex.", premium: @premium)
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self, premium: @premium) do
         <<~RUBY
-          render PhlexUI::Command::Dialog.new do
-            render PhlexUI::Command::DialogTrigger.new do
-              render PhlexUI::Button.new(variant: "outline", class: 'w-56 pr-2 pl-3 justify-between') do
+          CommandDialog do
+            CommandDialogTrigger do
+              Button(variant: "outline", class: 'w-56 pr-2 pl-3 justify-between') do
                 div(class: "flex items-center space-x-1") do
                   search_icon
                   span(class: "text-muted-foreground font-normal") do
                     plain "Search"
                   end
                 end
-                render PhlexUI::ShortcutKey.new do
+                ShortcutKey do
                   span(class: "text-xs") { "⌘" }
                   plain "K"
                 end
               end
             end
-            render PhlexUI::Command::DialogContent.new do
-              render PhlexUI::Command.new do
-                render PhlexUI::Command::Input.new(placeholder: "Type a command or search...")
-                render PhlexUI::Command::Empty.new { "No results found." }
-                render PhlexUI::Command::List.new do
-                  render PhlexUI::Command::Group.new(title: "Components") do
+            CommandDialogContent do
+              Command do
+                CommandInput(placeholder: "Type a command or search...")
+                CommandEmpty { "No results found." }
+                CommandList do
+                  CommandGroup(title: "Components") do
                     components_list.each do |component|
-                      render PhlexUI::Command::Item.new(value: component[:name], href: component[:path]) do
+                      CommandItem(value: component[:name], href: component[:path]) do
                         default_icon
                         plain component[:name]
                       end
                     end
                   end
-                  render PhlexUI::Command::Group.new(title: "Settings") do
+                  CommandGroup(title: "Settings") do
                     settings_list.each do |setting|
-                      render PhlexUI::Command::Item.new(value: setting[:name], href: setting[:path]) do
+                      CommandItem(value: setting[:name], href: setting[:path]) do
                         default_icon
                         plain setting[:name]
                       end
@@ -58,32 +58,32 @@ class Docs::CommandView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With keybinding", context: self, premium: @premium) do
         <<~RUBY
-          render PhlexUI::Command::Dialog.new do
-            render PhlexUI::Command::DialogTrigger.new(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
+          CommandDialog do
+            CommandDialogTrigger(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do
               p(class: "text-sm text-muted-foreground") do
                 span(class: 'mr-1') { "Press" }
-                render PhlexUI::ShortcutKey.new do
+                ShortcutKey do
                   span(class: "text-xs") { "⌘" }
                   plain "J"
                 end
               end
             end
-            render PhlexUI::Command::DialogContent.new do
-              render PhlexUI::Command.new do
-                render PhlexUI::Command::Input.new(placeholder: "Type a command or search...")
-                render PhlexUI::Command::Empty.new { "No results found." }
-                render PhlexUI::Command::List.new do
-                  render PhlexUI::Command::Group.new(title: "Components") do
+            CommandDialogContent do
+              Command do
+                CommandInput(placeholder: "Type a command or search...")
+                CommandEmpty { "No results found." }
+                CommandList do
+                  CommandGroup(title: "Components") do
                     components_list.each do |component|
-                      render PhlexUI::Command::Item.new(value: component[:name], href: component[:path]) do
+                      CommandItem(value: component[:name], href: component[:path]) do
                         default_icon
                         plain component[:name]
                       end
                     end
                   end
-                  render PhlexUI::Command::Group.new(title: "Settings") do
+                  CommandGroup(title: "Settings") do
                     settings_list.each do |setting|
-                      render PhlexUI::Command::Item.new(value: setting[:name], href: setting[:path]) do
+                      CommandItem(value: setting[:name], href: setting[:path]) do
                         default_icon
                         plain setting[:name]
                       end
@@ -105,15 +105,15 @@ class Docs::CommandView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "CommandController", source: "https://github.com/PhlexUI/phlex_ui_stimulus_pro/blob/main/controllers/command_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::Dialog", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::DialogTrigger", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::DialogContent", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::Input", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/input.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::Empty", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/empty.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::List", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/list.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::Group", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/group.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Command::Item", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/item.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "CommandDialog", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CommandDialogTrigger", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CommandDialogContent", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "Command", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CommandInput", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/input.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CommandEmpty", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/empty.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CommandList", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/list.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CommandGroup", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/group.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "CommandItem", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/item.rb", built_using: :phlex)
     ]
   end
 

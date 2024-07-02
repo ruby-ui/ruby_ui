@@ -9,8 +9,8 @@ class Themes::ShowView < ApplicationView
     render Shared::Container.new(size: "2xl", class: "py-12") do
       div(class: "md:flex items-center justify-between") do
         div do
-          render PhlexUI::Typography::H1.new { "Themes" }
-          render PhlexUI::Typography::Lead.new { "Customize your app fast with hand-picked themes." }
+          TypographyH1 { "Themes" }
+          TypographyLead { "Customize your app fast with hand-picked themes." }
         end
         div(class: "flex gap-x-2 mt-4") do
           render Themes::CustomizePopover.new(theme: @theme)
@@ -32,7 +32,7 @@ class Themes::ShowView < ApplicationView
         div(class: "flex flex-col gap-y-6 p-3 w-full sm:w-1/2 xl:w-1/3") do
           # render Themes::Grid::Command.new
           render Themes::Grid::Signin.new
-          render Themes::Grid::Table.new
+          # render Themes::Grid::Table.new
         end
       end
     end

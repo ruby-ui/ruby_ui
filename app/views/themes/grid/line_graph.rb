@@ -4,12 +4,12 @@ module Themes
   module Grid
     class LineGraph < ApplicationComponent
       def view_template
-        render PhlexUI::Card.new(class: "p-8 space-y-6") do
+        Card(class: "p-8 space-y-6") do
           div do
-            render PhlexUI::Typography::Large.new { "Phlex Success" }
-            render PhlexUI::Typography::Muted.new { "Number of stars on the Phlex Github repo" }
+            TypographyLarge { "Phlex Success" }
+            TypographyMuted { "Number of stars on the Phlex Github repo" }
           end
-          render PhlexUI::Chart.new(options: chart_options)
+          Chart(options: chart_options)
         end
       end
 

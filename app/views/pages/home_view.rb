@@ -4,8 +4,8 @@ class Pages::HomeView < ApplicationView
   def view_template
     render HomeView::Banner.new do |banner|
       banner.cta do
-        render PhlexUI::Link.new(variant: :outline, href: helpers.docs_accordion_path, class: "text-center justify-center") { "Browse Components" }
-        render PhlexUI::Link.new(variant: :primary, href: helpers.docs_introduction_path, class: "text-center justify-center") do
+        Link(variant: :outline, href: helpers.docs_accordion_path, class: "text-center justify-center") { "Browse Components" }
+        Link(variant: :primary, href: helpers.docs_introduction_path, class: "text-center justify-center") do
           plain "Get Started"
           svg(
             xmlns: "http://www.w3.org/2000/svg",

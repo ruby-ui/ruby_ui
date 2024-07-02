@@ -5,17 +5,17 @@ class Docs::ChartView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Chart", description: "Displays information in a visual way.")
 
-      render PhlexUI::Typography::H2.new { "Introduction" }
+      TypographyH2 { "Introduction" }
 
-      render PhlexUI::Typography::P.new do
+      TypographyP do
         plain "PhlexUI uses "
-        render PhlexUI::Typography::InlineLink.new(href: "https://www.chartjs.org/") { "Chart.js" }
+        TypographyInlineLink(href: "https://www.chartjs.org/") { "Chart.js" }
         plain " to render charts. Chart.js is a free open-source JavaScript library for data visualization, which supports 8 chart types: bar, line, area, pie, bubble, radar, polar, and scatter. If you're unfamiliar with Chart.js. We recommend the "
-        render PhlexUI::Typography::InlineLink.new(href: "https://www.chartjs.org/docs/latest/getting-started/") { "Getting Started guide" }
+        TypographyInlineLink(href: "https://www.chartjs.org/docs/latest/getting-started/") { "Getting Started guide" }
         plain ". "
       end
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Bar Chart", context: self) do
         <<~RUBY
@@ -38,7 +38,7 @@ class Docs::ChartView < ApplicationView
             },
           }
 
-          render PhlexUI::Chart.new(options: options)
+          PhlexUIChart(options: options)
         RUBY
       end
 
@@ -67,7 +67,7 @@ class Docs::ChartView < ApplicationView
             },
           }
 
-          render PhlexUI::Chart.new(options: options)
+          PhlexUIChart(options: options)
         RUBY
       end
 
@@ -94,7 +94,7 @@ class Docs::ChartView < ApplicationView
             },
           }
 
-          render PhlexUI::Chart.new(options: options)
+          PhlexUIChart(options: options)
         RUBY
       end
 
@@ -107,7 +107,7 @@ class Docs::ChartView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "ChartController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/chart_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::Chart", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/chart.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Chart", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/chart.rb", built_using: :phlex)
     ]
   end
 end

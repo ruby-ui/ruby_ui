@@ -5,30 +5,30 @@ module Themes
     class Table < ApplicationComponent
       User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
 
-      def view_template
-        render PhlexUI::Card.new(class: "p-6") do
-          render PhlexUI::Table::Builder.new(users) do |t|
-            t.column("Name") do |user|
-              div(class: "flex items-center space-x-3") do
-                render PhlexUI::Avatar::Builder.new(src: user.avatar_url, size: :md)
-                div do
-                  p(class: "text-sm font-medium") { user.name }
-                  p(class: "text-sm text-gray-500") { user.username }
-                end
-              end
-            end
-            t.column("Commits", &:commits)
-            t.column("Links", header_attrs: {class: "text-right"}, footer_attrs: {class: "text-right"}) do |user|
-              div(class: "flex items-center justify-end space-x-2") do
-                render PhlexUI::Link.new(href: github_link(user), variant: :outline, size: :sm) do
-                  github_icon
-                  span(class: "ml-2") { "See profile" }
-                end
-              end
-            end
-          end
-        end
-      end
+      # def view_template
+      #   render PhlexUI::Card.new(class: "p-6") do
+      #     render PhlexUI::Table::Builder.new(users) do |t|
+      #       t.column("Name") do |user|
+      #         div(class: "flex items-center space-x-3") do
+      #           render PhlexUI::Avatar::Builder.new(src: user.avatar_url, size: :md)
+      #           div do
+      #             p(class: "text-sm font-medium") { user.name }
+      #             p(class: "text-sm text-gray-500") { user.username }
+      #           end
+      #         end
+      #       end
+      #       t.column("Commits", &:commits)
+      #       t.column("Links", header_attrs: {class: "text-right"}, footer_attrs: {class: "text-right"}) do |user|
+      #         div(class: "flex items-center justify-end space-x-2") do
+      #           render PhlexUI::Link.new(href: github_link(user), variant: :outline, size: :sm) do
+      #             github_icon
+      #             span(class: "ml-2") { "See profile" }
+      #           end
+      #         end
+      #       end
+      #     end
+      #   end
+      # end
 
       private
 

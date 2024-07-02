@@ -8,29 +8,40 @@ class Docs::ComponentsTable < ApplicationComponent
   def view_template
     TypographyH2 { "Components" }
     div(class: "border rounded-lg overflow-hidden") do
-      Table::Builder.new(@components) do |t|
-        t.column("Component") do |component|
-          div(class: "flex items-center space-x-2") do
-            render PhlexUI::Typography::InlineCode.new { component.name }
-            if component.builder
-              render PhlexUI::Badge.new(size: :sm, variant: :sky) { "Builder" }
+      Table do
+        TableHeader do
+          TableRow do
+            div(class: "flex items-center space-x-2") do
+              TableHead { "Component" }
             end
+            TableHead(class: "w-full grow-1") { "Built using" }
+            TableHead(class: "text-right") { "Source" }
           end
         end
-        t.column("Built using", header_attrs: {class: "w-full grow-1"}) do |component|
-          component.built_using
-          case component.built_using&.to_sym
-          when :phlex
-            render PhlexUI::Badge.new(size: :sm, variant: :rose) { "Phlex" }
-          when :stimulus
-            render PhlexUI::Badge.new(size: :sm, variant: :amber) { "Stimulus JS" }
-          end
-        end
-        t.column("Source", header_attrs: {class: "text-right"}) do |component|
-          div(class: "flex justify-end") do
-            render PhlexUI::Link.new(href: component.source, variant: :outline, size: :sm) do
-              github_icon
-              span(class: "ml-2") { "See source" }
+
+        TableBody do
+          @components.each do |component|
+            TableRow do
+              TableCell do
+                TypographyInlineCode { component.name }
+              end
+              TableCell do
+                component.built_using
+                case component.built_using&.to_sym
+                when :phlex
+                  Badge(size: :sm, variant: :rose) { "Phlex" }
+                when :stimulus
+                  Badge(size: :sm, variant: :amber) { "Stimulus JS" }
+                end
+              end
+              TableCell do
+                div(class: "flex justify-end") do
+                  Link(href: component.source, variant: :outline, size: :sm) do
+                    github_icon
+                    span(class: "ml-2") { "See source" }
+                  end
+                end
+              end
             end
           end
         end

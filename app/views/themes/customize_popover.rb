@@ -7,17 +7,17 @@ module Themes
     end
 
     def view_template
-      render PhlexUI::Popover.new(options: {trigger: "click", placement: "bottom-end"}) do
-        render PhlexUI::Popover::Trigger.new do
-          render PhlexUI::Button.new(variant: :outline) do
+      Popover(options: {trigger: "click", placement: "bottom-end"}) do
+        PopoverTrigger do
+          Button(variant: :outline) do
             color_swatch_icon
             plain "Customize Theme"
           end
         end
-        render PhlexUI::Popover::Content.new(class: "w-96 p-6") do
+        PopoverContent(class: "w-96 p-6") do
           div(class: "space-y-0") do
-            render PhlexUI::Typography::Large.new { "Customize" }
-            render PhlexUI::Typography::P.new(class: "text-muted-foreground") { "Choose how your app looks" }
+            TypographyLarge { "Customize" }
+            TypographyP(class: "text-muted-foreground") { "Choose how your app looks" }
           end
           div(class: "grid grid-cols-3 gap-2 mt-4") do
             Theme::CSS.all_themes.each do |name, color_hash|
@@ -31,7 +31,7 @@ module Themes
     private
 
     def render_color_picker(name, color_hash, selected: false)
-      render PhlexUI::Link.new(href: helpers.theme_path(name&.downcase), variant: :outline, class: tokens("!justify-start", -> { selected } => "ring-neutral-950 ring-1")) do
+      Link(href: helpers.theme_path(name&.downcase), variant: :outline, class: tokens("!justify-start", -> { selected } => "ring-neutral-950 ring-1")) do
         div(class: "w-4 h-4 rounded-full shrink-0 mr-2 ring-white dark:hidden", style: "background-color: hsl(#{color_hash[:root][:primary].split.join(",")})") do
         end
         div(class: "w-4 h-4 rounded-full shrink-0 mr-2 ring-white hidden dark:block", style: "background-color: hsl(#{color_hash[:dark][:primary].split.join(",")})") do

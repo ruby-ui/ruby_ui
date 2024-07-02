@@ -8,70 +8,34 @@ class Docs::TableView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
       render Docs::Header.new(title: "Table", description: "A responsive table component.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Without builder", context: self) do
         <<~RUBY
-          render PhlexUI::Table.new do
-            render PhlexUI::Table::Caption.new { "Employees at Acme inc." }
-            render PhlexUI::Table::Header.new do
-              render PhlexUI::Table::Row.new do
-                render PhlexUI::Table::Head.new { "Name" }
-                render PhlexUI::Table::Head.new { "Email" }
-                render PhlexUI::Table::Head.new { "Status" }
-                render PhlexUI::Table::Head.new(class: "text-right") { "Role" }
+          Table do
+            TableCaption { "Employees at Acme inc." }
+            TableHeader do
+              TableRow do
+                TableHead { "Name" }
+                TableHead { "Email" }
+                TableHead { "Status" }
+                TableHead(class: "text-right") { "Role" }
               end
             end
-            render PhlexUI::Table::Body.new do
+            TableBody do
               invoices.each do |invoice|
-                render PhlexUI::Table::Row.new do
-                  render PhlexUI::Table::Cell.new(class: 'font-medium') { invoice.identifier }
-                  render PhlexUI::Table::Cell.new { render_status_badge(invoice.status) }
-                  render PhlexUI::Table::Cell.new { invoice.method }
-                  render PhlexUI::Table::Cell.new(class: "text-right") { format_amount(invoice.amount) }
+                TableRow do
+                  TableCell(class: 'font-medium') { invoice.identifier }
+                  TableCell { render_status_badge(invoice.status) }
+                  TableCell { invoice.method }
+                  TableCell(class: "text-right") { format_amount(invoice.amount) }
                 end
               end
             end
-            render PhlexUI::Table::Footer.new do
-              render PhlexUI::Table::Row.new do
-                render PhlexUI::Table::Head.new(class: "font-medium", colspan: 3) { "Total" }
-                render PhlexUI::Table::Head.new(class: "font-medium text-right") { format_amount(invoices.sum(&:amount)) }
-              end
-            end
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Table Builder", description: "Helper methods to make it easier to construct a table", context: self) do
-        <<~RUBY
-          render PhlexUI::Table::Builder.new(invoices, caption: "A list of your recent invoices.") do |t|
-            t.column("Invoice", "Total") { |invoice| span(class: 'font-medium') { invoice.identifier } }
-            t.column("Status") { |invoice| render_status_badge(invoice.status) }
-            t.column("Method", &:method)
-            t.column("Amount", format_amount(invoices.sum(&:amount)), header_attrs: { class: 'text-right'}, footer_attrs: { class: 'text-right'}) { |invoice| span(class: 'text-right block') { format_amount(invoice.amount) } }
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Another Example", context: self) do
-        <<~RUBY
-          render PhlexUI::Table::Builder.new(users, caption: "Top contributors to Phlex") do |t|
-            t.column("Name") do |user|
-              div(class: 'flex items-center space-x-3') do
-                render PhlexUI::Avatar::Builder.new(src: user.avatar_url, size: :md)
-                div do
-                  p(class: 'text-sm font-medium') { user.name }
-                  p(class: 'text-sm text-gray-500') { user.username }
-                end
-              end
-            end
-            t.column("Commits", &:commits)
-            t.column("Links", header_attrs: { class: 'text-right'}, footer_attrs: { class: 'text-right'}) do |user| 
-              div(class: 'flex items-center justify-end space-x-2') do
-                render PhlexUI::Link.new(href: github_link(user), variant: :outline, size: :sm) do
-                  github_icon
-                  span(class: 'ml-2') { "See profile" }
-                end
+            TableFooter do
+              TableRow do
+                TableHead(class: "font-medium", colspan: 3) { "Total" }
+                TableHead(class: "font-medium text-right") { format_amount(invoices.sum(&:amount)) }
               end
             end
           end
@@ -86,15 +50,14 @@ class Docs::TableView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Table", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Caption", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/caption.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Header", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/header.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Body", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/body.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/footer.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Row", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/row.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Head", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/head.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Cell", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/cell.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Table::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/builder.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Table", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TableCaption", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/caption.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TableHeader", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/header.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TableBody", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/body.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TableFooter", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/footer.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TableRow", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/row.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TableHead", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/head.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TableCell", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/cell.rb", built_using: :phlex)
     ]
   end
 
@@ -138,11 +101,11 @@ class Docs::TableView < ApplicationView
   def render_status_badge(status)
     case status.downcase
     when "active"
-      render PhlexUI::Badge.new(variant: :success, size: :sm) { status }
+      Badge(variant: :success, size: :sm) { status }
     when "inactive"
-      render PhlexUI::Badge.new(variant: :destructive, size: :sm) { status }
+      Badge(variant: :destructive, size: :sm) { status }
     when "pending"
-      render PhlexUI::Badge.new(variant: :warning, size: :sm) { status }
+      Badge(variant: :warning, size: :sm) { status }
     end
   end
 end

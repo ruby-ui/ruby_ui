@@ -5,33 +5,21 @@ class Docs::AvatarView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Avatar", description: "An image element with a fallback for representing the user.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
-
-      render Docs::VisualCodeExample.new(title: "Builder with Image", context: self) do
-        <<~RUBY
-          render PhlexUI::Avatar::Builder.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper", initials: "JD")
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Builder without Image", context: self) do
-        <<~RUBY
-          render PhlexUI::Avatar::Builder.new(initials: "JD")
-        RUBY
-      end
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Image & fallback", context: self) do
         <<~RUBY
-          render PhlexUI::Avatar.new do
-            render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-            render PhlexUI::Avatar::Fallback.new { "JD" }
+          Avatar do
+            AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+            AvatarFallback { "JD" }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Only fallback", context: self) do
         <<~RUBY
-          render PhlexUI::Avatar.new do
-            render PhlexUI::Avatar::Fallback.new { "JD" }
+          Avatar do
+            AvatarFallback { "JD" }
           end
         RUBY
       end
@@ -40,29 +28,29 @@ class Docs::AvatarView < ApplicationView
         <<~RUBY
           div(class: 'flex items-center space-x-2') do
             # size: :xs
-            render PhlexUI::Avatar.new(size: :xs) do
-              render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :xs) do
+              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+              AvatarFallback { "JD" }
             end
             # size: :sm
-            render PhlexUI::Avatar.new(size: :sm) do
-              render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :sm) do
+              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+              AvatarFallback { "JD" }
             end
             # size: :md
-            render PhlexUI::Avatar.new(size: :md) do
-              render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :md) do
+              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+              AvatarFallback { "JD" }
             end
             # size: :lg
-            render PhlexUI::Avatar.new(size: :lg) do
-              render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :lg) do
+              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+              AvatarFallback { "JD" }
             end
             # size: :xl
-            render PhlexUI::Avatar.new(size: :xl) do
-              render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :xl) do
+              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+              AvatarFallback { "JD" }
             end
           end
         RUBY
@@ -72,24 +60,24 @@ class Docs::AvatarView < ApplicationView
         <<~RUBY
           div(class: 'flex items-center space-x-2') do
             # size: :xs
-            render PhlexUI::Avatar.new(size: :xs) do
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :xs) do
+              AvatarFallback { "JD" }
             end
             # size: :sm
-            render PhlexUI::Avatar.new(size: :sm) do
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :sm) do
+              AvatarFallback { "JD" }
             end
             # size: :md
-            render PhlexUI::Avatar.new(size: :md) do
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :md) do
+              AvatarFallback { "JD" }
             end
             # size: :lg
-            render PhlexUI::Avatar.new(size: :lg) do
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :lg) do
+              AvatarFallback { "JD" }
             end
             # size: :xl
-            render PhlexUI::Avatar.new(size: :xl) do
-              render PhlexUI::Avatar::Fallback.new { "JD" }
+            Avatar(size: :xl) do
+              AvatarFallback { "JD" }
             end
           end
         RUBY
@@ -103,10 +91,9 @@ class Docs::AvatarView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Avatar::Builder", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/builder.rb", builder: true, built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Avatar", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Avatar::Image", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/image.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Avatar::Fallback", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/fallback.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Avatar", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "AvatarImage", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/image.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "AvatarFallback", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/fallback.rb", built_using: :phlex)
     ]
   end
 end

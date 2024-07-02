@@ -5,18 +5,18 @@ class Docs::TooltipView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Tooltip", description: "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render PhlexUI::Tooltip.new do
-            render PhlexUI::Tooltip::Trigger.new do
-              render PhlexUI::Button.new(variant: :outline, icon: true) do
+          Tooltip do
+            TooltipTrigger do
+              Button(variant: :outline, icon: true) do
                 bookmark_icon
               end
             end
-            render PhlexUI::Tooltip::Content.new do
-              render PhlexUI::Typography::P.new { "Add to library" }
+            TooltipContent do
+              TypographyP { "Add to library" }
             end
           end
         RUBY
@@ -31,9 +31,9 @@ class Docs::TooltipView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tooltip", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tooltip::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::Tooltip::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/content.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Tooltip", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TooltipTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TooltipContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/content.rb", built_using: :phlex)
     ]
   end
 

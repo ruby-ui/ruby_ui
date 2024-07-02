@@ -1,6 +1,7 @@
 GIT
-  remote: https://github.com/PhlexUI/phlex_ui.git
-  revision: ab73874f4a437a92c8c721fff8f37cfad6196cd1
+  remote: https://github.com/cirdes/phlex_ui.git
+  revision: b20cee8f8bb143c019a58d6b0a9abbddf65c61b4
+  branch: fix-clipboard
   specs:
     phlex_ui (0.1.10)
       activesupport (>= 6.0)

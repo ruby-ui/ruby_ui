@@ -5,35 +5,35 @@ class Docs::LinkView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Link", description: "Displays a link that looks like a button or underline link.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", description: "This is the default appearance of a Link", context: self) do
         <<~RUBY
-          render PhlexUI::Link.new(href: "#") { "Link" }
+          Link(href: "#") { "Link" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Primary", description: "This is the primary variant of a Link", context: self) do
         <<~RUBY
-          render PhlexUI::Link.new(href: "#", variant: :primary) { "Primary" }
+          Link(href: "#", variant: :primary) { "Primary" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Secondary", description: "This is the secondary variant of a Link", context: self) do
         <<~RUBY
-          render PhlexUI::Link.new(href: "#", variant: :secondary) { "Secondary" }
+          Link(href: "#", variant: :secondary) { "Secondary" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Destructive", description: "This is the destructive variant of a Link", context: self) do
         <<~RUBY
-          render PhlexUI::Link.new(href: "#", variant: :destructive) { "Destructive" }
+          Link(href: "#", variant: :destructive) { "Destructive" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Icon", description: "This is the icon variant of a Link", context: self) do
         <<~RUBY
-          render PhlexUI::Link.new(href: "#", variant: :outline, icon: true) do 
+          Link(href: "#", variant: :outline, icon: true) do 
             chevron_icon
           end
         RUBY
@@ -41,7 +41,7 @@ class Docs::LinkView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With Icon", description: "This is the primary variant of a Link with an icon", context: self) do
         <<~RUBY
-          render PhlexUI::Link.new(href: "#", variant: :primary) do 
+          Link(href: "#", variant: :primary) do 
             email_icon
             span { "Login with Email" }
           end
@@ -50,7 +50,7 @@ class Docs::LinkView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Ghost", description: "This is the ghost variant of a Link", context: self) do
         <<~RUBY
-          render PhlexUI::Link.new(href: "#", variant: :ghost) { "Ghost" }
+          Link(href: "#", variant: :ghost) { "Ghost" }
         RUBY
       end
 
@@ -62,7 +62,7 @@ class Docs::LinkView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PhlexUI::Link", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/link.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Link", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/link.rb", built_using: :phlex)
     ]
   end
 

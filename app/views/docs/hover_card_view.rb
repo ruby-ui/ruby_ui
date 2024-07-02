@@ -5,19 +5,19 @@ class Docs::HoverCardView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Hover Card", description: "For sighted users to preview content available behind a link.")
 
-      render PhlexUI::Typography::H2.new { "Usage" }
+      TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          render PhlexUI::HoverCard.new do
-            render PhlexUI::HoverCard::Trigger.new do
-              render PhlexUI::Button.new(variant: :link) { "@joeldrapper" } # Make this a link in order to navigate somewhere
+          HoverCard do
+            HoverCardTrigger do
+              Button(variant: :link) { "@joeldrapper" } # Make this a link in order to navigate somewhere
             end
-            render PhlexUI::HoverCard::Content.new do
+            HoverCardContent do
               div(class: "flex justify-between space-x-4") do
-                render PhlexUI::Avatar.new do
-                  render PhlexUI::Avatar::Image.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-                  render PhlexUI::Avatar::Fallback.new { "JD" }
+                Avatar do
+                  AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+                  AvatarFallback { "JD" }
                 end
                 div(class: "space-y-1") do
                   h4(class: "text-sm font-medium") { "@joeldrapper" }
@@ -59,9 +59,9 @@ class Docs::HoverCardView < ApplicationView
   def components
     [
       Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "PhlexUI::HoverCard", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::HoverCard::Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PhlexUI::HoverCard::Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/content.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "HoverCard", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "HoverCardTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "HoverCardContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/content.rb", built_using: :phlex)
     ]
   end
 end
