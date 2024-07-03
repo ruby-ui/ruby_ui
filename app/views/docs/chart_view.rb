@@ -38,7 +38,7 @@ class Docs::ChartView < ApplicationView
             },
           }
 
-          PhlexUIChart(options: options)
+          Chart(options: options)
         RUBY
       end
 
@@ -67,7 +67,7 @@ class Docs::ChartView < ApplicationView
             },
           }
 
-          PhlexUIChart(options: options)
+          Chart(options: options)
         RUBY
       end
 
@@ -94,7 +94,7 @@ class Docs::ChartView < ApplicationView
             },
           }
 
-          PhlexUIChart(options: options)
+          Chart(options: options)
         RUBY
       end
 
