@@ -76,6 +76,23 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
             phlex_ui_installation("free")
           end
         end
+        # STEP 3
+        steps.add_step do
+          step_container do
+            TypographyLarge { "Include PhlexUI module" }
+            TypographyP do
+              plain "Include PhlexUI module in your "
+              TypographyInlineCode(class: "whitespace-nowrap") { "application_component.rb" }
+              plain " file"
+            end
+            code = <<~CODE
+              class ApplicationComponent < Phlex::HTML
+                include PhlexUI
+              end
+            CODE
+            Codeblock(code, syntax: :ruby)
+          end
+        end
       end
 
       # JS INSTALLATION
