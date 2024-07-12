@@ -86,6 +86,5 @@ gem "rack-www" # used to redirect www to non-www subdomain
 gem "rollbar"
 
 gem "phlex-rails"
-# gem "phlex_ui"
+gem "phlex_ui", github: "PhlexUI/phlex_ui", branch: "main"
 # gem "phlex_ui", path: "../phlex_ui"
-gem "phlex_ui", git: "https://github.com/PhlexUI/phlex_ui.git", branch: "main"

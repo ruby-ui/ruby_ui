@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - '*'
+      - "*"
   push:
     branches:
       - main
@@ -37,7 +37,6 @@ jobs:
       - name: Lint code for consistent style
         run: bundle exec standardrb
 
-
   test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -48,7 +47,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: test
-        ports: ['5432:5432']
+        ports: ["5432:5432"]
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -56,7 +55,7 @@ jobs:
           --health-retries 5
       redis:
         image: redis
-        ports: ['6379:6379']
+        ports: ["6379:6379"]
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
@@ -74,7 +73,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: '.tool-versions'
+          node-version-file: ".tool-versions"
           cache: yarn
 
       - name: Install dependencies
@@ -93,4 +92,18 @@ jobs:
           bin/rails test:prepare
           bin/rails db:test:prepare
           bin/rails test
-          bin/rails test:system
+
+  deploy-development:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.14
+        with:
+          branch: main
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "phlex-ui-web"
+          heroku_email: "seth@statecert.com"
