@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^7.3.0",
+    "@hotwired/turbo-rails": "^8.0.4",
     "autoprefixer": "^10.4.16",
     "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.0",
