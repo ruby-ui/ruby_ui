@@ -72,3 +72,5 @@ end
 gem "phlex-rails"
 gem "phlex_ui", github: "PhlexUI/phlex_ui", branch: "main"
 # gem "phlex_ui", path: "../phlex_ui"
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
