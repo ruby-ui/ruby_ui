@@ -11,6 +11,7 @@ class Shared::Navbar < ApplicationComponent
           Link(href: helpers.docs_introduction_path, variant: :ghost, class: "hidden md:inline-block") { "Docs" }
           Link(href: helpers.docs_accordion_path, variant: :ghost, class: "hidden md:inline-block") { "Components" }
           Link(href: helpers.theme_path("default"), variant: :ghost, class: "hidden md:inline-block") { "Themes" }
+          Link(href: helpers.lookbook_path("default"), target: "_blank", variant: :ghost, class: "hidden md:inline-block") { "Lookbook" }
         end
         div(class: "flex items-center gap-x-2 md:divide-x") do
           div(class: "flex items-center") do

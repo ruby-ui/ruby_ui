@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get "themes/:theme", to: "themes#show", as: :theme
 
+  mount Lookbook::Engine, at: "/lookbook"
+
   scope "docs" do
     # GETTING STARTED
     get "introduction", to: "docs#introduction", as: :docs_introduction

@@ -29,6 +29,10 @@ module PhlexComponentsLibrary
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # lookbook configuration
+    config.lookbook.project_name = "Phlex Components"
+    config.lookbook.preview_layout = "component_preview"
+
     config.exceptions_app = routes # redirects all exceptions to custom error pages (See routes)
   end
 end
