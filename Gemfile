@@ -1,37 +1,30 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.0"
+ruby "3.3.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.8"
-
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
-
-# Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
-
+gem "rails", "~> 7.2.0.beta3"
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft", "0.9.0"
+# Use sqlite3 as the database for Active Record
+gem "sqlite3", ">= 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
-
+gem "puma", "6.4.2"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails"
-
+gem "jsbundling-rails", "1.3.0"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
-
+gem "turbo-rails", "2.0.6"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails"
-
+gem "stimulus-rails", "1.3.3"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails"
+gem "cssbundling-rails", "1.4.0"
 
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+# # Build JSON APIs with ease [https://github.com/rails/jbuilder]
+# gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
+# gem "redis", "~> 4.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -51,12 +44,11 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem "dotenv-rails", groups: [:development, :test]
+# gem "dotenv-rails", groups: [:development, :test]
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
-  gem "pry"
 end
 
 group :development do
@@ -76,14 +68,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "stripe"
-gem "letter_opener", group: :development
-gem "postmark-rails" # used in production
-gem "octokit", "~> 5.0"
-gem "faraday-retry", "~> 2.0" # used for API calls that were failing in octokit gem
-gem "rack-www" # used to redirect www to non-www subdomain
-gem "rollbar"
 
 gem "phlex-rails"
 gem "phlex_ui", github: "PhlexUI/phlex_ui", branch: "main"

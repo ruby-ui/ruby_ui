@@ -10,19 +10,17 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/rails/devcontainer/features/activestorage": {},
-    "ghcr.io/rails/devcontainer/features/postgres-client": {},
-    "ghcr.io/devcontainers/features/node:1": { "version": 20 }
+    "ghcr.io/devcontainers/features/node:1": { "version": 20 },
+    "ghcr.io/rails/devcontainer/features/sqlite3": {}
   },
 
   "containerEnv": {
     "CAPYBARA_SERVER_PORT": "45678",
-    "SELENIUM_HOST": "selenium",
-    "REDIS_URL": "redis://redis:6379/1",
-    "DB_HOST": "postgres"
+    "SELENIUM_HOST": "selenium"
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [3000, 5432, 6379],
+  "forwardPorts": [3000, 6379],
 
   // Configure tool-specific properties.
   // "customizations": {},
