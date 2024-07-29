@@ -51,7 +51,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".tool-versions"
+          node-version-file: ".node-version"
           cache: yarn
 
       - name: Install dependencies
