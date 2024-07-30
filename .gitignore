@@ -35,7 +35,4 @@
 
 /node_modules
 
-.env*
-
-/.yarn/*
-.yarnrc
+.env* 
