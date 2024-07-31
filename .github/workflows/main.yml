@@ -85,7 +85,7 @@ jobs:
           heroku_email: "seth@statecert.com"
 
   fly-deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/v1' }}
     needs: [lint, test]
     name: Deploy app
     runs-on: ubuntu-latest
