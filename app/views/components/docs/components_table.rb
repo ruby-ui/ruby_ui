@@ -1,12 +1,39 @@
 # frozen_string_literal: true
 
 class Docs::ComponentsTable < ApplicationComponent
-  def initialize(components)
+  def initialize(components, file_components)
     @components = components.sort_by { |component| [component.built_using, component.name] }
+    @file_components = file_components.sort_by { |component| [component.built_using, component.name] }
   end
 
   def view_template
     TypographyH2 { "Components" }
+
+    Tabs(default_value: "account", class: "") do
+      TabsList do
+        TabsTrigger(value: "components") { "Components shown above" }
+        TabsTrigger(value: "file-components") { "File Components" }
+      end
+      TabsContent(value: "components") do
+        div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
+          div(class: "space-y-0") do
+            component_table_view(@components)
+          end
+        end
+      end
+      TabsContent(value: "file-components") do
+        div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
+          div do
+            component_table_view(@file_components)
+          end
+        end
+      end
+    end
+  end
+
+  private
+
+  def component_table_view(components)
     div(class: "border rounded-lg overflow-hidden") do
       Table do
         TableHeader do
@@ -20,7 +47,7 @@ class Docs::ComponentsTable < ApplicationComponent
         end
 
         TableBody do
-          @components.each do |component|
+          components.each do |component|
             TableRow do
               TableCell do
                 TypographyInlineCode { component.name }
@@ -48,8 +75,6 @@ class Docs::ComponentsTable < ApplicationComponent
       end
     end
   end
-
-  private
 
   def github_icon
     svg(viewbox: "0 0 438.549 438.549", class: "h-4 w-4") do |s|
