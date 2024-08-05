@@ -86,6 +86,10 @@ class DocsController < ApplicationController
     render Docs::CollapsibleView.new
   end
 
+  def combobox
+    render Docs::ComboboxView.new
+  end
+
   def command
     render Docs::CommandView.new
   end
