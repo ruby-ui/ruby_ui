@@ -134,6 +134,26 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.23.0.tgz#db44a6a08520b5f25bbe409f34a59f2d4bcc7ced"
   integrity sha512-Arm+WgUFLUATuoxCJcahGuk6Yj9Pzxd6l11Zb/2aAuv5kWWvvfhLFo2fni4uSK5vzlUdCGZ/BdV5tH8klj8p8g==
 
+"@floating-ui/core@^1.6.0":
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.6.6.tgz#f6edf703c8acb73e3802cf558c88ddb7cddc4f67"
+  integrity sha512-Vkvsw6EcpMHjvZZdMkSY+djMGFbt7CRssW99Ne8tar2WLnZ/l3dbxeTShbLQj+/s35h+Qb4cmnob+EzwtjrXGQ==
+  dependencies:
+    "@floating-ui/utils" "^0.2.6"
+
+"@floating-ui/dom@^1.6.8":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.6.9.tgz#7240f4fea0ff929a9d642f7572331d33dd2ee809"
+  integrity sha512-zB1PcI350t4tkm3rvUhSRKa9sT7vH5CrAbQxW+VaPYJXKAO0gsg4CTueL+6Ajp7XzAQC8CW4Jj1Wgqc0sB6oUQ==
+  dependencies:
+    "@floating-ui/core" "^1.6.0"
+    "@floating-ui/utils" "^0.2.6"
+
+"@floating-ui/utils@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.6.tgz#1898a31c7e17a50384147a02a4e6264b1b1a0291"
+  integrity sha512-0KI3zGxIUs1KDR/pjQPdJH4Z8nGBm0yJ5WRoRfdw1Kzeh45jkIfA0rmD0kBF6fKHH+xaH7g8y4jIXyAV5MGK3g==
+
 "@hotwired/stimulus@3.2.2", "@hotwired/stimulus@^3.2.2":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
@@ -707,18 +727,6 @@ path-parse@^1.0.7:
   resolved "https://registry.npmjs.org/path-parse/-/path-parse-1.0.7.tgz"
   integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
-"phlex_ui@https://github.com/PhlexUI/phlex_ui_stimulus.git":
-  version "0.1.5"
-  resolved "https://github.com/PhlexUI/phlex_ui_stimulus.git#d08e1cd62dcf1456ee22e94a67a0c33b93882134"
-  dependencies:
-    "@hotwired/stimulus" "^3.2.2"
-    chart.js "^4.4.1"
-    date-fns "^2.30.0"
-    fuse.js "^7.0.0"
-    motion "^10.16.4"
-    mustache "^4.2.0"
-    tippy.js "^6.3.7"
-
 picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz"
@@ -813,8 +821,9 @@ queue-microtask@^1.2.2:
 
 "rbui-js@https://github.com/PhlexUI/phlex_ui.git#v1":
   version "0.0.1-alpha.0"
-  resolved "https://github.com/PhlexUI/phlex_ui.git#ade1fb28ff5695fb70e28dd1453ad2106f479eff"
+  resolved "https://github.com/PhlexUI/phlex_ui.git#939341791f34174983adc2290c6dad6c3f20fb5b"
   dependencies:
+    "@floating-ui/dom" "^1.6.8"
     "@hotwired/stimulus" "^3.2.2"
     chart.js "^4.4.1"
     date-fns "^2.30.0"
