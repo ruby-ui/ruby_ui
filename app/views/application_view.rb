@@ -49,14 +49,12 @@ class ApplicationView < ApplicationComponent
       ext = File.extname(file)
       basename = File.basename(file, ext)
 
-      if ext == ".rb"
-        name = basename.camelize
-        source = "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/#{component.to_s.downcase}/#{File.basename(file)}"
-        built_using = :phlex
+      name = basename.camelize
+      source = "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/#{component.to_s.downcase}/#{File.basename(file)}"
+      built_using = if ext == ".rb"
+        :phlex
       else # ".js"
-        name = basename.camelize
-        source = "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/#{component.to_s.downcase}/#{File.basename(file)}"
-        built_using = :stimulus
+        :stimulus
       end
 
       Docs::ComponentStruct.new(
