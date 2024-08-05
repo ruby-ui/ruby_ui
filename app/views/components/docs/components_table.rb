@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Docs::ComponentsTable < ApplicationComponent
-  def initialize(components, file_components)
+  def initialize(components, file_components = nil)
     @components = components.sort_by { |component| [component.built_using, component.name] }
-    @file_components = file_components.sort_by { |component| [component.built_using, component.name] }
+    @file_components = file_components.sort_by { |component| [component.built_using, component.name] } if file_components
   end
 
   def view_template
@@ -12,7 +12,7 @@ class Docs::ComponentsTable < ApplicationComponent
     Tabs(default_value: "account", class: "") do
       TabsList do
         TabsTrigger(value: "components") { "Components shown above" }
-        TabsTrigger(value: "file-components") { "File Components" }
+        TabsTrigger(value: "file-components") { "File Components" } if @file_components
       end
       TabsContent(value: "components") do
         div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
@@ -21,10 +21,12 @@ class Docs::ComponentsTable < ApplicationComponent
           end
         end
       end
-      TabsContent(value: "file-components") do
-        div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
-          div do
-            component_table_view(@file_components)
+      if @file_components
+        TabsContent(value: "file-components") do
+          div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
+            div do
+              component_table_view(@file_components)
+            end
           end
         end
       end
