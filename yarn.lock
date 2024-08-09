@@ -833,7 +833,7 @@ queue-microtask@^1.2.2:
 
 "rbui-js@https://github.com/PhlexUI/phlex_ui.git#v1":
   version "0.0.1-alpha.0"
-  resolved "https://github.com/PhlexUI/phlex_ui.git#939341791f34174983adc2290c6dad6c3f20fb5b"
+  resolved "https://github.com/PhlexUI/phlex_ui.git#faf332ff68cfccd40c0b55aff1697bb270db7d89"
   dependencies:
     "@floating-ui/dom" "^1.6.8"
     "@hotwired/stimulus" "^3.2.2"
