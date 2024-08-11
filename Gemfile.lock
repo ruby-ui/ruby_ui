@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/PhlexUI/phlex_ui.git
-  revision: faf332ff68cfccd40c0b55aff1697bb270db7d89
+  revision: 7cc2e5c3551971a191e7200865339808f230585f
   branch: v1
   specs:
     phlex_ui (0.1.10)

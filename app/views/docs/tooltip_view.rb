@@ -30,10 +30,10 @@ class Docs::TooltipView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
       Docs::ComponentStruct.new(name: "Tooltip", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip.rb", built_using: :phlex),
       Docs::ComponentStruct.new(name: "TooltipTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TooltipContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/content.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "TooltipContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/content.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "TooltipController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus)
     ]
   end
 
