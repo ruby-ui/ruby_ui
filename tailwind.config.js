@@ -1,9 +1,9 @@
 // For importing tailwind styles from phlex_ui/phlex_ui_pro gem
 const execSync = require('child_process').execSync;
 
-// Import phlex_ui gem path
-const outputPhlexUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
-const phlex_ui_path = outputPhlexUI.trim() + '/**/*.rb';
+// Import rbui gem path
+const outputRBUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
+const rbui_path = outputRBUI.trim() + '/**/*.rb';
 
 const defaultTheme = require('tailwindcss/defaultTheme')
 
@@ -14,7 +14,7 @@ module.exports = {
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js',
-    phlex_ui_path
+    rbui_path
   ],
   theme: {
     container: {
@@ -43,14 +43,6 @@ module.exports = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        warning: {
-          DEFAULT: "hsl(var(--warning))",
-          foreground: "hsl(var(--warning-foreground))",
-        },
-        success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
-        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -58,6 +50,23 @@ module.exports = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        /* rbui especific */
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
         },
       },
       borderRadius: {
