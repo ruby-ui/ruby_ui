@@ -18,17 +18,11 @@ module PhlexUi
 
             Form do
               SheetMiddle do
-                FormSpacer do
-                  FormItem do
-                    Label { "Name" }
-                    Input(placeholder: "Joel Drapper") { "Joel Drapper" }
-                  end
+                label { "Name" }
+                Input(placeholder: "Joel Drapper") { "Joel Drapper" }
 
-                  FormItem do
-                    Label { "Email" }
-                    Input(placeholder: "joel@drapper.me")
-                  end
-                end
+                label { "Email" }
+                Input(placeholder: "joel@drapper.me")
               end
 
               SheetFooter do

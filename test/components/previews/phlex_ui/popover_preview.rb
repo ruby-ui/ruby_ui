@@ -55,8 +55,8 @@ module PhlexUi
             end
 
             Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do
-              link.plain(helpers.lucide_icon("log-out", class: "w-4 h-4 mr-2"))
-              link.plain("Logout")
+              plain(helpers.lucide_icon("log-out", class: "w-4 h-4 mr-2"))
+              plain("Logout")
             end
           end
         end

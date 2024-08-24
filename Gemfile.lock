@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/PhlexUI/phlex_ui.git
-  revision: 8197c46331678d969b071ce0c0ded83d24ae73cb
-  branch: ch/add-form-component
+  revision: 9fdaf51c734dc357cdf031ea664dca3af6fdcfda
+  branch: v1
   specs:
     phlex_ui (0.1.10)
       phlex (~> 1.10)

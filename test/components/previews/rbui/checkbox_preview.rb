@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PhlexUi
+module Rbui
   class CheckboxPreview < Lookbook::Preview
     # Default Checkbox
     # ---------------

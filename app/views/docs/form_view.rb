@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Docs::FormView < ApplicationView
+  @@code_example = nil
+
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Form", description: "Building forms with built-in client-side validations.")
@@ -8,7 +10,7 @@ class Docs::FormView < ApplicationView
       TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
-        <<~RUBY
+        @@code_example = <<~RUBY
           Form(class: "w-2/3 space-y-6") do
             FormField do
               FormFieldLabel { "Default error" }
@@ -21,24 +23,125 @@ class Docs::FormView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::VisualCodeExample.new(title: "Custom error message", context: self) do
+        <<~RUBY
+          Form(class: "w-2/3 space-y-6") do
+            FormField do
+              FormFieldLabel { "Custom error message" }
+              Input(placeholder: "joel@drapper.me", required: true, data_value_missing: "Custom error message")
+              FormFieldError()
+            end
+            Button(type: "submit") { "Save" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Backend error", context: self) do
+        <<~RUBY
+          Form(class: "w-2/3 space-y-6") do
+            FormField do
+              FormFieldLabel { "Backend error" }
+              Input(placeholder: "Joel Drapper", required: true)
+              FormFieldError { "Error from backend" }
+            end
+            Button(type: "submit") { "Save" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Checkbox", context: self) do
+        <<~RUBY
+          Form(class: "w-2/3 space-y-6") do
+            FormField do
+              Checkbox(required: true)
+                label(
+                  class:
+                    "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                ) { " Accept terms and conditions " }
+              FormFieldError()
+            end
+            Button(type: "submit") { "Save" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Select", context: self) do
+        <<~RUBY
+          Form(class: "w-2/3 space-y-6") do
+            FormField do
+              FormFieldLabel { "Select" }
+              Select do
+                SelectInput(required: true)
+                SelectTrigger do
+                  SelectValue(placeholder: "Select a fruit")
+                end
+                SelectContent() do
+                  SelectGroup do
+                    SelectLabel { "Fruits" }
+                    SelectItem(value: "apple") { "Apple" }
+                    SelectItem(value: "orange") { "Orange" }
+                    SelectItem(value: "banana") { "Banana" }
+                    SelectItem(value: "watermelon") { "Watermelon" }
+                  end
+                end
+              end
+              FormFieldError()
+            end
+            Button(type: "submit") { "Save" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Combobox", context: self) do
+        <<~RUBY
+          Form(class: "w-2/3 space-y-6") do
+            FormField do
+              FormFieldLabel { "Combobox" }
+              Combobox do
+                ComboboxInput(required: true)
+                ComboboxTrigger do
+                  ComboboxValue(placeholder: "Select event...")
+                end
+                ComboboxContent do
+                  ComboboxSearchInput(placeholder: "Search event...")
+                  ComboboxList do
+                    ComboboxEmpty { "No results found." }
+                    ComboboxGroup(heading: "Suggestions") do
+                      ComboboxItem(value: "railsworld") do
+                        span { "Rails World" }
+                      end
+                      ComboboxItem(value: "tropicalrb") do
+                        span { "Tropical.rb" }
+                      end
+                      ComboboxItem(value: "friendly.rb") do
+                        span { "Friendly.rb" }
+                      end
+                    end
+
+                    ComboboxSeparator()
+
+                    ComboboxGroup(heading: "Others") do
+                      ComboboxItem(value: "railsconf") do
+                        span { "RailsConf" }
+                      end
+                      ComboboxItem(value: "euruko") do
+                        span { "Euruko" }
+                      end
+                      ComboboxItem(value: "rubykaigi") do
+                        span { "RubyKaigi" }
+                      end
+                    end
+                  end
+                end
+              end
+              FormFieldError()
+            end
+            Button(type: "submit") { "Save" }
+          end
+        RUBY
+      end
+
+      render Docs::ComponentsTable.new(components("Form", @@code_example), component_files("Form"))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "DialogController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/dialog_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "DismissableController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/dismissable_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "Dialog", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "Trigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "Content", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "Header", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/header.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "Title", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "Description", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/description.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "Middle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/middle.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "Footer", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dialog/footer.rb", built_using: :phlex)
-    ]
   end
 end
