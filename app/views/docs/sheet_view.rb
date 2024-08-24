@@ -22,23 +22,16 @@ class Docs::SheetView < ApplicationView
                 SheetTitle { "Edit profile" }
                 SheetDescription { "Make changes to your profile here. Click save when you're done." }
               end
-              Form do
-                SheetMiddle do
-                  FormSpacer do
-                    FormItem do
-                      Label { "Name" }
-                      Input(placeholder: "Joel Drapper") { "Joel Drapper" }
-                    end
-                    FormItem do
-                      Label { "Email" }
-                      Input(placeholder: "joel@drapper.me")
-                    end
-                  end
-                end
-                SheetFooter do
-                  Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
-                  Button(type: "submit") { "Save" }
-                end
+
+              SheetMiddle do
+                label { "Name" }
+                Input(placeholder: "Joel Drapper") { "Joel Drapper" }
+                label { "Email" }
+                Input(placeholder: "joel@drapper.me")
+              end
+              SheetFooter do
+                Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
+                Button(type: "submit") { "Save" }
               end
             end
           end
@@ -60,148 +53,16 @@ class Docs::SheetView < ApplicationView
                 end
                 Form do
                   SheetMiddle do
-                    FormSpacer do
-                      FormItem do
-                        Label { "Name" }
-                        Input(placeholder: "Joel Drapper") { "Joel Drapper" }
-                      end
-                      FormItem do
-                        Label { "Email" }
-                        Input(placeholder: "joel@drapper.me")
-                      end
-                    end
+                    label { "Name" }
+                    Input(placeholder: "Joel Drapper") { "Joel Drapper" }
+
+                    label { "Email" }
+                    Input(placeholder: "joel@drapper.me")
                   end
                   SheetFooter do
                     Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
                     Button(type: "submit") { "Save" }
                   end
-                end
-              end
-            end
-
-            # -- BOTTOM --
-            Sheet do
-              SheetTrigger do
-                Button(variant: :outline, class: 'w-full justify-center') { :bottom }
-              end
-              SheetContent(side: :bottom, class: tokens(-> { [:left, :right].include?(:bottom) } => "sm:max-w-sm")) do
-                SheetHeader do
-                  SheetTitle { "Edit profile" }
-                  SheetDescription { "Make changes to your profile here. Click save when you're done." }
-                end
-                Form do
-                  SheetMiddle do
-                    FormSpacer do
-                      FormItem do
-                        Label { "Name" }
-                        Input(placeholder: "Joel Drapper") { "Joel Drapper" }
-                      end
-                      FormItem do
-                        Label { "Email" }
-                        Input(placeholder: "joel@drapper.me")
-                      end
-                    end
-                  end
-                  SheetFooter do
-                    Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
-                    Button(type: "submit") { "Save" }
-                  end
-                end
-              end
-            end
-
-            # -- LEFT --
-            Sheet do
-              SheetTrigger do
-                Button(variant: :outline, class: 'w-full justify-center') { :left }
-              end
-              SheetContent(side: :left, class: tokens(-> { [:left, :right].include?(:left) } => "sm:max-w-sm")) do
-                SheetHeader do
-                  SheetTitle { "Edit profile" }
-                  SheetDescription { "Make changes to your profile here. Click save when you're done." }
-                end
-                Form do
-                  SheetMiddle do
-                    FormSpacer do
-                      FormItem do
-                        Label { "Name" }
-                        Input(placeholder: "Joel Drapper") { "Joel Drapper" }
-                      end
-                      FormItem do
-                        Label { "Email" }
-                        Input(placeholder: "joel@drapper.me")
-                      end
-                    end
-                  end
-                  SheetFooter do
-                    Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
-                    Button(type: "submit") { "Save" }
-                  end
-                end
-              end
-            end
-
-            # -- RIGHT --
-            Sheet do
-              SheetTrigger do
-                Button(variant: :outline, class: 'w-full justify-center') { :right }
-              end
-              SheetContent(side: :right, class: tokens(-> { [:left, :right].include?(:right) } => "sm:max-w-sm")) do
-                SheetHeader do
-                  SheetTitle { "Edit profile" }
-                  SheetDescription { "Make changes to your profile here. Click save when you're done." }
-                end
-                Form do
-                  SheetMiddle do
-                    FormSpacer do
-                      FormItem do
-                        Label { "Name" }
-                        Input(placeholder: "Joel Drapper") { "Joel Drapper" }
-                      end
-                      FormItem do
-                        Label { "Email" }
-                        Input(placeholder: "joel@drapper.me")
-                      end
-                    end
-                  end
-                  SheetFooter do
-                    Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
-                    Button(type: "submit") { "Save" }
-                  end
-                end
-              end
-            end
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Custom size", context: self, premium: @premium) do
-        <<~RUBY
-          Sheet do
-            SheetTrigger do
-              Button(variant: :outline) { "Open Sheet" }
-            end
-            SheetContent(class: 'w-3/4') do
-              SheetHeader do
-                SheetTitle { "Edit profile" }
-                SheetDescription { "Make changes to your profile here. Click save when you're done." }
-              end
-              Form do
-                SheetMiddle do
-                  FormSpacer do
-                    FormItem do
-                      Label { "Name" }
-                      Input(placeholder: "Joel Drapper") { "Joel Drapper" }
-                    end
-                    FormItem do
-                      Label { "Email" }
-                      Input(placeholder: "joel@drapper.me")
-                    end
-                  end
-                end
-                SheetFooter do
-                  Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
-                  Button(type: "submit") { "Save" }
                 end
               end
             end

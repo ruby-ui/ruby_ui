@@ -80,6 +80,7 @@ class Shared::Menu < ApplicationComponent
       {name: "Date Picker", path: helpers.docs_date_picker_path},
       {name: "Dialog / Modal", path: helpers.docs_dialog_path},
       {name: "Dropdown Menu", path: helpers.docs_dropdown_menu_path},
+      {name: "Form", path: helpers.docs_form_path},
       {name: "Input", path: helpers.docs_input_path},
       {name: "Hover Card", path: helpers.docs_hover_card_path},
       {name: "Link", path: helpers.docs_link_path},
