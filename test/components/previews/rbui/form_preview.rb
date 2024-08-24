@@ -55,7 +55,7 @@ module Rbui
         Form(class: "w-2/3 space-y-6 w-64") do
           FormField do
             Checkbox(required: true)
-            label(class: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70") do 
+            label(class: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70") do
               "Accept terms and conditions"
             end
             FormFieldError()
