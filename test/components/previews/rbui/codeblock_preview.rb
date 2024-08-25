@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PhlexUi
+module Rbui
   class CodeblockPreview < Lookbook::Preview
     # Default Codeblock
     # ---------------

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PhlexUi
+module Rbui
   class ShortcutKeyPreview < Lookbook::Preview
     def default
       render(TestView.new) do
