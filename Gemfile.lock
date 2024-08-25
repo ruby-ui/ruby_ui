@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/PhlexUI/phlex_ui.git
-  revision: 99830935a1af73d6bc8fe9fe2fc1148fa3e4c581
-  branch: ch/migrate-typography
+  revision: e85541ea5cdddd9890486ad1a54ef8e7ad2e49fb
+  branch: v1
   specs:
     phlex_ui (0.1.10)
       phlex (~> 1.10)
