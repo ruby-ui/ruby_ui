@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 class Docs::DatePickerView < ApplicationView
-  def initialize
-    @premium = true
-  end
-
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Date Picker", description: "A date picker component with input.", premium: @premium)
+      render Docs::Header.new(title: "Date Picker", description: "A date picker component with input.")
 
       TypographyH2 { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Single Date", context: self, premium: @premium) do
+      render Docs::VisualCodeExample.new(title: "Single Date", context: self) do
         <<~RUBY
           div(class: 'space-y-4 w-[260px]') do
             Popover(options: { trigger: 'focusin' }) do

@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 class Docs::CommandView < ApplicationView
-  def initialize
-    @premium = true
-  end
-
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Command", description: "Fast, composable, unstyled command menu for Phlex.", premium: @premium)
+      render Docs::Header.new(title: "Command", description: "Fast, composable, unstyled command menu for Phlex.")
 
       TypographyH2 { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self, premium: @premium) do
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           CommandDialog do
             CommandDialogTrigger do
@@ -56,7 +52,7 @@ class Docs::CommandView < ApplicationView
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "With keybinding", context: self, premium: @premium) do
+      render Docs::VisualCodeExample.new(title: "With keybinding", context: self) do
         <<~RUBY
           CommandDialog do
             CommandDialogTrigger(keybindings: ['keydown.ctrl+j@window', 'keydown.meta+j@window']) do

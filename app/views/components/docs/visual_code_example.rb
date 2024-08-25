@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class Docs::VisualCodeExample < ApplicationComponent
-  def initialize(title: nil, description: nil, context: nil, premium: false)
+  def initialize(title: nil, description: nil, context: nil)
     @title = title
     @description = description
-    @premium = premium
     @context = context
   end
 

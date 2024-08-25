@@ -11,7 +11,7 @@ class Docs::CardView < ApplicationView
         <<~RUBY
           Card(class: 'w-96') do
             CardHeader do
-              CardTitle { 'You might like "PhlexUI"' }
+              CardTitle { 'You might like "RBUI"' }
               CardDescription { "@joeldrapper" }
             end
             CardContent do
@@ -44,7 +44,7 @@ class Docs::CardView < ApplicationView
               )
             end
             CardHeader do
-              CardTitle { 'Introducing PhlexUI' }
+              CardTitle { 'Introducing RBUI' }
               CardDescription { "Kickstart your project today!" }
             end
             CardFooter(class: 'flex justify-end') do

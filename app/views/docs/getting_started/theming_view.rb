@@ -23,7 +23,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         TypographyList do
           TypographyListItem do
             span(class: "font-medium") { "Easily customisable design " }
-            plain "by updating CSS variables, without having to update the PhlexUI component."
+            plain "by updating CSS variables, without having to update the RBUI component."
           end
           TypographyListItem do
             span(class: "font-medium") { "Simpler implementation " }

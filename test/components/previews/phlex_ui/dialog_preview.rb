@@ -11,9 +11,9 @@ module PhlexUi
           DialogTrigger { Button { "Open Dialog" } }
           DialogContent(size:) do
             DialogHeader do
-              DialogTitle { "PhlexUI to the rescue" }
+              DialogTitle { "RBUI to the rescue" }
               DialogDescription do
-                "PhlexUI helps you build accessible standard compliant web apps with ease"
+                "RBUI helps you build accessible standard compliant web apps with ease"
               end
             end
             DialogMiddle do

@@ -3,30 +3,17 @@
 class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, PhlexUI allows you to tailor the components to your specific needs.")
+      render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, RBUI allows you to tailor the components to your specific needs.")
 
       div(class: "space-y-4") do
         TypographyH2 { "Introduction" }
-        TypographyP { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. PhlexUI is designed to facilitate this process with ease." }
+        TypographyP { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. RBUI is designed to facilitate this process with ease." }
       end
 
       div(class: "space-y-4") do
         TypographyH2 { "Updating attributes & classes" }
         TypographyP do
           plain "All components accept any HTML attribute, and will pass it through to the underlying HTML element. This is great for quick changes, or when you need to add a custom class for a one off situation."
-        end
-        Alert do
-          puzzle_icon
-          AlertTitle { "How it works" }
-          AlertDescription do
-            plain "When you pass an attribute to a PhlexUI component, it will be processed by the"
-            TypographyInlineCode { "PhlexUI::AttributeMerger" }
-            plain " class. You can read more about the "
-            TypographyInlineLink(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/base.rb") { "PhlexUI::Base" }
-            plain " and the "
-            TypographyInlineLink(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/attribute_merger.rb") { "PhlexUI::AttributeMerger" }
-            plain " classes on Github."
-          end
         end
         TypographyLarge { "Adding attributes" }
         TypographyP do

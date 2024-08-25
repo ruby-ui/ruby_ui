@@ -5,7 +5,7 @@ class Shared::Head < ApplicationComponent
 
   def view_template
     head do
-      title { "PhlexUI - Component Library" }
+      title { "RBUI - Component Library" }
       meta name: "viewport", content: "width=device-width,initial-scale=1"
       meta name: "turbo-refresh-method", content: "morph"
       meta name: "turbo-refresh-scroll", content: "preserve"

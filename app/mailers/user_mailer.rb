@@ -4,20 +4,9 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Welcome to PhlexUI"
+      subject: "Welcome to RBUI"
     ) do |format|
       format.html { render Mailers::UserMailer::Welcome.new(user: @user) }
-    end
-  end
-
-  def future_of_phlexui
-    @user = params[:user]
-
-    mail(
-      to: @user.email,
-      subject: "Open Source and the Future of PhlexUI (Retry)"
-    ) do |format|
-      format.html { render Mailers::UserMailer::FutureOfPhlexui.new(user: @user) }
     end
   end
 end

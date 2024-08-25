@@ -4,8 +4,8 @@ module Themes
   module Grid
     class Chat < ApplicationComponent
       MESSAGES = [
-        "You should checkout PhlexUI's new release, it makes life sooo much easier",
-        "What's PhlexUI?",
+        "You should checkout RBUI's new release, it makes life sooo much easier",
+        "What's RBUI?",
         "Don't ask questions, just get on that ASAP and thank me later",
         "Alright, alright, I'll check it out"
       ]
@@ -23,7 +23,6 @@ module Themes
       def header
         div(class: "flex items-center justify-between") do
           div(class: "flex items-center space-x-4") do
-            # render PhlexUI::Avatar::Builder.new(src: "https://avatars.githubusercontent.com/u/246692?v=4")
             div do
               TypographyP(class: "font-medium") { "Joel Drapper" }
               TypographyMuted { "joel@drapper.me" }
@@ -39,10 +38,6 @@ module Themes
               TypographyP { "Save contact" }
             end
           end
-
-          # render PhlexUI::Button.new(variant: :outline, icon: true, class: '!rounded-full') do
-          #   plus_icon
-          # end
         end
       end
 

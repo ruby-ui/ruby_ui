@@ -7,9 +7,9 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
 
       div(class: "space-y-4") do
         heading2 { "How it works" }
-        TypographyP { "PhlexUI seamlessly integrates dark mode, a crucial feature for modern applications, enhancing user experience and catering to diverse user preferences." }
+        TypographyP { "RBUI seamlessly integrates dark mode, a crucial feature for modern applications, enhancing user experience and catering to diverse user preferences." }
         TypographyP do
-          plain "PhlexUI is setup to use the "
+          plain "RBUI is setup to use the "
           TypographyInlineLink(href: "https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually") { "TailwindCSS 'class' strategy" }
           plain ". This means that you can toggle dark mode by adding or removing the "
           TypographyInlineCode { "dark" }

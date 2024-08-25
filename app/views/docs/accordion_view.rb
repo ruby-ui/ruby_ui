@@ -33,13 +33,13 @@ class Docs::AccordionView < ApplicationView
                       )
                     end
                   end
-                  p(class: "font-medium") { "What is PhlexUI?" }
+                  p(class: "font-medium") { "What is RBUI?" }
                 end
               end
 
               AccordionContent do
                 p(class: "pl-16 pr-4 pb-4 text-muted-foreground") do
-                  "PhlexUI is a UI component library for Ruby devs who want to build better, faster."
+                  "RBUI is a UI component library for Ruby devs who want to build better, faster."
                 end
               end
             end
@@ -73,7 +73,7 @@ class Docs::AccordionView < ApplicationView
 
               AccordionContent do
                 p(class: "pl-16 pr-4 pb-4 text-muted-foreground") do
-                  "Yes, PhlexUI is pure Ruby and works great with Rails. It's a Ruby gem that you can install into your Rails app."
+                  "Yes, RBUI is pure Ruby and works great with Rails. It's a Ruby gem that you can install into your Rails app."
                 end
               end
             end

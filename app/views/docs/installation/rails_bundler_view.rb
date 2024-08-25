@@ -8,7 +8,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
 
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install PhlexUI within a Rails app that employs JS bundling.")
+      render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install RBUI within a Rails app that employs JS bundling.")
 
       TypographyH2(class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
@@ -66,8 +66,8 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 2
         steps.add_step do
           step_container do
-            TypographyLarge { "Install PhlexUI gem" }
-            TypographyP { "Run the following in the terminal to install the PhlexUI Component Library" }
+            TypographyLarge { "Install RBUI gem" }
+            TypographyP { "Run the following in the terminal to install the RBUI Component Library" }
             code = <<~CODE
               bundle add phlex_ui
             CODE
@@ -77,15 +77,15 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 3
         steps.add_step do
           step_container do
-            TypographyLarge { "Include PhlexUI module" }
+            TypographyLarge { "Include RBUI module" }
             TypographyP do
-              plain "Include PhlexUI module in your "
+              plain "Include RBUI module in your "
               TypographyInlineCode(class: "whitespace-nowrap") { "application_component.rb" }
               plain " file"
             end
             code = <<~CODE
               class ApplicationComponent < Phlex::HTML
-                include PhlexUI
+                include RBUI
               end
             CODE
             Codeblock(code, syntax: :ruby)
@@ -161,7 +161,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
       steps.add_step do
         step_container do
           TypographyLarge { "Install package" }
-          TypographyP { "Run the following in the terminal to install PhlexUI JS package" }
+          TypographyP { "Run the following in the terminal to install RBUI JS package" }
           code = <<~CODE
             yarn add rbui-js
           CODE

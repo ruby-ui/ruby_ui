@@ -9,7 +9,7 @@ module PhlexUi
       render(TestView.new) do
         Alert(variant:) do
           AlertTitle { "Pro tip" }
-          AlertDescription { "With PhlexUI you'll ship faster." }
+          AlertDescription { "With RBUI you'll ship faster." }
         end
       end
     end

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class Docs::Header < ApplicationComponent
-  def initialize(title: nil, description: nil, premium: false)
+  def initialize(title: nil, description: nil)
     @title = title
     @description = description
-    @premium = premium
   end
 
   def view_template

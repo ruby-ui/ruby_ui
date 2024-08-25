@@ -27,7 +27,7 @@ module PhlexUi
                 "phlex-ruby/phlex-rails"
               end
               div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
-                "PhlexUI/phlex_ui"
+                "RBUI/rbui"
               end
             end
           end

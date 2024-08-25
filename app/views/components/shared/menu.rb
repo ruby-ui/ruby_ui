@@ -98,7 +98,6 @@ class Shared::Menu < ApplicationComponent
   end
 
   def menu_link(component)
-    component[:premium] ||= false
     current_path = component[:path] == helpers.request.path
     a(href: component[:path], class: tokens("group flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline", -> { current_path } => "text-foreground font-medium", -> { !current_path } => "text-muted-foreground")) do
       span(class: "flex items-center gap-x-1") do

@@ -120,7 +120,7 @@ class Pages::HomeView < ApplicationView
               render HomeView::Steps.new(steps: steps)
             end
           end
-          render HomeView::Card.new(class: "col-span-6 md:col-span-4", title: "Customer-Centric UX", subtitle: "Create an app experience your users will rave about. PhlexUI ensures that your user's journey is nothing less than memorable.", color: :pink) do |card|
+          render HomeView::Card.new(class: "col-span-6 md:col-span-4", title: "Customer-Centric UX", subtitle: "Create an app experience your users will rave about. RBUI ensures that your user's journey is nothing less than memorable.", color: :pink) do |card|
             card.icon do
               svg(
                 xmlns: "http://www.w3.org/2000/svg",
@@ -152,7 +152,7 @@ class Pages::HomeView < ApplicationView
               end
             end
           end
-          render HomeView::Card.new(class: "col-span-6 sm:col-span-3", title: "Minimal Dependencies", subtitle: "Keep your app lean and mean. With PhlexUI, we use custom built Stimulus.js controllers wherever possible - less package dependencies to worry about.", color: :secondary) do |card|
+          render HomeView::Card.new(class: "col-span-6 sm:col-span-3", title: "Minimal Dependencies", subtitle: "Keep your app lean and mean. With RBUI, we use custom built Stimulus.js controllers wherever possible - less package dependencies to worry about.", color: :secondary) do |card|
             card.icon do
               svg(
                 xmlns: "http://www.w3.org/2000/svg",

@@ -12,7 +12,7 @@ class Docs::AlertView < ApplicationView
           Alert do
             rocket_icon
             AlertTitle { "Pro tip" }
-            AlertDescription { "With PhlexUI you'll ship faster." }
+            AlertDescription { "With RBUI you'll ship faster." }
           end
         RUBY
       end
@@ -51,7 +51,7 @@ class Docs::AlertView < ApplicationView
           Alert(variant: :success) do
             check_icon
             AlertTitle { "Installation successful" }
-            AlertDescription { "You're all set to start using PhlexUI in your application." }
+            AlertDescription { "You're all set to start using RBUI in your application." }
           end
         RUBY
       end
