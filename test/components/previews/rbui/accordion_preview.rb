@@ -12,11 +12,21 @@ module Rbui
     # ---------------
     def default
       render(TestView.new) do
-        Accordion do
-          ITEMS.each do |it|
-            AccordionItem do
-              AccordionTrigger { AccordionDefaultTrigger { AccordionIcon { it[:title] } } }
-              AccordionContent { AccordionDefaultContent { it[:content] } }
+        div(class: "w-96") do
+          Accordion do
+            ITEMS.each do |it|
+              AccordionItem do
+                AccordionTrigger do
+                  p(class: "font-medium") { it[:title] }
+                  AccordionIcon()
+                end
+
+                AccordionContent do
+                  p(class: "text-sm pb-4") do
+                    it[:content]
+                  end
+                end
+              end
             end
           end
         end
