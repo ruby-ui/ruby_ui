@@ -29,7 +29,7 @@ class Docs::DialogView < ApplicationView
                 end
               end
               DialogFooter do
-                Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
+                Button(variant: :outline, data: { action: 'click->rbui--dialog#dismiss' }) { "Cancel" }
                 Button { "Save" }
               end
             end
@@ -60,7 +60,7 @@ class Docs::DialogView < ApplicationView
                   end
                 end
                 DialogFooter do
-                  Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
+                  Button(variant: :outline, data: { action: 'click->rbui--dialog#dismiss' }) { "Cancel" }
                   Button { "Save" }
                 end
               end
@@ -86,7 +86,7 @@ class Docs::DialogView < ApplicationView
                   end
                 end
                 DialogFooter do
-                  Button(variant: :outline, data: { action: 'click->dismissable#dismiss' }) { "Cancel" }
+                  Button(variant: :outline, data: { action: 'click->rbui--dialog#dismiss' }) { "Cancel" }
                   Button { "Save" }
                 end
               end
