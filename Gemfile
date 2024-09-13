@@ -71,7 +71,7 @@ group :test do
 end
 
 gem "phlex-rails"
-# gem "phlex_ui", github: "PhlexUI/phlex_ui", branch: "v1"
-gem "phlex_ui", path: "../phlex_ui"
+gem "phlex_ui", github: "PhlexUI/phlex_ui", branch: "v1"
+# gem "phlex_ui", path: "../phlex_ui"
 
 gem "pry"
