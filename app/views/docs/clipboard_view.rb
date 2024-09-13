@@ -20,6 +20,8 @@ class Docs::ClipboardView < ApplicationView
           end
         RUBY
       end
+
+      render Docs::ComponentsTable.new(components)
     end
   end
 
@@ -27,7 +29,11 @@ class Docs::ClipboardView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "Button", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/button.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "ClipboarController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/clipboard_controller.js", built_using: :stimulus),
+      Docs::ComponentStruct.new(name: "ClipboardPopover", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/clipboard_popover.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "ClipboardSource", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/clipboard_source.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "ClipboardTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/clipboard_trigger.rb", built_using: :phlex),
+      Docs::ComponentStruct.new(name: "Clipboard", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/clipboard.rb", built_using: :phlex)
     ]
   end
 end
