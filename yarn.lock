@@ -831,8 +831,9 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-"rbui-js@file:../phlex_ui":
+"rbui-js@https://github.com/PhlexUI/phlex_ui.git#v1":
   version "0.0.1-alpha.0"
+  resolved "https://github.com/PhlexUI/phlex_ui.git#bccfd09c75126620a65cae0560ef35ded715d1b5"
   dependencies:
     "@floating-ui/dom" "^1.6.8"
     "@hotwired/stimulus" "^3.2.2"
