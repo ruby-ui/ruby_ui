@@ -72,6 +72,7 @@ class Shared::Menu < ApplicationComponent
       {name: "Calendar", path: helpers.docs_calendar_path},
       # { name: "Chart", path: helpers.docs_chart_path, badge: "New" },
       {name: "Checkbox", path: helpers.docs_checkbox_path},
+      {name: "Clipboard", path: helpers.docs_clipboard_path},
       {name: "Codeblock", path: helpers.docs_codeblock_path},
       {name: "Collapsible", path: helpers.docs_collapsible_path},
       {name: "Combobox", path: helpers.docs_combobox_path},

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get "calendar", to: "docs#calendar", as: :docs_calendar
     get "chart", to: "docs#chart", as: :docs_chart
     get "checkbox", to: "docs#checkbox", as: :docs_checkbox
+    get "clipboard", to: "docs#clipboard", as: :docs_clipboard
     get "codeblock", to: "docs#codeblock", as: :docs_codeblock
     get "collapsible", to: "docs#collapsible", as: :docs_collapsible
     get "combobox", to: "docs#combobox", as: :docs_combobox

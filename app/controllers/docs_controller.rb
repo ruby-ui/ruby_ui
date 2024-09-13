@@ -78,6 +78,10 @@ class DocsController < ApplicationController
     render Docs::CheckboxView.new
   end
 
+  def clipboard
+    render Docs::ClipboardView.new
+  end
+
   def codeblock
     render Docs::CodeblockView.new
   end
