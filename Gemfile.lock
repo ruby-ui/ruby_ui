@@ -1,6 +1,5 @@
-GIT
-  remote: https://github.com/rbui-labs/rbui.git
-  revision: 19a1b5df2db0e000a21b9b2c5a573179c07506be
+PATH
+  remote: ../phlex_ui
   specs:
     rbui (0.2.0)
       phlex (~> 1.10)
