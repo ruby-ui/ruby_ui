@@ -12,7 +12,7 @@ class Docs::PopoverView < ApplicationView
               Button(variant: :outline) { "Open Popover" }
             end
             PopoverContent(class: 'w-40') do
-              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -30,7 +30,7 @@ class Docs::PopoverView < ApplicationView
                 end
                 plain "Profile"
               end
-              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -53,7 +53,7 @@ class Docs::PopoverView < ApplicationView
                 end
                 plain "Settings"
               end
-              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -85,7 +85,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'top' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -103,7 +103,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -126,7 +126,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -152,7 +152,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'top-start' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -170,7 +170,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -193,7 +193,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -219,7 +219,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'top-end' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -237,7 +237,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -260,7 +260,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -287,7 +287,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'right' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -305,7 +305,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -328,7 +328,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -354,7 +354,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'right-start' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -372,7 +372,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -395,7 +395,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -421,7 +421,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'right-end' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -439,7 +439,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -462,7 +462,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -489,7 +489,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'left' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -507,7 +507,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -530,7 +530,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -556,7 +556,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'left-start' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -574,7 +574,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -597,7 +597,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -623,7 +623,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'left-end' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -641,7 +641,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -664,7 +664,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -691,7 +691,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'bottom' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -709,7 +709,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -732,7 +732,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -758,7 +758,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'bottom-start' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -776,7 +776,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -799,7 +799,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -825,7 +825,7 @@ class Docs::PopoverView < ApplicationView
                 Button(variant: :outline, class: 'w-full justify-center') { 'bottom-end' }
               end
               PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -843,7 +843,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -866,7 +866,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -897,7 +897,7 @@ class Docs::PopoverView < ApplicationView
               Button(variant: :outline) { "Click" }
             end
             PopoverContent(class: 'w-40') do
-              Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -915,7 +915,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Profile"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -938,7 +938,7 @@ class Docs::PopoverView < ApplicationView
                   end
                   plain "Settings"
                 end
-                Link(href: "#", variant: :ghost, class: 'block w-full justify-start pl-2') do
+                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
                   svg(
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
