@@ -2,7 +2,7 @@
 
 # rubocop:disable Layout/LineLength
 
-module PhlexUi
+module Rbui
   class PopoverPreview < Lookbook::Preview
     # Default Popover
     # ---------------
@@ -15,17 +15,17 @@ module PhlexUi
           end
 
           PopoverContent(class: "w-40") do
-            Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do
+            Link(href: "#", variant: :ghost, class: "w-full justify-start pl-2") do
               plain(helpers.lucide_icon("circle-user", class: "w-4 h-4 mr-2"))
               plain("Profile")
             end
 
-            Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do
+            Link(href: "#", variant: :ghost, class: "w-full justify-start pl-2") do
               plain(helpers.lucide_icon("cog", class: "w-4 h-4 mr-2"))
               plain("Settings")
             end
 
-            Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do
+            Link(href: "#", variant: :ghost, class: "w-full justify-start pl-2") do
               plain(helpers.lucide_icon("log-out", class: "w-4 h-4 mr-2"))
               plain("Logout")
             end
@@ -44,17 +44,17 @@ module PhlexUi
           end
 
           PopoverContent(class: "w-40") do
-            Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do
+            Link(href: "#", variant: :ghost, class: "w-full justify-start pl-2") do
               plain(helpers.lucide_icon("circle-user", class: "w-4 h-4 mr-2"))
               plain("Profile")
             end
 
-            Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do
+            Link(href: "#", variant: :ghost, class: "w-full justify-start pl-2") do
               plain(helpers.lucide_icon("cog", class: "w-4 h-4 mr-2"))
               plain("Settings")
             end
 
-            Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do
+            Link(href: "#", variant: :ghost, class: "w-full justify-start pl-2") do
               plain(helpers.lucide_icon("log-out", class: "w-4 h-4 mr-2"))
               plain("Logout")
             end
