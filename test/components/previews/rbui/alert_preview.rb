@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rbui
+module RBUI
   class AlertPreview < Lookbook::Preview
     # Default Alert
     # ---------------

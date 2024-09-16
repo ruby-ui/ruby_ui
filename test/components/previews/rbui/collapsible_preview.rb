@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rbui
+module RBUI
   class CollapsiblePreview < Lookbook::Preview
     # Default Collapsible
     # ---------------

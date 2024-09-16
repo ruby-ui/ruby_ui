@@ -2,7 +2,7 @@
 
 # rubocop:disable Layout/LineLength
 
-module Rbui
+module RBUI
   class BadgePreview < Lookbook::Preview
     # Default Badge
     # ---------------

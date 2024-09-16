@@ -2,7 +2,7 @@
 
 # rubocop:disable Layout/LineLength
 
-module Rbui
+module RBUI
   class PopoverPreview < Lookbook::Preview
     # Default Popover
     # ---------------

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rbui
+module RBUI
   class AccordionPreview < Lookbook::Preview
     ITEMS = [
       {title: "Item 1", content: "Content 1"},

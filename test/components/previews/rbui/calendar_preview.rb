@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rbui
+module RBUI
   class CalendarPreview < Lookbook::Preview
     def default
       render(TestView.new) do

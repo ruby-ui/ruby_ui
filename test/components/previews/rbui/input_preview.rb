@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rbui
+module RBUI
   class InputPreview < Lookbook::Preview
     # Email Input
     # ---------------
