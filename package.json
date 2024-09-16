@@ -12,7 +12,7 @@
     "lottie-web": "5.12.2",
     "phlex_ui": "https://github.com/PhlexUI/phlex_ui_stimulus.git",
     "postcss": "8.4.40",
-    "rbui-js": "https://github.com/PhlexUI/phlex_ui.git#v1",
+    "rbui-js": "^1.0.0-alpha.2",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "1.0.7"
   },

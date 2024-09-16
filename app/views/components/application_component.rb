@@ -2,7 +2,6 @@
 
 class ApplicationComponent < Phlex::HTML
   include RBUI
-  include PhlexUI
   include Phlex::Rails::Helpers::Routes
 
   if Rails.env.development?

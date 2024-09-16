@@ -1,20 +1,21 @@
-// For importing tailwind styles from phlex_ui/phlex_ui_pro gem
-const execSync = require('child_process').execSync;
+// For importing tailwind styles from rbui gem
+const execSync = require("child_process").execSync;
 
 // Import rbui gem path
-const outputRBUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
-const rbui_path = outputRBUI.trim() + '/**/*.rb';
+const outputRBUI = execSync("bundle show rbui", { encoding: "utf-8" });
+const rbui_path = outputRBUI.trim() + "/**/*.rb";
 
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   darkMode: ["class"],
   content: [
-    './app/views/**/*.{erb,haml,html,slim,rb}',
-    './app/helpers/**/*.rb',
-    './app/assets/stylesheets/**/*.css',
-    './app/javascript/**/*.js',
-    rbui_path
+    "./app/views/**/*.{erb,haml,html,slim,rb}",
+    "./app/helpers/**/*.rb",
+    "./app/assets/stylesheets/**/*.css",
+    "./app/javascript/**/*.js",
+    rbui_path,
+    "./app/components/**/*.{erb,haml,html,slim,rb}",
   ],
   theme: {
     container: {
@@ -79,7 +80,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-  ],
-}
+  plugins: [require("tailwindcss-animate")],
+};

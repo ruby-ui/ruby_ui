@@ -30,7 +30,7 @@ class ApplicationView < ApplicationComponent
 
   require "rubygems"
 
-  def component_files(component, gem_name = "phlex_ui")
+  def component_files(component, gem_name = "rbui")
     # Find the gem specification
     gem_spec = Gem::Specification.find_by_name(gem_name)
     return [] unless gem_spec

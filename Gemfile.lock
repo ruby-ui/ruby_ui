@@ -1,9 +1,8 @@
 GIT
-  remote: https://github.com/PhlexUI/phlex_ui.git
-  revision: bccfd09c75126620a65cae0560ef35ded715d1b5
-  branch: v1
+  remote: https://github.com/rbui-labs/rbui.git
+  revision: 19a1b5df2db0e000a21b9b2c5a573179c07506be
   specs:
-    phlex_ui (0.1.10)
+    rbui (0.2.0)
       phlex (~> 1.10)
       rouge (~> 4.2.0)
       tailwind_merge (>= 0.12)
@@ -349,11 +348,11 @@ DEPENDENCIES
   lookbook (= 2.3.2)
   lucide-rails (= 0.4.0)
   phlex-rails
-  phlex_ui!
   propshaft (= 0.9.0)
   pry
   puma (= 6.4.2)
   rails (= 7.2.0)
+  rbui!
   selenium-webdriver
   sqlite3 (>= 1.4)
   standard
