@@ -71,7 +71,7 @@ jobs:
           bin/rails test
 
   heroku-deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/PhlexUI-web' }}
     needs: [lint, test]
     runs-on: ubuntu-latest
 
@@ -80,13 +80,13 @@ jobs:
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.14
         with:
-          branch: main
+          branch: PhlexUI-web
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "phlex-ui-web"
           heroku_email: "seth@statecert.com"
 
   fly-deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/v1' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: [lint, test]
     name: Deploy app
     runs-on: ubuntu-latest
@@ -97,4 +97,3 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
