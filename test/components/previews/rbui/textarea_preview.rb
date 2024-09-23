@@ -2,31 +2,30 @@
 
 module RBUI
   class TextareaPreview < Lookbook::Preview
-    # Email Textarea
+    # Default
     # ---------------
-    def email
+    def default
       render(TestView.new) do
-        Textarea(type: "email", placeholder: "Email", class: "max-w-sm")
+        Textarea(placeholder: "Textarea")
       end
     end
 
-    # Disabled Textarea
+    # Disabled
     def disabled
       render(TestView.new) do
-        Textarea(disabled: true, type: "email", placeholder: "Email", class: "max-w-sm")
+        Textarea(disabled: true, placeholder: "Disabled")
       end
     end
 
-    # with error
+    # FormField
     def with_error
       render(TestView.new) do
-        Textarea(
-          type: "email",
-          placeholder: "Email",
-          id: "email1",
-          value: "joel@mail",
-          error: "Invalid email address"
-        )
+        FormField do
+          FormFieldLabel(for: "textarea") { "Textarea"}
+          FormFieldHint { "This is a textarea" }
+          Textarea(placeholder: "Textarea", id: "textarea")
+          FormFieldError { "This is an error message" }
+        end
       end
     end
   end
