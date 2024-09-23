@@ -21,7 +21,7 @@ module RBUI
     def with_error
       render(TestView.new) do
         FormField do
-          FormFieldLabel(for: "textarea") { "Textarea"}
+          FormFieldLabel(for: "textarea") { "Textarea" }
           FormFieldHint { "This is a textarea" }
           Textarea(placeholder: "Textarea", id: "textarea")
           FormFieldError { "This is an error message" }
