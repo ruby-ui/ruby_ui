@@ -3,7 +3,7 @@
 class Docs::TextareaView < ApplicationView
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Textarea", description: "Displays a form textarea field or a component that looks like an textarea field.")
+      render Docs::Header.new(title: "Textarea", description: "Displays a textarea field.")
 
       TypographyH2 { "Usage" }
 
@@ -44,8 +44,7 @@ class Docs::TextareaView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "InputController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/input_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "Textarea", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/input.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Textarea", source: "https://github.com/rbui-labs/rbui/blob/main/lib/rbui/textarea/textarea.rb", built_using: :phlex)
     ]
   end
 end
