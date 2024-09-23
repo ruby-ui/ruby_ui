@@ -158,6 +158,10 @@ class DocsController < ApplicationController
     render Docs::TabsView.new
   end
 
+  def textarea
+    render Docs::TextareaView.new
+  end
+
   def theme_toggle
     render Docs::ThemeToggleView.new
   end
