@@ -2,6 +2,8 @@
 
 class Docs::LinkView < ApplicationView
   def view_template
+    component = "Link"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Link", description: "Displays a link that looks like a button or underline link.")
 
@@ -54,17 +56,11 @@ class Docs::LinkView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
   end
 
   private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Link", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/link.rb", built_using: :phlex)
-    ]
-  end
 
   def chevron_icon
     svg(

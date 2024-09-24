@@ -2,6 +2,7 @@
 
 class Docs::CardView < ApplicationView
   def view_template
+    component = "Card"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Card", description: "Displays a card with header, content, and footer.")
 
@@ -73,21 +74,8 @@ class Docs::CardView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Card", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "CardHeader", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/header.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "CardContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "CardFooter", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/footer.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "CardTitle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "CardDescription", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/card/description.rb", built_using: :phlex)
-    ]
   end
 
   def arrow_icon(classes: nil)

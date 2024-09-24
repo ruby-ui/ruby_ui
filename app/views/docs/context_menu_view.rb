@@ -2,6 +2,7 @@
 
 class Docs::ContextMenuView < ApplicationView
   def view_template
+    component = "ContextMenu"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Context Menu", description: "Displays a menu to the user — such as a set of actions or functions — triggered by a right click.")
 
@@ -76,21 +77,7 @@ class Docs::ContextMenuView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "ContextMenu", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "ContextMenuTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "ContextMenuContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "ContextMenuItem", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/item.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "ContextMenuSeparator", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/separator.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "ContextMenuLabel", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/context_menu/label.rb", built_using: :phlex)
-    ]
   end
 end

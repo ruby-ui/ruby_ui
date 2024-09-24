@@ -2,6 +2,7 @@
 
 class Docs::CollapsibleView < ApplicationView
   def view_template
+    component = "Collapsible"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Collapsible", description: "An interactive component which expands/collapses a panel.")
 
@@ -69,20 +70,11 @@ class Docs::CollapsibleView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
   end
 
   private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "CollapsibleController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/collapsible_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "Collapsible", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "CollapsibleTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "CollapsibleContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/collapsible/content.rb", built_using: :phlex)
-    ]
-  end
 
   def chevron_icon
     svg(

@@ -2,6 +2,7 @@
 
 class Docs::DropdownMenuView < ApplicationView
   def view_template
+    component = "DropdownMenu"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Dropdown Menu", description: "Displays a menu to the user — such as a set of actions or functions — triggered by a button.")
 
@@ -221,21 +222,7 @@ class Docs::DropdownMenuView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "DropdownMenu", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "DropdownMenuTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "DropdownMenuContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "DropdownMenuLabel", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/label.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "DropdownMenuItem", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/item.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "DropdownMenuSeparator", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/dropdown_menu/separator.rb", built_using: :phlex)
-    ]
   end
 end

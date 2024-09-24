@@ -121,15 +121,7 @@ class Docs::ButtonView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references("Button", Docs::VisualCodeExample.collected_code), component_files("Button"))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Button", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/button.rb", built_using: :phlex)
-    ]
   end
 end

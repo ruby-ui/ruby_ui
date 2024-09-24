@@ -2,6 +2,7 @@
 
 class Docs::AvatarView < ApplicationView
   def view_template
+    component = "Avatar"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Avatar", description: "An image element with a fallback for representing the user.")
 
@@ -57,7 +58,7 @@ class Docs::AvatarView < ApplicationView
       end
 
       render Docs::VisualCodeExample.new(title: "Sizes (only fallback)", context: self) do
-        <<~RUBY
+        @@code = <<~RUBY
           div(class: 'flex items-center space-x-2') do
             # size: :xs
             Avatar(size: :xs) do
@@ -83,17 +84,7 @@ class Docs::AvatarView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Avatar", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AvatarImage", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/image.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AvatarFallback", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/avatar/fallback.rb", built_using: :phlex)
-    ]
   end
 end

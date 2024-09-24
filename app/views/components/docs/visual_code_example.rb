@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class Docs::VisualCodeExample < ApplicationComponent
+  @@collected_code = []
+
+  def self.collected_code
+    @@collected_code.join("\n")
+  end
+
+  def self.reset_collected_code
+    @@collected_code = []
+  end
+
   def initialize(title: nil, description: nil, context: nil)
     @title = title
     @description = description
@@ -10,6 +20,7 @@ class Docs::VisualCodeExample < ApplicationComponent
   # standard:disable Style/ArgumentsForwarding
   def view_template(&block)
     @display_code = CGI.unescapeHTML(capture(&block))
+    @@collected_code << @display_code
 
     div(id: @title) do
       div(class: "relative") do

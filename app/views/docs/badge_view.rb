@@ -70,15 +70,7 @@ class Docs::BadgeView < ApplicationView
       end
 
       # components
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references("Badge", Docs::VisualCodeExample.collected_code), component_files("Badge"))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Badge", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/badge.rb", built_using: :phlex)
-    ]
   end
 end

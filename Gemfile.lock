@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/PhlexUI/phlex_ui.git
-  revision: bccfd09c75126620a65cae0560ef35ded715d1b5
-  branch: v1
+  remote: https://github.com/rbui-labs/rbui.git
+  revision: abb3ec1e5971413d4930ce4a56f688b7acb66a5e
+  branch: main
   specs:
-    rbui (0.2.0)
+    rbui (1.0.0.pre.alpha.3)
       phlex (~> 1.10)
       rouge (~> 4.2.0)
       tailwind_merge (>= 0.12)

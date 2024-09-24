@@ -2,6 +2,7 @@
 
 class Docs::AlertView < ApplicationView
   def view_template
+    component = "Alert"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Alert", description: "Displays a callout for user attention.")
 
@@ -56,19 +57,11 @@ class Docs::AlertView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
   end
 
   private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Alert", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AlertTitle", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AlertDescription", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert/description.rb", built_using: :phlex)
-    ]
-  end
 
   def rocket_icon
     svg(

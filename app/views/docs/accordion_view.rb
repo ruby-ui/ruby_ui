@@ -3,13 +3,14 @@
 class Docs::AccordionView < ApplicationView
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Accordion",
+      component = "Accordion"
+      render Docs::Header.new(title: component,
         description: "A vertically stacked set of interactive headings that each reveal a section of content.")
 
       TypographyH2 { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
-        <<~RUBY
+        @@code = <<~RUBY
           div(class: "w-full") do
               Accordion do
                 AccordionItem do
@@ -44,26 +45,7 @@ class Docs::AccordionView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, @@code), component_files(component))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "AccordionController",
-        source: "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/accordion/accordion_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "Accordion",
-        source: "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/accordion/accordion.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AccordionItem",
-        source: "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/accordion/accordion_item.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AccordionTrigger",
-        source: "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/accordion/accordion_trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AccordionContent",
-        source: "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/accordion/accordion_content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "AccordionIcon",
-        source: "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/accordion/accordion_icon.rb", built_using: :phlex)
-    ]
   end
 end

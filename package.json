@@ -10,9 +10,8 @@
     "clsx": "2.1.1",
     "esbuild": "0.23.0",
     "lottie-web": "5.12.2",
-    "phlex_ui": "https://github.com/PhlexUI/phlex_ui_stimulus.git",
     "postcss": "8.4.40",
-    "rbui-js": "https://github.com/PhlexUI/phlex_ui.git#v1",
+    "rbui-js": "rbui-labs/rbui#main",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "1.0.7"
   },

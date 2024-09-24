@@ -4,8 +4,9 @@ class Docs::ComboboxView < ApplicationView
   @@code_example = nil
 
   def view_template
+    component = "Combobox"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Combobox", description: "Autocomplete input and command palette with a list of suggestions.")
+      render Docs::Header.new(title: component, description: "Autocomplete input and command palette with a list of suggestions.")
 
       TypographyH2 { "Usage" }
 
@@ -52,7 +53,7 @@ class Docs::ComboboxView < ApplicationView
           end
         RUBY
       end
-      render Docs::ComponentsTable.new(components("Combobox", @@code_example), component_files("Combobox"))
+      render Docs::ComponentsTable.new(component_references(component, @@code_example), component_files("Combobox"))
     end
   end
 end

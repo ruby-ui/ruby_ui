@@ -6,6 +6,7 @@
 
 Docs::ComponentStruct = Struct.new(:name, :source, :builder, :built_using) do
   def initialize(name:, source:, builder: false, built_using: :phlex)
+    source = ApplicationView::GITHUB_FILE_URL + source
     super(name, source, builder, built_using)
   end
 end

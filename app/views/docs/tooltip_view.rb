@@ -2,6 +2,8 @@
 
 class Docs::TooltipView < ApplicationView
   def view_template
+    component = "Tooltip"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Tooltip", description: "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.")
 
@@ -22,20 +24,11 @@ class Docs::TooltipView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
   end
 
   private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Tooltip", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TooltipTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TooltipContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tooltip/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TooltipController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus)
-    ]
-  end
 
   def bookmark_icon
     svg(

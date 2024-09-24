@@ -11,8 +11,8 @@ class Docs::ComponentsTable < ApplicationComponent
 
     Tabs(default_value: "account", class: "") do
       TabsList do
-        TabsTrigger(value: "components") { "Components shown above" }
-        TabsTrigger(value: "file-components") { "File Components" } if @file_components
+        TabsTrigger(value: "components") { "Components Referenced" }
+        TabsTrigger(value: "file-components") { "Component files" }
       end
       TabsContent(value: "components") do
         div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
@@ -25,7 +25,11 @@ class Docs::ComponentsTable < ApplicationComponent
         TabsContent(value: "file-components") do
           div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
             div do
-              component_table_view(@file_components)
+              if @file_components.present?
+                component_table_view(@file_components)
+              else
+                TypographyP { "No components for this page" }
+              end
             end
           end
         end
@@ -65,7 +69,7 @@ class Docs::ComponentsTable < ApplicationComponent
               end
               TableCell do
                 div(class: "flex justify-end") do
-                  Link(href: component.source, variant: :outline, size: :sm) do
+                  Link(href: component.source, variant: :outline, size: :sm, target: "_blank") do
                     github_icon
                     span(class: "ml-2") { "See source" }
                   end

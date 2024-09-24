@@ -5,6 +5,8 @@ class Docs::TableView < ApplicationView
   User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
 
   def view_template
+    component = "Table"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
       render Docs::Header.new(title: "Table", description: "A responsive table component.")
 
@@ -42,24 +44,11 @@ class Docs::TableView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
   end
 
   private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Table", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TableCaption", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/caption.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TableHeader", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/header.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TableBody", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/body.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TableFooter", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/footer.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TableRow", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/row.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TableHead", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/head.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "TableCell", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/table/cell.rb", built_using: :phlex)
-    ]
-  end
 
   def invoices
     [

@@ -2,6 +2,7 @@
 
 class Docs::CodeblockView < ApplicationView
   def view_template
+    component = "Codeblock"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Codeblock", description: "A component for displaying highlighted code.")
 
@@ -46,16 +47,7 @@ class Docs::CodeblockView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "ClipboardController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/clipboard_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "Codeblock", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/codeblock.rb", built_using: :phlex)
-    ]
   end
 end

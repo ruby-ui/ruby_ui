@@ -2,6 +2,8 @@
 
 class Docs::HoverCardView < ApplicationView
   def view_template
+    component = "HoverCard"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Hover Card", description: "For sighted users to preview content available behind a link.")
 
@@ -50,18 +52,18 @@ class Docs::HoverCardView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
   end
 
   private
 
-  def components
-    [
-      Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "HoverCard", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "HoverCardTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "HoverCardContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/content.rb", built_using: :phlex)
-    ]
-  end
+  # def components
+  #   [
+  #     Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
+  #     Docs::ComponentStruct.new(name: "HoverCard", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card.rb", built_using: :phlex),
+  #     Docs::ComponentStruct.new(name: "HoverCardTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/trigger.rb", built_using: :phlex),
+  #     Docs::ComponentStruct.new(name: "HoverCardContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/content.rb", built_using: :phlex)
+  #   ]
+  # end
 end

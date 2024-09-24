@@ -2,6 +2,8 @@
 
 class Docs::SheetView < ApplicationView
   def view_template
+    component = "Sheet"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Sheet", description: "Extends the Sheet component to display content that complements the main content of the screen.")
 
@@ -66,23 +68,7 @@ class Docs::SheetView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
-  end
-
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "SheetController", source: "https://github.com/PhlexUI/phlex_ui_stimulus_pro/blob/main/controllers/sheet_controller.js", built_using: :stimulus),
-      Docs::ComponentStruct.new(name: "Sheet", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "SheetTrigger", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/trigger.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "SheetContent", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "SheetHeader", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/header.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "SheetTitle", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/title.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "SheetDescription", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/description.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "SheetMiddle", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/middle.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "SheetFooter", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/sheet/footer.rb", built_using: :phlex)
-    ]
   end
 end

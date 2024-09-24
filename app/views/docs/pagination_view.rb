@@ -2,6 +2,8 @@
 
 class Docs::PaginationView < ApplicationView
   def view_template
+    component = "Pagination"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Pagination", description: "Pagination with page navigation, next and previous links.")
 
@@ -41,20 +43,11 @@ class Docs::PaginationView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(components)
+      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
     end
   end
 
   private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Pagination", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PaginationContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/content.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PaginationEllipsis", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/ellipsis.rb", built_using: :phlex),
-      Docs::ComponentStruct.new(name: "PaginationItem", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/pagination/item.rb", built_using: :phlex)
-    ]
-  end
 
   def chevrons_left_icon
     svg(
