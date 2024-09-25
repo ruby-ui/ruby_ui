@@ -44,7 +44,7 @@ class Docs::TextareaView < ApplicationView
 
   def components
     [
-      Docs::ComponentStruct.new(name: "Textarea", source: "https://github.com/rbui-labs/rbui/blob/main/lib/rbui/textarea/textarea.rb", built_using: :phlex)
+      Docs::ComponentStruct.new(name: "Textarea", source: "lib/rbui/textarea/textarea.rb", built_using: :phlex)
     ]
   end
 end
