@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/rbui-labs/rbui.git
-  revision: 19a1b5df2db0e000a21b9b2c5a573179c07506be
+  revision: 9428238764f51f5039dffcfa76ba4e90ab77f74b
   specs:
-    rbui (0.2.0)
+    rbui (1.0.0.pre.alpha.3)
       phlex (~> 1.10)
       rouge (~> 4.2.0)
       tailwind_merge (>= 0.12)
