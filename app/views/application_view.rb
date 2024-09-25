@@ -24,6 +24,11 @@ class ApplicationView < ApplicationComponent
   GITHUB_REPO_URL = "https://github.com/rbui-labs/rbui/"
   GITHUB_FILE_URL = "#{GITHUB_REPO_URL}blob/main/"
 
+  def before_template
+    Docs::VisualCodeExample.reset_collected_code
+    super
+  end
+
   def component_references(component, code_example = nil, use_component_files = false)
     return [] unless code_example
 

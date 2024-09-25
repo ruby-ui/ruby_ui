@@ -17,9 +17,8 @@ class Docs::VisualCodeExample < ApplicationComponent
     @context = context
   end
 
-  # standard:disable Style/ArgumentsForwarding
-  def view_template(&block)
-    @display_code = CGI.unescapeHTML(capture(&block))
+  def view_template(&)
+    @display_code = CGI.unescapeHTML(capture(&))
     @@collected_code << @display_code
 
     div(id: @title) do
@@ -30,7 +29,7 @@ class Docs::VisualCodeExample < ApplicationComponent
             div(class: "flex-grow") # Spacer
             render_tab_triggers
           end
-          render_tab_contents(&block)
+          render_tab_contents(&)
         end
       end
     end
@@ -64,8 +63,8 @@ class Docs::VisualCodeExample < ApplicationComponent
     end
   end
 
-  def render_tab_contents(&block)
-    TabsContent(value: "preview") { render_preview_tab(&block) }
+  def render_tab_contents(&)
+    TabsContent(value: "preview") { render_preview_tab(&) }
     TabsContent(value: "code") { render_code_tab }
   end
 
