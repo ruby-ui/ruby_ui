@@ -2,6 +2,8 @@
 
 class Docs::TextareaView < ApplicationView
   def view_template
+    component = "Textarea"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Textarea", description: "Displays a textarea field.")
 
@@ -35,16 +37,8 @@ class Docs::TextareaView < ApplicationView
           end
         RUBY
       end
-
-      render Docs::ComponentsTable.new(components)
     end
-  end
 
-  private
-
-  def components
-    [
-      Docs::ComponentStruct.new(name: "Textarea", source: "lib/rbui/textarea/textarea.rb", built_using: :phlex)
-    ]
+    render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
   end
 end
