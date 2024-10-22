@@ -2,7 +2,7 @@
 const execSync = require("child_process").execSync;
 
 // Import rbui gem path
-const outputRBUI = execSync("bundle show rbui", { encoding: "utf-8" });
+const outputRBUI = execSync("bundle show ruby_ui", { encoding: "utf-8" });
 const rbui_path = outputRBUI.trim() + "/**/*.rb";
 
 const defaultTheme = require("tailwindcss/defaultTheme");

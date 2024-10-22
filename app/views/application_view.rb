@@ -59,7 +59,7 @@ class ApplicationView < ApplicationComponent
 
   require "rubygems"
 
-  def component_files(component, gem_name = "rbui")
+  def component_files(component, gem_name = "ruby_ui")
     # Find the gem specification
     gem_spec = Gem::Specification.find_by_name(gem_name)
     return [] unless gem_spec
