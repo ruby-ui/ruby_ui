@@ -38,3 +38,5 @@
 .env* 
 
 .tool-versions
+
+config/credentials/production.key
