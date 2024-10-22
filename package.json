@@ -11,7 +11,7 @@
     "esbuild": "0.23.0",
     "lottie-web": "5.12.2",
     "postcss": "8.4.40",
-    "rbui-js": "^1.0.0-alpha.4",
+    "rbui-js": "rbui-labs/rbui",
     "tailwindcss": "3.4.7",
     "tailwindcss-animate": "1.0.7"
   },

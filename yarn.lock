@@ -819,10 +819,21 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-rbui-js@^1.0.0-alpha.4:
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/rbui-js/-/rbui-js-1.0.0-alpha.4.tgz#f8cb252609217869692d15b6e662a31f3ec6342b"
-  integrity sha512-C1wRwuw6LjY0SEopvdi/sONBreehTzJla1ZH/E0t1TEne7Rx/R8RwPj+xhuxS/BOj/jwIc9goFKLro+3kbSo2w==
+rbui-js@../rbui:
+  version "1.0.0-alpha.3"
+  dependencies:
+    "@floating-ui/dom" "^1.6.8"
+    "@hotwired/stimulus" "^3.2.2"
+    chart.js "^4.4.1"
+    date-fns "^2.30.0"
+    fuse.js "^7.0.0"
+    motion "^10.16.4"
+    mustache "^4.2.0"
+    tippy.js "^6.3.7"
+
+rbui-js@rbui-labs/rbui:
+  version "1.0.0-alpha.3"
+  resolved "https://codeload.github.com/rbui-labs/rbui/tar.gz/301f325d1161a59ffdfecb02403754f8dad30c37"
   dependencies:
     "@floating-ui/dom" "^1.6.8"
     "@hotwired/stimulus" "^3.2.2"
