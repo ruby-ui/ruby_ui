@@ -56,7 +56,7 @@ class Docs::ComponentsTable < ApplicationComponent
           components.each do |component|
             TableRow do
               TableCell do
-                TypographyInlineCode { component.name }
+                InlineCode { component.name }
               end
               TableCell do
                 component.built_using

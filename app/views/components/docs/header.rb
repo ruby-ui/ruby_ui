@@ -9,7 +9,7 @@ class Docs::Header < ApplicationComponent
   def view_template
     div(class: "space-y-2") do
       Heading(level: 1) { @title }
-      TypographyLead { @description }
+      Text(as: "p", size: "5", weight: "medium") { @description }
     end
   end
 

@@ -77,7 +77,7 @@ class Docs::TypographyView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Lead", context: self) do
         <<~RUBY
-          TypographyLead { "A modal dialog that interrupts the user with important content and expects a response." }
+          Text(as: "p", size: "5", weight: "medium") { "A modal dialog that interrupts the user with important content and expects a response." }
         RUBY
       end
 
