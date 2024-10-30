@@ -2,54 +2,14 @@
 
 module RBUI
   class Textreview < Lookbook::Preview
-    # H1
+    # Heading
     # ---------------
-    # @param variant [Symbol] select { choices: [primary, title] }
-    # @param weight [Symbol] select { choices: [medium, profile] }
-    def h1(variant: :primary, weight: :medium)
+    # @param level [Symbol] select { choices: [1, 2, 3, 4] }
+    # @param as [Symbol] select { choices: [primary, title] }
+    # @param size [Symbol] select { choices: [1,2,3,4,5,6,7,8,9] }
+    def heading(level: 1)
       render(TestView.new) do
-        TypographyH1(variant:, weight:) { "This is an H1 heading" }
-      end
-    end
-
-    # H2
-    # ---------------
-    # @param variant [Symbol] select { choices: [primary, title] }
-    # @param weight [Symbol] select { choices: [medium, profile] }
-    def h2(variant: :primary, weight: :medium)
-      render(TestView.new) do
-        TypographyH2(variant:, weight:) { "This is an H2 heading" }
-      end
-    end
-
-    # H3
-    # ---------------
-    # @param variant [Symbol] select { choices: [primary, title] }
-    # @param weight [Symbol] select { choices: [medium, profile] }
-    def h3(variant: :primary, weight: :medium)
-      render(TestView.new) do
-        TypographyH3(variant:, weight:) { "This is an H3 heading" }
-      end
-    end
-
-    # H4
-    # ---------------
-    # @param variant [Symbol] select { choices: [primary, title] }
-    # @param weight [Symbol] select { choices: [medium, profile] }
-    def h4(variant: :primary, weight: :medium)
-      render(TestView.new) do
-        TypographyH4(variant:, weight:) { "This is an H4 heading" }
-      end
-    end
-
-    # p
-    # ---------------
-    # @param size [Symbol] select { choices: [xsmall, small, base] }
-    # @param weight [Symbol] select { choices: [medium, normal] }
-    # @param color [Symbol] select { choices: [primary, title, secondary, disabled] }
-    def p(size: :base, weight: :medium, color: :primary)
-      render(TestView.new) do
-        Text(size:, weight:, color:) { "This is an Paragraph" }
+        Heading(level:, as:, size:) { "This is an H1 heading" }
       end
     end
   end

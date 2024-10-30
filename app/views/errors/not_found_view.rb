@@ -5,7 +5,7 @@ class Errors::NotFoundView < ApplicationView
     Card(class: "p-8 space-y-6 flex flex-col items-center") do
       div(class: "space-y-2") do
         Badge(variant: :purple, class: "font-mono") { "STATUS: 404" }
-        TypographyH1(class: "!leading-tight") { "Oops! Page not found" }
+        Heading(level: 1, class: "!leading-tight") { "Oops! Page not found" }
         Text(class: "text-muted-foreground") { "The page you were looking for doesn't exist." }
       end
 

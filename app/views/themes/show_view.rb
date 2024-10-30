@@ -9,7 +9,7 @@ class Themes::ShowView < ApplicationView
     render Shared::Container.new(size: "2xl", class: "py-12") do
       div(class: "md:flex items-center justify-between") do
         div do
-          TypographyH1 { "Themes" }
+          Heading(level: 1) { "Themes" }
           TypographyLead { "Customize your app fast with hand-picked themes." }
         end
         div(class: "flex gap-x-2 mt-4") do
