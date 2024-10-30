@@ -13,12 +13,13 @@ class RBUI::TabsTest < Minitest::Test
           RBUI.TabsTrigger(value: "password") { "Password" }
         end
         RBUI.TabsContent(value: "account") do
-          RBUI.TypographyLarge { "Account" }
-          RBUI.TypographyMuted { "Update your account details." }
+          RBUI::Text(as: "p", size: "4") { "Account" }
+          RBUI::Text(size: "5", weight: "semibold") { "Are you sure absolutely sure?" }
+          RBUI::Text(size: "2", class: "text-muted-foreground") { "Update your account details." }
         end
         RBUI.TabsContent(value: "password") do
-          RBUI.TypographyLarge { "Password" }
-          RBUI.TypographyMuted { "Change your password here. After saving, you'll be logged out." }
+          RBUI::Text(as: "p", size: "4") { "Password" }
+          RBUI::Text(size: "2", class: "text-muted-foreground") { "Change your password here. After saving, you'll be logged out." }
         end
       end
     end

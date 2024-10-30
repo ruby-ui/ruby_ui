@@ -12,7 +12,7 @@ class RBUI::TooltipTest < Minitest::Test
           RBUI.Button(variant: :outline, icon: true) { "?" }
         end
         RBUI.TooltipContent do
-          RBUI.TypographyP { "Add to library" }
+          RBUI::Text(as: "p") { "Add to library" }
         end
       end
     end

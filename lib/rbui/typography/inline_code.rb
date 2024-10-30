@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RBUI
-  class TypographyInlineCode < Base
+  class InlineCode < Base
     def view_template(&)
       code(**attrs, &)
     end

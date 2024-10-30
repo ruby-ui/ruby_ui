@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RBUI
-  class TypographyInlineLink < Base
+  class InlineLink < Base
     def initialize(href:, **attrs)
       super(**attrs)
       @href = href

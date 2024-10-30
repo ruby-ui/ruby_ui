@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency "phlex", "~> 1.10"
   s.add_dependency "rouge", "~> 4.2.0"
-  s.add_dependency "tailwind_merge", ">= 0.12"
+  s.add_dependency "tailwind_merge", "~> 0.12"
 
-  s.add_development_dependency "rake"
-  s.add_development_dependency "standard"
-  s.add_development_dependency "minitest"
+  s.add_development_dependency "rake", "~> 13.0"
+  s.add_development_dependency "standard", "~> 1.0"
+  s.add_development_dependency "minitest", "~> 5.0"
 end
