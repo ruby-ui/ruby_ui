@@ -819,31 +819,6 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-rbui-js@../rbui:
-  version "1.0.0-alpha.3"
-  dependencies:
-    "@floating-ui/dom" "^1.6.8"
-    "@hotwired/stimulus" "^3.2.2"
-    chart.js "^4.4.1"
-    date-fns "^2.30.0"
-    fuse.js "^7.0.0"
-    motion "^10.16.4"
-    mustache "^4.2.0"
-    tippy.js "^6.3.7"
-
-rbui-js@rbui-labs/rbui:
-  version "1.0.0-alpha.3"
-  resolved "https://codeload.github.com/rbui-labs/rbui/tar.gz/301f325d1161a59ffdfecb02403754f8dad30c37"
-  dependencies:
-    "@floating-ui/dom" "^1.6.8"
-    "@hotwired/stimulus" "^3.2.2"
-    chart.js "^4.4.1"
-    date-fns "^2.30.0"
-    fuse.js "^7.0.0"
-    motion "^10.16.4"
-    mustache "^4.2.0"
-    tippy.js "^6.3.7"
-
 read-cache@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/read-cache/-/read-cache-1.0.0.tgz"
@@ -876,6 +851,19 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+ruby_ui_js@ruby-ui/ruby_ui:
+  version "1.0.0-alpha.4"
+  resolved "https://codeload.github.com/ruby-ui/ruby_ui/tar.gz/0ae3ed06e7ce56f17c67e2aa530f7fc2c806dc74"
+  dependencies:
+    "@floating-ui/dom" "^1.6.8"
+    "@hotwired/stimulus" "^3.2.2"
+    chart.js "^4.4.1"
+    date-fns "^2.30.0"
+    fuse.js "^7.0.0"
+    motion "^10.16.4"
+    mustache "^4.2.0"
+    tippy.js "^6.3.7"
 
 run-parallel@^1.1.9:
   version "1.2.0"

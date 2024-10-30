@@ -4,5 +4,5 @@ import { application } from "../../../app/javascript/controllers/application";
 
 // Register all controllers
 
-import RBUI from "rbui-js";
+import RBUI from "ruby_ui_js";
 RBUI.initialize(application);
