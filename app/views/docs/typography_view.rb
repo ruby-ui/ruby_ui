@@ -29,7 +29,7 @@ class Docs::TypographyView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "h4", context: self) do
         <<~RUBY
-          TypographyH4 { "This is an H4 title" }
+          Heading(level: 4) { "This is an H4 title" }
         RUBY
       end
 

@@ -56,7 +56,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
         render Steps::Builder.new do |steps|
           # Find source code
           steps.add_step do
-            TypographyH4 { "Find the source code" }
+            Heading(level: 4) { "Find the source code" }
             Text do
               plain "First, find the source code for the component you want to redefine. In this case, we want to redefine the "
               TypographyInlineCode { "Alert" }
@@ -67,7 +67,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
           end
           # Copy source code to application
           steps.add_step do
-            TypographyH4 { "Copy the source code" }
+            Heading(level: 4) { "Copy the source code" }
             Text do
               plain "Next, copy the source code for the component into your application. You can do this by creating a new file at "
               TypographyInlineCode { "app/views/components/phlex_u_i/alert.rb" }
@@ -84,7 +84,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
           end
           # Make changes
           steps.add_step do
-            TypographyH4 { "Edit to perfection!" }
+            Heading(level: 4) { "Edit to perfection!" }
           end
         end
       end
