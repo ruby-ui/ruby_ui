@@ -2,10 +2,10 @@
 
 class Docs::TailwindCss < ApplicationComponent
   def view_template
-    Text(size: "5", weight: "semibold") { "Add CSS variables" }
+    Text(size: "4", weight: "semibold") { "Add CSS variables" }
     Text do
       plain "Add the following to your "
-      TypographyInlineCode { "app/assets/stylesheets/application.tailwind.css" }
+      InlineCode { "app/assets/stylesheets/application.tailwind.css" }
       plain " file"
     end
     code = css_variables

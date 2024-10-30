@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class Docs::TypographyView < ApplicationView
+class Docs::TypographyView < ComponentView
   def view_template
     component = "Typography"
 
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Typography", description: "Sensible defaults to use for text.")
 
-      Heading(level: 2) { "Usage" }
+      Components.Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "h1", context: self) do
         <<~RUBY
@@ -23,7 +23,7 @@ class Docs::TypographyView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "h3", context: self) do
         <<~RUBY
-          TypographyH3 { "This is an H3 title" }
+          Heading(level: 3) { "This is an H3 title" }
         RUBY
       end
 
@@ -51,45 +51,45 @@ class Docs::TypographyView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "List", context: self) do
         <<~RUBY
-          TypographyList(items: [
-            'Phlex is fast',
-            'Phlex is easy to use',
-            'Phlex is awesome',
-          ])
+          Components.TypographyList(items: [
+              'Phlex is fast',
+              'Phlex is easy to use',
+              'Phlex is awesome',
+            ])
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Numbered List", context: self) do
         <<~RUBY
-          TypographyList(items: [
-            'Copy',
-            'Paste',
-            'Customize',
-          ], numbered: true)
+          Components.TypographyList(items: [
+              'Copy',
+              'Paste',
+              'Customize',
+            ], numbered: true)
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Inline Code", context: self) do
         <<~RUBY
-          TypographyInlineCode { "This is an inline code block" }
+          InlineCode { "This is an inline code block" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Lead", context: self) do
         <<~RUBY
-          Text(as: "p", size: "5", weight: "medium") { "A modal dialog that interrupts the user with important content and expects a response." }
+          Text(as: "p", size: "5", weight: "muted") { "A modal dialog that interrupts the user with important content and expects a response." }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Large", context: self) do
         <<~RUBY
-          Text(size: "5", weight: "semibold") { "Are you sure absolutely sure?" }
+          Text(size: "4", weight: "semibold") { "Are you sure absolutely sure?" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Small", context: self) do
         <<~RUBY
-          TypographySmall { "Email address" }
+          Text(size: "sm") { "Email address" }
         RUBY
       end
 

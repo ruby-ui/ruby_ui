@@ -6,10 +6,10 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       render Docs::Header.new(title: "Theming", description: "Using CSS variables for theming.")
 
       div(class: "space-y-4") do
-        Heading(level: 2) { "Introduction" }
+        Components.Heading(level: 2) { "Introduction" }
         Text do
           plain "Phlex UI uses CSS Variables like "
-          TypographyInlineCode { "--primary: 0 0% 9%" }
+          InlineCode { "--primary: 0 0% 9%" }
           plain " for theming. This allows you to easily customize the look and feel of your application."
         end
         # List the 2 benefits. That we can use CSS variables to change the style, without changing the tailwindcss classes used
@@ -20,19 +20,19 @@ class Docs::GettingStarted::ThemingView < ApplicationView
           span(class: "font-medium") { "two main benefits" }
           plain " to this approach:"
         end
-        TypographyList do
-          TypographyListItem do
+        Components.TypographyList do
+          Components.TypographyListItem do
             span(class: "font-medium") { "Easily customisable design " }
             plain "by updating CSS variables, without having to update the RBUI component."
           end
-          TypographyListItem do
+          Components.TypographyListItem do
             span(class: "font-medium") { "Simpler implementation " }
             plain " for both light and dark mode, by not having to duplicate the TailwindCSS class (e.g. "
-            TypographyInlineCode { "bg-primary" }
+            InlineCode { "bg-primary" }
             plain " will work for both light and dark mode, without having to define both "
-            TypographyInlineCode { "bg-primary" }
+            InlineCode { "bg-primary" }
             plain " and "
-            TypographyInlineCode { "dark:bg-primary-dark" }
+            InlineCode { "dark:bg-primary-dark" }
             plain " - Or something else like that)."
           end
         end
@@ -42,19 +42,19 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         Heading(level: 2) { "Convention" }
         Text do
           plain "We use a simple "
-          TypographyInlineCode { "background" }
+          InlineCode { "background" }
           plain " and "
-          TypographyInlineCode { "foreground" }
+          InlineCode { "foreground" }
           plain " convention for colors. The "
-          TypographyInlineCode { "background" }
+          InlineCode { "background" }
           plain " variable is used for the background color of the component and the "
-          TypographyInlineCode { "foreground" }
+          InlineCode { "foreground" }
           plain " variable is used for the text color. This is similar to other component libraries that are popular in React and elsewhere, and it works well in our experience."
         end
         Alert(class: "bg-transparent") do
           AlertDescription do
             plain "The "
-            TypographyInlineCode { "background" }
+            InlineCode { "background" }
             plain " suffix is omitted when the variable is used for the background color of the component."
           end
         end
@@ -66,13 +66,13 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         Codeblock(code, syntax: :css)
         Text do
           plain "The "
-          TypographyInlineCode { "background" }
+          InlineCode { "background" }
           plain " color of the following component will be "
-          TypographyInlineCode { "hsl(var(--primary))" }
+          InlineCode { "hsl(var(--primary))" }
           plain " and the "
-          TypographyInlineCode { "foreground" }
+          InlineCode { "foreground" }
           plain " color will be "
-          TypographyInlineCode { "hsl(var(--primary-foreground))" }
+          InlineCode { "hsl(var(--primary-foreground))" }
           plain "."
         end
         code = <<~CODE
@@ -101,9 +101,9 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         Heading(level: 2) { "Adding new colors" }
         Text do
           plain "To add new colors, you need to add them to your "
-          TypographyInlineCode { "application.tailwind.css" }
+          InlineCode { "application.tailwind.css" }
           plain " file and to your "
-          TypographyInlineCode { "tailwind.config.js" }
+          InlineCode { "tailwind.config.js" }
           plain " file."
         end
         adding_a_color
@@ -115,20 +115,20 @@ class Docs::GettingStarted::ThemingView < ApplicationView
           plain "It's recommended to use "
           InlineLink(href: "https://www.smashingmagazine.com/2021/07/hsl-colors-css/") { "HSL colors" }
           plain " for your application. However, you can also use other color formats such as "
-          TypographyInlineCode { "rgb" }
+          InlineCode { "rgb" }
           plain " or "
-          TypographyInlineCode { "rgba" }
+          InlineCode { "rgba" }
           plain "."
         end
         Text do
           plain "See "
           InlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
           plain " for more information on how to use "
-          TypographyInlineCode { "rgb" }
+          InlineCode { "rgb" }
           plain ", "
-          TypographyInlineCode { "rgba" }
+          InlineCode { "rgba" }
           plain " or "
-          TypographyInlineCode { "hsl" }
+          InlineCode { "hsl" }
           plain " colors."
         end
       end
@@ -137,7 +137,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
   def css_variables
     space_y_2 do
-      TypographySmall { "Default background color of <body>...etc" }
+      Text(size: "2", weight: "medium") { "Default background color of <body>...etc" }
       code = <<~CODE
         --background: 0 0% 100%;
         --foreground: 222.2 47.4% 11.2%;
@@ -146,7 +146,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Muted backgrounds such as TabsList" }
+      Text(size: "2", weight: "medium") { "Muted backgrounds such as TabsList" }
       code = <<~CODE
         --muted: 210 40% 96.1%;
         --muted-foreground: 215.4 16.3% 46.9%;
@@ -155,7 +155,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Default border color" }
+      Text(size: "2", weight: "medium") { "Default border color" }
       code = <<~CODE
         --border: 214.3 31.8% 91.4%;
       CODE
@@ -163,7 +163,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Border color for inputs such as Input, Select or Textarea" }
+      Text(size: "2", weight: "medium") { "Border color for inputs such as Input, Select or Textarea" }
       code = <<~CODE
         --input: 214.3 31.8% 91.4%;
       CODE
@@ -171,7 +171,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Primary colors for Button" }
+      Text(size: "2", weight: "medium") { "Primary colors for Button" }
       code = <<~CODE
         --primary: 222.2 47.4% 11.2%;
         --primary-foreground: 210 40% 98%;
@@ -180,7 +180,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Secondary colors for Button" }
+      Text(size: "2", weight: "medium") { "Secondary colors for Button" }
       code = <<~CODE
         --secondary: 210 40% 96.1%;
         --secondary-foreground: 222.2 47.4% 11.2%;
@@ -189,7 +189,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Used for accents such as hover effects on DropdownMenu::Item, Select::Item... etc" }
+      Text(size: "2", weight: "medium") { "Used for accents such as hover effects on DropdownMenu::Item, Select::Item... etc" }
       code = <<~CODE
         --accent: 210 40% 96.1%;
         --accent-foreground: 222.2 47.4% 11.2%;
@@ -198,7 +198,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Used for destructive actions such as Button.new(variant: :destructive)" }
+      Text(size: "2", weight: "medium") { "Used for destructive actions such as Button.new(variant: :destructive)" }
       code = <<~CODE
         --destructive: 0 100% 50%;
         --destructive-foreground: 210 40% 98%;
@@ -207,7 +207,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Used for focus ring" }
+      Text(size: "2", weight: "medium") { "Used for focus ring" }
       code = <<~CODE
         --ring: 215 20.2% 65.1%;
       CODE
@@ -215,7 +215,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "Border radius for card, input and buttons" }
+      Text(size: "2", weight: "medium") { "Border radius for card, input and buttons" }
       code = <<~CODE
         --radius: 0.5rem;
       CODE
@@ -225,7 +225,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
   def adding_a_color
     space_y_2 do
-      TypographySmall do
+      Text(size: "2", weight: "medium") do
         span(class: "text-muted-foreground") { "app/stylesheets/" }
         plain "application.tailwind.css"
       end
@@ -244,7 +244,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
     end
 
     space_y_2 do
-      TypographySmall { "tailwind.config.js" }
+      Text(size: "2", weight: "medium") { "tailwind.config.js" }
       code = <<~CODE
         module.exports = {
           theme: {
@@ -262,9 +262,9 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
     Text do
       plain "You can now use the "
-      TypographyInlineCode { "contrast" }
+      InlineCode { "contrast" }
       plain " and "
-      TypographyInlineCode { "contrast-foreground" }
+      InlineCode { "contrast-foreground" }
       plain " variables in your application."
     end
 

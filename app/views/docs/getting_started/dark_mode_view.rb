@@ -12,9 +12,9 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
           plain "RBUI is setup to use the "
           InlineLink(href: "https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually") { "TailwindCSS 'class' strategy" }
           plain ". This means that you can toggle dark mode by adding or removing the "
-          TypographyInlineCode { "dark" }
+          InlineCode { "dark" }
           plain " class from the "
-          TypographyInlineCode { "<body>" }
+          InlineCode { "<body>" }
           plain " element."
         end
         Text { "To enable dark mode, follow the installation below." }
@@ -24,23 +24,23 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
         heading2 { "Installation" }
         Text do
           plain "To implement Dark mode, add the "
-          TypographyInlineCode { "ThemeToggle" }
+          InlineCode { "ThemeToggle" }
           plain " component (below) to your application layout file. This ensures it's available on all pages."
         end
         Text do
           plain "This component is a button that toggles the "
-          TypographyInlineCode { "dark" }
+          InlineCode { "dark" }
           plain " class on the "
-          TypographyInlineCode { "<body>" }
+          InlineCode { "<body>" }
           plain " element, using the "
-          TypographyInlineCode { "ToggleThemeController" }
+          InlineCode { "ToggleThemeController" }
           plain " Stimulus controller."
         end
         Alert do
           AlertTitle { "Pro tip" }
           AlertDescription do
             plain "You can hide the theme toggle on specific pages, like so: "
-            TypographyInlineCode { "ThemeToggle(class: 'hidden')" }
+            InlineCode { "ThemeToggle(class: 'hidden')" }
             plain "."
           end
         end

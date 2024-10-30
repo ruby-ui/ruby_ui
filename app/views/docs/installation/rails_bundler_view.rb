@@ -10,11 +10,11 @@ class Docs::Installation::RailsBundlerView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install RBUI within a Rails app that employs JS bundling.")
 
-      Heading(level: 2)(class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
         steps.add_step do
           step_container do
-            Text(size: "5", weight: "semibold") { "Generate a new Rails application" }
+            Text(size: "4", weight: "semibold") { "Generate a new Rails application" }
             Text do
               plain "In case you don't have a Rails application set up yet, let's start by generating one. The demo uses esbuild, however feel free to change esbuild to use bun, webpack or rollup.js. "
               InlineLink(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#adding-npm-packages-with-javascript-bundlers") { "Read more about JS bundlers in Rails here." }
@@ -41,7 +41,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 1
         steps.add_step do
           step_container do
-            Text(size: "5", weight: "semibold") { "Install Phlex" }
+            Text(size: "4", weight: "semibold") { "Install Phlex" }
             Text { "Run the following in the terminal to install phlex for Rails" }
             code = <<~CODE
               bundle add phlex-rails
@@ -66,7 +66,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 2
         steps.add_step do
           step_container do
-            Text(size: "5", weight: "semibold") { "Install RBUI gem" }
+            Text(size: "4", weight: "semibold") { "Install RBUI gem" }
             Text { "Run the following in the terminal to install the RBUI Component Library" }
             code = <<~CODE
               bundle add phlex_ui
@@ -77,10 +77,10 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 3
         steps.add_step do
           step_container do
-            Text(size: "5", weight: "semibold") { "Include RBUI module" }
+            Text(size: "4", weight: "semibold") { "Include RBUI module" }
             Text do
               plain "Include RBUI module in your "
-              TypographyInlineCode(class: "whitespace-nowrap") { "application_component.rb" }
+              InlineCode(class: "whitespace-nowrap") { "application_component.rb" }
               plain " file"
             end
             code = <<~CODE
@@ -94,7 +94,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 4
         steps.add_step do
           step_container do
-            Text(size: "5", weight: "semibold") { "Next step, JS!" }
+            Text(size: "4", weight: "semibold") { "Next step, JS!" }
             Text { "Let's make the components come to life by adding some JavaScript." }
           end
         end
@@ -110,7 +110,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 1
         steps.add_step do
           step_container do
-            Text(size: "5", weight: "semibold") { "Install TailwindCSS" }
+            Text(size: "4", weight: "semibold") { "Install TailwindCSS" }
             Text do
               plain "Most will already have TailwindCSS installed, however if you do not, first follow the "
               InlineLink(href: "https://tailwindcss.com/docs/guides/ruby-on-rails") { "TailwindCSS installation guide" }
@@ -121,7 +121,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 2
         steps.add_step do
           step_container do
-            Text(size: "5", weight: "semibold") { "Install Dependencies" }
+            Text(size: "4", weight: "semibold") { "Install Dependencies" }
 
             Text { "Run the following in the terminal to install the dependencies" }
 
@@ -160,7 +160,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
       # STEP 1
       steps.add_step do
         step_container do
-          Text(size: "5", weight: "semibold") { "Install package" }
+          Text(size: "4", weight: "semibold") { "Install package" }
           Text { "Run the following in the terminal to install RBUI JS package" }
           code = <<~CODE
             yarn add rbui-js
@@ -171,10 +171,10 @@ class Docs::Installation::RailsBundlerView < ApplicationView
 
       # STEP 2
       steps.add_step do
-        Text(size: "5", weight: "semibold") { "Import package" }
+        Text(size: "4", weight: "semibold") { "Import package" }
         Text do
           plain "Import the package in your "
-          TypographyInlineCode(class: "whitespace-nowrap") { "app/javascript/application.js" }
+          InlineCode(class: "whitespace-nowrap") { "app/javascript/application.js" }
           plain " file"
         end
         code = <<~CODE

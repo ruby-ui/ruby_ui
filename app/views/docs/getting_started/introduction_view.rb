@@ -21,16 +21,16 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       div(class: "space-y-4") do
         Heading(level: 2) { "Core ingredients" }
         Text { "RBUI is built on top of 3 core ingredients: " }
-        TypographyList do
-          TypographyListItem(class: "space-y-2") do
+        Components.TypographyList do
+          Components.TypographyListItem(class: "space-y-2") do
             span(class: "font-bold") { "Phlex" }
             plain " - A framework for building fast, reusable, testable views in pure Ruby."
           end
-          TypographyListItem(class: "space-y-2") do
+          Components.TypographyListItem(class: "space-y-2") do
             span(class: "font-bold") { "TailwindCSS" }
             plain " - A utility-first CSS framework for rapidly building custom designs."
           end
-          TypographyListItem(class: "space-y-2") do
+          Components.TypographyListItem(class: "space-y-2") do
             span(class: "font-bold") { "Stimulus JS" }
             plain " - A modest JavaScript framework for the HTML you already have."
           end
@@ -56,9 +56,9 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
 
       div(class: "space-y-4") do
         Heading(level: 2) { "Goals of RBUI" }
-        TypographyList(numbered: true) do
-          TypographyListItem { "Create a reusable UI component library specifically for Ruby devs" }
-          TypographyListItem { "Enable Ruby devs to create custom and complex UIs without needing to write CSS or JS" }
+        Components.TypographyList(numbered: true) do
+          Components.TypographyListItem { "Create a reusable UI component library specifically for Ruby devs" }
+          Components.TypographyListItem { "Enable Ruby devs to create custom and complex UIs without needing to write CSS or JS" }
         end
       end
 
@@ -71,15 +71,15 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
           plain "."
         end
         Text { "After some time using Phlex, it's obvious to me that this is a better way to render your views in Ruby apps. Phlex is intuitive and simple. It is also incredibly fast (12x faster than ERB, 5x faster than ViewComponent), it also makes your code more organised and leads to a better developer experience." }
-        Text(size: "5", weight: "semibold") { "Same same, but different" }
+        Text(size: "4", weight: "semibold") { "Same same, but different" }
         Text do
           plain "Phlex is essentially just HTML in Ruby form, bundled into a component. It's a simple concept, but it's incredibly powerful. It allows you to write your views in pure Ruby, without the need for a templating language. This means you can use all the features of Ruby, including loops, conditionals, and more."
         end
         Text do
           plain "As an example, if you want to render a "
-          TypographyInlineCode { "<p class='text-sm font-muted-foreground'>Phlex. Same same, but different.</p>" }
+          InlineCode { "<p class='text-sm font-muted-foreground'>Phlex. Same same, but different.</p>" }
           plain " element, you can do it like this "
-          TypographyInlineCode { "p(class: 'text-sm font-muted-foreground') { 'Phlex. Same same, but different.' }" }
+          InlineCode { "p(class: 'text-sm font-muted-foreground') { 'Phlex. Same same, but different.' }" }
           plain "."
         end
         Text do
@@ -92,24 +92,24 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       div(class: "space-y-4") do
         Heading(level: 2) { "Acknowledgments" }
         Text { "I'd like to thank the following projects and people for helping me build RBUI" }
-        TypographyList do
-          TypographyListItem do
+        Components.TypographyList do
+          Components.TypographyListItem do
             InlineLink(href: "https://github.com/joeldrapper") { "Joel Drapper" }
             plain " - Thanks for creating Phlex, and for your support and advice."
           end
-          TypographyListItem do
+          Components.TypographyListItem do
             InlineLink(href: "https://phlex.fun") { "Phlex" }
             plain " - The foundation of RBUI."
           end
-          TypographyListItem do
+          Components.TypographyListItem do
             InlineLink(href: "https://stimulus.hotwired.dev") { "Stimulus JS" }
             plain " - A quicker way to write JavaScript."
           end
-          TypographyListItem do
+          Components.TypographyListItem do
             InlineLink(href: "http://tailwindcss.com") { "TailwindCSS" }
             plain " - I wouldn't build without it."
           end
-          TypographyListItem do
+          Components.TypographyListItem do
             InlineLink(href: "https://twitter.com/george_kettle") { "My Twitter followers" }
             plain " - Thanks for all the ideas, feedback and support."
           end

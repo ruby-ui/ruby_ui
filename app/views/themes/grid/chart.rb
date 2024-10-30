@@ -6,7 +6,7 @@ module Themes
       def view_template
         Card(class: "p-8 space-y-6") do
           div do
-            Text(size: "5", weight: "semibold") { "Phlex Speed Tests" }
+            Text(size: "4", weight: "semibold") { "Phlex Speed Tests" }
             Text(size: "2", class: "text-muted-foreground") { "Render time for a simple page" }
           end
           Chart(options: chart_options)

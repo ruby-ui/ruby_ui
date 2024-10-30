@@ -2,10 +2,10 @@
 
 class Docs::TailwindConfig < ApplicationComponent
   def view_template
-    Text(size: "5", weight: "semibold") { "Update Tailwind Configuration" }
+    Text(size: "4", weight: "semibold") { "Update Tailwind Configuration" }
     Text do
       plain "Add the following to your "
-      TypographyInlineCode(class: "whitespace-nowrap") { "tailwind.config.js" }
+      InlineCode(class: "whitespace-nowrap") { "tailwind.config.js" }
       plain " file"
     end
     Codeblock(tailwind_config, syntax: :javascript)

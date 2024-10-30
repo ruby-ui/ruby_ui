@@ -6,7 +6,7 @@ module Themes
       def view_template
         Card(class: "p-8 space-y-4") do
           div do
-            Text(size: "5", weight: "semibold") { "Create an account" }
+            Text(size: "4", weight: "semibold") { "Create an account" }
             Text(size: "2", class: "text-muted-foreground") { "Enter your email below to create your account" }
           end
           oauth_buttons
