@@ -7,7 +7,7 @@ class Docs::ComponentsTable < ApplicationComponent
   end
 
   def view_template
-    TypographyH2 { "Components" }
+    Heading(level: 2) { "Components" }
 
     Tabs(default_value: "account", class: "") do
       TabsList do

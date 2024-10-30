@@ -7,7 +7,7 @@ class Docs::GettingStarted::InstallationView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Installation", description: "How to install dependencies and structure your app.")
 
-      TypographyH2 { "Select a Framework" }
+      Heading(level: 2) { "Select a Framework" }
       div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4") do
         framework_card(title: "Rails --- JS Bundler", link: helpers.docs_installation_rails_bundler_path) { rails_logo }
         framework_card(title: "Rails --- Importmaps", link: helpers.docs_installation_rails_importmaps_path) { rails_logo }

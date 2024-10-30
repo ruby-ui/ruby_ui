@@ -6,7 +6,7 @@ class Docs::CalendarView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Calendar", description: "A date field component that allows users to enter and edit date.")
 
-      TypographyH2.new { "Usage" }
+      Heading(level: 2).new { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Connect to input", context: self) do
         <<~RUBY

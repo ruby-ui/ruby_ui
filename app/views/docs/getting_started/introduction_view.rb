@@ -6,7 +6,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       render Docs::Header.new(title: "Introduction", description: "Reusable UI components for Ruby developers")
 
       div(class: "space-y-4") do
-        TypographyH2 { "About" }
+        Heading(level: 2) { "About" }
         Text do
           plain "RBUI is a UI framework for Ruby developers, built on top of "
           TypographyInlineLink(href: "http://phlex.fun") { "Phlex" }
@@ -19,7 +19,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Core ingredients" }
+        Heading(level: 2) { "Core ingredients" }
         Text { "RBUI is built on top of 3 core ingredients: " }
         TypographyList do
           TypographyListItem(class: "space-y-2") do
@@ -38,7 +38,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Why I built RBUI" }
+        Heading(level: 2) { "Why I built RBUI" }
         Text do
           plain "Many Ruby developers are familiar with "
           TypographyInlineLink(href: "https://rubyonrails.org") { "Rails" }
@@ -55,7 +55,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Goals of RBUI" }
+        Heading(level: 2) { "Goals of RBUI" }
         TypographyList(numbered: true) do
           TypographyListItem { "Create a reusable UI component library specifically for Ruby devs" }
           TypographyListItem { "Enable Ruby devs to create custom and complex UIs without needing to write CSS or JS" }
@@ -63,7 +63,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "My experience using Phlex" }
+        Heading(level: 2) { "My experience using Phlex" }
         Text do
           span(class: "font-medium") { "I was initially skeptical about Phlex. " }
           plain "I worried about using an abstraction layer on top of HTML and thought this would be a bad move. However, after trying it I realised that I was wrong, and "
@@ -90,7 +90,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Acknowledgments" }
+        Heading(level: 2) { "Acknowledgments" }
         Text { "I'd like to thank the following projects and people for helping me build RBUI" }
         TypographyList do
           TypographyListItem do

@@ -10,7 +10,7 @@ class Docs::TableView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-8") do
       render Docs::Header.new(title: "Table", description: "A responsive table component.")
 
-      TypographyH2 { "Usage" }
+      Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Without builder", context: self) do
         <<~RUBY

@@ -6,7 +6,7 @@ class Docs::AlertDialogView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Alert Dialog", description: "A modal dialog that interrupts the user with important content and expects a response.")
 
-      TypographyH2 { "Usage" }
+      Heading(level: 2) { "Usage" }
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           AlertDialog do

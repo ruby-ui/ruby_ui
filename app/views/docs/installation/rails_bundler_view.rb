@@ -10,7 +10,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install RBUI within a Rails app that employs JS bundling.")
 
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
+      Heading(level: 2)(class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
         steps.add_step do
           step_container do
@@ -36,7 +36,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         end
       end
 
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Install the gem" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Install the gem" }
       render Steps::Builder.new do |steps|
         # STEP 1
         steps.add_step do
@@ -101,11 +101,11 @@ class Docs::Installation::RailsBundlerView < ApplicationView
       end
 
       # JS INSTALLATION
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Install JS" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Install JS" }
       js_installation
 
       # STYLE INSTALLATION
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Install Styles" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Install Styles" }
       render Steps::Builder.new do |steps|
         # STEP 1
         steps.add_step do

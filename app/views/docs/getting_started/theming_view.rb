@@ -6,7 +6,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       render Docs::Header.new(title: "Theming", description: "Using CSS variables for theming.")
 
       div(class: "space-y-4") do
-        TypographyH2 { "Introduction" }
+        Heading(level: 2) { "Introduction" }
         Text do
           plain "Phlex UI uses CSS Variables like "
           TypographyInlineCode { "--primary: 0 0% 9%" }
@@ -39,7 +39,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Convention" }
+        Heading(level: 2) { "Convention" }
         Text do
           plain "We use a simple "
           TypographyInlineCode { "background" }
@@ -90,7 +90,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "List of variables" }
+        Heading(level: 2) { "List of variables" }
         Text { "Here's the list of variables available for customization:" }
         Card(class: "space-y-4 shadow-none p-4 md:p-6") do
           css_variables
@@ -98,7 +98,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Adding new colors" }
+        Heading(level: 2) { "Adding new colors" }
         Text do
           plain "To add new colors, you need to add them to your "
           TypographyInlineCode { "application.tailwind.css" }
@@ -110,7 +110,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Other color formats" }
+        Heading(level: 2) { "Other color formats" }
         Text do
           plain "It's recommended to use "
           TypographyInlineLink(href: "https://www.smashingmagazine.com/2021/07/hsl-colors-css/") { "HSL colors" }

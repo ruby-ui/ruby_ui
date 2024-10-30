@@ -6,12 +6,12 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
       render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, RBUI allows you to tailor the components to your specific needs.")
 
       div(class: "space-y-4") do
-        TypographyH2 { "Introduction" }
+        Heading(level: 2) { "Introduction" }
         Text { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. RBUI is designed to facilitate this process with ease." }
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Updating attributes & classes" }
+        Heading(level: 2) { "Updating attributes & classes" }
         Text do
           plain "All components accept any HTML attribute, and will pass it through to the underlying HTML element. This is great for quick changes, or when you need to add a custom class for a one off situation."
         end
@@ -42,7 +42,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
       end
 
       div(class: "space-y-4") do
-        TypographyH2 { "Redefining components" }
+        Heading(level: 2) { "Redefining components" }
         Text { "Redefining components is a powerful concept that allows you to redefine the underlying components through inheritance, or completely. This is useful when you need to make more complex changes to the components, that can't be achieved with attributes and classes alone. In other words, you can change the whole damn thing if you like." }
         # to redefine a component, find the component you want to redefine in the source code, and copy it into your application. Then, make the changes you need. For example, if you want to change the button component, you can copy the button component from the source code, and paste it into your application. Then, you can make the changes you need.
         Text(size: "5", weight: "semibold") { "How it works" }

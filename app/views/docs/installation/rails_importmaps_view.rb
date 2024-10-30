@@ -16,7 +16,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         AlertDescription { "This means that animation using tailwind-animate plugin will not work. I am thinking of a new way to implement this, most likely with a stimulus controller for animations." }
       end
 
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Creating a Rails app" }
       render Steps::Builder.new do |steps|
         steps.add_step do
           step_container do
@@ -42,7 +42,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         end
       end
 
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Install the gem" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Install the gem" }
       render Steps::Builder.new do |steps|
         # STEP 1
         steps.add_step do
@@ -100,11 +100,11 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
       end
 
       # JS INSTALLATION
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Install JS" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Install JS" }
       js_installation
 
       # STYLE INSTALLATION
-      TypographyH2(class: "!text-2xl pb-4 border-b") { "Install Styles" }
+      Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Install Styles" }
       render Steps::Builder.new do |steps|
         # STEP 1
         steps.add_step do

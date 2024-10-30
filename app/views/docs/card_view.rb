@@ -6,7 +6,7 @@ class Docs::CardView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Card", description: "Displays a card with header, content, and footer.")
 
-      TypographyH2 { "Usage" }
+      Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Card with image", context: self) do
         <<~RUBY

@@ -7,7 +7,7 @@ class Docs::InputView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Input", description: "Displays a form input field or a component that looks like an input field.")
 
-      TypographyH2 { "Usage" }
+      Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Email", context: self) do
         <<~RUBY

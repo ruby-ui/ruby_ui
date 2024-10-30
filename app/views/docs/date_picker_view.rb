@@ -7,7 +7,7 @@ class Docs::DatePickerView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Date Picker", description: "A date picker component with input.")
 
-      TypographyH2 { "Usage" }
+      Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Single Date", context: self) do
         <<~RUBY

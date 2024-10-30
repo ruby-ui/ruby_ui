@@ -5,7 +5,7 @@ class Docs::ChartView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Chart", description: "Displays information in a visual way.")
 
-      TypographyH2 { "Introduction" }
+      Heading(level: 2) { "Introduction" }
 
       Text do
         plain "RBUI uses "
@@ -15,7 +15,7 @@ class Docs::ChartView < ApplicationView
         plain ". "
       end
 
-      TypographyH2 { "Usage" }
+      Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Bar Chart", context: self) do
         <<~RUBY

@@ -6,7 +6,7 @@ class Docs::AspectRatioView < ApplicationView
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Aspect Ratio", description: "Displays content within a desired ratio.")
 
-      TypographyH2 { "Usage" }
+      Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "16/9", context: self) do
         <<~RUBY

@@ -91,7 +91,7 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
   end
 
   def heading2(&)
-    TypographyH2(class: "!text-2xl pb-4 border-b", &)
+    Heading(level: 2, class: "!text-2xl pb-4 border-b", &)
   end
 
   def space_y_4(&)
