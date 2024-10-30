@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RBUI
-  class TypographyPreview < Lookbook::Preview
+  class Textreview < Lookbook::Preview
     # H1
     # ---------------
     # @param variant [Symbol] select { choices: [primary, title] }
@@ -49,7 +49,7 @@ module RBUI
     # @param color [Symbol] select { choices: [primary, title, secondary, disabled] }
     def p(size: :base, weight: :medium, color: :primary)
       render(TestView.new) do
-        TypographyP(size:, weight:, color:) { "This is an Paragraph" }
+        Text(size:, weight:, color:) { "This is an Paragraph" }
       end
     end
   end

@@ -15,7 +15,7 @@ class Docs::ClipboardView < ApplicationView
 
             ClipboardTrigger do
               Link(href: "#", class: "gap-1") do
-                TypographyP(size: :small, class: "text-primary") { "Copy the secret of success!!!" }
+                Text(size: :small, class: "text-primary") { "Copy the secret of success!!!" }
               end
             end
           end

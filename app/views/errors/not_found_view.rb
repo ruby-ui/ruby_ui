@@ -6,7 +6,7 @@ class Errors::NotFoundView < ApplicationView
       div(class: "space-y-2") do
         Badge(variant: :purple, class: "font-mono") { "STATUS: 404" }
         TypographyH1(class: "!leading-tight") { "Oops! Page not found" }
-        TypographyP(class: "text-muted-foreground") { "The page you were looking for doesn't exist." }
+        Text(class: "text-muted-foreground") { "The page you were looking for doesn't exist." }
       end
 
       Link(href: helpers.root_path, variant: :primary, class: "w-full") do

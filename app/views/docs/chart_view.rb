@@ -7,7 +7,7 @@ class Docs::ChartView < ApplicationView
 
       TypographyH2 { "Introduction" }
 
-      TypographyP do
+      Text do
         plain "RBUI uses "
         TypographyInlineLink(href: "https://www.chartjs.org/") { "Chart.js" }
         plain " to render charts. Chart.js is a free open-source JavaScript library for data visualization, which supports 8 chart types: bar, line, area, pie, bubble, radar, polar, and scatter. If you're unfamiliar with Chart.js. We recommend the "

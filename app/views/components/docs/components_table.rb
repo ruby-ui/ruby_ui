@@ -28,7 +28,7 @@ class Docs::ComponentsTable < ApplicationComponent
               if @file_components.present?
                 component_table_view(@file_components)
               else
-                TypographyP { "No components for this page" }
+                Text { "No components for this page" }
               end
             end
           end

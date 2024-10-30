@@ -7,7 +7,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
       div(class: "space-y-4") do
         TypographyH2 { "Introduction" }
-        TypographyP do
+        Text do
           plain "Phlex UI uses CSS Variables like "
           TypographyInlineCode { "--primary: 0 0% 9%" }
           plain " for theming. This allows you to easily customize the look and feel of your application."
@@ -15,7 +15,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         # List the 2 benefits. That we can use CSS variables to change the style, without changing the tailwindcss classes used
         # And that we can change the style of a particular tailwindcss class for both light and dark mode, without having to duplicate the tailwindcss class
         # For instance, bg-primary will work for both light and dark mode, without having to define both bg-primary and dark:bg-primary-dark (or something else like that)
-        TypographyP do
+        Text do
           plain "There are "
           span(class: "font-medium") { "two main benefits" }
           plain " to this approach:"
@@ -40,7 +40,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
       div(class: "space-y-4") do
         TypographyH2 { "Convention" }
-        TypographyP do
+        Text do
           plain "We use a simple "
           TypographyInlineCode { "background" }
           plain " and "
@@ -58,13 +58,13 @@ class Docs::GettingStarted::ThemingView < ApplicationView
             plain " suffix is omitted when the variable is used for the background color of the component."
           end
         end
-        TypographyP { "Given the following CSS variables:" }
+        Text { "Given the following CSS variables:" }
         code = <<~CODE
           --primary: 222.2 47.4% 11.2%;
           --primary-foreground: 210 40% 98%;
         CODE
         Codeblock(code, syntax: :css)
-        TypographyP do
+        Text do
           plain "The "
           TypographyInlineCode { "background" }
           plain " color of the following component will be "
@@ -91,7 +91,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
       div(class: "space-y-4") do
         TypographyH2 { "List of variables" }
-        TypographyP { "Here's the list of variables available for customization:" }
+        Text { "Here's the list of variables available for customization:" }
         Card(class: "space-y-4 shadow-none p-4 md:p-6") do
           css_variables
         end
@@ -99,7 +99,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
       div(class: "space-y-4") do
         TypographyH2 { "Adding new colors" }
-        TypographyP do
+        Text do
           plain "To add new colors, you need to add them to your "
           TypographyInlineCode { "application.tailwind.css" }
           plain " file and to your "
@@ -111,7 +111,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
 
       div(class: "space-y-4") do
         TypographyH2 { "Other color formats" }
-        TypographyP do
+        Text do
           plain "It's recommended to use "
           TypographyInlineLink(href: "https://www.smashingmagazine.com/2021/07/hsl-colors-css/") { "HSL colors" }
           plain " for your application. However, you can also use other color formats such as "
@@ -120,7 +120,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
           TypographyInlineCode { "rgba" }
           plain "."
         end
-        TypographyP do
+        Text do
           plain "See "
           TypographyInlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
           plain " for more information on how to use "
@@ -260,7 +260,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
       Codeblock(code, syntax: :javascript)
     end
 
-    TypographyP do
+    Text do
       plain "You can now use the "
       TypographyInlineCode { "contrast" }
       plain " and "

@@ -18,7 +18,7 @@ class Docs::TooltipView < ApplicationView
               end
             end
             TooltipContent do
-              TypographyP { "Add to library" }
+              Text { "Add to library" }
             end
           end
         RUBY

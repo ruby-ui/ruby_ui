@@ -35,13 +35,13 @@ class Docs::TypographyView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "p", context: self) do
         <<~RUBY
-          TypographyP { "This is an P tag" }
+          Text { "This is an P tag" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Inline Link", context: self) do
         <<~RUBY
-          TypographyP(class: 'text-center') do
+          Text(class: 'text-center') do
             plain "Checkout our "
             TypographyInlineLink(href: helpers.docs_installation_path) { "installation instructions" }
             plain " to get started."

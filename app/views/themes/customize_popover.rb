@@ -17,7 +17,7 @@ module Themes
         PopoverContent(class: "w-96 p-6") do
           div(class: "space-y-0") do
             Text(size: "5", weight: "semibold") { "Customize" }
-            TypographyP(class: "text-muted-foreground") { "Choose how your app looks" }
+            Text(class: "text-muted-foreground") { "Choose how your app looks" }
           end
           div(class: "grid grid-cols-3 gap-2 mt-4") do
             Theme::CSS.all_themes.each do |name, color_hash|

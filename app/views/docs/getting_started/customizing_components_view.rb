@@ -7,16 +7,16 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
 
       div(class: "space-y-4") do
         TypographyH2 { "Introduction" }
-        TypographyP { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. RBUI is designed to facilitate this process with ease." }
+        Text { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. RBUI is designed to facilitate this process with ease." }
       end
 
       div(class: "space-y-4") do
         TypographyH2 { "Updating attributes & classes" }
-        TypographyP do
+        Text do
           plain "All components accept any HTML attribute, and will pass it through to the underlying HTML element. This is great for quick changes, or when you need to add a custom class for a one off situation."
         end
         Text(size: "5", weight: "semibold") { "Adding attributes" }
-        TypographyP do
+        Text do
           plain "By default, attribute values are added to the existing values of the component. For instance, if you want to make a button span the full width of its container, you can do it like this: "
           TypographyInlineCode { "Button(class: 'w-full')" }
           plain ". This will add the "
@@ -24,7 +24,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
           plain " class to the button, causing it to span the full width of its container."
         end
         Text(size: "5", weight: "semibold") { "Overriding Classes" }
-        TypographyP do
+        Text do
           plain "There might be instances where you need to override a specific style attribute. For instance, if you wish to alter the color of a button while keeping the rest of the styles intact, you can achieve this as follows: "
           TypographyInlineCode { "Button(class: '!bg-red-500')" }
           plain ". This will replace the default background color with red by utilizing the "
@@ -32,7 +32,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
           plain " modifier."
         end
         Text(size: "5", weight: "semibold") { "Replacing Attributes" }
-        TypographyP do
+        Text do
           plain "In some rare cases, you might need to replace the default value of an attribute entirely. For instance, if you want to change all the styles of a button, you can do it as follows: "
           TypographyInlineCode { "Button(class!: 'bg-red-500 text-white py-2 px-4 font-medium hover:bg-red-600')" }
           plain ". This will override all the default classes and apply only the ones you specify. In this case, it will apply "
@@ -43,21 +43,21 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
 
       div(class: "space-y-4") do
         TypographyH2 { "Redefining components" }
-        TypographyP { "Redefining components is a powerful concept that allows you to redefine the underlying components through inheritance, or completely. This is useful when you need to make more complex changes to the components, that can't be achieved with attributes and classes alone. In other words, you can change the whole damn thing if you like." }
+        Text { "Redefining components is a powerful concept that allows you to redefine the underlying components through inheritance, or completely. This is useful when you need to make more complex changes to the components, that can't be achieved with attributes and classes alone. In other words, you can change the whole damn thing if you like." }
         # to redefine a component, find the component you want to redefine in the source code, and copy it into your application. Then, make the changes you need. For example, if you want to change the button component, you can copy the button component from the source code, and paste it into your application. Then, you can make the changes you need.
         Text(size: "5", weight: "semibold") { "How it works" }
-        TypographyP do
+        Text do
           plain "To redefine a component, find the component you want to redefine in the source code, and copy it into your application. Then, make the changes you need. For example, if you want to change the button component, you can copy the button component from the source code, and paste it into your application. Then, you can make the changes you need."
         end
         Text(size: "5", weight: "semibold") { "Let's redefine the Alert component" }
-        TypographyP do
+        Text do
           plain "Let's say you want to change the alert component to use a particular icon every time it is rendered. You can do this by redefining the component as follows:"
         end
         render Steps::Builder.new do |steps|
           # Find source code
           steps.add_step do
             TypographyH4 { "Find the source code" }
-            TypographyP do
+            Text do
               plain "First, find the source code for the component you want to redefine. In this case, we want to redefine the "
               TypographyInlineCode { "Alert" }
               plain " component, so we'll find the source code for the alert component "
@@ -68,7 +68,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
           # Copy source code to application
           steps.add_step do
             TypographyH4 { "Copy the source code" }
-            TypographyP do
+            Text do
               plain "Next, copy the source code for the component into your application. You can do this by creating a new file at "
               TypographyInlineCode { "app/views/components/phlex_u_i/alert.rb" }
               plain ", and pasting the source code into it. When using the  "
@@ -77,7 +77,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
               TypographyInlineCode { "app/views/components/phlex_u_i" }
               plain " directory."
             end
-            TypographyP do
+            Text do
               plain "Your new file should look something like this:"
             end
             Codeblock(alert_component_definition, syntax: :ruby)
