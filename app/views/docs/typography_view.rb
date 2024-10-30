@@ -43,7 +43,7 @@ class Docs::TypographyView < ApplicationView
         <<~RUBY
           Text(class: 'text-center') do
             plain "Checkout our "
-            TypographyInlineLink(href: helpers.docs_installation_path) { "installation instructions" }
+            InlineLink(href: helpers.docs_installation_path) { "installation instructions" }
             plain " to get started."
           end
         RUBY

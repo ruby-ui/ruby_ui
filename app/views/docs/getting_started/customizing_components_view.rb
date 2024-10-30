@@ -61,7 +61,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
               plain "First, find the source code for the component you want to redefine. In this case, we want to redefine the "
               TypographyInlineCode { "Alert" }
               plain " component, so we'll find the source code for the alert component "
-              TypographyInlineLink(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb") { "here on Github" }
+              InlineLink(href: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/alert.rb") { "here on Github" }
               plain "."
             end
           end

@@ -83,7 +83,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
           AlertDescription do
             span(class: "font-medium") { "CSS variables must be defined without color space function" }
             plain ". See the "
-            TypographyInlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
+            InlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
             plain " for more information."
           end
         end
@@ -113,7 +113,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         Heading(level: 2) { "Other color formats" }
         Text do
           plain "It's recommended to use "
-          TypographyInlineLink(href: "https://www.smashingmagazine.com/2021/07/hsl-colors-css/") { "HSL colors" }
+          InlineLink(href: "https://www.smashingmagazine.com/2021/07/hsl-colors-css/") { "HSL colors" }
           plain " for your application. However, you can also use other color formats such as "
           TypographyInlineCode { "rgb" }
           plain " or "
@@ -122,7 +122,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         end
         Text do
           plain "See "
-          TypographyInlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
+          InlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
           plain " for more information on how to use "
           TypographyInlineCode { "rgb" }
           plain ", "

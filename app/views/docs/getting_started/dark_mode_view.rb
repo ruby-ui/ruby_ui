@@ -10,7 +10,7 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
         Text { "RBUI seamlessly integrates dark mode, a crucial feature for modern applications, enhancing user experience and catering to diverse user preferences." }
         Text do
           plain "RBUI is setup to use the "
-          TypographyInlineLink(href: "https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually") { "TailwindCSS 'class' strategy" }
+          InlineLink(href: "https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually") { "TailwindCSS 'class' strategy" }
           plain ". This means that you can toggle dark mode by adding or removing the "
           TypographyInlineCode { "dark" }
           plain " class from the "

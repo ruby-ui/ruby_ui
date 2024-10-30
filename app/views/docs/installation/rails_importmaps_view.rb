@@ -23,7 +23,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
             Text(size: "5", weight: "semibold") { "Generate a new Rails application" }
             Text do
               plain "In case you don't have a Rails application set up yet, let's start by generating one. The demo uses importmaps (Rails default). "
-              TypographyInlineLink(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#import-maps") { "Read more about Importmaps in Rails here." }
+              InlineLink(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#import-maps") { "Read more about Importmaps in Rails here." }
             end
             code = <<~CODE
               rails new CHANGE_TO_NAME_OF_APP --css=tailwind
@@ -64,7 +64,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
             end
             Text do
               plain "Refer to the "
-              TypographyInlineLink(href: @phlex_rails_link) { "Phlex installation guide for Rails" }
+              InlineLink(href: @phlex_rails_link) { "Phlex installation guide for Rails" }
               plain " for more information."
             end
           end
@@ -112,7 +112,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
             Text(size: "5", weight: "semibold") { "Install TailwindCSS" }
             Text do
               plain "In this guide we have already installed TailwindCSS, however if you have not done this make sure to follow the "
-              TypographyInlineLink(href: "https://tailwindcss.com/docs/guides/ruby-on-rails") { "TailwindCSS installation guide" }
+              InlineLink(href: "https://tailwindcss.com/docs/guides/ruby-on-rails") { "TailwindCSS installation guide" }
             end
           end
         end

@@ -17,7 +17,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
             Text(size: "5", weight: "semibold") { "Generate a new Rails application" }
             Text do
               plain "In case you don't have a Rails application set up yet, let's start by generating one. The demo uses esbuild, however feel free to change esbuild to use bun, webpack or rollup.js. "
-              TypographyInlineLink(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#adding-npm-packages-with-javascript-bundlers") { "Read more about JS bundlers in Rails here." }
+              InlineLink(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#adding-npm-packages-with-javascript-bundlers") { "Read more about JS bundlers in Rails here." }
             end
             code = <<~CODE
               rails new CHANGE_TO_NAME_OF_APP --css=tailwind --javascript=esbuild
@@ -58,7 +58,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
             end
             Text do
               plain "Refer to the "
-              TypographyInlineLink(href: @phlex_rails_link) { "Phlex installation guide for Rails" }
+              InlineLink(href: @phlex_rails_link) { "Phlex installation guide for Rails" }
               plain " for more information."
             end
           end
@@ -113,7 +113,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
             Text(size: "5", weight: "semibold") { "Install TailwindCSS" }
             Text do
               plain "Most will already have TailwindCSS installed, however if you do not, first follow the "
-              TypographyInlineLink(href: "https://tailwindcss.com/docs/guides/ruby-on-rails") { "TailwindCSS installation guide" }
+              InlineLink(href: "https://tailwindcss.com/docs/guides/ruby-on-rails") { "TailwindCSS installation guide" }
             end
           end
         end

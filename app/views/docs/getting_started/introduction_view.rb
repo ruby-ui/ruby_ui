@@ -9,11 +9,11 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
         Heading(level: 2) { "About" }
         Text do
           plain "RBUI is a UI framework for Ruby developers, built on top of "
-          TypographyInlineLink(href: "http://phlex.fun") { "Phlex" }
+          InlineLink(href: "http://phlex.fun") { "Phlex" }
           plain ", "
-          TypographyInlineLink(href: "https://tailwindcss.com") { "TailwindCSS" }
+          InlineLink(href: "https://tailwindcss.com") { "TailwindCSS" }
           plain " and "
-          TypographyInlineLink(href: "https://stimulus.hotwire.dev") { "Stimulus JS" }
+          InlineLink(href: "https://stimulus.hotwire.dev") { "Stimulus JS" }
           plain ". It provides a set of components that are easy to use, and easy to customize."
         end
       end
@@ -41,9 +41,9 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
         Heading(level: 2) { "Why I built RBUI" }
         Text do
           plain "Many Ruby developers are familiar with "
-          TypographyInlineLink(href: "https://rubyonrails.org") { "Rails" }
+          InlineLink(href: "https://rubyonrails.org") { "Rails" }
           plain ", and the "
-          TypographyInlineLink(href: "https://guides.rubyonrails.org/layouts_and_rendering.html") { "convention over configuration" }
+          InlineLink(href: "https://guides.rubyonrails.org/layouts_and_rendering.html") { "convention over configuration" }
           plain " approach it takes. RBUI is built on the same principles, providing a set of components that are easy to use, and easy to customize."
         end
         Text do
@@ -94,23 +94,23 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
         Text { "I'd like to thank the following projects and people for helping me build RBUI" }
         TypographyList do
           TypographyListItem do
-            TypographyInlineLink(href: "https://github.com/joeldrapper") { "Joel Drapper" }
+            InlineLink(href: "https://github.com/joeldrapper") { "Joel Drapper" }
             plain " - Thanks for creating Phlex, and for your support and advice."
           end
           TypographyListItem do
-            TypographyInlineLink(href: "https://phlex.fun") { "Phlex" }
+            InlineLink(href: "https://phlex.fun") { "Phlex" }
             plain " - The foundation of RBUI."
           end
           TypographyListItem do
-            TypographyInlineLink(href: "https://stimulus.hotwired.dev") { "Stimulus JS" }
+            InlineLink(href: "https://stimulus.hotwired.dev") { "Stimulus JS" }
             plain " - A quicker way to write JavaScript."
           end
           TypographyListItem do
-            TypographyInlineLink(href: "http://tailwindcss.com") { "TailwindCSS" }
+            InlineLink(href: "http://tailwindcss.com") { "TailwindCSS" }
             plain " - I wouldn't build without it."
           end
           TypographyListItem do
-            TypographyInlineLink(href: "https://twitter.com/george_kettle") { "My Twitter followers" }
+            InlineLink(href: "https://twitter.com/george_kettle") { "My Twitter followers" }
             plain " - Thanks for all the ideas, feedback and support."
           end
         end
