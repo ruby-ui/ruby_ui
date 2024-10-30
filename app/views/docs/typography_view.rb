@@ -83,7 +83,7 @@ class Docs::TypographyView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Large", context: self) do
         <<~RUBY
-          TypographyLarge { "Are you sure absolutely sure?" }
+          Text(size: "5", weight: "semibold") { "Are you sure absolutely sure?" }
         RUBY
       end
 

@@ -21,7 +21,7 @@ class Docs::TabsView < ApplicationView
             TabsContent(value: "account") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div(class: "space-y-0") do
-                  TypographyLarge { "Account" }
+                  Text(size: "5", weight: "semibold") { "Account" }
                   TypographyMuted { "Update your account details." }
                 end
               end
@@ -29,7 +29,7 @@ class Docs::TabsView < ApplicationView
             TabsContent(value: "password") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div do
-                  TypographyLarge { "Password" }
+                  Text(size: "5", weight: "semibold") { "Password" }
                   TypographyMuted { "Change your password here. After saving, you'll be logged out." }
                 end
               end
@@ -59,7 +59,7 @@ class Docs::TabsView < ApplicationView
                 end
                 div(class: "space-y-4") do
                   div do
-                    TypographyLarge { "Joel Drapper" }
+                    Text(size: "5", weight: "semibold") { "Joel Drapper" }
                     TypographyMuted { "Creator of Phlex Components. Ruby on Rails developer." }
                   end
                   Link(href: "https://github.com/joeldrapper", variant: :outline, size: :sm) do
@@ -90,7 +90,7 @@ class Docs::TabsView < ApplicationView
             TabsContent(value: "account") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div(class: "space-y-0") do
-                  TypographyLarge { "Account" }
+                  Text(size: "5", weight: "semibold") { "Account" }
                   TypographyMuted { "Update your account details." }
                 end
               end
@@ -98,7 +98,7 @@ class Docs::TabsView < ApplicationView
             TabsContent(value: "password") do
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div do
-                  TypographyLarge { "Password" }
+                  Text(size: "5", weight: "semibold") { "Password" }
                   TypographyMuted { "Change your password here. After saving, you'll be logged out." }
                 end
               end

@@ -14,7 +14,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
       render Steps::Builder.new do |steps|
         steps.add_step do
           step_container do
-            TypographyLarge { "Generate a new Rails application" }
+            Text(size: "5", weight: "semibold") { "Generate a new Rails application" }
             TypographyP do
               plain "In case you don't have a Rails application set up yet, let's start by generating one. The demo uses esbuild, however feel free to change esbuild to use bun, webpack or rollup.js. "
               TypographyInlineLink(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#adding-npm-packages-with-javascript-bundlers") { "Read more about JS bundlers in Rails here." }
@@ -41,7 +41,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 1
         steps.add_step do
           step_container do
-            TypographyLarge { "Install Phlex" }
+            Text(size: "5", weight: "semibold") { "Install Phlex" }
             TypographyP { "Run the following in the terminal to install phlex for Rails" }
             code = <<~CODE
               bundle add phlex-rails
@@ -66,7 +66,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 2
         steps.add_step do
           step_container do
-            TypographyLarge { "Install RBUI gem" }
+            Text(size: "5", weight: "semibold") { "Install RBUI gem" }
             TypographyP { "Run the following in the terminal to install the RBUI Component Library" }
             code = <<~CODE
               bundle add phlex_ui
@@ -77,7 +77,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 3
         steps.add_step do
           step_container do
-            TypographyLarge { "Include RBUI module" }
+            Text(size: "5", weight: "semibold") { "Include RBUI module" }
             TypographyP do
               plain "Include RBUI module in your "
               TypographyInlineCode(class: "whitespace-nowrap") { "application_component.rb" }
@@ -94,7 +94,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 4
         steps.add_step do
           step_container do
-            TypographyLarge { "Next step, JS!" }
+            Text(size: "5", weight: "semibold") { "Next step, JS!" }
             TypographyP { "Let's make the components come to life by adding some JavaScript." }
           end
         end
@@ -110,7 +110,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 1
         steps.add_step do
           step_container do
-            TypographyLarge { "Install TailwindCSS" }
+            Text(size: "5", weight: "semibold") { "Install TailwindCSS" }
             TypographyP do
               plain "Most will already have TailwindCSS installed, however if you do not, first follow the "
               TypographyInlineLink(href: "https://tailwindcss.com/docs/guides/ruby-on-rails") { "TailwindCSS installation guide" }
@@ -121,7 +121,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         # STEP 2
         steps.add_step do
           step_container do
-            TypographyLarge { "Install Dependencies" }
+            Text(size: "5", weight: "semibold") { "Install Dependencies" }
 
             TypographyP { "Run the following in the terminal to install the dependencies" }
 
@@ -160,7 +160,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
       # STEP 1
       steps.add_step do
         step_container do
-          TypographyLarge { "Install package" }
+          Text(size: "5", weight: "semibold") { "Install package" }
           TypographyP { "Run the following in the terminal to install RBUI JS package" }
           code = <<~CODE
             yarn add rbui-js
@@ -171,7 +171,7 @@ class Docs::Installation::RailsBundlerView < ApplicationView
 
       # STEP 2
       steps.add_step do
-        TypographyLarge { "Import package" }
+        Text(size: "5", weight: "semibold") { "Import package" }
         TypographyP do
           plain "Import the package in your "
           TypographyInlineCode(class: "whitespace-nowrap") { "app/javascript/application.js" }

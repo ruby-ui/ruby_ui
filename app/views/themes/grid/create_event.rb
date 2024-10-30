@@ -6,7 +6,7 @@ module Themes
       def view_template
         Card(class: "p-8 space-y-4") do
           div do
-            TypographyLarge { "Create an Event" }
+            Text(size: "5", weight: "semibold") { "Create an Event" }
             TypographyMuted { "Enter your event details below" }
           end
           event_form

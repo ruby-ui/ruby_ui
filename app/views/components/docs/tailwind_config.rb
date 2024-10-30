@@ -2,7 +2,7 @@
 
 class Docs::TailwindConfig < ApplicationComponent
   def view_template
-    TypographyLarge { "Update Tailwind Configuration" }
+    Text(size: "5", weight: "semibold") { "Update Tailwind Configuration" }
     TypographyP do
       plain "Add the following to your "
       TypographyInlineCode(class: "whitespace-nowrap") { "tailwind.config.js" }

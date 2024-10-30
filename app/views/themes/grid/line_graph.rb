@@ -6,7 +6,7 @@ module Themes
       def view_template
         Card(class: "p-8 space-y-6") do
           div do
-            TypographyLarge { "Phlex Success" }
+            Text(size: "5", weight: "semibold") { "Phlex Success" }
             TypographyMuted { "Number of stars on the Phlex Github repo" }
           end
           Chart(options: chart_options)

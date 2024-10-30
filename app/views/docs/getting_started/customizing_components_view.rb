@@ -15,7 +15,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
         TypographyP do
           plain "All components accept any HTML attribute, and will pass it through to the underlying HTML element. This is great for quick changes, or when you need to add a custom class for a one off situation."
         end
-        TypographyLarge { "Adding attributes" }
+        Text(size: "5", weight: "semibold") { "Adding attributes" }
         TypographyP do
           plain "By default, attribute values are added to the existing values of the component. For instance, if you want to make a button span the full width of its container, you can do it like this: "
           TypographyInlineCode { "Button(class: 'w-full')" }
@@ -23,7 +23,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
           TypographyInlineCode { "w-full" }
           plain " class to the button, causing it to span the full width of its container."
         end
-        TypographyLarge { "Overriding Classes" }
+        Text(size: "5", weight: "semibold") { "Overriding Classes" }
         TypographyP do
           plain "There might be instances where you need to override a specific style attribute. For instance, if you wish to alter the color of a button while keeping the rest of the styles intact, you can achieve this as follows: "
           TypographyInlineCode { "Button(class: '!bg-red-500')" }
@@ -31,7 +31,7 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
           TypographyInlineCode { "!important" }
           plain " modifier."
         end
-        TypographyLarge { "Replacing Attributes" }
+        Text(size: "5", weight: "semibold") { "Replacing Attributes" }
         TypographyP do
           plain "In some rare cases, you might need to replace the default value of an attribute entirely. For instance, if you want to change all the styles of a button, you can do it as follows: "
           TypographyInlineCode { "Button(class!: 'bg-red-500 text-white py-2 px-4 font-medium hover:bg-red-600')" }
@@ -45,11 +45,11 @@ class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
         TypographyH2 { "Redefining components" }
         TypographyP { "Redefining components is a powerful concept that allows you to redefine the underlying components through inheritance, or completely. This is useful when you need to make more complex changes to the components, that can't be achieved with attributes and classes alone. In other words, you can change the whole damn thing if you like." }
         # to redefine a component, find the component you want to redefine in the source code, and copy it into your application. Then, make the changes you need. For example, if you want to change the button component, you can copy the button component from the source code, and paste it into your application. Then, you can make the changes you need.
-        TypographyLarge { "How it works" }
+        Text(size: "5", weight: "semibold") { "How it works" }
         TypographyP do
           plain "To redefine a component, find the component you want to redefine in the source code, and copy it into your application. Then, make the changes you need. For example, if you want to change the button component, you can copy the button component from the source code, and paste it into your application. Then, you can make the changes you need."
         end
-        TypographyLarge { "Let's redefine the Alert component" }
+        Text(size: "5", weight: "semibold") { "Let's redefine the Alert component" }
         TypographyP do
           plain "Let's say you want to change the alert component to use a particular icon every time it is rendered. You can do this by redefining the component as follows:"
         end

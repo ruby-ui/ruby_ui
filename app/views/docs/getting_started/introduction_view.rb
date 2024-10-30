@@ -71,7 +71,7 @@ class Docs::GettingStarted::IntroductionView < ApplicationView
           plain "."
         end
         TypographyP { "After some time using Phlex, it's obvious to me that this is a better way to render your views in Ruby apps. Phlex is intuitive and simple. It is also incredibly fast (12x faster than ERB, 5x faster than ViewComponent), it also makes your code more organised and leads to a better developer experience." }
-        TypographyLarge { "Same same, but different" }
+        Text(size: "5", weight: "semibold") { "Same same, but different" }
         TypographyP do
           plain "Phlex is essentially just HTML in Ruby form, bundled into a component. It's a simple concept, but it's incredibly powerful. It allows you to write your views in pure Ruby, without the need for a templating language. This means you can use all the features of Ruby, including loops, conditionals, and more."
         end

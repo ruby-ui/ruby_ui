@@ -20,7 +20,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
       render Steps::Builder.new do |steps|
         steps.add_step do
           step_container do
-            TypographyLarge { "Generate a new Rails application" }
+            Text(size: "5", weight: "semibold") { "Generate a new Rails application" }
             TypographyP do
               plain "In case you don't have a Rails application set up yet, let's start by generating one. The demo uses importmaps (Rails default). "
               TypographyInlineLink(href: "https://guides.rubyonrails.org/working_with_javascript_in_rails.html#import-maps") { "Read more about Importmaps in Rails here." }
@@ -47,7 +47,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         # STEP 1
         steps.add_step do
           step_container do
-            TypographyLarge { "Install Phlex" }
+            Text(size: "5", weight: "semibold") { "Install Phlex" }
             TypographyP { "Run the following in the terminal to install phlex for Rails" }
             code = <<~CODE
               bundle add phlex-rails
@@ -72,7 +72,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         # STEP 2
         steps.add_step do
           step_container do
-            TypographyLarge { "Install RBUI gem" }
+            Text(size: "5", weight: "semibold") { "Install RBUI gem" }
             TypographyP { "Run the following in the terminal to install the RBUI Component Library" }
             code = <<~CODE
               bundle add phlex_ui
@@ -83,7 +83,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         # STEP 3
         steps.add_step do
           step_container do
-            TypographyLarge { "Include RBUI module" }
+            Text(size: "5", weight: "semibold") { "Include RBUI module" }
             TypographyP do
               plain "Include RBUI module in your "
               TypographyInlineCode(class: "whitespace-nowrap") { "application_component.rb" }
@@ -109,7 +109,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         # STEP 1
         steps.add_step do
           step_container do
-            TypographyLarge { "Install TailwindCSS" }
+            Text(size: "5", weight: "semibold") { "Install TailwindCSS" }
             TypographyP do
               plain "In this guide we have already installed TailwindCSS, however if you have not done this make sure to follow the "
               TypographyInlineLink(href: "https://tailwindcss.com/docs/guides/ruby-on-rails") { "TailwindCSS installation guide" }
@@ -145,7 +145,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
       # STEP 1
       steps.add_step do
         step_container do
-          TypographyLarge { "Install package" }
+          Text(size: "5", weight: "semibold") { "Install package" }
           TypographyP { "Run the following in the terminal to install RBUI JS package" }
           code = <<~CODE
             bin/importmap pin rbui-js
@@ -156,7 +156,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
 
       # STEP 2
       steps.add_step do
-        TypographyLarge { "Import package" }
+        Text(size: "5", weight: "semibold") { "Import package" }
         TypographyP do
           plain "Import the package in your "
           TypographyInlineCode(class: "whitespace-nowrap") { "app/javascript/application.js" }
