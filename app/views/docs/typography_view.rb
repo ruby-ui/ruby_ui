@@ -95,7 +95,7 @@ class Docs::TypographyView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Muted", context: self) do
         <<~RUBY
-          TypographyMuted { "Enter your email address." }
+          Text(size: "2", class: "text-muted-foreground") { "Enter your email address." }
         RUBY
       end
 

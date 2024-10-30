@@ -68,7 +68,7 @@ class Docs::CardView < ApplicationView
               h5(class: 'font-semibold text-4xl') { '$2,602' }
             end
             CardFooter do
-              TypographyMuted { "**** 4620" }
+              Text(size: "2", class: "text-muted-foreground") { "**** 4620" }
             end
           end
         RUBY

@@ -7,7 +7,7 @@ module Themes
         Card(class: "p-8 space-y-4") do
           div do
             Text(size: "5", weight: "semibold") { "Create an Event" }
-            TypographyMuted { "Enter your event details below" }
+            Text(size: "2", class: "text-muted-foreground") { "Enter your event details below" }
           end
           event_form
         end

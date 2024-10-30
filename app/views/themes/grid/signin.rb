@@ -7,7 +7,7 @@ module Themes
         Card(class: "p-8 space-y-4") do
           div do
             Text(size: "5", weight: "semibold") { "Create an account" }
-            TypographyMuted { "Enter your email below to create your account" }
+            Text(size: "2", class: "text-muted-foreground") { "Enter your email below to create your account" }
           end
           oauth_buttons
           or_continue_with

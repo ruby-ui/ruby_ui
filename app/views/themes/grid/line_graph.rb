@@ -7,7 +7,7 @@ module Themes
         Card(class: "p-8 space-y-6") do
           div do
             Text(size: "5", weight: "semibold") { "Phlex Success" }
-            TypographyMuted { "Number of stars on the Phlex Github repo" }
+            Text(size: "2", class: "text-muted-foreground") { "Number of stars on the Phlex Github repo" }
           end
           Chart(options: chart_options)
         end

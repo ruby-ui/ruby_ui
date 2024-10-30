@@ -26,7 +26,7 @@ module Themes
               div(class: "space-y-4") do
                 div do
                   Text(size: "5", weight: "semibold") { "Joel Drapper" }
-                  TypographyMuted { "Creator of Phlex Components. Ruby on Rails developer." }
+                  Text(size: "2", class: "text-muted-foreground") { "Creator of Phlex Components. Ruby on Rails developer." }
                 end
                 Link(href: "https://github.com/joeldrapper", variant: :outline, size: :sm) do
                   github_icon

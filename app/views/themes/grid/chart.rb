@@ -7,7 +7,7 @@ module Themes
         Card(class: "p-8 space-y-6") do
           div do
             Text(size: "5", weight: "semibold") { "Phlex Speed Tests" }
-            TypographyMuted { "Render time for a simple page" }
+            Text(size: "2", class: "text-muted-foreground") { "Render time for a simple page" }
           end
           Chart(options: chart_options)
         end

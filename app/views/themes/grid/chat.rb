@@ -25,7 +25,7 @@ module Themes
           div(class: "flex items-center space-x-4") do
             div do
               TypographyP(class: "font-medium") { "Joel Drapper" }
-              TypographyMuted { "joel@drapper.me" }
+              Text(size: "2", class: "text-muted-foreground") { "joel@drapper.me" }
             end
           end
           Tooltip do

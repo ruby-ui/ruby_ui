@@ -22,7 +22,7 @@ class Docs::TabsView < ApplicationView
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div(class: "space-y-0") do
                   Text(size: "5", weight: "semibold") { "Account" }
-                  TypographyMuted { "Update your account details." }
+                  Text(size: "2", class: "text-muted-foreground") { "Update your account details." }
                 end
               end
             end
@@ -30,7 +30,7 @@ class Docs::TabsView < ApplicationView
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div do
                   Text(size: "5", weight: "semibold") { "Password" }
-                  TypographyMuted { "Change your password here. After saving, you'll be logged out." }
+                  Text(size: "2", class: "text-muted-foreground") { "Change your password here. After saving, you'll be logged out." }
                 end
               end
             end
@@ -60,7 +60,7 @@ class Docs::TabsView < ApplicationView
                 div(class: "space-y-4") do
                   div do
                     Text(size: "5", weight: "semibold") { "Joel Drapper" }
-                    TypographyMuted { "Creator of Phlex Components. Ruby on Rails developer." }
+                    Text(size: "2", class: "text-muted-foreground") { "Creator of Phlex Components. Ruby on Rails developer." }
                   end
                   Link(href: "https://github.com/joeldrapper", variant: :outline, size: :sm) do
                     github_icon
@@ -91,7 +91,7 @@ class Docs::TabsView < ApplicationView
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div(class: "space-y-0") do
                   Text(size: "5", weight: "semibold") { "Account" }
-                  TypographyMuted { "Update your account details." }
+                  Text(size: "2", class: "text-muted-foreground") { "Update your account details." }
                 end
               end
             end
@@ -99,7 +99,7 @@ class Docs::TabsView < ApplicationView
               div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
                 div do
                   Text(size: "5", weight: "semibold") { "Password" }
-                  TypographyMuted { "Change your password here. After saving, you'll be logged out." }
+                  Text(size: "2", class: "text-muted-foreground") { "Change your password here. After saving, you'll be logged out." }
                 end
               end
             end
