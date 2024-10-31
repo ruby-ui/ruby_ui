@@ -24,9 +24,6 @@ module RBUI
             run "bundle add phlex-rails --version=\"~> 1.2.1\""
           end
 
-          say "Adding tailwind_merge"
-          run "bundle add tailwind_merge"
-
           say "run phlex install"
           run "bin/rails generate phlex:install"
         end
