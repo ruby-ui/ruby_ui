@@ -17,7 +17,7 @@ module RBUI
 
     def default_attrs
       {
-        class: tokens("px-2 py-1.5 text-sm font-semibold text-foreground", inset?: "pl-8")
+        class: ["px-2 py-1.5 text-sm font-semibold text-foreground", inset?: "pl-8"]
       }
     end
   end

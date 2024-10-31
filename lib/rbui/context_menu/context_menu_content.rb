@@ -3,7 +3,7 @@
 module RBUI
   class ContextMenuContent < Base
     def view_template(&block)
-      template_tag(data: {rbui__context_menu_target: "content"}) do
+      template(data: {rbui__context_menu_target: "content"}) do
         div(**attrs, &block)
       end
     end
