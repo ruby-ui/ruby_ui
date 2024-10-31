@@ -87,7 +87,7 @@ module RBUI
     end
 
     def date_template(target, &block)
-      template_tag(data: {rbui__calendar_target: target}) do
+      div(data: {rbui__calendar_target: target}) do
         td(
           class:
                 "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected])]:rounded-md",

@@ -17,7 +17,7 @@ module RBUI
     end
 
     def view_template(&block)
-      template_tag(data: {rbui__command_target: "content"}) do
+      div(data: {rbui__command_target: "content"}) do
         div(data: {controller: "rbui--command"}) do
           backdrop
           div(**attrs, &block)

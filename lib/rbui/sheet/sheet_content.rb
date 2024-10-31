@@ -16,7 +16,7 @@ module RBUI
     end
 
     def view_template(&block)
-      template_tag(data: {rbui__sheet_target: "content"}) do
+      div(data: {rbui__sheet_target: "content"}) do
         div(data: {controller: "rbui--sheet-content"}) do
           backdrop
           div(**attrs) do
