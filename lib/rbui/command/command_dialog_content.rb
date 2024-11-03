@@ -17,7 +17,14 @@ module RBUI
     end
 
     def view_template(&block)
-      template_tag(data: {rbui__command_target: "content"}) do
+      current_version = Gem.loaded_specs["phlex"].version
+      _template_tag = if current_version.segments[0] >= 2
+        template
+      else
+        template_tag
+      end
+
+      _template_tag(data: {rbui__command_target: "content"}) do
         div(data: {controller: "rbui--command"}) do
           backdrop
           div(**attrs, &block)
@@ -30,10 +37,10 @@ module RBUI
     def default_attrs
       {
         data_state: "open",
-        class: tokens(
+        class: [
           "fixed pointer-events-auto left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full",
           SIZES[@size]
-        )
+        ]
       }
     end
 

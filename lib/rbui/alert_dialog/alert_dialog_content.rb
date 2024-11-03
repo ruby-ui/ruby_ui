@@ -3,7 +3,14 @@
 module RBUI
   class AlertDialogContent < Base
     def view_template(&block)
-      template_tag(**attrs) do
+      current_version = Gem.loaded_specs["phlex"].version
+      _template_tag = if current_version.segments[0] >= 2
+        template
+      else
+        template_tag
+      end
+
+      _template_tag(**attrs) do
         div(data: {controller: "rbui--alert-dialog"}) do
           background
           container(&block)

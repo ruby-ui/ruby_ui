@@ -21,7 +21,7 @@ module RBUI
     def default_attrs
       {
         data: {
-          action: tokens("click->rbui--command#open", @keybindings.join(" "))
+          action: ["click->rbui--command#open", @keybindings.join(" ")]
         }
       }
     end

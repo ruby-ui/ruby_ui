@@ -29,7 +29,7 @@ module RBUI
     def default_attrs
       base_classes = "backdrop-blur relative w-full ring-1 ring-inset rounded-lg px-4 py-4 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-8"
       {
-        class: tokens(base_classes, colors)
+        class: [base_classes, colors]
       }
     end
   end

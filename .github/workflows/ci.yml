@@ -13,29 +13,37 @@ jobs:
     name: StandardRB Check Action
     runs-on: ubuntu-latest
     steps:
-     - uses: actions/checkout@v4
-     - uses: ruby/setup-ruby@v1
-       with:
-         ruby-version: 3.3
-         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-     - run: bundle exec standardrb --format progress
-  tests:
-    strategy:
-        fail-fast: false
-        matrix:
-          os: ["ubuntu-latest"]
-          ruby-version:
-            - "3.2"
-            - "3.3"
-            - "head"
-    name: Running minitest
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: false
+          ruby-version: 3.3 # Use the latest stable Ruby version for StandardRB
+          bundler-cache: true
+      - run: bundle exec standardrb --format progress
 
-      - run: bundle install
-      - run: bundle exec rake test
+  tests:
+    name: Tests (Ruby ${{ matrix.ruby }} - ${{ matrix.gemfile }})
+    strategy:
+      matrix:
+        include:
+          # Latest Ruby with latest Phlex
+          - ruby: 3.3
+            gemfile: Gemfile
+
+          # Ruby 3.2 with Phlex 1
+          - ruby: 3.2
+            gemfile: gemfiles/phlex1.gemfile
+
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Run tests
+        run: bundle exec rake test

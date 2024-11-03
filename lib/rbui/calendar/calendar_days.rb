@@ -20,10 +20,10 @@ module RBUI
           data_action: "click->rbui--calendar#selectDay",
           name: "day",
           class:
-                tokens(
+                [
                   BASE_CLASS,
                   "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground"
-                ),
+                ],
           role: "gridcell",
           tabindex: "0",
           type: "button",
@@ -39,10 +39,10 @@ module RBUI
           data_action: "click->rbui--calendar#selectDay",
           name: "day",
           class:
-                tokens(
+                [
                   BASE_CLASS,
                   "bg-accent text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                ),
+                ],
           role: "gridcell",
           tabindex: "-1",
           type: "button"
@@ -57,10 +57,10 @@ module RBUI
           data_action: "click->rbui--calendar#selectDay",
           name: "day",
           class:
-                tokens(
+                [
                   BASE_CLASS,
                   "bg-background text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                ),
+                ],
           role: "gridcell",
           tabindex: "-1",
           type: "button"
@@ -75,10 +75,10 @@ module RBUI
           data_action: " click->rbui--calendar#selectDay",
           name: "day",
           class:
-                tokens(
+                [
                   BASE_CLASS,
                   "bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                ),
+                ],
           role: "gridcell",
           tabindex: "-1",
           type: "button"
@@ -87,7 +87,14 @@ module RBUI
     end
 
     def date_template(target, &block)
-      template_tag(data: {rbui__calendar_target: target}) do
+      current_version = Gem.loaded_specs["phlex"].version
+      _template_tag = if current_version.segments[0] >= 2
+        template
+      else
+        template_tag
+      end
+
+      _template_tag(data: {rbui__calendar_target: target}) do
         td(
           class:
                 "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected])]:rounded-md",
