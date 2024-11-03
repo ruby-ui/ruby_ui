@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for rbui on 2024-07-28T09:41:04-03:00
+# fly.toml app configuration file generated for ruby-ui on 2024-11-03T18:13:31+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'rbui'
+app = 'ruby-ui'
 primary_region = 'iad'
 console_command = '/rails/bin/rails console'
 
