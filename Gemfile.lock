@@ -1,10 +1,10 @@
 GIT
   remote: https://github.com/ruby-ui/ruby_ui.git
-  revision: 0ae3ed06e7ce56f17c67e2aa530f7fc2c806dc74
+  revision: 33dc56c7565e64080f976594b7a67eb0b7e2412f
   branch: main
   specs:
     ruby_ui (1.0.0.pre.alpha.4)
-      phlex (~> 1.10)
+      phlex (~> 1.10, < 3)
       rouge (~> 4.2.0)
       tailwind_merge (~> 0.12)
 

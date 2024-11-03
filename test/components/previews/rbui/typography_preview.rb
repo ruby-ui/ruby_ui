@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RBUI
-  class Textreview < Lookbook::Preview
+  class TypographyPreview < Lookbook::Preview
     # Heading
     # ---------------
     # @param level [Symbol] select { choices: [1, 2, 3, 4] }
