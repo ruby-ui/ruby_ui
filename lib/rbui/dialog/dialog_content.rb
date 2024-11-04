@@ -17,15 +17,7 @@ module RBUI
     end
 
     def view_template
-      current_version = Gem.loaded_specs["phlex"].version
-
-      _template_tag = if current_version.segments[0] >= 2
-        template
-      else
-        template_tag
-      end
-
-      _template_tag(data: {rbui__dialog_target: "content"}) do
+      all_template_tag(data: {rbui__dialog_target: "content"}) do
         div(data_controller: "rbui--dialog") do
           backdrop
           div(**attrs) do

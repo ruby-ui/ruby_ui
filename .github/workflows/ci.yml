@@ -27,7 +27,7 @@ jobs:
         include:
           # Latest Ruby with latest Phlex
           - ruby: 3.3
-            gemfile: Gemfile
+            gemfile: gemfiles/phlex2.gemfile
 
           # Ruby 3.2 with Phlex 1
           - ruby: 3.2

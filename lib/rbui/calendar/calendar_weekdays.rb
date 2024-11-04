@@ -5,15 +5,7 @@ module RBUI
     DAYS = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday].freeze
 
     def view_template
-      current_version = Gem.loaded_specs["phlex"].version
-
-      _template_tag = if current_version.segments[0] >= 2
-        template
-      else
-        template_tag
-      end
-
-      _template_tag(data: {rbui__calendar_target: "weekdaysTemplate"}) do
+      all_template_tag(data: {rbui__calendar_target: "weekdaysTemplate"}) do
         thead(**attrs) do
           tr(class: "flex") do
             DAYS.each do |day|

@@ -3,14 +3,7 @@
 module RBUI
   class HoverCardContent < Base
     def view_template(&block)
-      current_version = Gem.loaded_specs["phlex"].version
-
-      _template_tag = if current_version.segments[0] >= 2
-        template
-      else
-        template_tag
-      end
-      _template_tag(data: {rbui__hover_card_target: "content"}) do
+      all_template_tag(data: {rbui__hover_card_target: "content"}) do
         div(**attrs, &block)
       end
     end

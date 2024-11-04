@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     ruby_ui (1.0.0.pre.alpha.4)
-      phlex (~> 1.10, < 3)
+      phlex (>= 1.10, < 3)
       rouge (~> 4.2.0)
       tailwind_merge (~> 0.12)
 

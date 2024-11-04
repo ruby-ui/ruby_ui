@@ -87,14 +87,7 @@ module RBUI
     end
 
     def date_template(target, &block)
-      current_version = Gem.loaded_specs["phlex"].version
-      _template_tag = if current_version.segments[0] >= 2
-        template
-      else
-        template_tag
-      end
-
-      _template_tag(data: {rbui__calendar_target: target}) do
+      all_template_tag(data: {rbui__calendar_target: target}) do
         td(
           class:
                 "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected])]:rounded-md",
