@@ -2,11 +2,11 @@
 
 module RBUI
   class Heading < Base
-    def initialize(level: nil, as: nil, size: nil, **attrs)
+    def initialize(level: nil, as: nil, size: nil)
       @level = level
       @as = as
       @size = size
-      super(**attrs)
+      super
     end
 
     def view_template(&)
