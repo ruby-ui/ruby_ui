@@ -19,9 +19,9 @@ module RBUI
     def default_attrs
       {
         aria: {current: @active ? "page" : nil},
-        class: tokens(
+        class: [
           RBUI::Button.new(variant: @active ? :outline : :ghost).attrs[:class]
-        )
+        ]
       }
     end
   end

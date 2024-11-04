@@ -1,4 +1,5 @@
 require "net/http"
+require_relative "../base_generator"
 
 # TODO: make ejctectec components work without the gem
 module RBUI

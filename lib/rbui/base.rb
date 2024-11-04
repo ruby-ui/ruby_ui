@@ -22,6 +22,15 @@ module RBUI
 
     private
 
+    def all_template_tag(**attrs, &)
+      current_version = Gem.loaded_specs["phlex"].version
+      if current_version.segments[0] >= 2
+        template(**attrs, &)
+      else
+        template_tag(**attrs, &)
+      end
+    end
+
     def default_attrs
       {}
     end

@@ -24,7 +24,7 @@ module RBUI
 
     def default_attrs
       {
-        class: tokens("relative flex shrink-0 overflow-hidden rounded-full", @size_classes)
+        class: ["relative flex shrink-0 overflow-hidden rounded-full", @size_classes]
       }
     end
   end

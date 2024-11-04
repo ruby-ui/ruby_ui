@@ -13,9 +13,10 @@ Gem::Specification.new do |s|
     "https://rubygems.org/gems/ruby_ui"
   s.license = "MIT"
 
-  s.required_ruby_version = ">= 3.2"
+  s.required_ruby_version = ">= 3.0"
 
-  s.add_dependency "phlex", "~> 1.10"
+  s.add_dependency "phlex", ">= 1.10", "< 3"
+  # s.add_dependency "phlex", ">= 2.0.0.beta"
   s.add_dependency "rouge", "~> 4.2.0"
   s.add_dependency "tailwind_merge", ">= 0.12"
 
