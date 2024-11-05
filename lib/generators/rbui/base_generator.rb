@@ -1,6 +1,6 @@
 require "rails/generators"
 
-module RBUI
+module RubyUI
   module Generators
     class BaseGenerator < defined?(Rails::Generators::Base) ? Rails::Generators::Base : Object
       namespace "rbui:base"

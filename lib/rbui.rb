@@ -3,7 +3,7 @@
 require "json"
 require "phlex"
 
-module RBUI
+module RubyUI
   extend Phlex::Kit
 
   def self.setup

@@ -1,6 +1,6 @@
-module RBUI
+module RubyUI
   module Generators
-    class ComponentGenerator < RBUI::Generators::BaseGenerator
+    class ComponentGenerator < RubyUI::Generators::BaseGenerator
       namespace "rbui:component"
 
       source_root File.expand_path("../../..", __dir__)

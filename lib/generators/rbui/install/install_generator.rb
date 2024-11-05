@@ -2,9 +2,9 @@ require "net/http"
 require_relative "../base_generator"
 
 # TODO: make ejctectec components work without the gem
-module RBUI
+module RubyUI
   module Generators
-    class InstallGenerator < RBUI::Generators::BaseGenerator
+    class InstallGenerator < RubyUI::Generators::BaseGenerator
       namespace "rbui:install"
 
       if defined?(Rails::Generators::Base)
@@ -59,7 +59,7 @@ module RBUI
 
           tailwind_config_path = Rails.root.join("config/tailwind.config.js")
           if !File.exist?(tailwind_config_path)
-            say "Tailwind CSS is required for RBUI", :red
+            say "Tailwind CSS is required for RubyUI", :red
           end
 
           say "Add rbui initializer"
@@ -94,7 +94,7 @@ module RBUI
           stimulus_path = Rails.root.join("app/javascript/application.js")
           package_name = "rbui-js"
 
-          say "Add RBUI Stimulus controllers"
+          say "Add RubyUI Stimulus controllers"
           # run "mkdir -p app/javascript/controllers/rbui-js"
           template "index.js", "app/components/rbui/index.js"
 
@@ -132,11 +132,11 @@ module RBUI
         end
 
         def include_rbui
-          message = "Include RBUI in your global component layout?\n This allows to call RBUI.Button {\"button\"} / RBUI::Button.new {\"button\"} with Button  {\"button\"} (y/n)"
+          message = "Include RubyUI in your global component layout?\n This allows to call RubyUI.Button {\"button\"} / RubyUI::Button.new {\"button\"} with Button  {\"button\"} (y/n)"
           if yes?(message)
-            say "Add RBUI to your global component layout"
+            say "Add RubyUI to your global component layout"
             insert_into_file "app/views/application_view.rb", after: "class ApplicationView < ApplicationComponent\n" do
-              "  include RBUI\n"
+              "  include RubyUI\n"
             end
           end
         end
