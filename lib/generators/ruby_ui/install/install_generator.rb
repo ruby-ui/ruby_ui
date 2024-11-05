@@ -22,7 +22,7 @@ module RubyUI
             say "Phlex Rails is already installed", :green
           else
             say "Adding Phlex Rails"
-            run "bundle add phlex-rails --version=\"~> 1.2.1\""
+            run "bundle add phlex-rails --version=\"~> 2.0.0.beta2\""
           end
 
           say "Adding tailwind_merge"
