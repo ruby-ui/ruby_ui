@@ -14,6 +14,7 @@ Here is the list of components that are being built. For reference, see here htt
 ✅ Calendar
 ✅ Card
 ✅ Checkbox
+✅ CheckboxGroup
 ✅ Codeblock
 ✅ Collapsible
 ⚪️ Combobox

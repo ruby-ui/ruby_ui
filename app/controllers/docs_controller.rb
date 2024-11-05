@@ -78,6 +78,10 @@ class DocsController < ApplicationController
     render Docs::CheckboxView.new
   end
 
+  def checkbox_group
+    render Docs::CheckboxGroupView.new
+  end
+
   def clipboard
     render Docs::ClipboardView.new
   end
