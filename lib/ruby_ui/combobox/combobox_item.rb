@@ -41,10 +41,10 @@ module RubyUI
           "combobox-item group relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground aria-[current]:bg-accent aria-[current]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         data: {
           value: @value,
-          rbui__combobox_target: "item",
-          rbui__combobox_content_target: "item",
-          controller: "rbui--combobox-item",
-          action: "click->rbui--combobox#onItemSelected"
+          ruby_ui__combobox_target: "item",
+          ruby_ui__combobox_content_target: "item",
+          controller: "ruby_ui--combobox-item",
+          action: "click->ruby_ui--combobox#onItemSelected"
         },
         aria_selected: "false"
       }

@@ -19,7 +19,7 @@ module RubyUI
         aria_live: "polite",
         role: "presentation",
         data: {
-          rbui__calendar_target: "title"
+          ruby_ui__calendar_target: "title"
         }
       }
     end

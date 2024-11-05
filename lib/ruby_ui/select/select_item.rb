@@ -39,9 +39,9 @@ module RubyUI
         tabindex: "0",
         class: "item group relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         data: {
-          controller: "rbui--select-item",
-          action: "click->rbui--select#selectItem keydown.enter->rbui--select#selectItem keydown.down->rbui--select#handleKeyDown keydown.up->rbui--select#handleKeyUp keydown.esc->rbui--select#handleEsc",
-          rbui__select_target: "item"
+          controller: "ruby_ui--select-item",
+          action: "click->ruby_ui--select#selectItem keydown.enter->ruby_ui--select#selectItem keydown.down->ruby_ui--select#handleKeyDown keydown.up->ruby_ui--select#handleKeyUp keydown.esc->ruby_ui--select#handleEsc",
+          ruby_ui__select_target: "item"
         },
         data_value: @value,
         data_orientation: "vertical",

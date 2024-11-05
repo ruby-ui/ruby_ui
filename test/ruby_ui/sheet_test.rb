@@ -22,7 +22,7 @@ class RubyUI::SheetTest < Minitest::Test
             RubyUI.Input(placeholder: "joel@drapper.me")
 
             RubyUI.SheetFooter do
-              RubyUI.Button(variant: :outline, data: {action: "click->rbui--sheet-content#close"}) { "Cancel" }
+              RubyUI.Button(variant: :outline, data: {action: "click->ruby_ui--sheet-content#close"}) { "Cancel" }
               RubyUI.Button(type: "submit") { "Save" }
             end
           end

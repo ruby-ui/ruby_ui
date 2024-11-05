@@ -11,7 +11,7 @@ module RubyUI
       div(
         class: "hidden",
         style: "width: max-content; position: absolute; top: 0; left: 0;",
-        data: {rbui__clipboard_target: clipboard_target}
+        data: {ruby_ui__clipboard_target: clipboard_target}
       ) do
         div(**attrs, &block)
       end

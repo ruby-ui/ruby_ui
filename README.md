@@ -28,26 +28,26 @@ RubyUI is a UI component library designed to let Ruby developers create modern, 
 ### 1. Install the gem
 
 ```bash
-bundle add rbui
+bundle add ruby_ui
 ```
 
 or add it to your Gemfile:
 
 ```ruby
-gem "rbui"
+gem "ruby_ui"
 ```
 
 ### 2. Run the installer:
 
 ```bash
-bin/rails g rbui:install
+bin/rails g ruby_ui:install
 ```
 
 ### 3. Done! 🎉
 
 ## Documentation 📖
 
-Visit https://rbui.dev/docs/introduction to view the full documentation, including:
+Visit https://ruby_ui.dev/docs/introduction to view the full documentation, including:
 
 - Detailed component guides
 - Themes

@@ -1,14 +1,14 @@
 {
   "name": "ruby_ui_js",
   "version": "1.0.0-alpha.4",
-  "main": "lib/rbui/index.js",
-  "description": "Stimulus controllers for RbUI Component Library",
-  "homepage": "https://rbui.dev",
+  "main": "lib/ruby_ui/index.js",
+  "description": "Stimulus controllers for ruby_ui Component Library",
+  "homepage": "https://ruby_ui.dev",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "RbUI",
+    "ruby_ui",
     "Stimulus",
     "StimulusJS",
     "StimulusControllers",
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/rbui-hq/rbui.git"
+    "url": "https://github.com/ruby_ui-hq/ruby_ui.git"
   },
   "author": "George Kettle",
   "license": "ISC",

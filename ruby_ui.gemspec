@@ -1,4 +1,4 @@
-require_relative "lib/rbui/version"
+require_relative "lib/ruby_ui/version"
 
 Gem::Specification.new do |s|
   s.name = "ruby_ui"

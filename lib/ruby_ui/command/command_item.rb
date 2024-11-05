@@ -21,7 +21,7 @@ module RubyUI
         href: @href,
         role: "option",
         data: {
-          rbui__command_target: "item",
+          ruby_ui__command_target: "item",
           value: @value,
           text: @text
         }

@@ -13,7 +13,7 @@ module RubyUI
         role: "presentation",
         class: "hidden py-6 text-center text-sm",
         data: {
-          rbui__combobox_content_target: "empty"
+          ruby_ui__combobox_content_target: "empty"
         }
       }
     end

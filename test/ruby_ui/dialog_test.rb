@@ -26,7 +26,7 @@ class RubyUI::DialogTest < Minitest::Test
             end
           end
           RubyUI.DialogFooter do
-            RubyUI.Button(variant: :outline, data: {action: "click->rbui--dialog#dismiss"}) { "Cancel" }
+            RubyUI.Button(variant: :outline, data: {action: "click->ruby_ui--dialog#dismiss"}) { "Cancel" }
             RubyUI.Button { "Save" }
           end
         end

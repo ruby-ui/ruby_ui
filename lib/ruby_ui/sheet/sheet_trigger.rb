@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {action: "click->rbui--sheet#open"}
+        data: {action: "click->ruby_ui--sheet#open"}
       }
     end
   end

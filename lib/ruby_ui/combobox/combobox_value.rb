@@ -18,7 +18,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          rbui__combobox_target: "value"
+          ruby_ui__combobox_target: "value"
         },
         class: "pointer-events-none"
       }

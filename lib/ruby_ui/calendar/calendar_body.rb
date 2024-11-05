@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          rbui__calendar_target: "calendar"
+          ruby_ui__calendar_target: "calendar"
         }
       }
     end

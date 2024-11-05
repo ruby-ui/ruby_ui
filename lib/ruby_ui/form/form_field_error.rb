@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          rbui__form_field_target: "error"
+          ruby_ui__form_field_target: "error"
         },
         class: "text-sm font-medium text-destructive"
       }

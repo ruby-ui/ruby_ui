@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {rbui__tooltip_target: "trigger"},
+        data: {ruby_ui__tooltip_target: "trigger"},
         variant: :outline,
         class: "peer"
       }

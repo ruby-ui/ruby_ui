@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          rbui__popover_target: "content"
+          ruby_ui__popover_target: "content"
         },
         class: [
           "hidden z-50 rounded-md border bg-background p-1 text-foreground shadow-md outline-none",

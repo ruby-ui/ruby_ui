@@ -15,8 +15,8 @@ module RubyUI
 
     def default_attrs
       {
-        data_controller: "rbui--chart",
-        data_rbui__chart_options_value: @options
+        data_controller: "ruby_ui--chart",
+        data_ruby_ui__chart_options_value: @options
       }
     end
   end

@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          action: "click->rbui--collapsible#toggle"
+          action: "click->ruby_ui--collapsible#toggle"
         }
       }
     end

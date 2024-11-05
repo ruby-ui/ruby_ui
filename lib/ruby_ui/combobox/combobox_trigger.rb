@@ -34,8 +34,8 @@ module RubyUI
     def default_attrs
       {
         data: {
-          action: "rbui--combobox#onTriggerClick",
-          rbui__combobox_target: "trigger"
+          action: "ruby_ui--combobox#onTriggerClick",
+          ruby_ui__combobox_target: "trigger"
         },
         type: "button",
         role: "combobox",

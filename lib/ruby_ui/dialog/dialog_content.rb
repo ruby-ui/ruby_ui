@@ -17,8 +17,8 @@ module RubyUI
     end
 
     def view_template
-      all_template_tag(data: {rbui__dialog_target: "content"}) do
-        div(data_controller: "rbui--dialog") do
+      all_template_tag(data: {ruby_ui__dialog_target: "content"}) do
+        div(data_controller: "ruby_ui--dialog") do
           backdrop
           div(**attrs) do
             yield
@@ -44,7 +44,7 @@ module RubyUI
       button(
         type: "button",
         class: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",
-        data_action: "click->rbui--dialog#dismiss"
+        data_action: "click->ruby_ui--dialog#dismiss"
       ) do
         svg(
           width: "15",
@@ -69,7 +69,7 @@ module RubyUI
     def backdrop
       div(
         data_state: "open",
-        data_action: "click->rbui--dialog#dismiss esc->rbui--dialog#dismiss",
+        data_action: "click->ruby_ui--dialog#dismiss esc->ruby_ui--dialog#dismiss",
         class:
               "fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
       )

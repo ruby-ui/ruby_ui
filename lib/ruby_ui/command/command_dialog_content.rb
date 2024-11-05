@@ -17,8 +17,8 @@ module RubyUI
     end
 
     def view_template(&block)
-      all_template_tag(data: {rbui__command_target: "content"}) do
-        div(data: {controller: "rbui--command"}) do
+      all_template_tag(data: {ruby_ui__command_target: "content"}) do
+        div(data: {controller: "ruby_ui--command"}) do
           backdrop
           div(**attrs, &block)
         end
@@ -40,7 +40,7 @@ module RubyUI
     def backdrop
       div(
         data_state: "open",
-        data_action: "click->rbui--command#dismiss esc->rbui--command#dismiss",
+        data_action: "click->ruby_ui--command#dismiss esc->ruby_ui--command#dismiss",
         class: "fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
       )
     end

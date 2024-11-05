@@ -19,7 +19,7 @@ class RubyUI::CollapsibleTest < Minitest::Test
             "phlex-ruby/phlex-rails"
           end
           content.div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
-            "RbUI/rbui"
+            "ruby_ui/ruby_ui"
           end
         end
       end

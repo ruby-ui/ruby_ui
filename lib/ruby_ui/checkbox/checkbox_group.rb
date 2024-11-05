@@ -12,7 +12,7 @@ module RubyUI
       {
         role: "group",
         data: {
-          controller: "rbui--checkbox-group"
+          controller: "ruby_ui--checkbox-group"
         }
       }
     end

@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {rbui__dropdown_menu_target: "trigger", action: "click->rbui--dropdown-menu#toggle"},
+        data: {ruby_ui__dropdown_menu_target: "trigger", action: "click->ruby_ui--dropdown-menu#toggle"},
         class: "inline-block"
       }
     end

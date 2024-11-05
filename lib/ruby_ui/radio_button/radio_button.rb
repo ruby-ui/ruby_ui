@@ -12,8 +12,8 @@ module RubyUI
       {
         type: "radio",
         data: {
-          rbui__form_field_target: "input",
-          action: "input->rbui--form-field#onInput invalid->rbui--form-field#onInvalid"
+          ruby_ui__form_field_target: "input",
+          action: "input->ruby_ui--form-field#onInput invalid->ruby_ui--form-field#onInvalid"
         },
         class: "h-4 w-4 p-0 border-primary rounded-full flex-none"
       }

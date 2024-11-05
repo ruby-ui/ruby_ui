@@ -30,7 +30,7 @@ module RubyUI
         role: "presentation",
         data: {
           value: @heading,
-          rbui__combobox_content_target: "group"
+          ruby_ui__combobox_content_target: "group"
         }
       }
     end

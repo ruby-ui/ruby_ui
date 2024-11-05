@@ -12,9 +12,9 @@ module RubyUI
       {
         class: "hidden",
         data: {
-          rbui__select_target: "input",
-          rbui__form_field_target: "input",
-          action: "change->rbui--form-field#onChange invalid->rbui--form-field#onInvalid"
+          ruby_ui__select_target: "input",
+          ruby_ui__form_field_target: "input",
+          action: "change->ruby_ui--form-field#onChange invalid->ruby_ui--form-field#onInvalid"
         }
       }
     end

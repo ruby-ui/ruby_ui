@@ -1,7 +1,7 @@
 module RubyUI
   module Generators
     class ComponentGenerator < RubyUI::Generators::BaseGenerator
-      namespace "rbui:component"
+      namespace "ruby_ui:component"
 
       source_root File.expand_path("../../..", __dir__)
       argument :component_name, type: :string, required: true
@@ -21,7 +21,7 @@ module RubyUI
       end
 
       def copy_component_files
-        puts "Component #{component} not found in rbui gem" if component_source.empty?
+        puts "Component #{component} not found in ruby_ui gem" if component_source.empty?
 
         component_files = Dir.glob("#{component_source}/*")
 
@@ -32,22 +32,22 @@ module RubyUI
       end
 
       def update_index_file
-        index_path = File.join(destination_root, "app/components/rbui/index.js")
+        index_path = File.join(destination_root, "app/components/ruby_ui/index.js")
 
-        rbui_index_content = File.read(index_path)
+        ruby_ui_index_content = File.read(index_path)
 
-        updated_rbui_index_content = add_controller_registration(rbui_index_content)
+        updated_ruby_ui_index_content = add_controller_registration(ruby_ui_index_content)
 
-        File.write(index_path, updated_rbui_index_content)
+        File.write(index_path, updated_ruby_ui_index_content)
       end
 
-      def add_controller_registration(rbui_index_content)
+      def add_controller_registration(ruby_ui_index_content)
         valid_controllers = get_valid_controllers
 
-        rbui_index_content = update_imports(rbui_index_content, valid_controllers)
-        update_registrations(rbui_index_content, valid_controllers)
+        ruby_ui_index_content = update_imports(ruby_ui_index_content, valid_controllers)
+        update_registrations(ruby_ui_index_content, valid_controllers)
         # Uncomment the following line if you want to update exports
-        # rbui_index_content = update_exports(rbui_index_content, valid_controllers)
+        # ruby_ui_index_content = update_exports(ruby_ui_index_content, valid_controllers)
       end
 
       def get_valid_controllers
@@ -74,8 +74,8 @@ module RubyUI
         # Build the new import path
         new_import_path = new_import_path("./#{relative_path.dirname}/#{file_name}")
 
-        # Create the registration name by dasherizing the component name and prefixing with 'rbui--'
-        registration_name = "rbui--#{component_name.dasherize}"
+        # Create the registration name by dasherizing the component name and prefixing with 'ruby_ui--'
+        registration_name = "ruby_ui--#{component_name.dasherize}"
 
         # Return a hash with import, registration, and export statements
         {
@@ -92,7 +92,7 @@ module RubyUI
 
       def new_import_path(relative_path)
         if using_importmap?
-          "rbui/#{relative_path.sub(/^\.\//, "")}"
+          "ruby_ui/#{relative_path.sub(/^\.\//, "")}"
         else
           relative_path
         end
@@ -118,11 +118,11 @@ module RubyUI
       end
 
       def source_path
-        @source_path ||= "lib/rbui"
+        @source_path ||= "lib/ruby_ui"
       end
 
       def destination_path
-        @destination_path ||= "app/components/rbui"
+        @destination_path ||= "app/components/ruby_ui"
       end
 
       def component_source

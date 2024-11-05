@@ -12,7 +12,7 @@ module RubyUI
       {
         class: "py-6 text-center text-sm",
         role: "presentation",
-        data: {rbui__command_target: "empty"}
+        data: {ruby_ui__command_target: "empty"}
       }
     end
   end

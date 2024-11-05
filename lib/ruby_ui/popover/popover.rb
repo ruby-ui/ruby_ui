@@ -16,9 +16,9 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "rbui--popover",
-          rbui__popover_options_value: @options.to_json,
-          rbui__popover_trigger_value: @options[:trigger] || "hover"
+          controller: "ruby_ui--popover",
+          ruby_ui__popover_options_value: @options.to_json,
+          ruby_ui__popover_trigger_value: @options[:trigger] || "hover"
         }
       }
     end

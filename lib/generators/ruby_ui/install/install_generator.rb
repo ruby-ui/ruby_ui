@@ -5,7 +5,7 @@ require_relative "../base_generator"
 module RubyUI
   module Generators
     class InstallGenerator < RubyUI::Generators::BaseGenerator
-      namespace "rbui:install"
+      namespace "ruby_ui:install"
 
       if defined?(Rails::Generators::Base)
         source_root File.expand_path("templates", __dir__)
@@ -62,8 +62,8 @@ module RubyUI
             say "Tailwind CSS is required for RubyUI", :red
           end
 
-          say "Add rbui initializer"
-          template "base_store_initializer.rb", "config/initializers/rbui.rb"
+          say "Add ruby_ui initializer"
+          template "base_store_initializer.rb", "config/initializers/ruby_ui.rb"
 
           if using_importmap?
             say "Using importmaps, adding tailwind-animate"
@@ -90,16 +90,16 @@ module RubyUI
           template "application.tailwind.css", "app/assets/stylesheets/application.tailwind.css", force: true
         end
 
-        def pin_rbui_js
+        def pin_ruby_ui_js
           stimulus_path = Rails.root.join("app/javascript/application.js")
-          package_name = "rbui-js"
+          package_name = "ruby_ui-js"
 
           say "Add RubyUI Stimulus controllers"
-          # run "mkdir -p app/javascript/controllers/rbui-js"
-          template "index.js", "app/components/rbui/index.js"
+          # run "mkdir -p app/javascript/controllers/ruby_ui-js"
+          template "index.js", "app/components/ruby_ui/index.js"
 
           if using_importmap?
-            gsub_file "app/components/rbui/index.js", /^import { application }.*$/ do
+            gsub_file "app/components/ruby_ui/index.js", /^import { application }.*$/ do
               'import { application } from "controllers/application";'
             end
 
@@ -109,29 +109,29 @@ module RubyUI
 
             say "Pin #{package_name}"
             append_to_file Rails.root.join("config/importmap.rb") do
-              "pin_all_from \"app/components/rbui\", under: \"rbui\"\n"
+              "pin_all_from \"app/components/ruby_ui\", under: \"ruby_ui\"\n"
             end
 
             run "bin/importmap pin #{package_name}"
-            append_to_file stimulus_path, "\nimport \"rbui\";\n"
+            append_to_file stimulus_path, "\nimport \"ruby_ui\";\n"
 
             manifest_path = Rails.root.join("app/assets/config/manifest.js")
             if File.exist?(manifest_path)
-              append_to_file manifest_path, "\n//= link rbui/index.js\n"
+              append_to_file manifest_path, "\n//= link ruby_ui/index.js\n"
             end
 
             fix_import_maps!
           else
-            say "Add rbui-js package"
+            say "Add ruby_ui-js package"
             run "yarn add #{package_name}"
 
-            append_to_file stimulus_path, "\nimport \"../components/rbui\";\n"
+            append_to_file stimulus_path, "\nimport \"../components/ruby_ui\";\n"
 
             run "yarn build"
           end
         end
 
-        def include_rbui
+        def include_ruby_ui
           message = "Include RubyUI in your global component layout?\n This allows to call RubyUI.Button {\"button\"} / RubyUI::Button.new {\"button\"} with Button  {\"button\"} (y/n)"
           if yes?(message)
             say "Add RubyUI to your global component layout"

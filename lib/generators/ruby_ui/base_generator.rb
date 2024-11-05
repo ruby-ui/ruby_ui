@@ -3,7 +3,7 @@ require "rails/generators"
 module RubyUI
   module Generators
     class BaseGenerator < defined?(Rails::Generators::Base) ? Rails::Generators::Base : Object
-      namespace "rbui:base"
+      namespace "ruby_ui:base"
 
       source_root File.join(__dir__, "templates")
 

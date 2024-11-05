@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {controller: "rbui--sheet"}
+        data: {controller: "ruby_ui--sheet"}
       }
     end
   end

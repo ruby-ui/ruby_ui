@@ -4,7 +4,7 @@ import { application } from "../../../app/javascript/controllers/application";
 // import ComboboxController from "./combobox/combobox_controller";
 
 // Register all controllers
-// application.register("rbui--combobox", ComboboxController);
+// application.register("ruby_ui--combobox", ComboboxController);
 
-import RubyUI from "rbui-js";
+import RubyUI from "ruby_ui-js";
 RubyUI.initialize(application);

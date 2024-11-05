@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "rbui"
+require "ruby_ui"
 
 Bundler.require(:development)
 

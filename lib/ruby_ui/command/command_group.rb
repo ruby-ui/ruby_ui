@@ -32,7 +32,7 @@ module RubyUI
         role: "presentation",
         data: {
           value: @title,
-          rbui__command_target: "group"
+          ruby_ui__command_target: "group"
         }
       }
     end

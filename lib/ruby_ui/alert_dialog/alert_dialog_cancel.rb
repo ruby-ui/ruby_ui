@@ -12,7 +12,7 @@ module RubyUI
       {
         variant: :outline,
         data: {
-          action: "click->rbui--alert-dialog#dismiss"
+          action: "click->ruby_ui--alert-dialog#dismiss"
         },
         class: "mt-2 sm:mt-0"
       }

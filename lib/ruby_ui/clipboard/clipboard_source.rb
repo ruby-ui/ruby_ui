@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          rbui__clipboard_target: "source"
+          ruby_ui__clipboard_target: "source"
         }
       }
     end

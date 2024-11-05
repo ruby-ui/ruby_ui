@@ -31,7 +31,7 @@ module RubyUI
     def default_attrs
       {
         class: "opacity-50",
-        data: {rbui__accordion_target: "icon"}
+        data: {ruby_ui__accordion_target: "icon"}
       }
     end
   end

@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          rbui__hover_card_target: "trigger"
+          ruby_ui__hover_card_target: "trigger"
         },
         class: "inline-block"
       }

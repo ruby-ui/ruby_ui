@@ -19,7 +19,7 @@ module RubyUI
       {
         id: @id,
         data: {
-          rbui__combobox_target: "list"
+          ruby_ui__combobox_target: "list"
         },
         role: "listbox",
         tabindex: "-1"

@@ -16,8 +16,8 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "rbui--alert-dialog",
-          rbui__alert_dialog_open_value: @open.to_s
+          controller: "ruby_ui--alert-dialog",
+          ruby_ui__alert_dialog_open_value: @open.to_s
         },
         class: "inline-block"
       }

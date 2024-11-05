@@ -37,7 +37,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          rbui__alert_dialog_target: "content"
+          ruby_ui__alert_dialog_target: "content"
         }
       }
     end

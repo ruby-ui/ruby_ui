@@ -15,7 +15,7 @@ class RubyUI::AccordionTest < Minitest::Test
       end
     end
 
-    assert_match(/<div data-controller="rbui--accordion"/, output)
+    assert_match(/<div data-controller="ruby_ui--accordion"/, output)
   end
 
   def test_render_with_all_items

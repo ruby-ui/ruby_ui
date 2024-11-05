@@ -17,7 +17,7 @@ module RubyUI
       date_template("selectedDateTemplate") do
         button(
           data_day: "{{day}}",
-          data_action: "click->rbui--calendar#selectDay",
+          data_action: "click->ruby_ui--calendar#selectDay",
           name: "day",
           class:
                 [
@@ -36,7 +36,7 @@ module RubyUI
       date_template("todayDateTemplate") do
         button(
           data_day: "{{day}}",
-          data_action: "click->rbui--calendar#selectDay",
+          data_action: "click->ruby_ui--calendar#selectDay",
           name: "day",
           class:
                 [
@@ -54,7 +54,7 @@ module RubyUI
       date_template("currentMonthDateTemplate") do
         button(
           data_day: "{{day}}",
-          data_action: "click->rbui--calendar#selectDay",
+          data_action: "click->ruby_ui--calendar#selectDay",
           name: "day",
           class:
                 [
@@ -72,7 +72,7 @@ module RubyUI
       date_template("otherMonthDateTemplate") do
         button(
           data_day: "{{day}}",
-          data_action: " click->rbui--calendar#selectDay",
+          data_action: " click->ruby_ui--calendar#selectDay",
           name: "day",
           class:
                 [
@@ -87,7 +87,7 @@ module RubyUI
     end
 
     def date_template(target, &block)
-      all_template_tag(data: {rbui__calendar_target: target}) do
+      all_template_tag(data: {ruby_ui__calendar_target: target}) do
         td(
           class:
                 "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected])]:rounded-md",

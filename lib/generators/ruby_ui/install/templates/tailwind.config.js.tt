@@ -1,9 +1,9 @@
-// For importing tailwind styles from rbui gem
+// For importing tailwind styles from ruby_ui gem
 const execSync = require('child_process').execSync;
 
-// Import rbui gem path
-const outputRubyUI = execSync('bundle show rbui', { encoding: 'utf-8' });
-const rbui_path = outputRubyUI.trim() + '/**/*.rb';
+// Import ruby_ui gem path
+const outputRubyUI = execSync('bundle show ruby_ui', { encoding: 'utf-8' });
+const ruby_ui_path = outputRubyUI.trim() + '/**/*.rb';
 
 const defaultTheme = require('tailwindcss/defaultTheme')
 
@@ -11,11 +11,11 @@ module.exports = {
   darkMode: ["class"],
   content: [
     './app/views/**/*.{erb,haml,html,slim,rb}',
-    './app/components/rbui/**/*.rb',
+    './app/components/ruby_ui/**/*.rb',
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js',
-    rbui_path
+    ruby_ui_path
   ],
   theme: {
     container: {
@@ -60,7 +60,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        /* rbui especific */
+        /* ruby_ui especific */
         warning: {
           DEFAULT: "hsl(var(--warning))",
           foreground: "hsl(var(--warning-foreground))",
