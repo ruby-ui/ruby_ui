@@ -14,7 +14,7 @@ module RubyUI
         data: {
           ruby_ui__form_field_target: "input",
           ruby_ui__checkbox_group_target: "checkbox",
-          action: "change->ruby_ui--checkbox-group#onChange change->ruby_ui--form-field#onInput change->ruby_ui--checkbox-group#onChange"
+          action: "change->ruby_ui--checkbox-group#onChange change->ruby_ui--form-field#onInput invalid->ruby_ui--form-field#onInvalid"
         },
         class: "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 accent-primary"
       }
