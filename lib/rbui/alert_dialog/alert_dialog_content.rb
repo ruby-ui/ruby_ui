@@ -3,7 +3,7 @@
 module RBUI
   class AlertDialogContent < Base
     def view_template(&block)
-      div(class: "hidden") do
+      all_template_tag(**attrs) do
         div(data: {controller: "rbui--alert-dialog"}) do
           background
           container(&block)
