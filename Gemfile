@@ -73,6 +73,6 @@ end
 gem "phlex-rails"
 
 gem "ruby_ui", github: "ruby-ui/ruby_ui", branch: "main"
-# gem "ruby_ui", path: "../rbui"
+# gem "ruby_ui", path: "../ruby_ui"
 
 gem "pry"
