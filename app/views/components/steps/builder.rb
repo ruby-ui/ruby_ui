@@ -2,7 +2,7 @@
 
 module Steps
   class Builder < ApplicationComponent
-    include Phlex::DeferredRender
+    include DeferredRender
 
     def initialize(**attrs)
       @attrs = attrs

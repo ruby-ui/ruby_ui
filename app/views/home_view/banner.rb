@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HomeView::Banner < ApplicationComponent
-  include Phlex::DeferredRender
+  include DeferredRender
 
   def view_template(&block)
     div(class: "relative overflow-hidden") do

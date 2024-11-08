@@ -25,7 +25,7 @@ class Shared::Navbar < ApplicationComponent
   end
 
   def dark_mode_toggle
-    RBUI.ThemeToggle do |toggle|
+    RubyUI.ThemeToggle do |toggle|
       toggle.light_mode do
         Button(variant: :ghost, icon: true) do
           svg(

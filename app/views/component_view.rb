@@ -1,4 +1,4 @@
 class ComponentView < ApplicationComponent
-  include RBUI
+  include RubyUI
   include ApplicationHelper
 end

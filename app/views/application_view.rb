@@ -23,7 +23,7 @@ class ApplicationView < ApplicationComponent
   # can change that to `Phlex::HTML` if you want to keep views and
   # components independent.
 
-  GITHUB_REPO_URL = "https://github.com/rbui-labs/rbui/"
+  GITHUB_REPO_URL = "https://github.com/ruby-ui/ruby_ui/"
   GITHUB_FILE_URL = "#{GITHUB_REPO_URL}blob/main/"
 
   def before_template

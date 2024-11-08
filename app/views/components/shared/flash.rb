@@ -22,11 +22,11 @@ class Shared::Flash < ApplicationComponent
       data_state: "open",
       data_controller: "dismissable",
       # data_swipe_direction: "right",
-      class: tokens(
+      class: [
         "group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md p-4 pr-6 pt-3.5 shadow-lg transition-all data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full border",
-        notice?: "bg-background text-foreground",
-        alert?: "destructive group border-destructive bg-destructive text-destructive-foreground"
-      ),
+        ("bg-background text-foreground" if notice?),
+        ("destructive group border-destructive bg-destructive text-destructive-foreground" if alert?)
+      ],
       style: "user-select:none; touch-action:none"
     ) do
       div(class: "grid gap-1") do
@@ -47,11 +47,11 @@ class Shared::Flash < ApplicationComponent
   def close_button
     button(
       type: "button",
-      class: tokens(
+      class: [
         "absolute right-1 top-1 rounded-md p-1 opacity-0 transition-opacity focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-ring group-hover:opacity-100",
-        notice?: "text-foreground/50 hover:text-foreground",
-        alert?: "text-destructive-foreground/50 hover:text-destructive-foreground focus:ring-destructive-foreground focus:ring-offset-destructive-foreground"
-      ),
+        ("text-foreground/50 hover:text-foreground" if notice?),
+        ("text-destructive-foreground/50 hover:text-destructive-foreground focus:ring-destructive-foreground focus:ring-offset-destructive-foreground" if alert?)
+      ],
 
       data: {
         action: "click->dismissable#dismiss"

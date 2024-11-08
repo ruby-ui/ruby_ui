@@ -83,7 +83,7 @@ class Docs::CardView < ApplicationView
       xmlns: "http://www.w3.org/2000/svg",
       viewbox: "0 0 20 20",
       fill: "currentColor",
-      class: tokens("w-4 h-4", classes)
+      class: ["w-4 h-4", classes]
     ) do |s|
       s.path(
         fill_rule: "evenodd",
@@ -101,7 +101,7 @@ class Docs::CardView < ApplicationView
       viewbox: "0 0 24 24",
       stroke_width: "1.5",
       stroke: "currentColor",
-      class: tokens("w-6 h-6", classes)
+      class: ["w-6 h-6", classes]
     ) do |s|
       s.path(
         stroke_linecap: "round",

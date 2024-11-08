@@ -5,7 +5,7 @@ module ApplicationHelper
     calls = []
     Prism.parse(code_example).value.accept(MethodCallFinder.new(calls))
     calls_set = Set.new(calls.map(&:to_s))
-    descendants = Phlex::HTML.descendants.map { |d| d.to_s.gsub(/^RBUI::/, "") }
+    descendants = Phlex::HTML.descendants.map { |d| d.to_s.gsub(/^RubyUI::/, "") }
     component_names = descendants.select { |d| calls_set.include?(d) }
 
     # component_names = code_example.scan(/(?<=^|\s)#{component}\w*/).uniq
@@ -13,7 +13,7 @@ module ApplicationHelper
     component_names.map do |name|
       Docs::ComponentStruct.new(
         name: name,
-        source: "lib/rbui/#{camel_to_snake(component)}/#{camel_to_snake(name)}.rb",
+        source: "lib/ruby_ui/#{camel_to_snake(component)}/#{camel_to_snake(name)}.rb",
         built_using: :phlex
       )
     end
@@ -35,7 +35,7 @@ module ApplicationHelper
     return [] unless gem_spec
 
     # Construct the path to the component files within the gem
-    component_dir = File.join(gem_spec.gem_dir, "lib", "rbui", camel_to_snake(component))
+    component_dir = File.join(gem_spec.gem_dir, "lib", "ruby_ui", camel_to_snake(component))
 
     return [] unless Dir.exist?(component_dir)
 
@@ -49,8 +49,8 @@ module ApplicationHelper
       basename = File.basename(file, ext)
 
       name = basename.camelize
-      # source = "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/rbui/#{component.to_s.downcase}/#{File.basename(file)}"
-      source = "lib/rbui/#{camel_to_snake(component)}/#{File.basename(file)}"
+      # source = "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/ruby_ui/#{component.to_s.downcase}/#{File.basename(file)}"
+      source = "lib/ruby_ui/#{camel_to_snake(component)}/#{File.basename(file)}"
       built_using = if ext == ".rb"
         :phlex
       else # ".js"

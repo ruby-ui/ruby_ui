@@ -50,13 +50,11 @@ module Themes
       end
 
       def message(content, right: false)
-        div(class: tokens("w-full flex", -> { right } => "justify-end")) do
-          div(class:
-              tokens(
-                "rounded-2xl p-4 w-3/4",
-                -> { right } => "bg-primary text-primary-foreground rounded-br-sm",
-                -> { !right } => "bg-muted text-foreground rounded-bl-sm"
-              )) do
+        div(class: ["w-full flex", ("justify-end" if right)]) do
+          div(class: [
+            "rounded-2xl p-4 w-3/4",
+            (right ? "bg-primary text-primary-foreground rounded-br-sm" : "bg-muted text-foreground rounded-bl-sm")
+          ]) do
             content
           end
         end

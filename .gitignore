@@ -35,8 +35,11 @@
 
 /node_modules
 
-.env* 
+.env*
 
 .tool-versions
 
 config/credentials/production.key
+
+# Yarn
+yarn-error.log

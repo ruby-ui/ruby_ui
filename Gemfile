@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.4"
+ruby "3.3.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "7.2.0"
@@ -70,7 +70,8 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "phlex-rails"
+gem "phlex", github: "phlex-ruby/phlex"
+gem "phlex-rails", github: "phlex-ruby/phlex-rails"
 
 gem "ruby_ui", github: "ruby-ui/ruby_ui", branch: "main"
 # gem "ruby_ui", path: "../ruby_ui"

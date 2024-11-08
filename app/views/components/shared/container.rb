@@ -12,7 +12,7 @@ class Shared::Container < ApplicationComponent
 
   def initialize(size: "md", **attrs)
     @attrs = attrs
-    @attrs[:class] = tokens(DEFAULT_CLASS, SIZE_CLASSES[size].to_s, @attrs[:class])
+    @attrs[:class] = [DEFAULT_CLASS, SIZE_CLASSES[size].to_s, @attrs[:class]]
   end
 
   def view_template(&)

@@ -31,15 +31,12 @@ class Components::TypographyList < Components::Base
 
   def numbered? = @numbered
 
-  def not_numbered? = !numbered?
-
   def default_attrs
     {
-      class: tokens(
+      class: [
         "my-6 ml-6 [&>li]:mt-2 [&>li]:pl-2",
-        numbered?: "list-decimal marker:font-medium",
-        not_numbered?: "list-disc"
-      )
+        (numbered? ? "list-decimal marker:font-medium" : "list-disc")
+      ]
     }
   end
 end
