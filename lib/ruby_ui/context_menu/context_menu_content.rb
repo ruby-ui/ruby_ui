@@ -3,7 +3,7 @@
 module RubyUI
   class ContextMenuContent < Base
     def view_template(&block)
-      all_template_tag(data: {ruby_ui__context_menu_target: "content"}) do
+      template(data: {ruby_ui__context_menu_target: "content"}) do
         div(**attrs, &block)
       end
     end

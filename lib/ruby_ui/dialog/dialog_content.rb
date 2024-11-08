@@ -17,7 +17,7 @@ module RubyUI
     end
 
     def view_template
-      all_template_tag(data: {ruby_ui__dialog_target: "content"}) do
+      template(data: {ruby_ui__dialog_target: "content"}) do
         div(data_controller: "ruby-ui--dialog") do
           backdrop
           div(**attrs) do

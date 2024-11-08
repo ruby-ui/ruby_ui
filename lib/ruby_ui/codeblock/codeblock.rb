@@ -54,19 +54,7 @@ module RubyUI
     def codeblock
       div(**attrs) do
         div(class: "after:content-none") do
-          pre do
-            current_version = Gem.loaded_specs["phlex"].version
-
-            if current_version.segments[0] >= 2
-              # Any 2.x version (including betas)
-              raw(safe(FORMATTER.format(lexer.lex(@code))))
-            else
-              # Any 1.x version
-              unsafe_raw FORMATTER.format(
-                lexer.lex(@code)
-              )
-            end
-          end
+          pre { raw(safe(FORMATTER.format(lexer.lex(@code)))) }
         end
       end
     end
