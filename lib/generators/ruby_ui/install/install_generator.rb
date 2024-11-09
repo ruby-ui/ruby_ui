@@ -92,10 +92,10 @@ module RubyUI
 
         def pin_ruby_ui_js
           stimulus_path = Rails.root.join("app/javascript/application.js")
-          package_name = "ruby_ui-js"
+          package_name = "ruby_ui_js"
 
           say "Add RubyUI Stimulus controllers"
-          # run "mkdir -p app/javascript/controllers/ruby_ui-js"
+          # run "mkdir -p app/javascript/controllers/ruby_ui_js"
           template "index.js", "app/components/ruby_ui/index.js"
 
           if using_importmap?
@@ -122,7 +122,7 @@ module RubyUI
 
             fix_import_maps!
           else
-            say "Add ruby_ui-js package"
+            say "Add ruby_ui_js package"
             run "yarn add #{package_name}"
 
             append_to_file stimulus_path, "\nimport \"../components/ruby_ui\";\n"
