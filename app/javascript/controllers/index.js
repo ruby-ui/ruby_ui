@@ -9,3 +9,6 @@ application.register("color-theme", ColorThemeController)
 
 import LottieController from "./lottie_controller"
 application.register("lottie", LottieController)
+
+import SidebarMenuController from "./sidebar_menu_controller"
+application.register("sidebar-menu", SidebarMenuController)
