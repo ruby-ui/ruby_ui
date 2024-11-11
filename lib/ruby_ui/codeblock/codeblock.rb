@@ -34,6 +34,7 @@ module RubyUI
 
     def default_attrs
       {
+        style: {tab_size: 2},
         class: "highlight text-sm max-h-[350px] after:content-none flex font-mono overflow-auto overflow-x rounded-md border !bg-stone-900 [&_pre]:p-4"
       }
     end
