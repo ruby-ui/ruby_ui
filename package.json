@@ -28,6 +28,7 @@
     "chart.js": "^4.4.1",
     "date-fns": "^2.30.0",
     "fuse.js": "^7.0.0",
+    "maska": "^3.0.3",
     "motion": "^10.16.4",
     "mustache": "^4.2.0",
     "tippy.js": "^6.3.7"

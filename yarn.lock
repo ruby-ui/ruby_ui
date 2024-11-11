@@ -126,6 +126,11 @@ hey-listen@^1.0.8:
   resolved "https://registry.yarnpkg.com/hey-listen/-/hey-listen-1.0.8.tgz#8e59561ff724908de1aa924ed6ecc84a56a9aa68"
   integrity sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==
 
+maska@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/maska/-/maska-3.0.3.tgz#36e3c2c77bf35db09842f318315c590e2855a9ce"
+  integrity sha512-ItFbuqVeBKk1JmC4QCRxKeNaX+Ym/oMUYZVXwvAPKAwMeO4bYZpIGjNWOcZy+L8YXQaPvCZ68+5eYpGRdyaA8w==
+
 motion@^10.16.4:
   version "10.18.0"
   resolved "https://registry.yarnpkg.com/motion/-/motion-10.18.0.tgz#8fd035cc3a668800fe7e2479568eeb98af484ab3"
