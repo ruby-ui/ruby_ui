@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/ruby-ui/ruby_ui.git
-  revision: 6fb08c975c3f9f162fb3f510f5b42372dfeb9fc7
+  revision: 992944de9fcead84da66ff5a6f6c8662a021acae
   branch: main
   specs:
     ruby_ui (1.0.0.pre.alpha.4)
@@ -172,6 +172,7 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.7)
     minitest (5.25.1)
     msgpack (1.7.3)
     net-imap (0.5.0)
@@ -184,17 +185,8 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.16.7-aarch64-linux)
-      racc (~> 1.4)
-    nokogiri (1.16.7-arm-linux)
-      racc (~> 1.4)
-    nokogiri (1.16.7-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.16.7-x86-linux)
-      racc (~> 1.4)
-    nokogiri (1.16.7-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.16.7-x86_64-linux)
+    nokogiri (1.16.7)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     parallel (1.26.3)
     parser (3.3.6.0)
@@ -284,16 +276,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sqlite3 (2.2.0-aarch64-linux-gnu)
-    sqlite3 (2.2.0-aarch64-linux-musl)
-    sqlite3 (2.2.0-arm-linux-gnu)
-    sqlite3 (2.2.0-arm-linux-musl)
-    sqlite3 (2.2.0-arm64-darwin)
-    sqlite3 (2.2.0-x86-linux-gnu)
-    sqlite3 (2.2.0-x86-linux-musl)
-    sqlite3 (2.2.0-x86_64-darwin)
-    sqlite3 (2.2.0-x86_64-linux-gnu)
-    sqlite3 (2.2.0-x86_64-linux-musl)
+    sqlite3 (2.2.0)
+      mini_portile2 (~> 2.8.0)
     standard (1.41.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)

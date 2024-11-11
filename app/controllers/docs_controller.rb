@@ -134,6 +134,10 @@ class DocsController < ApplicationController
     render Docs::LinkView.new
   end
 
+  def masked_input
+    render Docs::MaskedInputView.new
+  end
+
   def pagination
     render Docs::PaginationView.new
   end

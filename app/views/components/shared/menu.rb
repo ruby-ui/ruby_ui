@@ -86,6 +86,7 @@ class Shared::Menu < ApplicationComponent
       {name: "Input", path: helpers.docs_input_path},
       {name: "Hover Card", path: helpers.docs_hover_card_path},
       {name: "Link", path: helpers.docs_link_path},
+      {name: "Masked Input", path: helpers.masked_input_path},
       {name: "Pagination", path: helpers.docs_pagination_path, badge: "New"},
       {name: "Popover", path: helpers.docs_popover_path},
       {name: "Select", path: helpers.docs_select_path, badge: "New"},

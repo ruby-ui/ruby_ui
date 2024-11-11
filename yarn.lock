@@ -726,6 +726,11 @@ lru-cache@^10.2.0:
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.4.3.tgz#410fc8a17b70e598013df257c2446b7f3383f119"
   integrity sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==
 
+maska@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/maska/-/maska-3.0.3.tgz#36e3c2c77bf35db09842f318315c590e2855a9ce"
+  integrity sha512-ItFbuqVeBKk1JmC4QCRxKeNaX+Ym/oMUYZVXwvAPKAwMeO4bYZpIGjNWOcZy+L8YXQaPvCZ68+5eYpGRdyaA8w==
+
 merge2@^1.3.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
@@ -950,13 +955,14 @@ reusify@^1.0.4:
 
 ruby_ui_js@ruby-ui/ruby_ui:
   version "1.0.0-alpha.4"
-  resolved "https://codeload.github.com/ruby-ui/ruby_ui/tar.gz/6fb08c975c3f9f162fb3f510f5b42372dfeb9fc7"
+  resolved "https://codeload.github.com/ruby-ui/ruby_ui/tar.gz/992944de9fcead84da66ff5a6f6c8662a021acae"
   dependencies:
     "@floating-ui/dom" "^1.6.8"
     "@hotwired/stimulus" "^3.2.2"
     chart.js "^4.4.1"
     date-fns "^2.30.0"
     fuse.js "^7.0.0"
+    maska "^3.0.3"
     motion "^10.16.4"
     mustache "^4.2.0"
     tippy.js "^6.3.7"
@@ -991,6 +997,7 @@ source-map-js@^1.2.0, source-map-js@^1.2.1:
   integrity sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -1009,6 +1016,7 @@ string-width@^5.0.1, string-width@^5.1.2:
     strip-ansi "^7.0.1"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
