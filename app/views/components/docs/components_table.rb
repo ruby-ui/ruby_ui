@@ -1,40 +1,14 @@
 # frozen_string_literal: true
 
 class Docs::ComponentsTable < ApplicationComponent
-  def initialize(components, file_components = nil)
-    @components = components.sort_by { |component| [component.built_using, component.name] }
-    @file_components = file_components.sort_by { |component| [component.built_using, component.name] } if file_components
+  def initialize(component_files)
+    @component_files = component_files.sort_by { |component| [component.built_using, component.name] }
   end
 
   def view_template
     Heading(level: 2) { "Components" }
 
-    Tabs(default_value: "account", class: "") do
-      TabsList do
-        TabsTrigger(value: "components") { "Components Referenced" }
-        TabsTrigger(value: "file-components") { "Component files" }
-      end
-      TabsContent(value: "components") do
-        div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
-          div(class: "space-y-0") do
-            component_table_view(@components)
-          end
-        end
-      end
-      if @file_components
-        TabsContent(value: "file-components") do
-          div(class: "rounded-lg border p-6 space-y-4 bg-background text-foreground") do
-            div do
-              if @file_components.present?
-                component_table_view(@file_components)
-              else
-                Text { "No components for this page" }
-              end
-            end
-          end
-        end
-      end
-    end
+    component_table_view(@component_files)
   end
 
   private

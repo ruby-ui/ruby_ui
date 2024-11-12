@@ -35,7 +35,7 @@ class Docs::LinkView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Icon", description: "This is the icon variant of a Link", context: self) do
         <<~RUBY
-          Link(href: "#", variant: :outline, icon: true) do 
+          Link(href: "#", variant: :outline, icon: true) do
             chevron_icon
           end
         RUBY
@@ -43,7 +43,7 @@ class Docs::LinkView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With Icon", description: "This is the primary variant of a Link with an icon", context: self) do
         <<~RUBY
-          Link(href: "#", variant: :primary) do 
+          Link(href: "#", variant: :primary) do
             email_icon
             span { "Login with Email" }
           end
@@ -56,7 +56,7 @@ class Docs::LinkView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 

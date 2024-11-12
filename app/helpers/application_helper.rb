@@ -1,34 +1,6 @@
+require "rubygems"
+
 module ApplicationHelper
-  def component_references(component, code_example = nil, use_component_files = false)
-    return [] unless code_example
-
-    calls = []
-    Prism.parse(code_example).value.accept(MethodCallFinder.new(calls))
-    calls_set = Set.new(calls.map(&:to_s))
-    descendants = Phlex::HTML.descendants.map { |d| d.to_s.gsub(/^RubyUI::/, "") }
-    component_names = descendants.select { |d| calls_set.include?(d) }
-
-    # component_names = code_example.scan(/(?<=^|\s)#{component}\w*/).uniq
-
-    component_names.map do |name|
-      Docs::ComponentStruct.new(
-        name: name,
-        source: "lib/ruby_ui/#{camel_to_snake(component)}/#{camel_to_snake(name)}.rb",
-        built_using: :phlex
-      )
-    end
-
-    # component_names.push(
-    #   Docs::ComponentStruct.new(
-    #     name: "ComboboxController",
-    #     source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/command_controller.js",
-    #     built_using: :stimulus
-    #   )
-    # )
-  end
-
-  require "rubygems"
-
   def component_files(component, gem_name = "ruby_ui")
     # Find the gem specification
     gem_spec = Gem::Specification.find_by_name(gem_name)

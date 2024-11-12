@@ -70,7 +70,7 @@ class Docs::BadgeView < ApplicationView
       end
 
       # components
-      render Docs::ComponentsTable.new(component_references("Badge", Docs::VisualCodeExample.collected_code), component_files("Badge"))
+      render Docs::ComponentsTable.new(component_files("Badge"))
     end
   end
 end

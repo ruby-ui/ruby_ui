@@ -53,7 +53,7 @@ class Docs::ComboboxView < ApplicationView
           end
         RUBY
       end
-      render Docs::ComponentsTable.new(component_references(component, @@code_example), component_files("Combobox"))
+      render Docs::ComponentsTable.new(component_files("Combobox"))
     end
   end
 end

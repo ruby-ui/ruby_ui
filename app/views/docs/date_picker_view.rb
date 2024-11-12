@@ -2,7 +2,7 @@
 
 class Docs::DatePickerView < ApplicationView
   def view_template
-    component = "Date Picker"
+    component = "DatePicker"
 
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Date Picker", description: "A date picker component with input.")
@@ -27,7 +27,7 @@ class Docs::DatePickerView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 end

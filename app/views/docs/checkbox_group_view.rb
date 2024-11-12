@@ -2,7 +2,7 @@
 
 class Docs::CheckboxGroupView < ApplicationView
   def view_template
-    component = "Checkbox Group"
+    component = "Checkbox"
 
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Checkbox Group", description: "A control that allows the user to toggle between checked and not checked.")
@@ -71,7 +71,7 @@ class Docs::CheckboxGroupView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 end

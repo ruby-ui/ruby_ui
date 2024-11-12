@@ -51,7 +51,7 @@ class Docs::ButtonView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Icon", context: self) do
         <<~RUBY
-          Button(variant: :outline, icon: true) do 
+          Button(variant: :outline, icon: true) do
             svg(
               xmlns: "http://www.w3.org/2000/svg",
               viewbox: "0 0 20 20",
@@ -71,7 +71,7 @@ class Docs::ButtonView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With Icon", context: self) do
         <<~RUBY
-          Button(variant: :primary) do 
+          Button(variant: :primary) do
             svg(
               xmlns: "http://www.w3.org/2000/svg",
               fill: "none",
@@ -94,7 +94,7 @@ class Docs::ButtonView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With Icon", context: self) do
         <<~RUBY
-          Button(variant: :primary, disabled: true) do 
+          Button(variant: :primary, disabled: true) do
             svg(
               xmlns: "http://www.w3.org/2000/svg",
               viewbox: "0 0 20 20",
@@ -115,13 +115,13 @@ class Docs::ButtonView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Submit", context: self) do
         <<~RUBY
-          Button(variant: :primary, type: :submit) do 
+          Button(variant: :primary, type: :submit) do
             span { "Submit application" }
           end
         RUBY
       end
 
-      render Docs::ComponentsTable.new(component_references("Button", Docs::VisualCodeExample.collected_code), component_files("Button"))
+      render Docs::ComponentsTable.new(component_files("Button"))
     end
   end
 end

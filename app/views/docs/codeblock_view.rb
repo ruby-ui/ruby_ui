@@ -10,7 +10,7 @@ class Docs::CodeblockView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "With clipboard", context: self) do
         <<~RUBY
-          code = <<~CODE 
+          code = <<~CODE
               def hello_world
                 puts "Hello, world!"
               end
@@ -23,7 +23,7 @@ class Docs::CodeblockView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Without clipboard", context: self) do
         <<~RUBY
-          code = <<~CODE 
+          code = <<~CODE
               def hello_world
                 puts "Hello, world!"
               end
@@ -36,7 +36,7 @@ class Docs::CodeblockView < ApplicationView
 
       render Docs::VisualCodeExample.new(title: "Custom message", description: "Copy the code to see the message", context: self) do
         <<~RUBY
-          code = <<~CODE 
+          code = <<~CODE
               def hello_world
                 puts "Hello, world!"
               end
@@ -47,7 +47,7 @@ class Docs::CodeblockView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 end

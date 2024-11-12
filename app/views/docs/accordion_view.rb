@@ -45,7 +45,7 @@ class Docs::AccordionView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(component_references(component, @@code), component_files(component))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 end

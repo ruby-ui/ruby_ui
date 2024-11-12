@@ -140,7 +140,7 @@ class Docs::FormView < ApplicationView
         RUBY
       end
 
-      render Docs::ComponentsTable.new(component_references(component, Docs::VisualCodeExample.collected_code), component_files(component))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 end
