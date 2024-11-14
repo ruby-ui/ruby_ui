@@ -36,6 +36,16 @@ module Phlex::Testing
   ViewHelper = Basic
 end
 
+# Add this to the end of your test/test_helper.rb file
+
+def load_spec(spec_path)
+  module_name = File.basename(spec_path, ".rb").split("_").map(&:capitalize).join
+  mod = Module.new
+  mod.module_eval(File.read(spec_path), spec_path)
+  Object.const_set(module_name, mod)
+  mod
+end
+
 # this is a tracepoint that will output the path of all files loaded that contain the string "phlex"
 # trace = TracePoint.new(:class) do |tp|
 #   puts "Loaded: #{tp.path}" if tp.path.include?("phlex")

@@ -10,17 +10,29 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    base64 (0.2.0)
     json (2.8.0)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
     lru_redux (1.1.0)
     minitest (5.25.1)
+    mustermann (3.0.3)
+      ruby2_keywords (~> 0.0.1)
+    nio4r (2.7.4)
     parallel (1.26.3)
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
     phlex (2.0.0.beta2)
+    puma (6.4.3)
+      nio4r (~> 2.0)
     racc (1.8.1)
+    rack (3.1.8)
+    rack-protection (4.0.0)
+      base64 (>= 0.1.0)
+      rack (>= 3.0.0, < 4)
+    rack-session (2.0.0)
+      rack (>= 3.0.0)
     rainbow (3.1.1)
     rake (13.2.1)
     regexp_parser (2.9.2)
@@ -41,6 +53,13 @@ GEM
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
+    sinatra (4.0.0)
+      mustermann (~> 3.0)
+      rack (>= 3.0.0, < 4)
+      rack-protection (= 4.0.0)
+      rack-session (>= 2.0.0, < 3)
+      tilt (~> 2.0)
     standard (1.41.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -55,16 +74,18 @@ GEM
       rubocop-performance (~> 1.22.0)
     tailwind_merge (0.13.2)
       lru_redux (~> 1.1)
+    tilt (2.4.0)
     unicode-display_width (2.6.0)
 
 PLATFORMS
   arm64-darwin-24
-  ruby
 
 DEPENDENCIES
   minitest (~> 5.0)
+  puma
   rake (~> 13.0)
   ruby_ui!
+  sinatra
   standard (~> 1.0)
 
 BUNDLED WITH

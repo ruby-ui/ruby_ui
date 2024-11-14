@@ -5,7 +5,8 @@
   "description": "Stimulus controllers for ruby_ui Component Library",
   "homepage": "https://ruby_ui.dev",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node esbuild.config.mjs",
+    "test": "playwright test"
   },
   "keywords": [
     "ruby_ui",
@@ -34,6 +35,10 @@
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
-    "globals": "^15.8.0"
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^22.9.0",
+    "esbuild": "^0.24.0",
+    "globals": "^15.8.0",
+    "playwright": "^1.48.2"
   }
 }

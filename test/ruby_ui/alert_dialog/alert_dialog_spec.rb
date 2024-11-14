@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
-class RubyUI::AlertDialogTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
-  def test_render_with_all_items
-    output = phlex_context do
+class RubyUI::AlertDialogSpec
+  def spec(context)
+    context.instance_exec do
       RubyUI.AlertDialog do
         RubyUI.AlertDialogTrigger do
           RubyUI.Button { "Show dialog" }
@@ -23,7 +19,5 @@ class RubyUI::AlertDialogTest < Minitest::Test
         end
       end
     end
-
-    assert_match(/Show dialog/, output)
   end
 end
