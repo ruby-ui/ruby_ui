@@ -2,9 +2,6 @@ PATH
   remote: .
   specs:
     ruby_ui (1.0.0.pre.alpha.4)
-      phlex (>= 2.0.0.beta2)
-      rouge (~> 4.2.0)
-      tailwind_merge (~> 0.12)
 
 GEM
   remote: https://rubygems.org/
@@ -63,9 +60,12 @@ PLATFORMS
 
 DEPENDENCIES
   minitest (~> 5.0)
+  phlex (>= 2.0.0.beta2)
   rake (~> 13.0)
+  rouge (~> 4.2.0)
   ruby_ui!
   standard (~> 1.0)
+  tailwind_merge (~> 0.12)
 
 BUNDLED WITH
    2.5.22
