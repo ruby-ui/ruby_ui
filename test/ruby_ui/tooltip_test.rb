@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::TooltipTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::TooltipTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Tooltip do
         RubyUI.TooltipTrigger do
           RubyUI.Button(variant: :outline, icon: true) { "?" }

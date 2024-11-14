@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::InlineCodeTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::InlineCodeTest < ComponentTest
   def test_render_inline_code
-    output = phlex_context do
+    output = phlex do
       RubyUI::InlineCode() { "This is an inline code block" }
     end
 

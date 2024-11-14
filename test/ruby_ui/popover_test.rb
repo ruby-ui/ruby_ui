@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::PopoverTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::PopoverTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Popover do
         RubyUI.PopoverTrigger(class: "w-full") do
           RubyUI.Button(variant: :outline) { "Open Popover" }

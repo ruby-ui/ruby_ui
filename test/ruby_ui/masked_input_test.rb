@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::MaskedInputTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::MaskedInputTest < ComponentTest
   def test_render
-    output = phlex_context do
+    output = phlex do
       RubyUI.MaskedInput(data: {maska: "#####-###"})
     end
 

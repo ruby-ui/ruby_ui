@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::ChartTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::ChartTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       options = {
         type: "bar",
         data: {

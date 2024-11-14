@@ -2,9 +2,7 @@
 
 require "test_helper"
 
-class RubyUI::CommandTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::CommandTest < ComponentTest
   def test_render_with_all_items
     components_list = [
       {name: "Accordion", path: "#"},
@@ -21,7 +19,7 @@ class RubyUI::CommandTest < Minitest::Test
       {name: "Settings", path: "#"}
     ]
 
-    output = phlex_context do
+    output = phlex do
       RubyUI.CommandDialog do
         RubyUI.CommandDialogTrigger do
           RubyUI.Button(variant: "outline", class: "w-56 pr-2 pl-3 justify-between") do |button|

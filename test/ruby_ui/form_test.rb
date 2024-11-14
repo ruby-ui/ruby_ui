@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::FormTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::FormTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Form do
         RubyUI.FormField do
           RubyUI.FormFieldLabel { "Label" }

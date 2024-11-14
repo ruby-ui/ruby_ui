@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::AlertDialogTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::AlertDialogTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.AlertDialog do
         RubyUI.AlertDialogTrigger do
           RubyUI.Button { "Show dialog" }

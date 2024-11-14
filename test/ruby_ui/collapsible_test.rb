@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::CollapsibleTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::CollapsibleTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Collapsible(open: true) do
         RubyUI.CollapsibleTrigger do
           RubyUI.Button(variant: :ghost, icon: true) do |button|

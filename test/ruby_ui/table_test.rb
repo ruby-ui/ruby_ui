@@ -2,9 +2,7 @@
 
 require "test_helper"
 
-class RubyUI::TableTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::TableTest < ComponentTest
   def test_render_with_all_items
     invoices = [
       {identifier: "INV-0001", status: "Active", method: "Credit Card", amount: 100},
@@ -13,7 +11,7 @@ class RubyUI::TableTest < Minitest::Test
       {identifier: "INV-0004", status: "Inactive", method: "Credit Card", amount: 100}
     ]
 
-    output = phlex_context do
+    output = phlex do
       RubyUI.Table do
         RubyUI.TableCaption { "Employees at Acme inc." }
         RubyUI.TableHeader do

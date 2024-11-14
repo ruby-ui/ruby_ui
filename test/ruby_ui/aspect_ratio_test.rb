@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::AspectRatioTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::AspectRatioTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.AspectRatio(aspect_ratio: "16/9") do |aspect|
         aspect.img(
           alt: "Placeholder",

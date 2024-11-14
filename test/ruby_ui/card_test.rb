@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::CardTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::CardTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Card(class: "w-96") do
         RubyUI.CardHeader do
           RubyUI.CardTitle { 'You might like "RubyUI"' }

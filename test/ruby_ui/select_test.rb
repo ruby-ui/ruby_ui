@@ -2,9 +2,7 @@
 
 require "test_helper"
 
-class RubyUI::SelectTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::SelectTest < ComponentTest
   def test_render_with_all_items
     people = [
       ["John Doe", 1],
@@ -12,7 +10,7 @@ class RubyUI::SelectTest < Minitest::Test
       ["Sam Smith", 3]
     ]
 
-    output = phlex_context do
+    output = phlex do
       RubyUI.Select do
         RubyUI.SelectInput(name: "NAME")
         RubyUI.SelectTrigger do

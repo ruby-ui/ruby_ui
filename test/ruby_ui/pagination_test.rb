@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::PaginationTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::PaginationTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Pagination do
         RubyUI.PaginationContent do
           RubyUI.PaginationItem(href: "#") do |item|

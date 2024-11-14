@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::AccordionTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::AccordionTest < ComponentTest
   def test_render_with_default_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Accordion do
         RubyUI.AccordionItem do
           RubyUI.AccordionDefaultTrigger { "Title" }
@@ -19,7 +17,7 @@ class RubyUI::AccordionTest < Minitest::Test
   end
 
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Accordion do
         RubyUI.AccordionItem do
           RubyUI.AccordionTrigger do |trigger|
