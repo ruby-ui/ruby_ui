@@ -1,4 +1,4 @@
-require_relative "lib/ruby_ui/version"
+require_relative "lib/ruby_ui"
 
 Gem::Specification.new do |s|
   s.name = "ruby_ui"
@@ -15,10 +15,9 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">= 3.3.1"
 
-  s.add_dependency "phlex", ">= 2.0.0.beta2"
-  s.add_dependency "rouge", "~> 4.2.0"
-  s.add_dependency "tailwind_merge", "~> 0.12"
-
+  s.add_development_dependency "phlex", ">= 2.0.0.beta2"
+  s.add_development_dependency "rouge", "~> 4.2.0"
+  s.add_development_dependency "tailwind_merge", "~> 0.12"
   s.add_development_dependency "rake", "~> 13.0"
   s.add_development_dependency "standard", "~> 1.0"
   s.add_development_dependency "minitest", "~> 5.0"

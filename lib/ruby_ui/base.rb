@@ -13,13 +13,6 @@ module RubyUI
       @attrs[:class] = TAILWIND_MERGER.merge(@attrs[:class]) if @attrs[:class]
     end
 
-    if defined?(Rails) && Rails.env.development?
-      def before_template
-        comment { "Before #{self.class.name}" }
-        super
-      end
-    end
-
     private
 
     def default_attrs

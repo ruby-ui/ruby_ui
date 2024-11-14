@@ -1,39 +1,36 @@
 # frozen_string_literal: true
 
-require "bundler/setup"
-
-Bundler.require(:default)
-
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+require "ruby_ui"
 require "phlex"
-# require "phlex/testing/view_helper"
+require "json"
+
 require "minitest/autorun"
 
-class TestContext < Phlex::HTML
-  def view_template(&)
-    div(&)
+module RubyUI
+  extend Phlex::Kit
+
+  Dir.glob("lib/ruby_ui/**/*.rb").map do |path|
+    class_name = path.split("/").last.delete_suffix(".rb").split("_").map(&:capitalize).join.to_sym
+
+    autoload class_name, path
   end
 end
 
 def phlex_context(&)
-  render TestContext.new, &
+  render Phlex::HTML.new, &
 end
 
-# this is a monkey patch for https://github.com/phlex-ruby/phlex/pull/809
-module Phlex::Testing
-  module Basic
-    def render(view, &)
-      if view.is_a?(Class) && view < Phlex::SGML
-        view = view.new
+module Phlex
+  module Testing
+    module ViewHelper
+      def render(component, &)
+        component.call(view_context:, &)
       end
 
-      view.call(view_context:, &)
-    end
-
-    def view_context
-      nil
+      def view_context = nil
     end
   end
-  ViewHelper = Basic
 end
 
 # this is a tracepoint that will output the path of all files loaded that contain the string "phlex"
