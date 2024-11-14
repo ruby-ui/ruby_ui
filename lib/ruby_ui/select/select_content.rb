@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "securerandom"
-
 module RubyUI
   class SelectContent < Base
     def initialize(**attrs)

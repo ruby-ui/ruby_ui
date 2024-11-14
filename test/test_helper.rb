@@ -3,7 +3,8 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "ruby_ui"
 require "phlex"
-
+require "json"
+require "securerandom"
 require "minitest/autorun"
 
 module RubyUI

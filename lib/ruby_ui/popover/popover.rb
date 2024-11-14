@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
-
 module RubyUI
   class Popover < Base
     def initialize(options: {}, **attrs)

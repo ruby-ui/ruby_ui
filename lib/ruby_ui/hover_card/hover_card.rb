@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
-
 module RubyUI
   class HoverCard < Base
     def initialize(option: {}, **attrs)

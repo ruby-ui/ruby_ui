@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
-
 module RubyUI
   class ContextMenu < Base
     def initialize(options: {}, **attrs)
