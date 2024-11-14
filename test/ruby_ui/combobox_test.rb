@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::ComboboxTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::ComboboxTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Combobox do
         RubyUI.ComboboxInput()
         RubyUI.ComboboxTrigger do

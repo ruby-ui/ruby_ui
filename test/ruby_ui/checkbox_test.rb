@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::CheckboxTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::CheckboxTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Checkbox(id: "terms")
     end
 

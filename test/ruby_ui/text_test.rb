@@ -2,12 +2,10 @@
 
 require "test_helper"
 
-class RubyUI::TypographyTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::TypographyTest < ComponentTest
   def test_heading_with_levels
     (1..4).each do |level|
-      output = phlex_context do
+      output = phlex do
         RubyUI::Heading(level: level.to_s) { "This is an H#{level} title" }
       end
 
@@ -17,7 +15,7 @@ class RubyUI::TypographyTest < Minitest::Test
   end
 
   def test_heading_with_custom_size
-    output = phlex_context do
+    output = phlex do
       RubyUI::Heading(as: "h2", size: "7") { "Custom Heading" }
     end
 
@@ -28,7 +26,7 @@ class RubyUI::TypographyTest < Minitest::Test
 
   def test_text_with_sizes
     (1..9).each do |size|
-      output = phlex_context do
+      output = phlex do
         RubyUI::Text(size: size.to_s) { "Size #{size} text" }
       end
 
@@ -47,7 +45,7 @@ class RubyUI::TypographyTest < Minitest::Test
 
   def test_text_with_weights
     %w[light regular medium bold].each do |weight|
-      output = phlex_context do
+      output = phlex do
         RubyUI::Text(weight: weight) { "#{weight.capitalize} text" }
       end
 
@@ -58,7 +56,7 @@ class RubyUI::TypographyTest < Minitest::Test
 
   def test_text_as_different_elements
     %w[p span div label].each do |element|
-      output = phlex_context do
+      output = phlex do
         RubyUI::Text(as: element) { element.capitalize.to_s }
       end
 
@@ -68,7 +66,7 @@ class RubyUI::TypographyTest < Minitest::Test
   end
 
   def test_lead_text
-    output = phlex_context do
+    output = phlex do
       RubyUI::Text(as: "p", size: "5", weight: "medium") { "A modal dialog that interrupts the user." }
     end
 
@@ -78,7 +76,7 @@ class RubyUI::TypographyTest < Minitest::Test
   end
 
   def test_large_text
-    output = phlex_context do
+    output = phlex do
       RubyUI::Text(size: "5", weight: "semibold") { "Are you sure absolutely sure?" }
     end
 
@@ -88,7 +86,7 @@ class RubyUI::TypographyTest < Minitest::Test
   end
 
   def test_small_text
-    output = phlex_context do
+    output = phlex do
       RubyUI::Text(size: "2", weight: "medium") { "Email address" }
     end
 
@@ -98,7 +96,7 @@ class RubyUI::TypographyTest < Minitest::Test
   end
 
   def test_muted_text
-    output = phlex_context do
+    output = phlex do
       RubyUI::Text(size: "2", class: "text-muted-foreground") { "Enter your email address." }
     end
 

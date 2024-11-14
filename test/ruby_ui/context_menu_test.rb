@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::ContextMenuTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::ContextMenuTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.ContextMenu do
         RubyUI.ContextMenuTrigger(class: "flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm") { "Right click here" }
         RubyUI.ContextMenuContent(class: "w-64") do

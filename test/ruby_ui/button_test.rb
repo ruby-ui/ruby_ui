@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::ButtonTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::ButtonTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Button(variant: :primary) { "Primary" }
     end
 

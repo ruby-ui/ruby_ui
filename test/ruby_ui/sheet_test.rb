@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::SheetTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::SheetTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Sheet do
         RubyUI.SheetTrigger do
           RubyUI.Button(variant: :outline) { "Open Sheet" }

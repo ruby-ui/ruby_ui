@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::DialogTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::DialogTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Dialog do
         RubyUI.DialogTrigger do
           RubyUI.Button { "Open Dialog" }

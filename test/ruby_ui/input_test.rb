@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::InputTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::InputTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Input(type: "email", placeholder: "Email")
     end
 
@@ -14,7 +12,7 @@ class RubyUI::InputTest < Minitest::Test
   end
 
   def test_render_with_value
-    output = phlex_context do
+    output = phlex do
       RubyUI.Input(type: "email", value: "user@email.com")
     end
 

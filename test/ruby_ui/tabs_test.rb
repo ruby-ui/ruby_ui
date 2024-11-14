@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::TabsTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::TabsTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.Tabs(default_value: "account", class: "w-96") do
         RubyUI.TabsList do
           RubyUI.TabsTrigger(value: "account") { "Account" }

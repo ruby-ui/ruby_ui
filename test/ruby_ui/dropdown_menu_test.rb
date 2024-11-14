@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::DropdownMenuTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::DropdownMenuTest < ComponentTest
   def test_render_with_all_items
-    output = phlex_context do
+    output = phlex do
       RubyUI.DropdownMenu do
         RubyUI.DropdownMenuTrigger(class: "w-full") do
           RubyUI.Button(variant: :outline) { "Open" }

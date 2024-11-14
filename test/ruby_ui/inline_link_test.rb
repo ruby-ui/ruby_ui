@@ -2,11 +2,9 @@
 
 require "test_helper"
 
-class RubyUI::InlineLinkTest < Minitest::Test
-  include Phlex::Testing::ViewHelper
-
+class RubyUI::InlineLinkTest < ComponentTest
   def test_render_inline_link
-    output = phlex_context do
+    output = phlex do
       RubyUI::InlineLink(href: "#") { "Link" }
     end
 
