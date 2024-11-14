@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "securerandom"
+
 module RubyUI
   class TooltipContent < Base
     def initialize(**attrs)

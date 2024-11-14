@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 module RubyUI
   class Clipboard < Base
     def initialize(options: {}, success: "Copied!", error: "Copy Failed!", **attrs)
