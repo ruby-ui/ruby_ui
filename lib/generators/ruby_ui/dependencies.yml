@@ -1,0 +1,70 @@
+accordion:
+  js_packages:
+    - "motion"
+
+alert_dialog:
+  components:
+    - "Button"
+
+calendar:
+  js_packages:
+    - "mustache"
+
+chart:
+  js_packages:
+    - "chart.js"
+
+clipboard:
+  js_packages:
+    - "@floating-ui/dom"
+
+codeblock:
+  components:
+    - "Button"
+    - "Clipboard"
+
+  gems:
+    - "rouge"
+
+combobox:
+  js_packages:
+    - "@floating-ui/dom"
+
+command:
+  js_packages:
+    - "fuse.js"
+
+context_menu:
+  js_packages:
+    - "tippy.js"
+
+dropdown_menu:
+  js_packages:
+    - "@floating-ui/dom"
+
+hover_card:
+  js_packages:
+    - "tippy.js"
+
+masked_input:
+  components:
+    - "Input"
+
+  js_packages:
+    - "maska"
+
+pagination:
+  components:
+    - "Button"
+
+popover:
+  js_packages:
+    - "@floating-ui/dom"
+
+select:
+  js_packages:
+    - "@floating-ui/dom"
+
+tooltip:
+  js_packages:
+    - "@floating-ui/dom"

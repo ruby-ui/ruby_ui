@@ -39,19 +39,22 @@ module RubyUI
         say "Generating Stimulus controllers"
 
         js_controller_file_paths.each do |file_path|
-          component_file_name = file_path.split("/").last
-          copy_file file_path, Rails.root.join("app/javascript/controllers/ruby_ui", component_file_name)
+          controller_file_name = file_path.split("/").last
+          copy_file file_path, Rails.root.join("app/javascript/controllers/ruby_ui", controller_file_name)
         end
 
         say "Updating Stimulus controllers manifest"
         run "rake stimulus:manifest:update"
       end
 
-      def copy_dependencies
-        case component_folder_name
-        when "masked_input"
-          copy_masked_input_dependencies
-        end
+      def install_dependencies
+        return if dependencies.blank?
+
+        say "Installing dependencies"
+
+        install_components_dependencies(dependencies["components"])
+        install_gems_dependencies(dependencies["gems"])
+        install_js_packages(dependencies["js_packages"])
       end
 
       private
@@ -68,10 +71,38 @@ module RubyUI
 
       def js_controller_file_paths = Dir.glob(File.join(component_folder_path, "*.js"))
 
-      def copy_masked_input_dependencies
-        say "Generating masked input dependencies"
+      def install_components_dependencies(components)
+        components&.each do |component|
+          run "bin/rails generate ruby_ui:component #{component}"
+        end
+      end
 
-        run "bin/rails generate ruby_ui:component Input"
+      def install_gems_dependencies(gems)
+        gems&.each do |ruby_gem|
+          run "bundle show #{ruby_gem} > /dev/null 2>&1 || bundle add #{ruby_gem}"
+        end
+      end
+
+      def install_js_packages(js_packages)
+        js_packages&.each do |js_package|
+          install_js_package(js_package)
+        end
+      end
+
+      def install_js_package(package)
+        if File.exist?(Rails.root.join("package-lock.json"))
+          run "npm install #{package}"
+        elsif File.exist?(Rails.root.join("yarn.lock"))
+          run "yarn add #{package}"
+        else
+          say "Could not detect the package manager, you need to install '#{package}' manually", :red
+        end
+      end
+
+      def dependencies
+        @dependencies ||= YAML.load_file(File.join(__dir__, "dependencies.yml")).freeze
+
+        @dependencies[component_folder_name]
       end
     end
   end
