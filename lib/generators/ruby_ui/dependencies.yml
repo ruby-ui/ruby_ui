@@ -14,10 +14,6 @@ chart:
   js_packages:
     - "chart.js"
 
-checkbox:
-  stimulus_controllers:
-    - "form/form_field_controller.js"
-
 clipboard:
   js_packages:
     - "@floating-ui/dom"
@@ -33,9 +29,6 @@ codeblock:
 combobox:
   js_packages:
     - "@floating-ui/dom"
-
-  stimulus_controllers:
-    - "form/form_field_controller.js"
 
 command:
   js_packages:
@@ -53,10 +46,6 @@ hover_card:
   js_packages:
     - "tippy.js"
 
-input:
-  stimulus_controllers:
-    - "form/form_field_controller.js"
-
 masked_input:
   components:
     - "Input"
@@ -72,20 +61,9 @@ popover:
   js_packages:
     - "@floating-ui/dom"
 
-radio_button:
-  stimulus_controllers:
-    - "form/form_field_controller.js"
-
 select:
   js_packages:
     - "@floating-ui/dom"
-
-  stimulus_controllers:
-    - "form/form_field_controller.js"
-
-textarea:
-  stimulus_controllers:
-    - "form/form_field_controller.js"
 
 tooltip:
   js_packages:

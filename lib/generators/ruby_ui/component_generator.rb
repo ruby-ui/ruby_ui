@@ -53,7 +53,6 @@ module RubyUI
         say "Installing dependencies"
 
         install_components_dependencies(dependencies["components"])
-        install_stimulus_dependencies(dependencies["stimulus_controllers"])
         install_gems_dependencies(dependencies["gems"])
         install_js_packages(dependencies["js_packages"])
       end
@@ -76,18 +75,6 @@ module RubyUI
         components&.each do |component|
           run "bin/rails generate ruby_ui:component #{component}"
         end
-      end
-
-      def install_stimulus_dependencies(stimulus_controllers)
-        return if stimulus_controllers.nil?
-
-        stimulus_controllers.each do |controller|
-          controller_path = File.join(self.class.source_root, controller)
-          controller_file_name = controller.split("/").last
-          copy_file controller_path, Rails.root.join("app/javascript/controllers/ruby_ui", controller_file_name)
-        end
-
-        run "rake stimulus:manifest:update"
       end
 
       def install_gems_dependencies(gems)
