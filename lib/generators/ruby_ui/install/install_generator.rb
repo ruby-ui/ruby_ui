@@ -56,7 +56,14 @@ module RubyUI
 
       def add_tailwind_config
         say "Adding RubyUI config to tailwind config"
-        template "tailwind.config.js.erb", Rails.root.join("tailwind.config.js")
+
+        if File.exist?(Rails.root.join("tailwind.config.js")) # tailwindcss js package
+          template "tailwind.config.js.js-package.erb", Rails.root.join("tailwind.config.js")
+        elsif File.exist?(Rails.root.join("config/tailwind.config.js")) # tailwindcss-rails gem
+          template "tailwind.config.js.tailwindcss-rails.erb", Rails.root.join("config/tailwind.config.js")
+        else
+          say "Cannot find tailwind.config.js. You will need to install tailwind config manually", :red
+        end
       end
 
       def add_ruby_ui_base
