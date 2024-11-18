@@ -1,22 +1,13 @@
-// For importing tailwind styles from ruby_ui gem
-const execSync = require('child_process').execSync;
-
-// Import ruby_ui gem path
-const outputRubyUI = execSync('bundle show ruby_ui', { encoding: 'utf-8' });
-const ruby_ui_path = outputRubyUI.trim() + '/**/*.rb';
-
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 module.exports = {
-  darkMode: ["class"],
   content: [
-    './app/views/**/*.{erb,haml,html,slim,rb}',
-    './app/components/ruby_ui/**/*.rb',
+    './app/views/**/*.rb', // Phlex views
+    './app/components/**/*.rb', // Phlex components
+    './app/views/**/*.html.erb',
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
-    './app/javascript/**/*.js',
-    ruby_ui_path
+    './app/javascript/**/*.js'
   ],
+  darkMode: ["class"],
   theme: {
     container: {
       center: true,
@@ -76,15 +67,8 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--font-sans)", 'ui-sans-serif', 'system-ui', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
       },
     },
   },
-  plugins: [
-    <% if using_importmap? %>
-    require("../vendor/javascript/tailwindcss-animate"),
-    <% else %>
-    require("tailwindcss-animate"),
-    <% end %>
-  ],
 }
