@@ -19,7 +19,7 @@ module RubyUI
         say "Generating main component"
 
         copy_file File.join(component_folder_path, "#{component_folder_name}.rb"),
-          Rails.root.join("app/components/ruby_ui/", "#{component_folder_name}.rb")
+          Rails.root.join("app/components/ruby_ui", "#{component_folder_name}.rb")
       end
 
       def copy_subcomponents_files
@@ -29,8 +29,22 @@ module RubyUI
 
         subcomponent_file_paths.each do |file_path|
           component_file_name = file_path.split("/").last
-          copy_file file_path, Rails.root.join("app/components/ruby_ui/", component_folder_name, component_file_name)
+          copy_file file_path, Rails.root.join("app/components/ruby_ui", component_folder_name, component_file_name)
         end
+      end
+
+      def copy_js_files
+        return if js_controller_file_paths.empty?
+
+        say "Generating Stimulus controllers"
+
+        js_controller_file_paths.each do |file_path|
+          component_file_name = file_path.split("/").last
+          copy_file file_path, Rails.root.join("app/javascript/controllers/ruby_ui", component_file_name)
+        end
+
+        say "Updating Stimulus controllers manifest"
+        run "rake stimulus:manifest:update"
       end
 
       def copy_dependencies
@@ -51,6 +65,8 @@ module RubyUI
       def main_component_file_path = File.join(component_folder_path, "#{component_folder_name}.rb")
 
       def subcomponent_file_paths = Dir.glob(File.join(component_folder_path, "*.rb")) - [main_component_file_path]
+
+      def js_controller_file_paths = Dir.glob(File.join(component_folder_path, "*.js"))
 
       def copy_masked_input_dependencies
         say "Generating masked input dependencies"
