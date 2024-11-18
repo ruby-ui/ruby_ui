@@ -1,0 +1,92 @@
+accordion:
+  js_packages:
+    - "motion"
+
+alert_dialog:
+  components:
+    - "Button"
+
+calendar:
+  js_packages:
+    - "mustache"
+
+chart:
+  js_packages:
+    - "chart.js"
+
+checkbox:
+  stimulus_controllers:
+    - "form/form_field_controller.js"
+
+clipboard:
+  js_packages:
+    - "@floating-ui/dom"
+
+codeblock:
+  components:
+    - "Button"
+    - "Clipboard"
+
+  gems:
+    - "rouge"
+
+combobox:
+  js_packages:
+    - "@floating-ui/dom"
+
+  stimulus_controllers:
+    - "form/form_field_controller.js"
+
+command:
+  js_packages:
+    - "fuse.js"
+
+context_menu:
+  js_packages:
+    - "tippy.js"
+
+dropdown_menu:
+  js_packages:
+    - "@floating-ui/dom"
+
+hover_card:
+  js_packages:
+    - "tippy.js"
+
+input:
+  stimulus_controllers:
+    - "form/form_field_controller.js"
+
+masked_input:
+  components:
+    - "Input"
+
+  js_packages:
+    - "maska"
+
+pagination:
+  components:
+    - "Button"
+
+popover:
+  js_packages:
+    - "@floating-ui/dom"
+
+radio_button:
+  stimulus_controllers:
+    - "form/form_field_controller.js"
+
+select:
+  js_packages:
+    - "@floating-ui/dom"
+
+  stimulus_controllers:
+    - "form/form_field_controller.js"
+
+textarea:
+  stimulus_controllers:
+    - "form/form_field_controller.js"
+
+tooltip:
+  js_packages:
+    - "@floating-ui/dom"
