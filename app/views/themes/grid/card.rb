@@ -4,7 +4,7 @@ module Themes
       def view_template
         Card(class: "w-full") do
           CardHeader do
-            CardTitle { 'You might like "RBUI"' }
+            CardTitle { 'You might like "RubyUI"' }
             CardDescription { "@joeldrapper" }
           end
           CardContent do

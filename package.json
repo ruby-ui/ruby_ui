@@ -2,18 +2,22 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@floating-ui/dom": "^1.6.12",
     "@hotwired/stimulus": "3.2.2",
     "@hotwired/turbo-rails": "8.0.12",
     "autoprefixer": "10.4.19",
-    "chart.js": "4.4.3",
+    "chart.js": "^4.4.6",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "esbuild": "0.23.0",
-    "lottie-web": "5.12.2",
+    "fuse.js": "^7.0.0",
+    "maska": "^3.0.3",
+    "motion": "10.18.0",
+    "mustache": "^4.2.0",
     "postcss": "8.4.40",
-    "ruby_ui_js": "ruby-ui/ruby_ui",
     "tailwindcss": "3.4.7",
-    "tailwindcss-animate": "1.0.7"
+    "tailwindcss-animate": "1.0.7",
+    "tippy.js": "^6.3.7"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",

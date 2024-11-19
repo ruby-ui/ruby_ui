@@ -1,22 +1,13 @@
-// For importing tailwind styles from rbui gem
-const execSync = require("child_process").execSync;
-
-// Import rbui gem path
-const outputRBUI = execSync("bundle show ruby_ui", { encoding: "utf-8" });
-const rbui_path = outputRBUI.trim() + "/**/*.rb";
-
-const defaultTheme = require("tailwindcss/defaultTheme");
-
 module.exports = {
-  darkMode: ["class"],
   content: [
-    "./app/views/**/*.{erb,haml,html,slim,rb}",
-    "./app/helpers/**/*.rb",
-    "./app/assets/stylesheets/**/*.css",
-    "./app/javascript/**/*.js",
-    rbui_path,
-    "./app/components/**/*.{erb,haml,html,slim,rb}",
+    './app/views/**/*.rb', // Phlex views
+    './app/components/**/*.rb', // Phlex components
+    './app/views/**/*.html.erb',
+    './app/helpers/**/*.rb',
+    './app/assets/stylesheets/**/*.css',
+    './app/javascript/**/*.js'
   ],
+  darkMode: ["class"],
   theme: {
     container: {
       center: true,
@@ -60,7 +51,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        /* rbui especific */
+        /* ruby_ui especific */
         warning: {
           DEFAULT: "hsl(var(--warning))",
           foreground: "hsl(var(--warning-foreground))",
@@ -76,9 +67,11 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--font-sans)", 'ui-sans-serif', 'system-ui', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-};
+  plugins: [
+    require("tailwindcss-animate")
+  ],
+}

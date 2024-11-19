@@ -31,7 +31,7 @@ class Docs::CollapsibleView < ApplicationView
                   "phlex-ruby/phlex-rails"
                 end
                 div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
-                  "RBUI/rbui"
+                  "ruby-ui/ruby_ui"
                 end
               end
             end
@@ -62,7 +62,7 @@ class Docs::CollapsibleView < ApplicationView
                   "phlex-ruby/phlex-rails"
                 end
                 div(class: "rounded-md border px-4 py-2 font-mono text-sm shadow-sm") do
-                  "RBUI/rbui"
+                  "ruby-ui/ruby_ui"
                 end
               end
             end

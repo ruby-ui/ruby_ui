@@ -23,7 +23,7 @@ class Docs::GettingStarted::ThemingView < ApplicationView
         Components.TypographyList do
           Components.TypographyListItem do
             span(class: "font-medium") { "Easily customisable design " }
-            plain "by updating CSS variables, without having to update the RBUI component."
+            plain "by updating CSS variables, without having to update the RubyUI component."
           end
           Components.TypographyListItem do
             span(class: "font-medium") { "Simpler implementation " }

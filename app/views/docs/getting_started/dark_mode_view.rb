@@ -7,9 +7,9 @@ class Docs::GettingStarted::DarkModeView < ApplicationView
 
       div(class: "space-y-4") do
         heading2 { "How it works" }
-        Text { "RBUI seamlessly integrates dark mode, a crucial feature for modern applications, enhancing user experience and catering to diverse user preferences." }
+        Text { "RubyUI seamlessly integrates dark mode, a crucial feature for modern applications, enhancing user experience and catering to diverse user preferences." }
         Text do
-          plain "RBUI is setup to use the "
+          plain "RubyUI is setup to use the "
           InlineLink(href: "https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually") { "TailwindCSS 'class' strategy" }
           plain ". This means that you can toggle dark mode by adding or removing the "
           InlineCode { "dark" }

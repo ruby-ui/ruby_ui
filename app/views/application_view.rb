@@ -14,8 +14,6 @@ class MethodCallFinder < Prism::Visitor
 end
 
 class ApplicationView < ApplicationComponent
-  # include RBUI
-  include Components
   include ApplicationHelper
   # The ApplicationView is an abstract class for all your views.
 

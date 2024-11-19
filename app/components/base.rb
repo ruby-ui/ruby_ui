@@ -1,4 +1,10 @@
 class Components::Base < Phlex::HTML
+  include Components
+  include RubyUI
+
+  # Include any helpers you want to be available across all components
+  include Phlex::Rails::Helpers::Routes
+
   TAILWIND_MERGER = ::TailwindMerge::Merger.new.freeze unless defined?(TAILWIND_MERGER)
 
   attr_reader :attrs
@@ -8,7 +14,7 @@ class Components::Base < Phlex::HTML
     @attrs[:class] = TAILWIND_MERGER.merge(@attrs[:class]) if @attrs[:class]
   end
 
-  if defined?(Rails) && Rails.env.development?
+  if Rails.env.development?
     def before_template
       comment { "Before #{self.class.name}" }
       super

@@ -8,7 +8,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
 
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Rails - Importmaps", description: "How to install RBUI within a Rails app that uses Importmaps.")
+      render Docs::Header.new(title: "Rails - Importmaps", description: "How to install RubyUI within a Rails app that uses Importmaps.")
 
       Alert(variant: :warning) do
         alert_icon
@@ -72,8 +72,8 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         # STEP 2
         steps.add_step do
           step_container do
-            Text(size: "4", weight: "semibold") { "Install RBUI gem" }
-            Text { "Run the following in the terminal to install the RBUI Component Library" }
+            Text(size: "4", weight: "semibold") { "Install RubyUI gem" }
+            Text { "Run the following in the terminal to install the RubyUI Component Library" }
             code = <<~CODE
               bundle add phlex_ui
             CODE
@@ -83,15 +83,15 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
         # STEP 3
         steps.add_step do
           step_container do
-            Text(size: "4", weight: "semibold") { "Include RBUI module" }
+            Text(size: "4", weight: "semibold") { "Include RubyUI module" }
             Text do
-              plain "Include RBUI module in your "
+              plain "Include RubyUI module in your "
               InlineCode(class: "whitespace-nowrap") { "application_component.rb" }
               plain " file"
             end
             code = <<~CODE
               class ApplicationComponent < Phlex::HTML
-                include RBUI
+                include RubyUI
               end
             CODE
             Codeblock(code, syntax: :ruby)
@@ -146,9 +146,9 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
       steps.add_step do
         step_container do
           Text(size: "4", weight: "semibold") { "Install package" }
-          Text { "Run the following in the terminal to install RBUI JS package" }
+          Text { "Run the following in the terminal to install RubyUI JS package" }
           code = <<~CODE
-            bin/importmap pin rbui-js
+            bin/importmap pin ruby_ui_js
           CODE
           Codeblock(code, syntax: :javascript)
         end
@@ -163,7 +163,7 @@ class Docs::Installation::RailsImportmapsView < ApplicationView
           plain " file"
         end
         code = <<~CODE
-          import 'rbui-js';
+          import 'ruby_ui_js';
         CODE
         Codeblock(code, syntax: :javascript)
       end

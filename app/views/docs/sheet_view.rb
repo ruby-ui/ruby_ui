@@ -28,7 +28,7 @@ class Docs::SheetView < ApplicationView
                 Input(placeholder: "joel@drapper.me")
               end
               SheetFooter do
-                Button(variant: :outline, data: { action: 'click->rbui--sheet-content#close' }) { "Cancel" }
+                Button(variant: :outline, data: { action: 'click->ruby-ui--sheet-content#close' }) { "Cancel" }
                 Button(type: "submit") { "Save" }
               end
             end
@@ -58,7 +58,7 @@ class Docs::SheetView < ApplicationView
                     Input(placeholder: "joel@drapper.me")
                   end
                   SheetFooter do
-                    Button(variant: :outline, data: { action: 'click->rbui--sheet-content#close' }) { "Cancel" }
+                    Button(variant: :outline, data: { action: 'click->ruby-ui--sheet-content#close' }) { "Cancel" }
                     Button(type: "submit") { "Save" }
                   end
                 end

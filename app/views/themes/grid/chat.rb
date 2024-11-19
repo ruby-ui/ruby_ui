@@ -4,8 +4,8 @@ module Themes
   module Grid
     class Chat < ApplicationComponent
       MESSAGES = [
-        "You should checkout RBUI's new release, it makes life sooo much easier",
-        "What's RBUI?",
+        "You should checkout RubyUI's new release, it makes life sooo much easier",
+        "What's RubyUI?",
         "Don't ask questions, just get on that ASAP and thank me later",
         "Alright, alright, I'll check it out"
       ]

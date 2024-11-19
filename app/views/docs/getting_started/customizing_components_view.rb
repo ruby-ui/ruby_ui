@@ -3,11 +3,11 @@
 class Docs::GettingStarted::CustomizingComponentsView < ApplicationView
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, RBUI allows you to tailor the components to your specific needs.")
+      render Docs::Header.new(title: "Customizing components", description: "When theming doesn't suffice, RubyUI allows you to tailor the components to your specific needs.")
 
       div(class: "space-y-4") do
         Heading(level: 2) { "Introduction" }
-        Text { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. RBUI is designed to facilitate this process with ease." }
+        Text { "While theming provides a powerful tool for modifying aspects such as fonts, brand colors, and border attributes, there may be instances where you need to directly customize the components. RubyUI is designed to facilitate this process with ease." }
       end
 
       div(class: "space-y-4") do
