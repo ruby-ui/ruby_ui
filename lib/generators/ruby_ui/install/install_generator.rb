@@ -1,8 +1,11 @@
 require "rails/generators"
+require_relative "../javascript_utils"
 
 module RubyUI
   module Generators
     class InstallGenerator < Rails::Generators::Base
+      include RubyUI::Generators::JavascriptUtils
+
       namespace "ruby_ui:install"
 
       source_root File.expand_path("templates", __dir__)
@@ -64,6 +67,12 @@ module RubyUI
         else
           say "Cannot find tailwind.config.js. You will need to install tailwind config manually", :red
         end
+      end
+
+      def install_tailwind_animate
+        say "Installing tailwindcss-animate plugin"
+
+        install_js_package("tailwindcss-animate")
       end
 
       def add_ruby_ui_base
