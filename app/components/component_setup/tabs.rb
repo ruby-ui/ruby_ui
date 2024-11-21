@@ -23,7 +23,7 @@ module Components
           end
 
           TabsContent(value: "manual") do
-            Text { "Coming soon" }
+            render ManualSteps.new(component_name:)
           end
         end
       end
