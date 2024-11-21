@@ -93,6 +93,8 @@ class Docs::CommandView < ApplicationView
         RUBY
       end
 
+      render Components::ComponentSetup::Tabs.new(component_name: component)
+
       render Docs::ComponentsTable.new(component_files(component))
     end
   end

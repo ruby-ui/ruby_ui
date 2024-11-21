@@ -98,6 +98,8 @@ class Docs::ChartView < ApplicationView
         RUBY
       end
 
+      render Components::ComponentSetup::Tabs.new(component_name: "Chart")
+
       render Docs::ComponentsTable.new(components)
     end
   end

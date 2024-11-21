@@ -53,6 +53,9 @@ class Docs::ComboboxView < ApplicationView
           end
         RUBY
       end
+
+      render Components::ComponentSetup::Tabs.new(component_name: "Combobox")
+
       render Docs::ComponentsTable.new(component_files("Combobox"))
     end
   end

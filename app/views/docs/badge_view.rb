@@ -2,6 +2,8 @@
 
 class Docs::BadgeView < ApplicationView
   def view_template
+    component = "Badge"
+
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Badge", description: "Displays a badge or a component that looks like a badge.")
 
@@ -69,8 +71,10 @@ class Docs::BadgeView < ApplicationView
         RUBY
       end
 
+      render Components::ComponentSetup::Tabs.new(component_name: component)
+
       # components
-      render Docs::ComponentsTable.new(component_files("Badge"))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 end
