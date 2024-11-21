@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 class Docs::Installation::RailsBundlerView < ApplicationView
-  def initialize
-    @phlex_rails_link = "https://www.phlex.fun/rails/"
-    @phlex_ui_pro_private_key = ENV["BUNDLE_PHLEXUI__FURY__SITE"]
-  end
-
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install RubyUI within a Rails app that employs JS bundling.")
@@ -460,23 +455,6 @@ class Docs::Installation::RailsBundlerView < ApplicationView
         d:
           "M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z",
         clip_rule: "evenodd"
-      )
-    end
-  end
-
-  def arrow_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      viewbox: "0 0 24 24",
-      stroke_width: "2",
-      stroke: "currentColor",
-      class: "w-4 h-4 ml-1.5 -mr-1"
-    ) do |s|
-      s.path(
-        stroke_linecap: "round",
-        stroke_linejoin: "round",
-        d: "M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
       )
     end
   end
