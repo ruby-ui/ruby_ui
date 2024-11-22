@@ -47,7 +47,7 @@ bin/rails g ruby_ui:install
 
 ## Documentation 📖
 
-Visit https://rbui.dev/docs/introduction to view the full documentation, including:
+Visit https://rubyui.com/docs/introduction to view the full documentation, including:
 
 - Detailed component guides
 - Themes
