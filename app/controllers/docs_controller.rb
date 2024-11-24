@@ -58,6 +58,10 @@ class DocsController < ApplicationController
     render Docs::BadgeView.new
   end
 
+  def breadcrumb
+    render Docs::BreadcrumbView.new
+  end
+
   def button
     render Docs::ButtonView.new
   end

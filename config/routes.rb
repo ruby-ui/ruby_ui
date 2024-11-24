@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get "aspect_ratio", to: "docs#aspect_ratio", as: :docs_aspect_ratio
     get "avatar", to: "docs#avatar", as: :docs_avatar
     get "badge", to: "docs#badge", as: :docs_badge
+    get "breadcrumb", to: "docs#breadcrumb", as: :docs_breadcrumb
     get "button", to: "docs#button", as: :docs_button
     get "card", to: "docs#card", as: :docs_card
     get "calendar", to: "docs#calendar", as: :docs_calendar

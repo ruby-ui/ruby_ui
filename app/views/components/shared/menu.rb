@@ -67,6 +67,7 @@ class Shared::Menu < ApplicationComponent
       {name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path},
       {name: "Avatar", path: helpers.docs_avatar_path},
       {name: "Badge", path: helpers.docs_badge_path},
+      {name: "Breadcrumb", path: helpers.docs_breadcrumb_path, badge: "New"},
       {name: "Button", path: helpers.docs_button_path},
       {name: "Calendar", path: helpers.docs_calendar_path},
       {name: "Card", path: helpers.docs_card_path},
