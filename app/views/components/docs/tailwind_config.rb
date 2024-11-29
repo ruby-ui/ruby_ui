@@ -15,12 +15,12 @@ class Docs::TailwindConfig < ApplicationComponent
 
   def tailwind_config
     <<~CODE
-      // For importing tailwind styles from rbui gem
+      // For importing tailwind styles from ruby_ui gem
       const execSync = require('child_process').execSync;
 
-      // Import rbui gem path (To make sure Tailwind loads classes used by rbui gem)
-      const outputRBUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
-      const rbui_path = outputRBUI.trim() + '/**/*.rb';
+      // Import ruby_ui gem path (To make sure Tailwind loads classes used by ruby_ui gem)
+      const outputRUBYUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
+      const ruby_ui_path = outputRUBYUI.trim() + '/**/*.rb';
 
       const defaultTheme = require('tailwindcss/defaultTheme')
 
@@ -31,7 +31,7 @@ class Docs::TailwindConfig < ApplicationComponent
           './app/helpers/**/*.rb',
           './app/assets/stylesheets/**/*.css',
           './app/javascript/**/*.js',
-          rbui_path
+          ruby_ui_path
         ],
         theme: {
           container: {
