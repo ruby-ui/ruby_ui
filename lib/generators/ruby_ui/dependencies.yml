@@ -26,10 +26,6 @@ codeblock:
   gems:
     - "rouge"
 
-combobox:
-  js_packages:
-    - "@floating-ui/dom"
-
 command:
   js_packages:
     - "fuse.js"

@@ -3,7 +3,7 @@
 module RubyUI
   class ComboboxInput < Base
     def view_template
-      input(**attrs)
+      select(**attrs)
     end
 
     private
@@ -12,9 +12,7 @@ module RubyUI
       {
         class: "hidden",
         data: {
-          ruby_ui__combobox_target: "input",
-          ruby_ui__form_field_target: "input",
-          action: "change->ruby-ui--form-field#onChange invalid->ruby-ui--form-field#onInvalid"
+          ruby_ui__combobox_target: "select"
         }
       }
     end
