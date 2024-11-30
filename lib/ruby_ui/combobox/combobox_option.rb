@@ -27,7 +27,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "group flex flex-row gap-2 items-center rounded-sm px-2 py-1.5 text-sm outline-none cursor-pointer select-none aria-selected:bg-accent hover:bg-accent p-2 [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0",
+        class: "group flex flex-row gap-2 items-center rounded-sm px-2 py-1.5 text-sm outline-none cursor-pointer select-none aria-selected:bg-accent hover:bg-accent p-2 [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2 ",
         role: "option",
         aria: {selected: @selected.to_s},
         data: {

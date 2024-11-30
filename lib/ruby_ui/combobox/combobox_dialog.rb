@@ -17,7 +17,7 @@ module RubyUI
         autofocus: true,
         data: {
           ruby_ui__combobox_target: "dialog",
-          action: "click->ruby-ui--combobox#handleOutsideClick"
+          action: "click->ruby-ui--combobox#handleOutsideClick keydown.down->ruby-ui--combobox#keyDownPressed keydown.up->ruby-ui--combobox#keyUpPressed keydown.enter->ruby-ui--combobox#keyEnterPressed keydown.esc->ruby-ui--combobox#closeDialog:prevent"
         }
       }
     end
