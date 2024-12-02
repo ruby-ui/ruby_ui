@@ -1,11 +1,12 @@
 # RubyUI (former PhlexUI) 🚀
 
-A UI component library, crafted precisely for Ruby devs who want to stay organized and build modern apps, fast. ✨
-**Use this to build your own component library** 🛠️
+Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
 
-## About RubyUI 📚
+This is NOT a component library. It's a collection of re-usable components that you can generate or copy and paste into your apps.
 
-RubyUI is a UI component library designed to let Ruby developers create modern, fast, and organized applications. 💎
+Pick the components you need. Copy and paste the code into your project and customize to your needs. The code is yours.
+
+Use this as a reference to build your own component libraries.
 
 ### Key Features:
 
@@ -28,13 +29,13 @@ RubyUI is a UI component library designed to let Ruby developers create modern, 
 ### 1. Install the gem
 
 ```bash
-bundle add ruby_ui
+bundle add ruby_ui --group development --require false
 ```
 
 or add it to your Gemfile:
 
 ```ruby
-gem "ruby_ui"
+gem "ruby_ui", group: :development, require: false
 ```
 
 ### 2. Run the installer:
@@ -44,6 +45,12 @@ bin/rails g ruby_ui:install
 ```
 
 ### 3. Done! 🎉
+
+You can generate your components using `ruby_ui:component` generator.
+
+```bash
+bin/rails g ruby_ui:component Accordion
+```
 
 ## Documentation 📖
 
