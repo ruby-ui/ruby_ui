@@ -54,7 +54,7 @@ bin/rails g ruby_ui:component Accordion
 
 ## Documentation 📖
 
-Visit https://rubyui.com to view the full documentation, including:
+Visit https://rubyui.com/docs/introduction to view the full documentation, including:
 
 - Detailed component guides
 - Themes
