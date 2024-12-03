@@ -2,8 +2,7 @@
 
 module RubyUI
   class Combobox < Base
-    def initialize(multiple: false, term: "items", **)
-      @multiple = multiple
+    def initialize(term: "items", **)
       @term = term
       super(**)
     end
@@ -19,7 +18,6 @@ module RubyUI
         role: "combobox",
         data: {
           controller: "ruby-ui--combobox",
-          ruby_ui__combobox_multiple_value: @multiple.to_s,
           ruby_ui__combobox_term_value: @term.to_s
         }
       }

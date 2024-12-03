@@ -3,36 +3,66 @@
 require "test_helper"
 
 class RubyUI::ComboboxTest < ComponentTest
-  def test_render_with_all_items
+  def test_render_with_radio_items
     output = phlex do
       RubyUI.Combobox(multiple: true, term: "frameworks") do
-        RubyUI.ComboboxInput(name: "multiple")
-
         RubyUI.ComboboxTrigger placeholder: "Select your framework"
 
         RubyUI.ComboboxDialog do
           RubyUI.ComboboxSearchInput(placeholder: "Type the framework name")
 
-          RubyUI.ComboboxDatalist do
+          RubyUI.ComboboxList do
             RubyUI.ComboboxEmptyState { "No results" }
 
-            RubyUI.ComboboxOptgroup label: "Ruby" do
-              RubyUI.ComboboxOption(value: "rails") { "Rails" }
-              RubyUI.ComboboxOption(value: "hanami") { "Hanami" }
+            RubyUI.ComboboxListGroup label: "Ruby" do
+              RubyUI.ComboboxItem do
+                RubyUI.ComboboxRadio(name: "Rails", value: "rails")
+              end
+              RubyUI.ComboboxItem do
+                RubyUI.ComboboxRadio(name: "Hanami", value: "hanami")
+              end
             end
 
-            RubyUI.ComboboxOptgroup label: "Crystal" do
-              RubyUI.ComboboxOption(value: "lucky", selected: true) { "Lucky" }
-              RubyUI.ComboboxOption(value: "kemal") { "Kemal" }
+            RubyUI.ComboboxItem do
+              RubyUI.ComboboxRadio(name: "Lucky", value: "lucky")
+            end
+            RubyUI.ComboboxItem do
+              RubyUI.ComboboxRadio(name: "Kemal", value: "kemal")
+            end
+          end
+        end
+      end
+    end
+
+    assert_match(/Hanami/, output)
+  end
+
+  def test_render_with_checkbox_items
+    output = phlex do
+      RubyUI.Combobox(multiple: true, term: "frameworks") do
+        RubyUI.ComboboxTrigger placeholder: "Select your framework"
+
+        RubyUI.ComboboxDialog do
+          RubyUI.ComboboxSearchInput(placeholder: "Type the framework name")
+
+          RubyUI.ComboboxList do
+            RubyUI.ComboboxEmptyState { "No results" }
+
+            RubyUI.ComboboxListGroup label: "Ruby" do
+              RubyUI.ComboboxItem do
+                RubyUI.ComboboxCheckbox(name: "Rails", value: "rails")
+              end
+              RubyUI.ComboboxItem do
+                RubyUI.ComboboxCheckbox(name: "Hanami", value: "hanami")
+              end
             end
 
-            RubyUI.ComboboxOptgroup label: "Others" do
-              RubyUI.ComboboxOption(value: "django") { "Django" }
-              RubyUI.ComboboxOption(value: "laravel") { "Laravel" }
+            RubyUI.ComboboxItem do
+              RubyUI.ComboboxCheckbox(name: "Lucky", value: "lucky")
             end
-
-            RubyUI.ComboboxOption(value: "spring") { "Spring" }
-            RubyUI.ComboboxOption(value: "vraptor") { "VRaptor" }
+            RubyUI.ComboboxItem do
+              RubyUI.ComboboxCheckbox(name: "Kemal", value: "kemal")
+            end
           end
         end
       end

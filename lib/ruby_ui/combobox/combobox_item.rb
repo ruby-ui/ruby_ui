@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+module RubyUI
+  class ComboboxItem < Base
+    def view_template(&)
+      label(**attrs, &)
+    end
+
+    private
+
+    def default_attrs
+      {
+        class: "flex flex-row gap-2 items-center rounded-sm px-2 py-1.5 text-sm outline-none cursor-pointer select-none has-[:checked]:bg-accent hover:bg-accent p-2 [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2 ",
+        role: "option",
+        data: {
+          ruby_ui__combobox_target: "item"
+        }
+      }
+    end
+  end
+end
