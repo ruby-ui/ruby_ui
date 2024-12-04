@@ -8,7 +8,7 @@ class RubyUI::ComboboxTest < ComponentTest
       RubyUI.Combobox(multiple: true, term: "frameworks") do
         RubyUI.ComboboxTrigger placeholder: "Select your framework"
 
-        RubyUI.ComboboxDialog do
+        RubyUI.ComboboxPopover do
           RubyUI.ComboboxSearchInput(placeholder: "Type the framework name")
 
           RubyUI.ComboboxList do
@@ -42,7 +42,7 @@ class RubyUI::ComboboxTest < ComponentTest
       RubyUI.Combobox(multiple: true, term: "frameworks") do
         RubyUI.ComboboxTrigger placeholder: "Select your framework"
 
-        RubyUI.ComboboxDialog do
+        RubyUI.ComboboxPopover do
           RubyUI.ComboboxSearchInput(placeholder: "Type the framework name")
 
           RubyUI.ComboboxList do

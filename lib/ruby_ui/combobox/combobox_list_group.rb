@@ -12,7 +12,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: ["hidden has-[label:not(.hidden)]:flex flex-col gap-1", LABEL_CLASSES],
+        class: ["hidden has-[label:not(.hidden)]:flex flex-col py-1 gap-1 border-b", LABEL_CLASSES],
         role: "group"
       }
     end
