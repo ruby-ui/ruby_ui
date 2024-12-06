@@ -11,6 +11,7 @@ To contribute to this project, it's recommended to install the gem locally and p
 ```ruby
 gem "ruby_ui", path: "../ruby_ui"
 ```
+
 ## Working with Components
 
 ### Component Development Workflow

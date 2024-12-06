@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     get "select", to: "docs#select", as: :docs_select
     get "sheet", to: "docs#sheet", as: :docs_sheet
     get "shortcut_key", to: "docs#shortcut_key", as: :docs_shortcut_key
+    get "switch", to: "docs#switch", as: :docs_switch
     get "table", to: "docs#table", as: :docs_table
     get "tabs", to: "docs#tabs", as: :docs_tabs
     get "textarea", to: "docs#textarea", as: :docs_textarea
