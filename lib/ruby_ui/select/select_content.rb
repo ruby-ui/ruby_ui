@@ -10,7 +10,7 @@ module RubyUI
     def view_template(&block)
       div(**attrs) do
         div(
-          class: "max-h-96 min-w-max overflow-auto rounded-md border bg-background p-1 text-foreground shadow-md animate-out group-data-[ruby-ui--select-open-value=true]/select:animate-in fade-out-0 group-data-[ruby-ui--select-open-value=true]/select:fade-in-0 zoom-out-95 group-data-[ruby-ui--select-open-value=true]/select:zoom-in-95 slide-in-from-top-2", &block
+          class: "max-h-96 w-full text-wrap overflow-auto rounded-md border bg-background p-1 text-foreground shadow-md animate-out group-data-[ruby-ui--select-open-value=true]/select:animate-in fade-out-0 group-data-[ruby-ui--select-open-value=true]/select:fade-in-0 zoom-out-95 group-data-[ruby-ui--select-open-value=true]/select:zoom-in-95 slide-in-from-top-2", &block
         )
       end
     end
