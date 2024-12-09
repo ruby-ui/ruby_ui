@@ -20,7 +20,7 @@ module RubyUI
         data: {
           ruby_ui__select_target: "value"
         },
-        class: "pointer-events-none"
+        class: "truncate pointer-events-none"
       }
     end
   end
