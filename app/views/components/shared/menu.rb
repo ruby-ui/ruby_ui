@@ -77,7 +77,7 @@ class Shared::Menu < ApplicationComponent
       {name: "Clipboard", path: helpers.docs_clipboard_path},
       {name: "Codeblock", path: helpers.docs_codeblock_path},
       {name: "Collapsible", path: helpers.docs_collapsible_path},
-      {name: "Combobox", path: helpers.docs_combobox_path},
+      {name: "Combobox", path: helpers.docs_combobox_path, badge: "Updated"},
       {name: "Command", path: helpers.docs_command_path},
       {name: "Context Menu", path: helpers.docs_context_menu_path},
       {name: "Date Picker", path: helpers.docs_date_picker_path},

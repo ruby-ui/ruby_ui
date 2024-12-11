@@ -28,14 +28,8 @@ application.register("ruby-ui--clipboard", RubyUi__ClipboardController)
 import RubyUi__CollapsibleController from "./ruby_ui/collapsible_controller"
 application.register("ruby-ui--collapsible", RubyUi__CollapsibleController)
 
-import RubyUi__ComboboxContentController from "./ruby_ui/combobox_content_controller"
-application.register("ruby-ui--combobox-content", RubyUi__ComboboxContentController)
-
 import RubyUi__ComboboxController from "./ruby_ui/combobox_controller"
 application.register("ruby-ui--combobox", RubyUi__ComboboxController)
-
-import RubyUi__ComboboxItemController from "./ruby_ui/combobox_item_controller"
-application.register("ruby-ui--combobox-item", RubyUi__ComboboxItemController)
 
 import RubyUi__CommandController from "./ruby_ui/command_controller"
 application.register("ruby-ui--command", RubyUi__CommandController)

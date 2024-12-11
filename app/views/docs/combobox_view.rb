@@ -10,41 +10,105 @@ class Docs::ComboboxView < ApplicationView
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
-        @@code_example = <<~RUBY
-          div(class: "w-96") do
+      render Docs::VisualCodeExample.new(title: "Single option", context: self) do
+        <<~RUBY
+          div class: "w-96" do
             Combobox do
-              ComboboxInput()
-              ComboboxTrigger do
-                ComboboxValue(placeholder: "Select event...")
-              end
-              ComboboxContent do
-                ComboboxSearchInput(placeholder: "Search event...")
+              ComboboxTrigger placeholder: "Pick value"
+
+              ComboboxPopover do
+                ComboboxSearchInput(placeholder: "Pick value or type anything")
+
                 ComboboxList do
-                  ComboboxEmpty { "No results found." }
-                  ComboboxGroup(heading: "Suggestions") do
-                    ComboboxItem(value: "railsworld") do
-                      span { "Rails World" }
+                  ComboboxEmptyState { "No result" }
+
+                  ComboboxListGroup label: "Fruits" do
+                    ComboboxItem do
+                      ComboboxRadio(name: "food", value: "apple")
+                      span { "Apple" }
                     end
-                    ComboboxItem(value: "tropicalrb") do
-                      span { "Tropical.rb" }
-                    end
-                    ComboboxItem(value: "friendly.rb") do
-                      span { "Friendly.rb" }
+
+                    ComboboxItem do
+                      ComboboxRadio(name: "food", value: "banana")
+                      span { "Banana" }
                     end
                   end
 
-                  ComboboxSeparator()
+                  ComboboxListGroup label: "Vegetable" do
+                    ComboboxItem do
+                      ComboboxRadio(name: "food", value: "brocoli")
+                      span { "Broccoli" }
+                    end
 
-                  ComboboxGroup(heading: "Others") do
-                    ComboboxItem(value: "railsconf") do
-                      span { "RailsConf" }
+                    ComboboxItem do
+                      ComboboxRadio(name: "food", value: "carrot")
+                      span { "Carrot" }
                     end
-                    ComboboxItem(value: "euruko") do
-                      span { "Euruko" }
+                  end
+
+                  ComboboxListGroup label: "Others" do
+                    ComboboxItem do
+                      ComboboxRadio(name: "food", value: "chocolate")
+                      span { "Chocolate" }
                     end
-                    ComboboxItem(value: "rubykaigi") do
-                      span { "RubyKaigi" }
+
+                    ComboboxItem do
+                      ComboboxRadio(name: "food", value: "milk")
+                      span { "Milk" }
+                    end
+                  end
+                end
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Multiple options", context: self) do
+        <<~RUBY
+          div class: "w-96" do
+            Combobox term: "things" do
+              ComboboxTrigger placeholder: "Pick value"
+
+              ComboboxPopover do
+                ComboboxSearchInput(placeholder: "Pick value or type anything")
+
+                ComboboxList do
+                  ComboboxEmptyState { "No result" }
+
+                  ComboboxListGroup label: "Fruits" do
+                    ComboboxItem do
+                      ComboboxCheckbox(name: "food", value: "apple")
+                      span { "Apple" }
+                    end
+
+                    ComboboxItem do
+                      ComboboxCheckbox(name: "food", value: "banana")
+                      span { "Banana" }
+                    end
+                  end
+
+                  ComboboxListGroup label: "Vegetable" do
+                    ComboboxItem do
+                      ComboboxCheckbox(name: "food", value: "brocoli")
+                      span { "Broccoli" }
+                    end
+
+                    ComboboxItem do
+                      ComboboxCheckbox(name: "food", value: "carrot")
+                      span { "Carrot" }
+                    end
+                  end
+
+                  ComboboxListGroup label: "Others" do
+                    ComboboxItem do
+                      ComboboxCheckbox(name: "food", value: "chocolate")
+                      span { "Chocolate" }
+                    end
+
+                    ComboboxItem do
+                      ComboboxCheckbox(name: "food", value: "milk")
+                      span { "Milk" }
                     end
                   end
                 end

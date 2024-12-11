@@ -1,201 +1,159 @@
 import { Controller } from "@hotwired/stimulus";
-import { computePosition, autoUpdate, offset } from "@floating-ui/dom";
+import { computePosition, autoUpdate, offset, flip } from "@floating-ui/dom";
 
-export const POPOVER_OPENED = "ruby-ui--combobox#popoverOpened";
-
+// Connects to data-controller="ruby-ui--combobox"
 export default class extends Controller {
-  static targets = [
-    "input",
-    "trigger",
-    "value",
-    "content",
-    "search",
-    "list",
-    "item",
-  ];
-  static values = { open: Boolean };
-  static outlets = ["ruby-ui--combobox-item", "ruby-ui--combobox-content"];
-
-  constructor(...args) {
-    super(...args);
-    this.cleanup;
+  static values = {
+    term: String
   }
 
+  static targets = [
+    "input",
+    "popover",
+    "item",
+    "emptyState",
+    "searchInput",
+    "trigger",
+    "triggerContent"
+  ]
+
+  selectedItemIndex = null
+
   connect() {
-    this.#setFloatingElement();
-    this.#generateItemsIds();
+    this.updateTriggerContent()
   }
 
   disconnect() {
     this.cleanup();
   }
 
-  onTriggerClick(event) {
-    event.preventDefault();
+  inputChanged(e) {
+    this.updateTriggerContent()
 
-    if (this.openValue) {
-      this.#closeContent();
+    if (e.target.type == "radio") {
+      this.closePopover()
+    }
+  }
+
+  inputContent(input) {
+    return input.dataset.text || input.parentElement.innerText
+  }
+
+  updateTriggerContent() {
+    const checkedInputs = this.inputTargets.filter(input => input.checked)
+
+    if (checkedInputs.length == 0) {
+      this.triggerContentTarget.innerText = this.triggerTarget.dataset.placeholder
+    } else if (checkedInputs.length === 1) {
+      this.triggerContentTarget.innerText = this.inputContent(checkedInputs[0])
     } else {
-      this.#openContent();
+      this.triggerContentTarget.innerText = `${checkedInputs.length} ${this.termValue}`
     }
   }
 
-  onItemSelected(event) {
-    event.preventDefault();
+  openPopover(event) {
+    event.preventDefault()
 
-    this.#setValueDispatchEventAndCloseContent(event.target);
+    this.updatePopoverPosition()
+    this.updatePopoverWidth()
+    this.triggerTarget.ariaExpanded = "true"
+    this.selectedItemIndex = null
+    this.itemTargets.forEach(item => item.ariaCurrent = "false")
+    this.popoverTarget.showPopover()
   }
 
-  onKeyEnter(event) {
-    event.preventDefault();
-
-    const currentItem = this.itemTargets.find(
-      (item) => item.getAttribute("aria-current") === "true",
-    );
-
-    if (!currentItem) this.#closeContent();
-
-    this.#setValueDispatchEventAndCloseContent(currentItem);
+  closePopover() {
+    this.triggerTarget.ariaExpanded = "false"
+    this.popoverTarget.hidePopover()
   }
 
-  onSearchInput(event) {
-    this.rubyUiComboboxContentOutlet.handleSearchInput(event.target.value);
-    this.#findAndSetCurrentAndActiveDescendant();
+  filterItems(e) {
+    if (["ArrowDown", "ArrowUp", "Tab", "Enter"].includes(e.key)) {
+      return
+    }
+
+    const filterTerm = this.searchInputTarget.value.toLowerCase()
+    let resultCount = 0
+
+    this.selectedItemIndex = null
+
+    this.inputTargets.forEach((input) => {
+      const text = this.inputContent(input).toLowerCase()
+
+      if (text.indexOf(filterTerm) > -1) {
+        input.parentElement.classList.remove("hidden")
+        resultCount++
+      } else {
+        input.parentElement.classList.add("hidden")
+      }
+    })
+
+    this.emptyStateTarget.classList.toggle("hidden", resultCount !== 0)
   }
 
-  onClickOutside(event) {
-    if (!this.openValue) return;
-    if (this.element.contains(event.target)) return;
+  keyDownPressed() {
+    if (this.selectedItemIndex !== null) {
+      this.selectedItemIndex++
+    } else {
+      this.selectedItemIndex = 0
+    }
 
-    event.preventDefault();
-    this.#closeContent();
+    this.focusSelectedInput()
   }
 
-  onEscKey(event) {
-    event.preventDefault();
+  keyUpPressed() {
+    if (this.selectedItemIndex !== null) {
+      this.selectedItemIndex--
+    } else {
+      this.selectedItemIndex = -1
+    }
 
-    this.#closeContent();
+    this.focusSelectedInput()
   }
 
-  onKeyDown(event) {
-    event.preventDefault();
+  focusSelectedInput() {
+    const visibleInputs = this.inputTargets.filter(input => !input.parentElement.classList.contains("hidden"))
 
-    const currentIndex = this.itemTargets.findIndex(
-      (item) => item.getAttribute("aria-current") === "true",
-    );
+    this.wrapSelectedInputIndex(visibleInputs.length)
 
-    if (currentIndex + 1 < this.itemTargets.length) {
-      this.itemTargets[currentIndex].removeAttribute("aria-current");
+    visibleInputs.forEach((input, index) => {
+      if (index == this.selectedItemIndex) {
+        input.parentElement.ariaCurrent = "true"
+        input.parentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
+      } else {
+        input.parentElement.ariaCurrent = "false"
+      }
+    })
+  }
 
-      const currentItem = this.itemTargets[currentIndex + 1];
-      this.#setCurrentAndActiveDescendant(currentItem);
+  keyEnterPressed(event) {
+    event.preventDefault()
+    const option = this.itemTargets.find(item => item.ariaCurrent === "true")
+
+    if (option) {
+      option.click()
     }
   }
 
-  onKeyUp(event) {
-    event.preventDefault();
-    const currentIndex = this.itemTargets.findIndex(
-      (item) => item.getAttribute("aria-current") === "true",
-    );
-
-    if (currentIndex > 0) {
-      this.itemTargets[currentIndex].removeAttribute("aria-current");
-
-      const currentItem = this.itemTargets[currentIndex - 1];
-      this.#setCurrentAndActiveDescendant(currentItem);
-    }
+  wrapSelectedInputIndex(length) {
+    this.selectedItemIndex = ((this.selectedItemIndex % length) + length) % length
   }
 
-  #closeContent() {
-    this.openValue = false;
-    this.contentTarget.classList.add("hidden");
-    this.triggerTarget.setAttribute("aria-expanded", false);
-    this.triggerTarget.setAttribute("aria-activedescendant", true);
-    this.itemTargets.forEach((item) => item.removeAttribute("aria-current"));
-
-    this.triggerTarget.focus({ preventScroll: true });
-  }
-
-  #openContent() {
-    this.openValue = true;
-    this.contentTarget.classList.remove("hidden");
-    this.triggerTarget.setAttribute("aria-expanded", true);
-
-    this.#findAndSetCurrentAndActiveDescendant();
-    this.searchTarget.focus({ preventScroll: true });
-  }
-
-  #findAndSetCurrentAndActiveDescendant() {
-    const selectedItem = this.itemTargets.find(
-      (item) => item.getAttribute("aria-selected") === "true",
-    );
-
-    if (selectedItem) {
-      this.#setCurrentAndActiveDescendant(selectedItem);
-      return;
-    }
-
-    const selectedVisible = this.itemTargets.find(
-      (item) => !item.classList.contains("hidden"),
-    );
-    this.#setCurrentAndActiveDescendant(selectedVisible);
-  }
-
-  #setCurrentAndActiveDescendant(item) {
-    if (!item) return;
-
-    item.setAttribute("aria-current", "true");
-    this.triggerTarget.setAttribute(
-      "aria-activedescendant",
-      item.getAttribute("id"),
-    );
-  }
-
-  #setValueDispatchEventAndCloseContent(item) {
-    const oldValue = this.inputTarget.value;
-    const newValue = item.dataset.value;
-
-    this.rubyUiComboboxItemOutlets.forEach((item) =>
-      item.handleItemSelected(newValue),
-    );
-
-    this.inputTarget.value = item.dataset.value;
-    this.valueTarget.innerText = item.innerText;
-
-    this.#dispatchOnChange(oldValue, newValue);
-    this.#closeContent();
-  }
-
-  #dispatchOnChange(oldValue, newValue) {
-    if (oldValue === newValue) return;
-
-    const event = new InputEvent("change", {
-      bubbles: true,
-      cancelable: true,
-    });
-
-    this.inputTarget.dispatchEvent(event);
-  }
-
-  #generateItemsIds() {
-    const listId = this.listTarget.getAttribute("id");
-    this.triggerTarget.setAttribute("aria-controls", listId);
-
-    this.itemTargets.forEach((item, index) => {
-      item.id = `${listId}-${index}`;
-    });
-  }
-
-  #setFloatingElement() {
-    this.cleanup = autoUpdate(this.triggerTarget, this.contentTarget, () => {
-      computePosition(this.triggerTarget, this.contentTarget, {
-        middleware: [offset(4)],
+  updatePopoverPosition() {
+    this.cleanup = autoUpdate(this.triggerTarget, this.popoverTarget, () => {
+      computePosition(this.triggerTarget, this.popoverTarget, {
+        placement: 'bottom-start',
+        middleware: [offset(4), flip()],
       }).then(({ x, y }) => {
-        Object.assign(this.contentTarget.style, {
+        Object.assign(this.popoverTarget.style, {
           left: `${x}px`,
           top: `${y}px`,
         });
       });
     });
+  }
+
+  updatePopoverWidth() {
+    this.popoverTarget.style.width = `${this.triggerTarget.offsetWidth}px`
   }
 }

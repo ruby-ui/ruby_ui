@@ -96,43 +96,55 @@ class Docs::FormView < ApplicationView
           Form(class: "w-2/3 space-y-6") do
             FormField do
               FormFieldLabel { "Combobox" }
+
               Combobox do
-                ComboboxInput(required: true)
-                ComboboxTrigger do
-                  ComboboxValue(placeholder: "Select event...")
-                end
-                ComboboxContent do
-                  ComboboxSearchInput(placeholder: "Search event...")
+                ComboboxTrigger placeholder: "Pick value"
+
+                ComboboxPopover do
+                  ComboboxSearchInput(placeholder: "Pick value or type anything")
+
                   ComboboxList do
-                    ComboboxEmpty { "No results found." }
-                    ComboboxGroup(heading: "Suggestions") do
-                      ComboboxItem(value: "railsworld") do
-                        span { "Rails World" }
+                    ComboboxEmptyState { "No result" }
+
+                    ComboboxListGroup label: "Fruits" do
+                      ComboboxItem do
+                        ComboboxRadio(name: "food", value: "apple", required: true)
+                        span { "Apple" }
                       end
-                      ComboboxItem(value: "tropicalrb") do
-                        span { "Tropical.rb" }
-                      end
-                      ComboboxItem(value: "friendly.rb") do
-                        span { "Friendly.rb" }
+
+                      ComboboxItem do
+                        ComboboxRadio(name: "food", value: "banana", required: true)
+                        span { "Banana" }
                       end
                     end
 
-                    ComboboxSeparator()
+                    ComboboxListGroup label: "Vegetable" do
+                      ComboboxItem do
+                        ComboboxRadio(name: "food", value: "brocoli", required: true)
+                        span { "Broccoli" }
+                      end
 
-                    ComboboxGroup(heading: "Others") do
-                      ComboboxItem(value: "railsconf") do
-                        span { "RailsConf" }
+                      ComboboxItem do
+                        ComboboxRadio(name: "food", value: "carrot", required: true)
+                        span { "Carrot" }
                       end
-                      ComboboxItem(value: "euruko") do
-                        span { "Euruko" }
+                    end
+
+                    ComboboxListGroup label: "Others" do
+                      ComboboxItem do
+                        ComboboxRadio(name: "food", value: "chocolate", required: true)
+                        span { "Chocolate" }
                       end
-                      ComboboxItem(value: "rubykaigi") do
-                        span { "RubyKaigi" }
+
+                      ComboboxItem do
+                        ComboboxRadio(name: "food", value: "milk", required: true)
+                        span { "Milk" }
                       end
                     end
                   end
                 end
               end
+
               FormFieldError()
             end
             Button(type: "submit") { "Save" }
