@@ -13,7 +13,12 @@ module RubyUI
         class: "aspect-square h-4 w-4 rounded-full border border-primary accent-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
         data: {
           ruby_ui__combobox_target: "input",
-          action: "ruby-ui--combobox#inputChanged"
+          ruby_ui__form_field_target: "input",
+          action: %w[
+            ruby-ui--combobox#inputChanged
+            input->ruby-ui--form-field#onInput
+            invalid->ruby-ui--form-field#onInvalid
+          ]
         }
       }
     end

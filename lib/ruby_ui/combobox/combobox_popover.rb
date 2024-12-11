@@ -16,7 +16,13 @@ module RubyUI
         popover: true,
         data: {
           ruby_ui__combobox_target: "popover",
-          action: "keydown.down->ruby-ui--combobox#keyDownPressed keydown.up->ruby-ui--combobox#keyUpPressed keydown.enter->ruby-ui--combobox#keyEnterPressed keydown.esc->ruby-ui--combobox#closeDialog:prevent"
+          action: %w[
+            keydown.down->ruby-ui--combobox#keyDownPressed
+            keydown.up->ruby-ui--combobox#keyUpPressed
+            keydown.enter->ruby-ui--combobox#keyEnterPressed
+            keydown.esc->ruby-ui--combobox#closeDialog:prevent
+            resize@window->ruby-ui--combobox#updatePopoverWidth
+          ]
         }
       }
     end
