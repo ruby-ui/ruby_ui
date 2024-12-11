@@ -2,21 +2,37 @@
 
 module RubyUI
   class ComboboxSearchInput < Base
-    def initialize(placeholder:, **attrs)
+    def initialize(placeholder:, **)
       @placeholder = placeholder
-      super(**attrs)
+      super(**)
     end
 
     def view_template
-      input_container do
-        search_icon
+      div class: "flex text-muted-foreground items-center border-b px-3" do
+        icon
         input(**attrs)
       end
     end
 
     private
 
-    def search_icon
+    def default_attrs
+      {
+        type: "search",
+        class: "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none border-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        role: "searchbox",
+        placeholder: @placeholder,
+        data: {
+          ruby_ui__combobox_target: "searchInput",
+          action: "keyup->ruby-ui--combobox#filterItems search->ruby-ui--combobox#filterItems"
+        },
+        autocomplete: "off",
+        autocorrect: "off",
+        spellcheck: "false"
+      }
+    end
+
+    def icon
       svg(
         xmlns: "http://www.w3.org/2000/svg",
         viewbox: "0 0 24 24",
@@ -32,25 +48,6 @@ module RubyUI
           d: "m21 21-4.3-4.3"
         )
       end
-    end
-
-    def input_container(&)
-      div(class: "flex items-center border-b px-3", &)
-    end
-
-    def default_attrs
-      {
-        class:
-          "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-        placeholder: @placeholder,
-        data: {
-          action: "input->ruby-ui--combobox#onSearchInput",
-          ruby_ui__combobox_target: "search"
-        },
-        autocomplete: "off",
-        autocorrect: "off",
-        spellcheck: false
-      }
     end
   end
 end

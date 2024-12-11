@@ -2,51 +2,23 @@
 
 module RubyUI
   class ComboboxItem < Base
-    def initialize(value: nil, **attrs)
-      @value = value
-      super(**attrs)
-    end
-
-    def view_template(&block)
-      div(**attrs) do
-        div(class: "invisible group-aria-selected:visible") { icon }
-        block.call
-      end
+    def view_template(&)
+      label(**attrs, &)
     end
 
     private
 
-    def icon
-      svg(
-        xmlns: "http://www.w3.org/2000/svg",
-        viewbox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        class: "mr-2 h-4 w-4",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round"
-      ) do |s|
-        s.path(
-          d: "M20 6 9 17l-5-5"
-        )
-      end
-    end
-
     def default_attrs
       {
+        class: [
+          "flex flex-row w-full text-wrap truncate gap-2 items-center rounded-sm px-2 py-1.5 text-sm outline-none cursor-pointer",
+          "select-none has-[:checked]:bg-accent hover:bg-accent p-2",
+          "[&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2"
+        ],
         role: "option",
-        tabindex: "0",
-        class:
-          "combobox-item group relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground aria-[current]:bg-accent aria-[current]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         data: {
-          value: @value,
-          ruby_ui__combobox_target: "item",
-          ruby_ui__combobox_content_target: "item",
-          controller: "ruby-ui--combobox-item",
-          action: "click->ruby-ui--combobox#onItemSelected"
-        },
-        aria_selected: "false"
+          ruby_ui__combobox_target: "item"
+        }
       }
     end
   end

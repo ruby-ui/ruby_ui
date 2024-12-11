@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ComboboxEmpty < Base
+  class ComboboxEmptyState < Base
     def view_template(&)
       div(**attrs, &)
     end
@@ -13,7 +13,7 @@ module RubyUI
         role: "presentation",
         class: "hidden py-6 text-center text-sm",
         data: {
-          ruby_ui__combobox_content_target: "empty"
+          ruby_ui__combobox_target: "emptyState"
         }
       }
     end
