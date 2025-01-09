@@ -7,6 +7,19 @@ Bundler.require(:default)
 require "phlex"
 # require "phlex/testing/view_helper"
 require "minitest/autorun"
+require "capybara/cuprite"
+
+# Configure Capybara
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(app,
+    window_size: [1200, 800],
+    headless: false,
+    browser_options: { 'no-sandbox': nil }
+  )
+end
+
+Capybara.default_driver = :cuprite
+Capybara.javascript_driver = :cuprite
 
 class TestContext < Phlex::HTML
   def view_template(&)
