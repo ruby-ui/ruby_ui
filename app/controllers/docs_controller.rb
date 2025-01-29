@@ -166,6 +166,10 @@ class DocsController < ApplicationController
     render Docs::ShortcutKeyView.new
   end
 
+  def skeleton
+    render Docs::SkeletonView.new
+  end
+
   def switch
     render Docs::SwitchView.new
   end

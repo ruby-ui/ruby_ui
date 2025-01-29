@@ -94,6 +94,7 @@ class Shared::Menu < ApplicationComponent
       {name: "Select", path: helpers.docs_select_path, badge: "New"},
       {name: "Sheet", path: helpers.docs_sheet_path},
       {name: "Shortcut Key", path: helpers.docs_shortcut_key_path},
+      {name: "Skeleton", path: helpers.docs_skeleton_path, badge: "New"},
       {name: "Switch", path: helpers.docs_switch_path},
       {name: "Table", path: helpers.docs_table_path},
       {name: "Tabs", path: helpers.docs_tabs_path},
