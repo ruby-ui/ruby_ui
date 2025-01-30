@@ -90,6 +90,7 @@ class Shared::Menu < ApplicationComponent
       {name: "Masked Input", path: helpers.masked_input_path},
       {name: "Pagination", path: helpers.docs_pagination_path, badge: "New"},
       {name: "Popover", path: helpers.docs_popover_path},
+      {name: "Progress", path: helpers.docs_progress_path, badge: "New"},
       {name: "Radio Button", path: helpers.docs_radio_button_path, badge: "New"},
       {name: "Select", path: helpers.docs_select_path, badge: "New"},
       {name: "Sheet", path: helpers.docs_sheet_path},

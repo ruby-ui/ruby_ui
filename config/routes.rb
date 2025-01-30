@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     get "masked_input", to: "docs#masked_input", as: :masked_input
     get "pagination", to: "docs#pagination", as: :docs_pagination
     get "popover", to: "docs#popover", as: :docs_popover
+    get "progress", to: "docs#progress", as: :docs_progress
     get "radio_button", to: "docs#radio_button", as: :docs_radio_button
     get "select", to: "docs#select", as: :docs_select
     get "sheet", to: "docs#sheet", as: :docs_sheet

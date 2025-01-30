@@ -150,6 +150,10 @@ class DocsController < ApplicationController
     render Docs::PopoverView.new
   end
 
+  def progress
+    render Docs::ProgressView.new
+  end
+
   def radio_button
     render Docs::RadioButtonView.new
   end
