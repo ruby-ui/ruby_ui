@@ -76,6 +76,11 @@ class Docs::ComboboxView < ApplicationView
                 ComboboxList do
                   ComboboxEmptyState { "No result" }
 
+                  ComboboxItem(class: "mt-3") do
+                    ComboboxToggleAllCheckbox(name: "all", value: "all")
+                    span { "Select all" }
+                  end
+
                   ComboboxListGroup label: "Fruits" do
                     ComboboxItem do
                       ComboboxCheckbox(name: "food", value: "apple")

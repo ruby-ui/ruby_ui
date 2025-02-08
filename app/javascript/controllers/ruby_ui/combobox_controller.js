@@ -9,6 +9,7 @@ export default class extends Controller {
 
   static targets = [
     "input",
+    "toggleAll",
     "popover",
     "item",
     "emptyState",
@@ -33,10 +34,20 @@ export default class extends Controller {
     if (e.target.type == "radio") {
       this.closePopover()
     }
+
+    if (this.hasToggleAllTarget && !e.target.checked) {
+      this.toggleAllTarget.checked = false
+    }
   }
 
   inputContent(input) {
     return input.dataset.text || input.parentElement.innerText
+  }
+
+  toggleAllItems() {
+    const isChecked = this.toggleAllTarget.checked
+    this.inputTargets.forEach(input => input.checked = isChecked)
+    this.updateTriggerContent()
   }
 
   updateTriggerContent() {
@@ -73,6 +84,12 @@ export default class extends Controller {
     }
 
     const filterTerm = this.searchInputTarget.value.toLowerCase()
+
+    if (this.hasToggleAllTarget) {
+      if (filterTerm) this.toggleAllTarget.parentElement.classList.add("hidden")
+      else this.toggleAllTarget.parentElement.classList.remove("hidden")
+    }
+
     let resultCount = 0
 
     this.selectedItemIndex = null
