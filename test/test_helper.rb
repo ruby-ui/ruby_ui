@@ -19,14 +19,12 @@ end
 
 class ComponentTest < Minitest::Test
   def render(component, &)
-    component.call(view_context:, &)
+    component.call(&)
   end
 
   def phlex(&)
     render Phlex::HTML.new, &
   end
-
-  def view_context = nil
 end
 
 # this is a tracepoint that will output the path of all files loaded that contain the string "phlex"

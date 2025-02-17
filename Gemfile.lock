@@ -16,7 +16,7 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
-    phlex (2.0.0.beta2)
+    phlex (2.0.2)
     racc (1.8.1)
     rainbow (3.1.1)
     rake (13.2.1)
@@ -60,7 +60,7 @@ PLATFORMS
 
 DEPENDENCIES
   minitest (~> 5.0)
-  phlex (>= 2.0.0.beta2)
+  phlex (>= 2.0.2)
   rake (~> 13.0)
   rouge (~> 4.2.0)
   ruby_ui!

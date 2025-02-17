@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">= 3.3.1"
 
-  s.add_development_dependency "phlex", ">= 2.0.0.beta2"
+  s.add_development_dependency "phlex", ">= 2.0.2"
   s.add_development_dependency "rouge", "~> 4.2.0"
   s.add_development_dependency "tailwind_merge", "~> 0.12"
   s.add_development_dependency "rake", "~> 13.0"
