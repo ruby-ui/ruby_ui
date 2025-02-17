@@ -2,17 +2,6 @@
 
 module RubyUI
   class CarouselPrevious < Base
-    ORIENTATION_CLASSES = {
-      horizontal: "-left-12 top-1/2 -translate-y-1/2",
-      vertical: "-top-12 left-1/2 -translate-x-1/2 rotate-90"
-    }
-
-    def initialize(**attrs)
-      @orientation = CarouselContext.orientation || :horizontal
-
-      super
-    end
-
     def view_template(&)
       Button(**attrs) do
         icon
@@ -26,7 +15,11 @@ module RubyUI
       {
         variant: :outline,
         icon: true,
-        class: ["absolute h-8 w-8 rounded-full", ORIENTATION_CLASSES[@orientation]],
+        class: [
+          "absolute h-8 w-8 rounded-full",
+          "group-[.is-horizontal]:-left-12 group-[.is-horizontal]:top-1/2 group-[.is-horizontal]:-translate-y-1/2",
+          "group-[.is-vertical]:-top-12 group-[.is-vertical]:left-1/2 group-[.is-vertical]:-translate-x-1/2 group-[.is-vertical]:rotate-90"
+        ],
         disabled: true,
         data: {
           action: "click->ruby-ui--carousel#scrollPrev",

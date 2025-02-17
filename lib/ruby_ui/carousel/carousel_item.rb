@@ -2,17 +2,6 @@
 
 module RubyUI
   class CarouselItem < Base
-    ORIENTATION_CLASSES = {
-      horizontal: "pl-4",
-      vertical: "pt-4"
-    }
-
-    def initialize(**attrs)
-      @orientation = CarouselContext.orientation || :horizontal
-
-      super
-    end
-
     def view_template(&)
       div(**attrs, &)
     end
@@ -23,7 +12,11 @@ module RubyUI
       {
         role: "group",
         aria_roledescription: "slide",
-        class: ["min-w-0 shrink-0 grow-0 basis-full", ORIENTATION_CLASSES[@orientation]]
+        class: [
+          "min-w-0 shrink-0 grow-0 basis-full",
+          "group-[.is-horizontal]:pl-4",
+          "group-[.is-vertical]:pt-4"
+        ]
       }
     end
   end

@@ -10,16 +10,14 @@ module RubyUI
     end
 
     def view_template(&)
-      CarouselContext.with_context(orientation: @orientation) do
-        div(**attrs, &)
-      end
+      div(**attrs, &)
     end
 
     private
 
     def default_attrs
       {
-        class: "relative",
+        class: ["relative group", orientation_classes],
         role: "region",
         aria_roledescription: "carousel",
         data: {
@@ -33,6 +31,10 @@ module RubyUI
       {
         axis: (@orientation == :horizontal) ? "x" : "y"
       }
+    end
+
+    def orientation_classes
+      (@orientation == :horizontal) ? "is-horizontal" : "is-vertical"
     end
   end
 end

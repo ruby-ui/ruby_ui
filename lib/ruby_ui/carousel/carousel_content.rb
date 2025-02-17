@@ -2,17 +2,6 @@
 
 module RubyUI
   class CarouselContent < Base
-    ORIENTATION_CLASSES = {
-      horizontal: "-ml-4",
-      vertical: "-mt-4 flex-col"
-    }
-
-    def initialize(**attrs)
-      @orientation = CarouselContext.orientation || :horizontal
-
-      super
-    end
-
     def view_template(&)
       div(class: "overflow-hidden", data: {ruby_ui__carousel_target: "viewport"}) do
         div(**attrs, &)
@@ -23,7 +12,11 @@ module RubyUI
 
     def default_attrs
       {
-        class: ["flex", ORIENTATION_CLASSES[@orientation]]
+        class: [
+          "flex",
+          "group-[.is-horizontal]:-ml-4",
+          "group-[.is-vertical]:-mt-4 group-[.is-vertical]:flex-col"
+        ]
       }
     end
   end
