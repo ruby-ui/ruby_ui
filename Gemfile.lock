@@ -1,16 +1,16 @@
 GIT
   remote: https://github.com/phlex-ruby/phlex-rails.git
-  revision: 80388e7c1a5ba53f11e8de45eeb250bb99bc9060
+  revision: be91ab54bc1b0497e4cc72f1f435524811e0be76
   specs:
-    phlex-rails (2.0.0.beta2)
-      phlex (= 2.0.0.beta2)
+    phlex-rails (2.0.2)
+      phlex (~> 2.0.2)
       railties (>= 6.1, < 9)
 
 GIT
   remote: https://github.com/phlex-ruby/phlex.git
-  revision: f02859abaf1397d4df37c23b12646d47a55e5b46
+  revision: bdff5f6800d36717bd576c8af8331ebeca8b4b3b
   specs:
-    phlex (2.0.0.beta2)
+    phlex (2.0.2)
 
 GIT
   remote: https://github.com/ruby-ui/ruby_ui.git

@@ -12,7 +12,7 @@ module Components
       def view_template
         Heading(level: 2) { "Installation" }
 
-        Tabs(default_value: "cli", class: "w-full") do
+        RubyUI::Tabs(default_value: "cli", class: "w-full") do
           TabsList do
             TabsTrigger(value: "cli") { "CLI" }
             TabsTrigger(value: "manual") { "Manual" }
