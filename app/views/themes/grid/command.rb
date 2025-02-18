@@ -97,12 +97,12 @@ module Themes
 
       def components_list
         [
-          {name: "Accordion", path: helpers.docs_accordion_path},
-          {name: "Alert", path: helpers.docs_alert_path},
-          {name: "Alert Dialog", path: helpers.docs_alert_dialog_path},
-          {name: "Aspect Ratio", path: helpers.docs_aspect_ratio_path},
-          {name: "Avatar", path: helpers.docs_avatar_path},
-          {name: "Badge", path: helpers.docs_badge_path}
+          {name: "Accordion", path: docs_accordion_path},
+          {name: "Alert", path: docs_alert_path},
+          {name: "Alert Dialog", path: docs_alert_dialog_path},
+          {name: "Aspect Ratio", path: docs_aspect_ratio_path},
+          {name: "Avatar", path: docs_avatar_path},
+          {name: "Badge", path: docs_badge_path}
         ]
       end
 

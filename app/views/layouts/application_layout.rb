@@ -12,7 +12,7 @@ class ApplicationLayout < ApplicationView
       body do
         render Shared::Navbar.new
         main(&block)
-        render Shared::Flashes.new(notice: helpers.flash[:notice], alert: helpers.flash[:alert])
+        render Shared::Flashes.new(notice: flash[:notice], alert: flash[:alert])
       end
     end
   end

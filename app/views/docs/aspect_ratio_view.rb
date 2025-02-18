@@ -14,8 +14,7 @@ class Docs::AspectRatioView < ApplicationView
             img(
               alt: "Placeholder",
               loading: "lazy",
-              src:
-                helpers.image_path('pattern.jpg')
+              src: image_path('pattern.jpg')
             )
           end
         RUBY
@@ -27,8 +26,7 @@ class Docs::AspectRatioView < ApplicationView
             img(
               alt: "Placeholder",
               loading: "lazy",
-              src:
-                helpers.image_path('pattern.jpg')
+              src: image_path('pattern.jpg')
             )
           end
         RUBY
@@ -40,8 +38,7 @@ class Docs::AspectRatioView < ApplicationView
             img(
               alt: "Placeholder",
               loading: "lazy",
-              src:
-                helpers.image_path('pattern.jpg')
+              src: image_path('pattern.jpg')
             )
           end
         RUBY
@@ -53,8 +50,7 @@ class Docs::AspectRatioView < ApplicationView
             img(
               alt: "Placeholder",
               loading: "lazy",
-              src:
-                helpers.image_path('pattern.jpg')
+              src: image_path('pattern.jpg')
             )
           end
         RUBY

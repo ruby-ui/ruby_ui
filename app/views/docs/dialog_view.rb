@@ -25,8 +25,7 @@ class Docs::DialogView < ApplicationView
                   img(
                     alt: "Placeholder",
                     loading: "lazy",
-                    src:
-                      helpers.image_path("pattern.jpg")
+                    src: image_path("pattern.jpg")
                   )
                 end
               end
@@ -56,8 +55,7 @@ class Docs::DialogView < ApplicationView
                     img(
                       alt: "Placeholder",
                       loading: "lazy",
-                      src:
-                        helpers.image_path("pattern.jpg")
+                      src: image_path("pattern.jpg")
                     )
                   end
                 end
@@ -82,8 +80,7 @@ class Docs::DialogView < ApplicationView
                     img(
                       alt: "Placeholder",
                       loading: "lazy",
-                      src:
-                        helpers.image_path("pattern.jpg")
+                      src: image_path("pattern.jpg")
                     )
                   end
                 end

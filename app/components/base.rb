@@ -4,6 +4,10 @@ class Components::Base < Phlex::HTML
 
   # Include any helpers you want to be available across all components
   include Phlex::Rails::Helpers::Routes
+  include Phlex::Rails::Helpers::ImagePath
+  include Phlex::Rails::Helpers::ImageURL
+  include Phlex::Rails::Helpers::Flash
+  include Phlex::Rails::Helpers::Request
 
   TAILWIND_MERGER = ::TailwindMerge::Merger.new.freeze unless defined?(TAILWIND_MERGER)
 

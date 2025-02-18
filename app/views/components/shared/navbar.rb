@@ -8,9 +8,9 @@ class Shared::Navbar < ApplicationComponent
           render Shared::MobileMenu.new(class: "md:hidden")
           render Shared::Logo.new
 
-          Link(href: helpers.docs_introduction_path, variant: :ghost, class: "hidden md:inline-block") { "Docs" }
-          Link(href: helpers.docs_accordion_path, variant: :ghost, class: "hidden md:inline-block") { "Components" }
-          Link(href: helpers.theme_path("default"), variant: :ghost, class: "hidden md:inline-block") { "Themes" }
+          Link(href: docs_introduction_path, variant: :ghost, class: "hidden md:inline-block") { "Docs" }
+          Link(href: docs_accordion_path, variant: :ghost, class: "hidden md:inline-block") { "Components" }
+          Link(href: theme_path("default"), variant: :ghost, class: "hidden md:inline-block") { "Themes" }
         end
         div(class: "flex items-center gap-x-2 md:divide-x") do
           div(class: "flex items-center") do

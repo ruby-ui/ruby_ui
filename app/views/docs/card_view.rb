@@ -20,8 +20,7 @@ class Docs::CardView < ApplicationView
                 img(
                   alt: "Placeholder",
                   loading: "lazy",
-                  src:
-                    helpers.image_url('pattern.jpg')
+                  src: image_url('pattern.jpg')
                 )
               end
             end
@@ -40,8 +39,7 @@ class Docs::CardView < ApplicationView
               img(
                 alt: "Placeholder",
                 loading: "lazy",
-                src:
-                  helpers.image_url('pattern.jpg')
+                src: image_url('pattern.jpg')
               )
             end
             CardHeader do

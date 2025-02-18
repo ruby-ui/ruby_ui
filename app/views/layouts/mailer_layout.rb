@@ -275,7 +275,7 @@ class MailerLayout < Phlex::HTML
 
                 div(class: "logo-container") do
                   a(href: ENV["HOST"]) do
-                    img(src: helpers.image_url("logo.svg"), alt: ENV["APP_NAME"], height: "20")
+                    img(src: image_url("logo.svg"), alt: ENV["APP_NAME"], height: "20")
                   end
                 end
 

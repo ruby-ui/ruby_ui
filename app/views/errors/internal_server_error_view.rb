@@ -9,7 +9,7 @@ class Errors::InternalServerErrorView < ApplicationView
         Text(class: "text-muted-foreground") { "Something unexpected happened. We're looking into it." }
       end
 
-      Link(href: helpers.root_path, variant: :primary, class: "w-full") do
+      Link(href: root_path, variant: :primary, class: "w-full") do
         house_icon
         plain "Go to home"
       end

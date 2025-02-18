@@ -12,8 +12,7 @@ module Themes
               img(
                 alt: "Placeholder",
                 loading: "lazy",
-                src:
-                  helpers.image_url("pattern.jpg")
+                src: image_url("pattern.jpg")
               )
             end
           end

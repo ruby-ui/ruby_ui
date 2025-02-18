@@ -9,7 +9,7 @@ class Errors::NotFoundView < ApplicationView
         Text(class: "text-muted-foreground") { "The page you were looking for doesn't exist." }
       end
 
-      Link(href: helpers.root_path, variant: :primary, class: "w-full") do
+      Link(href: root_path, variant: :primary, class: "w-full") do
         house_icon
         plain "Go to home"
       end
