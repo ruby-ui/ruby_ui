@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.5"
+ruby "3.4.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "7.2.0"
@@ -77,7 +77,7 @@ gem "phlex-rails", github: "phlex-ruby/phlex-rails"
 gem "ruby_ui", github: "ruby-ui/ruby_ui", branch: "main", require: false
 # gem "ruby_ui", path: "../ruby_ui"
 
-gem "pry"
+gem "pry", "0.15.2"
 
 gem "tailwind_merge", "~> 0.13.2"
 
