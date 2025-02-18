@@ -29,7 +29,7 @@ module ApplicationHelper
         :stimulus
       end
 
-      Docs::ComponentStruct.new(
+      ::Docs::ComponentStruct.new(
         name: name,
         source: source,
         built_using: built_using

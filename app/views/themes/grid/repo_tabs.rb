@@ -42,11 +42,11 @@ module Themes
 
       def components
         [
-          Docs::ComponentStruct.new(name: "TabsController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/tabs_controller.js", built_using: :stimulus),
-          Docs::ComponentStruct.new(name: "Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "TabsList", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "TabsTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "TabsContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex)
+          ::Docs::ComponentStruct.new(name: "TabsController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/tabs_controller.js", built_using: :stimulus),
+          ::Docs::ComponentStruct.new(name: "Tabs", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "TabsList", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/list.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "TabsTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/trigger.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "TabsContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/tabs/content.rb", built_using: :phlex)
         ]
       end
 

@@ -50,16 +50,16 @@ module Themes
 
       def components
         [
-          Docs::ComponentStruct.new(name: "CommandController", source: "https://github.com/PhlexUI/phlex_ui_stimulus_pro/blob/main/controllers/command_controller.js", built_using: :stimulus),
-          Docs::ComponentStruct.new(name: "CommandDialog", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "CommandDialogTrigger", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_trigger.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "CommandDialogContent", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_content.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "Command", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "CommandInput", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/input.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "CommandEmpty", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/empty.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "CommandList", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/list.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "CommandGroup", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/group.rb", built_using: :phlex),
-          Docs::ComponentStruct.new(name: "CommandItem", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/item.rb", built_using: :phlex)
+          ::Docs::ComponentStruct.new(name: "CommandController", source: "https://github.com/PhlexUI/phlex_ui_stimulus_pro/blob/main/controllers/command_controller.js", built_using: :stimulus),
+          ::Docs::ComponentStruct.new(name: "CommandDialog", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "CommandDialogTrigger", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_trigger.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "CommandDialogContent", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/dialog_content.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "Command", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "CommandInput", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/input.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "CommandEmpty", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/empty.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "CommandList", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/list.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "CommandGroup", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/group.rb", built_using: :phlex),
+          ::Docs::ComponentStruct.new(name: "CommandItem", source: "https://github.com/PhlexUI/phlex_ui_pro/blob/main/lib/phlex_ui_pro/command/item.rb", built_using: :phlex)
         ]
       end
 
