@@ -14,7 +14,7 @@ class Shared::Head < ApplicationComponent
       csrf_meta_tags
       stylesheet_link_tag "https://api.fontshare.com/v2/css?f[]=general-sans@1&display=swap", data_turbo_track: "reload"
       stylesheet_link_tag "application", data_turbo_track: "reload"
-      javascript_include_tag "application", data_turbo_track: "reload", defer: true
+      javascript_include_tag "application", data_turbo_track: "reload", type: "module"
     end
   end
 end
