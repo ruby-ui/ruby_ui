@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::BadgeView < ApplicationView
+class Views::Docs::BadgeView < Views::Base
   def view_template
     component = "Badge"
 

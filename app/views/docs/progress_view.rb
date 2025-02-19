@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::ProgressView < ApplicationView
+class Views::Docs::ProgressView < Views::Base
   def view_template
     component = "Progress"
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::TooltipView < ApplicationView
+class Views::Docs::TooltipView < Views::Base
   def view_template
     component = "Tooltip"
 

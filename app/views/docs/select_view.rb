@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::SelectView < ApplicationView
+class Views::Docs::SelectView < Views::Base
   def view_template
     component = "Select"
 

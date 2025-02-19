@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::AvatarView < ApplicationView
+class Views::Docs::AvatarView < Views::Base
   def view_template
     component = "Avatar"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do

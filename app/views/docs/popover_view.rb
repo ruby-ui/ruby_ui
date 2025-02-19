@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::PopoverView < ApplicationView
+class Views::Docs::PopoverView < Views::Base
   def view_template
     component = "Popover"
 

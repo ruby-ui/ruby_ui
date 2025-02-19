@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::CommandView < ApplicationView
+class Views::Docs::CommandView < Views::Base
   def view_template
     component = "Command"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do

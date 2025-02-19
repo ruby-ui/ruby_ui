@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::TableView < ApplicationView
+class Views::Docs::TableView < Views::Base
   Invoice = Struct.new(:identifier, :status, :method, :amount, keyword_init: true)
   User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
 

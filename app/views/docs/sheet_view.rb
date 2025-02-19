@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::SheetView < ApplicationView
+class Views::Docs::SheetView < Views::Base
   def view_template
     component = "Sheet"
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DocsLayout < ApplicationView
+class DocsLayout < Views::Base
   include Phlex::Rails::Layout
 
   def view_template(&block)

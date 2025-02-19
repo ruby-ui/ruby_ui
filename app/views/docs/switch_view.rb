@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::SwitchView < ApplicationView
+class Views::Docs::SwitchView < Views::Base
   def view_template
     component = "Switch"
 

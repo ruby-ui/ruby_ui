@@ -4,6 +4,6 @@ class PagesController < ApplicationController
   layout -> { PagesLayout }
 
   def home
-    render Pages::HomeView.new
+    render Views::Pages::HomeView.new
   end
 end

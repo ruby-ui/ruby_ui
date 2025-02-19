@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::SkeletonView < ApplicationView
+class Views::Docs::SkeletonView < Views::Base
   def view_template
     component = "Skeleton"
 

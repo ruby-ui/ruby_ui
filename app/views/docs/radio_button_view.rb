@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::RadioButtonView < ApplicationView
+class Views::Docs::RadioButtonView < Views::Base
   def view_template
     component = "RadioButton"
 

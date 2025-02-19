@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::MaskedInputView < ApplicationView
+class Views::Docs::MaskedInputView < Views::Base
   def view_template
     component = "MaskedInput"
 

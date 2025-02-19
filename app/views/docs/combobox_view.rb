@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::ComboboxView < ApplicationView
+class Views::Docs::ComboboxView < Views::Base
   @@code_example = nil
 
   def view_template

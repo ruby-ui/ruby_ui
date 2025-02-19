@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::LinkView < ApplicationView
+class Views::Docs::LinkView < Views::Base
   def view_template
     component = "Link"
 

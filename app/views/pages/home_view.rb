@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Pages::HomeView < ApplicationView
+class Views::Pages::HomeView < Views::Base
   def view_template
     render HomeView::Banner.new do |banner|
       banner.cta do

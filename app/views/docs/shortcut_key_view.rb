@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::ShortcutKeyView < ApplicationView
+class Views::Docs::ShortcutKeyView < Views::Base
   def view_template
     component = "ShortcutKey"
 

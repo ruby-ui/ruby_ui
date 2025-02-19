@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::GettingStarted::ThemingView < ApplicationView
+class Views::Docs::GettingStarted::ThemingView < Views::Base
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Theming", description: "Using CSS variables for theming.")

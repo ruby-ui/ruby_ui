@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::ButtonView < ApplicationView
+class Views::Docs::ButtonView < Views::Base
   def view_template
     component = "Button"
 

@@ -1,4 +1,4 @@
-class MailerLayout < Phlex::HTML
+class MailerLayout < Views::Base
   include Phlex::Rails::Layout
 
   def view_template(&block)

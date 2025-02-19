@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::BreadcrumbView < ApplicationView
+class Views::Docs::BreadcrumbView < Views::Base
   def view_template
     component = "Breadcrumb"
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Themes::ShowView < ApplicationView
+class Views::Themes::ShowView < Views::Base
   def initialize(theme:)
     @theme = theme
   end

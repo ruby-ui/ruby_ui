@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::GettingStarted::InstallationView < ApplicationView
+class Views::Docs::GettingStarted::InstallationView < Views::Base
   include DeferredRender
 
   def view_template

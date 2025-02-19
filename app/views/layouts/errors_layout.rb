@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ErrorsLayout < ApplicationView
+class ErrorsLayout < Views::Base
   include Phlex::Rails::Layout
 
   def view_template(&block)

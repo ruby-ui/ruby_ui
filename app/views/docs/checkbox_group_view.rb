@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::CheckboxGroupView < ApplicationView
+class Views::Docs::CheckboxGroupView < Views::Base
   def view_template
     component = "Checkbox"
 

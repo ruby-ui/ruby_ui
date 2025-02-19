@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::Installation::RailsBundlerView < ApplicationView
+class Views::Docs::Installation::RailsBundlerView < Views::Base
   def view_template
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install RubyUI within a Rails app that employs JS bundling.")

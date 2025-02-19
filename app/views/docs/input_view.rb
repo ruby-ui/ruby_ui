@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::InputView < ApplicationView
+class Views::Docs::InputView < Views::Base
   def view_template
     component = "Input"
 

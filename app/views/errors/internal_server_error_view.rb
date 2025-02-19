@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Errors::InternalServerErrorView < ApplicationView
+class Views::Errors::InternalServerErrorView < Views::Base
   def view_template
     Card(class: "p-8 space-y-6 flex flex-col items-center") do
       div(class: "space-y-2") do

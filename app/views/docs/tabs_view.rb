@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::TabsView < ApplicationView
+class Views::Docs::TabsView < Views::Base
   Repo = Struct.new(:github_url, :name, :stars, :version, keyword_init: true)
 
   def view_template

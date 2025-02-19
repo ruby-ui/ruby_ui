@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::TypographyView < ApplicationView
+class Views::Docs::TypographyView < Views::Base
   def view_template
     component = "Typography"
 

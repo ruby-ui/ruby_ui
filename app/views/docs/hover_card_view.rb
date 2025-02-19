@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Docs::HoverCardView < ApplicationView
+class Views::Docs::HoverCardView < Views::Base
   def view_template
     component = "HoverCard"
 
