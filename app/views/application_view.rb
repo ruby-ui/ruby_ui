@@ -13,7 +13,7 @@ class MethodCallFinder < Prism::Visitor
   end
 end
 
-class ApplicationView < ApplicationComponent
+class ApplicationView < Base
   include ApplicationHelper
   # The ApplicationView is an abstract class for all your views.
 
