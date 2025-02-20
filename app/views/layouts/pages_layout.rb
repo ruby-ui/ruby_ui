@@ -1,18 +1,22 @@
 # frozen_string_literal: true
 
-class PagesLayout < Views::Base
-  include Phlex::Rails::Layout
+module Views
+  module Layouts
+    class PagesLayout < Views::Base
+      include Phlex::Rails::Layout
 
-  def view_template(&block)
-    doctype
+      def view_template(&block)
+        doctype
 
-    html do
-      render Shared::Head.new
+        html do
+          render Shared::Head.new
 
-      body do
-        render Shared::Navbar.new
-        main(class: "relative", &block)
-        render Shared::Flashes.new(notice: flash[:notice], alert: flash[:alert])
+          body do
+            render Shared::Navbar.new
+            main(class: "relative", &block)
+            render Shared::Flashes.new(notice: flash[:notice], alert: flash[:alert])
+          end
+        end
       end
     end
   end

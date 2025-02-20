@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ThemesController < ApplicationController
-  layout -> { ApplicationLayout }
+  layout -> { Views::Layouts::ApplicationLayout }
 
   # GET /themes/:theme
   def show

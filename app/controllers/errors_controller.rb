@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ErrorsController < ApplicationController
-  layout -> { ErrorsLayout }
+  layout -> { Views::Layouts::ErrorsLayout }
 
   def not_found
     render Views::Errors::NotFound.new, status: :not_found

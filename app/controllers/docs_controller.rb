@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DocsController < ApplicationController
-  layout -> { DocsLayout }
+  layout -> { Views::Layouts::DocsLayout }
 
   # GETTING STARTED
   def introduction
