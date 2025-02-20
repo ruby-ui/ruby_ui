@@ -5,200 +5,200 @@ class DocsController < ApplicationController
 
   # GETTING STARTED
   def introduction
-    render Views::Docs::GettingStarted::IntroductionView.new
+    render Views::Docs::GettingStarted::Introduction.new
   end
 
   def installation
-    render Views::Docs::GettingStarted::InstallationView.new
+    render Views::Docs::GettingStarted::Installation.new
   end
 
   def theming
-    render Views::Docs::GettingStarted::ThemingView.new
+    render Views::Docs::GettingStarted::Theming.new
   end
 
   def dark_mode
-    render Views::Docs::GettingStarted::DarkModeView.new
+    render Views::Docs::GettingStarted::DarkMode.new
   end
 
   def customizing_components
-    render Views::Docs::GettingStarted::CustomizingComponentsView.new
+    render Views::Docs::GettingStarted::CustomizingComponents.new
   end
 
   # INSTALLATION
   def installation_rails_bundler
-    render Views::Docs::Installation::RailsBundlerView.new
+    render Views::Docs::Installation::RailsBundler.new
   end
 
   def installation_rails_importmaps
-    render Views::Docs::Installation::RailsImportmapsView.new
+    render Views::Docs::Installation::RailsImportmaps.new
   end
 
   # COMPONENTS
   def accordion
-    render Views::Docs::AccordionView.new
+    render Views::Docs::Accordion.new
   end
 
   def alert_component # alert is a reserved word
-    render Views::Docs::AlertView.new
+    render Views::Docs::Alert.new
   end
 
   def alert_dialog
-    render Views::Docs::AlertDialogView.new
+    render Views::Docs::AlertDialog.new
   end
 
   def aspect_ratio
-    render Views::Docs::AspectRatioView.new
+    render Views::Docs::AspectRatio.new
   end
 
   def avatar
-    render Views::Docs::AvatarView.new
+    render Views::Docs::Avatar.new
   end
 
   def badge
-    render Views::Docs::BadgeView.new
+    render Views::Docs::Badge.new
   end
 
   def breadcrumb
-    render Views::Docs::BreadcrumbView.new
+    render Views::Docs::Breadcrumb.new
   end
 
   def button
-    render Views::Docs::ButtonView.new
+    render Views::Docs::Button.new
   end
 
   def card
-    render Views::Docs::CardView.new
+    render Views::Docs::Card.new
   end
 
   def calendar
-    render Views::Docs::CalendarView.new
+    render Views::Docs::Calendar.new
   end
 
   def chart
-    render Views::Docs::ChartView.new
+    render Views::Docs::Chart.new
   end
 
   def checkbox
-    render Views::Docs::CheckboxView.new
+    render Views::Docs::Checkbox.new
   end
 
   def checkbox_group
-    render Views::Docs::CheckboxGroupView.new
+    render Views::Docs::CheckboxGroup.new
   end
 
   def clipboard
-    render Views::Docs::ClipboardView.new
+    render Views::Docs::Clipboard.new
   end
 
   def codeblock
-    render Views::Docs::CodeblockView.new
+    render Views::Docs::Codeblock.new
   end
 
   def collapsible
-    render Views::Docs::CollapsibleView.new
+    render Views::Docs::Collapsible.new
   end
 
   def combobox
-    render Views::Docs::ComboboxView.new
+    render Views::Docs::Combobox.new
   end
 
   def command
-    render Views::Docs::CommandView.new
+    render Views::Docs::Command.new
   end
 
   def context_menu
-    render Views::Docs::ContextMenuView.new
+    render Views::Docs::ContextMenu.new
   end
 
   def date_picker
-    render Views::Docs::DatePickerView.new
+    render Views::Docs::DatePicker.new
   end
 
   def dialog
-    render Views::Docs::DialogView.new
+    render Views::Docs::Dialog.new
   end
 
   def dropdown_menu
-    render Views::Docs::DropdownMenuView.new
+    render Views::Docs::DropdownMenu.new
   end
 
   def form
-    render Views::Docs::FormView.new
+    render Views::Docs::Form.new
   end
 
   def hover_card
-    render Views::Docs::HoverCardView.new
+    render Views::Docs::HoverCard.new
   end
 
   def input
-    render Views::Docs::InputView.new
+    render Views::Docs::Input.new
   end
 
   def link
-    render Views::Docs::LinkView.new
+    render Views::Docs::Link.new
   end
 
   def masked_input
-    render Views::Docs::MaskedInputView.new
+    render Views::Docs::MaskedInput.new
   end
 
   def pagination
-    render Views::Docs::PaginationView.new
+    render Views::Docs::Pagination.new
   end
 
   def popover
-    render Views::Docs::PopoverView.new
+    render Views::Docs::Popover.new
   end
 
   def progress
-    render Views::Docs::ProgressView.new
+    render Views::Docs::Progress.new
   end
 
   def radio_button
-    render Views::Docs::RadioButtonView.new
+    render Views::Docs::RadioButton.new
   end
 
   def select
-    render Views::Docs::SelectView.new
+    render Views::Docs::Select.new
   end
 
   def sheet
-    render Views::Docs::SheetView.new
+    render Views::Docs::Sheet.new
   end
 
   def shortcut_key
-    render Views::Docs::ShortcutKeyView.new
+    render Views::Docs::ShortcutKey.new
   end
 
   def skeleton
-    render Views::Docs::SkeletonView.new
+    render Views::Docs::Skeleton.new
   end
 
   def switch
-    render Views::Docs::SwitchView.new
+    render Views::Docs::Switch.new
   end
 
   def table
-    render Views::Docs::TableView.new
+    render Views::Docs::Table.new
   end
 
   def tabs
-    render Views::Docs::TabsView.new
+    render Views::Docs::Tabs.new
   end
 
   def textarea
-    render Views::Docs::TextareaView.new
+    render Views::Docs::Textarea.new
   end
 
   def theme_toggle
-    render Views::Docs::ThemeToggleView.new
+    render Views::Docs::ThemeToggle.new
   end
 
   def tooltip
-    render Views::Docs::TooltipView.new
+    render Views::Docs::Tooltip.new
   end
 
   def typography
-    render Views::Docs::TypographyView.new
+    render Views::Docs::Typography.new
   end
 end

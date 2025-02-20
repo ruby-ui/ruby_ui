@@ -5,6 +5,6 @@ class ThemesController < ApplicationController
 
   # GET /themes/:theme
   def show
-    render Views::Themes::ShowView.new(theme: params[:theme])
+    render Views::Themes::Show.new(theme: params[:theme])
   end
 end
