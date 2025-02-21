@@ -10,6 +10,10 @@ calendar:
   js_packages:
     - "mustache"
 
+carousel:
+  js_packages:
+    - "embla-carousel"
+
 chart:
   js_packages:
     - "chart.js"
