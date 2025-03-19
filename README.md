@@ -63,13 +63,13 @@ Visit https://rubyui.com/docs/introduction to view the full documentation, inclu
 
 ## Speed Comparison 🏎️
 
-RubyUI, powered by Phlex, outperforms traditional methods:
+RubyUI, powered by Phlex, outperforms alternative methods:
 
 - Phlex: Baseline 🏁
-- ViewComponent: 5.57x slower 🐢
-- ERB Templates: 12.08x slower 🐌
+- ViewComponent: ~1.5x slower 🚙
+- ERB Templates: ~5x slower 🐢
 
-_Huge thanks to @KonnorRogers for running these tests_ 🙏
+See the original [view layers benchmark](https://github.com/KonnorRogers/view-layer-benchmarks) by @KonnorRogers and its [variations](https://github.com/KonnorRogers/view-layer-benchmarks/forks).
 
 ## Importmap notes:
 
