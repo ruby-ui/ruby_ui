@@ -73,6 +73,7 @@ module Components
           {name: "Button", path: docs_button_path},
           {name: "Calendar", path: docs_calendar_path},
           {name: "Card", path: docs_card_path},
+          {name: "Carousel", path: docs_carousel_path, badge: "New"},
           # { name: "Chart", path: docs_chart_path, badge: "New" },
           {name: "Checkbox", path: docs_checkbox_path},
           {name: "Checkbox Group", path: docs_checkbox_group_path},

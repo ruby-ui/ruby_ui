@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     get "breadcrumb", to: "docs#breadcrumb", as: :docs_breadcrumb
     get "button", to: "docs#button", as: :docs_button
     get "card", to: "docs#card", as: :docs_card
+    get "carousel", to: "docs#carousel", as: :docs_carousel
     get "calendar", to: "docs#calendar", as: :docs_calendar
     get "chart", to: "docs#chart", as: :docs_chart
     get "checkbox", to: "docs#checkbox", as: :docs_checkbox

@@ -9,6 +9,7 @@
     "chart.js": "^4.4.6",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
+    "embla-carousel": "^8.5.2",
     "esbuild": "0.23.0",
     "fuse.js": "^7.0.0",
     "maska": "^3.0.3",

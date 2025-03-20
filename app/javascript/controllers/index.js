@@ -16,6 +16,9 @@ application.register("ruby-ui--calendar", RubyUi__CalendarController)
 import RubyUi__CalendarInputController from "./ruby_ui/calendar_input_controller"
 application.register("ruby-ui--calendar-input", RubyUi__CalendarInputController)
 
+import RubyUi__CarouselController from "./ruby_ui/carousel_controller"
+application.register("ruby-ui--carousel", RubyUi__CarouselController)
+
 import RubyUi__ChartController from "./ruby_ui/chart_controller"
 application.register("ruby-ui--chart", RubyUi__ChartController)
 
