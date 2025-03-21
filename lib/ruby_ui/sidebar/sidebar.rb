@@ -51,7 +51,7 @@ module RubyUI
         style: "--sidebar-width: #{SIDEBAR_WIDTH}; --sidebar-width-icon: #{SIDEBAR_WIDTH_ICON};",
         data: {
           state: "expanded",
-          collapsible: @collapsible,
+          collapsible: @state == "collapsed" ? @collapsible : "expanded",
           variant: @variant,
           side: @side
         }
