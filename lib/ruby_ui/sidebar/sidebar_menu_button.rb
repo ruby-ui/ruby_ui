@@ -20,6 +20,7 @@ module RubyUI
 
       @active = active
       @as = as
+      @size = size
       super(**attrs)
     end
 
