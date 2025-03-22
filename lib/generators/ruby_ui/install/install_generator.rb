@@ -65,14 +65,7 @@ module RubyUI
       def install_tailwind_animate
         say "Installing tw-animate-css plugin"
 
-        package = "tw-animate-css"
-        if File.exist?(Rails.root.join("yarn.lock"))
-          run "yarn add #{package}"
-        elsif File.exist?(Rails.root.join("package-lock.json"))
-          run "npm install #{package}"
-        else
-          say "Could not detect the package manager, you need to install '#{package}' manually", :red
-        end
+        install_js_package("tw-animate-css")
       end
 
       def add_ruby_ui_base
