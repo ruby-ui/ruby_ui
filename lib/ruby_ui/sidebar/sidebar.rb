@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 
-# "--sidebar-width": SIDEBAR_WIDTH,
-# "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-
-# TODO: Add keyboard events
-# TODO: Open only mobile or normal sidebar
-# TODO: state => expanded, collapsed
-# TODO: cache
-
-# const MOBILE_BREAKPOINT = 768
-
 module RubyUI
   class Sidebar < Base
     SIDEBAR_WIDTH = "16rem"
