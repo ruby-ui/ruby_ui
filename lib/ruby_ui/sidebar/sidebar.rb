@@ -55,6 +55,7 @@ module RubyUI
           collapsible: @open ? "" : @collapsible,
           variant: @variant,
           side: @side,
+          ruby_ui__sidebar_open_value: @open.to_s,
           ruby_ui__sidebar_collapsible_value: @collapsible,
         }
       }
