@@ -47,7 +47,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+        class: "group/sidebar has-[[data-variant=inset]]:bg-sidebar",
         style: "--sidebar-width: #{SIDEBAR_WIDTH}; --sidebar-width-icon: #{SIDEBAR_WIDTH_ICON};",
         data: {
           state: "expanded",
