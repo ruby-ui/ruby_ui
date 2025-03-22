@@ -18,9 +18,10 @@ module RubyUI
       raise ArgumentError, "Invalid variant: #{variant}" unless VARIANT_CLASSES.key?(variant)
       raise ArgumentError, "Invalid size: #{size}" unless SIZE_CLASSES.key?(size)
 
-      @active = active
       @as = as
+      @variant = variant
       @size = size
+      @active = active
       super(**attrs)
     end
 
