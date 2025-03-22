@@ -52,27 +52,25 @@ module RubyUI
         end
       end
 
-      def add_tailwind_css
-        say "Adding RubyUI styles to application css"
-        template "application.tailwind.css.erb", Rails.root.join("app/assets/stylesheets/application.tailwind.css")
-      end
-
       def add_tailwind_config
         say "Adding RubyUI config to tailwind config"
 
-        if File.exist?(Rails.root.join("tailwind.config.js")) # tailwindcss js package
-          template "tailwind.config.js.js-package.erb", Rails.root.join("tailwind.config.js")
-        elsif File.exist?(Rails.root.join("config/tailwind.config.js")) # tailwindcss-rails gem
-          template "tailwind.config.js.tailwindcss-rails.erb", Rails.root.join("config/tailwind.config.js")
+        if File.exist?(Rails.root.join("app/assets/tailwind/application.css")) # tailwindcss-rails gem
+          template "application.css.erb", Rails.root.join("app/assets/tailwind/application.css")
         else
-          say "Cannot find tailwind.config.js. You will need to install tailwind config manually", :red
+          template "application.tailwind.css.erb", Rails.root.join("app/assets/stylesheets/application.tailwind.css")
         end
       end
 
-      def install_tailwind_animate
-        say "Installing tailwindcss-animate plugin"
+      def install_tw_animate_css
+        say "Installing tw-animate-css plugin"
 
-        install_js_package("tailwindcss-animate")
+        package = "tw-animate-css"
+        if using_yarn?
+          run "yarn add -D #{package}"
+        else
+          run "npm install -D #{package}"
+        end
       end
 
       def add_ruby_ui_base
