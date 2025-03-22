@@ -43,7 +43,7 @@ module RubyUI
           "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width]",
           "transition-[left,right,width] duration-200 ease-linear md:flex",
           content_wrapper_side_classes,
-          content_wrapper_variant_classes,
+          content_wrapper_variant_classes
         ]
       }
     end
