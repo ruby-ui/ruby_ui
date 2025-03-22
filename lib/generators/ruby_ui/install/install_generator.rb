@@ -62,10 +62,15 @@ module RubyUI
         end
       end
 
-      def install_tailwind_animate
+      def install_tw_animate_css
         say "Installing tw-animate-css plugin"
 
-        install_js_package("tw-animate-css")
+        package = "tw-animate-css"
+        if using_yarn?
+          run "yarn add -D #{package}"
+        else
+          run "npm install -D #{package}"
+        end
       end
 
       def add_ruby_ui_base
