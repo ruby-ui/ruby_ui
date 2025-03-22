@@ -20,13 +20,13 @@ module RubyUI
     COLLAPSIBLES = %i[offcanvas icon none].freeze
 
     def initialize(side: :left, variant: :sidebar, collapsible: :offcanvas, open: true, **attrs)
-      raise ArgumentError, "Invalid side: #{side}. Must be one of #{SIDES}." unless SIDES.include?(side)
-      raise ArgumentError, "Invalid variant: #{variant}. Must be one of #{VARIANTS}." unless VARIANTS.include?(variant)
-      raise ArgumentError, "Invalid collapsible: #{collapsible}. Must be one of #{COLLAPSIBLES}." unless COLLAPSIBLES.include?(collapsible)
+      raise ArgumentError, "Invalid side: #{side}. Must be one of #{SIDES}." unless SIDES.include?(side.to_sym)
+      raise ArgumentError, "Invalid variant: #{variant}. Must be one of #{VARIANTS}." unless VARIANTS.include?(variant.to_sym)
+      raise ArgumentError, "Invalid collapsible: #{collapsible}. Must be one of #{COLLAPSIBLES}." unless COLLAPSIBLES.include?(collapsible.to_sym)
 
-      @side = side
-      @variant = variant
-      @collapsible = collapsible
+      @side = side.to_sym
+      @variant = variant.to_sym
+      @collapsible = collapsible.to_sym
       @open = open
       super(**attrs)
     end
@@ -37,7 +37,7 @@ module RubyUI
           NonCollapsiableSidebar(&)
         else
           MobileSidebar(&)
-          CollapsiableSidebar(&)
+          CollapsiableSidebar(side: @side, variant: @variant, &)
         end
       end
     end
@@ -46,7 +46,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "group/sidebar has-[[data-variant=inset]]:bg-sidebar",
+        class: "peer group/sidebar has-[[data-variant=inset]]:bg-sidebar",
         style: "--sidebar-width: #{SIDEBAR_WIDTH}; --sidebar-width-icon: #{SIDEBAR_WIDTH_ICON};",
         data: {
           controller: "ruby-ui--sidebar",
