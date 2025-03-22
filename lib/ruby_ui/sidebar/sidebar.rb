@@ -15,10 +15,9 @@ module RubyUI
     SIDEBAR_WIDTH = "16rem"
     SIDEBAR_WIDTH_ICON = "3rem"
 
-    SIDES = %i[ left right ].freeze
-    VARIANTS = %i[ sidebar floating inset ].freeze
-    COLLAPSIBLES = %i[ offcanvas icon none ].freeze
-
+    SIDES = %i[left right].freeze
+    VARIANTS = %i[sidebar floating inset].freeze
+    COLLAPSIBLES = %i[offcanvas icon none].freeze
 
     def initialize(side: :left, variant: :sidebar, collapsible: :offcanvas, open: true, **attrs)
       raise ArgumentError, "Invalid side: #{side}. Must be one of #{SIDES}." unless SIDES.include?(side)
@@ -56,7 +55,7 @@ module RubyUI
           variant: @variant,
           side: @side,
           ruby_ui__sidebar_open_value: @open.to_s,
-          ruby_ui__sidebar_collapsible_value: @collapsible,
+          ruby_ui__sidebar_collapsible_value: @collapsible
         }
       }
     end

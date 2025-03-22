@@ -11,7 +11,7 @@ module RubyUI
       div(**attrs) do
         Skeleton(class: "size-4 rounded-md", data: {sidebar: "menu-skeleton-icon"}) if @show_icon
         Skeleton(
-          class: "h-4 max-w-[--skeleton-width] flex-1", 
+          class: "h-4 max-w-[--skeleton-width] flex-1",
           data: {sidebar: "menu-skeleton-text"},
           style: {"--skeleton-width" => "#{skeleton_width}%"}
         )
@@ -30,7 +30,7 @@ module RubyUI
     end
 
     def skeleton_width
-      @_skeleton_width ||= rand(40) + 50
+      @_skeleton_width ||= rand(50..89)
     end
   end
 end
