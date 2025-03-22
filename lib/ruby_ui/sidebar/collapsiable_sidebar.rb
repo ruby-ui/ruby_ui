@@ -28,7 +28,8 @@ module RubyUI
     def gap_element_attrs
       {
         class: [
-          "relative w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear",
+          "relative w-[--sidebar-width] bg-transparent transition-[width]",
+          "duration-200 ease-linear",
           "group-data-[collapsible=offcanvas]/sidebar-wrapper:w-0",
           "group-data-[side=right]/sidebar-wrapper:rotate-180",
           variant_classes
@@ -39,7 +40,8 @@ module RubyUI
     def content_wrapper_attrs
       {
         class: [
-          "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex",
+          "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width]",
+          "transition-[left,right,width] duration-200 ease-linear md:flex",
           content_wrapper_side_classes,
           content_wrapper_variant_classes,
         ]
@@ -48,7 +50,13 @@ module RubyUI
 
     def content_attrs
       {
-        class: "flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]/sidebar-wrapper:rounded-lg group-data-[variant=floating]/sidebar-wrapper:border group-data-[variant=floating]/sidebar-wrapper:border-sidebar-border group-data-[variant=floating]/sidebar-wrapper:shadow",
+        class: [
+          "flex h-full w-full flex-col bg-sidebar",
+          "group-data-[variant=floating]/sidebar-wrapper:rounded-lg",
+          "group-data-[variant=floating]/sidebar-wrapper:border",
+          "group-data-[variant=floating]/sidebar-wrapper:border-sidebar-border",
+          "group-data-[variant=floating]/sidebar-wrapper:shadow"
+        ],
         data: {
           sidebar: "sidebar"
         }
