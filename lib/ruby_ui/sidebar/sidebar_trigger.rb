@@ -15,7 +15,8 @@ module RubyUI
       {
         class: "h-7 w-7 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
         data: {
-          sidebar: "trigger"
+          sidebar: "trigger",
+          sidebar_trigger: true
         }
       }
     end
