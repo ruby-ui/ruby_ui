@@ -20,7 +20,7 @@ module RubyUI
     COLLAPSIBLES = %i[ offcanvas icon none ].freeze
 
 
-    def initialize(side: :left, variant: :sidebar, collapsible: :offcanvas, **attrs)
+    def initialize(side: :left, variant: :sidebar, collapsible: :offcanvas, open: true, **attrs)
       raise ArgumentError, "Invalid side: #{side}. Must be one of #{SIDES}." unless SIDES.include?(side)
       raise ArgumentError, "Invalid variant: #{variant}. Must be one of #{VARIANTS}." unless VARIANTS.include?(variant)
       raise ArgumentError, "Invalid collapsible: #{collapsible}. Must be one of #{COLLAPSIBLES}." unless COLLAPSIBLES.include?(collapsible)
@@ -28,6 +28,7 @@ module RubyUI
       @side = side
       @variant = variant
       @collapsible = collapsible
+      @open = open
       super(**attrs)
     end
 
@@ -50,8 +51,8 @@ module RubyUI
         style: "--sidebar-width: #{SIDEBAR_WIDTH}; --sidebar-width-icon: #{SIDEBAR_WIDTH_ICON};",
         data: {
           controller: "ruby-ui--sidebar",
-          state: "expanded",
-          collapsible: "expanded",
+          state: @open ? "expanded" : "collapsed",
+          collapsible: @open ? "" : @collapsible,
           variant: @variant,
           side: @side,
           ruby_ui__sidebar_collapsible_value: @collapsible,
