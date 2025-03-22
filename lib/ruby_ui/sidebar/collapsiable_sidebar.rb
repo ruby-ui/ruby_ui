@@ -30,8 +30,8 @@ module RubyUI
         class: [
           "relative w-[--sidebar-width] bg-transparent transition-[width]",
           "duration-200 ease-linear",
-          "group-data-[collapsible=offcanvas]/sidebar-wrapper:w-0",
-          "group-data-[side=right]/sidebar-wrapper:rotate-180",
+          "group-data-[collapsible=offcanvas]/sidebar:w-0",
+          "group-data-[side=right]/sidebar:rotate-180",
           variant_classes
         ]
       }
@@ -52,10 +52,10 @@ module RubyUI
       {
         class: [
           "flex h-full w-full flex-col bg-sidebar",
-          "group-data-[variant=floating]/sidebar-wrapper:rounded-lg",
-          "group-data-[variant=floating]/sidebar-wrapper:border",
-          "group-data-[variant=floating]/sidebar-wrapper:border-sidebar-border",
-          "group-data-[variant=floating]/sidebar-wrapper:shadow"
+          "group-data-[variant=floating]/sidebar:rounded-lg",
+          "group-data-[variant=floating]/sidebar:border",
+          "group-data-[variant=floating]/sidebar:border-sidebar-border",
+          "group-data-[variant=floating]/sidebar:shadow"
         ],
         data: {
           sidebar: "sidebar"
@@ -65,23 +65,23 @@ module RubyUI
 
     def variant_classes
       if %i[floating inset].include?(@variant)
-        "group-data-[collapsible=icon]/sidebar-wrapper:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
+        "group-data-[collapsible=icon]/sidebar:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
       else
-        "group-data-[collapsible=icon]/sidebar-wrapper:w-[--sidebar-width-icon]"
+        "group-data-[collapsible=icon]/sidebar:w-[--sidebar-width-icon]"
       end
     end
 
     def content_wrapper_side_classes
-      return "left-0 group-data-[collapsible=offcanvas]/sidebar-wrapper:left-[calc(var(--sidebar-width)*-1)]" if @side == :left
+      return "left-0 group-data-[collapsible=offcanvas]/sidebar:left-[calc(var(--sidebar-width)*-1)]" if @side == :left
 
-      "right-0 group-data-[collapsible=offcanvas]/sidebar-wrapper:right-[calc(var(--sidebar-width)*-1)]"
+      "right-0 group-data-[collapsible=offcanvas]/sidebar:right-[calc(var(--sidebar-width)*-1)]"
     end
 
     def content_wrapper_variant_classes
       if %i[floating inset].include?(@variant)
-        "p-2 group-data-[collapsible=icon]/sidebar-wrapper:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
+        "p-2 group-data-[collapsible=icon]/sidebar:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
       else
-        "group-data-[collapsible=icon]/sidebar-wrapper:w-[--sidebar-width-icon] group-data-[side=left]/sidebar-wrapper:border-r group-data-[side=right]/sidebar-wrapper:border-l"
+        "group-data-[collapsible=icon]/sidebar:w-[--sidebar-width-icon] group-data-[side=left]/sidebar:border-r group-data-[side=right]/sidebar:border-l"
       end
     end
   end
