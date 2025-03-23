@@ -11,13 +11,11 @@ module RubyUI
     end
 
     def view_template(&)
-      div do
-        MobileSidebar(side: @side, **attrs, &)
-        div(**mix(sidebar_attrs, attrs)) do
-          div(**gap_element_attrs)
-          div(**content_wrapper_attrs) do
-            div(**content_attrs, &)
-          end
+      MobileSidebar(side: @side, **attrs, &)
+      div(**mix(sidebar_attrs, attrs)) do
+        div(**gap_element_attrs)
+        div(**content_wrapper_attrs) do
+          div(**content_attrs, &)
         end
       end
     end

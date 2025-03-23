@@ -13,7 +13,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: 'group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
+        class: 'group/sidebar-wrapper [&:has([data-variant=inset])]:bg-sidebar flex min-h-svh w-full',
         style: "--sidebar-width: #{SIDEBAR_WIDTH}; --sidebar-width-icon: #{SIDEBAR_WIDTH_ICON};",
         data: {
           controller: 'ruby-ui--sidebar'

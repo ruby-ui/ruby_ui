@@ -19,12 +19,10 @@ module RubyUI
     end
 
     def view_template(&)
-      div(**attrs) do
-        if @collapsible == :none
-          NonCollapsiableSidebar(&)
-        else
-          CollapsiableSidebar(side: @side, variant: @variant, collapsible: @collapsible, open: @open, &)
-        end
+      if @collapsible == :none
+        NonCollapsiableSidebar(**attrs, &)
+      else
+        CollapsiableSidebar(side: @side, variant: @variant, collapsible: @collapsible, open: @open, **attrs, &)
       end
     end
   end
