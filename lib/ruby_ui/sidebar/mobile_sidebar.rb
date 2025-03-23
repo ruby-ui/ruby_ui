@@ -2,7 +2,7 @@
 
 module RubyUI
   class MobileSidebar < Base
-    SIDEBAR_WIDTH_MOBILE = "18rem"
+    SIDEBAR_WIDTH_MOBILE = '18rem'
 
     def initialize(side: :left, **attrs)
       @side = side
@@ -13,20 +13,20 @@ module RubyUI
       Sheet(**attrs) do
         SheetContent(
           side: @side,
-          class: "w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden",
+          class: 'w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden',
           style: {
             "--sidebar-width": SIDEBAR_WIDTH_MOBILE
           },
           data: {
-            sidebar: "sidebar",
-            mobile: "true"
-          },
+            sidebar: 'sidebar',
+            mobile: 'true'
+          }
         ) do
-          SheetHeader(class: "sr-only") do
-            SheetTitle { "Sidebar" }
-            SheetDescription { "Displays the mobile sidebar." }
+          SheetHeader(class: 'sr-only') do
+            SheetTitle { 'Sidebar' }
+            SheetDescription { 'Displays the mobile sidebar.' }
           end
-          div(class: "flex h-full w-full flex-col", &)
+          div(class: 'flex h-full w-full flex-col', &)
         end
       end
     end
@@ -35,7 +35,10 @@ module RubyUI
 
     def default_attrs
       {
-        class: "ruby-ui--sidebar-sheet"
+        data: {
+          ruby_ui__sidebar_target: 'mobileSidebar',
+          action: 'ruby--ui-sidebar:open->ruby-ui--sheet#open:self'
+        }
       }
     end
   end
