@@ -36,7 +36,7 @@ module RubyUI
           "[&>svg]:text-sidebar-accent-foreground",
           "data-[active=true]:bg-sidebar-accent",
           "data-[active=true]:text-sidebar-accent-foreground",
-          "group-data-[collapsible=icon]/sidebar:hidden",
+          "group-data-[collapsible=icon]:hidden",
           SIZE_CLASSES[@size]
         ],
         data: {

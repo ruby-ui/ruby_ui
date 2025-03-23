@@ -22,7 +22,7 @@ module RubyUI
           "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
           "focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
           "after:absolute after:-inset-2 after:md:hidden",
-          "group-data-[collapsible=icon]/sidebar:hidden"
+          "group-data-[collapsible=icon]:hidden"
         ],
         data: {
           sidebar: "group-action"
