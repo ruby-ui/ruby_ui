@@ -4,17 +4,17 @@ module RubyUI
   class Separator < Base
     ORIENTATIONS = %i[horizontal vertical].freeze
 
-    def initialize(as: "div", orientation: :horizontal, decorative: true, **attrs)
+    def initialize(as: :div, orientation: :horizontal, decorative: true, **attrs)
       raise ArgumentError, "Invalid orientation: #{orientation}" unless ORIENTATIONS.include?(orientation.to_sym)
 
-      @as = as
+      @as = as.to_sym
       @orientation = orientation.to_sym
       @decorative = decorative
       super(**attrs)
     end
 
     def view_template(&)
-      public_send(@as, **attrs, &)
+      tag(@as, **attrs, &)
     end
 
     private
@@ -25,10 +25,7 @@ module RubyUI
         class: [
           "shrink-0 bg-border",
           orientation_classes
-        ],
-        data: {
-          orientation: @orientation
-        }
+        ]
       }
     end
 

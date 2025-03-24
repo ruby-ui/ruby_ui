@@ -10,7 +10,7 @@ class RubyUI::SeparatorTest < ComponentTest
 
     assert_match(/div/, output)
     assert_match(/role="none"/, output)
-    assert_match(/data-orientation="horizontal"/, output)
+    assert_match(/h-\[1px\]/, output)
   end
 
   def test_render_with_vertical_orientation
@@ -18,7 +18,7 @@ class RubyUI::SeparatorTest < ComponentTest
       RubyUI.Separator(orientation: :vertical)
     end
 
-    assert_match(/data-orientation="vertical"/, output)
+    assert_match(/w-\[1px\]/, output)
   end
 
   def test_render_with_decorative_false
@@ -34,6 +34,6 @@ class RubyUI::SeparatorTest < ComponentTest
       RubyUI.Separator(as: "hr")
     end
 
-    assert_match(/hr/, output)
+    assert_match(/<hr/, output)
   end
 end
