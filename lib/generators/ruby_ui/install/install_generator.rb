@@ -55,7 +55,7 @@ module RubyUI
       def add_tailwind_config
         say "Adding RubyUI config to tailwind config"
 
-        if File.exist?(Rails.root.join("app/assets/tailwind/application.css")) # tailwindcss-rails gem
+        if using_tailwindcss_rails_gem?
           template "application.css.erb", Rails.root.join("app/assets/tailwind/application.css")
         else
           template "application.tailwind.css.erb", Rails.root.join("app/assets/stylesheets/application.tailwind.css")
@@ -68,6 +68,18 @@ module RubyUI
         install_js_package("tw-animate-css")
       end
 
+      def install_tailwindcss_forms
+        say "Installing @tailwindcss/forms plugin"
+
+        install_js_package("@tailwindcss/forms")
+      end
+
+      def install_tailwindcss_typography
+        say "Installing @tailwindcss/typography plugin"
+
+        install_js_package("@tailwindcss/typography")
+      end
+
       def add_ruby_ui_base
         say "Adding RubyUI::Base component"
         template "../../../../ruby_ui/base.rb", Rails.root.join("app/components/ruby_ui/base.rb")
@@ -77,6 +89,10 @@ module RubyUI
 
       def gem_installed?(name)
         Gem::Specification.find_all_by_name(name).any?
+      end
+
+      def using_tailwindcss_rails_gem?
+        File.exist?(Rails.root.join("app/assets/tailwind/application.css"))
       end
     end
   end
