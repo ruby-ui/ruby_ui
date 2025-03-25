@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description = "Ruby UI is a UI Component Library for Ruby developers. Built on top of the Phlex Framework."
   s.authors = ["George Kettle"]
   s.email = "george.kettle@icloud.com"
-  s.files = Dir["lib/**/*.{rb,yml,erb}", "tasks/**/*.rake"]
+  s.files = Dir["README.md", "LICENSE.txt", "lib/**/*"]
   s.require_path = "lib"
   s.homepage =
     "https://rubygems.org/gems/ruby_ui"
