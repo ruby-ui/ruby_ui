@@ -7,7 +7,7 @@ class Views::Docs::Installation::RailsBundler < Views::Base
 
       Alert(variant: :info) do
         AlertTitle { "RubyUI" }
-        AlertDescription { "To take full advantage of RubyUI, the application is expected to be using TailwindCSS and Stimulus" }
+        AlertDescription { "To take full advantage of RubyUI, the application is expected to be using TailwindCSS 4 and Stimulus" }
       end
 
       Heading(level: 2, class: "!text-2xl pb-4 border-b") { "Using RubyUI CLI" }
@@ -58,7 +58,7 @@ class Views::Docs::Installation::RailsBundler < Views::Base
             end
 
             code = <<~CODE
-              bundle add phlex-rails --github phlex-ruby/phlex-rails --branch main
+              bundle add phlex-rails
             CODE
             div(class: "w-full") do
               Codeblock(code, syntax: :javascript)
@@ -67,7 +67,7 @@ class Views::Docs::Installation::RailsBundler < Views::Base
             Alert(variant: :warning) do
               info_icon
               AlertTitle { "Phlex compatibility" }
-              AlertDescription { "Note that RubyUI components target Phlex 2, but you can use them with Phlex 1.x as long as you are willing to adapt their code." }
+              AlertDescription { "Note that RubyUI components target Phlex 2.x most recent version" }
             end
           end
         end
@@ -215,7 +215,7 @@ class Views::Docs::Installation::RailsBundler < Views::Base
         steps.add_step do
           step_container do
             Text(size: "4", weight: "semibold") do
-              "Include RubyUI styles in your CSS"
+              "Include RubyUI configuration & styles in your CSS"
             end
 
             Text do
@@ -228,81 +228,154 @@ class Views::Docs::Installation::RailsBundler < Views::Base
             end
 
             code = <<~STYLESHEET
-              @tailwind base;
-              @tailwind components;
-              @tailwind utilities;
+              @import "tailwindcss";
 
-              @layer base {
-                :root {
-                  --background: 0 0% 100%;
-                  --foreground: 240 10% 3.9%;
-                  --card: 0 0% 100%;
-                  --card-foreground: 240 10% 3.9%;
-                  --popover: 0 0% 100%;
-                  --popover-foreground: 240 10% 3.9%;
-                  --primary: 240 5.9% 10%;
-                  --primary-foreground: 0 0% 98%;
-                  --secondary: 240 4.8% 95.9%;
-                  --secondary-foreground: 240 5.9% 10%;
-                  --muted: 240 4.8% 95.9%;
-                  --muted-foreground: 240 3.8% 46.1%;
-                  --accent: 240 4.8% 95.9%;
-                  --accent-foreground: 240 5.9% 10%;
-                  --destructive: 0 84.2% 60.2%;
-                  --destructive-foreground: 0 0% 98%;
-                  --border: 240 5.9% 90%;
-                  --input: 240 5.9% 90%;
-                  --ring: 240 5.9% 10%;
-                  --radius: 0.5rem;
+              @plugin "@tailwindcss/forms";
+              @plugin "@tailwindcss/typography";
 
-                  /* ruby_ui especific */
-                  --warning: 38 92% 50%;
-                  --warning-foreground: 0 0% 100%;
-                  --success: 87 100% 37%;
-                  --success-foreground: 0 0% 100%;
-                }
+              @import "tw-animate-css";
 
-                .dark {
-                  --background: 240 10% 3.9%;
-                  --foreground: 0 0% 98%;
-                  --card: 240 10% 3.9%;
-                  --card-foreground: 0 0% 98%;
-                  --popover: 240 10% 3.9%;
-                  --popover-foreground: 0 0% 98%;
-                  --primary: 0 0% 98%;
-                  --primary-foreground: 240 5.9% 10%;
-                  --secondary: 240 3.7% 15.9%;
-                  --secondary-foreground: 0 0% 98%;
-                  --muted: 240 3.7% 15.9%;
-                  --muted-foreground: 240 5% 64.9%;
-                  --accent: 240 3.7% 15.9%;
-                  --accent-foreground: 0 0% 98%;
-                  --destructive: 0 62.8% 30.6%;
-                  --destructive-foreground: 0 0% 98%;
-                  --border: 240 3.7% 15.9%;
-                  --input: 240 3.7% 15.9%;
-                  --ring: 240 4.9% 83.9%;
+              @custom-variant dark (&:is(.dark *));
 
-                  /* ruby_ui especific */
-                  --warning: 38 92% 50%;
-                  --warning-foreground: 0 0% 100%;
-                  --success: 84 81% 44%;
-                  --success-foreground: 0 0% 100%;
-                }
+              :root {
+                --background: oklch(1 0 0);
+                --foreground: oklch(0.145 0 0);
+                --card: oklch(1 0 0);
+                --card-foreground: oklch(0.145 0 0);
+                --popover: oklch(1 0 0);
+                --popover-foreground: oklch(0.145 0 0);
+                --primary: oklch(0.205 0 0);
+                --primary-foreground: oklch(0.985 0 0);
+                --secondary: oklch(0.97 0 0);
+                --secondary-foreground: oklch(0.205 0 0);
+                --muted: oklch(0.97 0 0);
+                --muted-foreground: oklch(0.556 0 0);
+                --accent: oklch(0.97 0 0);
+                --accent-foreground: oklch(0.205 0 0);
+                --destructive: oklch(0.577 0.245 27.325);
+                --destructive-foreground: oklch(0.577 0.245 27.325);
+                --border: oklch(0.922 0 0);
+                --input: oklch(0.922 0 0);
+                --ring: oklch(0.708 0 0);
+                --chart-1: oklch(0.646 0.222 41.116);
+                --chart-2: oklch(0.6 0.118 184.704);
+                --chart-3: oklch(0.398 0.07 227.392);
+                --chart-4: oklch(0.828 0.189 84.429);
+                --chart-5: oklch(0.769 0.188 70.08);
+                --radius: 0.625rem;
+                --sidebar: oklch(0.985 0 0);
+                --sidebar-foreground: oklch(0.145 0 0);
+                --sidebar-primary: oklch(0.205 0 0);
+                --sidebar-primary-foreground: oklch(0.985 0 0);
+                --sidebar-accent: oklch(0.97 0 0);
+                --sidebar-accent-foreground: oklch(0.205 0 0);
+                --sidebar-border: oklch(0.922 0 0);
+                --sidebar-ring: oklch(0.708 0 0);
+
+                /* ruby_ui specific */
+                --warning: hsl(38 92% 50%);
+                --warning-foreground: hsl(0 0% 100%);
+                --success: hsl(87 100% 37%);
+                --success-foreground: hsl(0 0% 100%);
+
+                /* Container settings */
+                --container-center: true;
+                --container-padding: hsl(2rem);
+                --container-max-width-2xl: hsl(1400px);
+              }
+
+              .dark {
+                --background: oklch(0.145 0 0);
+                --foreground: oklch(0.985 0 0);
+                --card: oklch(0.145 0 0);
+                --card-foreground: oklch(0.985 0 0);
+                --popover: oklch(0.145 0 0);
+                --popover-foreground: oklch(0.985 0 0);
+                --primary: oklch(0.985 0 0);
+                --primary-foreground: oklch(0.205 0 0);
+                --secondary: oklch(0.269 0 0);
+                --secondary-foreground: oklch(0.985 0 0);
+                --muted: oklch(0.269 0 0);
+                --muted-foreground: oklch(0.708 0 0);
+                --accent: oklch(0.269 0 0);
+                --accent-foreground: oklch(0.985 0 0);
+                --destructive: oklch(0.396 0.141 25.723);
+                --destructive-foreground: oklch(0.637 0.237 25.331);
+                --border: oklch(0.269 0 0);
+                --input: oklch(0.269 0 0);
+                --ring: oklch(0.439 0 0);
+                --chart-1: oklch(0.488 0.243 264.376);
+                --chart-2: oklch(0.696 0.17 162.48);
+                --chart-3: oklch(0.769 0.188 70.08);
+                --chart-4: oklch(0.627 0.265 303.9);
+                --chart-5: oklch(0.645 0.246 16.439);
+                --sidebar: oklch(0.205 0 0);
+                --sidebar-foreground: oklch(0.985 0 0);
+                --sidebar-primary: oklch(0.488 0.243 264.376);
+                --sidebar-primary-foreground: oklch(0.985 0 0);
+                --sidebar-accent: oklch(0.269 0 0);
+                --sidebar-accent-foreground: oklch(0.985 0 0);
+                --sidebar-border: oklch(0.269 0 0);
+                --sidebar-ring: oklch(0.439 0 0);
+
+                /* ruby_ui specific */
+                --warning: hsl(38 92% 50%);
+                --warning-foreground: hsl(0 0% 100%);
+                --success: hsl(84 81% 44%);
+                --success-foreground: hsl(0 0% 100%);
+              }
+
+              @theme inline {
+                --color-background: var(--background);
+                --color-foreground: var(--foreground);
+                --color-card: var(--card);
+                --color-card-foreground: var(--card-foreground);
+                --color-popover: var(--popover);
+                --color-popover-foreground: var(--popover-foreground);
+                --color-primary: var(--primary);
+                --color-primary-foreground: var(--primary-foreground);
+                --color-secondary: var(--secondary);
+                --color-secondary-foreground: var(--secondary-foreground);
+                --color-muted: var(--muted);
+                --color-muted-foreground: var(--muted-foreground);
+                --color-accent: var(--accent);
+                --color-accent-foreground: var(--accent-foreground);
+                --color-destructive: var(--destructive);
+                --color-destructive-foreground: var(--destructive-foreground);
+                --color-border: var(--border);
+                --color-input: var(--input);
+                --color-ring: var(--ring);
+                --color-chart-1: var(--chart-1);
+                --color-chart-2: var(--chart-2);
+                --color-chart-3: var(--chart-3);
+                --color-chart-4: var(--chart-4);
+                --color-chart-5: var(--chart-5);
+                --radius-sm: calc(var(--radius) - 4px);
+                --radius-md: calc(var(--radius) - 2px);
+                --radius-lg: var(--radius);
+                --radius-xl: calc(var(--radius) + 4px);
+                --color-sidebar: var(--sidebar);
+                --color-sidebar-foreground: var(--sidebar-foreground);
+                --color-sidebar-primary: var(--sidebar-primary);
+                --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+                --color-sidebar-accent: var(--sidebar-accent);
+                --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+                --color-sidebar-border: var(--sidebar-border);
+                --color-sidebar-ring: var(--sidebar-ring);
+
+                /* ruby_ui specific */
+                --color-warning: var(--warning);
+                --color-warning-foreground: var(--warning-foreground);
+                --color-success: var(--success);
+                --color-success-foreground: var(--success-foreground);
               }
 
               @layer base {
                 * {
-                  @apply border-border;
+                  @apply border-border outline-ring/50;
                 }
-
                 body {
                   @apply bg-background text-foreground;
-                  font-feature-settings: "rlig" 1, "calt" 1;
-
-                  /* docs specific */
-                  /* https://css-tricks.com/snippets/css/system-font-stack/ */
-                  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
                 }
               }
 
@@ -317,7 +390,7 @@ class Views::Docs::Installation::RailsBundler < Views::Base
         steps.add_step do
           step_container do
             Text(size: "4", weight: "semibold") do
-              "Install tailwindcss-animate plugin"
+              "Install tw-animate-css plugin"
             end
 
             Text do
@@ -325,109 +398,8 @@ class Views::Docs::Installation::RailsBundler < Views::Base
             end
 
             code = <<~CODE
-              yarn add tailwindcss-animate
+              yarn add tw-animate-css
             CODE
-            div(class: "w-full") do
-              Codeblock(code, syntax: :javascript)
-            end
-          end
-        end
-
-        steps.add_step do
-          step_container do
-            Text(size: "4", weight: "semibold") do
-              "Include RubyUI TailwindCSS theme"
-            end
-
-            Text do
-              plain "Include RubyUI theme config in "
-              InlineCode(class: "whitespace-nowrap") { "tailwind.config.js" }
-            end
-
-            Text do
-              "Your config file will look like this:"
-            end
-
-            code = <<~JAVASCRIPT
-              module.exports = {
-                content: [
-                  './app/views/**/*.rb', // Phlex views
-                  './app/components/**/*.rb', // Phlex components
-                  './app/views/**/*.html.erb',
-                  './app/helpers/**/*.rb',
-                  './app/assets/stylesheets/**/*.css',
-                  './app/javascript/**/*.js'
-                ],
-                darkMode: ["class"],
-                theme: {
-                  container: {
-                    center: true,
-                    padding: "2rem",
-                    screens: {
-                      "2xl": "1400px",
-                    },
-                  },
-                  extend: {
-                    colors: {
-                      border: "hsl(var(--border))",
-                      input: "hsl(var(--input))",
-                      ring: "hsl(var(--ring))",
-                      background: "hsl(var(--background))",
-                      foreground: "hsl(var(--foreground))",
-                      primary: {
-                        DEFAULT: "hsl(var(--primary))",
-                        foreground: "hsl(var(--primary-foreground))",
-                      },
-                      secondary: {
-                        DEFAULT: "hsl(var(--secondary))",
-                        foreground: "hsl(var(--secondary-foreground))",
-                      },
-                      destructive: {
-                        DEFAULT: "hsl(var(--destructive))",
-                        foreground: "hsl(var(--destructive-foreground))",
-                      },
-                      muted: {
-                        DEFAULT: "hsl(var(--muted))",
-                        foreground: "hsl(var(--muted-foreground))",
-                      },
-                      accent: {
-                        DEFAULT: "hsl(var(--accent))",
-                        foreground: "hsl(var(--accent-foreground))",
-                      },
-                      popover: {
-                        DEFAULT: "hsl(var(--popover))",
-                        foreground: "hsl(var(--popover-foreground))",
-                      },
-                      card: {
-                        DEFAULT: "hsl(var(--card))",
-                        foreground: "hsl(var(--card-foreground))",
-                      },
-                      /* ruby_ui especific */
-                      warning: {
-                        DEFAULT: "hsl(var(--warning))",
-                        foreground: "hsl(var(--warning-foreground))",
-                      },
-                      success: {
-                        DEFAULT: "hsl(var(--success))",
-                        foreground: "hsl(var(--success-foreground))",
-                      },
-                    },
-                    borderRadius: {
-                      lg: `var(--radius)`,
-                      md: `calc(var(--radius) - 2px)`,
-                      sm: "calc(var(--radius) - 4px)",
-                    },
-                    fontFamily: {
-                      sans: ["var(--font-sans)", 'ui-sans-serif', 'system-ui', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
-                    },
-                  },
-                },
-                plugins: [
-                  require("tailwindcss-animate"),
-                ],
-              }
-            JAVASCRIPT
-
             div(class: "w-full") do
               Codeblock(code, syntax: :javascript)
             end
