@@ -15,26 +15,13 @@ module RubyUI
           exit
         end
 
-        say "Generating component files"
-      end
-
-      def copy_main_component_file
-        main_component_file_path = File.join(component_folder_path, "#{component_folder_name}.rb")
-
-        # some components dont't have a main component, eg. Typography
-        return unless File.exist? main_component_file_path
-
-        say "Generating main component"
-
-        copy_file main_component_file_path, Rails.root.join("app/components/ruby_ui", "#{component_folder_name}.rb")
+        say "Generating #{component_name} files..."
       end
 
       def copy_related_component_files
-        return if related_components_file_paths.empty?
+        say "Generating components"
 
-        say "Generating related components"
-
-        related_components_file_paths.each do |file_path|
+        components_file_paths.each do |file_path|
           component_file_name = file_path.split("/").last
           copy_file file_path, Rails.root.join("app/components/ruby_ui", component_folder_name, component_file_name)
         end
@@ -75,9 +62,7 @@ module RubyUI
 
       def component_folder_path = File.join(self.class.source_root, component_folder_name)
 
-      def main_component_file_path = File.join(component_folder_path, "#{component_folder_name}.rb")
-
-      def related_components_file_paths = Dir.glob(File.join(component_folder_path, "*.rb")) - [main_component_file_path]
+      def components_file_paths = Dir.glob(File.join(component_folder_path, "*.rb"))
 
       def js_controller_file_paths = Dir.glob(File.join(component_folder_path, "*.js"))
 
