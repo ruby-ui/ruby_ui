@@ -52,27 +52,32 @@ module RubyUI
         end
       end
 
-      def add_tailwind_css
-        say "Adding RubyUI styles to application css"
-        template "application.tailwind.css.erb", Rails.root.join("app/assets/stylesheets/application.tailwind.css")
-      end
-
       def add_tailwind_config
         say "Adding RubyUI config to tailwind config"
 
-        if File.exist?(Rails.root.join("tailwind.config.js")) # tailwindcss js package
-          template "tailwind.config.js.js-package.erb", Rails.root.join("tailwind.config.js")
-        elsif File.exist?(Rails.root.join("config/tailwind.config.js")) # tailwindcss-rails gem
-          template "tailwind.config.js.tailwindcss-rails.erb", Rails.root.join("config/tailwind.config.js")
+        if using_tailwindcss_rails_gem?
+          template "application.css.erb", Rails.root.join("app/assets/tailwind/application.css")
         else
-          say "Cannot find tailwind.config.js. You will need to install tailwind config manually", :red
+          template "application.tailwind.css.erb", Rails.root.join("app/assets/stylesheets/application.tailwind.css")
         end
       end
 
-      def install_tailwind_animate
-        say "Installing tailwindcss-animate plugin"
+      def install_tw_animate_css
+        say "Installing tw-animate-css plugin"
 
-        install_js_package("tailwindcss-animate")
+        install_js_package("tw-animate-css")
+      end
+
+      def install_tailwindcss_forms
+        say "Installing @tailwindcss/forms plugin"
+
+        install_js_package("@tailwindcss/forms")
+      end
+
+      def install_tailwindcss_typography
+        say "Installing @tailwindcss/typography plugin"
+
+        install_js_package("@tailwindcss/typography")
       end
 
       def add_ruby_ui_base
@@ -84,6 +89,10 @@ module RubyUI
 
       def gem_installed?(name)
         Gem::Specification.find_all_by_name(name).any?
+      end
+
+      def using_tailwindcss_rails_gem?
+        File.exist?(Rails.root.join("app/assets/tailwind/application.css"))
       end
     end
   end
