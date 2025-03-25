@@ -1,8 +1,13 @@
 @import "tailwindcss";
-@import "../../../vendor/javascript/tw-animate-css.js";
 
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
+
+<% if using_importmap? %>
+@import "../../../vendor/javascript/tw-animate-css.js";
+<% else %>
+@import "tw-animate-css";
+<% end %>
 
 @custom-variant dark (&:is(.dark *));
 
@@ -131,6 +136,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ruby_ui specific */
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-success: var(--success);
@@ -139,15 +146,9 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
-
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-
-    /* docs specific */
-    /* https://css-tricks.com/snippets/css/system-font-stack/ */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
 }
