@@ -10,13 +10,8 @@ module RubyUI
       File.read(file_path) if File.exist?(file_path)
     end
 
-    def main_component_file_path(component_name)
-      component_name = component_name.underscore
-      File.join(component_folder(component_name), "#{component_name}.rb")
-    end
-
-    def related_component_file_paths(component_name)
-      Dir[File.join(component_folder(component_name), "*.rb")] - [main_component_file_path(component_name)]
+    def component_file_paths(component_name)
+      Dir[File.join(component_folder(component_name), "*.rb")]
     end
 
     def stimulus_controller_file_paths(component_name)

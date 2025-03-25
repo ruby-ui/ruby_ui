@@ -15,8 +15,7 @@ module Components
           Heading(level: 4, class: "pb-4 border-b") { "Manual installation" }
 
           render Steps::Builder.new do |steps|
-            main_component_step(steps)
-            related_component_steps(steps)
+            component_steps(steps)
             stimulus_controller_steps(steps)
             js_dependencies_steps(steps)
             ruby_dependencies_steps(steps)
@@ -25,47 +24,25 @@ module Components
         end
       end
 
-      def main_component_step(steps)
-        main_component_code = RubyUI::FileManager.main_component_code(component_name)
+      def component_steps(steps)
+        component_file_paths = RubyUI::FileManager.component_file_paths(component_name)
 
-        return if main_component_code.blank?
+        component_file_paths.each do |component_path|
+          component_class = component_path.split("/").last.delete_suffix(".rb").camelcase
+          component_file_name = component_path.split("/").last
+          component_code = RubyUI::FileManager.component_code(component_path)
 
-        steps.add_step do
-          render Steps::Container do
-            Text(size: "4", weight: "semibold") do
-              plain "Add "
-              InlineCode(class: "whitespace-nowrap") { "RubyUI::#{component_name.camelcase}" }
-              plain " to "
-              InlineCode(class: "whitespace-nowrap") { "app/components/ruby_ui/#{component_name.underscore}.rb" }
-            end
-
-            div(class: "w-full") do
-              Codeblock(main_component_code, syntax: :ruby)
-            end
-          end
-        end
-      end
-
-      def related_component_steps(steps)
-        related_component_file_paths = RubyUI::FileManager.related_component_file_paths(component_name)
-
-        return if related_component_file_paths.empty?
-
-        related_component_file_paths.each do |component_path|
-          related_component_class = component_path.split("/").last.delete_suffix(".rb").camelcase
-          related_component_file_name = component_path.split("/").last
-          related_component_code = RubyUI::FileManager.component_code(component_path)
           steps.add_step do
             render Steps::Container do
               Text(size: "4", weight: "semibold") do
                 plain "Add "
-                InlineCode(class: "whitespace-nowrap") { "RubyUI::#{related_component_class}" }
+                InlineCode(class: "whitespace-nowrap") { "RubyUI::#{component_class}" }
                 plain " to "
-                InlineCode(class: "whitespace-nowrap") { "app/components/ruby_ui/#{component_name.underscore}/#{related_component_file_name}" }
+                InlineCode(class: "whitespace-nowrap") { "app/components/ruby_ui/#{component_name.underscore}/#{component_file_name}" }
               end
 
               div(class: "w-full") do
-                Codeblock(related_component_code, syntax: :ruby)
+                Codeblock(component_code, syntax: :ruby)
               end
             end
           end

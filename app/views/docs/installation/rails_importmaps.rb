@@ -278,11 +278,6 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
                 --warning-foreground: hsl(0 0% 100%);
                 --success: hsl(87 100% 37%);
                 --success-foreground: hsl(0 0% 100%);
-
-                /* Container settings */
-                --container-center: true;
-                --container-padding: hsl(2rem);
-                --container-max-width-2xl: hsl(1400px);
               }
 
               .dark {
@@ -369,6 +364,13 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
                 --color-warning-foreground: var(--warning-foreground);
                 --color-success: var(--success);
                 --color-success-foreground: var(--success-foreground);
+              }
+
+              /* Container settings */
+              @utility container {
+                margin-inline: auto;
+                padding-inline: 2rem;
+                max-width: 1400px;
               }
 
               @layer base {
