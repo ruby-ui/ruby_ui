@@ -41,7 +41,7 @@ module RubyUI
         data: {
           sidebar: "menu-button",
           size: @size,
-          active: @active
+          active: @active.to_s
         }
       }
     end
