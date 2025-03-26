@@ -96,6 +96,7 @@ module Components
           {name: "Progress", path: docs_progress_path, badge: "New"},
           {name: "Radio Button", path: docs_radio_button_path, badge: "New"},
           {name: "Select", path: docs_select_path, badge: "New"},
+          {name: "Separator", path: docs_separator_path, badge: "New"},
           {name: "Sheet", path: docs_sheet_path},
           {name: "Shortcut Key", path: docs_shortcut_key_path},
           {name: "Skeleton", path: docs_skeleton_path, badge: "New"},

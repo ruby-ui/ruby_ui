@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     get "progress", to: "docs#progress", as: :docs_progress
     get "radio_button", to: "docs#radio_button", as: :docs_radio_button
     get "select", to: "docs#select", as: :docs_select
+    get "separator", to: "docs#separator", as: :docs_separator
     get "sheet", to: "docs#sheet", as: :docs_sheet
     get "shortcut_key", to: "docs#shortcut_key", as: :docs_shortcut_key
     get "skeleton", to: "docs#skeleton", as: :docs_skeleton

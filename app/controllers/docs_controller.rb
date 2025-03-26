@@ -166,6 +166,10 @@ class DocsController < ApplicationController
     render Views::Docs::Select.new
   end
 
+  def separator
+    render Views::Docs::Separator.new
+  end
+
   def sheet
     render Views::Docs::Sheet.new
   end
