@@ -15,6 +15,10 @@ module RubyUI
 
     def default_attrs
       {
+        class: [
+          "group/dropdown-menu",
+          (@strategy == "absolute") ? "is-absolute" : "is-fixed"
+        ],
         data: {
           controller: "ruby-ui--dropdown-menu",
           action: "click@window->ruby-ui--dropdown-menu#onClickOutside",
