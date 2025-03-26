@@ -17,7 +17,7 @@ module RubyUI
       {
         class: [
           "group/dropdown-menu",
-          (@strategy == "absolute") ? "is-absolute" : "is-fixed"
+          (strategy == "absolute") ? "is-absolute" : "is-fixed"
         ],
         data: {
           controller: "ruby-ui--dropdown-menu",
@@ -25,6 +25,10 @@ module RubyUI
           ruby_ui__dropdown_menu_options_value: @options.to_json
         }
       }
+    end
+
+    def strategy
+      @_strategy ||= @options[:strategy] || "absolute"
     end
   end
 end
