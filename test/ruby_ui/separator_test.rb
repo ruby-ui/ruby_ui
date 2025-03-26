@@ -31,7 +31,7 @@ class RubyUI::SeparatorTest < ComponentTest
 
   def test_render_with_custom_tag
     output = phlex do
-      RubyUI.Separator(as: "hr")
+      RubyUI.Separator(as: :hr)
     end
 
     assert_match(/<hr/, output)
