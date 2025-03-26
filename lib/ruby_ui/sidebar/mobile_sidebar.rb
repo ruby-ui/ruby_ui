@@ -13,7 +13,7 @@ module RubyUI
       Sheet(**attrs) do
         SheetContent(
           side: @side,
-          class: "w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden",
+          class: "w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden",
           style: {
             "--sidebar-width": SIDEBAR_WIDTH_MOBILE
           },

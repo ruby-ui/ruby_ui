@@ -39,7 +39,7 @@ module RubyUI
     def gap_element_attrs
       {
         class: [
-          "relative w-[--sidebar-width] bg-transparent transition-[width]",
+          "relative w-[var(--sidebar-width)] bg-transparent transition-[width]",
           "duration-200 ease-linear",
           "group-data-[collapsible=offcanvas]:w-0",
           "group-data-[side=right]:rotate-180",
@@ -51,7 +51,7 @@ module RubyUI
     def content_wrapper_attrs
       {
         class: [
-          "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width]",
+          "fixed inset-y-0 z-10 hidden h-svh w-[var(--sidebar-width)]",
           "transition-[left,right,width] duration-200 ease-linear md:flex",
           content_wrapper_side_classes,
           content_wrapper_variant_classes
@@ -78,7 +78,7 @@ module RubyUI
       if %i[floating inset].include?(@variant)
         "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
       else
-        "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
+        "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)]"
       end
     end
 
@@ -92,7 +92,7 @@ module RubyUI
       if %i[floating inset].include?(@variant)
         "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
       else
-        "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l"
+        "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l"
       end
     end
   end
