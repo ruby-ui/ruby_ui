@@ -2,13 +2,13 @@
 
 module RubyUI
   class SidebarGroupAction < Base
-    def initialize(as: "button", **attrs)
+    def initialize(as: :button, **attrs)
       @as = as
       super(**attrs)
     end
 
     def view_template(&)
-      public_send(@as, **attrs, &)
+      tag(@as, **attrs, &)
     end
 
     private

@@ -2,13 +2,13 @@
 
 module RubyUI
   class SidebarMenuAction < Base
-    def initialize(as: "button", show_on_hover: false, **attrs)
+    def initialize(as: :button, show_on_hover: false, **attrs)
       @as = as
       super(**attrs)
     end
 
     def view_template(&)
-      public_send(@as, **attrs, &)
+      tag(@as, **attrs, &)
     end
 
     private

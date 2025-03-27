@@ -23,12 +23,12 @@ class RubyUI::SidebarTest < ComponentTest
                   RubyUI.SidebarMenuItem do
                     RubyUI.SidebarMenuSub do
                       RubyUI.SidebarMenuSubItem do
-                        RubyUI.SidebarMenuSubButton(as: "a", href: "#") { "Sub Item 1" }
+                        RubyUI.SidebarMenuSubButton(as: :a, href: "#") { "Sub Item 1" }
                       end
                     end
                   end
                   RubyUI.SidebarMenuItem do
-                    RubyUI.SidebarMenuButton(as: "a", href: "#") { "Settings" }
+                    RubyUI.SidebarMenuButton(as: :a, href: "#") { "Settings" }
                     RubyUI.SidebarMenuAction { "Settings" }
                   end
                   RubyUI.SidebarMenuItem do
