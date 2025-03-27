@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class RubyUI::SidebarTest < ComponentTest
   def test_render_with_all_items
@@ -10,31 +10,31 @@ class RubyUI::SidebarTest < ComponentTest
           RubyUI.SidebarHeader do
             RubyUI.SidebarGroup do
               RubyUI.SidebarGroupContent do
-                RubyUI.SidebarInput(id: 'search', placeholder: 'Search the docs')
+                RubyUI.SidebarInput(id: "search", placeholder: "Search the docs")
               end
             end
           end
           RubyUI.SidebarContent do
             RubyUI.SidebarGroup do
-              RubyUI.SidebarGroupLabel { 'Application' }
-              RubyUI.SidebarGroupAction { 'Group Action' }
+              RubyUI.SidebarGroupLabel { "Application" }
+              RubyUI.SidebarGroupAction { "Group Action" }
               RubyUI.SidebarGroupContent do
                 RubyUI.SidebarMenu do
                   RubyUI.SidebarMenuItem do
                     RubyUI.SidebarMenuSub do
                       RubyUI.SidebarMenuSubItem do
-                        RubyUI.SidebarMenuSubButton(as: 'a', href: '#') { 'Sub Item 1' }
+                        RubyUI.SidebarMenuSubButton(as: "a", href: "#") { "Sub Item 1" }
                       end
                     end
                   end
                   RubyUI.SidebarMenuItem do
-                    RubyUI.SidebarMenuButton(as: 'a', href: '#') { 'Settings' }
-                    RubyUI.SidebarMenuAction { 'Settings' }
+                    RubyUI.SidebarMenuButton(as: "a", href: "#") { "Settings" }
+                    RubyUI.SidebarMenuAction { "Settings" }
                   end
                   RubyUI.SidebarMenuItem do
-                    RubyUI.SidebarMenuButton { 'Dashboard' }
-                    RubyUI.SidebarMenuAction { 'Dashboard' }
-                    RubyUI.SidebarMenuBadge { 'Dashboard Badge' }
+                    RubyUI.SidebarMenuButton { "Dashboard" }
+                    RubyUI.SidebarMenuAction { "Dashboard" }
+                    RubyUI.SidebarMenuBadge { "Dashboard Badge" }
                   end
                   RubyUI.SidebarMenuItem do
                     RubyUI.SidebarMenuSkeleton()
@@ -44,7 +44,7 @@ class RubyUI::SidebarTest < ComponentTest
             end
             RubyUI.SidebarSeparator()
           end
-          RubyUI.SidebarFooter { 'Footer' }
+          RubyUI.SidebarFooter { "Footer" }
           RubyUI.SidebarRail()
         end
         RubyUI.SidebarInset do
