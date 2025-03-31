@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_ui (1.0.0.rc1)
+    ruby_ui (1.0.0)
 
 GEM
   remote: https://rubygems.org/
