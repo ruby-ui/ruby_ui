@@ -30,7 +30,7 @@ class Views::Docs::Accordion < Views::Base
             Accordion do
               AccordionItem do
                 AccordionTrigger do
-                  p(class: "font-medium") { "Can I use it with Rils?" }
+                  p(class: "font-medium") { "Can I use it with Rails?" }
                   AccordionIcon()
                 end
 
