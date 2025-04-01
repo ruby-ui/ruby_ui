@@ -9,7 +9,7 @@ module Components
             img(src: image_url("logo.svg"), class: "h-4 block dark:hidden")
             img(src: image_url("logo_dark.svg"), class: "h-4 hidden dark:block")
             span(class: "sr-only") { "RubyUI" }
-            Badge(variant: :amber, size: :sm, class: "ml-2 whitespace-nowrap") { "Pre Release" }
+            Badge(variant: :amber, size: :sm, class: "ml-2 whitespace-nowrap") { "1.0" }
           }
         end
       end

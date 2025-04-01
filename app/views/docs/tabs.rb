@@ -182,7 +182,7 @@ class Views::Docs::Tabs < Views::Base
   def repositories
     [
       Repo.new(github_url: "https://github.com/phlex-ruby/phlex", name: "phlex", stars: 961, version: "v1.8.1"),
-      Repo.new(github_url: "https://github.com/joeldrapper/green_dots", name: "green_dots", stars: 40, version: "Pre Release"),
+      Repo.new(github_url: "https://github.com/joeldrapper/green_dots", name: "green_dots", stars: 40, version: "1.0"),
       Repo.new(github_url: "https://github.com/joeldrapper/literal", name: "literal", stars: 96, version: "v0.1.0")
     ]
   end
