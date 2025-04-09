@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
     "https://rubygems.org/gems/ruby_ui"
   s.license = "MIT"
 
-  s.required_ruby_version = ">= 3.3.1"
+  s.required_ruby_version = ">= 3.2"
 
   s.add_development_dependency "phlex", ">= 2.1.2"
   s.add_development_dependency "rouge", "~> 4.2.0"
