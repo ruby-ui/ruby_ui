@@ -49,7 +49,7 @@ class Views::Docs::GettingStarted::DarkMode < Views::Base
           render Docs::VisualCodeExample.new(title: "Toggle component", context: self) do
             <<~RUBY
               ThemeToggle do |toggle|
-                toggle.light_mode do
+                SetLightMode do
                   Button(variant: :outline, icon: true) do
                     svg(
                       xmlns: "http://www.w3.org/2000/svg",
@@ -65,7 +65,7 @@ class Views::Docs::GettingStarted::DarkMode < Views::Base
                   end
                 end
 
-                toggle.dark_mode do
+                SetDarkMode do
                   Button(variant: :outline, icon: true) do
                     svg(
                       xmlns: "http://www.w3.org/2000/svg",

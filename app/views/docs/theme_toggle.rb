@@ -12,7 +12,7 @@ class Views::Docs::ThemeToggle < Views::Base
       render Docs::VisualCodeExample.new(title: "With icon", context: self) do
         <<~RUBY
           ThemeToggle do |toggle|
-            toggle.light_mode do
+            SetLightMode do
               Button(variant: :ghost, icon: true) do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
@@ -28,7 +28,7 @@ class Views::Docs::ThemeToggle < Views::Base
               end
             end
 
-            toggle.dark_mode do
+            SetDarkMode do
               Button(variant: :ghost, icon: true) do
                 svg(
                   xmlns: "http://www.w3.org/2000/svg",
@@ -52,11 +52,11 @@ class Views::Docs::ThemeToggle < Views::Base
       render Docs::VisualCodeExample.new(title: "With text", context: self) do
         <<~RUBY
           ThemeToggle do |toggle|
-            toggle.light_mode do
+            SetLightMode do
               Button(variant: :primary) { "Light" }
             end
 
-            toggle.dark_mode do
+            SetDarkMode do
               Button(variant: :primary) { "Dark" }
             end
           end

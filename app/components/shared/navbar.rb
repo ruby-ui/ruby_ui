@@ -26,8 +26,8 @@ module Components
       end
 
       def dark_mode_toggle
-        RubyUI.ThemeToggle do |toggle|
-          toggle.light_mode do
+        ThemeToggle do
+          SetLightMode do
             Button(variant: :ghost, icon: true) do
               svg(
                 xmlns: "http://www.w3.org/2000/svg",
@@ -42,8 +42,7 @@ module Components
               end
             end
           end
-
-          toggle.dark_mode do
+          SetDarkMode do
             Button(variant: :ghost, icon: true) do
               svg(
                 xmlns: "http://www.w3.org/2000/svg",
