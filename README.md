@@ -26,6 +26,9 @@ Use this as a reference to build your own component libraries.
 
 ## Installation 🚀
 
+> [!NOTE]
+> RubyUI 1.0 requires Ruby 3.2 or later
+
 ### 1. Install the gem
 
 ```bash
