@@ -15,7 +15,7 @@
     "esbuild": "0.25.1",
     "fuse.js": "^7.1.0",
     "maska": "^3.1.1",
-    "motion": "^12.6.0",
+    "motion": "^12.7.2",
     "mustache": "^4.2.0",
     "tailwindcss": "4.0.14",
     "tippy.js": "^6.3.7",
