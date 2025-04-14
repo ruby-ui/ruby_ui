@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.14
+        uses: akhileshns/heroku-deploy@v3.14.15
         with:
           branch: PhlexUI-web
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
