@@ -122,7 +122,7 @@ GEM
     debug (1.10.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
-    dockerfile-rails (1.7.6)
+    dockerfile-rails (1.7.9)
       rails (>= 3.0.0)
     drb (2.2.1)
     erubi (1.13.1)
