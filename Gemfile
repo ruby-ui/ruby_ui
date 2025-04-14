@@ -12,7 +12,7 @@ gem "sqlite3", ">= 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "6.4.2"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails", "1.3.0"
+gem "jsbundling-rails", "1.3.1"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails", "2.0.6"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
