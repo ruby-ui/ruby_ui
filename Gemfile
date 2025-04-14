@@ -20,7 +20,7 @@ gem "stimulus-rails", "1.3.4"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails", "1.4.0"
 
-gem "lucide-rails", "0.4.0"
+gem "lucide-rails", "0.5.1"
 
 # gem "jbuilder"
 
