@@ -2,82 +2,47 @@ name: CI
 
 on:
   pull_request:
-    branches:
-      - "*"
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
   push:
-    branches:
-      - main
-      - v1
-
+    branches: "main"
 jobs:
-  scan:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-  lint:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bundle exec standardrb
-
   test:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          bundler-cache: true
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} 
+        
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.3
         with:
-          run_install: false
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: ".node-version"
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y -qq libvips
-          pnpm install
-
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: |
-          bin/rails test:prepare
-          bin/rails db:test:prepare
-          bin/rails test
+          imageName: ghcr.io/ruby-ui/web-devcontainer
+          cacheFrom: ghcr.io/ruby-ui/web-devcontainer
+          push: always
+          runCmd: |
+            bundle exec standardrb
+            bin/rails test:prepare
+            bin/rails db:test:prepare
+            bin/rails test
 
   heroku-deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/PhlexUI-web' }}
-    needs: [lint, test]
+    needs: [test]
     runs-on: ubuntu-latest
 
     steps:
@@ -92,7 +57,7 @@ jobs:
 
   fly-deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    needs: [lint, test]
+    needs: [test]
     name: Deploy app
     runs-on: ubuntu-latest
     concurrency: deploy-group
