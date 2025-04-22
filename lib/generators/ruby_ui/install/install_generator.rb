@@ -62,12 +62,6 @@ module RubyUI
       def install_tailwind_plugins
         say "Installing tw-animate-css plugin"
         install_js_package("tw-animate-css")
-
-        say "Installing @tailwindcss/forms plugin"
-        install_js_package("@tailwindcss/forms")
-
-        say "Installing @tailwindcss/typography plugin"
-        install_js_package("@tailwindcss/typography")
       end
 
       def add_ruby_ui_base
