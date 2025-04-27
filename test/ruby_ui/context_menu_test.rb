@@ -25,5 +25,9 @@ class RubyUI::ContextMenuTest < ComponentTest
     end
 
     assert_match(/Right click here/, output)
+    assert_match(/Back/, output)
+    assert_match(/Show Bookmarks Bar/, output)
+    assert_match(/Developer Tools/, output)
+    refute_match(/popper/i, output)
   end
 end

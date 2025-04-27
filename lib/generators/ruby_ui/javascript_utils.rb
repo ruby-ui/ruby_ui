@@ -49,7 +49,6 @@ module RubyUI
 
         inject_into_file Rails.root.join("config/importmap.rb"), <<~RUBY
           pin "tippy.js", to: "https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/+esm"
-          pin "@popperjs/core", to: "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/+esm"\n
         RUBY
       end
     end
