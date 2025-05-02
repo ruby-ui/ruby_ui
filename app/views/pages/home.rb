@@ -23,7 +23,14 @@ class Views::Pages::Home < Views::Base
         end
       end
     end
+
+
+    
     div(class: "overflow-hidden") do
+      div(class: "container mx-auto max-w-5xl px-4 flex justify-center my-8") do
+        iframe(width: "100%", height: "720", src: "https://www.youtube.com/embed/OQZam7rug00?si=JmZNzS5u194Q0AWQ", title: "YouTube video player", frameborder: "0", allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share", referrerpolicy: "strict-origin-when-cross-origin", allowfullscreen: true)
+      end
+      
       div(class: "relative z-10 container mx-auto max-w-5xl pt-16 lg:pt-16 py-24 lg:py-32 px-4") do
         div(class: "grid grid-cols-6 gap-4") do
           render HomeView::Card.new(class: "col-span-6 sm:col-span-3 md:col-span-4", title: "Built for Speed", subtitle: "Dive into a world where your Rails UI development happens at light speed. Phlex is not just fast - it's blazing fast.", color: :secondary) do |card|
@@ -46,14 +53,12 @@ class Views::Pages::Home < Views::Base
           render HomeView::Card.new(class: "col-span-6 sm:col-span-3 md:col-span-2", color: :sky) do |card|
             card.content do
               div(class: "flex flex-col items-center justify-center text-center space-y-4 h-full") do
-                p(class: "text-6xl font-semibold") { "12x" }
-                p { "Faster than traditional Rails ERB templates" }
+                p(class: "text-6xl font-semibold") { "7.7x" }
+                p do 
+                  a(href: "https://github.com/palkan/view-layer-benchmarks", class: "underline") { "Faster" }
+                  span {" than traditional Rails ERB"}  
+                end
               end
-            end
-          end
-          render HomeView::Card.new(class: "col-span-6", color: :card, title: "Speed Tests", subtitle: "Huge thanks to @KonnorRogers for running these tests") do |card|
-            card.content do
-              render_speed_tests
             end
           end
           render HomeView::Card.new(class: "col-span-6 sm:col-span-3", title: "UI that... Wow!", subtitle: "Design stunning, streamlined, and customizable UIs that not only look great but sell your app without you lifting a finger.", color: :violet) do |card|
@@ -210,25 +215,5 @@ class Views::Pages::Home < Views::Base
         time: 12.08
       }
     ].sort_by { |test| test[:time] }
-  end
-
-  def render_speed_tests
-    div(class: "space-y-4 overflow-hidden") do
-      speed_tests.each do |test|
-        div(class: "sm:flex items-center space-y-2 sm:space-x-2") do
-          h3(class: "font-semibold leading-none tracking-tight w-40") { test[:framework] }
-          div(class: "p-1 rounded-md flex items-center gap-x-2 border flex-grow") do
-            # bar with sky gradient
-            div(class: "flex-grow") do
-              div(class: "bg-gradient-to-r from-sky-400 to-sky-200 rounded h-8", style: "width: #{test[:time] * 100 / speed_tests.last[:time]}%")
-            end
-            # text with timex
-            div(class: "flex-shrink-0 w-20 pr-2") do
-              p(class: "text-sm text-right") { "#{test[:time]}x" } if test[:time] > 1
-            end
-          end
-        end
-      end
-    end
   end
 end
