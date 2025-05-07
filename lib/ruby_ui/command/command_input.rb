@@ -38,7 +38,12 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        class: [
+          "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none",
+          "placeholder:text-muted-foreground",
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          "aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none"
+        ],
         placeholder: @placeholder,
         data_action: "input->ruby-ui--command#filter keydown.down->ruby-ui--command#handleKeydown keydown.up->ruby-ui--command#handleKeydown keydown.enter->ruby-ui--command#handleKeydown keydown.esc->ruby-ui--command#dismiss",
         data_ruby_ui__command_target: "input",
