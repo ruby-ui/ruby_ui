@@ -36,42 +36,66 @@ module RubyUI
 
     def primary_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors bg-primary text-primary-foreground shadow",
+        "hover:bg-primary/90",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         size_classes
       ]
     end
 
     def link_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline",
+        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors text-primary underline-offset-4",
+        "hover:underline",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         size_classes
       ]
     end
 
     def secondary_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-opacity-80",
+        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors bg-secondary text-secondary-foreground",
+        "hover:bg-opacity-80",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         size_classes
       ]
     end
 
     def destructive_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors bg-destructive text-destructive-foreground shadow-sm",
+        "hover:bg-destructive/90",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         size_classes
       ]
     end
 
     def outline_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors border border-input bg-background shadow-sm",
+        "hover:bg-accent hover:text-accent-foreground",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         size_classes
       ]
     end
 
     def ghost_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground",
+        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors",
+        "hover:bg-accent hover:text-accent-foreground",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         size_classes
       ]
     end
