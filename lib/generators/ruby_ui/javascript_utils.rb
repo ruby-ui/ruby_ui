@@ -8,6 +8,8 @@ module RubyUI
           run "yarn add #{package}"
         elsif using_npm?
           run "npm install #{package}"
+        elsif using_pnpm?
+          run "pnpm install #{package}"
         else
           say "Could not detect the package manager, you need to install '#{package}' manually", :red
         end
@@ -29,6 +31,8 @@ module RubyUI
       end
 
       def using_npm? = File.exist?(Rails.root.join("package-lock.json"))
+
+      def using_pnpm? = File.exist?(Rails.root.join("pnpm-lock.yaml"))
 
       def using_yarn? = File.exist?(Rails.root.join("yarn.lock"))
 
