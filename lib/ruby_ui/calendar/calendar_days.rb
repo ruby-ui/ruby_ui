@@ -2,7 +2,11 @@
 
 module RubyUI
   class CalendarDays < Base
-    BASE_CLASS = "inline-flex items-center justify-center rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 w-8 p-0 font-normal aria-selected:opacity-100"
+    DEFAULT_CLASSES = "inline-flex items-center justify-center rounded-md text-sm ring-offset-background transition-colors h-8 w-8 p-0 font-normal"
+    DISABLED_CLASSES = "disabled:pointer-events-none disabled:opacity-50"
+    FOCUS_VISIBLE_CLASSES = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+    ARIA_SELECTED_CLASSES = "aria-selected:opacity-100"
+    ARIA_DISABLED_CLASSES = "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
 
     def view_template
       render_selected_date_template
@@ -19,11 +23,16 @@ module RubyUI
           data_day: "{{day}}",
           data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
-          class:
-                [
-                  BASE_CLASS,
-                  "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground"
-                ],
+          class: [
+            DEFAULT_CLASSES,
+            DISABLED_CLASSES,
+            FOCUS_VISIBLE_CLASSES,
+            ARIA_SELECTED_CLASSES,
+            ARIA_DISABLED_CLASSES,
+            "bg-primary text-primary-foreground",
+            "hover:bg-primary hover:text-primary-foreground",
+            "focus:bg-primary focus:text-primary-foreground"
+          ],
           role: "gridcell",
           tabindex: "0",
           type: "button",
@@ -38,11 +47,16 @@ module RubyUI
           data_day: "{{day}}",
           data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
-          class:
-                [
-                  BASE_CLASS,
-                  "bg-accent text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                ],
+          class: [
+            DEFAULT_CLASSES,
+            DISABLED_CLASSES,
+            FOCUS_VISIBLE_CLASSES,
+            ARIA_SELECTED_CLASSES,
+            ARIA_DISABLED_CLASSES,
+            "bg-accent text-accent-foreground",
+            "hover:bg-accent hover:text-accent-foreground",
+            "focus:bg-accent focus:text-accent-foreground"
+          ],
           role: "gridcell",
           tabindex: "-1",
           type: "button"
@@ -56,11 +70,16 @@ module RubyUI
           data_day: "{{day}}",
           data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
-          class:
-                [
-                  BASE_CLASS,
-                  "bg-background text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                ],
+          class: [
+            DEFAULT_CLASSES,
+            DISABLED_CLASSES,
+            FOCUS_VISIBLE_CLASSES,
+            ARIA_SELECTED_CLASSES,
+            ARIA_DISABLED_CLASSES,
+            "bg-background text-foreground",
+            "hover:bg-accent hover:text-accent-foreground",
+            "focus:bg-accent focus:text-accent-foreground"
+          ],
           role: "gridcell",
           tabindex: "-1",
           type: "button"
@@ -72,13 +91,18 @@ module RubyUI
       date_template("otherMonthDateTemplate") do
         button(
           data_day: "{{day}}",
-          data_action: " click->ruby-ui--calendar#selectDay",
+          data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
-          class:
-                [
-                  BASE_CLASS,
-                  "bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                ],
+          class: [
+            DEFAULT_CLASSES,
+            DISABLED_CLASSES,
+            FOCUS_VISIBLE_CLASSES,
+            ARIA_SELECTED_CLASSES,
+            ARIA_DISABLED_CLASSES,
+            "bg-background text-muted-foreground",
+            "hover:bg-accent hover:text-accent-foreground",
+            "focus:bg-accent focus:text-accent-foreground"
+          ],
           role: "gridcell",
           tabindex: "-1",
           type: "button"
@@ -89,8 +113,11 @@ module RubyUI
     def date_template(target, &block)
       template(data: {ruby_ui__calendar_target: target}) do
         td(
-          class:
-                "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected])]:rounded-md",
+          class: [
+            "relative p-0 text-center text-sm",
+            "focus-within:relative focus-within:z-20",
+            "[&:has([aria-selected])]:bg-accent [&:has([aria-selected])]:rounded-md"
+          ],
           role: "presentation",
           &block
         )
