@@ -19,7 +19,7 @@ module RubyUI
     def default_attrs
       {
         type: "search",
-        class: "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none border-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        class: "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none border-none focus:ring-0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
         role: "searchbox",
         placeholder: @placeholder,
         data: {
