@@ -52,8 +52,15 @@ module RubyUI
       {
         href: @href,
         role: "menuitem",
-        class:
-              "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 pl-8",
+        class: [
+          "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none pl-8",
+          "hover:bg-accent hover:text-accent-foreground",
+          "focus:bg-accent focus:text-accent-foreground",
+          "disabled:pointer-events-none disabled:opacity-50",
+          "aria-selected:bg-accent aria-selected:text-accent-foreground",
+          "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+        ],
         tabindex: "-1",
         data_orientation: "vertical",
         data_action: "click->ruby-ui--context-menu#close",

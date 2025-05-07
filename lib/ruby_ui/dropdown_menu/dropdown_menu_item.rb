@@ -17,7 +17,15 @@ module RubyUI
       {
         href: @href,
         role: "menuitem",
-        class: "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        class: [
+          "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors",
+          "hover:bg-accent hover:text-accent-foreground",
+          "focus:bg-accent focus:text-accent-foreground",
+          "disabled:pointer-events-none disabled:opacity-50",
+          "aria-selected:bg-accent aria-selected:text-accent-foreground",
+          "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+        ],
         data_action: "click->ruby-ui--dropdown-menu#close",
         data_ruby_ui__dropdown_menu_target: "menuItem",
         tabindex: "-1",
