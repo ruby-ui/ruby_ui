@@ -79,6 +79,6 @@ gem "ruby_ui", github: "ruby-ui/ruby_ui", branch: "main", require: false
 
 gem "pry", "0.15.2"
 
-gem "tailwind_merge", "~> 0.13.2"
+gem "tailwind_merge", "~> 1.2.0"
 
 gem "rouge", "~> 4.5"
