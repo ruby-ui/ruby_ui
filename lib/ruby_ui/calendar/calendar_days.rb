@@ -2,11 +2,13 @@
 
 module RubyUI
   class CalendarDays < Base
-    DEFAULT_CLASSES = "inline-flex items-center justify-center rounded-md text-sm ring-offset-background transition-colors h-8 w-8 p-0 font-normal"
-    DISABLED_CLASSES = "disabled:pointer-events-none disabled:opacity-50"
-    FOCUS_VISIBLE_CLASSES = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-    ARIA_SELECTED_CLASSES = "aria-selected:opacity-100"
-    ARIA_DISABLED_CLASSES = "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+    BASE_CLASSES = [
+      "aria-selected:opacity-100",
+      "disabled:pointer-events-none disabled:opacity-50",
+      "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "inline-flex items-center justify-center rounded-md text-sm ring-offset-background transition-colors h-8 w-8 p-0 font-normal"
+    ].freeze
 
     def view_template
       render_selected_date_template
@@ -24,11 +26,7 @@ module RubyUI
           data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
           class: [
-            DEFAULT_CLASSES,
-            DISABLED_CLASSES,
-            FOCUS_VISIBLE_CLASSES,
-            ARIA_SELECTED_CLASSES,
-            ARIA_DISABLED_CLASSES,
+            BASE_CLASSES,
             "bg-primary text-primary-foreground",
             "hover:bg-primary hover:text-primary-foreground",
             "focus:bg-primary focus:text-primary-foreground"
@@ -48,11 +46,7 @@ module RubyUI
           data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
           class: [
-            DEFAULT_CLASSES,
-            DISABLED_CLASSES,
-            FOCUS_VISIBLE_CLASSES,
-            ARIA_SELECTED_CLASSES,
-            ARIA_DISABLED_CLASSES,
+            BASE_CLASSES,
             "bg-accent text-accent-foreground",
             "hover:bg-accent hover:text-accent-foreground",
             "focus:bg-accent focus:text-accent-foreground"
@@ -71,11 +65,7 @@ module RubyUI
           data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
           class: [
-            DEFAULT_CLASSES,
-            DISABLED_CLASSES,
-            FOCUS_VISIBLE_CLASSES,
-            ARIA_SELECTED_CLASSES,
-            ARIA_DISABLED_CLASSES,
+            BASE_CLASSES,
             "bg-background text-foreground",
             "hover:bg-accent hover:text-accent-foreground",
             "focus:bg-accent focus:text-accent-foreground"
@@ -94,11 +84,7 @@ module RubyUI
           data_action: "click->ruby-ui--calendar#selectDay",
           name: "day",
           class: [
-            DEFAULT_CLASSES,
-            DISABLED_CLASSES,
-            FOCUS_VISIBLE_CLASSES,
-            ARIA_SELECTED_CLASSES,
-            ARIA_DISABLED_CLASSES,
+            BASE_CLASSES,
             "bg-background text-muted-foreground",
             "hover:bg-accent hover:text-accent-foreground",
             "focus:bg-accent focus:text-accent-foreground"
