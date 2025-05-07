@@ -3,11 +3,11 @@
 module RubyUI
   class CalendarDays < Base
     BASE_CLASSES = [
+      "inline-flex items-center justify-center rounded-md text-sm ring-offset-background transition-colors h-8 w-8 p-0 font-normal",
       "aria-selected:opacity-100",
       "disabled:pointer-events-none disabled:opacity-50",
       "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      "inline-flex items-center justify-center rounded-md text-sm ring-offset-background transition-colors h-8 w-8 p-0 font-normal"
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     ].freeze
 
     def view_template
