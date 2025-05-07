@@ -2,6 +2,11 @@
 
 module RubyUI
   class Button < Base
+    DISABLED_CLASSES = "disabled:pointer-events-none disabled:opacity-50"
+    FOCUS_VISIBLE_CLASSES = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    ARIA_DISABLED_CLASSES = "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+    DEFAULT_CLASSES = "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors"
+
     def initialize(type: :button, variant: :primary, size: :md, icon: false, **attrs)
       @type = type
       @variant = variant.to_sym
@@ -36,67 +41,72 @@ module RubyUI
 
     def primary_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors bg-primary text-primary-foreground shadow",
-        "hover:bg-primary/90",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-        "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-        size_classes
+        DEFAULT_CLASSES,
+        FOCUS_VISIBLE_CLASSES,
+        DISABLED_CLASSES,
+        ARIA_DISABLED_CLASSES,
+        size_classes,
+        "bg-primary text-primary-foreground shadow",
+        "hover:bg-primary/90"
       ]
     end
 
     def link_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors text-primary underline-offset-4",
-        "hover:underline",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-        "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-        size_classes
+        DEFAULT_CLASSES,
+        FOCUS_VISIBLE_CLASSES,
+        DISABLED_CLASSES,
+        ARIA_DISABLED_CLASSES,
+        size_classes,
+        "text-primary underline-offset-4",
+        "hover:underline"
       ]
     end
 
     def secondary_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors bg-secondary text-secondary-foreground",
-        "hover:bg-opacity-80",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-        "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-        size_classes
+        DEFAULT_CLASSES,
+        FOCUS_VISIBLE_CLASSES,
+        DISABLED_CLASSES,
+        ARIA_DISABLED_CLASSES,
+        size_classes,
+        "bg-secondary text-secondary-foreground",
+        "hover:bg-opacity-80"
       ]
     end
 
     def destructive_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors bg-destructive text-destructive-foreground shadow-sm",
-        "hover:bg-destructive/90",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-        "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-        size_classes
+        DEFAULT_CLASSES,
+        FOCUS_VISIBLE_CLASSES,
+        DISABLED_CLASSES,
+        ARIA_DISABLED_CLASSES,
+        size_classes,
+        "bg-destructive text-destructive-foreground shadow-sm",
+        "hover:bg-destructive/90"
       ]
     end
 
     def outline_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors border border-input bg-background shadow-sm",
-        "hover:bg-accent hover:text-accent-foreground",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-        "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-        size_classes
+        DEFAULT_CLASSES,
+        FOCUS_VISIBLE_CLASSES,
+        DISABLED_CLASSES,
+        ARIA_DISABLED_CLASSES,
+        size_classes,
+        "border border-input bg-background shadow-sm",
+        "hover:bg-accent hover:text-accent-foreground"
       ]
     end
 
     def ghost_classes
       [
-        "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors",
-        "hover:bg-accent hover:text-accent-foreground",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-        "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-        size_classes
+        DEFAULT_CLASSES,
+        FOCUS_VISIBLE_CLASSES,
+        DISABLED_CLASSES,
+        ARIA_DISABLED_CLASSES,
+        size_classes,
+        "hover:bg-accent hover:text-accent-foreground"
       ]
     end
 
@@ -112,10 +122,7 @@ module RubyUI
     end
 
     def default_attrs
-      {
-        type: @type,
-        class: default_classes
-      }
+      {type: @type, class: default_classes}
     end
   end
 end
