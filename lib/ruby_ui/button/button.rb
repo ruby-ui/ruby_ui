@@ -2,10 +2,12 @@
 
 module RubyUI
   class Button < Base
-    DISABLED_CLASSES = "disabled:pointer-events-none disabled:opacity-50"
-    FOCUS_VISIBLE_CLASSES = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-    ARIA_DISABLED_CLASSES = "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
-    DEFAULT_CLASSES = "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors"
+    BASE_CLASSES = [
+      "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors",
+      "disabled:pointer-events-none disabled:opacity-50",
+      "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+      "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+    ].freeze
 
     def initialize(type: :button, variant: :primary, size: :md, icon: false, **attrs)
       @type = type
@@ -41,10 +43,7 @@ module RubyUI
 
     def primary_classes
       [
-        DEFAULT_CLASSES,
-        FOCUS_VISIBLE_CLASSES,
-        DISABLED_CLASSES,
-        ARIA_DISABLED_CLASSES,
+        BASE_CLASSES,
         size_classes,
         "bg-primary text-primary-foreground shadow",
         "hover:bg-primary/90"
@@ -53,10 +52,7 @@ module RubyUI
 
     def link_classes
       [
-        DEFAULT_CLASSES,
-        FOCUS_VISIBLE_CLASSES,
-        DISABLED_CLASSES,
-        ARIA_DISABLED_CLASSES,
+        BASE_CLASSES,
         size_classes,
         "text-primary underline-offset-4",
         "hover:underline"
@@ -65,10 +61,7 @@ module RubyUI
 
     def secondary_classes
       [
-        DEFAULT_CLASSES,
-        FOCUS_VISIBLE_CLASSES,
-        DISABLED_CLASSES,
-        ARIA_DISABLED_CLASSES,
+        BASE_CLASSES,
         size_classes,
         "bg-secondary text-secondary-foreground",
         "hover:bg-opacity-80"
@@ -77,10 +70,7 @@ module RubyUI
 
     def destructive_classes
       [
-        DEFAULT_CLASSES,
-        FOCUS_VISIBLE_CLASSES,
-        DISABLED_CLASSES,
-        ARIA_DISABLED_CLASSES,
+        BASE_CLASSES,
         size_classes,
         "bg-destructive text-destructive-foreground shadow-sm",
         "hover:bg-destructive/90"
@@ -89,10 +79,7 @@ module RubyUI
 
     def outline_classes
       [
-        DEFAULT_CLASSES,
-        FOCUS_VISIBLE_CLASSES,
-        DISABLED_CLASSES,
-        ARIA_DISABLED_CLASSES,
+        BASE_CLASSES,
         size_classes,
         "border border-input bg-background shadow-sm",
         "hover:bg-accent hover:text-accent-foreground"
@@ -101,10 +88,7 @@ module RubyUI
 
     def ghost_classes
       [
-        DEFAULT_CLASSES,
-        FOCUS_VISIBLE_CLASSES,
-        DISABLED_CLASSES,
-        ARIA_DISABLED_CLASSES,
+        BASE_CLASSES,
         size_classes,
         "hover:bg-accent hover:text-accent-foreground"
       ]
