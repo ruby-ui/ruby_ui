@@ -51,6 +51,18 @@ class Views::Docs::Button < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
+        <<~RUBY
+          Button(disabled: true) { "Disabled" }
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+        <<~RUBY
+          Button(aria: {disabled: "true"}) { "Aria Disabled" }
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Icon", context: self) do
         <<~RUBY
           Button(variant: :outline, icon: true) do
