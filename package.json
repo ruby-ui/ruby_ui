@@ -2,7 +2,7 @@
   "name": "app",
   "private": true,
   "dependencies": {
-    "@floating-ui/dom": "^1.6.13",
+    "@floating-ui/dom": "^1.7.0",
     "@hotwired/stimulus": "3.2.2",
     "@hotwired/turbo-rails": "8.0.13",
     "@tailwindcss/forms": "^0.5.10",
