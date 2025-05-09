@@ -72,8 +72,9 @@ module RubyUI
       [
         BASE_CLASSES,
         size_classes,
-        "bg-destructive text-destructive-foreground shadow-sm",
-        "hover:bg-destructive/90"
+        "bg-destructive text-white shadow-sm",
+        "[a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20",
+        "dark:focus-visible:ring-destructive/40 dark:bg-destructive/60"
       ]
     end
 
