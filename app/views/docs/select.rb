@@ -11,20 +11,88 @@ class Views::Docs::Select < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Select (Deconstructed)", context: self) do
         <<~RUBY
-          div(class: 'w-56 flex items-center justify-center') do
-            Select do
-              SelectInput(value: "apple", id: "select-a-fruit")
-              SelectTrigger do
-                SelectValue(placeholder: 'Select a fruit', id: "select-a-fruit") { "Apple" }
+          Select(class: "w-56") do
+            SelectInput(value: "apple", id: "select-a-fruit")
+
+            SelectTrigger do
+              SelectValue(placeholder: "Select a fruit", id: "select-a-fruit") { "Apple" }
+            end
+
+            SelectContent(outlet_id: "select-a-fruit") do
+              SelectGroup do
+                SelectLabel { "Fruits" }
+                SelectItem(value: "apple") { "Apple" }
+                SelectItem(value: "orange") { "Orange" }
+                SelectItem(value: "banana") { "Banana" }
+                SelectItem(value: "watermelon") { "Watermelon" }
               end
-              SelectContent(outlet_id: "select-a-fruit") do
-                SelectGroup do
-                  SelectLabel { "Fruits" }
-                  SelectItem(value: "apple") { "Apple" }
-                  SelectItem(value: "orange") { "Orange" }
-                  SelectItem(value: "banana") { "Banana" }
-                  SelectItem(value: "watermelon") { "Watermelon" }
-                end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
+        <<~RUBY
+          Select(class: "w-56") do
+            SelectInput(value: "apple", id: "select-a-fruit")
+
+            SelectTrigger(disabled: true) do
+              SelectValue(placeholder: "Select a fruit", id: "select-a-fruit") { "Apple" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Data Disabled", context: self) do
+        <<~RUBY
+          Select(class: "w-56") do
+            SelectInput(value: "apple", id: "select-a-fruit")
+
+            SelectTrigger do
+              SelectValue(placeholder: "Select a fruit", id: "select-a-fruit") { "Apple" }
+            end
+
+            SelectContent(outlet_id: "select-a-fruit") do
+              SelectGroup do
+                SelectLabel { "Fruits" }
+                SelectItem(data: {disabled: true}, value: "apple") { "Apple" }
+                SelectItem(value: "orange") { "Orange" }
+                SelectItem(value: "banana") { "Banana" }
+                SelectItem(data: {disabled: true}, value: "watermelon") { "Watermelon" }
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Aria Disabled Trigger", context: self) do
+        <<~RUBY
+          Select(class: "w-56") do
+            SelectInput(value: "apple", id: "select-a-fruit")
+
+            SelectTrigger(aria: {disabled: "true"}) do
+              SelectValue(placeholder: "Select a fruit", id: "select-a-fruit") { "Apple" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Aria Disabled Item", context: self) do
+        <<~RUBY
+          Select(class: "w-56") do
+            SelectInput(value: "apple", id: "select-a-fruit")
+
+            SelectTrigger do
+              SelectValue(placeholder: "Select a fruit", id: "select-a-fruit") { "Apple" }
+            end
+
+            SelectContent(outlet_id: "select-a-fruit") do
+              SelectGroup do
+                SelectLabel { "Fruits" }
+                SelectItem(aria: {disabled: "true"}, value: "apple") { "Apple" }
+                SelectItem(value: "orange") { "Orange" }
+                SelectItem(value: "banana") { "Banana" }
+                SelectItem(aria: {disabled: "true"}, value: "watermelon") { "Watermelon" }
               end
             end
           end
