@@ -22,7 +22,7 @@ class Views::Docs::Combobox < Views::Base
                 ComboboxList do
                   ComboboxEmptyState { "No result" }
 
-                  ComboboxListGroup label: "Fruits" do
+                  ComboboxListGroup(label: "Fruits") do
                     ComboboxItem do
                       ComboboxRadio(name: "food", value: "apple")
                       span { "Apple" }
@@ -34,7 +34,7 @@ class Views::Docs::Combobox < Views::Base
                     end
                   end
 
-                  ComboboxListGroup label: "Vegetable" do
+                  ComboboxListGroup(label: "Vegetable") do
                     ComboboxItem do
                       ComboboxRadio(name: "food", value: "brocoli")
                       span { "Broccoli" }
@@ -46,7 +46,7 @@ class Views::Docs::Combobox < Views::Base
                     end
                   end
 
-                  ComboboxListGroup label: "Others" do
+                  ComboboxListGroup(label: "Others") do
                     ComboboxItem do
                       ComboboxRadio(name: "food", value: "chocolate")
                       span { "Chocolate" }
@@ -118,6 +118,26 @@ class Views::Docs::Combobox < Views::Base
                   end
                 end
               end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
+        <<~RUBY
+          div(class: "w-96") do
+            Combobox do
+              ComboboxTrigger(disabled: true, placeholder: "Pick value")
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+        <<~RUBY
+          div(class: "w-96") do
+            Combobox do
+              ComboboxTrigger(aria: {disabled: "true"}, placeholder: "Pick value")
             end
           end
         RUBY
