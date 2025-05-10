@@ -1,10 +1,9 @@
 # See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
 
-name: Fly Deploy
+name: Deploy
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+  
 jobs:
   deploy:
     name: Deploy app

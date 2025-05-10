@@ -11,7 +11,51 @@ on:
     branches: "main"
 jobs:
   test:
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+          uses: ruby/setup-ruby@v1
+          with:
+            bundler-cache: true
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: |
+          # sudo apt-get update
+          # sudo apt-get install -y -qq libvips
+          pnpm install
+
+      - name: Lint code for consistent style
+        run: bundle exec standardrb
+        
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/ruby-ui/web-devcontainer
+          cacheFrom: ghcr.io/ruby-ui/web-devcontainer
+          push: always
+          runCmd: |
+            bundle exec standardrb
+            bin/rails test:prepare
+            bin/rails db:test:prepare
+            bin/rails test
+
+  docker-build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,36 +78,17 @@ jobs:
           imageName: ghcr.io/ruby-ui/web-devcontainer
           cacheFrom: ghcr.io/ruby-ui/web-devcontainer
           push: always
-          runCmd: |
-            bundle exec standardrb
-            bin/rails test:prepare
-            bin/rails db:test:prepare
-            bin/rails test
+        
 
-  heroku-deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/PhlexUI-web' }}
-    needs: [test]
+  next-deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: [test, docker-build]
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.14.15
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          branch: PhlexUI-web
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "phlex-ui-web"
-          heroku_email: "seth@statecert.com"
-
-  fly-deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    needs: [test]
-    name: Deploy app
-    runs-on: ubuntu-latest
-    concurrency: deploy-group
-    steps:
-      - uses: actions/checkout@v4
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          fetch-depth: 0
+      - name: Deploy to Heroku Prod
+        run: git push https://heroku:${{ secrets.HEROKU_RUBYUI_API_KEY }}@git.heroku.com/rubyui-next.git HEAD:main
