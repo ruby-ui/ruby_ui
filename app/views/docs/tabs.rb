@@ -38,6 +38,28 @@ class Views::Docs::Tabs < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
+        <<~RUBY
+          Tabs(default_value: "account", class: 'w-96') do
+            TabsList do
+              TabsTrigger(disabled: true, value: "account") { "Account" }
+              TabsTrigger(disabled: true, value: "password") { "Password" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+        <<~RUBY
+          Tabs(default_value: "account", class: 'w-96') do
+            TabsList do
+              TabsTrigger(aria: {disabled: "true"}, value: "account") { "Account" }
+              TabsTrigger(aria: {disabled: "true"}, value: "password") { "Password" }
+            end
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Full width", context: self) do
         <<~RUBY
           Tabs(default_value: "overview", class: 'w-96') do
