@@ -18,9 +18,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Ruby
-          uses: ruby/setup-ruby@v1
-          with:
-            bundler-cache: true
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -34,25 +34,16 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: |
-          # sudo apt-get update
-          # sudo apt-get install -y -qq libvips
-          pnpm install
+        run: pnpm install
 
       - name: Lint code for consistent style
         run: bundle exec standardrb
         
-      - name: Build and run dev container task
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: ghcr.io/ruby-ui/web-devcontainer
-          cacheFrom: ghcr.io/ruby-ui/web-devcontainer
-          push: always
-          runCmd: |
-            bundle exec standardrb
-            bin/rails test:prepare
-            bin/rails db:test:prepare
-            bin/rails test
+      - name: Run tests
+        run: |
+          bin/rails test:prepare
+          bin/rails db:test:prepare
+          bin/rails test
 
   docker-build:
     if: github.ref == 'refs/heads/main'
