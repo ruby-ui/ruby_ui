@@ -55,6 +55,8 @@ You can generate your components using `ruby_ui:component` generator.
 bin/rails g ruby_ui:component Accordion
 ```
 
+You also can generate all components using `ruby_ui:component:all` generator
+
 ## Documentation 📖
 
 Visit https://rubyui.com/docs/introduction to view the full documentation, including:
