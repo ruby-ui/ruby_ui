@@ -15,6 +15,12 @@ class Views::Docs::Link < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+        <<~RUBY
+          Link(aria: {disabled: "true"}, href: "#") { "Link" }
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Primary", description: "This is the primary variant of a Link", context: self) do
         <<~RUBY
           Link(href: "#", variant: :primary) { "Primary" }
