@@ -27,6 +27,24 @@ class Views::Docs::RadioButton < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
+        <<~RUBY
+          div(class: "flex flex-row items-center gap-2") do
+            RadioButton(class: "peer",id: "disabled", disabled: true)
+            FormFieldLabel(for: "disabled") { "Disabled" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+        <<~RUBY
+          div(class: "flex flex-row items-center gap-2") do
+            RadioButton(class: "peer", id: "aria-disabled", aria: {disabled: "true"})
+            FormFieldLabel(for: "aria-disabled") { "Aria Disabled" }
+          end
+        RUBY
+      end
+
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
