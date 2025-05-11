@@ -2,7 +2,6 @@ module RubyUI
   module Generators
     module Component
       class AllGenerator < Rails::Generators::Base
-
         namespace "ruby_ui:component:all"
 
         source_root File.expand_path("../../../ruby_ui", __dir__)
