@@ -1,7 +1,8 @@
 name: Verify components
 
-push:
-  branches: "main"
+on:
+  push:
+    branches: "main"
 
 jobs:
   build:
@@ -11,11 +12,11 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build
-        run: rails g ruby_ui:component:all
+        run: rails g ruby_ui:component:all --force true
 
       - uses: CatChen/check-git-status-action@v1
         with:
           fail-if-not-clean: true
           push-if-not-clean: false
           request-changes-if-not-clean: false
-          targets: 'app' #optional
+          targets: 'app'
