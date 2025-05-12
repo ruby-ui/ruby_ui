@@ -8,6 +8,7 @@ module RubyUI
 
       source_root File.expand_path("../../ruby_ui", __dir__)
       argument :component_name, type: :string, required: true
+      class_option :force, type: :boolean, default: false
 
       def generate_component
         if component_not_found?
@@ -23,7 +24,7 @@ module RubyUI
 
         components_file_paths.each do |file_path|
           component_file_name = file_path.split("/").last
-          copy_file file_path, Rails.root.join("app/components/ruby_ui", component_folder_name, component_file_name)
+          copy_file file_path, Rails.root.join("app/components/ruby_ui", component_folder_name, component_file_name), force: options["force"]
         end
       end
 
@@ -34,7 +35,7 @@ module RubyUI
 
         js_controller_file_paths.each do |file_path|
           controller_file_name = file_path.split("/").last
-          copy_file file_path, Rails.root.join("app/javascript/controllers/ruby_ui", controller_file_name)
+          copy_file file_path, Rails.root.join("app/javascript/controllers/ruby_ui", controller_file_name), force: options["force"]
         end
 
         # Importmap doesn't have controller manifest, instead it uses `eagerLoadControllersFrom("controllers", application)`
@@ -68,7 +69,7 @@ module RubyUI
 
       def install_components_dependencies(components)
         components&.each do |component|
-          run "bin/rails generate ruby_ui:component #{component}"
+          run "bin/rails generate ruby_ui:component #{component} --force #{options["force"]}"
         end
       end
 
