@@ -5,16 +5,15 @@ module RubyUI
         namespace "ruby_ui:component:all"
 
         source_root File.expand_path("../../../ruby_ui", __dir__)
+        class_option :force, type: :boolean, default: false
 
         def generate_components
           say "Generating all components..."
 
           Dir.children(self.class.source_root).each do |folder_name|
-            puts "folder_name: #{folder_name}"
-            next if folder_name == "base.rb"
+            next if folder_name.ends_with?(".rb")
 
-            component_name = folder_name.camelize
-            run "bin/rails generate ruby_ui:component #{component_name} --force true"
+            run "bin/rails generate ruby_ui:component #{folder_name} --force #{options["force"]}"
           end
         end
       end
