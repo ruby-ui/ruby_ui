@@ -1,0 +1,21 @@
+name: Verify components
+
+push:
+  branches: "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: rails g ruby_ui:component:all
+
+      - uses: CatChen/check-git-status-action@v1
+        with:
+          fail-if-not-clean: true
+          push-if-not-clean: false
+          request-changes-if-not-clean: false
+          targets: 'app' #optional
