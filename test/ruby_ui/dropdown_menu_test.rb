@@ -6,6 +6,7 @@ class RubyUI::DropdownMenuTest < ComponentTest
   def test_render_with_all_items
     output = phlex do
       RubyUI.DropdownMenu do
+        RubyUI::DropdownMenuOverlay()
         RubyUI.DropdownMenuTrigger(class: "w-full") do
           RubyUI.Button(variant: :outline) { "Open" }
         end
