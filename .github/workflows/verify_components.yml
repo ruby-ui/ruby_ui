@@ -9,10 +9,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Build
-        run: rails g ruby_ui:component:all --force true
+        run: bin/rails g ruby_ui:component:all --force true
 
       - uses: CatChen/check-git-status-action@v1
         with:
