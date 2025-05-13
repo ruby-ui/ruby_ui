@@ -12,11 +12,11 @@ class Views::Docs::DatePicker < Views::Base
       render Docs::VisualCodeExample.new(title: "Single Date", context: self) do
         <<~RUBY
           div(class: 'space-y-4 w-[260px]') do
-            Popover(options: { trigger: 'focusin' }) do
+            Popover(options: { trigger: 'click' }) do
               PopoverTrigger(class: 'w-full') do
                 div(class: 'grid w-full max-w-sm items-center gap-1.5') do
                   label(for: "date") { "Select a date" }
-                  Input(type: 'string', placeholder: "Select a date", class: 'rounded-md border shadow', id: 'date', data_controller: 'input')
+                  Input(type: 'string', placeholder: "Select a date", class: 'rounded-md border shadow', id: 'date', data_controller: 'ruby-ui--calendar-input')
                 end
               end
               PopoverContent do
