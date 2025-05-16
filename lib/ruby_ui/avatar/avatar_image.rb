@@ -17,7 +17,7 @@ module RubyUI
     def default_attrs
       {
         loading: "lazy",
-        class: "aspect-square h-full w-full",
+        class: "absolute aspect-square h-full w-full z-1",
         alt: @alt,
         src: @src
       }
