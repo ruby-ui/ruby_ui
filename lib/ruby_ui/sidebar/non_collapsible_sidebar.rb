@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class NonCollpapsibleSidebar < Base
+  class NonCollapsibleSidebar < Base
     def view_template(&)
       div(**attrs, &)
     end
