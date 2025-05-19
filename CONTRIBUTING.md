@@ -31,7 +31,7 @@ We prioritize:
 
 ## Code Standards
 
-We follow Standard Ruby conventions for code style. The CI pipeline runs `standard` to verify code quality.
+We follow Standard Ruby conventions for code style. The CI pipeline runs `standard` to ensure consistent code formatting.
 
 ## Testing
 
