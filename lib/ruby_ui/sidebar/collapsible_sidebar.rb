@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CollapsiableSidebar < Base
+  class CollapsibleSidebar < Base
     def initialize(side: :left, variant: :sidebar, collapsible: :offcanvas, open: true, **attrs)
       @side = side
       @variant = variant
