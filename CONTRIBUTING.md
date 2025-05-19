@@ -18,7 +18,7 @@ We recommend using the provided devcontainer to set up your development environm
 2. Create a new branch for your changes
 3. Make your changes
 4. Run tests to ensure your changes don't break existing functionality: `bundle exec rake test`
-5. Run the linter to ensure code quality: `bundle exec rake standard`
+5. Run the linter to ensure consistent code formatting: `bundle exec rake standard`
 6. Submit a Pull Request to the main repository
 
 ## Focus Areas
