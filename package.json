@@ -8,7 +8,7 @@
     "@tailwindcss/forms": "0.5.10",
     "@tailwindcss/typography": "0.5.16",
     "autoprefixer": "10.4.21",
-    "chart.js": "4.4.9",
+    "chart.js": "4.5.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "embla-carousel": "8.6.0",
