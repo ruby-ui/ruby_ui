@@ -15,8 +15,8 @@ importers:
         specifier: 3.2.2
         version: 3.2.2
       '@hotwired/turbo-rails':
-        specifier: 8.0.13
-        version: 8.0.13
+        specifier: 8.0.16
+        version: 8.0.16
       '@tailwindcss/forms':
         specifier: 0.5.10
         version: 0.5.10(tailwindcss@4.1.7)
@@ -227,8 +227,8 @@ packages:
   '@hotwired/stimulus@3.2.2':
     resolution: {integrity: sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==}
 
-  '@hotwired/turbo-rails@8.0.13':
-    resolution: {integrity: sha512-6SCnnOSzhtaJ0pNkAjncZxjtKsK3sP/vPEkCnTXBXSHkr+vF7DTZkOlwjhms1DbbQNTsjCsBoKvzSMbh/omSCQ==}
+  '@hotwired/turbo-rails@8.0.16':
+    resolution: {integrity: sha512-Yxiy2x+N3eOIEDokvLzSrd08aI5RDKnFYDQFl2J/LuMEWTtPdY7oNP0F/gv/sSe5AV23Lwz4FitG/uNFXNM5tA==}
 
   '@hotwired/turbo@8.0.13':
     resolution: {integrity: sha512-M7qXUqcGab6G5PKOiwhgbByTtrPgKPFCTMNQ52QhzUEXEqmp0/ApEguUesh/FPiUjrmFec+3lq98KsWnYY2C7g==}
@@ -240,8 +240,8 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  '@rails/actioncable@7.2.201':
-    resolution: {integrity: sha512-wsTdWoZ5EfG5k3t7ORdyQF0ZmDEgN4aVPCanHAiNEwCROqibSZMXXmCbH7IDJUVri4FOeAVwwbPINI7HVHPKBw==}
+  '@rails/actioncable@8.0.200':
+    resolution: {integrity: sha512-EDqWyxck22BHmv1e+mD8Kl6GmtNkhEPdRfGFT7kvsv1yoXd9iYrqHDVAaR8bKmU/syC5eEZ2I5aWWxtB73ukMw==}
 
   '@tailwindcss/forms@0.5.10':
     resolution: {integrity: sha512-utI1ONF6uf/pPNO68kmN1b8rEwNXv3czukalo8VtJH8ksIkZXr3Q3VYudZLkCsDd4Wku120uF02hYK25XGPorw==}
@@ -501,10 +501,10 @@ snapshots:
 
   '@hotwired/stimulus@3.2.2': {}
 
-  '@hotwired/turbo-rails@8.0.13':
+  '@hotwired/turbo-rails@8.0.16':
     dependencies:
       '@hotwired/turbo': 8.0.13
-      '@rails/actioncable': 7.2.201
+      '@rails/actioncable': 8.0.200
 
   '@hotwired/turbo@8.0.13': {}
 
@@ -512,7 +512,7 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@rails/actioncable@7.2.201': {}
+  '@rails/actioncable@8.0.200': {}
 
   '@tailwindcss/forms@0.5.10(tailwindcss@4.1.7)':
     dependencies:
