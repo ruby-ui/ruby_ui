@@ -19,7 +19,7 @@
     "mustache": "4.2.0",
     "tailwindcss": "4.1.7",
     "tippy.js": "6.3.7",
-    "tw-animate-css": "1.2.9"
+    "tw-animate-css": "1.3.4"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
