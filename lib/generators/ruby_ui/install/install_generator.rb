@@ -42,7 +42,7 @@ module RubyUI
 
       def add_ruby_ui_module_to_components_base
         say "Adding RubyUI Kit to Components::Base"
-        insert_into_file Rails.root.join("app/components/base.rb"), after: "include Phlex::Rails::Helpers::Routes" do
+        insert_into_file Rails.root.join("app/components/base.rb"), after: "class Components::Base < Phlex::HTML" do
           "\n  include RubyUI"
         end
       end
