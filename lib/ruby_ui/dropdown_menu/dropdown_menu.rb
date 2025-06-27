@@ -16,6 +16,7 @@ module RubyUI
     def default_attrs
       {
         class: [
+          "z-50",
           "group/dropdown-menu",
           (strategy == "absolute") ? "is-absolute" : "is-fixed"
         ],
