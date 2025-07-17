@@ -145,15 +145,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.7048 0.1868 47.6)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.7048 0.1868 47.6)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.7048 0.1868 47.6)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.7048 0.1868 47.6)"
         }
       }
     end
@@ -162,15 +162,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.7686 0.1646 70.11)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.7686 0.1646 70.11)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.7686 0.1646 70.11)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.7686 0.1646 70.11)"
         }
       }
     end
@@ -179,15 +179,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.8601 0.173 91.84)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.8601 0.173 91.84)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.8601 0.173 91.84)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.8601 0.173 91.84)"
         }
       }
     end
@@ -196,15 +196,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.765 0.2044 131.05)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.765 0.2044 131.05)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.765 0.2044 131.05)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.765 0.2044 131.05)"
         }
       }
     end
@@ -213,15 +213,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.7205 0.192 149.49)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.7205 0.192 149.49)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.7205 0.192 149.49)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.7205 0.192 149.49)"
         }
       }
     end
@@ -230,15 +230,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6902 0.1481 162.37)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6902 0.1481 162.37)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6902 0.1481 162.37)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6902 0.1481 162.37)"
         }
       }
     end
@@ -247,15 +247,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.7023 0.1232 181.8)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.7023 0.1232 181.8)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.7023 0.1232 181.8)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.7023 0.1232 181.8)"
         }
       }
     end
@@ -264,15 +264,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.7147 0.126 215.83)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.7147 0.126 215.83)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.7147 0.126 215.83)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.7147 0.126 215.83)"
         }
       }
     end
@@ -281,15 +281,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6847 0.1478 237.27)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6847 0.1478 237.27)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6847 0.1478 237.27)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6847 0.1478 237.27)"
         }
       }
     end
@@ -298,15 +298,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6232 0.1879 259.8)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6232 0.1879 259.8)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6232 0.1879 259.8)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6232 0.1879 259.8)"
         }
       }
     end
@@ -315,15 +315,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.5875 0.2039 277.36)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.5875 0.2039 277.36)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.5875 0.2039 277.36)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.5875 0.2039 277.36)"
         }
       }
     end
@@ -332,15 +332,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6016 0.2214 292.23)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6016 0.2214 292.23)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6016 0.2214 292.23)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6016 0.2214 292.23)"
         }
       }
     end
@@ -349,15 +349,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6268 0.2332 304.11)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6268 0.2332 304.11)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6268 0.2332 304.11)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6268 0.2332 304.11)"
         }
       }
     end
@@ -366,15 +366,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6683 0.2569 322.02)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6683 0.2569 322.02)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6683 0.2569 322.02)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6683 0.2569 322.02)"
         }
       }
     end
@@ -383,15 +383,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6538 0.2133 354.06)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6538 0.2133 354.06)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6538 0.2133 354.06)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6538 0.2133 354.06)"
         }
       }
     end
@@ -400,15 +400,15 @@ module Theme
       {
         root: {
           **default_root,
-          primary: "oklch(0.577 0.245 27.325)",
+          primary: "oklch(0.6437 0.2159 16.81)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.577 0.245 27.325)"
+          ring: "oklch(0.6437 0.2159 16.81)"
         },
         dark: {
           **default_dark,
-          primary: "oklch(0.396 0.141 25.723)",
+          primary: "oklch(0.6437 0.2159 16.81)",
           "primary-foreground": "oklch(0.985 0 0)",
-          ring: "oklch(0.396 0.141 25.723)"
+          ring: "oklch(0.6437 0.2159 16.81)"
         }
       }
     end

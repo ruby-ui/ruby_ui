@@ -33,9 +33,9 @@ module Components
 
       def render_color_picker(name, color_hash, selected: false)
         Link(href: theme_path(name&.downcase), variant: :outline, class: ["!justify-start", ("ring-neutral-950 ring-1" if selected)]) do
-          div(class: "w-4 h-4 rounded-full shrink-0 mr-2 ring-white dark:hidden", style: "background-color: hsl(#{color_hash[:root][:primary].split.join(",")})") do
+          div(class: "w-4 h-4 rounded-full shrink-0 mr-2 ring-white dark:hidden", style: "background-color: #{color_hash[:root][:primary].split.join(" ")}") do
           end
-          div(class: "w-4 h-4 rounded-full shrink-0 mr-2 ring-white hidden dark:block", style: "background-color: hsl(#{color_hash[:dark][:primary].split.join(",")})") do
+          div(class: "w-4 h-4 rounded-full shrink-0 mr-2 ring-white hidden dark:block", style: "background-color: #{color_hash[:dark][:primary].split.join(" ")}") do
           end
           plain name&.capitalize
         end
