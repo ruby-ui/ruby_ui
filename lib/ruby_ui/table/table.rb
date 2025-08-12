@@ -3,7 +3,7 @@
 module RubyUI
   class Table < Base
     def view_template(&block)
-      div(class: "relative w-full overflow-auto") do
+      div(class: "relative w-full overflow-x-auto") do
         table(**attrs, &block)
       end
     end
