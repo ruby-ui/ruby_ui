@@ -81,4 +81,4 @@ gem "pry", "0.15.2"
 
 gem "tailwind_merge", "~> 1.3.1"
 
-gem "rouge", "~> 4.5"
+gem "rouge", "~> 4.6"

@@ -243,7 +243,7 @@ GEM
     reline (0.6.1)
       io-console (~> 0.5)
     rexml (3.4.1)
-    rouge (4.5.2)
+    rouge (4.6.0)
     rubocop (1.75.6)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -336,7 +336,7 @@ DEPENDENCIES
   pry (= 0.15.2)
   puma (= 6.6.0)
   rails (= 8.0.2)
-  rouge (~> 4.5)
+  rouge (~> 4.6)
   ruby_ui!
   selenium-webdriver
   sqlite3 (= 2.7.3)
