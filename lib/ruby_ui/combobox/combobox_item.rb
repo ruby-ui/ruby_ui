@@ -13,7 +13,8 @@ module RubyUI
         class: [
           "flex flex-row w-full text-wrap [&>span,&>div]:truncate gap-2 items-center rounded-sm px-2 py-1 text-sm outline-none cursor-pointer",
           "select-none has-[:checked]:bg-accent hover:bg-accent p-2",
-          "[&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2"
+          "[&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2",
+          "has-disabled:opacity-50 has-disabled:cursor-not-allowed"
         ],
         role: "option",
         data: {
