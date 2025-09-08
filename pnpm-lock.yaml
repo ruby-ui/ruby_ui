@@ -19,10 +19,10 @@ importers:
         version: 8.0.16
       '@tailwindcss/forms':
         specifier: 0.5.10
-        version: 0.5.10(tailwindcss@4.1.11)
+        version: 0.5.10(tailwindcss@4.1.13)
       '@tailwindcss/typography':
         specifier: 0.5.16
-        version: 0.5.16(tailwindcss@4.1.11)
+        version: 0.5.16(tailwindcss@4.1.13)
       autoprefixer:
         specifier: 10.4.21
         version: 10.4.21(postcss@8.5.3)
@@ -54,8 +54,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       tailwindcss:
-        specifier: 4.1.11
-        version: 4.1.11
+        specifier: 4.1.13
+        version: 4.1.13
       tippy.js:
         specifier: 6.3.7
         version: 6.3.7
@@ -396,8 +396,8 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
-  tailwindcss@4.1.11:
-    resolution: {integrity: sha512-2E9TBm6MDD/xKYe+dvJZAmg3yxIEDNRc0jwlNyDg/4Fil2QcSLjFKGVff0lAf1jjeaArlG/M75Ey/EYr/OJtBA==}
+  tailwindcss@4.1.13:
+    resolution: {integrity: sha512-i+zidfmTqtwquj4hMEwdjshYYgMbOrPzb9a0M3ZgNa0JMoZeFC6bxZvO8yr8ozS6ix2SDz0+mvryPeBs2TFE+w==}
 
   tippy.js@6.3.7:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
@@ -523,18 +523,18 @@ snapshots:
 
   '@rails/actioncable@8.0.200': {}
 
-  '@tailwindcss/forms@0.5.10(tailwindcss@4.1.11)':
+  '@tailwindcss/forms@0.5.10(tailwindcss@4.1.13)':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 4.1.11
+      tailwindcss: 4.1.13
 
-  '@tailwindcss/typography@0.5.16(tailwindcss@4.1.11)':
+  '@tailwindcss/typography@0.5.16(tailwindcss@4.1.13)':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 4.1.11
+      tailwindcss: 4.1.13
 
   autoprefixer@10.4.21(postcss@8.5.3):
     dependencies:
@@ -658,7 +658,7 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
-  tailwindcss@4.1.11: {}
+  tailwindcss@4.1.13: {}
 
   tippy.js@6.3.7:
     dependencies:
