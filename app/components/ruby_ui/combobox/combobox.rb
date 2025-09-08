@@ -2,7 +2,7 @@
 
 module RubyUI
   class Combobox < Base
-    def initialize(term: "items", **)
+    def initialize(term: nil, **)
       @term = term
       super(**)
     end
@@ -18,7 +18,8 @@ module RubyUI
         role: "combobox",
         data: {
           controller: "ruby-ui--combobox",
-          ruby_ui__combobox_term_value: @term.to_s
+          ruby_ui__combobox_term_value: @term,
+          action: "turbo:morph@window->ruby-ui--combobox#updateTriggerContent"
         }
       }
     end

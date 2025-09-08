@@ -53,12 +53,12 @@ export default class extends Controller {
   updateTriggerContent() {
     const checkedInputs = this.inputTargets.filter(input => input.checked)
 
-    if (checkedInputs.length == 0) {
+    if (checkedInputs.length === 0) {
       this.triggerContentTarget.innerText = this.triggerTarget.dataset.placeholder
-    } else if (checkedInputs.length === 1) {
-      this.triggerContentTarget.innerText = this.inputContent(checkedInputs[0])
-    } else {
+    } else if (this.termValue && checkedInputs.length > 1) {
       this.triggerContentTarget.innerText = `${checkedInputs.length} ${this.termValue}`
+    } else {
+      this.triggerContentTarget.innerText = checkedInputs.map((input) => this.inputContent(input)).join(", ")
     }
   }
 
