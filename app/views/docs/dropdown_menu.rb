@@ -204,24 +204,6 @@ class Views::Docs::DropdownMenu < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Open on hover", context: self) do
-        <<~RUBY
-          DropdownMenu(options: { trigger: "mouseenter focus" }) do
-            DropdownMenuTrigger(class: 'w-full') do
-              Button(variant: :outline) { "Open" }
-            end
-            DropdownMenuContent do
-              DropdownMenuLabel { "My Account" }
-              DropdownMenuSeparator
-              DropdownMenuItem(href: '#') { "Profile" }
-              DropdownMenuItem(href: '#') { "Billing" }
-              DropdownMenuItem(href: '#') { "Team" }
-              DropdownMenuItem(href: '#') { "Subscription" }
-            end
-          end
-        RUBY
-      end
-
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
