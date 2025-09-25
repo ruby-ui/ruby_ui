@@ -20,7 +20,7 @@ module RubyUI
             keydown.down->ruby-ui--combobox#keyDownPressed
             keydown.up->ruby-ui--combobox#keyUpPressed
             keydown.enter->ruby-ui--combobox#keyEnterPressed
-            keydown.esc->ruby-ui--combobox#closeDialog:prevent
+            keydown.esc->ruby-ui--combobox#closePopover:prevent
             resize@window->ruby-ui--combobox#updatePopoverWidth
           ]
         }
