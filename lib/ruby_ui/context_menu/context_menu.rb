@@ -18,7 +18,7 @@ module RubyUI
       {
         data: {
           controller: "ruby-ui--context-menu",
-          popover_options_value: @options.to_json
+          ruby_ui__context_menu_options_value: @options.to_json
         }
       }
     end
