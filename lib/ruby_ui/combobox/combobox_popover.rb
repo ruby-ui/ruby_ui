@@ -17,6 +17,7 @@ module RubyUI
         data: {
           ruby_ui__combobox_target: "popover",
           action: %w[
+            toggle->ruby-ui--combobox#handlePopoverToggle
             keydown.down->ruby-ui--combobox#keyDownPressed
             keydown.up->ruby-ui--combobox#keyUpPressed
             keydown.enter->ruby-ui--combobox#keyEnterPressed
