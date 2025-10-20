@@ -78,9 +78,9 @@ module Components
       end
 
       def iframe_preview
-        div(class: "relative aspect-[4/2.5] w-full overflow-hidden rounded-md border") do
+        div(class: "relative aspect-[4/2.5] w-full overflow-hidden rounded-md border", data: {controller: "iframe-theme"}) do
           div(class: "absolute inset-0 hidden w-[1600px] bg-background md:block") do
-            iframe(src: @src, class: "size-full")
+            iframe(src: @src, class: "size-full", data: {iframe_theme_target: "iframe"})
           end
         end
       end
