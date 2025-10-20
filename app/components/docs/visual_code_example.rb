@@ -13,9 +13,10 @@ module Components
         @@collected_code = []
       end
 
-      def initialize(title: nil, description: nil, context: nil)
+      def initialize(title: nil, description: nil, src: nil, context: nil)
         @title = title
         @description = description
+        @src = src
         @context = context
       end
 
@@ -43,7 +44,7 @@ module Components
       def render_header
         div do
           if @title
-            div(class: "flex items-center gap-x-2 mb-1") do
+            div do
               Components.Heading(level: 4) { @title.capitalize }
             end
           end
@@ -71,6 +72,20 @@ module Components
       end
 
       def render_preview_tab(&block)
+        return iframe_preview if @src
+
+        raw_preview
+      end
+
+      def iframe_preview
+        div(class: "relative aspect-[4/2.5] w-full overflow-hidden rounded-md border") do
+          div(class: "absolute inset-0 hidden w-[1600px] bg-background md:block") do
+            iframe(src: @src, class: "size-full")
+          end
+        end
+      end
+
+      def raw_preview
         div(class: "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border") do
           div(class: "preview flex min-h-[350px] w-full justify-center p-10 items-center") do
             decoded_code = CGI.unescapeHTML(@display_code)

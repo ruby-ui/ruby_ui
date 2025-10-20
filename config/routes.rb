@@ -50,6 +50,9 @@ Rails.application.routes.draw do
     get "separator", to: "docs#separator", as: :docs_separator
     get "sheet", to: "docs#sheet", as: :docs_sheet
     get "shortcut_key", to: "docs#shortcut_key", as: :docs_shortcut_key
+    get "sidebar", to: "docs#sidebar", as: :docs_sidebar
+    get "sidebar/example", to: "docs/sidebar#example", as: :docs_sidebar_example
+    get "sidebar/inset", to: "docs/sidebar#inset_example", as: :docs_sidebar_inset
     get "skeleton", to: "docs#skeleton", as: :docs_skeleton
     get "switch", to: "docs#switch", as: :docs_switch
     get "table", to: "docs#table", as: :docs_table

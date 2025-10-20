@@ -178,6 +178,10 @@ class DocsController < ApplicationController
     render Views::Docs::ShortcutKey.new
   end
 
+  def sidebar
+    render Views::Docs::Sidebar.new
+  end
+
   def skeleton
     render Views::Docs::Skeleton.new
   end

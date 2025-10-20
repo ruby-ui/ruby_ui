@@ -99,6 +99,7 @@ module Components
           {name: "Separator", path: docs_separator_path, badge: "New"},
           {name: "Sheet", path: docs_sheet_path},
           {name: "Shortcut Key", path: docs_shortcut_key_path},
+          {name: "Sidebar", path: docs_sidebar_path, badge: "New"},
           {name: "Skeleton", path: docs_skeleton_path, badge: "New"},
           {name: "Switch", path: docs_switch_path},
           {name: "Table", path: docs_table_path},
