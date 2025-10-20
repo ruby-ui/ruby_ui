@@ -193,7 +193,7 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (7.0.4)
+    puma (7.1.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.0)
@@ -333,7 +333,7 @@ DEPENDENCIES
   phlex-rails!
   propshaft (= 1.2.1)
   pry (= 0.15.2)
-  puma (= 7.0.4)
+  puma (= 7.1.0)
   rails (= 8.0.2.1)
   rouge (~> 4.6)
   ruby_ui!
