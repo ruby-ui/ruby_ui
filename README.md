@@ -26,5 +26,3 @@ gem "ruby_ui", path: "../ruby_ui"
 This workflow allows you to iterate quickly on components while maintaining the gem's structure.
 
 Would you like me to expand on any part of the contributing guide?
-
-[![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=0fdaefc76c39&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
