@@ -18,7 +18,7 @@ module RubyUI
         class: [
           "h-4 w-4 p-0 border-primary rounded-full flex-none",
           "disabled:cursor-not-allowed disabled:opacity-50",
-          "checked:bg-primary checked:text-primary-foreground",
+          "checked:bg-primary checked:text-primary-foreground dark:checked:bg-secondary checked:text-primary checked:border-primary",
           "aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none"
         ]
       }
