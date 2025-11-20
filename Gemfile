@@ -6,7 +6,7 @@ ruby "3.4.7"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "8.0.2.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft", "1.2.1"
+gem "propshaft", "1.3.1"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "2.8.0"
 # Use the Puma web server [https://github.com/puma/puma]
