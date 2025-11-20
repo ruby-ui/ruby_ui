@@ -43,3 +43,6 @@ config/credentials/production.key
 
 # Yarn
 yarn-error.log
+
+# Pnpm
+.pnpm-store

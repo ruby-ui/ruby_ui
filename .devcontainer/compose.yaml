@@ -1,4 +1,4 @@
-name: "phlexui-web"
+name: "rubyui-web"
 
 services:
   rails-app:
@@ -7,26 +7,19 @@ services:
       dockerfile: .devcontainer/Dockerfile
 
     volumes:
-    - ../..:/workspaces:cached
+    - ../../web:/workspaces/web:cached
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
-
-    networks:
-    - default
 
     # Uncomment the next line to use a non-root user for all processes.
     # user: vscode
 
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
-    ports:
-    - 45678:45678
     depends_on:
     - selenium
-
+  
   selenium:
-    image: seleniarm/standalone-chromium
+    image: selenium/standalone-chromium
     restart: unless-stopped
-    networks:
-    - default

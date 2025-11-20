@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/ruby
 {
-  "name": "phlexui-web",
+  "name": "rubyui-web",
   "dockerComposeFile": "compose.yaml",
   "service": "rails-app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -11,6 +11,7 @@
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/rails/devcontainer/features/activestorage": {},
     "ghcr.io/devcontainers/features/node:1": { "version": 20, "pnpmVersion": "10.8.0" },
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {"moby":false},
     "ghcr.io/rails/devcontainer/features/sqlite3": {}
   },
 
@@ -30,11 +31,6 @@
         "Shopify.ruby-lsp",
         "testdouble.vscode-standard-ruby"
       ]
-    },
-    "settings": {
-      "rubyLsp.rubyVersionManager": {
-        "identifier": "rbenv"
-      }
     }
   },
 
