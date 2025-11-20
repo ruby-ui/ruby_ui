@@ -28,6 +28,11 @@ export default class extends Controller {
     if (this.cleanup) { this.cleanup() }
   }
 
+  handlePopoverToggle(event) {
+    // Keep ariaExpanded in sync with the actual popover state
+    this.triggerTarget.ariaExpanded = event.newState === 'open' ? 'true' : 'false'
+  }
+
   inputChanged(e) {
     this.updateTriggerContent()
 
@@ -62,8 +67,18 @@ export default class extends Controller {
     }
   }
 
-  openPopover(event) {
+  togglePopover(event) {
     event.preventDefault()
+
+    if (this.triggerTarget.ariaExpanded === "true") {
+      this.closePopover()
+    } else {
+      this.openPopover(event)
+    }
+  }
+
+  openPopover(event) {
+    if (event) event.preventDefault()
 
     this.updatePopoverPosition()
     this.updatePopoverWidth()

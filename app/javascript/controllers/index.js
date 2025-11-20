@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import IframeThemeController from "./iframe_theme_controller"
+application.register("iframe-theme", IframeThemeController)
+
 import RubyUi__AccordionController from "./ruby_ui/accordion_controller"
 application.register("ruby-ui--accordion", RubyUi__AccordionController)
 
@@ -81,9 +84,6 @@ application.register("ruby-ui--theme-toggle", RubyUi__ThemeToggleController)
 
 import RubyUi__TooltipController from "./ruby_ui/tooltip_controller"
 application.register("ruby-ui--tooltip", RubyUi__TooltipController)
-
-import IframeThemeController from "./iframe_theme_controller"
-application.register("iframe-theme", IframeThemeController)
 
 import SidebarMenuController from "./sidebar_menu_controller"
 application.register("sidebar-menu", SidebarMenuController)

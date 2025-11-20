@@ -31,7 +31,7 @@ module RubyUI
         data: {
           placeholder: @placeholder,
           ruby_ui__combobox_target: "trigger",
-          action: "ruby-ui--combobox#openPopover"
+          action: "ruby-ui--combobox#togglePopover"
         },
         aria: {
           haspopup: "listbox",
