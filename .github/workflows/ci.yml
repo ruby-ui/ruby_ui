@@ -2,20 +2,51 @@ name: CI
 
 on:
   pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - ready_for_review
   push:
-    branches: "main"
+    branches: 
+      - "main"
+      - "released"
 jobs:
   test:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.8.0
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: ".node-version"
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint code for consistent style
+        run: bundle exec standardrb
+        
+      - name: Run tests
+        run: bin/rails db:test:prepare test
+
+  verify_components:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -36,14 +67,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint code for consistent style
-        run: bundle exec standardrb
-        
-      - name: Run tests
-        run: |
-          bin/rails test:prepare
-          bin/rails db:test:prepare
-          bin/rails test
+      - name: Build
+        run: bin/rails g ruby_ui:component:all --force true
+
+      - uses: CatChen/check-git-status-action@v1
+        with:
+          fail-if-not-clean: true
+          push-if-not-clean: false
+          request-changes-if-not-clean: false
+          targets: 'app'
 
   docker-build:
     if: github.ref == 'refs/heads/main'
@@ -54,7 +86,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -73,13 +105,27 @@ jobs:
 
   next-deploy:
     if: github.ref == 'refs/heads/main'
-    needs: [test, docker-build]
+    needs: [test, docker-build, verify_components]
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Deploy to Heroku Next
+        run: git push https://heroku:${{ secrets.HEROKU_RUBYUI_API_KEY }}@git.heroku.com/rubyui-next.git HEAD:main
+
+
+  released-deploy:
+    if: github.ref == 'refs/heads/released'
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Deploy to Heroku Prod
-        run: git push https://heroku:${{ secrets.HEROKU_RUBYUI_API_KEY }}@git.heroku.com/rubyui-next.git HEAD:main
+        run: git push https://heroku:${{ secrets.HEROKU_RUBYUI_API_KEY }}@git.heroku.com/rubyui.git HEAD:main
