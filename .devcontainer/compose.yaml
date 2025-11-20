@@ -7,7 +7,6 @@ services:
       dockerfile: .devcontainer/Dockerfile
 
     volumes:
-    - ../../ruby_ui:/workspaces/ruby_ui:cached
-
-    # Overrides default command so things don't shut down after the process ends.
+      - ../../ruby_ui:/workspaces/ruby_ui:cached
+      # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
