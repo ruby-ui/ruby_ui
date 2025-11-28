@@ -15,13 +15,13 @@ module Components
           SheetTrigger do
             Button(variant: :primary) { "Copy Code" }
           end
-          SheetContent(class: "sm:max-w-md w-screen flex flex-col h-screen overflow-y-scroll") do
+          SheetContent(class: "sm:max-w-lg lg:max-w-xl flex flex-col h-screen overflow-y-scroll") do
             SheetHeader do
               SheetTitle { "Theme" }
-              SheetDescription { "Copy and paste the following code into your CSS file." }
+              SheetDescription { "Copy and paste the following code into your CSS file. These styles are compatible with TailwindCSS 4." }
             end
             SheetMiddle(class: "flex-1 relative") do
-              Codeblock(Theme::CSS.retrieve(@theme, with_directive: true), syntax: :css, class: "h-full max-h-none")
+              Codeblock(Theme::CSS.retrieve(@theme, with_directive: true, exclude_ruby_ui_vars: true), syntax: :css, class: "h-full max-h-none")
             end
           end
         end

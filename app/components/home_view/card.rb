@@ -31,7 +31,7 @@ module Components
           end
           if @title || @subtitle
             div(class: "space-y-2") do
-              h3(class: "font-semibold leading-none tracking-tight") { @title } if @title
+              h2(class: "font-semibold leading-none tracking-tight") { @title } if @title
               p { @subtitle } if @subtitle
             end
           end

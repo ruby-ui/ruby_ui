@@ -1,7 +1,11 @@
 module Theme
   class CSS
-    def self.retrieve(theme, with_directive: true, format: :css)
+    # Ruby UI specific variables that are not part of the standard shadcn theme
+    RUBY_UI_SPECIFIC_VARS = %w[warning warning-foreground success success-foreground].freeze
+
+    def self.retrieve(theme, with_directive: true, format: :css, exclude_ruby_ui_vars: false)
       theme_hash = send(theme)
+      theme_hash = filter_ruby_ui_vars(theme_hash) if exclude_ruby_ui_vars
 
       case format
       when :css
@@ -11,6 +15,12 @@ module Theme
         theme_hash
       else
         raise ArgumentError, "Invalid format: #{format}"
+      end
+    end
+
+    def self.filter_ruby_ui_vars(theme_hash)
+      theme_hash.transform_values do |properties|
+        properties.reject { |key, _| RUBY_UI_SPECIFIC_VARS.include?(key.to_s) }
       end
     end
 
@@ -86,11 +96,11 @@ module Theme
         dark: {
           background: "oklch(0.145 0 0)",
           foreground: "oklch(0.985 0 0)",
-          card: "oklch(0.145 0 0)",
+          card: "oklch(0.205 0 0)",
           "card-foreground": "oklch(0.985 0 0)",
-          popover: "oklch(0.145 0 0)",
+          popover: "oklch(0.205 0 0)",
           "popover-foreground": "oklch(0.985 0 0)",
-          primary: "oklch(0.985 0 0)",
+          primary: "oklch(0.922 0 0)",
           "primary-foreground": "oklch(0.205 0 0)",
           secondary: "oklch(0.269 0 0)",
           "secondary-foreground": "oklch(0.985 0 0)",
@@ -98,11 +108,11 @@ module Theme
           "muted-foreground": "oklch(0.708 0 0)",
           accent: "oklch(0.269 0 0)",
           "accent-foreground": "oklch(0.985 0 0)",
-          destructive: "oklch(0.396 0.141 25.723)",
+          destructive: "oklch(0.704 0.191 22.216)",
           "destructive-foreground": "oklch(0.637 0.237 25.331)",
-          border: "oklch(0.269 0 0)",
-          input: "oklch(0.269 0 0)",
-          ring: "oklch(0.439 0 0)",
+          border: "oklch(1 0 0 / 10%)",
+          input: "oklch(1 0 0 / 15%)",
+          ring: "oklch(0.556 0 0)",
           "chart-1": "oklch(0.488 0.243 264.376)",
           "chart-2": "oklch(0.696 0.17 162.48)",
           "chart-3": "oklch(0.769 0.188 70.08)",
@@ -114,8 +124,8 @@ module Theme
           "sidebar-primary-foreground": "oklch(0.985 0 0)",
           "sidebar-accent": "oklch(0.269 0 0)",
           "sidebar-accent-foreground": "oklch(0.985 0 0)",
-          "sidebar-border": "oklch(0.269 0 0)",
-          "sidebar-ring": "oklch(0.439 0 0)",
+          "sidebar-border": "oklch(1 0 0 / 10%)",
+          "sidebar-ring": "oklch(0.556 0 0)",
           warning: "hsl(38 92% 50%)",
           "warning-foreground": "hsl(0 0% 100%)",
           success: "hsl(84 81% 44%)",
@@ -457,11 +467,11 @@ module Theme
       {
         background: "oklch(0.145 0 0)",
         foreground: "oklch(0.985 0 0)",
-        card: "oklch(0.145 0 0)",
+        card: "oklch(0.205 0 0)",
         "card-foreground": "oklch(0.985 0 0)",
-        popover: "oklch(0.145 0 0)",
+        popover: "oklch(0.205 0 0)",
         "popover-foreground": "oklch(0.985 0 0)",
-        primary: "oklch(0.985 0 0)",
+        primary: "oklch(0.922 0 0)",
         "primary-foreground": "oklch(0.205 0 0)",
         secondary: "oklch(0.269 0 0)",
         "secondary-foreground": "oklch(0.985 0 0)",
@@ -469,11 +479,11 @@ module Theme
         "muted-foreground": "oklch(0.708 0 0)",
         accent: "oklch(0.269 0 0)",
         "accent-foreground": "oklch(0.985 0 0)",
-        destructive: "oklch(0.396 0.141 25.723)",
+        destructive: "oklch(0.704 0.191 22.216)",
         "destructive-foreground": "oklch(0.637 0.237 25.331)",
-        border: "oklch(0.269 0 0)",
-        input: "oklch(0.269 0 0)",
-        ring: "oklch(0.439 0 0)",
+        border: "oklch(1 0 0 / 10%)",
+        input: "oklch(1 0 0 / 15%)",
+        ring: "oklch(0.556 0 0)",
         "chart-1": "oklch(0.488 0.243 264.376)",
         "chart-2": "oklch(0.696 0.17 162.48)",
         "chart-3": "oklch(0.769 0.188 70.08)",
@@ -485,8 +495,8 @@ module Theme
         "sidebar-primary-foreground": "oklch(0.985 0 0)",
         "sidebar-accent": "oklch(0.269 0 0)",
         "sidebar-accent-foreground": "oklch(0.985 0 0)",
-        "sidebar-border": "oklch(0.269 0 0)",
-        "sidebar-ring": "oklch(0.439 0 0)",
+        "sidebar-border": "oklch(1 0 0 / 10%)",
+        "sidebar-ring": "oklch(0.556 0 0)",
         warning: "hsl(38 92% 50%)",
         "warning-foreground": "hsl(0 0% 100%)",
         success: "hsl(84 81% 44%)",
@@ -510,11 +520,9 @@ module Theme
     end
 
     def self.wrap_with_directive(css)
-      <<~CSS
-        @layer base {
-          #{css}
-        }
-      CSS
+      # Tailwind 4: :root and .dark selectors should NOT be wrapped in @layer base
+      # This ensures CSS variables are properly accessible to @theme inline
+      css
     end
   end
 end

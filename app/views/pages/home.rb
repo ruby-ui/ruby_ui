@@ -29,7 +29,7 @@ class Views::Pages::Home < Views::Base
         iframe(width: "100%", height: "720", src: "https://www.youtube.com/embed/OQZam7rug00?si=JmZNzS5u194Q0AWQ", title: "YouTube video player", frameborder: "0", allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share", referrerpolicy: "strict-origin-when-cross-origin", allowfullscreen: true)
       end
 
-      div(class: "relative z-10 container mx-auto max-w-5xl pt-16 lg:pt-16 py-24 lg:py-32 px-4") do
+      div(class: "relative z-10 container mx-auto max-w-5xl pt-16 lg:pt-16 py-24 px-4") do
         div(class: "grid grid-cols-6 gap-4") do
           render HomeView::Card.new(class: "col-span-6 sm:col-span-3 md:col-span-4", title: "Built for Speed", subtitle: "Dive into a world where your Rails UI development happens at light speed. Phlex is not just fast - it's blazing fast.", color: :secondary) do |card|
             card.icon do
