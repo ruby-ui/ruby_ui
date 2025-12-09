@@ -18,5 +18,12 @@ module RubyUI
     def default_attrs
       {}
     end
+
+    if Rails.env.development?
+      def before_template
+        comment { "Before #{self.class.name}" }
+        super
+      end
+    end
   end
 end
