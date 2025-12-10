@@ -41,4 +41,22 @@ While we don't have specific test coverage requirements, all contributions shoul
 
 If your changes include new components, modify how components should be used, or add new behaviors, it is highly recommended to also open a PR on the [ruby-ui/web](https://github.com/ruby-ui/web) repository. This ensures the documentation website stays up-to-date with the latest component changes.
 
+### Installing Documentation Files
+
+RubyUI includes documentation files for each component that can be installed into your Rails application. These files are located at `lib/ruby_ui/{component}/{component}_docs.rb` and provide usage examples for each component.
+
+To install the documentation files:
+
+```bash
+bin/rails g ruby_ui:install:docs
+```
+
+To overwrite existing documentation files:
+
+```bash
+bin/rails g ruby_ui:install:docs --force
+```
+
+This will copy the documentation files to `app/views/docs/` in your Rails application.
+
 Thank you for contributing to make RubyUI better! 

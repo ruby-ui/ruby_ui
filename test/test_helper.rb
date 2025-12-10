@@ -10,7 +10,7 @@ require "minitest/autorun"
 module RubyUI
   extend Phlex::Kit
 
-  Dir.glob("lib/ruby_ui/**/*.rb").map do |path|
+  Dir.glob("lib/ruby_ui/**/*.rb").reject { |f| f.include?("/docs/") || f.end_with?("_docs.rb") }.map do |path|
     class_name = path.split("/").last.delete_suffix(".rb").split("_").map(&:capitalize).join.to_sym
 
     autoload class_name, path
