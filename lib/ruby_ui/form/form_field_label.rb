@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         class: [
-          "text-sm font-medium leading-none inline-block",
+          "empty:hidden text-sm font-medium leading-none",
           "peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
           "peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none"
         ]
