@@ -66,5 +66,25 @@ module Views
     def docs_badge_path
       "#"
     end
+
+    def docs_installation_path
+      "#"
+    end
+
+    # InlineCode helper for typography examples
+    def InlineCode(&)
+      code(&)
+    end
+  end
+end
+
+# Module-level components stub
+module Components
+  def self.Heading(level:, &block)
+    # Stub for module-level Heading calls
+  end
+
+  def self.TypographyList(items:, numbered: false)
+    # Stub for TypographyList component
   end
 end
