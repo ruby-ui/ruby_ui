@@ -88,6 +88,50 @@ class Views::Docs::GettingStarted::CustomizingComponents < Views::Base
           end
         end
       end
+
+      div(class: "space-y-4") do
+        Heading(level: 2) { "Learning from shadcn/ui" }
+        Text do
+          plain "RubyUI components are inspired by "
+          InlineLink(href: "https://ui.shadcn.com") { "shadcn/ui" }
+          plain ", which has an extensive collection of beautifully designed components. When customizing RubyUI components, we recommend checking the "
+          InlineLink(href: "https://ui.shadcn.com/docs/components") { "shadcn/ui component documentation" }
+          plain " for reference on Tailwind CSS class implementations."
+        end
+        Text do
+          plain "shadcn/ui provides excellent examples of:"
+        end
+        Components.TypographyList do
+          Components.TypographyListItem { "Tailwind CSS class patterns for common UI elements" }
+          Components.TypographyListItem { "Accessibility best practices" }
+          Components.TypographyListItem { "Responsive design patterns" }
+          Components.TypographyListItem { "Dark mode implementations" }
+        end
+      end
+
+      div(class: "space-y-4") do
+        Heading(level: 2) { "Contributing new components" }
+        Text do
+          plain "If you've implemented a component locally that exists in "
+          InlineLink(href: "https://ui.shadcn.com/docs/components") { "shadcn/ui" }
+          plain " but isn't yet available in RubyUI, we'd love for you to contribute it back to the community!"
+        end
+        Text do
+          plain "To contribute a new component:"
+        end
+        Components.TypographyList(numbered: true) do
+          Components.TypographyListItem do
+            plain "Check the "
+            InlineLink(href: "https://github.com/PhlexUI/phlex_ui") { "RubyUI GitHub repository" }
+            plain " to see if the component is already planned"
+          end
+          Components.TypographyListItem { "Open an issue or discussion to propose the new component" }
+          Components.TypographyListItem { "Submit a pull request with your implementation" }
+        end
+        Text do
+          plain "By contributing, you help expand the RubyUI ecosystem and make it easier for other Ruby developers to build beautiful interfaces."
+        end
+      end
     end
   end
 

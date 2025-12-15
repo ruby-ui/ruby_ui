@@ -8,9 +8,11 @@ class Views::Docs::GettingStarted::Theming < Views::Base
       div(class: "space-y-4") do
         Components.Heading(level: 2) { "Introduction" }
         Text do
-          plain "Phlex UI uses CSS Variables like "
-          InlineCode { "--primary: 0 0% 9%" }
-          plain " for theming. This allows you to easily customize the look and feel of your application."
+          plain "RubyUI uses CSS Variables like "
+          InlineCode { "--primary: oklch(0.205 0 0)" }
+          plain " for theming. This approach is inspired by "
+          InlineLink(href: "https://ui.shadcn.com") { "shadcn/ui" }
+          plain " and allows you to easily customize the look and feel of your application."
         end
         # List the 2 benefits. That we can use CSS variables to change the style, without changing the tailwindcss classes used
         # And that we can change the style of a particular tailwindcss class for both light and dark mode, without having to duplicate the tailwindcss class
@@ -60,19 +62,19 @@ class Views::Docs::GettingStarted::Theming < Views::Base
         end
         Text { "Given the following CSS variables:" }
         code = <<~CODE
-          --primary: 222.2 47.4% 11.2%;
-          --primary-foreground: 210 40% 98%;
+          --primary: oklch(0.205 0 0);
+          --primary-foreground: oklch(0.985 0 0);
         CODE
         Codeblock(code, syntax: :css)
         Text do
           plain "The "
           InlineCode { "background" }
           plain " color of the following component will be "
-          InlineCode { "hsl(var(--primary))" }
+          InlineCode { "var(--primary)" }
           plain " and the "
           InlineCode { "foreground" }
           plain " color will be "
-          InlineCode { "hsl(var(--primary-foreground))" }
+          InlineCode { "var(--primary-foreground)" }
           plain "."
         end
         code = <<~CODE
@@ -81,8 +83,8 @@ class Views::Docs::GettingStarted::Theming < Views::Base
         Codeblock(code, syntax: :html)
         Alert(class: "bg-transparent") do
           AlertDescription do
-            span(class: "font-medium") { "CSS variables must be defined without color space function" }
-            plain ". See the "
+            span(class: "font-medium") { "RubyUI uses oklch color format" }
+            plain ", the same format used by shadcn/ui. See the "
             InlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
             plain " for more information."
           end
@@ -110,26 +112,42 @@ class Views::Docs::GettingStarted::Theming < Views::Base
       end
 
       div(class: "space-y-4") do
-        Heading(level: 2) { "Other color formats" }
+        Heading(level: 2) { "Color format (oklch)" }
         Text do
-          plain "It's recommended to use "
-          InlineLink(href: "https://www.smashingmagazine.com/2021/07/hsl-colors-css/") { "HSL colors" }
-          plain " for your application. However, you can also use other color formats such as "
-          InlineCode { "rgb" }
-          plain " or "
-          InlineCode { "rgba" }
-          plain "."
+          plain "RubyUI uses "
+          InlineLink(href: "https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch") { "oklch colors" }
+          plain " as the default color format. This is the same format used by "
+          InlineLink(href: "https://ui.shadcn.com") { "shadcn/ui" }
+          plain " and provides better perceptual uniformity and wider color gamut support."
         end
         Text do
-          plain "See "
-          InlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
-          plain " for more information on how to use "
-          InlineCode { "rgb" }
-          plain ", "
-          InlineCode { "rgba" }
-          plain " or "
+          plain "While "
+          InlineCode { "oklch" }
+          plain " is recommended, you can also use other color formats such as "
           InlineCode { "hsl" }
-          plain " colors."
+          plain ", "
+          InlineCode { "rgb" }
+          plain ", or "
+          InlineCode { "rgba" }
+          plain ". See the "
+          InlineLink(href: "https://tailwindcss.com/docs/customizing-colors#using-css-variables") { "Tailwind CSS documentation" }
+          plain " for more information."
+        end
+      end
+
+      div(class: "space-y-4") do
+        Heading(level: 2) { "shadcn/ui themes" }
+        Text do
+          plain "RubyUI themes use the same CSS variable convention as "
+          InlineLink(href: "https://ui.shadcn.com") { "shadcn/ui" }
+          plain ". This means you can copy themes directly from "
+          InlineLink(href: "https://ui.shadcn.com/themes") { "shadcn/ui themes" }
+          plain " and use them in your RubyUI application."
+        end
+        Text do
+          plain "Visit the "
+          InlineLink(href: "/themes/default") { "RubyUI themes page" }
+          plain " to preview and copy themes, just like you would on shadcn/ui."
         end
       end
     end
@@ -139,8 +157,8 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Default background color of <body>...etc" }
       code = <<~CODE
-        --background: 0 0% 100%;
-        --foreground: 222.2 47.4% 11.2%;
+        --background: oklch(1 0 0);
+        --foreground: oklch(0.145 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -148,8 +166,8 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Muted backgrounds such as TabsList" }
       code = <<~CODE
-        --muted: 210 40% 96.1%;
-        --muted-foreground: 215.4 16.3% 46.9%;
+        --muted: oklch(0.97 0 0);
+        --muted-foreground: oklch(0.556 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -157,7 +175,7 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Default border color" }
       code = <<~CODE
-        --border: 214.3 31.8% 91.4%;
+        --border: oklch(0.922 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -165,7 +183,7 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Border color for inputs such as Input, Select or Textarea" }
       code = <<~CODE
-        --input: 214.3 31.8% 91.4%;
+        --input: oklch(0.922 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -173,8 +191,8 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Primary colors for Button" }
       code = <<~CODE
-        --primary: 222.2 47.4% 11.2%;
-        --primary-foreground: 210 40% 98%;
+        --primary: oklch(0.205 0 0);
+        --primary-foreground: oklch(0.985 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -182,8 +200,8 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Secondary colors for Button" }
       code = <<~CODE
-        --secondary: 210 40% 96.1%;
-        --secondary-foreground: 222.2 47.4% 11.2%;
+        --secondary: oklch(0.97 0 0);
+        --secondary-foreground: oklch(0.205 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -191,8 +209,8 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Used for accents such as hover effects on DropdownMenu::Item, Select::Item... etc" }
       code = <<~CODE
-        --accent: 210 40% 96.1%;
-        --accent-foreground: 222.2 47.4% 11.2%;
+        --accent: oklch(0.97 0 0);
+        --accent-foreground: oklch(0.205 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -200,8 +218,8 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Used for destructive actions such as Button.new(variant: :destructive)" }
       code = <<~CODE
-        --destructive: 0 100% 50%;
-        --destructive-foreground: 210 40% 98%;
+        --destructive: oklch(0.577 0.245 27.325);
+        --destructive-foreground: oklch(0.577 0.245 27.325);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -209,7 +227,7 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Used for focus ring" }
       code = <<~CODE
-        --ring: 215 20.2% 65.1%;
+        --ring: oklch(0.708 0 0);
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -217,7 +235,7 @@ class Views::Docs::GettingStarted::Theming < Views::Base
     space_y_2 do
       Text(size: "2", weight: "medium") { "Border radius for card, input and buttons" }
       code = <<~CODE
-        --radius: 0.5rem;
+        --radius: 0.625rem;
       CODE
       Codeblock(code, syntax: :css)
     end
@@ -231,33 +249,27 @@ class Views::Docs::GettingStarted::Theming < Views::Base
       end
       code = <<~CODE
         :root {
-          --contrast: 38 92% 50%;
-          --contrast-foreground: 48 96% 89%;
+          --contrast: oklch(0.75 0.18 85);
+          --contrast-foreground: oklch(0.25 0.05 85);
         }
 
         .dark {
-          --contrast: 48 96% 89%;
-          --contrast-foreground: 38 92% 50%;
+          --contrast: oklch(0.85 0.15 85);
+          --contrast-foreground: oklch(0.2 0.05 85);
         }
       CODE
       Codeblock(code, syntax: :css)
     end
 
     space_y_2 do
-      Text(size: "2", weight: "medium") { "tailwind.config.js" }
+      Text(size: "2", weight: "medium") { "application.tailwind.css (inside @theme inline)" }
       code = <<~CODE
-        module.exports = {
-          theme: {
-            extend: {
-              colors: {
-                contrast: "hsl(var(--contrast))",
-                "contrast-foreground": "hsl(var(--contrast-foreground))",
-              },
-            },
-          },
+        @theme inline {
+          --color-contrast: var(--contrast);
+          --color-contrast-foreground: var(--contrast-foreground);
         }
       CODE
-      Codeblock(code, syntax: :javascript)
+      Codeblock(code, syntax: :css)
     end
 
     Text do

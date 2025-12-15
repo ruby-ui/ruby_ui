@@ -38,6 +38,32 @@ class Views::Docs::GettingStarted::Introduction < Views::Base
       end
 
       div(class: "space-y-4") do
+        Heading(level: 2) { "Design inspiration" }
+        Text do
+          plain "RubyUI's component designs are heavily inspired by "
+          InlineLink(href: "https://ui.shadcn.com") { "shadcn/ui" }
+          plain ", a beautifully designed collection of React components built on Tailwind CSS. shadcn/ui describes itself as \"The Foundation for your Design System\" - a set of components you can customize, extend, and make your own."
+        end
+        Text do
+          plain "We borrow design patterns, component APIs, and Tailwind CSS classes from shadcn/ui, bringing the same beautiful aesthetic to Ruby developers. This means:"
+        end
+        Components.TypographyList do
+          Components.TypographyListItem do
+            span(class: "font-medium") { "Same visual design " }
+            plain "- Components look and feel like their shadcn/ui counterparts"
+          end
+          Components.TypographyListItem do
+            span(class: "font-medium") { "Compatible theming " }
+            plain "- Use the same CSS variables and copy themes directly from shadcn/ui"
+          end
+          Components.TypographyListItem do
+            span(class: "font-medium") { "Familiar patterns " }
+            plain "- If you've used shadcn/ui, you'll feel right at home"
+          end
+        end
+      end
+
+      div(class: "space-y-4") do
         Heading(level: 2) { "Why I built RubyUI" }
         Text do
           plain "Many Ruby developers are familiar with "
@@ -100,6 +126,10 @@ class Views::Docs::GettingStarted::Introduction < Views::Base
           Components.TypographyListItem do
             InlineLink(href: "https://phlex.fun") { "Phlex" }
             plain " - The foundation of RubyUI."
+          end
+          Components.TypographyListItem do
+            InlineLink(href: "https://ui.shadcn.com") { "shadcn/ui" }
+            plain " - The design inspiration for RubyUI's components and theming system."
           end
           Components.TypographyListItem do
             InlineLink(href: "https://stimulus.hotwired.dev") { "Stimulus JS" }

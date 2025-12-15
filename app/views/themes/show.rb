@@ -10,7 +10,7 @@ class Views::Themes::Show < Views::Base
       div(class: "md:flex items-center justify-between") do
         div do
           Heading(level: 1) { "Themes" }
-          Text(as: "p", size: "5", weight: "medium") { "Customize your app fast with hand-picked themes." }
+          Text(as: "p", size: "5", weight: "medium") { "Customize your app fast with hand-picked themes. Compatible with shadcn/ui." }
         end
         div(class: "flex gap-x-2 mt-4") do
           render Themes::CustomizePopover.new(theme: @theme)
