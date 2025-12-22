@@ -18,8 +18,8 @@ importers:
         specifier: 8.0.20
         version: 8.0.20
       '@tailwindcss/forms':
-        specifier: 0.5.10
-        version: 0.5.10(tailwindcss@4.1.18)
+        specifier: 0.5.11
+        version: 0.5.11(tailwindcss@4.1.18)
       '@tailwindcss/typography':
         specifier: 0.5.19
         version: 0.5.19(tailwindcss@4.1.18)
@@ -249,8 +249,8 @@ packages:
   '@rails/actioncable@8.1.100':
     resolution: {integrity: sha512-j4vJQqz51CDVYv2UafKRu4jiZi5/gTnm7NkyL+VMIgEw3s8jtVtmzu9uItUaZccUg9NJ6o05yVyBAHxNfTuCRA==}
 
-  '@tailwindcss/forms@0.5.10':
-    resolution: {integrity: sha512-utI1ONF6uf/pPNO68kmN1b8rEwNXv3czukalo8VtJH8ksIkZXr3Q3VYudZLkCsDd4Wku120uF02hYK25XGPorw==}
+  '@tailwindcss/forms@0.5.11':
+    resolution: {integrity: sha512-h9wegbZDPurxG22xZSoWtdzc41/OlNEUQERNqI/0fOwa2aVlWGu7C35E/x6LDyD3lgtztFSSjKZyuVM0hxhbgA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1 || >= 4.0.0-alpha.20 || >= 4.0.0-beta.1'
 
@@ -514,7 +514,7 @@ snapshots:
 
   '@rails/actioncable@8.1.100': {}
 
-  '@tailwindcss/forms@0.5.10(tailwindcss@4.1.18)':
+  '@tailwindcss/forms@0.5.11(tailwindcss@4.1.18)':
     dependencies:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 4.1.18
