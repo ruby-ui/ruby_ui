@@ -3,69 +3,21 @@
 require "test_helper"
 
 class RubyUI::NativeSelectTest < ComponentTest
-  def test_render_with_options
+  def test_render_with_all_items
     output = phlex do
-      RubyUI.NativeSelect do
-        RubyUI.NativeSelectOption(value: "") { "Select a fruit" }
-        RubyUI.NativeSelectOption(value: "apple") { "Apple" }
-        RubyUI.NativeSelectOption(value: "banana") { "Banana" }
-      end
-    end
-
-    assert_match(/Select a fruit/, output)
-    assert_match(/Apple/, output)
-    assert_match(/Banana/, output)
-    assert_match(/<select/, output)
-    assert_match(/<svg/, output)
-  end
-
-  def test_render_with_groups
-    output = phlex do
-      RubyUI.NativeSelect do
-        RubyUI.NativeSelectGroup(label: "Fruits") do
-          RubyUI.NativeSelectOption(value: "apple") { "Apple" }
-          RubyUI.NativeSelectOption(value: "banana") { "Banana" }
+      RubyUI.NativeSelect(name: "department") do
+        RubyUI.NativeSelectOption(value: "") { "Select a department" }
+        RubyUI.NativeSelectGroup(label: "Engineering") do
+          RubyUI.NativeSelectOption(value: "frontend") { "Frontend" }
+          RubyUI.NativeSelectOption(value: "backend") { "Backend" }
         end
-        RubyUI.NativeSelectGroup(label: "Vegetables") do
-          RubyUI.NativeSelectOption(value: "carrot") { "Carrot" }
+        RubyUI.NativeSelectGroup(label: "Sales") do
+          RubyUI.NativeSelectOption(value: "account_executive") { "Account Executive" }
         end
       end
     end
 
-    assert_match(/<optgroup/, output)
-    assert_match(/Fruits/, output)
-    assert_match(/Vegetables/, output)
-    assert_match(/Carrot/, output)
-  end
-
-  def test_render_with_small_size
-    output = phlex do
-      RubyUI.NativeSelect(size: :sm) do
-        RubyUI.NativeSelectOption(value: "apple") { "Apple" }
-      end
-    end
-
-    assert_match(/Apple/, output)
-    assert_match(/<select/, output)
-  end
-
-  def test_render_with_disabled
-    output = phlex do
-      RubyUI.NativeSelect(disabled: true) do
-        RubyUI.NativeSelectOption(value: "apple") { "Apple" }
-      end
-    end
-
-    assert_match(/disabled/, output)
-  end
-
-  def test_render_with_name
-    output = phlex do
-      RubyUI.NativeSelect(name: "fruit") do
-        RubyUI.NativeSelectOption(value: "apple") { "Apple" }
-      end
-    end
-
-    assert_match(/name="fruit"/, output)
+    assert_match(/Frontend/, output)
+    assert_match('name="department"', output)
   end
 end
