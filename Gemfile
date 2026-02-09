@@ -80,4 +80,4 @@ gem "pry", "0.16.0"
 
 gem "tailwind_merge", "~> 1.3.1"
 
-gem "rouge", "~> 4.6"
+gem "rouge", "~> 4.7"
