@@ -31,7 +31,7 @@ module RubyUI
           "focus-visible:outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2",
           "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
           "aria-invalid:ring-destructive/20 aria-invalid:border-destructive aria-invalid:ring-2",
-          @size == :sm ? "h-7 rounded-md py-0.5" : "h-9"
+          (@size == :sm) ? "h-7 rounded-md py-0.5" : "h-9"
         ]
       }
     end
