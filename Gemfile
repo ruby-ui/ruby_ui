@@ -76,7 +76,7 @@ gem "phlex-rails", github: "phlex-ruby/phlex-rails"
 gem "ruby_ui", github: "ruby-ui/ruby_ui", branch: "main", require: false
 # gem "ruby_ui", path: "../ruby_ui"
 
-gem "pry", "0.15.2"
+gem "pry", "0.16.0"
 
 gem "tailwind_merge", "~> 1.3.1"
 
