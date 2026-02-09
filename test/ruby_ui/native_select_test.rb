@@ -16,6 +16,7 @@ class RubyUI::NativeSelectTest < ComponentTest
     assert_match(/Apple/, output)
     assert_match(/Banana/, output)
     assert_match(/<select/, output)
+    assert_match(/<svg/, output)
   end
 
   def test_render_with_groups

@@ -12,27 +12,11 @@ module RubyUI
         class: "group/native-select relative w-fit has-[select:disabled]:opacity-50"
       ) do
         select(**attrs, &block)
-        chevron_icon
+        render RubyUI::NativeSelectIcon.new
       end
     end
 
     private
-
-    def chevron_icon
-      svg(
-        xmlns: "http://www.w3.org/2000/svg",
-        viewbox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round",
-        class: "text-muted-foreground pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 select-none",
-        aria_hidden: "true"
-      ) do |s|
-        s.path(d: "m6 9 6 6 6-6")
-      end
-    end
 
     def default_attrs
       {
