@@ -5,7 +5,6 @@ on:
   push:
     branches: 
       - "main"
-      - "released"
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -101,31 +100,3 @@ jobs:
           imageName: ghcr.io/ruby-ui/web-devcontainer
           cacheFrom: ghcr.io/ruby-ui/web-devcontainer
           push: always
-        
-
-  next-deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: [test, docker-build, verify_components]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - name: Deploy to Heroku Next
-        run: git push https://heroku:${{ secrets.HEROKU_RUBYUI_API_KEY }}@git.heroku.com/rubyui-next.git HEAD:main
-
-
-  released-deploy:
-    if: github.ref == 'refs/heads/released'
-    needs: [test]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - name: Deploy to Heroku Prod
-        run: git push https://heroku:${{ secrets.HEROKU_RUBYUI_API_KEY }}@git.heroku.com/rubyui.git HEAD:main
