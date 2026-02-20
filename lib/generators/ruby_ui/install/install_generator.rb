@@ -30,7 +30,7 @@ module RubyUI
         if gem_installed?("tailwind_merge")
           say "tailwind_merge is already installed", :green
         else
-          say "Adding phlex-rails to Gemfile"
+          say "Adding tailwind_merge to Gemfile"
           run %(bundle add tailwind_merge)
         end
       end
