@@ -4,6 +4,8 @@ module RubyUI
       def install_js_package(package)
         if using_importmap?
           pin_with_importmap(package)
+        elsif using_bun?
+          run "bun add #{package}"
         elsif using_yarn?
           run "yarn add #{package}"
         elsif using_npm?
@@ -29,6 +31,8 @@ module RubyUI
       def using_importmap?
         File.exist?(Rails.root.join("config/importmap.rb")) && File.exist?(Rails.root.join("bin/importmap"))
       end
+
+      def using_bun? = File.exist?(Rails.root.join("bun.lock"))
 
       def using_npm? = File.exist?(Rails.root.join("package-lock.json"))
 
