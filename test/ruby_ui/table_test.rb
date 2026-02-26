@@ -43,4 +43,12 @@ class RubyUI::TableTest < ComponentTest
 
     assert_match(/Total/, output)
   end
+
+  def test_render_table_wrapper_has_relative_class
+    output = phlex do
+      RubyUI.Table {}
+    end
+
+    assert_match(/class="relative w-full overflow-auto"/, output)
+  end
 end
