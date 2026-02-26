@@ -9,6 +9,7 @@ module RubyUI
       source_root File.expand_path("../../ruby_ui", __dir__)
       argument :component_name, type: :string, required: true
       class_option :force, type: :boolean, default: false
+      class_option :with_docs, type: :boolean, default: false
 
       def generate_component
         if component_not_found?
@@ -63,7 +64,10 @@ module RubyUI
 
       def component_folder_path = File.join(self.class.source_root, component_folder_name)
 
-      def components_file_paths = Dir.glob(File.join(component_folder_path, "*.rb"))
+      def components_file_paths
+        files = Dir.glob(File.join(component_folder_path, "*.rb"))
+        options["with_docs"] ? files : files.reject { |f| f.end_with?("_docs.rb") }
+      end
 
       def js_controller_file_paths = Dir.glob(File.join(component_folder_path, "*.js"))
 
