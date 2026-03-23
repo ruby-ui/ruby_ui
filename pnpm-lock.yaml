@@ -19,10 +19,10 @@ importers:
         version: 8.0.23
       '@tailwindcss/forms':
         specifier: 0.5.11
-        version: 0.5.11(tailwindcss@4.1.18)
+        version: 0.5.11(tailwindcss@4.2.2)
       '@tailwindcss/typography':
         specifier: 0.5.19
-        version: 0.5.19(tailwindcss@4.1.18)
+        version: 0.5.19(tailwindcss@4.2.2)
       autoprefixer:
         specifier: 10.4.27
         version: 10.4.27(postcss@8.5.3)
@@ -54,8 +54,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       tailwindcss:
-        specifier: 4.1.18
-        version: 4.1.18
+        specifier: 4.2.2
+        version: 4.2.2
       tippy.js:
         specifier: 6.3.7
         version: 6.3.7
@@ -388,8 +388,8 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
-  tailwindcss@4.1.18:
-    resolution: {integrity: sha512-4+Z+0yiYyEtUVCScyfHCxOYP06L5Ne+JiHhY2IjR2KWMIWhJOYZKLSGZaP5HkZ8+bY0cxfzwDE5uOmzFXyIwxw==}
+  tailwindcss@4.2.2:
+    resolution: {integrity: sha512-KWBIxs1Xb6NoLdMVqhbhgwZf2PGBpPEiwOqgI4pFIYbNTfBXiKYyWoTsXgBQ9WFg/OlhnvHaY+AEpW7wSmFo2Q==}
 
   tippy.js@6.3.7:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
@@ -515,15 +515,15 @@ snapshots:
 
   '@rails/actioncable@8.1.200': {}
 
-  '@tailwindcss/forms@0.5.11(tailwindcss@4.1.18)':
+  '@tailwindcss/forms@0.5.11(tailwindcss@4.2.2)':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 4.1.18
+      tailwindcss: 4.2.2
 
-  '@tailwindcss/typography@0.5.19(tailwindcss@4.1.18)':
+  '@tailwindcss/typography@0.5.19(tailwindcss@4.2.2)':
     dependencies:
       postcss-selector-parser: 6.0.10
-      tailwindcss: 4.1.18
+      tailwindcss: 4.2.2
 
   autoprefixer@10.4.27(postcss@8.5.3):
     dependencies:
@@ -641,7 +641,7 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
-  tailwindcss@4.1.18: {}
+  tailwindcss@4.2.2: {}
 
   tippy.js@6.3.7:
     dependencies:
