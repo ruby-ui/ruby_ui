@@ -69,6 +69,9 @@ jobs:
       - name: Build
         run: bin/rails g ruby_ui:component:all --force true
 
+      - name: Remove generated docs stubs (conflict with app overrides)
+        run: git checkout -- app/components/ruby_ui/docs/ 2>/dev/null || rm -rf app/components/ruby_ui/docs/
+
       - uses: CatChen/check-git-status-action@v2
         with:
           fail-if-not-clean: true
