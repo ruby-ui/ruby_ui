@@ -14,7 +14,7 @@ module RubyUI
           stroke_width: "2",
           stroke_linecap: "round",
           stroke_linejoin: "round",
-          class: "size-4"
+          class: "size-3.5"
         ) do |s|
           s.path(d: "M18 6 6 18")
           s.path(d: "m6 6 12 12")
@@ -27,7 +27,7 @@ module RubyUI
     def default_attrs
       {
         type: "button",
-        class: "ml-auto shrink-0 rounded-sm opacity-50 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hidden",
+        class: "ml-auto shrink-0 rounded-sm text-muted-foreground hover:text-foreground focus-visible:outline-none hidden",
         aria: {label: "Clear selection"},
         data: {
           ruby_ui__combobox_target: "clearButton",

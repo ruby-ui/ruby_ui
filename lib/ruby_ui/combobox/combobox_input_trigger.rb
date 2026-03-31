@@ -1,29 +1,26 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ComboboxBadgeTrigger < Base
+  class ComboboxInputTrigger < Base
     def initialize(placeholder: "", **)
       @placeholder = placeholder
       super(**)
     end
 
-    def view_template(&)
+    def view_template
       div(**attrs) do
-        div(data: {ruby_ui__combobox_target: "badgeContainer"}, class: "contents")
         input(
           type: "text",
-          class: "flex-1 min-w-[80px] bg-transparent border-0 outline-none focus:ring-0 placeholder:text-muted-foreground text-sm",
+          placeholder: @placeholder,
           autocomplete: "off",
           autocorrect: "off",
           spellcheck: "false",
-          placeholder: @placeholder,
+          class: "flex-1 bg-transparent outline-none placeholder:text-muted-foreground text-sm disabled:cursor-not-allowed",
           data: {
-            ruby_ui__combobox_target: "badgeInput",
-            # JS implementation in combobox_controller.js
-            action: "keyup->ruby-ui--combobox#filterItems input->ruby-ui--combobox#filterItems keydown.backspace->ruby-ui--combobox#handleBadgeInputBackspace"
+            ruby_ui__combobox_target: "inputTrigger",
+            action: "focus->ruby-ui--combobox#openPopover keyup->ruby-ui--combobox#filterItems input->ruby-ui--combobox#filterItems"
           }
         )
-        yield if block_given?
         chevron_icon
       end
     end
@@ -32,10 +29,10 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex min-h-9 w-full flex-wrap items-center gap-1 rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 cursor-text",
+        class: "flex h-9 w-full items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 aria-invalid:border-destructive",
         data: {
           ruby_ui__combobox_target: "trigger",
-          action: "click->ruby-ui--combobox#openPopover"
+          placeholder: @placeholder
         },
         aria: {
           haspopup: "listbox",
