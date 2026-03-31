@@ -19,6 +19,7 @@ module RubyUI
           placeholder: @placeholder,
           data: {
             ruby_ui__combobox_target: "badgeInput",
+            # JS implementation in combobox_controller.js
             action: "keyup->ruby-ui--combobox#filterItems input->ruby-ui--combobox#filterItems keydown.backspace->ruby-ui--combobox#handleBadgeInputBackspace"
           }
         )
