@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Views::Docs::Combobox < Views::Base
-  @@code_example = nil
-
   def view_template
     component = "Combobox"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
@@ -10,51 +8,37 @@ class Views::Docs::Combobox < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Single option", context: self) do
+      render Docs::VisualCodeExample.new(title: "Combobox", context: self) do
         <<~RUBY
           div class: "w-96" do
             Combobox do
-              ComboboxTrigger placeholder: "Pick value"
+              ComboboxTrigger placeholder: "Select framework"
 
               ComboboxPopover do
-                ComboboxSearchInput(placeholder: "Pick value or type anything")
+                ComboboxSearchInput(placeholder: "Search framework...")
 
                 ComboboxList do
-                  ComboboxEmptyState { "No result" }
+                  ComboboxEmptyState { "No results found." }
 
-                  ComboboxListGroup(label: "Fruits") do
+                  ComboboxListGroup(label: "Ruby") do
                     ComboboxItem do
-                      ComboboxRadio(name: "food", value: "apple")
-                      span { "Apple" }
+                      ComboboxRadio(name: "framework", value: "rails")
+                      span { "Rails" }
                     end
-
                     ComboboxItem do
-                      ComboboxRadio(name: "food", value: "banana")
-                      span { "Banana" }
-                    end
-                  end
-
-                  ComboboxListGroup(label: "Vegetable") do
-                    ComboboxItem do
-                      ComboboxRadio(name: "food", value: "brocoli")
-                      span { "Broccoli" }
-                    end
-
-                    ComboboxItem do
-                      ComboboxRadio(name: "food", value: "carrot")
-                      span { "Carrot" }
+                      ComboboxRadio(name: "framework", value: "hanami")
+                      span { "Hanami" }
                     end
                   end
 
-                  ComboboxListGroup(label: "Others") do
+                  ComboboxListGroup(label: "JavaScript") do
                     ComboboxItem do
-                      ComboboxRadio(name: "food", value: "chocolate")
-                      span { "Chocolate" }
+                      ComboboxRadio(name: "framework", value: "nextjs")
+                      span { "Next.js" }
                     end
-
                     ComboboxItem do
-                      ComboboxRadio(name: "food", value: "milk")
-                      span { "Milk" }
+                      ComboboxRadio(name: "framework", value: "nuxt")
+                      span { "Nuxt" }
                     end
                   end
                 end
@@ -64,56 +48,37 @@ class Views::Docs::Combobox < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Multiple options", context: self) do
+      render Docs::VisualCodeExample.new(title: "Multiselect", context: self) do
         <<~RUBY
           div class: "w-96" do
-            Combobox term: "things" do
-              ComboboxTrigger placeholder: "Pick value"
+            Combobox do
+              ComboboxBadgeTrigger(placeholder: "Select frameworks...") do
+                ComboboxClearButton()
+              end
 
               ComboboxPopover do
-                ComboboxSearchInput(placeholder: "Pick value or type anything")
-
                 ComboboxList do
-                  ComboboxEmptyState { "No result" }
+                  ComboboxEmptyState { "No results found." }
 
-                  ComboboxItem(class: "mt-3") do
-                    ComboboxToggleAllCheckbox(name: "all", value: "all")
-                    span { "Select all" }
-                  end
-
-                  ComboboxListGroup label: "Fruits" do
+                  ComboboxListGroup(label: "Ruby") do
                     ComboboxItem do
-                      ComboboxCheckbox(name: "food", value: "apple")
-                      span { "Apple" }
+                      ComboboxCheckbox(name: "frameworks[]", value: "rails")
+                      span { "Rails" }
                     end
-
                     ComboboxItem do
-                      ComboboxCheckbox(name: "food", value: "banana")
-                      span { "Banana" }
+                      ComboboxCheckbox(name: "frameworks[]", value: "hanami")
+                      span { "Hanami" }
                     end
                   end
 
-                  ComboboxListGroup label: "Vegetable" do
+                  ComboboxListGroup(label: "JavaScript") do
                     ComboboxItem do
-                      ComboboxCheckbox(name: "food", value: "brocoli")
-                      span { "Broccoli" }
+                      ComboboxCheckbox(name: "frameworks[]", value: "nextjs")
+                      span { "Next.js" }
                     end
-
                     ComboboxItem do
-                      ComboboxCheckbox(name: "food", value: "carrot")
-                      span { "Carrot" }
-                    end
-                  end
-
-                  ComboboxListGroup label: "Others" do
-                    ComboboxItem do
-                      ComboboxCheckbox(name: "food", value: "chocolate")
-                      span { "Chocolate" }
-                    end
-
-                    ComboboxItem do
-                      ComboboxCheckbox(name: "food", value: "milk")
-                      span { "Milk" }
+                      ComboboxCheckbox(name: "frameworks[]", value: "nuxt")
+                      span { "Nuxt" }
                     end
                   end
                 end
@@ -133,19 +98,9 @@ class Views::Docs::Combobox < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
-        <<~RUBY
-          div(class: "w-96") do
-            Combobox do
-              ComboboxTrigger(aria: {disabled: "true"}, placeholder: "Pick value")
-            end
-          end
-        RUBY
-      end
+      render Components::ComponentSetup::Tabs.new(component_name: component)
 
-      render Components::ComponentSetup::Tabs.new(component_name: "Combobox")
-
-      render Docs::ComponentsTable.new(component_files("Combobox"))
+      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 end
