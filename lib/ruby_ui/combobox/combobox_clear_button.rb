@@ -27,9 +27,11 @@ module RubyUI
     def default_attrs
       {
         type: "button",
-        class: "ml-auto shrink-0 rounded-sm opacity-50 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring hidden",
+        class: "ml-auto shrink-0 rounded-sm opacity-50 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hidden",
+        aria: {label: "Clear selection"},
         data: {
           ruby_ui__combobox_target: "clearButton",
+          # JS implementation in combobox_controller.js
           action: "ruby-ui--combobox#clearAll"
         }
       }

@@ -121,4 +121,25 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/\bhidden\b/, output)
     assert_match(/clearButton/, output)
   end
+
+  def test_combobox_item_has_selected_state
+    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
+    assert_match(/has-\[:checked\]:bg-accent/, output)
+  end
+
+  def test_combobox_item_has_keyboard_highlight
+    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
+    assert_match(/aria-\[current=true\]:bg-accent/, output)
+  end
+
+  def test_combobox_item_has_disabled_state
+    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
+    assert_match(/has-\[input:disabled\]:opacity-50/, output)
+  end
+
+  def test_combobox_toggle_all_checkbox_is_peer_sr_only
+    output = phlex { RubyUI.ComboboxToggleAllCheckbox() }
+    assert_match(/\bpeer\b/, output)
+    assert_match(/sr-only/, output)
+  end
 end
