@@ -15,10 +15,10 @@ module RubyUI
           autocomplete: "off",
           autocorrect: "off",
           spellcheck: "false",
-          class: "flex-1 bg-transparent outline-none placeholder:text-muted-foreground text-sm disabled:cursor-not-allowed",
+          class: "flex-1 border-0 bg-transparent outline-none focus:ring-0 placeholder:text-muted-foreground text-sm disabled:cursor-not-allowed",
           data: {
             ruby_ui__combobox_target: "inputTrigger",
-            action: "focus->ruby-ui--combobox#openPopover keyup->ruby-ui--combobox#filterItems input->ruby-ui--combobox#filterItems"
+            action: "keyup->ruby-ui--combobox#filterItems input->ruby-ui--combobox#filterItems"
           }
         )
         chevron_icon
@@ -32,7 +32,8 @@ module RubyUI
         class: "flex h-9 w-full items-center rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 aria-invalid:border-destructive",
         data: {
           ruby_ui__combobox_target: "trigger",
-          placeholder: @placeholder
+          placeholder: @placeholder,
+          action: "click->ruby-ui--combobox#openPopover"
         },
         aria: {
           haspopup: "listbox",
