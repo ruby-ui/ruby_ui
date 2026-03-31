@@ -142,4 +142,31 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/\bpeer\b/, output)
     assert_match(/sr-only/, output)
   end
+
+  def test_combobox_input_trigger_renders
+    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick one") }
+    assert_match(/inputTrigger/, output)        # inputTrigger target on input
+    assert_match(/trigger/, output)             # trigger target on wrapper
+    assert_match(/Pick one/, output)            # placeholder
+    assert_match(/openPopover/, output)         # focus action
+    assert_match(/filterItems/, output)         # keyup action
+    assert_match(/chevron|path.*d="m7/, output) # chevron SVG present
+  end
+
+  def test_combobox_input_trigger_invalid_state
+    output = phlex { RubyUI.ComboboxInputTrigger(aria: {invalid: "true"}, placeholder: "Pick") }
+    assert_match(/aria-invalid.*true|invalid.*true/, output)
+    assert_match(/aria-invalid:border-destructive/, output)
+  end
+
+  def test_combobox_clear_button_is_subtle
+    output = phlex { RubyUI.ComboboxClearButton() }
+    assert_match(/text-muted-foreground/, output)
+    refute_match(/ring-ring/, output)
+  end
+
+  def test_combobox_badge_trigger_input_has_no_border
+    output = phlex { RubyUI.ComboboxBadgeTrigger(placeholder: "Select") }
+    assert_match(/border-0/, output)
+  end
 end
