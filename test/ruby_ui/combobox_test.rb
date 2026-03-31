@@ -70,4 +70,55 @@ class RubyUI::ComboboxTest < ComponentTest
 
     assert_match(/Hanami/, output)
   end
+
+  def test_combobox_item_renders_indicator
+    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
+    assert_match(/peer-checked:opacity-100/, output)
+    assert_match(/sr-only/, output)
+    assert_match(/peer/, output)
+  end
+
+  def test_combobox_radio_is_peer_sr_only
+    output = phlex { RubyUI.ComboboxRadio(name: "x", value: "1") }
+    assert_match(/\bpeer\b/, output)
+    assert_match(/sr-only/, output)
+    refute_match(/border-primary/, output)
+    refute_match(/rounded-full/, output)
+  end
+
+  def test_combobox_checkbox_is_peer_sr_only
+    output = phlex { RubyUI.ComboboxCheckbox(name: "x", value: "1") }
+    assert_match(/\bpeer\b/, output)
+    assert_match(/sr-only/, output)
+    refute_match(/border-primary/, output)
+    refute_match(/rounded-sm border/, output)
+  end
+
+  def test_combobox_item_indicator_renders_check_svg
+    output = phlex { RubyUI.ComboboxItemIndicator() }
+    assert_match(/peer-checked:opacity-100/, output)
+    assert_match(/opacity-0/, output)
+    assert_match(/M20 6 9 17l-5-5/, output)
+  end
+
+  def test_combobox_badge_trigger_renders_targets
+    output = phlex { RubyUI.ComboboxBadgeTrigger() }
+    assert_match(/badgeContainer/, output)
+    assert_match(/badgeInput/, output)
+    assert_match(/openPopover/, output)
+  end
+
+  def test_combobox_badge_renders_span
+    output = phlex { RubyUI.ComboboxBadge { "Item" } }
+    assert_match(/bg-secondary/, output)
+    assert_match(/Item/, output)
+    assert_match(/<span/, output)
+  end
+
+  def test_combobox_clear_button_renders
+    output = phlex { RubyUI.ComboboxClearButton() }
+    assert_match(/clearAll/, output)
+    assert_match(/\bhidden\b/, output)
+    assert_match(/clearButton/, output)
+  end
 end
