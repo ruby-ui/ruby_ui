@@ -10,8 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        data: {ruby_ui__collapsible_target: "content"},
-        class: "overflow-y-hidden"
+        data: { ruby_ui__collapsible_target: 'content' },
+        class: 'overflow-y-hidden'
       }
     end
   end

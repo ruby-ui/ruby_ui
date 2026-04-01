@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "py-4"
+        class: 'py-4'
       }
     end
   end

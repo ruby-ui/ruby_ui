@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        aria: {label: "pagination"},
-        class: "mx-auto flex w-full justify-center",
-        role: "navigation"
+        aria: { label: 'pagination' },
+        class: 'mx-auto flex w-full justify-center',
+        role: 'navigation'
       }
     end
   end

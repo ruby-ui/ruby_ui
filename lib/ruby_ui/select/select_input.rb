@@ -10,11 +10,11 @@ module RubyUI
 
     def default_attrs
       {
-        class: "hidden",
+        class: 'hidden',
         data: {
-          ruby_ui__select_target: "input",
-          ruby_ui__form_field_target: "input",
-          action: "change->ruby-ui--form-field#onChange invalid->ruby-ui--form-field#onInvalid"
+          ruby_ui__select_target: 'input',
+          ruby_ui__form_field_target: 'input',
+          action: 'change->ruby-ui--form-field#onChange invalid->ruby-ui--form-field#onInvalid'
         }
       }
     end

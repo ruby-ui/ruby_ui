@@ -16,20 +16,20 @@ module RubyUI
     def default_attrs
       {
         class: [
-          "z-50",
-          "group/dropdown-menu",
-          (strategy == "absolute") ? "is-absolute" : "is-fixed"
+          'z-50',
+          'group/dropdown-menu',
+          strategy == 'absolute' ? 'is-absolute' : 'is-fixed'
         ],
         data: {
-          controller: "ruby-ui--dropdown-menu",
-          action: "click@window->ruby-ui--dropdown-menu#onClickOutside",
+          controller: 'ruby-ui--dropdown-menu',
+          action: 'click@window->ruby-ui--dropdown-menu#onClickOutside',
           ruby_ui__dropdown_menu_options_value: @options.to_json
         }
       }
     end
 
     def strategy
-      @_strategy ||= @options[:strategy] || "absolute"
+      @strategy ||= @options[:strategy] || 'absolute'
     end
   end
 end

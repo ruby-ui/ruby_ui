@@ -2,7 +2,7 @@
 
 module RubyUI
   class Tooltip < Base
-    def initialize(placement: "top", **attrs)
+    def initialize(placement: 'top', **attrs)
       @placement = placement
       super(**attrs)
     end
@@ -16,10 +16,10 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--tooltip",
+          controller: 'ruby-ui--tooltip',
           ruby_ui__tooltip_placement_value: @placement
         },
-        class: "group"
+        class: 'group'
       }
     end
   end

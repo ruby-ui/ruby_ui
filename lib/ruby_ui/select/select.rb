@@ -11,12 +11,12 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--select",
-          ruby_ui__select_open_value: "false",
-          action: "click@window->ruby-ui--select#clickOutside",
-          ruby_ui__select_ruby_ui__select_item_outlet: ".item"
+          controller: 'ruby-ui--select',
+          ruby_ui__select_open_value: 'false',
+          action: 'click@window->ruby-ui--select#clickOutside',
+          ruby_ui__select_ruby_ui__select_item_outlet: '.item'
         },
-        class: "group/select w-full relative"
+        class: 'group/select w-full relative'
       }
     end
   end

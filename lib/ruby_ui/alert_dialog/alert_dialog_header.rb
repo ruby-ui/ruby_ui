@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex flex-col space-y-2 text-center sm:text-left rtl:sm:text-right"
+        class: 'flex flex-col space-y-2 text-center sm:text-left rtl:sm:text-right'
       }
     end
   end

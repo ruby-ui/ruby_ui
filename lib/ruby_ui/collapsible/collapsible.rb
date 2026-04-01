@@ -16,7 +16,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--collapsible",
+          controller: 'ruby-ui--collapsible',
           ruby_ui__collapsible_open_value: @open
         }
       }

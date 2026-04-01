@@ -21,18 +21,18 @@ module RubyUI
 
     def default_attrs
       {
-        role: (@decorative ? "none" : "separator"),
+        role: (@decorative ? 'none' : 'separator'),
         class: [
-          "shrink-0 bg-border",
+          'shrink-0 bg-border',
           orientation_classes
         ]
       }
     end
 
     def orientation_classes
-      return "h-[1px] w-full" if @orientation == :horizontal
+      return 'h-[1px] w-full' if @orientation == :horizontal
 
-      "h-full w-[1px]"
+      'h-full w-[1px]'
     end
   end
 end

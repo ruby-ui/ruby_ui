@@ -11,9 +11,9 @@ module RubyUI
     def default_attrs
       {
         data: {
-          ruby_ui__popover_target: "trigger"
+          ruby_ui__popover_target: 'trigger'
         },
-        class: "inline-block"
+        class: 'inline-block'
       }
     end
   end

@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "text-lg font-semibold"
+        class: 'text-lg font-semibold'
       }
     end
   end

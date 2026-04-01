@@ -11,10 +11,10 @@ module RubyUI
     def default_attrs
       {
         data: {
-          ruby_ui__accordion_target: "content"
+          ruby_ui__accordion_target: 'content'
         },
-        class: "overflow-y-hidden",
-        style: "height: 0px;"
+        class: 'overflow-y-hidden',
+        style: 'height: 0px;'
       }
     end
   end

@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "items-center p-6 pt-0"
+        class: 'items-center p-6 pt-0'
       }
     end
   end

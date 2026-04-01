@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "font-semibold leading-none tracking-tight"
+        class: 'font-semibold leading-none tracking-tight'
       }
     end
   end

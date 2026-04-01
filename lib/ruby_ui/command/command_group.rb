@@ -23,16 +23,16 @@ module RubyUI
     end
 
     def render_items(&)
-      div(group_items: "", role: "group", &)
+      div(group_items: '', role: 'group', &)
     end
 
     def default_attrs
       {
-        class: "overflow-hidden p-1 text-foreground [&_[group-heading]]:px-2 [&_[group-heading]]:py-1.5 [&_[group-heading]]:text-xs [&_[group-heading]]:font-medium [&_[group-heading]]:text-muted-foreground",
-        role: "presentation",
+        class: 'overflow-hidden p-1 text-foreground [&_[group-heading]]:px-2 [&_[group-heading]]:py-1.5 [&_[group-heading]]:text-xs [&_[group-heading]]:font-medium [&_[group-heading]]:text-muted-foreground',
+        role: 'presentation',
         data: {
           value: @title,
-          ruby_ui__command_target: "group"
+          ruby_ui__command_target: 'group'
         }
       }
     end

@@ -18,18 +18,18 @@ module RubyUI
 
     def default_attrs
       {
-        role: "progressbar",
+        role: 'progressbar',
         aria_valuenow: @value,
         aria_valuemin: 0,
         aria_valuemax: 100,
         aria_valuetext: "#{@value}%",
-        class: "relative h-2 overflow-hidden rounded-full bg-primary/20 [&>*]:bg-primary"
+        class: 'relative h-2 overflow-hidden rounded-full bg-primary/20 [&>*]:bg-primary'
       }
     end
 
     def indicator_attrs
       {
-        class: "h-full w-full flex-1",
+        class: 'h-full w-full flex-1',
         style: "transform: translateX(-#{100 - @value}%)"
       }
     end

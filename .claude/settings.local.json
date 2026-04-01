@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/cooper/dev/linkana/ruby_ui tag --list)"
+    ]
+  }
+}

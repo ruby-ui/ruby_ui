@@ -2,7 +2,7 @@
 
 module RubyUI
   class CalendarTitle < Base
-    def initialize(default: "Month Year", **attrs)
+    def initialize(default: 'Month Year', **attrs)
       @default = default
       super(**attrs)
     end
@@ -15,11 +15,11 @@ module RubyUI
 
     def default_attrs
       {
-        class: "text-sm font-medium",
-        aria_live: "polite",
-        role: "presentation",
+        class: 'text-sm font-medium',
+        aria_live: 'polite',
+        role: 'presentation',
         data: {
-          ruby_ui__calendar_target: "title"
+          ruby_ui__calendar_target: 'title'
         }
       }
     end

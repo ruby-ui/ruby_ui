@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        role: "group",
+        role: 'group',
         data: {
-          controller: "ruby-ui--checkbox-group"
+          controller: 'ruby-ui--checkbox-group'
         }
       }
     end

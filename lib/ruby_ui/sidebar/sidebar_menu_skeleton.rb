@@ -9,11 +9,11 @@ module RubyUI
 
     def view_template(&)
       div(**attrs) do
-        Skeleton(class: "size-4 rounded-md", data: {sidebar: "menu-skeleton-icon"}) if @show_icon
+        Skeleton(class: 'size-4 rounded-md', data: { sidebar: 'menu-skeleton-icon' }) if @show_icon
         Skeleton(
-          class: "h-4 max-w-[var(--skeleton-width)] flex-1",
-          data: {sidebar: "menu-skeleton-text"},
-          style: {"--skeleton-width" => "#{skeleton_width}%"}
+          class: 'h-4 max-w-[var(--skeleton-width)] flex-1',
+          data: { sidebar: 'menu-skeleton-text' },
+          style: { '--skeleton-width' => "#{skeleton_width}%" }
         )
       end
     end
@@ -22,15 +22,15 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex h-8 items-center gap-2 rounded-md px-2",
+        class: 'flex h-8 items-center gap-2 rounded-md px-2',
         data: {
-          sidebar: "menu-skeleton"
+          sidebar: 'menu-skeleton'
         }
       }
     end
 
     def skeleton_width
-      @_skeleton_width ||= rand(50..89)
+      @skeleton_width ||= rand(50..89)
     end
   end
 end

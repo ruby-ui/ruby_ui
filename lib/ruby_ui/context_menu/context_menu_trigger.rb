@@ -11,8 +11,8 @@ module RubyUI
     def default_attrs
       {
         data: {
-          ruby_ui__context_menu_target: "trigger",
-          action: "contextmenu->ruby-ui--context-menu#handleContextMenu"
+          ruby_ui__context_menu_target: 'trigger',
+          action: 'contextmenu->ruby-ui--context-menu#handleContextMenu'
         }
       }
     end

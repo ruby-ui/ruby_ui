@@ -5,7 +5,7 @@ module RubyUI
     def initialize(option: {}, **attrs)
       @options = option
       @options[:delay] ||= [500, 250]
-      @options[:trigger] ||= "mouseenter focus click"
+      @options[:trigger] ||= 'mouseenter focus click'
       super(**attrs)
     end
 
@@ -18,7 +18,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--hover-card",
+          controller: 'ruby-ui--hover-card',
           ruby_ui__hover_card_options_value: @options.to_json
         }
       }

@@ -3,8 +3,8 @@
 module RubyUI
   class CommandDialogTrigger < Base
     DEFAULT_KEYBINDINGS = [
-      "keydown.ctrl+k@window",
-      "keydown.meta+k@window"
+      'keydown.ctrl+k@window',
+      'keydown.meta+k@window'
     ].freeze
 
     def initialize(keybindings: DEFAULT_KEYBINDINGS, **attrs)
@@ -21,7 +21,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          action: ["click->ruby-ui--command#open", @keybindings.join(" ")]
+          action: ['click->ruby-ui--command#open', @keybindings.join(' ')]
         }
       }
     end

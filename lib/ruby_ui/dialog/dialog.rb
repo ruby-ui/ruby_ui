@@ -16,7 +16,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--dialog",
+          controller: 'ruby-ui--dialog',
           ruby_ui__dialog_open_value: @open
         }
       }

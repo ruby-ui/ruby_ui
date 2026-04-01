@@ -2,7 +2,7 @@
 
 module RubyUI
   class AvatarImage < Base
-    def initialize(src:, alt: "", **attrs)
+    def initialize(src:, alt: '', **attrs)
       @src = src
       @alt = alt
       super(**attrs)
@@ -16,8 +16,8 @@ module RubyUI
 
     def default_attrs
       {
-        loading: "lazy",
-        class: "aspect-square h-full w-full",
+        loading: 'lazy',
+        class: 'aspect-square h-full w-full',
         alt: @alt,
         src: @src
       }

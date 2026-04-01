@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "group/menu-item relative",
+        class: 'group/menu-item relative',
         data: {
-          sidebar: "menu-item"
+          sidebar: 'menu-item'
         }
       }
     end

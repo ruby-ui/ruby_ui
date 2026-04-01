@@ -7,7 +7,7 @@ module Views
       send(tag, &)
     end
 
-    def component_files(component_name)
+    def component_files(_component_name)
       []
     end
 
@@ -18,7 +18,7 @@ module Views
 
     # InlineLink helper for documentation links
     def InlineLink(href:, target: nil, class: nil, &)
-      a(href: href, target: target, class: binding.local_variable_get(:class), &)
+      a(href:, target:, class: binding.local_variable_get(:class), &)
     end
 
     # Alert component helpers
@@ -36,39 +36,39 @@ module Views
 
     # Route helper stubs - return "#" as placeholder
     def docs_sheet_path
-      "#"
+      '#'
     end
 
     def docs_separator_path
-      "#"
+      '#'
     end
 
     def docs_accordion_path
-      "#"
+      '#'
     end
 
     def docs_alert_path
-      "#"
+      '#'
     end
 
     def docs_alert_dialog_path
-      "#"
+      '#'
     end
 
     def docs_aspect_ratio_path
-      "#"
+      '#'
     end
 
     def docs_avatar_path
-      "#"
+      '#'
     end
 
     def docs_badge_path
-      "#"
+      '#'
     end
 
     def docs_installation_path
-      "#"
+      '#'
     end
 
     # InlineCode helper for typography examples

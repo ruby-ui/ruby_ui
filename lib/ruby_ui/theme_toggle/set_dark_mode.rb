@@ -8,8 +8,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "hidden dark:inline-block",
-        data: {controller: "ruby-ui--theme-toggle", action: "click->ruby-ui--theme-toggle#setLightTheme"}
+        class: 'hidden dark:inline-block',
+        data: { controller: 'ruby-ui--theme-toggle', action: 'click->ruby-ui--theme-toggle#setLightTheme' }
       }
     end
   end

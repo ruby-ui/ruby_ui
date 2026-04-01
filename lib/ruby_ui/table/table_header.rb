@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "[&_tr]:border-b"
+        class: '[&_tr]:border-b'
       }
     end
   end

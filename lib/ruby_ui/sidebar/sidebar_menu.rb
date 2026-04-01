@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex w-full min-w-0 flex-col gap-1",
+        class: 'flex w-full min-w-0 flex-col gap-1',
         data: {
-          sidebar: "menu"
+          sidebar: 'menu'
         }
       }
     end

@@ -10,12 +10,12 @@ module RubyUI
 
     def default_attrs
       {
-        class: "inset-auto m-0 absolute border bg-background shadow-lg rounded-lg",
-        role: "popover",
+        class: 'inset-auto m-0 absolute border bg-background shadow-lg rounded-lg',
+        role: 'popover',
         autofocus: true,
         popover: true,
         data: {
-          ruby_ui__combobox_target: "popover",
+          ruby_ui__combobox_target: 'popover',
           action: %w[
             toggle->ruby-ui--combobox#handlePopoverToggle
             keydown.down->ruby-ui--combobox#keyDownPressed

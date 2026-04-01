@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex flex-col space-y-1.5 p-6"
+        class: 'flex flex-col space-y-1.5 p-6'
       }
     end
   end

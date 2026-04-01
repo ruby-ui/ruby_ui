@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "inline-flex items-center gap-1.5"
+        class: 'inline-flex items-center gap-1.5'
       }
     end
   end

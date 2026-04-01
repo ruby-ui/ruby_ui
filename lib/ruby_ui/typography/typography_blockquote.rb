@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "mt-6 border-l-2 pl-6 italic"
+        class: 'mt-6 border-l-2 pl-6 italic'
       }
     end
   end

@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "w-full text-sm",
+        class: 'w-full text-sm',
         data: {
-          sidebar: "group-content"
+          sidebar: 'group-content'
         }
       }
     end

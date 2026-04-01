@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {controller: "ruby-ui--command"}
+        data: { controller: 'ruby-ui--command' }
       }
     end
   end

@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "mx-2 w-auto bg-sidebar-border",
+        class: 'mx-2 w-auto bg-sidebar-border',
         data: {
-          sidebar: "separator"
+          sidebar: 'separator'
         }
       }
     end

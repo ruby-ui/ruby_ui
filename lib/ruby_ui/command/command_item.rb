@@ -2,7 +2,7 @@
 
 module RubyUI
   class CommandItem < Base
-    def initialize(value:, text: "", href: "#", **attrs)
+    def initialize(value:, text: '', href: '#', **attrs)
       @value = value
       @text = text
       @href = href
@@ -17,11 +17,11 @@ module RubyUI
 
     def default_attrs
       {
-        class: "relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        class: 'relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         href: @href,
-        role: "option",
+        role: 'option',
         data: {
-          ruby_ui__command_target: "item",
+          ruby_ui__command_target: 'item',
           value: @value,
           text: @text
         }

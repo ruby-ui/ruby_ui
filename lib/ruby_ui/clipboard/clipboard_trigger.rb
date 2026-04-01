@@ -11,8 +11,8 @@ module RubyUI
     def default_attrs
       {
         data: {
-          ruby_ui__clipboard_target: "trigger",
-          action: "click->ruby-ui--clipboard#copy"
+          ruby_ui__clipboard_target: 'trigger',
+          action: 'click->ruby-ui--clipboard#copy'
         }
       }
     end

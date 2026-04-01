@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "px-2 py-1.5 text-sm font-semibold"
+        class: 'px-2 py-1.5 text-sm font-semibold'
       }
     end
   end

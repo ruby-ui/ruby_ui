@@ -10,10 +10,10 @@ module RubyUI
 
     def default_attrs
       {
-        role: "presentation",
-        class: "hidden py-6 text-center text-sm",
+        role: 'presentation',
+        class: 'hidden py-6 text-center text-sm',
         data: {
-          ruby_ui__combobox_target: "emptyState"
+          ruby_ui__combobox_target: 'emptyState'
         }
       }
     end

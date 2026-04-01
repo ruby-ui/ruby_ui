@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex flex-col gap-2 p-2",
+        class: 'flex flex-col gap-2 p-2',
         data: {
-          sidebar: "footer"
+          sidebar: 'footer'
         }
       }
     end

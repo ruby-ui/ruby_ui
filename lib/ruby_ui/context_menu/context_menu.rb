@@ -4,7 +4,7 @@ module RubyUI
   class ContextMenu < Base
     def initialize(options: {}, **attrs)
       @options = options
-      @options[:trigger] ||= "manual"
+      @options[:trigger] ||= 'manual'
       super(**attrs)
     end
 
@@ -17,7 +17,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--context-menu",
+          controller: 'ruby-ui--context-menu',
           ruby_ui__context_menu_options_value: @options.to_json
         }
       }

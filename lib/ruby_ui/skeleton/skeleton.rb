@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "animate-pulse rounded-md bg-primary/10"
+        class: 'animate-pulse rounded-md bg-primary/10'
       }
     end
   end

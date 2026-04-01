@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require "bundler/setup"
-require "ruby_ui"
+require 'bundler/setup'
+require 'ruby_ui'
 
 Bundler.require(:development)
 
-require "irb"
+require 'irb'
 
 IRB.start(__FILE__)

@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 rtl:space-x-reverse"
+        class: 'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 rtl:space-x-reverse'
       }
     end
   end

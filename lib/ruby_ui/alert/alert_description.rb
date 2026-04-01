@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "text-sm [&_p]:leading-relaxed"
+        class: 'text-sm [&_p]:leading-relaxed'
       }
     end
   end

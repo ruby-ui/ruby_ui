@@ -18,9 +18,9 @@ module RubyUI
     def default_attrs
       {
         data: {
-          ruby_ui__select_target: "value"
+          ruby_ui__select_target: 'value'
         },
-        class: "truncate pointer-events-none"
+        class: 'truncate pointer-events-none'
       }
     end
   end

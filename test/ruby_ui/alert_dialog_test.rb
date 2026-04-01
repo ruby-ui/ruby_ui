@@ -1,27 +1,31 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
-class RubyUI::AlertDialogTest < ComponentTest
-  def test_render_with_all_items
-    output = phlex do
-      RubyUI.AlertDialog do
-        RubyUI.AlertDialogTrigger do
-          RubyUI.Button { "Show dialog" }
-        end
-        RubyUI.AlertDialogContent do
-          RubyUI.AlertDialogHeader do
-            RubyUI.AlertDialogTitle { "Are you absolutely sure?" }
-            RubyUI.AlertDialogDescription { "This action cannot be undone. This will permanently delete your account and remove your data from our servers." }
+module RubyUI
+  class AlertDialogTest < ComponentTest
+    def test_render_with_all_items
+      output = phlex do
+        RubyUI.AlertDialog do
+          RubyUI.AlertDialogTrigger do
+            RubyUI.Button { 'Show dialog' }
           end
-          RubyUI.AlertDialogFooter do
-            RubyUI.AlertDialogCancel { "Cancel" }
-            RubyUI.AlertDialogAction { "Continue" }
+          RubyUI.AlertDialogContent do
+            RubyUI.AlertDialogHeader do
+              RubyUI.AlertDialogTitle { 'Are you absolutely sure?' }
+              RubyUI.AlertDialogDescription do
+                'This action cannot be undone. This will permanently delete your account and remove your data from our servers.'
+              end
+            end
+            RubyUI.AlertDialogFooter do
+              RubyUI.AlertDialogCancel { 'Cancel' }
+              RubyUI.AlertDialogAction { 'Continue' }
+            end
           end
         end
       end
-    end
 
-    assert_match(/Show dialog/, output)
+      assert_match(/Show dialog/, output)
+    end
   end
 end

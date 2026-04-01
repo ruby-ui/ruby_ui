@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "w-full"
+        class: 'w-full'
       }
     end
   end

@@ -15,11 +15,11 @@ module RubyUI
 
     def default_attrs
       {
-        role: "combobox",
+        role: 'combobox',
         data: {
-          controller: "ruby-ui--combobox",
+          controller: 'ruby-ui--combobox',
           ruby_ui__combobox_term_value: @term,
-          action: "turbo:morph@window->ruby-ui--combobox#updateTriggerContent"
+          action: 'turbo:morph@window->ruby-ui--combobox#updateTriggerContent'
         }
       }
     end

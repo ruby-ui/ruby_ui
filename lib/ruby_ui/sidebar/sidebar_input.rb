@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+        class: 'h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
         data: {
-          sidebar: "input"
+          sidebar: 'input'
         }
       }
     end

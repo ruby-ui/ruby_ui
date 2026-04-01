@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "relative flex w-full min-w-0 flex-col p-2",
+        class: 'relative flex w-full min-w-0 flex-col p-2',
         data: {
-          sidebar: "group"
+          sidebar: 'group'
         }
       }
     end

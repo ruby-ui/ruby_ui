@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "[&_tr:last-child]:border-0"
+        class: '[&_tr:last-child]:border-0'
       }
     end
   end

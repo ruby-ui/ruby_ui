@@ -10,9 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "py-6 text-center text-sm",
-        role: "presentation",
-        data: {ruby_ui__command_target: "empty"}
+        class: 'py-6 text-center text-sm',
+        role: 'presentation',
+        data: { ruby_ui__command_target: 'empty' }
       }
     end
   end

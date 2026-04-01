@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RubyUI
   module Generators
     module JavascriptUtils
@@ -17,9 +19,9 @@ module RubyUI
 
       def pin_with_importmap(package)
         case package
-        when "motion"
+        when 'motion'
           pin_motion
-        when "tippy.js"
+        when 'tippy.js'
           pin_tippy_js
         else
           run "bin/importmap pin #{package}"
@@ -27,21 +29,21 @@ module RubyUI
       end
 
       def using_importmap?
-        File.exist?(Rails.root.join("config/importmap.rb")) && File.exist?(Rails.root.join("bin/importmap"))
+        File.exist?(Rails.root.join('config/importmap.rb')) && File.exist?(Rails.root.join('bin/importmap'))
       end
 
-      def using_npm? = File.exist?(Rails.root.join("package-lock.json"))
+      def using_npm? = File.exist?(Rails.root.join('package-lock.json'))
 
-      def using_pnpm? = File.exist?(Rails.root.join("pnpm-lock.yaml"))
+      def using_pnpm? = File.exist?(Rails.root.join('pnpm-lock.yaml'))
 
-      def using_yarn? = File.exist?(Rails.root.join("yarn.lock"))
+      def using_yarn? = File.exist?(Rails.root.join('yarn.lock'))
 
       def pin_motion
         say <<~TEXT
           WARNING: Installing motion from CDN because `bin/importmap pin motion` doesn't download the correct file.
         TEXT
 
-        inject_into_file Rails.root.join("config/importmap.rb"), <<~RUBY
+        inject_into_file Rails.root.join('config/importmap.rb'), <<~RUBY
           pin "motion", to: "https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm"\n
         RUBY
       end
@@ -51,7 +53,7 @@ module RubyUI
           WARNING: Installing tippy.js from CDN because `bin/importmap pin tippy.js` doesn't download the correct file.
         TEXT
 
-        inject_into_file Rails.root.join("config/importmap.rb"), <<~RUBY
+        inject_into_file Rails.root.join('config/importmap.rb'), <<~RUBY
           pin "tippy.js", to: "https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/+esm"
           pin "@popperjs/core", to: "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/+esm"\n
         RUBY

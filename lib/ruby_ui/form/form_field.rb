@@ -11,9 +11,9 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--form-field"
+          controller: 'ruby-ui--form-field'
         },
-        class: "flex flex-col gap-2"
+        class: 'flex flex-col gap-2'
       }
     end
   end

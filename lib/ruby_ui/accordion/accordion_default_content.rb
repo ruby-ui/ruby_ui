@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "pb-4 pt-0 text-sm"
+        class: 'pb-4 pt-0 text-sm'
       }
     end
   end

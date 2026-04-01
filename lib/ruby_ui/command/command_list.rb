@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "divide-y divide-border"
+        class: 'divide-y divide-border'
       }
     end
   end

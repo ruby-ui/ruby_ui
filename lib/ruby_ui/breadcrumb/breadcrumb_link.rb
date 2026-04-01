@@ -2,7 +2,7 @@
 
 module RubyUI
   class BreadcrumbLink < Base
-    def initialize(href: "#", **attrs)
+    def initialize(href: '#', **attrs)
       @href = href
       super(**attrs)
     end
@@ -15,7 +15,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "transition-colors hover:text-foreground"
+        class: 'transition-colors hover:text-foreground'
       }
     end
   end
