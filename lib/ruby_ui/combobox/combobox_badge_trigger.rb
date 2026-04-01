@@ -2,62 +2,46 @@
 
 module RubyUI
   class ComboboxBadgeTrigger < Base
-    def initialize(placeholder: "", **)
+    def initialize(placeholder: "", clear_button: false, **)
       @placeholder = placeholder
+      @clear_button = clear_button
       super(**)
     end
 
     def view_template(&)
       div(**attrs) do
-        div(data: {ruby_ui__combobox_target: "badgeContainer"}, class: "contents")
+        div(data: {ruby_ui__combobox_target: "badgeContainer"}, class: "hidden")
         input(
           type: "text",
-          class: "flex-1 min-w-[80px] bg-transparent border-0 outline-none focus:ring-0 placeholder:text-muted-foreground text-sm",
+          class: "flex-1 min-w-8 bg-transparent border-0 px-0 outline-none focus:ring-0 placeholder:text-muted-foreground text-sm",
           autocomplete: "off",
           autocorrect: "off",
           spellcheck: "false",
           placeholder: @placeholder,
           data: {
             ruby_ui__combobox_target: "badgeInput",
-            # JS implementation in combobox_controller.js
             action: "keyup->ruby-ui--combobox#filterItems input->ruby-ui--combobox#filterItems keydown.backspace->ruby-ui--combobox#handleBadgeInputBackspace"
           }
         )
-        yield if block_given?
-        chevron_icon
+        render ComboboxClearButton.new if @clear_button
       end
     end
 
     private
 
+    # JS-toggled classes (referenced here so Tailwind compiles them): h-auto min-h-9 pt-1.5
     def default_attrs
       {
-        class: "flex min-h-9 w-full flex-wrap items-center gap-1 rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 cursor-text",
+        class: "flex h-9 w-full flex-wrap items-center gap-1 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 cursor-text",
         data: {
           ruby_ui__combobox_target: "trigger",
-          action: "click->ruby-ui--combobox#openPopover"
+          action: "click->ruby-ui--combobox#openPopover focusin->ruby-ui--combobox#openPopover"
         },
         aria: {
           haspopup: "listbox",
           expanded: "false"
         }
       }
-    end
-
-    def chevron_icon
-      svg(
-        xmlns: "http://www.w3.org/2000/svg",
-        viewbox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        class: "ml-2 h-4 w-4 shrink-0 opacity-50",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round"
-      ) do |s|
-        s.path(d: "m7 15 5 5 5-5")
-        s.path(d: "m7 9 5-5 5 5")
-      end
     end
   end
 end

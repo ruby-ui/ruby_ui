@@ -122,9 +122,9 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/clearButton/, output)
   end
 
-  def test_combobox_item_has_selected_state
+  def test_combobox_item_has_hover_state
     output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/has-\[:checked\]:bg-accent/, output)
+    assert_match(/hover:bg-accent/, output)
   end
 
   def test_combobox_item_has_keyboard_highlight
@@ -150,7 +150,7 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/Pick one/, output)            # placeholder
     assert_match(/openPopover/, output)         # focus action
     assert_match(/filterItems/, output)         # keyup action
-    assert_match(/chevron|path.*d="m7/, output) # chevron SVG present
+    assert_match(/path.*d="m6 9 6 6 6-6"/, output) # chevron-down SVG present
   end
 
   def test_combobox_input_trigger_invalid_state
@@ -162,11 +162,84 @@ class RubyUI::ComboboxTest < ComponentTest
   def test_combobox_clear_button_is_subtle
     output = phlex { RubyUI.ComboboxClearButton() }
     assert_match(/text-muted-foreground/, output)
-    refute_match(/ring-ring/, output)
+    assert_match(/focus-visible:ring-2/, output)
   end
 
   def test_combobox_badge_trigger_input_has_no_border
     output = phlex { RubyUI.ComboboxBadgeTrigger(placeholder: "Select") }
     assert_match(/border-0/, output)
+  end
+
+  def test_combobox_badge_trigger_clear_button_prop
+    output = phlex { RubyUI.ComboboxBadgeTrigger(clear_button: true) }
+    assert_match(/clearButton/, output)
+    assert_match(/clearAll/, output)
+  end
+
+  def test_combobox_badge_trigger_no_clear_button_by_default
+    output = phlex { RubyUI.ComboboxBadgeTrigger() }
+    refute_match(/clearButton/, output)
+  end
+
+  def test_combobox_badge_trigger_no_chevron
+    output = phlex { RubyUI.ComboboxBadgeTrigger() }
+    refute_match(/chevron|m6 9 6 6 6-6/, output)
+  end
+
+  def test_combobox_trigger_chevron_down
+    output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
+    assert_match(/m6 9 6 6 6-6/, output)
+  end
+
+  def test_combobox_trigger_placeholder_muted
+    output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
+    assert_match(/text-muted-foreground/, output)
+  end
+
+  def test_combobox_trigger_chevron_hover_effect
+    output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
+    assert_match(/hover:bg-muted/, output)
+    assert_match(/size-6/, output)
+    assert_match(/rounded-sm/, output)
+  end
+
+  def test_combobox_input_trigger_chevron_hover_effect
+    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick") }
+    assert_match(/hover:bg-muted/, output)
+    assert_match(/size-6/, output)
+    assert_match(/rounded-sm/, output)
+  end
+
+  def test_combobox_input_trigger_no_inner_padding
+    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick") }
+    assert_match(/px-0/, output)
+  end
+
+  def test_combobox_keyboard_actions_on_controller
+    output = phlex { RubyUI.Combobox { "" } }
+    assert_match(/keydown\.down/, output)
+    assert_match(/keydown\.up/, output)
+    assert_match(/keydown\.enter/, output)
+    assert_match(/keydown\.esc/, output)
+  end
+
+  def test_combobox_input_trigger_focusin_action
+    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick") }
+    assert_match(/focusin->ruby-ui--combobox#openPopover/, output)
+  end
+
+  def test_combobox_item_no_selected_background
+    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
+    refute_match(/has-\[:checked\]:bg-accent/, output)
+  end
+
+  def test_combobox_item_no_ring_on_current
+    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
+    refute_match(/aria-\[current=true\]:ring\b/, output)
+  end
+
+  def test_combobox_popover_no_autofocus
+    output = phlex { RubyUI.ComboboxPopover { "" } }
+    refute_match(/autofocus/, output)
   end
 end

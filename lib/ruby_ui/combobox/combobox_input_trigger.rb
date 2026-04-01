@@ -15,7 +15,7 @@ module RubyUI
           autocomplete: "off",
           autocorrect: "off",
           spellcheck: "false",
-          class: "flex-1 border-0 bg-transparent outline-none focus:ring-0 placeholder:text-muted-foreground text-sm disabled:cursor-not-allowed",
+          class: "flex-1 border-0 px-0 bg-transparent outline-none focus:ring-0 placeholder:text-muted-foreground text-sm disabled:cursor-not-allowed",
           data: {
             ruby_ui__combobox_target: "inputTrigger",
             action: "keyup->ruby-ui--combobox#filterItems input->ruby-ui--combobox#filterItems"
@@ -33,7 +33,7 @@ module RubyUI
         data: {
           ruby_ui__combobox_target: "trigger",
           placeholder: @placeholder,
-          action: "click->ruby-ui--combobox#openPopover"
+          action: "click->ruby-ui--combobox#openPopover focusin->ruby-ui--combobox#openPopover"
         },
         aria: {
           haspopup: "listbox",
@@ -43,18 +43,21 @@ module RubyUI
     end
 
     def chevron_icon
-      svg(
-        xmlns: "http://www.w3.org/2000/svg",
-        viewbox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        class: "ml-2 h-4 w-4 shrink-0 opacity-50",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round"
-      ) do |s|
-        s.path(d: "m7 15 5 5 5-5")
-        s.path(d: "m7 9 5-5 5 5")
+      span(class: "shrink-0 flex items-center justify-center size-6 rounded-sm hover:bg-muted hover:text-foreground") do
+        svg(
+          xmlns: "http://www.w3.org/2000/svg",
+          width: "24",
+          height: "24",
+          viewbox: "0 0 24 24",
+          fill: "none",
+          stroke: "currentColor",
+          stroke_width: "2",
+          stroke_linecap: "round",
+          stroke_linejoin: "round",
+          class: "pointer-events-none size-4 text-muted-foreground"
+        ) do |s|
+          s.path(d: "m6 9 6 6 6-6")
+        end
       end
     end
   end

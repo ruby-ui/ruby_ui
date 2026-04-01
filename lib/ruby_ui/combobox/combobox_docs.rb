@@ -18,26 +18,21 @@ class Views::Docs::Combobox < Views::Base
                 ComboboxList do
                   ComboboxEmptyState { "No results found." }
 
-                  ComboboxListGroup(label: "Ruby") do
-                    ComboboxItem do
-                      ComboboxRadio(name: "framework", value: "rails")
-                      span { "Rails" }
-                    end
-                    ComboboxItem do
-                      ComboboxRadio(name: "framework", value: "hanami")
-                      span { "Hanami" }
-                    end
+                  ComboboxItem do
+                    ComboboxRadio(name: "framework", value: "rails")
+                    span { "Rails" }
                   end
-
-                  ComboboxListGroup(label: "JavaScript") do
-                    ComboboxItem do
-                      ComboboxRadio(name: "framework", value: "nextjs")
-                      span { "Next.js" }
-                    end
-                    ComboboxItem do
-                      ComboboxRadio(name: "framework", value: "nuxt")
-                      span { "Nuxt" }
-                    end
+                  ComboboxItem do
+                    ComboboxRadio(name: "framework", value: "hanami")
+                    span { "Hanami" }
+                  end
+                  ComboboxItem do
+                    ComboboxRadio(name: "framework", value: "nextjs")
+                    span { "Next.js" }
+                  end
+                  ComboboxItem do
+                    ComboboxRadio(name: "framework", value: "nuxt")
+                    span { "Nuxt" }
                   end
                 end
               end
@@ -81,34 +76,43 @@ class Views::Docs::Combobox < Views::Base
         <<~RUBY
           div(class: "w-96") do
             Combobox do
-              ComboboxBadgeTrigger(placeholder: "Select frameworks...") do
-                ComboboxClearButton()
-              end
+              ComboboxBadgeTrigger(clear_button: true)
 
               ComboboxPopover do
                 ComboboxList do
                   ComboboxEmptyState { "No results found." }
 
-                  ComboboxListGroup(label: "Ruby") do
-                    ComboboxItem do
-                      ComboboxCheckbox(name: "frameworks[]", value: "rails")
-                      span { "Rails" }
-                    end
-                    ComboboxItem do
-                      ComboboxCheckbox(name: "frameworks[]", value: "hanami")
-                      span { "Hanami" }
-                    end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "rails")
+                    span { "Rails" }
                   end
-
-                  ComboboxListGroup(label: "JavaScript") do
-                    ComboboxItem do
-                      ComboboxCheckbox(name: "frameworks[]", value: "nextjs")
-                      span { "Next.js" }
-                    end
-                    ComboboxItem do
-                      ComboboxCheckbox(name: "frameworks[]", value: "nuxt")
-                      span { "Nuxt" }
-                    end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "hanami")
+                    span { "Hanami" }
+                  end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "sinatra")
+                    span { "Sinatra" }
+                  end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "nextjs", checked: true)
+                    span { "Next.js" }
+                  end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "nuxt")
+                    span { "Nuxt" }
+                  end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "svelte")
+                    span { "SvelteKit" }
+                  end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "remix")
+                    span { "Remix" }
+                  end
+                  ComboboxItem do
+                    ComboboxCheckbox(name: "frameworks[]", value: "astro")
+                    span { "Astro" }
                   end
                 end
               end
