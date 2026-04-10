@@ -1,0 +1,13 @@
+files:
+  include:
+    - "lib/**/*.html.erb"
+
+engine:
+  validators:
+    security: true
+    nesting: true
+    accessibility: true
+
+linter:
+  enabled: true
+  failLevel: error
