@@ -12,16 +12,11 @@ module RubyUI
       {
         class: "inset-auto m-0 absolute border bg-background shadow-lg rounded-lg",
         role: "popover",
-        autofocus: true,
         popover: true,
         data: {
           ruby_ui__combobox_target: "popover",
           action: %w[
             toggle->ruby-ui--combobox#handlePopoverToggle
-            keydown.down->ruby-ui--combobox#keyDownPressed
-            keydown.up->ruby-ui--combobox#keyUpPressed
-            keydown.enter->ruby-ui--combobox#keyEnterPressed
-            keydown.esc->ruby-ui--combobox#closePopover:prevent
             resize@window->ruby-ui--combobox#updatePopoverWidth
           ]
         }
