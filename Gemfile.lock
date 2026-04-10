@@ -7,6 +7,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    herb (0.9.5)
+    herb (0.9.5-arm64-darwin)
     json (2.8.0)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
@@ -59,6 +61,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  herb (~> 0.1)
   minitest (~> 5.0)
   phlex (>= 2.1.2)
   rake (~> 13.0)

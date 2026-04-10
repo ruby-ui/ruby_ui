@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake", "~> 13.0"
   s.add_development_dependency "standard", "~> 1.0"
   s.add_development_dependency "minitest", "~> 5.0"
+  s.add_development_dependency "herb", "~> 0.1"
 end
