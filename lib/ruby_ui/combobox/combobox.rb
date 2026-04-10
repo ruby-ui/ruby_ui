@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Combobox < Base
-    def initialize(term: nil, **)
-      @term = term
-      super(**)
-    end
+  class Combobox
+    include ComponentBase
 
-    def view_template(&)
-      div(**attrs, &)
+    def initialize(term: nil, **attrs)
+      @term = term
+      super(**attrs)
     end
 
     private

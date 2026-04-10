@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Collapsible < Base
+  class Collapsible
+    include ComponentBase
+
     def initialize(open: false, **attrs)
       @open = open
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

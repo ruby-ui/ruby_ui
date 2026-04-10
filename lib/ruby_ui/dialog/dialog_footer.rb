@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DialogFooter < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class DialogFooter
+    include ComponentBase
 
     private
 

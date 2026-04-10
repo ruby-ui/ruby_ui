@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class AccordionDefaultContent < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class AccordionDefaultContent
+    include ComponentBase
 
     private
 
     def default_attrs
-      {
-        class: "pb-4 pt-0 text-sm"
-      }
+      {class: "pb-4 pt-0 text-sm"}
     end
   end
 end

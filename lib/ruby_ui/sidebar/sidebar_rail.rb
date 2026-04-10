@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarRail < Base
-    def view_template(&)
-      button(**attrs, &)
-    end
+  class SidebarRail
+    include ComponentBase
 
     private
 

@@ -1,0 +1,10 @@
+<%# Carousel example %>
+<%= render Carousel.new do %>
+  <%= render CarouselContent.new do %>
+    <%= render CarouselItem.new { "Slide 1" } %>
+    <%= render CarouselItem.new { "Slide 2" } %>
+    <%= render CarouselItem.new { "Slide 3" } %>
+  <% end %>
+  <%= render CarouselPrevious.new %>
+  <%= render CarouselNext.new %>
+<% end %>

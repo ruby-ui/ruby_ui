@@ -1,0 +1,9 @@
+<template data-ruby-ui--calendar-target="weekdaysTemplate">
+  <thead <%= tag_attributes(attrs) %>>
+    <tr class="flex">
+      <% RubyUI::CalendarWeekdays::DAYS.each do |day| %>
+        <th scope="col" class="text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]" aria-label="<%= day %>"><%= day[0..1] %></th>
+      <% end %>
+    </tr>
+  </thead>
+</template>

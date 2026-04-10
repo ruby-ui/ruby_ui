@@ -2,83 +2,128 @@
 
 require "test_helper"
 
-class RubyUI::AccordionTest < ComponentTest
-  def test_render_with_default_items
-    output = phlex do
-      RubyUI.Accordion do
-        RubyUI.AccordionItem do
-          RubyUI.AccordionDefaultTrigger { "Title" }
-          RubyUI.AccordionDefaultContent { "Content" }
-        end
-      end
-    end
-
-    assert_match(/<div data-controller="ruby-ui--accordion"/, output)
+class RubyUI::AccordionTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::Accordion.new.is_a?(Phlex::HTML)
   end
 
-  def test_render_with_all_items
-    output = phlex do
-      RubyUI.Accordion do
-        RubyUI.AccordionItem do
-          RubyUI.AccordionTrigger do |trigger|
-            trigger.div do |div|
-              RubyUI.AccordionIcon do |icon|
-                icon.svg(
-                  xmlns: "http://www.w3.org/2000/svg",
-                  fill: "none",
-                  viewbox: "0 0 24 24",
-                  stroke_width: "1.5",
-                  stroke: "currentColor",
-                  class: "w-6 h-6"
-                ) do |s|
-                  s.path(
-                    stroke_linecap: "round",
-                    stroke_linejoin: "round",
-                    d: "M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  )
-                end
-              end
-              div.p { "What is RubyUI?" }
-            end
-          end
+  def test_default_class
+    assert_includes RubyUI::Accordion.new.attrs[:class], "w-full"
+  end
 
-          RubyUI.AccordionContent do |content|
-            content.p { "RubyUI is a UI component library for Ruby devs who want to build better, faster." }
-          end
-        end
+  def test_custom_class_merged
+    comp = RubyUI::Accordion.new(class: "custom")
+    assert_includes comp.attrs[:class], "w-full"
+    assert_includes comp.attrs[:class], "custom"
+  end
 
-        RubyUI.AccordionItem do
-          RubyUI.AccordionTrigger do |trigger|
-            trigger.div do |div|
-              RubyUI.AccordionIcon do |icon|
-                icon.svg(
-                  xmlns: "http://www.w3.org/2000/svg",
-                  fill: "none",
-                  viewbox: "0 0 24 24",
-                  stroke_width: "1.5",
-                  stroke: "currentColor",
-                  class: "w-6 h-6"
-                ) do |s|
-                  s.path(
-                    stroke_linecap: "round",
-                    stroke_linejoin: "round",
-                    d: "M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  )
-                end
-              end
-              div.p { "Can I use it with Rails?" }
-            end
-          end
+  def test_extra_attrs_pass_through
+    comp = RubyUI::Accordion.new(id: "my-id")
+    assert_equal "my-id", comp.attrs[:id]
+  end
+end
 
-          RubyUI.AccordionContent do |content|
-            content.p do
-              "Yes, RubyUI is pure Ruby and works great with Rails. It's a Ruby gem that you can install into your Rails app."
-            end
-          end
-        end
-      end
-    end
+class RubyUI::AccordionContentTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::AccordionContent.new.is_a?(Phlex::HTML)
+  end
 
-    assert_match(/Yes, RubyUI is pure Ruby and works great with Rails/, output)
+  def test_default_class
+    assert_includes RubyUI::AccordionContent.new.attrs[:class], "overflow-y-hidden"
+  end
+
+  def test_data_target
+    comp = RubyUI::AccordionContent.new
+    assert_equal "content", comp.attrs[:data][:ruby_ui__accordion_target]
+  end
+end
+
+class RubyUI::AccordionDefaultContentTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::AccordionDefaultContent.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    assert_includes RubyUI::AccordionDefaultContent.new.attrs[:class], "pb-4"
+  end
+end
+
+class RubyUI::AccordionDefaultTriggerTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::AccordionDefaultTrigger.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    assert_includes RubyUI::AccordionDefaultTrigger.new.attrs[:class], "w-full"
+  end
+
+  def test_data_action
+    comp = RubyUI::AccordionDefaultTrigger.new
+    assert_includes comp.attrs[:data][:action], "click->ruby-ui--accordion#toggle"
+  end
+end
+
+class RubyUI::AccordionIconTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::AccordionIcon.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    assert_includes RubyUI::AccordionIcon.new.attrs[:class], "opacity-50"
+  end
+
+  def test_data_target
+    comp = RubyUI::AccordionIcon.new
+    assert_equal "icon", comp.attrs[:data][:ruby_ui__accordion_target]
+  end
+end
+
+class RubyUI::AccordionItemTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::AccordionItem.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    assert_includes RubyUI::AccordionItem.new.attrs[:class], "border-b"
+  end
+
+  def test_controller
+    comp = RubyUI::AccordionItem.new
+    assert_equal "ruby-ui--accordion", comp.attrs[:data][:controller]
+  end
+
+  def test_open_default
+    comp = RubyUI::AccordionItem.new
+    assert_equal false, comp.attrs[:data][:ruby_ui__accordion_open_value]
+  end
+
+  def test_open_true
+    comp = RubyUI::AccordionItem.new(open: true)
+    assert_equal true, comp.attrs[:data][:ruby_ui__accordion_open_value]
+  end
+
+  def test_rotate_icon_default
+    comp = RubyUI::AccordionItem.new
+    assert_equal 180, comp.attrs[:data][:ruby_ui__accordion_rotate_icon_value]
+  end
+end
+
+class RubyUI::AccordionTriggerTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::AccordionTrigger.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    assert_includes RubyUI::AccordionTrigger.new.attrs[:class], "w-full"
+  end
+
+  def test_type_button
+    comp = RubyUI::AccordionTrigger.new
+    assert_equal "button", comp.attrs[:type]
+  end
+
+  def test_data_action
+    comp = RubyUI::AccordionTrigger.new
+    assert_includes comp.attrs[:data][:action], "click->ruby-ui--accordion#toggle"
   end
 end

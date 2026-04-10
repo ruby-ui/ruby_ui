@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Input < Base
+  class Input
+    include ComponentBase
+
     def initialize(type: :string, **attrs)
       @type = type.to_sym
       super(**attrs)
-    end
-
-    def view_template
-      input(type: @type, **attrs)
     end
 
     private
 
     def default_attrs
       {
+        type: @type,
         data: {
           ruby_ui__form_field_target: "input",
           action: "input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid"

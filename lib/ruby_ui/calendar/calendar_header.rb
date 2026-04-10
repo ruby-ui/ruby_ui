@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CalendarHeader < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class CalendarHeader
+    include ComponentBase
 
     private
 
     def default_attrs
-      {
-        class: "flex justify-center pt-1 relative items-center"
-      }
+      {class: "flex justify-center pt-1 relative items-center"}
     end
   end
 end

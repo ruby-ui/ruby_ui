@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SelectValue < Base
+  class SelectValue
+    include ComponentBase
+
+    attr_reader :placeholder
+
     def initialize(placeholder: nil, **attrs)
       @placeholder = placeholder
       super(**attrs)
-    end
-
-    def view_template(&block)
-      span(**attrs) do
-        block ? block.call : @placeholder
-      end
     end
 
     private

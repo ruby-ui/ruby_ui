@@ -1,0 +1,7 @@
+<label role="switch" class="<%= label_classes %>">
+  <% if include_hidden? %>
+    <input <%= tag_attributes(hidden_input_attrs) %>>
+  <% end %>
+  <input <%= tag_attributes(checkbox_attrs) %>>
+  <span class="<%= thumb_classes %>"></span>
+</label>

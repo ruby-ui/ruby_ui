@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class HoverCard < Base
+  class HoverCard
+    include ComponentBase
+
     def initialize(option: {}, **attrs)
       @options = option
       @options[:delay] ||= [500, 250]
       @options[:trigger] ||= "mouseenter focus click"
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

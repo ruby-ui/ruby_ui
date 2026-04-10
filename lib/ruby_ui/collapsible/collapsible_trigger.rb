@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CollapsibleTrigger < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class CollapsibleTrigger
+    include ComponentBase
 
     private
 

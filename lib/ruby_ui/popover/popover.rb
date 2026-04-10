@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Popover < Base
+  class Popover
+    include ComponentBase
+
     def initialize(options: {}, **attrs)
       @options = options
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

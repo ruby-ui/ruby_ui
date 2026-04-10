@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarMenuButton < Base
+  class SidebarMenuButton
+    include ComponentBase
+
     VARIANT_CLASSES = {
       default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-      outline:
-        "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]"
+      outline: "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]"
     }.freeze
 
     SIZE_CLASSES = {
@@ -25,8 +26,8 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template(&)
-      tag(@as, **attrs, &)
+    def tag_name
+      @as
     end
 
     private

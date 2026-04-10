@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ComboboxRadio < Base
-    def view_template
-      input(type: "radio", **attrs)
-    end
+  class ComboboxRadio
+    include ComponentBase
 
     private
 

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class AccordionContent < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class AccordionContent
+    include ComponentBase
 
     private
 

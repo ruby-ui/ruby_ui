@@ -1,0 +1,5 @@
+<% if collapsible? %>
+  <%= render RubyUI::CollapsibleSidebar.new(side: side, variant: variant, collapsible: collapsible, open: open?, **attrs) { yield } %>
+<% else %>
+  <%= render RubyUI::NonCollapsibleSidebar.new(**attrs) { yield } %>
+<% end %>

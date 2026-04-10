@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Clipboard < Base
+  class Clipboard
+    include ComponentBase
+
     def initialize(options: {}, success: "Copied!", error: "Copy Failed!", **attrs)
       @options = options
       @success = success
@@ -9,23 +11,15 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template(&block)
-      div(**attrs) do
-        div(&block)
-        success_popover
-        error_popover
-      end
+    def success_message
+      @success
+    end
+
+    def error_message
+      @error
     end
 
     private
-
-    def success_popover
-      ClipboardPopover(type: :success) { @success }
-    end
-
-    def error_popover
-      ClipboardPopover(type: :error) { @error }
-    end
 
     def default_attrs
       {

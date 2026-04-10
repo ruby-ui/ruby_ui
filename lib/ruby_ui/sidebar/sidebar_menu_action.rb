@@ -1,17 +1,30 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarMenuAction < Base
+  class SidebarMenuAction
+    include ComponentBase
+
     def initialize(as: :button, show_on_hover: false, **attrs)
       @as = as
+      @show_on_hover = show_on_hover
       super(**attrs)
     end
 
-    def view_template(&)
-      tag(@as, **attrs, &)
+    def tag_name
+      @as
     end
 
     private
+
+    def show_on_hover_classes
+      return unless @show_on_hover
+
+      [
+        "group-focus-within/menu-item:opacity-100",
+        "group-hover/menu-item:opacity-100 data-[state=open]:opacity-100",
+        "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0"
+      ].join(" ")
+    end
 
     def default_attrs
       {
@@ -29,20 +42,8 @@ module RubyUI
           "group-data-[collapsible=icon]:hidden",
           show_on_hover_classes
         ],
-        data: {
-          sidebar: "menu-action"
-        }
+        data: {sidebar: "menu-action"}
       }
-    end
-
-    def show_on_hover_classes
-      return unless @show_on_hover
-
-      [
-        "group-focus-within/menu-item:opacity-100",
-        "group-hover/menu-item:opacity-100 data-[state=open]:opacity-100",
-        "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0"
-      ].join(" ")
     end
   end
 end

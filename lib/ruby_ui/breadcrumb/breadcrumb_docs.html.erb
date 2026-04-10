@@ -1,0 +1,12 @@
+<%# Breadcrumb example %>
+<%= render Breadcrumb.new do %>
+  <%= render BreadcrumbList.new do %>
+    <%= render BreadcrumbItem.new do %>
+      <%= render BreadcrumbLink.new(href: "/") { "Home" } %>
+    <% end %>
+    <%= render BreadcrumbSeparator.new %>
+    <%= render BreadcrumbItem.new do %>
+      <%= render BreadcrumbPage.new { "Current Page" } %>
+    <% end %>
+  <% end %>
+<% end %>

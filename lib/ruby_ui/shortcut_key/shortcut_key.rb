@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ShortcutKey < Base
-    def view_template(&)
-      kbd(**attrs, &)
-    end
+  class ShortcutKey
+    include ComponentBase
 
     private
 

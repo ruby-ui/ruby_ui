@@ -1,0 +1,10 @@
+<div <%= tag_attributes(attrs) %>>
+  <%= render RubyUI::CalendarHeader.new do %>
+    <%= render RubyUI::CalendarTitle.new %>
+    <%= render RubyUI::CalendarPrev.new %>
+    <%= render RubyUI::CalendarNext.new %>
+  <% end %>
+  <%= render RubyUI::CalendarBody.new %>
+  <%= render RubyUI::CalendarWeekdays.new %>
+  <%= render RubyUI::CalendarDays.new %>
+</div>

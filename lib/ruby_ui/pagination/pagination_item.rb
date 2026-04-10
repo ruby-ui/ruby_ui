@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class PaginationItem < Base
+  class PaginationItem
+    include ComponentBase
+
+    attr_reader :href
+
     def initialize(href: "#", active: false, **attrs)
       @href = href
       @active = active
       super(**attrs)
-    end
-
-    def view_template(&block)
-      li do
-        a(href: @href, **attrs, &block)
-      end
     end
 
     private

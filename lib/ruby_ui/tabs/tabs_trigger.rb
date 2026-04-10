@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class TabsTrigger < Base
+  class TabsTrigger
+    include ComponentBase
+
+    attr_reader :value
+
     def initialize(value:, **attrs)
       @value = value
       super(**attrs)
-    end
-
-    def view_template(&)
-      button(**attrs, &)
     end
 
     private

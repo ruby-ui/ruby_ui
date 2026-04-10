@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ClipboardSource < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class ClipboardSource
+    include ComponentBase
 
     private
 

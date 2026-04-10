@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class AlertDialogAction < Base
-    def view_template(&)
-      render RubyUI::Button.new(**attrs, &)
+  class AlertDialogAction
+    include ComponentBase
+
+    def initialize(**attrs)
+      btn = RubyUI::Button.new(variant: :primary, **attrs)
+      @attrs = btn.attrs
     end
 
-    private
-
-    def default_attrs
-      {
-        variant: :primary
-      }
-    end
+    attr_reader :attrs
   end
 end

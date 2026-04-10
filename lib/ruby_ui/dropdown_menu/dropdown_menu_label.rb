@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DropdownMenuLabel < Base
-    def view_template(&)
-      h3(**attrs, &)
-    end
+  class DropdownMenuLabel
+    include ComponentBase
 
     private
 

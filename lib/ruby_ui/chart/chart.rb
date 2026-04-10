@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Chart < Base
+  class Chart
+    include ComponentBase
+
     def initialize(options: {}, **attrs)
       @options = options.to_json
       super(**attrs)
-    end
-
-    def view_template(&)
-      canvas(**attrs, &)
     end
 
     private

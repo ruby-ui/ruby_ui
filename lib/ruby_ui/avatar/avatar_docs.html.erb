@@ -1,0 +1,5 @@
+<%# Avatar example %>
+<%= render Avatar.new do %>
+  <%= render AvatarImage.new(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper") %>
+  <%= render AvatarFallback.new { "JD" } %>
+<% end %>

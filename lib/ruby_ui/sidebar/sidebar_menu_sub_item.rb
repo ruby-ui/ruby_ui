@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarMenuSubItem < Base
-    def view_template(&)
-      li(**attrs, &)
-    end
+  class SidebarMenuSubItem
+    include ComponentBase
   end
 end

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CarouselItem < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class CarouselItem
+    include ComponentBase
 
     private
 

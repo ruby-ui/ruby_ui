@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class TabsContent < Base
+  class TabsContent
+    include ComponentBase
+
+    attr_reader :value
+
     def initialize(value:, **attrs)
       @value = value
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

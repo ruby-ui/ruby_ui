@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DropdownMenuItem < Base
+  class DropdownMenuItem
+    include ComponentBase
+
     def initialize(href: "#", **attrs)
       @href = href
       super(**attrs)
-    end
-
-    def view_template(&)
-      a(**attrs, &)
     end
 
     private

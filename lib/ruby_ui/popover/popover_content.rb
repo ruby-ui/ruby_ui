@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class PopoverContent < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class PopoverContent
+    include ComponentBase
 
     private
 

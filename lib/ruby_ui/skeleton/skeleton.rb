@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Skeleton < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class Skeleton
+    include ComponentBase
 
     private
 

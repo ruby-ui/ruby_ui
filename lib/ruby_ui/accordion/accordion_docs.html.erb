@@ -1,0 +1,7 @@
+<%# Accordion example %>
+<%= render Accordion.new do %>
+  <%= render AccordionItem.new do %>
+    <%= render AccordionDefaultTrigger.new { "What is RubyUI?" } %>
+    <%= render AccordionDefaultContent.new { "RubyUI is a UI component library for Ruby developers." } %>
+  <% end %>
+<% end %>

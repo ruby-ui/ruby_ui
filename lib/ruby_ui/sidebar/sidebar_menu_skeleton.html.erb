@@ -1,0 +1,6 @@
+<div <%= tag_attributes(attrs) %>>
+  <% if show_icon? %>
+    <div class="size-4 rounded-md animate-pulse bg-muted" data-sidebar="menu-skeleton-icon"></div>
+  <% end %>
+  <div class="h-4 max-w-[var(--skeleton-width)] flex-1 animate-pulse bg-muted" data-sidebar="menu-skeleton-text" style="--skeleton-width: <%= skeleton_width %>%;"></div>
+</div>

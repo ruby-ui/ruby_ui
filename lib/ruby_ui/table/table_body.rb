@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class TableBody < Base
-    def view_template(&)
-      tbody(**attrs, &)
-    end
+  class TableBody
+    include ComponentBase
 
     private
 
     def default_attrs
-      {
-        class: "[&_tr:last-child]:border-0"
-      }
+      {class: "[&_tr:last-child]:border-0"}
     end
   end
 end

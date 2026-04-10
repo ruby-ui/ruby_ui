@@ -1,19 +1,11 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CarouselNext < Base
-    def view_template(&)
-      Button(**attrs) do
-        icon
-      end
-    end
+  class CarouselNext
+    include ComponentBase
 
-    private
-
-    def default_attrs
-      {
-        variant: :outline,
-        icon: true,
+    def initialize(**attrs)
+      merged = {
         class: [
           "absolute h-8 w-8 rounded-full",
           "group-[.is-horizontal]:-right-12 group-[.is-horizontal]:top-1/2 group-[.is-horizontal]:-translate-y-1/2",
@@ -24,25 +16,11 @@ module RubyUI
           action: "click->ruby-ui--carousel#scrollNext",
           ruby_ui__carousel_target: "nextButton"
         }
-      }
+      }.merge(attrs)
+      btn = RubyUI::Button.new(variant: :outline, icon: true, **merged)
+      @attrs = btn.attrs
     end
 
-    def icon
-      svg(
-        width: "24",
-        height: "24",
-        viewBox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round",
-        xmlns: "http://www.w3.org/2000/svg",
-        class: "w-4 h-4"
-      ) do |s|
-        s.path(d: "M5 12h14")
-        s.path(d: "m12 5 7 7-7 7")
-      end
-    end
+    attr_reader :attrs
   end
 end

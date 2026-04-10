@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Carousel < Base
+  class Carousel
+    include ComponentBase
+
     def initialize(orientation: :horizontal, options: {}, **user_attrs)
       @orientation = orientation
       @options = options
-
       super(**user_attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private
@@ -32,9 +29,7 @@ module RubyUI
     end
 
     def default_options
-      {
-        axis: (@orientation == :horizontal) ? "x" : "y"
-      }
+      {axis: (@orientation == :horizontal) ? "x" : "y"}
     end
 
     def orientation_classes

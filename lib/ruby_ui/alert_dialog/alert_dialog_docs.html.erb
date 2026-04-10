@@ -1,0 +1,16 @@
+<%# AlertDialog example %>
+<%= render AlertDialog.new do %>
+  <%= render AlertDialogTrigger.new do %>
+    <%= render Button.new { "Show dialog" } %>
+  <% end %>
+  <%= render AlertDialogContent.new do %>
+    <%= render AlertDialogHeader.new do %>
+      <%= render AlertDialogTitle.new { "Are you absolutely sure?" } %>
+      <%= render AlertDialogDescription.new { "This action cannot be undone." } %>
+    <% end %>
+    <%= render AlertDialogFooter.new do %>
+      <%= render AlertDialogCancel.new { "Cancel" } %>
+      <%= render AlertDialogAction.new { "Continue" } %>
+    <% end %>
+  <% end %>
+<% end %>

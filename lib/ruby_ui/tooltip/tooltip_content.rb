@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class TooltipContent < Base
+  class TooltipContent
+    include ComponentBase
+
     def initialize(**attrs)
       @id = "tooltip#{SecureRandom.hex(4)}"
       super
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

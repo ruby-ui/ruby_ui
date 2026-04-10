@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class TabsList < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class TabsList
+    include ComponentBase
 
     private
 

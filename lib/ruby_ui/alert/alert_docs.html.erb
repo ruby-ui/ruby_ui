@@ -1,0 +1,5 @@
+<%# Alert example %>
+<%= render Alert.new do %>
+  <%= render AlertTitle.new { "Pro tip" } %>
+  <%= render AlertDescription.new { "Simply, don't include an icon and your alert will look like this." } %>
+<% end %>

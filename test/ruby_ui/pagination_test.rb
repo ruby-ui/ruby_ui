@@ -2,36 +2,72 @@
 
 require "test_helper"
 
-class RubyUI::PaginationTest < ComponentTest
-  def test_render_with_all_items
-    output = phlex do
-      RubyUI.Pagination do
-        RubyUI.PaginationContent do
-          RubyUI.PaginationItem(href: "#") do |item|
-            item.plain "First"
-          end
-          RubyUI.PaginationItem(href: "#") do |item|
-            item.plain "Prev"
-          end
+class RubyUI::PaginationTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::Pagination.new.is_a?(Phlex::HTML)
+  end
 
-          RubyUI.PaginationEllipsis
+  def test_has_default_class
+    assert_includes RubyUI::Pagination.new.attrs[:class], "justify-center"
+  end
 
-          RubyUI.PaginationItem(href: "#") { "4" }
-          RubyUI.PaginationItem(href: "#", active: true) { "5" }
-          RubyUI.PaginationItem(href: "#") { "6" }
+  def test_aria_label
+    assert_equal "pagination", RubyUI::Pagination.new.attrs[:aria][:label]
+  end
 
-          RubyUI.PaginationEllipsis
+  def test_role
+    assert_equal "navigation", RubyUI::Pagination.new.attrs[:role]
+  end
+end
 
-          RubyUI.PaginationItem(href: "#") do |item|
-            item.plain "Next"
-          end
-          RubyUI.PaginationItem(href: "#") do |item|
-            item.plain "Last"
-          end
-        end
-      end
-    end
+class RubyUI::PaginationContentTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::PaginationContent.new.is_a?(Phlex::HTML)
+  end
 
-    assert_match(/First/, output)
+  def test_has_default_class
+    assert_includes RubyUI::PaginationContent.new.attrs[:class], "flex-row"
+  end
+end
+
+class RubyUI::PaginationEllipsisTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::PaginationEllipsis.new.is_a?(Phlex::HTML)
+  end
+
+  def test_aria_hidden
+    assert_equal true, RubyUI::PaginationEllipsis.new.attrs[:aria][:hidden]
+  end
+
+  def test_has_default_class
+    assert_includes RubyUI::PaginationEllipsis.new.attrs[:class], "h-9"
+  end
+end
+
+class RubyUI::PaginationItemTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::PaginationItem.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_href
+    assert_equal "#", RubyUI::PaginationItem.new.href
+  end
+
+  def test_custom_href
+    assert_equal "/page/2", RubyUI::PaginationItem.new(href: "/page/2").href
+  end
+
+  def test_active_aria_current
+    item = RubyUI::PaginationItem.new(active: true)
+    assert_equal "page", item.attrs[:aria][:current]
+  end
+
+  def test_inactive_no_aria_current
+    item = RubyUI::PaginationItem.new
+    assert_nil item.attrs[:aria][:current]
+  end
+
+  def test_has_class
+    assert RubyUI::PaginationItem.new.attrs[:class]
   end
 end

@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CommandItem < Base
+  class CommandItem
+    include ComponentBase
+
     def initialize(value:, text: "", href: "#", **attrs)
       @value = value
       @text = text
       @href = href
       super(**attrs)
-    end
-
-    def view_template(&)
-      a(**attrs, &)
     end
 
     private
@@ -25,7 +23,6 @@ module RubyUI
           value: @value,
           text: @text
         }
-        # aria_selected: "true", # Toggles aria-selected="true" on keydown
       }
     end
   end

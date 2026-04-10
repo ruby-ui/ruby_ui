@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ComboboxEmptyState < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class ComboboxEmptyState
+    include ComponentBase
 
     private
 

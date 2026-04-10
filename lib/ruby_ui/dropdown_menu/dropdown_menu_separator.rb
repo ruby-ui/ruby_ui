@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DropdownMenuSeparator < Base
-    def view_template
-      div(**attrs)
-    end
+  class DropdownMenuSeparator
+    include ComponentBase
 
     private
 

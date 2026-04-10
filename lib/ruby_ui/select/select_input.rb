@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SelectInput < Base
-    def view_template
-      input(**attrs)
-    end
+  class SelectInput
+    include ComponentBase
 
     private
 

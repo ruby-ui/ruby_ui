@@ -2,38 +2,40 @@
 
 require "test_helper"
 
-class RubyUI::SeparatorTest < ComponentTest
-  def test_render
-    output = phlex do
-      RubyUI.Separator()
-    end
-
-    assert_match(/div/, output)
-    assert_match(/role="none"/, output)
-    assert_match(/h-\[1px\]/, output)
+class RubyUI::SeparatorTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::Separator.new.is_a?(Phlex::HTML)
   end
 
-  def test_render_with_vertical_orientation
-    output = phlex do
-      RubyUI.Separator(orientation: :vertical)
-    end
-
-    assert_match(/w-\[1px\]/, output)
+  def test_default_role_none
+    assert_equal "none", RubyUI::Separator.new.attrs[:role]
   end
 
-  def test_render_with_decorative_false
-    output = phlex do
-      RubyUI.Separator(decorative: false)
-    end
-
-    assert_match(/role="separator"/, output)
+  def test_non_decorative_role_separator
+    assert_equal "separator", RubyUI::Separator.new(decorative: false).attrs[:role]
   end
 
-  def test_render_with_custom_tag
-    output = phlex do
-      RubyUI.Separator(as: :hr)
-    end
+  def test_horizontal_class
+    s = RubyUI::Separator.new
+    assert_includes s.attrs[:class], "h-[1px]"
+    assert_includes s.attrs[:class], "w-full"
+  end
 
-    assert_match(/<hr/, output)
+  def test_vertical_class
+    s = RubyUI::Separator.new(orientation: :vertical)
+    assert_includes s.attrs[:class], "w-[1px]"
+    assert_includes s.attrs[:class], "h-full"
+  end
+
+  def test_as_attr
+    assert_equal :div, RubyUI::Separator.new.as
+  end
+
+  def test_custom_as
+    assert_equal :hr, RubyUI::Separator.new(as: :hr).as
+  end
+
+  def test_invalid_orientation_raises
+    assert_raises(ArgumentError) { RubyUI::Separator.new(orientation: :diagonal) }
   end
 end

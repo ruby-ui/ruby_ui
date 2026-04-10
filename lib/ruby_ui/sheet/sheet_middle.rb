@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SheetMiddle < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class SheetMiddle
+    include ComponentBase
 
     private
 

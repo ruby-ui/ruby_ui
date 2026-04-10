@@ -1,0 +1,6 @@
+<template data-ruby-ui--command-target="content">
+  <div data-controller="ruby-ui--command">
+    <div data-state="open" data-action="click->ruby-ui--command#dismiss esc->ruby-ui--command#dismiss" class="fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"></div>
+    <div <%= tag_attributes(attrs) %>><%= yield %></div>
+  </div>
+</template>

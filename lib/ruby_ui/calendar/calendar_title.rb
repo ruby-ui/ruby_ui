@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CalendarTitle < Base
+  class CalendarTitle
+    include ComponentBase
+
     def initialize(default: "Month Year", **attrs)
       @default = default
       super(**attrs)
     end
 
-    def view_template
-      div(**attrs) { @default }
+    def default_text
+      @default
     end
 
     private

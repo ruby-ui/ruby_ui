@@ -2,17 +2,23 @@
 
 require "test_helper"
 
-class RubyUI::InlineCodeTest < ComponentTest
-  def test_render_inline_code
-    output = phlex do
-      RubyUI::InlineCode() { "This is an inline code block" }
-    end
+class RubyUI::InlineCodeTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::InlineCode.new.is_a?(Phlex::HTML)
+  end
 
-    assert_match("This is an inline code block", output)
-    assert_match(/<code/, output)
-    assert_match(/bg-muted/, output)
-    assert_match(/font-mono/, output)
-    assert_match(/text-sm/, output)
-    assert_match(/font-semibold/, output)
+  def test_default_class
+    ic = RubyUI::InlineCode.new
+    assert_includes ic.attrs[:class], "bg-muted"
+    assert_includes ic.attrs[:class], "font-mono"
+    assert_includes ic.attrs[:class], "text-sm"
+    assert_includes ic.attrs[:class], "font-semibold"
+    assert_includes ic.attrs[:class], "rounded"
+  end
+
+  def test_user_class_merges
+    ic = RubyUI::InlineCode.new(class: "extra")
+    assert_includes ic.attrs[:class], "extra"
+    assert_includes ic.attrs[:class], "bg-muted"
   end
 end

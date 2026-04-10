@@ -1,0 +1,8 @@
+<div class="<%= sidebar_class %>" data-<%= tag_attributes(sidebar_data).gsub('="', '-').gsub('"', '') %>>
+  <div class="<%= gap_class %>"></div>
+  <div class="<%= content_wrapper_class %>">
+    <div class="<%= content_class %>" data-sidebar="sidebar">
+      <%= yield %>
+    </div>
+  </div>
+</div>

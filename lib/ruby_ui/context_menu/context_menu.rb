@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ContextMenu < Base
+  class ContextMenu
+    include ComponentBase
+
     def initialize(options: {}, **attrs)
       @options = options
       @options[:trigger] ||= "manual"
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

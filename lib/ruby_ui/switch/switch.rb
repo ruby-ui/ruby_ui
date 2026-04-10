@@ -1,7 +1,22 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Switch < Base
+  class Switch
+    include ComponentBase
+
+    LABEL_CLASSES = [
+      "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors bg-input",
+      "has-checked:bg-primary",
+      "has-disabled:cursor-not-allowed has-disabled:opacity-50",
+      "has-aria-disabled:cursor-not-allowed has-aria-disabled:opacity-50 has-aria-disabled:pointer-events-none",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    ].freeze
+
+    THUMB_CLASSES = [
+      "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-0",
+      "peer-checked:translate-x-5"
+    ].freeze
+
     def initialize(include_hidden: true, checked_value: "1", unchecked_value: "0", **attrs)
       @include_hidden = include_hidden
       @checked_value = checked_value
@@ -9,26 +24,24 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template
-      label(
-        role: "switch",
-        class: [
-          "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors bg-input",
-          "has-checked:bg-primary",
-          "has-disabled:cursor-not-allowed has-disabled:opacity-50",
-          "has-aria-disabled:cursor-not-allowed has-aria-disabled:opacity-50 has-aria-disabled:pointer-events-none",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        ]
-      ) do
-        input(type: "hidden", name: attrs[:name], value: @unchecked_value) if @include_hidden
+    def include_hidden?
+      @include_hidden
+    end
 
-        input(**attrs.merge(type: "checkbox", class: "hidden peer", value: @checked_value))
+    def hidden_input_attrs
+      {type: "hidden", name: attrs[:name], value: @unchecked_value}
+    end
 
-        span(class: [
-          "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-0",
-          "peer-checked:translate-x-5"
-        ])
-      end
+    def checkbox_attrs
+      attrs.merge(type: "checkbox", class: "hidden peer", value: @checked_value)
+    end
+
+    def label_classes
+      LABEL_CLASSES.join(" ")
+    end
+
+    def thumb_classes
+      THUMB_CLASSES.join(" ")
     end
   end
 end

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class FormFieldLabel < Base
-    def view_template(&)
-      label(**attrs, &)
-    end
+  class FormFieldLabel
+    include ComponentBase
 
     private
 

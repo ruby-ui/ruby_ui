@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CommandDialogContent < Base
+  class CommandDialogContent
+    include ComponentBase
+
     SIZES = {
       xs: "max-w-sm",
       sm: "max-w-md",
@@ -16,15 +18,6 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template(&block)
-      template(data: {ruby_ui__command_target: "content"}) do
-        div(data: {controller: "ruby-ui--command"}) do
-          backdrop
-          div(**attrs, &block)
-        end
-      end
-    end
-
     private
 
     def default_attrs
@@ -35,14 +28,6 @@ module RubyUI
           SIZES[@size]
         ]
       }
-    end
-
-    def backdrop
-      div(
-        data_state: "open",
-        data_action: "click->ruby-ui--command#dismiss esc->ruby-ui--command#dismiss",
-        class: "fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-      )
     end
   end
 end

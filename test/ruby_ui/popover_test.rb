@@ -2,27 +2,49 @@
 
 require "test_helper"
 
-class RubyUI::PopoverTest < ComponentTest
-  def test_render_with_all_items
-    output = phlex do
-      RubyUI.Popover do
-        RubyUI.PopoverTrigger(class: "w-full") do
-          RubyUI.Button(variant: :outline) { "Open Popover" }
-        end
-        RubyUI.PopoverContent(class: "w-40") do
-          RubyUI.Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do |link|
-            link.plain "Profile"
-          end
-          RubyUI.Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do |link|
-            link.plain "Settings"
-          end
-          RubyUI.Link(href: "#", variant: :ghost, class: "block w-full justify-start pl-2") do |link|
-            link.plain "Logout"
-          end
-        end
-      end
-    end
+class RubyUI::PopoverTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::Popover.new.is_a?(Phlex::HTML)
+  end
 
-    assert_match(/Profile/, output)
+  def test_default_controller
+    assert_equal "ruby-ui--popover", RubyUI::Popover.new.attrs[:data][:controller]
+  end
+
+  def test_default_trigger_value
+    assert_equal "hover", RubyUI::Popover.new.attrs[:data][:ruby_ui__popover_trigger_value]
+  end
+
+  def test_custom_options
+    p = RubyUI::Popover.new(options: {placement: "top", trigger: "click"})
+    assert_equal "click", p.attrs[:data][:ruby_ui__popover_trigger_value]
+  end
+end
+
+class RubyUI::PopoverContentTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::PopoverContent.new.is_a?(Phlex::HTML)
+  end
+
+  def test_has_default_class
+    assert_includes RubyUI::PopoverContent.new.attrs[:class], "rounded-md"
+  end
+
+  def test_data_target
+    assert_equal "content", RubyUI::PopoverContent.new.attrs[:data][:ruby_ui__popover_target]
+  end
+end
+
+class RubyUI::PopoverTriggerTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::PopoverTrigger.new.is_a?(Phlex::HTML)
+  end
+
+  def test_data_target
+    assert_equal "trigger", RubyUI::PopoverTrigger.new.attrs[:data][:ruby_ui__popover_target]
+  end
+
+  def test_has_default_class
+    assert_includes RubyUI::PopoverTrigger.new.attrs[:class], "inline-block"
   end
 end

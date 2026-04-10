@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Tabs < Base
+  class Tabs
+    include ComponentBase
+
     def initialize(default: nil, **attrs)
       @default = default
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Pagination < Base
-    def view_template(&)
-      nav(**attrs, &)
-    end
+  class Pagination
+    include ComponentBase
 
     private
 

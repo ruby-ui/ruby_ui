@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Badge < Base
+  class Badge
+    include ComponentBase
+
     SIZES = {
       sm: "px-1.5 py-0.5 text-xs",
       md: "px-2 py-1 text-xs",
       lg: "px-3 py-1 text-sm"
-    }
+    }.freeze
 
     COLORS = {
       primary: "text-primary bg-primary/5 ring-primary/20",
@@ -37,24 +39,18 @@ module RubyUI
       fuchsia: "text-fuchsia-500 bg-fuchsia-500/10 ring-fuchsia-500/20",
       pink: "text-pink-500 bg-pink-500/10 ring-pink-500/20",
       rose: "text-rose-500 bg-rose-500/10 ring-rose-500/20"
-    }
+    }.freeze
 
-    def initialize(variant: :primary, size: :md, **args)
+    def initialize(variant: :primary, size: :md, **attrs)
       @variant = variant
       @size = size
-      super(**args)
-    end
-
-    def view_template(&)
-      span(**attrs, &)
+      super(**attrs)
     end
 
     private
 
     def default_attrs
-      {
-        class: ["inline-flex items-center rounded-md font-medium ring-1 ring-inset", SIZES[@size], COLORS[@variant]]
-      }
+      {class: ["inline-flex items-center rounded-md font-medium ring-1 ring-inset", SIZES[@size], COLORS[@variant]]}
     end
   end
 end

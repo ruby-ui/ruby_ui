@@ -2,26 +2,61 @@
 
 require "test_helper"
 
-class RubyUI::TabsTest < ComponentTest
-  def test_render_with_all_items
-    output = phlex do
-      RubyUI.Tabs(default_value: "account", class: "w-96") do
-        RubyUI.TabsList do
-          RubyUI.TabsTrigger(value: "account") { "Account" }
-          RubyUI.TabsTrigger(value: "password") { "Password" }
-        end
-        RubyUI.TabsContent(value: "account") do
-          RubyUI::Text(as: "p", size: "4") { "Account" }
-          RubyUI::Text(size: "5", weight: "semibold") { "Are you sure absolutely sure?" }
-          RubyUI::Text(size: "2", class: "text-muted-foreground") { "Update your account details." }
-        end
-        RubyUI.TabsContent(value: "password") do
-          RubyUI::Text(as: "p", size: "4") { "Password" }
-          RubyUI::Text(size: "2", class: "text-muted-foreground") { "Change your password here. After saving, you'll be logged out." }
-        end
-      end
-    end
+class RubyUI::TabsTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::Tabs.new.is_a?(Phlex::HTML)
+  end
 
-    assert_match(/Account/, output)
+  def test_controller
+    assert_equal "ruby-ui--tabs", RubyUI::Tabs.new.attrs[:data][:controller]
+  end
+
+  def test_default_active_value
+    t = RubyUI::Tabs.new(default: "account")
+    assert_equal "account", t.attrs[:data][:ruby_ui__tabs_active_value]
+  end
+end
+
+class RubyUI::TabsContentTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::TabsContent.new(value: "tab1").is_a?(Phlex::HTML)
+  end
+
+  def test_value_stored
+    tc = RubyUI::TabsContent.new(value: "tab1")
+    assert_equal "tab1", tc.value
+  end
+
+  def test_has_default_class
+    assert_includes RubyUI::TabsContent.new(value: "x").attrs[:class], "hidden"
+  end
+end
+
+class RubyUI::TabsListTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::TabsList.new.is_a?(Phlex::HTML)
+  end
+
+  def test_has_default_class
+    assert_includes RubyUI::TabsList.new.attrs[:class], "bg-muted"
+  end
+end
+
+class RubyUI::TabsTriggerTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::TabsTrigger.new(value: "tab1").is_a?(Phlex::HTML)
+  end
+
+  def test_value_stored
+    tt = RubyUI::TabsTrigger.new(value: "tab1")
+    assert_equal "tab1", tt.value
+  end
+
+  def test_type
+    assert_equal :button, RubyUI::TabsTrigger.new(value: "x").attrs[:type]
+  end
+
+  def test_has_default_class
+    assert_includes RubyUI::TabsTrigger.new(value: "x").attrs[:class], "rounded-md"
   end
 end

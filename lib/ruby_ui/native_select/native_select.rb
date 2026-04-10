@@ -1,19 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class NativeSelect < Base
+  class NativeSelect
+    include ComponentBase
+
     def initialize(size: :default, **attrs)
       @size = size
       super(**attrs)
-    end
-
-    def view_template(&block)
-      div(
-        class: "group/native-select relative w-fit has-[select:disabled]:opacity-50"
-      ) do
-        select(**attrs, &block)
-        render RubyUI::NativeSelectIcon.new
-      end
     end
 
     private

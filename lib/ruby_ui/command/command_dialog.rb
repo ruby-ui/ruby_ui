@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CommandDialog < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class CommandDialog
+    include ComponentBase
 
     private
 

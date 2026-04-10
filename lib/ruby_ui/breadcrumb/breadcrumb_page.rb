@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class BreadcrumbPage < Base
-    def view_template(&)
-      span(**attrs, &)
-    end
+  class BreadcrumbPage
+    include ComponentBase
 
     private
 

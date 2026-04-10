@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarWrapper < Base
+  class SidebarWrapper
+    include ComponentBase
+
     SIDEBAR_WIDTH = "16rem"
     SIDEBAR_WIDTH_ICON = "3rem"
-
-    def view_template(&)
-      div(**attrs, &)
-    end
 
     private
 

@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarGroupAction < Base
+  class SidebarGroupAction
+    include ComponentBase
+
     def initialize(as: :button, **attrs)
       @as = as
       super(**attrs)
     end
 
-    def view_template(&)
-      tag(@as, **attrs, &)
+    def tag_name
+      @as
     end
 
     private
@@ -24,9 +26,7 @@ module RubyUI
           "after:absolute after:-inset-2 after:md:hidden",
           "group-data-[collapsible=icon]:hidden"
         ],
-        data: {
-          sidebar: "group-action"
-        }
+        data: {sidebar: "group-action"}
       }
     end
   end

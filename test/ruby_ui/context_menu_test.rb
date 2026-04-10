@@ -2,28 +2,99 @@
 
 require "test_helper"
 
-class RubyUI::ContextMenuTest < ComponentTest
-  def test_render_with_all_items
-    output = phlex do
-      RubyUI.ContextMenu do
-        RubyUI.ContextMenuTrigger(class: "flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm") { "Right click here" }
-        RubyUI.ContextMenuContent(class: "w-64") do
-          RubyUI.ContextMenuItem(href: "#", shortcut: "⌘[") { "Back" }
-          RubyUI.ContextMenuItem(href: "#", shortcut: "⌘]", disabled: true) { "Forward" }
-          RubyUI.ContextMenuItem(href: "#", shortcut: "⌘R") { "Reload" }
-          RubyUI.ContextMenuSeparator
-          RubyUI.ContextMenuItem(href: "#", shortcut: "⌘⇧B", checked: true) { "Show Bookmarks Bar" }
-          RubyUI.ContextMenuItem(href: "#") { "Show Full URLs" }
-          RubyUI.ContextMenuSeparator
-          RubyUI.ContextMenuLabel(inset: true) { "More Tools" }
-          RubyUI.ContextMenuSeparator
-          RubyUI.ContextMenuItem(href: "#") { "Developer Tools" }
-          RubyUI.ContextMenuItem(href: "#") { "Task Manager" }
-          RubyUI.ContextMenuItem(href: "#") { "Extensions" }
-        end
-      end
-    end
+class RubyUI::ContextMenuTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::ContextMenu.new.is_a?(Phlex::HTML)
+  end
 
-    assert_match(/Right click here/, output)
+  def test_data_controller
+    comp = RubyUI::ContextMenu.new
+    assert_equal "ruby-ui--context-menu", comp.attrs.dig(:data, :controller)
+  end
+
+  def test_options_value
+    comp = RubyUI::ContextMenu.new(options: {placement: "right"})
+    assert_includes comp.attrs.dig(:data, :ruby_ui__context_menu_options_value), "right"
+  end
+end
+
+class RubyUI::ContextMenuContentTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::ContextMenuContent.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    comp = RubyUI::ContextMenuContent.new
+    assert_includes comp.attrs[:class], "z-50"
+    assert_equal "menu", comp.attrs[:role]
+  end
+end
+
+class RubyUI::ContextMenuItemTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::ContextMenuItem.new.is_a?(Phlex::HTML)
+  end
+
+  def test_href_default
+    comp = RubyUI::ContextMenuItem.new
+    assert_equal "#", comp.attrs[:href]
+  end
+
+  def test_custom_href
+    comp = RubyUI::ContextMenuItem.new(href: "/path")
+    assert_equal "/path", comp.attrs[:href]
+  end
+
+  def test_default_class
+    comp = RubyUI::ContextMenuItem.new
+    assert_includes comp.attrs[:class], "flex"
+  end
+
+  def test_checked_attr
+    comp = RubyUI::ContextMenuItem.new(checked: true)
+    assert comp.checked?
+  end
+
+  def test_shortcut_attr
+    comp = RubyUI::ContextMenuItem.new(shortcut: "⌘K")
+    assert_equal "⌘K", comp.shortcut
+  end
+end
+
+class RubyUI::ContextMenuLabelTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::ContextMenuLabel.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    comp = RubyUI::ContextMenuLabel.new
+    assert_includes comp.attrs[:class], "px-2"
+  end
+
+  def test_inset_adds_pl8
+    comp = RubyUI::ContextMenuLabel.new(inset: true)
+    assert_includes comp.attrs[:class], "pl-8"
+  end
+end
+
+class RubyUI::ContextMenuSeparatorTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::ContextMenuSeparator.new.is_a?(Phlex::HTML)
+  end
+
+  def test_role
+    comp = RubyUI::ContextMenuSeparator.new
+    assert_equal "separator", comp.attrs[:role]
+  end
+end
+
+class RubyUI::ContextMenuTriggerTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::ContextMenuTrigger.new.is_a?(Phlex::HTML)
+  end
+
+  def test_data_action
+    comp = RubyUI::ContextMenuTrigger.new
+    assert_includes comp.attrs.dig(:data, :action).to_s, "contextmenu"
   end
 end

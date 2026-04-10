@@ -1,0 +1,9 @@
+<%# Card example %>
+<%= render Card.new(class: "w-96") do %>
+  <%= render CardHeader.new do %>
+    <%= render CardTitle.new { "Card Title" } %>
+    <%= render CardDescription.new { "Card description goes here." } %>
+  <% end %>
+  <%= render CardContent.new { "Card content goes here." } %>
+  <%= render CardFooter.new { "Card footer" } %>
+<% end %>

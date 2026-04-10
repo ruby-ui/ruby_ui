@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SheetHeader < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class SheetHeader
+    include ComponentBase
 
     private
 

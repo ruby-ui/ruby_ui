@@ -1,0 +1,6 @@
+<div <%= tag_attributes(attrs) %>>
+  <% if title %>
+    <div group-heading="<%= title %>"><%= title %></div>
+  <% end %>
+  <div group-items="" role="group"><%= yield %></div>
+</div>

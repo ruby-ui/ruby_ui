@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Heading < Base
+  class Heading
+    include ComponentBase
+
     def initialize(level: nil, as: nil, size: nil, **attrs)
       @level = level
       @as = as
@@ -9,23 +11,16 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template(&)
-      tag = determine_tag
-      public_send(tag, **attrs, &)
-    end
-
-    private
-
-    def determine_tag
+    def tag_name
       return @as if @as
       return "h#{@level}" if @level
       "h1"
     end
 
+    private
+
     def default_attrs
-      {
-        class: class_names
-      }
+      {class: class_names}
     end
 
     def class_names

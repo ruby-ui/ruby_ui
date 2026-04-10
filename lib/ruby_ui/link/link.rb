@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Link < Base
+  class Link
+    include ComponentBase
+
     BASE_CLASSES = [
       "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors",
       "disabled:pointer-events-none disabled:opacity-50",
@@ -15,10 +17,6 @@ module RubyUI
       @size = size.to_sym
       @icon = icon
       super(**attrs)
-    end
-
-    def view_template(&)
-      a(href: @href, **attrs, &)
     end
 
     private
@@ -41,73 +39,25 @@ module RubyUI
       end
     end
 
-    def primary_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "bg-primary text-primary-foreground shadow",
-        "hover:bg-primary/90"
-      ]
-    end
-
-    def link_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "text-primary underline-offset-4",
-        "hover:underline"
-      ]
-    end
-
-    def secondary_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "bg-secondary text-secondary-foreground",
-        "hover:bg-opacity-80"
-      ]
-    end
-
-    def destructive_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "bg-destructive text-white shadow-sm",
-        "[a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20",
-        "dark:focus-visible:ring-destructive/40 dark:bg-destructive/60"
-      ]
-    end
-
-    def outline_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "border border-input bg-background shadow-sm",
-        "hover:bg-accent hover:text-accent-foreground"
-      ]
-    end
-
-    def ghost_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "hover:bg-accent hover:text-accent-foreground"
-      ]
-    end
-
-    def default_classes
+    def variant_classes
       case @variant
-      when :primary then primary_classes
-      when :link then link_classes
-      when :secondary then secondary_classes
-      when :destructive then destructive_classes
-      when :outline then outline_classes
-      when :ghost then ghost_classes
+      when :primary
+        ["bg-primary text-primary-foreground shadow", "hover:bg-primary/90"]
+      when :link
+        ["text-primary underline-offset-4", "hover:underline"]
+      when :secondary
+        ["bg-secondary text-secondary-foreground", "hover:bg-opacity-80"]
+      when :destructive
+        ["bg-destructive text-white shadow-sm", "[a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20", "dark:focus-visible:ring-destructive/40 dark:bg-destructive/60"]
+      when :outline
+        ["border border-input bg-background shadow-sm", "hover:bg-accent hover:text-accent-foreground"]
+      when :ghost
+        ["hover:bg-accent hover:text-accent-foreground"]
       end
     end
 
     def default_attrs
-      {type: "button", class: default_classes}
+      {href: @href, class: [BASE_CLASSES, size_classes, variant_classes]}
     end
   end
 end

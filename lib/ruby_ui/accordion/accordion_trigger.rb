@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class AccordionTrigger < Base
-    def view_template(&)
-      button(**attrs, &)
-    end
+  class AccordionTrigger
+    include ComponentBase
+
+    private
 
     def default_attrs
       {

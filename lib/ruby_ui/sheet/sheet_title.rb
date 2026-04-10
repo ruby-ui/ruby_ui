@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SheetTitle < Base
-    def view_template(&)
-      h3(**attrs, &)
-    end
+  class SheetTitle
+    include ComponentBase
 
     private
 

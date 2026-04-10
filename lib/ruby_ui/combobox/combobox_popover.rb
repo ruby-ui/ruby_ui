@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ComboboxPopover < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class ComboboxPopover
+    include ComponentBase
 
     private
 

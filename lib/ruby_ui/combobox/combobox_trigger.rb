@@ -1,20 +1,15 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ComboboxTrigger < Base
-    def initialize(placeholder: "", **)
+  class ComboboxTrigger
+    include ComponentBase
+
+    def initialize(placeholder: "", **attrs)
       @placeholder = placeholder
-      super(**)
+      super(**attrs)
     end
 
-    def view_template
-      button(**attrs) do
-        span(class: "truncate", data: {ruby_ui__combobox_target: "triggerContent"}) do
-          @placeholder
-        end
-        icon
-      end
-    end
+    attr_reader :placeholder
 
     private
 
@@ -38,26 +33,6 @@ module RubyUI
           expanded: "false"
         }
       }
-    end
-
-    def icon
-      svg(
-        xmlns: "http://www.w3.org/2000/svg",
-        viewbox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        class: "ml-2 h-4 w-4 shrink-0 opacity-50",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round"
-      ) do |s|
-        s.path(
-          d: "m7 15 5 5 5-5"
-        )
-        s.path(
-          d: "m7 9 5-5 5 5"
-        )
-      end
     end
   end
 end

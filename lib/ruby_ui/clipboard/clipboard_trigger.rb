@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ClipboardTrigger < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class ClipboardTrigger
+    include ComponentBase
 
     private
 

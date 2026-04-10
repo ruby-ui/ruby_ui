@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CalendarBody < Base
-    def view_template
-      table(**attrs)
-    end
+  class CalendarBody
+    include ComponentBase
 
     private
 

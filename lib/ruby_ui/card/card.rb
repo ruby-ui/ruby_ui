@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Card < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class Card
+    include ComponentBase
 
     private
 
     def default_attrs
-      {
-        class: "rounded-xl border bg-background shadow"
-      }
+      {class: "rounded-xl border bg-background shadow"}
     end
   end
 end

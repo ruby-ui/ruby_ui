@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CommandList < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class CommandList
+    include ComponentBase
 
     private
 

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ContextMenuTrigger < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class ContextMenuTrigger
+    include ComponentBase
 
     private
 

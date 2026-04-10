@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ComboboxCheckbox < Base
-    def view_template
-      input(type: "checkbox", **attrs)
-    end
+  class ComboboxCheckbox
+    include ComponentBase
 
     private
 

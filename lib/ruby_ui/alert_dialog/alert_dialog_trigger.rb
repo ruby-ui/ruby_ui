@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class AlertDialogTrigger < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class AlertDialogTrigger
+    include ComponentBase
 
     private
 

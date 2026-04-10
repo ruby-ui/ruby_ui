@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarGroupLabel < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class SidebarGroupLabel
+    include ComponentBase
 
     private
 
@@ -17,9 +15,7 @@ module RubyUI
           "ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
           "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0"
         ],
-        data: {
-          sidebar: "group-label"
-        }
+        data: {sidebar: "group-label"}
       }
     end
   end

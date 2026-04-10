@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SetDarkMode < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class SetDarkMode
+    include ComponentBase
+
+    private
 
     def default_attrs
       {

@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CarouselContent < Base
-    def view_template(&)
-      div(class: "overflow-hidden", data: {ruby_ui__carousel_target: "viewport"}) do
-        div(**attrs, &)
-      end
-    end
+  class CarouselContent
+    include ComponentBase
 
     private
 

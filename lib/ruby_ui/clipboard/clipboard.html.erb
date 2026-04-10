@@ -1,0 +1,5 @@
+<div <%= tag_attributes(attrs) %>>
+  <div><%= yield %></div>
+  <%= render RubyUI::ClipboardPopover.new(type: :success) { success_message } %>
+  <%= render RubyUI::ClipboardPopover.new(type: :error) { error_message } %>
+</div>

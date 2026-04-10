@@ -1,0 +1,20 @@
+<template data-ruby-ui--calendar-target="selectedDateTemplate">
+  <td class="<%= td_class %>" role="presentation">
+    <button data-day="{{day}}" data-action="click->ruby-ui--calendar#selectDay" name="day" class="<%= selected_date_button_class %>" role="gridcell" tabindex="0" type="button" aria-selected="true">{{dayDate}}</button>
+  </td>
+</template>
+<template data-ruby-ui--calendar-target="todayDateTemplate">
+  <td class="<%= td_class %>" role="presentation">
+    <button data-day="{{day}}" data-action="click->ruby-ui--calendar#selectDay" name="day" class="<%= today_date_button_class %>" role="gridcell" tabindex="-1" type="button">{{dayDate}}</button>
+  </td>
+</template>
+<template data-ruby-ui--calendar-target="currentMonthDateTemplate">
+  <td class="<%= td_class %>" role="presentation">
+    <button data-day="{{day}}" data-action="click->ruby-ui--calendar#selectDay" name="day" class="<%= current_month_button_class %>" role="gridcell" tabindex="-1" type="button">{{dayDate}}</button>
+  </td>
+</template>
+<template data-ruby-ui--calendar-target="otherMonthDateTemplate">
+  <td class="<%= td_class %>" role="presentation">
+    <button data-day="{{day}}" data-action=" click->ruby-ui--calendar#selectDay" name="day" class="<%= other_month_button_class %>" role="gridcell" tabindex="-1" type="button">{{dayDate}}</button>
+  </td>
+</template>

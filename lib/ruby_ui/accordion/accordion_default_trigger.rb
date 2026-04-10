@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class AccordionDefaultTrigger < Base
-    def view_template(&block)
-      div(class: "flex items-center justify-between w-full") do
-        p(&block)
-        RubyUI.AccordionIcon
-      end
-    end
+  class AccordionDefaultTrigger
+    include ComponentBase
+
+    private
 
     def default_attrs
       {

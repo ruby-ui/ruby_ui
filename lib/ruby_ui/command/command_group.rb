@@ -1,30 +1,17 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CommandGroup < Base
+  class CommandGroup
+    include ComponentBase
+
     def initialize(title: nil, **attrs)
       @title = title
       super(**attrs)
     end
 
-    def view_template(&block)
-      div(**attrs) do
-        render_header if @title
-        render_items(&block)
-      end
-    end
+    attr_reader :title
 
     private
-
-    def render_header
-      div(group_heading: @title) do
-        @title
-      end
-    end
-
-    def render_items(&)
-      div(group_items: "", role: "group", &)
-    end
 
     def default_attrs
       {

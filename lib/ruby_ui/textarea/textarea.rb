@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Textarea < Base
+  class Textarea
+    include ComponentBase
+
     def initialize(rows: 4, **attrs)
       @rows = rows
       super(**attrs)
-    end
-
-    def view_template(&)
-      textarea(rows: @rows, **attrs, &)
     end
 
     private
 
     def default_attrs
       {
+        rows: @rows,
         data: {
           ruby_ui__form_field_target: "input",
           action: "input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid"

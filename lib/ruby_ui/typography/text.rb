@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Text < Base
+  class Text
+    include ComponentBase
+
     def initialize(as: "p", size: "3", weight: "regular", **attrs)
       @as = as
       @size = size
@@ -9,16 +11,14 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template(&)
-      public_send(@as, **attrs, &)
+    def tag_name
+      @as
     end
 
     private
 
     def default_attrs
-      {
-        class: class_names
-      }
+      {class: class_names}
     end
 
     def class_names

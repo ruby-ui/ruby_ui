@@ -2,106 +2,117 @@
 
 require "test_helper"
 
-class RubyUI::TypographyTest < ComponentTest
-  def test_heading_with_levels
-    (1..4).each do |level|
-      output = phlex do
-        RubyUI::Heading(level: level.to_s) { "This is an H#{level} title" }
-      end
-
-      assert_match("This is an H#{level} title", output)
-      assert_match(/<h#{level}/, output)
-    end
+class RubyUI::TextTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::Text.new.is_a?(Phlex::HTML)
   end
 
-  def test_heading_with_custom_size
-    output = phlex do
-      RubyUI::Heading(as: "h2", size: "7") { "Custom Heading" }
-    end
-
-    assert_match("Custom Heading", output)
-    assert_match(/<h2/, output)
-    assert_match(/text-3xl/, output)
+  def test_default_tag_name
+    assert_equal "p", RubyUI::Text.new.tag_name
   end
 
-  def test_text_with_sizes
-    (1..9).each do |size|
-      output = phlex do
-        RubyUI::Text(size: size.to_s) { "Size #{size} text" }
-      end
-
-      assert_match("Size #{size} text", output)
-      assert_match(/text-#{if size == 3
-                             "base"
-                           elsif size == 1
-                             "xs"
-                           elsif size == 2
-                             "sm"
-                           else
-                             ["lg", "xl", "2xl", "3xl", "4xl", "5xl"][size - 4]
-                           end}/, output)
-    end
+  def test_custom_tag_name
+    assert_equal "span", RubyUI::Text.new(as: "span").tag_name
   end
 
-  def test_text_with_weights
-    %w[light regular medium bold].each do |weight|
-      output = phlex do
-        RubyUI::Text(weight: weight) { "#{weight.capitalize} text" }
-      end
-
-      assert_match("#{weight.capitalize} text", output)
-      assert_match(/font-#{(weight == "regular") ? "normal" : weight}/, output)
-    end
+  def test_default_size_class
+    t = RubyUI::Text.new
+    assert_includes t.attrs[:class], "text-base"
   end
 
-  def test_text_as_different_elements
-    %w[p span div label].each do |element|
-      output = phlex do
-        RubyUI::Text(as: element) { element.capitalize.to_s }
-      end
-
-      assert_match(element.capitalize.to_s, output)
-      assert_match(/<#{element}/, output)
-    end
+  def test_size_1_xs
+    t = RubyUI::Text.new(size: "1")
+    assert_includes t.attrs[:class], "text-xs"
   end
 
-  def test_lead_text
-    output = phlex do
-      RubyUI::Text(as: "p", size: "5", weight: "medium") { "A modal dialog that interrupts the user." }
-    end
-
-    assert_match("A modal dialog that interrupts the user.", output)
-    assert_match(/text-xl/, output)
-    assert_match(/font-medium/, output)
+  def test_size_2_sm
+    t = RubyUI::Text.new(size: "2")
+    assert_includes t.attrs[:class], "text-sm"
   end
 
-  def test_large_text
-    output = phlex do
-      RubyUI::Text(size: "5", weight: "semibold") { "Are you sure absolutely sure?" }
-    end
-
-    assert_match("Are you sure absolutely sure?", output)
-    assert_match(/text-xl/, output)
-    assert_match(/font-semibold/, output)
+  def test_size_5_xl
+    t = RubyUI::Text.new(size: "5")
+    assert_includes t.attrs[:class], "text-xl"
   end
 
-  def test_small_text
-    output = phlex do
-      RubyUI::Text(size: "2", weight: "medium") { "Email address" }
-    end
-
-    assert_match("Email address", output)
-    assert_match(/text-sm/, output)
-    assert_match(/font-medium/, output)
+  def test_weight_regular
+    t = RubyUI::Text.new(weight: "regular")
+    assert_includes t.attrs[:class], "font-normal"
   end
 
-  def test_muted_text
-    output = phlex do
-      RubyUI::Text(size: "2", class: "text-muted-foreground") { "Enter your email address." }
-    end
+  def test_weight_bold
+    t = RubyUI::Text.new(weight: "bold")
+    assert_includes t.attrs[:class], "font-bold"
+  end
 
-    assert_match("Enter your email address.", output)
-    assert_match(/text-sm/, output)
-    assert_match(/text-muted-foreground/, output)
+  def test_weight_muted
+    t = RubyUI::Text.new(weight: "muted")
+    assert_includes t.attrs[:class], "text-muted-foreground"
+  end
+
+  def test_user_class_merges
+    t = RubyUI::Text.new(class: "extra-class")
+    assert_includes t.attrs[:class], "extra-class"
+    assert_includes t.attrs[:class], "text-base"
+  end
+
+  def test_extra_attrs_pass_through
+    t = RubyUI::Text.new(id: "my-text")
+    assert_equal "my-text", t.attrs[:id]
+  end
+end
+
+class RubyUI::HeadingTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::Heading.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_tag_name
+    assert_equal "h1", RubyUI::Heading.new.tag_name
+  end
+
+  def test_level_1_tag
+    assert_equal "h1", RubyUI::Heading.new(level: "1").tag_name
+  end
+
+  def test_level_2_tag
+    assert_equal "h2", RubyUI::Heading.new(level: "2").tag_name
+  end
+
+  def test_as_overrides_level
+    assert_equal "h3", RubyUI::Heading.new(level: "1", as: "h3").tag_name
+  end
+
+  def test_default_class_includes_font_bold
+    h = RubyUI::Heading.new
+    assert_includes h.attrs[:class], "font-bold"
+    assert_includes h.attrs[:class], "scroll-m-20"
+  end
+
+  def test_level_1_gets_large_size
+    h = RubyUI::Heading.new(level: "1")
+    assert_includes h.attrs[:class], "text-3xl"
+  end
+
+  def test_level_2_gets_2xl
+    h = RubyUI::Heading.new(level: "2")
+    assert_includes h.attrs[:class], "text-2xl"
+  end
+
+  def test_custom_size_7
+    h = RubyUI::Heading.new(size: "7")
+    assert_includes h.attrs[:class], "text-3xl"
+  end
+end
+
+class RubyUI::TypographyBlockquoteTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::TypographyBlockquote.new.is_a?(Phlex::HTML)
+  end
+
+  def test_default_class
+    bq = RubyUI::TypographyBlockquote.new
+    assert_includes bq.attrs[:class], "border-l-2"
+    assert_includes bq.attrs[:class], "italic"
   end
 end

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarMenuSubButton < Base
+  class SidebarMenuSubButton
+    include ComponentBase
+
     SIZE_CLASSES = {
       sm: "text-xs",
       md: "text-sm"
@@ -16,8 +18,8 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template(&)
-      tag(@as, **attrs, &)
+    def tag_name
+      @as
     end
 
     private

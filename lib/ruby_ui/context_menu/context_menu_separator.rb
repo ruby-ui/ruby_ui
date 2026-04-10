@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ContextMenuSeparator < Base
-    def view_template
-      div(**attrs)
-    end
+  class ContextMenuSeparator
+    include ComponentBase
 
     private
 

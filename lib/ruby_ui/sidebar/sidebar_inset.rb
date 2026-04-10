@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarInset < Base
-    def view_template(&)
-      main(**attrs, &)
-    end
+  class SidebarInset
+    include ComponentBase
 
     private
 

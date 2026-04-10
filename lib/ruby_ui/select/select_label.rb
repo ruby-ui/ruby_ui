@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SelectLabel < Base
-    def view_template(&)
-      h3(**attrs, &)
-    end
+  class SelectLabel
+    include ComponentBase
 
     private
 

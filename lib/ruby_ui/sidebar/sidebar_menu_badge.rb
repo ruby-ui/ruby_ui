@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class SidebarMenuBadge < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class SidebarMenuBadge
+    include ComponentBase
 
     private
 
@@ -21,9 +19,7 @@ module RubyUI
           "peer-data-[size=lg]/menu-button:top-2.5",
           "group-data-[collapsible=icon]:hidden"
         ],
-        data: {
-          sidebar: "menu-badge"
-        }
+        data: {sidebar: "menu-badge"}
       }
     end
   end

@@ -2,16 +2,27 @@
 
 require "test_helper"
 
-class RubyUI::InlineLinkTest < ComponentTest
-  def test_render_inline_link
-    output = phlex do
-      RubyUI::InlineLink(href: "#") { "Link" }
-    end
+class RubyUI::InlineLinkTest < Minitest::Test
+  def test_not_phlex
+    refute RubyUI::InlineLink.new(href: "#").is_a?(Phlex::HTML)
+  end
 
-    assert_match(/Link/, output)
-    assert_match(/href="#"/, output)
-    assert_match(/text-primary/, output)
-    assert_match(/font-medium/, output)
-    assert_match(/hover:underline/, output)
+  def test_href_in_attrs
+    il = RubyUI::InlineLink.new(href: "/about")
+    assert_equal "/about", il.attrs[:href]
+  end
+
+  def test_default_class
+    il = RubyUI::InlineLink.new(href: "#")
+    assert_includes il.attrs[:class], "text-primary"
+    assert_includes il.attrs[:class], "font-medium"
+    assert_includes il.attrs[:class], "hover:underline"
+    assert_includes il.attrs[:class], "underline-offset-4"
+  end
+
+  def test_user_class_merges
+    il = RubyUI::InlineLink.new(href: "#", class: "extra")
+    assert_includes il.attrs[:class], "extra"
+    assert_includes il.attrs[:class], "text-primary"
   end
 end

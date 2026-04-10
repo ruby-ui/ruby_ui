@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Tooltip < Base
+  class Tooltip
+    include ComponentBase
+
     def initialize(placement: "top", **attrs)
       @placement = placement
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

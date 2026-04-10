@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class CheckboxGroup < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
+  class CheckboxGroup
+    include ComponentBase
 
     private
 

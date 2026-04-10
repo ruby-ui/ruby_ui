@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class FormFieldError < Base
-    def view_template(&)
-      p(**attrs, &)
-    end
+  class FormFieldError
+    include ComponentBase
 
     private
 
