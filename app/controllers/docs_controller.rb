@@ -34,6 +34,14 @@ class DocsController < ApplicationController
   end
 
   # COMPONENTS
+  def components
+    render Views::Docs::Components.new
+  end
+
+  def changelog
+    render Views::Docs::Changelog.new
+  end
+
   def accordion
     render Views::Docs::Accordion.new
   end
@@ -160,6 +168,10 @@ class DocsController < ApplicationController
 
   def radio_button
     render Views::Docs::RadioButton.new
+  end
+
+  def native_select
+    render Views::Docs::NativeSelect.new
   end
 
   def select

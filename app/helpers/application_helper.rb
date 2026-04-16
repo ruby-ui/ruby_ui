@@ -21,7 +21,7 @@ module ApplicationHelper
       basename = File.basename(file, ext)
 
       name = basename.camelize
-      # source = "https://github.com/PhlexUI/phlex_ui/blob/v1/lib/ruby_ui/#{component.to_s.downcase}/#{File.basename(file)}"
+      # source = "https://github.com/ruby-ui/ruby_ui/blob/v1/lib/ruby_ui/#{component.to_s.downcase}/#{File.basename(file)}"
       source = "lib/ruby_ui/#{camel_to_snake(component)}/#{File.basename(file)}"
       built_using = if ext == ".rb"
         :phlex

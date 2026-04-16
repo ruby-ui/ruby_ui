@@ -3,22 +3,29 @@
 module Components
   module Shared
     class Navbar < Components::Base
+      include ComponentsList
+
       def view_template
         header(class: "supports-backdrop-blur:bg-background/80 sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-2xl backdrop-saturate-200") do
           div(class: "px-2 sm:px-4 sm:container flex h-14 items-center justify-between") do
             div(class: "mr-4 flex items-center") do
               render Shared::MobileMenu.new(class: "md:hidden")
               render Shared::Logo.new
-
-              Link(href: docs_introduction_path, variant: :ghost, class: "hidden md:inline-block") { "Docs" }
-              Link(href: docs_accordion_path, variant: :ghost, class: "hidden md:inline-block") { "Components" }
-              Link(href: theme_path("default"), variant: :ghost, class: "hidden md:inline-block") { "Themes" }
+              nav(class: "hidden md:flex items-center gap-6 text-sm font-medium") do
+                a(href: docs_introduction_path, class: "transition-colors hover:text-foreground/80 text-foreground") { "Docs" }
+                a(href: docs_components_path, class: "transition-colors hover:text-foreground/80 text-foreground") { "Components" }
+                a(href: theme_path("default"), class: "transition-colors hover:text-foreground/80 text-foreground") { "Themes" }
+              end
             end
             div(class: "flex items-center gap-x-2 md:divide-x") do
-              div(class: "flex items-center") do
-                twitter_link
-                github_link
-                dark_mode_toggle
+              div(class: "flex items-center w-full justify-between md:justify-end gap-2") do
+                div(class: "w-full flex-1 md:w-auto md:flex-none") do
+                  search_button
+                end
+                div(class: "flex items-center") do
+                  github_link
+                  dark_mode_toggle
+                end
               end
             end
           end
@@ -62,24 +69,47 @@ module Components
         end
       end
 
-      def twitter_link
-        Link(href: "https://twitter.com/phlexui", variant: :ghost, icon: true) do
-          svg(
-            viewbox: "0 0 20 20",
-            aria_hidden: "true",
-            fill: "currentColor",
-            class: "h-4 w-4"
-          ) do |s|
-            s.path(
-              d:
-                "M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0 0 20 3.92a8.19 8.19 0 0 1-2.357.646 4.118 4.118 0 0 0 1.804-2.27 8.224 8.224 0 0 1-2.605.996 4.107 4.107 0 0 0-6.993 3.743 11.65 11.65 0 0 1-8.457-4.287 4.106 4.106 0 0 0 1.27 5.477A4.073 4.073 0 0 1 .8 7.713v.052a4.105 4.105 0 0 0 3.292 4.022 4.095 4.095 0 0 1-1.853.07 4.108 4.108 0 0 0 3.834 2.85A8.233 8.233 0 0 1 0 16.407a11.615 11.615 0 0 0 6.29 1.84"
-            )
+      def search_button
+        CommandDialog do
+          CommandDialogTrigger(keybindings: ["keydown.ctrl+k@window", "keydown.meta+k@window"]) do
+            Button(variant: :outline, class: "relative h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64") do
+              svg(xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewbox: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round", class: "mr-2") { |s|
+                s.circle(cx: "11", cy: "11", r: "8")
+                s.path(d: "m21 21-4.3-4.3")
+              }
+              span(class: "hidden lg:inline-flex") { "Search documentation..." }
+              span(class: "inline-flex lg:hidden") { "Search..." }
+              kbd(class: "pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex") do
+                span(class: "text-xs") { "⌘" }
+                plain "K"
+              end
+            end
+          end
+          CommandDialogContent(class: "overflow-hidden p-0 shadow-2xl") do
+            Command(class: "flex h-full w-full flex-col overflow-hidden") do
+              CommandInput(placeholder: "Search documentation...", class: "border-none focus:ring-0")
+              CommandEmpty { "No results found." }
+              CommandList(class: "max-h-[min(450px,80vh)] overflow-y-auto p-2") do
+                CommandGroup(title: "Components") do
+                  components.each do |component|
+                    CommandItem(value: component[:name], href: component[:path], class: "px-2 py-1.5") do
+                      plain component[:name]
+                    end
+                  end
+                end
+                CommandGroup(title: "Links") do
+                  CommandItem(value: "Introduction", href: docs_introduction_path, class: "px-2 py-1.5") { "Introduction" }
+                  CommandItem(value: "Installation", href: docs_installation_path, class: "px-2 py-1.5") { "Installation" }
+                  CommandItem(value: "Theming", href: docs_theming_path, class: "px-2 py-1.5") { "Theming" }
+                end
+              end
+            end
           end
         end
       end
 
       def github_link
-        Link(href: "https://github.com/PhlexUI/phlex_ui", variant: :ghost, icon: true) do
+        Link(href: "https://github.com/ruby-ui/ruby_ui", variant: :ghost, icon: true) do
           github_icon
         end
       end

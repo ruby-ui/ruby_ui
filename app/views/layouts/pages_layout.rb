@@ -14,6 +14,7 @@ module Views
           body do
             render Shared::Navbar.new
             main(class: "relative", &block)
+            render Shared::Footer.new
             render Shared::Flashes.new(notice: flash[:notice], alert: flash[:alert])
           end
         end

@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     get "installation/rails_importmaps", to: "docs#installation_rails_importmaps", as: :docs_installation_rails_importmaps
 
     # COMPONENTS
+    get "components", to: "docs#components", as: :docs_components
+    get "changelog", to: "docs#changelog", as: :docs_changelog
     get "accordion", to: "docs#accordion", as: :docs_accordion
     get "alert", to: "docs#alert_component", as: :docs_alert # alert is a reserved word for controller action
     get "alert_dialog", to: "docs#alert_dialog", as: :docs_alert_dialog
@@ -46,6 +48,7 @@ Rails.application.routes.draw do
     get "popover", to: "docs#popover", as: :docs_popover
     get "progress", to: "docs#progress", as: :docs_progress
     get "radio_button", to: "docs#radio_button", as: :docs_radio_button
+    get "native_select", to: "docs#native_select", as: :docs_native_select
     get "select", to: "docs#select", as: :docs_select
     get "separator", to: "docs#separator", as: :docs_separator
     get "sheet", to: "docs#sheet", as: :docs_sheet

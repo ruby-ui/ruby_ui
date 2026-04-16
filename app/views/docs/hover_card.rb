@@ -62,10 +62,10 @@ class Views::Docs::HoverCard < Views::Base
 
   # def components
   #   [
-  #     Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
-  #     Docs::ComponentStruct.new(name: "HoverCard", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card.rb", built_using: :phlex),
-  #     Docs::ComponentStruct.new(name: "HoverCardTrigger", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/trigger.rb", built_using: :phlex),
-  #     Docs::ComponentStruct.new(name: "HoverCardContent", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/hover_card/content.rb", built_using: :phlex)
+  #     Docs::ComponentStruct.new(name: "PopoverController", source: "https://github.com/ruby-ui/ruby_ui_stimulus/blob/main/controllers/popover_controller.js", built_using: :stimulus),
+  #     Docs::ComponentStruct.new(name: "HoverCard", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/hover_card.rb", built_using: :phlex),
+  #     Docs::ComponentStruct.new(name: "HoverCardTrigger", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/hover_card/trigger.rb", built_using: :phlex),
+  #     Docs::ComponentStruct.new(name: "HoverCardContent", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/hover_card/content.rb", built_using: :phlex)
   #   ]
   # end
 end

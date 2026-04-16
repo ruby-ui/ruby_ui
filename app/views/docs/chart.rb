@@ -108,8 +108,8 @@ class Views::Docs::Chart < Views::Base
 
   def components
     [
-      ::Docs::ComponentStruct.new(name: "ChartController", source: "https://github.com/PhlexUI/phlex_ui_stimulus/blob/main/controllers/chart_controller.js", built_using: :stimulus),
-      ::Docs::ComponentStruct.new(name: "Chart", source: "https://github.com/PhlexUI/phlex_ui/blob/main/lib/phlex_ui/chart.rb", built_using: :phlex)
+      ::Docs::ComponentStruct.new(name: "ChartController", source: "https://github.com/ruby-ui/ruby_ui_stimulus/blob/main/controllers/chart_controller.js", built_using: :stimulus),
+      ::Docs::ComponentStruct.new(name: "Chart", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/chart.rb", built_using: :phlex)
     ]
   end
 end

@@ -8,6 +8,8 @@ class Components::Base < Phlex::HTML
   include Phlex::Rails::Helpers::ImageURL
   include Phlex::Rails::Helpers::Flash
   include Phlex::Rails::Helpers::Request
+  include Phlex::Rails::Helpers::ContentTag
+  include LucideRails::RailsHelper
 
   TAILWIND_MERGER = ::TailwindMerge::Merger.new.freeze unless defined?(TAILWIND_MERGER)
 

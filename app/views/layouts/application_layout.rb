@@ -15,6 +15,7 @@ module Views
             script(defer: true, data_domain: "rubyui.com", src: "https://plausible.io/js/script.js")
             render Shared::Navbar.new
             main(&block)
+            render Shared::Footer.new
             render Shared::Flashes.new(notice: flash[:notice], alert: flash[:alert])
           end
         end

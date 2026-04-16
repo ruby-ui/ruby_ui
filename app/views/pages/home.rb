@@ -2,216 +2,287 @@
 
 class Views::Pages::Home < Views::Base
   def view_template
-    render HomeView::Banner.new do |banner|
-      banner.cta do
-        Link(variant: :outline, href: docs_accordion_path, class: "text-center justify-center") { "Browse Components" }
-        Link(variant: :primary, href: docs_introduction_path, class: "text-center justify-center") do
-          plain "Get Started"
-          svg(
-            xmlns: "http://www.w3.org/2000/svg",
-            viewbox: "0 0 20 20",
-            fill: "currentColor",
-            class: "w-5 h-5 ml-1 -mr-1"
-          ) do |s|
-            s.path(
-              fill_rule: "evenodd",
-              d:
-                "M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z",
-              clip_rule: "evenodd"
-            )
-          end
+    # Hero Section
+    section(class: "space-y-6 pt-6 md:pt-10 lg:pt-16") do
+      div(class: "container flex max-w-[64rem] flex-col items-center gap-4 text-center mx-auto") do
+        Link(href: docs_changelog_path, variant: :outline, class: "rounded-2xl px-4 py-1.5 text-sm font-medium") do
+          span(class: "sm:hidden") { "New components available" }
+          span(class: "hidden sm:inline") { "Combobox updates and more" }
+          svg(xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewbox: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round", class: "ml-2 h-4 w-4") { |s|
+            s.path(d: "M5 12h14")
+            s.path(d: "m12 5 7 7-7 7")
+          }
+        end
+        h1(class: "leading-tighter text-3xl font-semibold tracking-tight text-balance text-primary lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter max-w-4xl") do
+          [
+            "Build sharp Ruby interfaces.",
+            "Reusable UI components for Ruby developers.",
+            "Pure Ruby UI, built with Phlex.",
+            "Elevate your Rails apps with RubyUI.",
+            "The sharpest way to build in Ruby."
+          ].sample
+        end
+        p(class: "max-w-4xl text-base text-balance text-foreground sm:text-lg") do
+          "A UI component library, crafted precisely for Ruby devs who want to stay organised and build modern apps, fast."
+        end
+        div(class: "space-x-4 mt-4") do
+          Link(href: docs_introduction_path, variant: :primary, size: :lg) { "Documentation" }
+          Link(href: docs_components_path, variant: :outline, size: :lg) { "View Components" }
         end
       end
     end
 
-    div(class: "overflow-hidden") do
-      div(class: "container mx-auto max-w-5xl px-4 flex justify-center my-8") do
-        iframe(width: "100%", height: "720", src: "https://www.youtube.com/embed/OQZam7rug00?si=JmZNzS5u194Q0AWQ", title: "YouTube video player", frameborder: "0", allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share", referrerpolicy: "strict-origin-when-cross-origin", allowfullscreen: true)
-      end
-
-      div(class: "relative z-10 container mx-auto max-w-5xl pt-16 lg:pt-16 py-24 px-4") do
-        div(class: "grid grid-cols-6 gap-4") do
-          render HomeView::Card.new(class: "col-span-6 sm:col-span-3 md:col-span-4", title: "Built for Speed", subtitle: "Dive into a world where your Rails UI development happens at light speed. Phlex is not just fast - it's blazing fast.", color: :secondary) do |card|
-            card.icon do
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 24 24",
-                fill: "currentColor",
-                class: "w-6 h-6"
-              ) do |s|
-                s.path(
-                  fill_rule: "evenodd",
-                  d:
-                    "M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z",
-                  clip_rule: "evenodd"
-                )
+    # Components Mosaic Section
+    section(class: "container py-8 md:py-12 lg:py-24 mx-auto max-w-6xl") do
+      div(class: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6") do
+        # COLUMN 1
+        div(class: "space-y-6") do
+          # PAYMENT CARD
+          Card do
+            CardHeader(class: "space-y-1") do
+              CardTitle { "Payment Method" }
+              CardDescription { "All transactions are secure and encrypted." }
+            end
+            CardContent(class: "grid gap-4") do
+              div(class: "grid gap-2") do
+                Label { "Name on Card" }
+                Input(placeholder: "John Doe")
+              end
+              div(class: "grid gap-2") do
+                Label { "Card Number" }
+                Input(placeholder: "1234 5678 9012 3456")
+              end
+              div(class: "grid grid-cols-3 gap-4") do
+                div(class: "grid gap-2 col-span-2") do
+                  Label { "Expires" }
+                  div(class: "grid grid-cols-2 gap-2") do
+                    Button(variant: :outline, class: "justify-between text-muted-foreground font-normal") do
+                      span { "Month" }
+                      lucide_icon "chevron-down", class: "h-3 w-3 opacity-50"
+                    end
+                    Button(variant: :outline, class: "justify-between text-muted-foreground font-normal") do
+                      span { "Year" }
+                      lucide_icon "chevron-down", class: "h-3 w-3 opacity-50"
+                    end
+                  end
+                end
+                div(class: "grid gap-2") do
+                  Label { "CVV" }
+                  Input(placeholder: "CVV")
+                end
+              end
+              div(class: "flex items-center space-x-2 pt-2") do
+                Checkbox(id: "shipping")
+                Label(for: "shipping", class: "text-sm font-normal") { "Same as shipping address" }
               end
             end
+            CardFooter(class: "flex justify-between gap-2") do
+              Button(variant: :outline, class: "flex-1") { "Cancel" }
+              Button(class: "flex-1") { "Pay Now" }
+            end
           end
-          render HomeView::Card.new(class: "col-span-6 sm:col-span-3 md:col-span-2", color: :sky) do |card|
-            card.content do
-              div(class: "flex flex-col items-center justify-center text-center space-y-4 h-full") do
-                p(class: "text-6xl font-semibold") { "7.7x" }
-                p do
-                  a(href: "https://github.com/palkan/view-layer-benchmarks", class: "underline") { "Faster" }
-                  span { " than traditional Rails ERB" }
+
+          # ALERT Showcase
+          Alert do
+            lucide_icon "terminal", class: "h-4 w-4"
+            AlertTitle { "Heads up!" }
+            AlertDescription { "You can add components directly to your app using Phlex." }
+          end
+
+          # ACTIVITY FEED
+          Card do
+            CardHeader(class: "pb-3") do
+              CardTitle { "Activity Feed" }
+            end
+            CardContent(class: "flex flex-wrap gap-2") do
+              Badge(variant: :sky) { "In Review" }
+              Badge(variant: :success) { "Ready to Ship" }
+              Badge(variant: :outline) { "Draft" }
+              Badge(variant: :destructive) { "Rejected" }
+              Badge(variant: :primary) { "Deployed" }
+              Badge(variant: :amber) { "Agent Thinking" }
+            end
+          end
+        end
+
+        # COLUMN 2
+        div(class: "space-y-6") do
+          # TABS
+          Tabs(default_value: "account") do
+            TabsList(class: "grid w-full grid-cols-2") do
+              TabsTrigger(value: "account") { "Account" }
+              TabsTrigger(value: "password") { "Password" }
+            end
+            TabsContent(value: "account") do
+              Card do
+                CardHeader do
+                  CardTitle { "Account" }
+                  CardDescription { "Make changes to your account here." }
+                end
+                CardContent(class: "space-y-2") do
+                  div(class: "space-y-1") do
+                    Label { "Username" }
+                    Input(placeholder: "@djalma")
+                  end
+                  div(class: "space-y-1") do
+                    Label { "Email" }
+                    Input(placeholder: "djalma@nossomos.cc")
+                  end
+                end
+                CardFooter do
+                  Button(size: :sm, class: "w-full") { "Save changes" }
                 end
               end
             end
           end
-          render HomeView::Card.new(class: "col-span-6 sm:col-span-3", title: "UI that... Wow!", subtitle: "Design stunning, streamlined, and customizable UIs that not only look great but sell your app without you lifting a finger.", color: :violet) do |card|
-            card.icon do
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 24 24",
-                fill: "currentColor",
-                class: "w-6 h-6"
-              ) do |s|
-                s.path(
-                  fill_rule: "evenodd",
-                  d:
-                    "M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z",
-                  clip_rule: "evenodd"
-                )
+
+          # TEAM MEMBERS
+          Card do
+            CardHeader do
+              CardTitle { "Team Members" }
+              CardDescription { "Collaborate with your team." }
+            end
+            CardContent(class: "space-y-6") do
+              team_member("Sofia Davis", "@sdavis", "https://i.pravatar.cc/150?u=sofia")
+              team_member("Jackson Lee", "@jlee", "https://i.pravatar.cc/150?u=jackson")
+              team_member("Djalma Araújo", "@djalma", "https://i.pravatar.cc/150?u=djalma")
+              team_member("George Kettle", "@gkettle", "https://i.pravatar.cc/150?u=george")
+            end
+            CardFooter do
+              Button(variant: :outline, class: "w-full") { "Invite Members" }
+            end
+          end
+        end
+
+        # COLUMN 3
+        div(class: "space-y-6") do
+          # PROGRESS / QUOTA
+          Card do
+            CardHeader(class: "pb-4") do
+              div(class: "flex items-center justify-between") do
+                CardTitle { "Storage Usage" }
+                span(class: "text-xs text-muted-foreground") { "12.4GB / 20GB" }
+              end
+            end
+            CardContent do
+              Progress(value: 62)
+            end
+            CardFooter do
+              Button(variant: :ghost, size: :sm, class: "w-full text-xs") { "Upgrade Plan" }
+            end
+          end
+
+          # SETTINGS / SWITCHES
+          Card do
+            CardHeader do
+              CardTitle { "Settings" }
+              CardDescription { "Manage your preferences." }
+            end
+            CardContent(class: "space-y-4") do
+              div(class: "flex items-center justify-between rounded-lg border p-4 shadow-sm") do
+                div(class: "space-y-0.5") do
+                  p(class: "font-medium text-sm") { "Kubernetes" }
+                  p(class: "text-xs text-muted-foreground") { "Highly available cluster." }
+                end
+                Switch(checked: true)
+              end
+              div(class: "flex items-center justify-between rounded-lg border p-4 shadow-sm") do
+                div(class: "space-y-0.5") do
+                  p(class: "font-medium text-sm") { "Dark Mode" }
+                  p(class: "text-xs text-muted-foreground") { "Use the dark theme." }
+                end
+                Switch()
               end
             end
           end
-          render HomeView::Card.new(class: "col-span-6 sm:col-span-3", title: "Stay Organized", subtitle: "Say goodbye to clutter. With Phlex, your UI components are not only organized, but also easy to manage and track.", color: :secondary) do |card|
-            card.icon do
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 24 24",
-                fill: "currentColor",
-                class: "w-6 h-6"
-              ) do |s|
-                s.path(
-                  d:
-                    "M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875z"
-                )
-                s.path(
-                  d:
-                    "M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 001.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 001.897 1.384C6.809 12.164 9.315 12.75 12 12.75z"
-                )
-                s.path(
-                  d:
-                    "M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 15.914 9.315 16.5 12 16.5z"
-                )
-                s.path(
-                  d:
-                    "M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 19.664 9.315 20.25 12 20.25z"
-                )
+
+          # AI AGENT CHAT
+          Card do
+            CardHeader(class: "pb-2") do
+              div(class: "flex items-center justify-between") do
+                CardTitle { "AI Assistant" }
+                Badge(variant: :secondary, size: :sm) { "v4.0" }
               end
             end
-          end
-          div(class: "relative col-span-6") do
-            render HomeView::Shapes.new(color: :violet, class: "hidden md:block absolute top-0 left-0 rotate-90 -translate-x-1/2 translate-y-full", size: :lg)
-            div(class: "mx-auto max-w-lg py-28") do
-              steps = [
-                {
-                  title: "Find the perfect component",
-                  description: "Each component is embedded live on the page so you can find exactly the design you want."
-                },
-                {
-                  title: "Copy the snippet",
-                  description: "Click the \"Code\" tab to see the code for a component and grab the part that you need, or click the clipboard button to quickly copy the entire snippet in one step."
-                },
-                {
-                  title: "Make it yours",
-                  description: "Every component is built entirely out of Tailwind utility classes, so you can easily dive in and adjust anything you want to better fit your use case."
-                }
-              ]
-              render HomeView::Steps.new(steps: steps)
-            end
-          end
-          render HomeView::Card.new(class: "col-span-6 md:col-span-4", title: "Customer-Centric UX", subtitle: "Create an app experience your users will rave about. RubyUI ensures that your user's journey is nothing less than memorable.", color: :pink) do |card|
-            card.icon do
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 24 24",
-                fill: "currentColor",
-                class: "w-6 h-6"
-              ) do |s|
-                s.path(
-                  d:
-                    "M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"
-                )
+            CardContent(class: "space-y-4") do
+              div(class: "max-w-[80%] rounded-lg bg-muted p-3 text-sm") do
+                "How can I help you build with Ruby today?"
+              end
+              div(class: "flex flex-wrap gap-2") do
+                Button(variant: :outline, size: :sm, class: "h-7 text-[10px] gap-1") do
+                  lucide_icon "plus", class: "h-3 w-3"
+                  span { "Add Context" }
+                end
+                Button(variant: :outline, size: :sm, class: "h-7 text-[10px] gap-1") do
+                  lucide_icon "globe", class: "h-3 w-3"
+                  span { "Web Search" }
+                end
               end
             end
-          end
-          render HomeView::Card.new(class: "col-span-6 md:col-span-2", title: "Completely Customisable", subtitle: "Have full control over the design of all components.", color: :amber) do |card|
-            card.icon do
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 24 24",
-                fill: "currentColor",
-                class: "w-6 h-6"
-              ) do |s|
-                s.path(
-                  fill_rule: "evenodd",
-                  d:
-                    "M20.599 1.5c-.376 0-.743.111-1.055.32l-5.08 3.385a18.747 18.747 0 00-3.471 2.987 10.04 10.04 0 014.815 4.815 18.748 18.748 0 002.987-3.472l3.386-5.079A1.902 1.902 0 0020.599 1.5zm-8.3 14.025a18.76 18.76 0 001.896-1.207 8.026 8.026 0 00-4.513-4.513A18.75 18.75 0 008.475 11.7l-.278.5a5.26 5.26 0 013.601 3.602l.502-.278zM6.75 13.5A3.75 3.75 0 003 17.25a1.5 1.5 0 01-1.601 1.497.75.75 0 00-.7 1.123 5.25 5.25 0 009.8-2.62 3.75 3.75 0 00-3.75-3.75z",
-                  clip_rule: "evenodd"
-                )
+            CardFooter(class: "flex flex-col gap-3 pt-0") do
+              div(class: "flex items-center w-full gap-2") do
+                Button(variant: :ghost, size: :icon, class: "h-8 w-8 shrink-0") do
+                  lucide_icon "plus-circle", class: "h-4 w-4"
+                end
+                div(class: "relative flex-1") do
+                  Input(placeholder: "Ask anything...", class: "pr-10 h-10")
+                  Button(variant: :primary, size: :icon, class: "absolute right-1 top-1 h-8 w-8") do
+                    lucide_icon "arrow-up", class: "h-4 w-4"
+                  end
+                end
               end
-            end
-          end
-          render HomeView::Card.new(class: "col-span-6 sm:col-span-3", title: "Minimal Dependencies", subtitle: "Keep your app lean and mean. With RubyUI, we use custom built Stimulus.js controllers wherever possible - less package dependencies to worry about.", color: :secondary) do |card|
-            card.icon do
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 24 24",
-                fill: "currentColor",
-                class: "w-6 h-6"
-              ) do |s|
-                s.path(
-                  d:
-                    "M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z"
-                )
-              end
-            end
-          end
-          render HomeView::Card.new(class: "col-span-6 sm:col-span-3", title: "Reuse with Ease", subtitle: "Avoid the hassle of constantly reconstructing components. With Phlex, once built, use them seamlessly as needed.", color: :lime) do |card|
-            card.icon do
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                viewbox: "0 0 24 24",
-                fill: "currentColor",
-                class: "w-6 h-6"
-              ) do |s|
-                s.path(
-                  fill_rule: "evenodd",
-                  d:
-                    "M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z",
-                  clip_rule: "evenodd"
-                )
+              div(class: "flex items-center gap-2 text-[10px] text-muted-foreground") do
+                lucide_icon "zap", class: "h-3 w-3"
+                span { "GPT-4o" }
+                span(class: "mx-1") { "•" }
+                lucide_icon "layers", class: "h-3 w-3"
+                span { "Professional Plan" }
               end
             end
           end
         end
       end
-      div(class: "relative z-0 h-72 rotate-180 -mt-56 -mr-px") do
-        render Shared::GridPattern.new
-      end
-      div(class: "relative h-72") do
-        render Shared::GridPattern.new
-      end
     end
   end
 
-  def speed_tests
-    [
-      {
-        framework: "Phlex",
-        time: 1
-      },
-      {
-        framework: "ViewComponent",
-        time: 5.57
-      },
-      {
-        framework: "ERB Templates",
-        time: 12.08
-      }
-    ].sort_by { |test| test[:time] }
+  private
+
+  def Label(class: nil, **attrs, &block)
+    base_classes = "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+
+    label(class: [base_classes, binding.local_variable_get(:class)], **attrs, &block)
+  end
+
+  def team_member(name, handle, avatar_url)
+    div(class: "flex items-center justify-between") do
+      div(class: "flex items-center gap-4") do
+        Avatar do
+          AvatarImage(src: avatar_url, alt: name)
+          AvatarFallback { name.split.map(&:first).join }
+        end
+        div do
+          p(class: "text-sm font-medium leading-none") { name }
+          p(class: "text-xs text-muted-foreground") { handle }
+        end
+      end
+      Button(variant: :ghost, size: :sm) { "Edit" }
+    end
+  end
+
+  def activity_item(title, time, status)
+    div(class: "flex items-center gap-4") do
+      div(class: [
+        "h-2 w-2 rounded-full",
+        (if status == :success
+           "bg-green-500"
+         else
+           ((status == :warning) ? "bg-amber-500" : "bg-blue-500")
+         end)
+      ])
+      div do
+        p(class: "text-sm font-medium") { title }
+        p(class: "text-xs text-muted-foreground") { time }
+      end
+    end
   end
 end

@@ -21,7 +21,7 @@ module Components
           const execSync = require('child_process').execSync;
 
           // Import ruby_ui gem path (To make sure Tailwind loads classes used by ruby_ui gem)
-          const outputRUBYUI = execSync('bundle show phlex_ui', { encoding: 'utf-8' });
+          const outputRUBYUI = execSync('bundle show ruby_ui', { encoding: 'utf-8' });
           const ruby_ui_path = outputRUBYUI.trim() + '/**/*.rb';
 
           const defaultTheme = require('tailwindcss/defaultTheme')

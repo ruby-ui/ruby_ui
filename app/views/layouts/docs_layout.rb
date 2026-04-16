@@ -21,6 +21,7 @@ module Views
                 end
               end
             end
+            render Shared::Footer.new
             render Shared::Flashes.new(notice: flash[:notice], alert: flash[:alert])
           end
         end

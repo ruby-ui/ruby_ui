@@ -10,8 +10,8 @@ module Components
 
       def view_template
         div(class: "space-y-2") do
-          Components.Heading(level: 1) { @title }
-          Text(as: "p", size: "5", class: "text-muted-foreground") { @description }
+          h1(class: "scroll-m-24 text-3xl font-semibold tracking-tight sm:text-3xl") { @title }
+          p(class: "text-lg text-foreground") { @description }
         end
       end
 
