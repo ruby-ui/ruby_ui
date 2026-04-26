@@ -1,0 +1,60 @@
+# Build context for docs/Dockerfile is the monorepo root.
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file
+
+# Ignore git directory.
+/.git/
+/.gitignore
+
+# Ignore bundler config in either subproject.
+/gem/.bundle
+/docs/.bundle
+
+# Ignore environment files.
+/docs/.env*
+/gem/.env*
+
+# Ignore default key files.
+/docs/config/master.key
+/docs/config/credentials/*.key
+
+# Ignore logs and tempfiles.
+/docs/log/*
+/docs/tmp/*
+!/docs/log/.keep
+!/docs/tmp/.keep
+/docs/tmp/pids/*
+!/docs/tmp/pids/.keep
+
+# Ignore storage (uploaded files in dev and SQLite databases).
+/docs/storage/*
+!/docs/storage/.keep
+/docs/tmp/storage/*
+!/docs/tmp/storage/.keep
+
+# Ignore assets.
+/docs/node_modules/
+/docs/app/assets/builds/*
+!/docs/app/assets/builds/.keep
+/docs/public/assets
+
+# Ignore gem build artifacts.
+/gem/pkg/
+/gem/node_modules/
+/gem/tmp/
+/gem/.ruby-lsp/
+
+# Ignore CI service files.
+/.github
+
+# Ignore Kamal files.
+/docs/config/deploy*.yml
+/docs/.kamal
+
+# Ignore development files.
+/gem/.devcontainer
+/docs/.devcontainer
+
+# Ignore Docker-related files.
+/.dockerignore
+/docs/.dockerignore
+/docs/Dockerfile*
