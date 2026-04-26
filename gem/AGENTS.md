@@ -1,6 +1,15 @@
 # AGENTS.md
 
-This file provides guidance to AI coding agents when working with code in this repository.
+This file provides guidance to AI coding agents working in `gem/` (the gem subproject of the RubyUI monorepo).
+
+## Monorepo context
+
+This file lives in `gem/`, one of two sibling projects in the `ruby-ui/ruby_ui` monorepo:
+
+- `gem/` — this directory; the `ruby_ui` gem (Phlex components, generators, tests).
+- `docs/` — Rails 8 app that powers https://rubyui.com. Consumes the local gem via `path: "../gem"`.
+
+When you change a component here (`gem/lib/ruby_ui/<component>/`), update the matching documentation view in `docs/app/views/docs/<component>.rb` in the same PR.
 
 ## Project Overview
 
