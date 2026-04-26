@@ -43,7 +43,7 @@ class GemspecTest < Minitest::Test
         output = `gem build ruby_ui.gemspec --output #{gem_path} 2>&1`
         raise "gem build failed:\n#{output}" unless $?.success?
       end
-      Gem::Package.new(gem_path).map { |entry| entry.full_name }
+      Gem::Package.new(gem_path).contents
     end
   end
 end
