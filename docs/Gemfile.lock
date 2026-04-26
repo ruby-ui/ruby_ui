@@ -12,10 +12,8 @@ GIT
   specs:
     phlex (2.0.2)
 
-GIT
-  remote: https://github.com/ruby-ui/ruby_ui.git
-  revision: 856136f40bc4d5be942e39506e56fb08348afc93
-  branch: main
+PATH
+  remote: ../gem
   specs:
     ruby_ui (1.1.0)
 
