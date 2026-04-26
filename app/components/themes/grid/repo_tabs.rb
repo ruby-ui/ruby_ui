@@ -44,10 +44,10 @@ module Components
         def components
           [
             ::Docs::ComponentStruct.new(name: "TabsController", source: "https://github.com/ruby-ui/ruby_ui_stimulus/blob/main/controllers/tabs_controller.js", built_using: :stimulus),
-            ::Docs::ComponentStruct.new(name: "Tabs", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/tabs.rb", built_using: :phlex),
-            ::Docs::ComponentStruct.new(name: "TabsList", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/tabs/list.rb", built_using: :phlex),
-            ::Docs::ComponentStruct.new(name: "TabsTrigger", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/tabs/trigger.rb", built_using: :phlex),
-            ::Docs::ComponentStruct.new(name: "TabsContent", source: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/tabs/content.rb", built_using: :phlex)
+            ::Docs::ComponentStruct.new(name: "Tabs", source: "https://github.com/ruby-ui/ruby_ui/blob/main/gem/lib/ruby_ui/tabs.rb", built_using: :phlex),
+            ::Docs::ComponentStruct.new(name: "TabsList", source: "https://github.com/ruby-ui/ruby_ui/blob/main/gem/lib/ruby_ui/tabs/list.rb", built_using: :phlex),
+            ::Docs::ComponentStruct.new(name: "TabsTrigger", source: "https://github.com/ruby-ui/ruby_ui/blob/main/gem/lib/ruby_ui/tabs/trigger.rb", built_using: :phlex),
+            ::Docs::ComponentStruct.new(name: "TabsContent", source: "https://github.com/ruby-ui/ruby_ui/blob/main/gem/lib/ruby_ui/tabs/content.rb", built_using: :phlex)
           ]
         end
 
