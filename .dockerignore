@@ -1,51 +1,60 @@
-# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
+# Build context for docs/Dockerfile is the monorepo root.
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file
 
 # Ignore git directory.
 /.git/
 /.gitignore
 
-# Ignore bundler config.
-/.bundle
+# Ignore bundler config in either subproject.
+/gem/.bundle
+/docs/.bundle
 
-# Ignore all environment files.
-/.env*
+# Ignore environment files.
+/docs/.env*
+/gem/.env*
 
-# Ignore all default key files.
-/config/master.key
-/config/credentials/*.key
+# Ignore default key files.
+/docs/config/master.key
+/docs/config/credentials/*.key
 
-# Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+# Ignore logs and tempfiles.
+/docs/log/*
+/docs/tmp/*
+!/docs/log/.keep
+!/docs/tmp/.keep
+/docs/tmp/pids/*
+!/docs/tmp/pids/.keep
 
-# Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-!/tmp/pids/.keep
-
-# Ignore storage (uploaded files in development and any SQLite databases).
-/storage/*
-!/storage/.keep
-/tmp/storage/*
-!/tmp/storage/.keep
+# Ignore storage (uploaded files in dev and SQLite databases).
+/docs/storage/*
+!/docs/storage/.keep
+/docs/tmp/storage/*
+!/docs/tmp/storage/.keep
 
 # Ignore assets.
-/node_modules/
-/app/assets/builds/*
-!/app/assets/builds/.keep
-/public/assets
+/docs/node_modules/
+/docs/app/assets/builds/*
+!/docs/app/assets/builds/.keep
+/docs/public/assets
+
+# Ignore gem build artifacts.
+/gem/pkg/
+/gem/node_modules/
+/gem/tmp/
+/gem/.ruby-lsp/
 
 # Ignore CI service files.
 /.github
 
 # Ignore Kamal files.
-/config/deploy*.yml
-/.kamal
+/docs/config/deploy*.yml
+/docs/.kamal
 
-# Ignore development files
-/.devcontainer
+# Ignore development files.
+/gem/.devcontainer
+/docs/.devcontainer
 
-# Ignore Docker-related files
+# Ignore Docker-related files.
 /.dockerignore
-/Dockerfile*
+/docs/.dockerignore
+/docs/Dockerfile*

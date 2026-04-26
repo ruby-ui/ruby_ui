@@ -1,7 +1,12 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
+# Build context for this Dockerfile is the monorepo root, not docs/.
+# Run from the repo root:
+#   docker build -f docs/Dockerfile .
+#   flyctl deploy --config docs/fly.toml --dockerfile docs/Dockerfile .
+
+# Make sure RUBY_VERSION matches the Ruby version in docs/.ruby-version
 ARG RUBY_VERSION=3.4.7
 FROM quay.io/evl.ms/fullstaq-ruby:${RUBY_VERSION}-jemalloc-slim AS base
 
@@ -43,18 +48,21 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     npm install -g pnpm@$PNPM_VERSION && \
     rm -rf /tmp/node-build-master
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
+# Copy the gem first so docs/Gemfile's `path: "../gem"` resolves during bundle install.
+COPY gem /gem
+
+# Install application gems (cwd = /rails)
+COPY docs/Gemfile docs/Gemfile.lock ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
 # Install node modules
-COPY package.json ./
+COPY docs/package.json docs/pnpm-lock.yaml ./
 RUN pnpm install
 
 # Copy application code
-COPY . .
+COPY docs/ ./
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
@@ -67,8 +75,9 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 
-# Copy built artifacts: gems, application
+# Copy built artifacts: gems, application, and the gem subtree
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
+COPY --from=build /gem /gem
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
