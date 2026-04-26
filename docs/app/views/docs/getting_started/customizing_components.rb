@@ -61,7 +61,7 @@ class Views::Docs::GettingStarted::CustomizingComponents < Views::Base
               plain "First, find the source code for the component you want to redefine. In this case, we want to redefine the "
               InlineCode { "Alert" }
               plain " component, so we'll find the source code for the alert component "
-              InlineLink(href: "https://github.com/ruby-ui/ruby_ui/blob/main/lib/ruby_ui/alert.rb") { "here on Github" }
+              InlineLink(href: "https://github.com/ruby-ui/ruby_ui/blob/main/gem/lib/ruby_ui/alert.rb") { "here on Github" }
               plain "."
             end
           end
