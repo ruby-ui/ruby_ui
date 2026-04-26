@@ -42,8 +42,8 @@ importers:
         specifier: 0.28.0
         version: 0.28.0
       fuse.js:
-        specifier: 7.1.0
-        version: 7.1.0
+        specifier: 7.3.0
+        version: 7.3.0
       maska:
         specifier: 3.2.0
         version: 3.2.0
@@ -327,8 +327,8 @@ packages:
       react-dom:
         optional: true
 
-  fuse.js@7.1.0:
-    resolution: {integrity: sha512-trLf4SzuuUxfusZADLINj+dE8clK1frKdmqiJNb1Es75fmI5oY6X2mxLVUciLLjxqw/xr72Dhy+lER6dGd02FQ==}
+  fuse.js@7.3.0:
+    resolution: {integrity: sha512-plz8RVjfcDedTGfVngWH1jmJvBvAwi1v2jecfDerbEnMcmOYUEEwKFTHbNoCiYyzaK2Ws8lABkTCcRSqCY1q4w==}
     engines: {node: '>=10'}
 
   maska@3.2.0:
@@ -601,7 +601,7 @@ snapshots:
       motion-utils: 12.36.0
       tslib: 2.8.1
 
-  fuse.js@7.1.0: {}
+  fuse.js@7.3.0: {}
 
   maska@3.2.0: {}
 
