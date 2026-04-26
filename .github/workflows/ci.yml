@@ -3,103 +3,84 @@ name: CI
 on:
   pull_request:
   push:
-    branches: 
-      - "main"
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+    branches:
+      - main
 
+jobs:
+  gem:
+    name: Gem (Ruby ${{ matrix.ruby }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gem
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.3", "3.4"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+          rubygems: latest
+          working-directory: gem
+      - name: Run tests
+        run: bundle exec rake test
+      - name: Run linter
+        run: bundle exec rake standard
+
+  docs:
+    name: Docs (Rails)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs
+    steps:
+      - uses: actions/checkout@v6
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-
+          working-directory: docs
       - name: Install pnpm
         uses: pnpm/action-setup@v5
         with:
           version: 10.8.0
           run_install: false
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version-file: ".node-version"
-          cache: 'pnpm'
-
+          node-version-file: docs/.node-version
+          cache: pnpm
+          cache-dependency-path: docs/pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install
-
-      - name: Lint code for consistent style
+      - name: Lint
         run: bundle exec standardrb
-        
       - name: Run tests
         run: bin/rails db:test:prepare test
 
-  verify_components:
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-        with:
-          run_install: false
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: ".node-version"
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: bin/rails g ruby_ui:component:all --force true
-
-      - name: Remove generated docs stubs (conflict with app overrides)
-        run: git checkout -- app/components/ruby_ui/docs/ 2>/dev/null || rm -rf app/components/ruby_ui/docs/
-
-      - uses: CatChen/check-git-status-action@v2
-        with:
-          fail-if-not-clean: true
-          push-if-not-clean: false
-          request-changes-if-not-clean: false
-          targets: 'app'
-
   docker-build:
+    name: Docker build (Devcontainer)
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
+      - uses: actions/checkout@v6
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }} 
-        
-      - name: Build and run dev container task
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push devcontainer image
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/ruby-ui/web-devcontainer
           cacheFrom: ghcr.io/ruby-ui/web-devcontainer
+          subFolder: docs
           push: always

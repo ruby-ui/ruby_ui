@@ -1,21 +1,38 @@
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 version: 2
 updates:
-  # Ruby dependencies
+  # Gem
   - package-ecosystem: "bundler"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
-  # JavaScript dependencies  
-  - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/gem"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
 
-  # GitHub Actions
+  # Docs (Rails app)
+  - package-ecosystem: "bundler"
+    directory: "/docs"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+
+  # GitHub Actions (root)
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 5
+
+  # Devcontainers
+  - package-ecosystem: "devcontainers"
+    directory: "/gem"
+    schedule:
+      interval: weekly
+  - package-ecosystem: "devcontainers"
+    directory: "/docs"
+    schedule:
+      interval: weekly
