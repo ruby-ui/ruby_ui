@@ -1,28 +1,51 @@
-Rails need a plug n play system for creating streamlined ui components.
+# RubyUI
 
-Phlex looks fun and fast, so I thought I'd start creating ui components with it.
+[![CI](https://github.com/ruby-ui/ruby_ui/actions/workflows/ci.yml/badge.svg)](https://github.com/ruby-ui/ruby_ui/actions/workflows/ci.yml)
+[![Gem Version](https://badge.fury.io/rb/ruby_ui.svg)](https://rubygems.org/gems/ruby_ui)
 
-## Contributing - Local Development Setup
+Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
 
-### Install the Gem Locally
+This repository is a **monorepo** with two sibling projects:
 
-To contribute to this project, it's recommended to install the gem locally and point to it in your Gemfile:
-
-```ruby
-gem "ruby_ui", path: "../ruby_ui"
+```
+ruby_ui/
+├── gem/    # the ruby_ui gem (lib/, generators, tests, gemspec)
+└── docs/   # the Rails app that powers https://rubyui.com
 ```
 
-## Working with Components
+## Quick links
 
-### Component Development Workflow
+- **Use the gem in your app:** see [`gem/README.md`](gem/README.md).
+- **Documentation site:** https://rubyui.com/docs/introduction
+- **Contributing guide:** [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
-1. Eject the component you want to modify using the generator:
-   ```bash
-   rails generate ruby_ui:component combobox
-   ```
-2. Make your desired changes to the ejected component
-3. Once you're satisfied with the modifications, integrate the component back into the gem in the appropriate location
+## Layout
 
-This workflow allows you to iterate quickly on components while maintaining the gem's structure.
+| Path | What lives here |
+| --- | --- |
+| [`gem/`](gem/) | The `ruby_ui` gem (`gem build`, `gem release` from this folder). |
+| [`docs/`](docs/) | Rails 8 app for the documentation site. Consumes the local gem via `path: "../gem"`. |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Unified CI: gem tests on Ruby 3.3 + 3.4, Rails docs app tests, and a docker-build job that publishes the docs devcontainer to ghcr.io. |
 
-Would you like me to expand on any part of the contributing guide?
+## Development
+
+The two projects are independent for everyday work — pick the one you need:
+
+```bash
+# Gem work
+cd gem
+bundle install
+bundle exec rake          # tests + standardrb
+
+# Docs work (consumes the local gem via path: "../gem")
+cd docs
+bundle install
+pnpm install
+bin/dev                   # http://localhost:3000
+```
+
+Editing files under `gem/lib/ruby_ui/` is reflected immediately when running the docs app — no `bundle update`, no rebuild, no PR coordination across two repos.
+
+## License
+
+Released under the [MIT License](gem/LICENSE.txt).

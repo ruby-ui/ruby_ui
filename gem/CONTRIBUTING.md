@@ -39,7 +39,7 @@ While we don't have specific test coverage requirements, all contributions shoul
 
 ## Documentation
 
-If your changes include new components, modify how components should be used, or add new behaviors, it is highly recommended to also open a PR on the [ruby-ui/web](https://github.com/ruby-ui/web) repository. This ensures the documentation website stays up-to-date with the latest component changes.
+If your changes include new components, modify how components should be used, or add new behaviors, please update the corresponding view in `docs/app/views/docs/<component>.rb` in the same PR — the docs Rails app lives in this same monorepo and consumes the local gem via `path: "../gem"`.
 
 ### Installing Documentation Files
 
