@@ -44,7 +44,9 @@ module RubyUI
     end
 
     def build_query(hash)
-      hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join("&")
+      hash.flat_map { |k, v|
+        Array(v).map { |val| "#{CGI.escape(k.to_s)}=#{CGI.escape(val.to_s)}" }
+      }.join("&")
     end
 
     def sort_icon
