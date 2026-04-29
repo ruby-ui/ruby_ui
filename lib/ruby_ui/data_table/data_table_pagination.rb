@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "cgi"
-require_relative "../data_table_pagination_adapters/manual"
-require_relative "../data_table_pagination_adapters/pagy"
-require_relative "../data_table_pagination_adapters/kaminari"
+require_relative "data_table_manual_adapter"
+require_relative "data_table_pagy_adapter"
+require_relative "data_table_kaminari_adapter"
 
 module RubyUI
   class DataTablePagination < Base
@@ -30,10 +30,10 @@ module RubyUI
 
     def resolve_adapter(with:, pagy:, kaminari:, page:, per_page:, total_count:)
       return with if with
-      return RubyUI::DataTablePaginationAdapters::Pagy.new(pagy) if pagy
-      return RubyUI::DataTablePaginationAdapters::Kaminari.new(kaminari) if kaminari
+      return RubyUI::DataTablePagyAdapter.new(pagy) if pagy
+      return RubyUI::DataTableKaminariAdapter.new(kaminari) if kaminari
       if page && per_page && total_count
-        return RubyUI::DataTablePaginationAdapters::Manual.new(page:, per_page:, total_count:)
+        return RubyUI::DataTableManualAdapter.new(page:, per_page:, total_count:)
       end
       raise ArgumentError, "DataTablePagination requires one of: with:, pagy:, kaminari:, or page:+per_page:+total_count:"
     end
