@@ -60,20 +60,20 @@ module RubyUI
     def prev_item
       if current <= 1
         li do
-          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { plain @prev_label }
+          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { @prev_label }
         end
       else
-        render RubyUI::PaginationItem.new(href: page_href(current - 1)) { plain @prev_label }
+        render RubyUI::PaginationItem.new(href: page_href(current - 1)) { @prev_label }
       end
     end
 
     def next_item
       if current >= total
         li do
-          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { plain @next_label }
+          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { @next_label }
         end
       else
-        render RubyUI::PaginationItem.new(href: page_href(current + 1)) { plain @next_label }
+        render RubyUI::PaginationItem.new(href: page_href(current + 1)) { @next_label }
       end
     end
 
