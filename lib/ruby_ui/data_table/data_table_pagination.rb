@@ -7,16 +7,20 @@ require_relative "data_table_kaminari_adapter"
 
 module RubyUI
   class DataTablePagination < Base
-    def initialize(with: nil, pagy: nil, kaminari: nil, page: nil, per_page: nil, total_count: nil, page_param: "page", path: "", query: {}, window: 1, **attrs)
+    def initialize(with: nil, pagy: nil, kaminari: nil, page: nil, per_page: nil, total_count: nil, page_param: "page", path: "", query: {}, window: 1, prev_label: "<", next_label: ">", **attrs)
       @adapter = resolve_adapter(with:, pagy:, kaminari:, page:, per_page:, total_count:)
       @page_param = page_param
       @path = path
       @query = query.to_h.transform_keys(&:to_s)
       @window = window
+      @prev_label = prev_label
+      @next_label = next_label
       super(**attrs)
     end
 
     def view_template
+      return if total <= 1
+
       render RubyUI::Pagination.new(class: "mx-0 w-auto justify-end", **attrs) do
         render RubyUI::PaginationContent.new do
           prev_item
@@ -56,20 +60,20 @@ module RubyUI
     def prev_item
       if current <= 1
         li do
-          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { plain "Previous" }
+          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { plain @prev_label }
         end
       else
-        render RubyUI::PaginationItem.new(href: page_href(current - 1)) { plain "Previous" }
+        render RubyUI::PaginationItem.new(href: page_href(current - 1)) { plain @prev_label }
       end
     end
 
     def next_item
       if current >= total
         li do
-          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { plain "Next" }
+          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { plain @next_label }
         end
       else
-        render RubyUI::PaginationItem.new(href: page_href(current + 1)) { plain "Next" }
+        render RubyUI::PaginationItem.new(href: page_href(current + 1)) { plain @next_label }
       end
     end
 
