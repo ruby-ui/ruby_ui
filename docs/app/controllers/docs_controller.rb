@@ -122,6 +122,10 @@ class DocsController < ApplicationController
     render Views::Docs::ContextMenu.new
   end
 
+  def data_table
+    render Views::Docs::DataTable.new
+  end
+
   def date_picker
     render Views::Docs::DatePicker.new
   end

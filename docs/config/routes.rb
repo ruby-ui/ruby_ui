@@ -64,6 +64,12 @@ Rails.application.routes.draw do
     get "theme_toggle", to: "docs#theme_toggle", as: :docs_theme_toggle
     get "tooltip", to: "docs#tooltip", as: :docs_tooltip
     get "typography", to: "docs#typography", as: :docs_typography
+
+    # DATA TABLE
+    get "data_table", to: "docs#data_table", as: :docs_data_table
+    get "data_table_demo", to: "docs/data_table_demo#index", as: :docs_data_table_demo
+    post "data_table_demo/bulk_delete", to: "docs/data_table_demo#bulk_delete", as: :docs_data_table_demo_bulk_delete
+    post "data_table_demo/bulk_export", to: "docs/data_table_demo#bulk_export", as: :docs_data_table_demo_bulk_export
   end
 
   match "/404", to: "errors#not_found", via: :all
