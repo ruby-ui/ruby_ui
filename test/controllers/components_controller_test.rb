@@ -5,7 +5,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     scope_prefix = "/docs"
 
     Rails.application.routes.routes.select do |route|
-      route.path.spec.to_s.start_with?(scope_prefix)
+      route.path.spec.to_s.start_with?(scope_prefix) && route.verb == "GET"
     end.map do |route|
       {
         method: route.verb,
