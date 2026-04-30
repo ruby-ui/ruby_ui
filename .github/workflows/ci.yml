@@ -36,14 +36,14 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: docs
+        working-directory: .
     steps:
       - uses: actions/checkout@v6
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-          working-directory: docs
+          working-directory: .
       - name: Install pnpm
         uses: pnpm/action-setup@v5
         with:
@@ -52,9 +52,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version-file: docs/.node-version
+          node-version-file: .node-version
           cache: pnpm
-          cache-dependency-path: docs/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install
       - name: Lint
@@ -82,5 +82,5 @@ jobs:
         with:
           imageName: ghcr.io/ruby-ui/web-devcontainer
           cacheFrom: ghcr.io/ruby-ui/web-devcontainer
-          subFolder: docs
+          subFolder: .
           push: always
