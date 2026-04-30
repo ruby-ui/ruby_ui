@@ -17,7 +17,7 @@ module Views
               div(class: "border-b") do
                 div(class: "container px-4 flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10") do
                   render Shared::Sidebar.new
-                  main(class: "relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]", &block)
+                  main(class: "relative py-6 lg:py-8 w-full min-w-0", &block)
                 end
               end
             end
