@@ -78,8 +78,8 @@ module Components
       end
 
       def iframe_preview
-        div(class: "relative aspect-[4/2.5] w-full overflow-hidden rounded-md border", data: {controller: "iframe-theme"}) do
-          div(class: "absolute inset-0 hidden w-[1600px] bg-background md:block") do
+        div(class: "relative min-h-[500px] w-full overflow-hidden rounded-md border", data: {controller: "iframe-theme"}) do
+          div(class: "absolute inset-0 hidden w-full bg-background md:block") do
             iframe(src: @src, class: "size-full", data: {iframe_theme_target: "iframe"})
           end
         end
@@ -87,7 +87,7 @@ module Components
 
       def raw_preview
         div(class: "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border") do
-          div(class: "preview flex min-h-[350px] w-full justify-center p-10 items-center") do
+          div(class: "preview min-h-[350px] w-full p-6") do
             decoded_code = CGI.unescapeHTML(@display_code)
             @context.instance_eval(decoded_code)
           end
