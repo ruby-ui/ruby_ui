@@ -1,0 +1,40 @@
+{
+  "name": "ruby_ui_js",
+  "version": "1.2.0",
+  "main": "lib/ruby_ui/index.js",
+  "description": "Stimulus controllers for ruby_ui Component Library",
+  "homepage": "https://ruby_ui.dev",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ruby_ui",
+    "Stimulus",
+    "StimulusJS",
+    "StimulusControllers",
+    "Ruby",
+    "Rails",
+    "RubyOnRails"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruby_ui-hq/ruby_ui.git"
+  },
+  "author": "George Kettle",
+  "license": "ISC",
+  "dependencies": {
+    "@floating-ui/dom": "^1.6.8",
+    "@hotwired/stimulus": "^3.2.2",
+    "chart.js": "^4.4.1",
+    "date-fns": "^2.30.0",
+    "embla-carousel": "8.5.2",
+    "fuse.js": "^7.0.0",
+    "maska": "^3.0.3",
+    "motion": "^10.16.4",
+    "mustache": "^4.2.0",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "globals": "^15.8.0"
+  }
+}

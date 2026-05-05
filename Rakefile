@@ -1,12 +1,6 @@
-# frozen_string_literal: true
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-require "bundler/gem_tasks"
-require "minitest/test_task"
+require_relative "config/application"
 
-Minitest::TestTask.create(:test) do |t|
-  t.warning = false
-end
-
-require "standard/rake"
-
-task default: %i[test standard]
+Rails.application.load_tasks

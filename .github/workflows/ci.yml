@@ -1,31 +1,86 @@
 name: CI
 
 on:
+  pull_request:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
-  build:
-    name: Ruby ${{ matrix.ruby }}
+  gem:
+    name: Gem (Ruby ${{ matrix.ruby }})
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gem
     strategy:
       fail-fast: false
       matrix:
         ruby: ["3.3", "3.4"]
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
-        rubygems: latest
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+          rubygems: latest
+          working-directory: gem
+      - name: Run tests
+        run: bundle exec rake test
+      - name: Run linter
+        run: bundle exec rake standard
 
-    - name: Run tests
-      run: bundle exec rake test
+  docs:
+    name: Docs (Rails)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: .
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 10.8.0
+          run_install: false
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint
+        run: bundle exec standardrb
+      - name: Run tests
+        run: bin/rails db:test:prepare test
 
-    - name: Run linter
-      run: bundle exec rake standard
+  docker-build:
+    name: Docker build (Devcontainer)
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push devcontainer image
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/ruby-ui/web-devcontainer
+          cacheFrom: ghcr.io/ruby-ui/web-devcontainer
+          subFolder: .
+          push: always

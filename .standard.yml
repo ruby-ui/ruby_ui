@@ -1,3 +1,2 @@
-ruby_version: 3.4
-format: progress
-parallel: true
+ignore:
+  - 'db/migrate/*'

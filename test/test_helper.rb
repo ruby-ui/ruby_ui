@@ -1,34 +1,19 @@
-# frozen_string_literal: true
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
+require "rails/test_help"
 
-$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "ruby_ui"
-require "phlex"
-require "json"
-require "securerandom"
-require "minitest/autorun"
+class ActiveSupport::TestCase
+  # Run tests in parallel with specified workers
+  parallelize(workers: :number_of_processors)
 
-module RubyUI
-  extend Phlex::Kit
+  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
+  fixtures :all
 
-  Dir.glob("lib/ruby_ui/**/*.rb").reject { |f| f.include?("/docs/") || f.end_with?("_docs.rb") }.map do |path|
-    class_name = path.split("/").last.delete_suffix(".rb").split("_").map(&:capitalize).join.to_sym
-
-    autoload class_name, path
-  end
+  # Add more helper methods to be used by all tests here...
 end
 
-class ComponentTest < Minitest::Test
-  def render(component, &)
-    component.call(&)
-  end
-
-  def phlex(&)
-    render Phlex::HTML.new, &
+class ActionDispatch::IntegrationTest
+  setup do
+    host! "example.com"
   end
 end
-
-# this is a tracepoint that will output the path of all files loaded that contain the string "phlex"
-# trace = TracePoint.new(:class) do |tp|
-#   puts "Loaded: #{tp.path}" if tp.path.include?("phlex")
-# end
-# trace.enable

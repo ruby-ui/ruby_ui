@@ -1,12 +1,25 @@
-name: "ruby_ui"
+name: "rubyui-web"
 
 services:
-  app:
+  rails-app:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
 
     volumes:
-      - ../../ruby_ui:/workspaces/ruby_ui:cached
-      # Overrides default command so things don't shut down after the process ends.
+    - ../../web:/workspaces/web:cached
+
+    # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    depends_on:
+    - selenium
+  
+  selenium:
+    image: selenium/standalone-chromium
+    restart: unless-stopped
