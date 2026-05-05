@@ -73,7 +73,7 @@ end
 gem "phlex", github: "phlex-ruby/phlex"
 gem "phlex-rails", github: "phlex-ruby/phlex-rails"
 
-gem "ruby_ui", path: "../gem", require: false
+gem "ruby_ui", path: "gem", require: false
 
 gem "pry", "0.16.0"
 
