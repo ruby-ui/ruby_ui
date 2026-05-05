@@ -11,8 +11,16 @@ Rails.autoloaders.main.inflector.inflect(
   "ruby_ui" => "RubyUI"
 )
 
+# The docs app has local RubyUI-only helpers/components under lib/ruby_ui/*.
+# Collapse subdirectories so files like lib/ruby_ui/data_table/data_table.rb map
+# to RubyUI::DataTable instead of RubyUI::DataTable::DataTable.
+local_ruby_ui_path = Rails.root.join("lib/ruby_ui").to_s
+Rails.autoloaders.main.collapse(
+  Dir.glob("#{local_ruby_ui_path}/*").select { |p| File.directory?(p) }
+)
+
 # Autoload RubyUI components directly from the gem's lib/ruby_ui directory
-# (the gem lives at ../gem in this monorepo, resolved via Bundler).
+# (the gem lives at ./gem in this monorepo, resolved via Bundler).
 gem_ruby_ui_path = "#{Gem.loaded_specs["ruby_ui"].gem_dir}/lib/ruby_ui"
 
 Rails.autoloaders.main.push_dir(gem_ruby_ui_path, namespace: RubyUI)
