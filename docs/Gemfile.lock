@@ -15,7 +15,7 @@ GIT
 PATH
   remote: ../gem
   specs:
-    ruby_ui (1.1.0)
+    ruby_ui (1.2.0)
 
 GEM
   remote: https://rubygems.org/
