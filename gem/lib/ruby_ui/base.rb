@@ -19,7 +19,7 @@ module RubyUI
       {}
     end
 
-    if Rails.env.development?
+    if defined?(Rails) && Rails.env.development?
       def before_template
         comment { "Before #{self.class.name}" }
       end
