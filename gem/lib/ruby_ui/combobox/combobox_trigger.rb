@@ -9,7 +9,7 @@ module RubyUI
 
     def view_template
       button(**attrs) do
-        span(class: "truncate text-muted-foreground", data: {ruby_ui__combobox_target: "triggerContent"}) do
+        span(class: "truncate", data: {ruby_ui__combobox_target: "triggerContent"}) do
           @placeholder
         end
         icon
@@ -26,13 +26,12 @@ module RubyUI
           "hover:bg-accent hover:text-accent-foreground",
           "disabled:pointer-events-none disabled:opacity-50",
           "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-          "aria-invalid:border-destructive"
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         ],
         data: {
           placeholder: @placeholder,
           ruby_ui__combobox_target: "trigger",
-          action: "click->ruby-ui--combobox#togglePopover focus->ruby-ui--combobox#openPopover"
+          action: "ruby-ui--combobox#togglePopover"
         },
         aria: {
           haspopup: "listbox",
@@ -42,21 +41,22 @@ module RubyUI
     end
 
     def icon
-      span(class: "shrink-0 flex items-center justify-center size-6 rounded-sm hover:bg-muted hover:text-foreground") do
-        svg(
-          xmlns: "http://www.w3.org/2000/svg",
-          width: "24",
-          height: "24",
-          viewbox: "0 0 24 24",
-          fill: "none",
-          stroke: "currentColor",
-          stroke_width: "2",
-          stroke_linecap: "round",
-          stroke_linejoin: "round",
-          class: "pointer-events-none size-4 text-muted-foreground"
-        ) do |s|
-          s.path(d: "m6 9 6 6 6-6")
-        end
+      svg(
+        xmlns: "http://www.w3.org/2000/svg",
+        viewbox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        class: "ml-2 h-4 w-4 shrink-0 opacity-50",
+        stroke_width: "2",
+        stroke_linecap: "round",
+        stroke_linejoin: "round"
+      ) do |s|
+        s.path(
+          d: "m7 15 5 5 5-5"
+        )
+        s.path(
+          d: "m7 9 5-5 5 5"
+        )
       end
     end
   end

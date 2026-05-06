@@ -71,27 +71,25 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/Hanami/, output)
   end
 
-  def test_combobox_item_renders_indicator
+  def test_combobox_item_renders_expected_role_and_state_classes
     output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/peer-checked:opacity-100/, output)
-    assert_match(/sr-only/, output)
-    assert_match(/peer/, output)
+    assert_match(/role="option"/, output)
+    assert_match(/has-\[:checked\]:bg-accent/, output)
+    assert_match(/aria-\[current=true\]:ring/, output)
   end
 
-  def test_combobox_radio_is_peer_sr_only
+  def test_combobox_radio_renders_styled_input
     output = phlex { RubyUI.ComboboxRadio(name: "x", value: "1") }
-    assert_match(/\bpeer\b/, output)
-    assert_match(/sr-only/, output)
-    refute_match(/border-primary/, output)
-    refute_match(/rounded-full/, output)
+    assert_match(/rounded-full/, output)
+    assert_match(/border-primary/, output)
+    assert_match(/checked:bg-primary/, output)
   end
 
-  def test_combobox_checkbox_is_peer_sr_only
+  def test_combobox_checkbox_renders_styled_input
     output = phlex { RubyUI.ComboboxCheckbox(name: "x", value: "1") }
     assert_match(/\bpeer\b/, output)
-    assert_match(/sr-only/, output)
-    refute_match(/border-primary/, output)
-    refute_match(/rounded-sm border/, output)
+    assert_match(/rounded-sm border/, output)
+    assert_match(/checked:bg-primary/, output)
   end
 
   def test_combobox_item_indicator_renders_check_svg
@@ -134,13 +132,14 @@ class RubyUI::ComboboxTest < ComponentTest
 
   def test_combobox_item_has_disabled_state
     output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/has-\[input:disabled\]:opacity-50/, output)
+    assert_match(/has-disabled:opacity-50/, output)
   end
 
-  def test_combobox_toggle_all_checkbox_is_peer_sr_only
+  def test_combobox_toggle_all_checkbox_renders_styled_input
     output = phlex { RubyUI.ComboboxToggleAllCheckbox() }
     assert_match(/\bpeer\b/, output)
-    assert_match(/sr-only/, output)
+    assert_match(/rounded-sm border/, output)
+    assert_match(/change->ruby-ui--combobox#toggleAllItems/, output)
   end
 
   def test_combobox_input_trigger_renders
@@ -188,19 +187,19 @@ class RubyUI::ComboboxTest < ComponentTest
 
   def test_combobox_trigger_chevron_down
     output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
-    assert_match(/m6 9 6 6 6-6/, output)
+    assert_match(/m7 15 5 5 5-5/, output)
+    assert_match(/m7 9 5-5 5 5/, output)
   end
 
-  def test_combobox_trigger_placeholder_muted
+  def test_combobox_trigger_sets_placeholder_data
     output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
-    assert_match(/text-muted-foreground/, output)
+    assert_match(/data-placeholder="Pick"/, output)
   end
 
-  def test_combobox_trigger_chevron_hover_effect
+  def test_combobox_trigger_uses_toggle_action
     output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
-    assert_match(/hover:bg-muted/, output)
-    assert_match(/size-6/, output)
-    assert_match(/rounded-sm/, output)
+    assert_match(/ruby-ui--combobox#togglePopover/, output)
+    assert_match(/h-4 w-4/, output)
   end
 
   def test_combobox_input_trigger_chevron_hover_effect
@@ -216,7 +215,7 @@ class RubyUI::ComboboxTest < ComponentTest
   end
 
   def test_combobox_keyboard_actions_on_controller
-    output = phlex { RubyUI.Combobox { "" } }
+    output = phlex { RubyUI.ComboboxPopover { "" } }
     assert_match(/keydown\.down/, output)
     assert_match(/keydown\.up/, output)
     assert_match(/keydown\.enter/, output)
@@ -228,18 +227,18 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/focusin->ruby-ui--combobox#openPopover/, output)
   end
 
-  def test_combobox_item_no_selected_background
+  def test_combobox_item_has_selected_background
     output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    refute_match(/has-\[:checked\]:bg-accent/, output)
+    assert_match(/has-\[:checked\]:bg-accent/, output)
   end
 
-  def test_combobox_item_no_ring_on_current
+  def test_combobox_item_has_ring_on_current
     output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    refute_match(/aria-\[current=true\]:ring\b/, output)
+    assert_match(/aria-\[current=true\]:ring\b/, output)
   end
 
-  def test_combobox_popover_no_autofocus
+  def test_combobox_popover_has_autofocus
     output = phlex { RubyUI.ComboboxPopover { "" } }
-    refute_match(/autofocus/, output)
+    assert_match(/autofocus/, output)
   end
 end

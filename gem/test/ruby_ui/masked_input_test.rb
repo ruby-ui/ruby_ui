@@ -14,13 +14,13 @@ class RubyUI::MaskedInputTest < ComponentTest
     refute_match(/<input type="hidden"/, output)
   end
 
-  def test_render_with_save_unmasked
+  def test_render_ignores_save_unmasked_and_renders_single_input
     output = phlex do
       RubyUI.MaskedInput(save_unmasked: true, name: "agency", value: "0000", data: {maska: "####"})
     end
 
     assert_match(/<input type="text"/, output)
-    assert_match(/<input type="hidden" name="agency" value="0000"/, output)
+    refute_match(/<input type="hidden"/, output)
     assert_match(/data-maska="####"/, output)
     assert_match(/data-controller="ruby-ui--masked-input"/, output)
   end
