@@ -42,6 +42,16 @@ context_menu:
   js_packages:
     - "tippy.js"
 
+data_table:
+  components:
+    - "Button"
+    - "Checkbox"
+    - "DropdownMenu"
+    - "Input"
+    - "NativeSelect"
+    - "Pagination"
+    - "Table"
+
 dropdown_menu:
   js_packages:
     - "@floating-ui/dom"
