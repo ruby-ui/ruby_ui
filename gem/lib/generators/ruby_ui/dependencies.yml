@@ -2,6 +2,16 @@ accordion:
   js_packages:
     - "motion"
 
+data_table:
+  components:
+    - "Table"
+    - "Checkbox"
+    - "NativeSelect"
+    - "Pagination"
+    - "DropdownMenu"
+    - "Input"
+    - "Button"
+
 alert_dialog:
   components:
     - "Button"
