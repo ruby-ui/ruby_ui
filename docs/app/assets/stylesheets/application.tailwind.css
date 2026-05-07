@@ -3,6 +3,8 @@
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 
+/* Safelist classes from RubyUI gem components rendered by the docs app. */
+@source inline("dark:inline-block");
 
 @import "tw-animate-css";
 
