@@ -18,7 +18,7 @@ module RubyUI
 
     def view_template(&block)
       template(data: {ruby_ui__command_target: "content"}) do
-        div(data: {controller: "ruby-ui--command"}) do
+        div(data: {controller: "ruby-ui--command", ruby_ui__command_dialog: true}) do
           backdrop
           div(**attrs, &block)
         end

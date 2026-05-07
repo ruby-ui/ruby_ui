@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
 import Fuse from "fuse.js";
 
+const OPEN_DIALOG_SELECTOR = "[data-ruby-ui--command-dialog]";
+
 // Connects to data-controller="ruby-ui--command"
 export default class extends Controller {
   static targets = ["input", "group", "item", "empty", "content"];
@@ -34,6 +36,12 @@ export default class extends Controller {
     }
 
     if (!this.hasContentTarget) {
+      return;
+    }
+
+    const openDialog = document.querySelector(OPEN_DIALOG_SELECTOR);
+    if (openDialog) {
+      this.focusDialogInput(openDialog);
       return;
     }
 
@@ -143,5 +151,10 @@ export default class extends Controller {
   deselectAll() {
     this.itemTargets.forEach((item) => this.toggleAriaSelected(item, false));
     this.selectedIndex = -1;
+  }
+
+  focusDialogInput(dialog) {
+    const input = dialog.querySelector("[data-ruby-ui--command-target='input']");
+    input?.focus();
   }
 }

@@ -60,5 +60,6 @@ class RubyUI::CommandTest < ComponentTest
     end
 
     assert_match(/Search/, output)
+    assert_match(/data-ruby-ui--command-dialog/, output)
   end
 end
