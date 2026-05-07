@@ -7,11 +7,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.3)
+    drb (2.2.3)
     json (2.19.5)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     lru_redux (1.1.0)
-    minitest (5.25.1)
+    minitest (6.0.6)
+      drb (~> 2.0)
+      prism (~> 1.5)
     parallel (1.28.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
@@ -71,7 +74,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  minitest (~> 5.0)
+  minitest (~> 6.0)
   phlex (~> 2.1, >= 2.1.2)
   rake (~> 13.0)
   rouge (~> 4.7.0)
