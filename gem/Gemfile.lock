@@ -7,11 +7,13 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.3)
+    drb (2.2.3)
     json (2.19.5)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
-    lru_redux (1.1.0)
-    minitest (5.25.1)
+    minitest (6.0.6)
+      drb (~> 2.0)
+      prism (~> 1.5)
     parallel (1.28.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
@@ -47,6 +49,7 @@ GEM
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.47.1, < 2.0)
     ruby-progressbar (1.13.0)
+    sin_lru_redux (2.5.2)
     standard (1.54.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -59,8 +62,8 @@ GEM
     standard-performance (1.9.0)
       lint_roller (~> 1.1)
       rubocop-performance (~> 1.26.0)
-    tailwind_merge (0.13.2)
-      lru_redux (~> 1.1)
+    tailwind_merge (1.4.0)
+      sin_lru_redux (~> 2.5)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
@@ -71,13 +74,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  minitest (~> 5.0)
+  minitest (~> 6.0)
   phlex (~> 2.1, >= 2.1.2)
   rake (~> 13.0)
   rouge (~> 4.7.0)
   ruby_ui!
   standard (~> 1.0)
-  tailwind_merge (~> 0.12)
+  tailwind_merge (~> 1.4)
 
 BUNDLED WITH
    2.5.22
