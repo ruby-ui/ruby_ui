@@ -1,0 +1,62 @@
+# Contributing to RubyUI
+
+Thank you for your interest in contributing to RubyUI! This document provides guidelines for contributing to the project.
+
+## Development Setup
+
+We recommend using the provided devcontainer to set up your development environment. This ensures a consistent environment for all contributors.
+
+1. Make sure you have Docker
+2. Clone the repository
+3. Open the project in you editor
+4. Select "Reopen in Container" if you are using VSCode or any other method to run the project
+5. The devcontainer will set up everything you need to start developing
+
+## Contribution Process
+
+1. Fork the repository
+2. Create a new branch for your changes
+3. Make your changes
+4. Run tests to ensure your changes don't break existing functionality: `bundle exec rake test`
+5. Run the linter to ensure consistent code formatting: `bundle exec rake standard`
+6. Submit a Pull Request to the main repository
+
+## Focus Areas
+
+We prioritize:
+- Improving existing components rather than adding new ones
+- Preserving the shadcn look and feel
+- Enhancing documentation
+- Fixing bugs
+
+## Code Standards
+
+We follow Standard Ruby conventions for code style. The CI pipeline runs `standard` to ensure consistent code formatting.
+
+## Testing
+
+While we don't have specific test coverage requirements, all contributions should include tests for new functionality and ensure existing tests pass.
+
+## Documentation
+
+If your changes include new components, modify how components should be used, or add new behaviors, please update the corresponding view in `docs/app/views/docs/<component>.rb` in the same PR — the docs Rails app lives in this same monorepo and consumes the local gem via `path: "../gem"`.
+
+### Installing Documentation Files
+
+RubyUI includes documentation files for each component that can be installed into your Rails application. These files are located at `lib/ruby_ui/{component}/{component}_docs.rb` and provide usage examples for each component.
+
+To install the documentation files:
+
+```bash
+bin/rails g ruby_ui:install:docs
+```
+
+To overwrite existing documentation files:
+
+```bash
+bin/rails g ruby_ui:install:docs --force
+```
+
+This will copy the documentation files to `app/views/docs/` in your Rails application.
+
+Thank you for contributing to make RubyUI better! 

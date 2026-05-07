@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+module Components
+  module Shared
+    class Logo < Components::Base
+      def view_template
+        a(href: root_url, class: "mr-6 flex items-center space-x-2") do
+          Heading(level: 2, class: "flex items-center pb-0 border-0") {
+            img(src: image_url("logo.svg"), class: "h-4 block dark:hidden")
+            img(src: image_url("logo_dark.svg"), class: "h-4 hidden dark:block")
+            span(class: "sr-only") { "RubyUI" }
+            Badge(class: "ml-2 whitespace-nowrap bg-black text-white hover:bg-black/90 px-1.5 py-0.5 rounded-full text-xs font-semibold") { "1.0" }
+          }
+        end
+      end
+    end
+  end
+end

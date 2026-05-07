@@ -1,62 +1,66 @@
 # Contributing to RubyUI
 
-Thank you for your interest in contributing to RubyUI! This document provides guidelines for contributing to the project.
+Thanks for your interest in contributing! This repository is a monorepo containing two sibling projects:
 
-## Development Setup
+- [`gem/`](gem/) — the `ruby_ui` gem published to rubygems.org.
+- [`docs/`](docs/) — the Rails app that powers https://rubyui.com.
 
-We recommend using the provided devcontainer to set up your development environment. This ensures a consistent environment for all contributors.
+The big advantage of the monorepo: **a single PR can touch both the component and the docs example**. The docs app consumes the local gem via `path: "../gem"`, so any change in `gem/lib/ruby_ui/` is reflected in the running site immediately.
 
-1. Make sure you have Docker
-2. Clone the repository
-3. Open the project in you editor
-4. Select "Reopen in Container" if you are using VSCode or any other method to run the project
-5. The devcontainer will set up everything you need to start developing
+## Development setup
 
-## Contribution Process
+We recommend using the devcontainer for either subproject (each has its own `.devcontainer/`).
 
-1. Fork the repository
-2. Create a new branch for your changes
-3. Make your changes
-4. Run tests to ensure your changes don't break existing functionality: `bundle exec rake test`
-5. Run the linter to ensure consistent code formatting: `bundle exec rake standard`
-6. Submit a Pull Request to the main repository
+```bash
+git clone git@github.com:ruby-ui/ruby_ui.git
+cd ruby_ui
 
-## Focus Areas
+# For gem-only work:
+cd gem
+bundle install
+bundle exec rake
+
+# For docs work:
+cd docs
+bundle install
+pnpm install
+bin/dev
+```
+
+## Workflow
+
+1. Fork and create a feature branch.
+2. Make your changes:
+   - Component or generator changes → `gem/lib/...`, with tests in `gem/test/...`.
+   - Documentation page changes → `docs/app/views/docs/...` or `docs/app/components/...`.
+   - If a component change affects how it's documented, update **both** in the same PR.
+3. Run the relevant test suites:
+   - `cd gem && bundle exec rake` (tests + standardrb).
+   - `cd docs && bin/rails test` and `bundle exec standardrb`.
+4. Open a Pull Request against `main`. Use the PR template and prefix the title with a category in brackets, e.g. `[Feature] Add new variant to Button`.
+
+## Focus areas
 
 We prioritize:
-- Improving existing components rather than adding new ones
-- Preserving the shadcn look and feel
-- Enhancing documentation
-- Fixing bugs
 
-## Code Standards
+- Improving existing components rather than adding new ones.
+- Preserving the shadcn look and feel.
+- Enhancing documentation.
+- Fixing bugs.
 
-We follow Standard Ruby conventions for code style. The CI pipeline runs `standard` to ensure consistent code formatting.
+## Code style
 
-## Testing
+- Ruby: [Standard Ruby](https://github.com/standardrb/standard) — `bundle exec standardrb --fix` to auto-fix.
+- JavaScript: kept minimal; Stimulus controllers live alongside the components they belong to.
 
-While we don't have specific test coverage requirements, all contributions should include tests for new functionality and ensure existing tests pass.
+## Documentation files
 
-## Documentation
-
-If your changes include new components, modify how components should be used, or add new behaviors, it is highly recommended to also open a PR on the [ruby-ui/web](https://github.com/ruby-ui/web) repository. This ensures the documentation website stays up-to-date with the latest component changes.
-
-### Installing Documentation Files
-
-RubyUI includes documentation files for each component that can be installed into your Rails application. These files are located at `lib/ruby_ui/{component}/{component}_docs.rb` and provide usage examples for each component.
-
-To install the documentation files:
+The gem ships per-component `*_docs.rb` files (rendering examples) under `gem/lib/ruby_ui/<component>/`. Consumers of the gem can install these into their own Rails app with:
 
 ```bash
 bin/rails g ruby_ui:install:docs
 ```
 
-To overwrite existing documentation files:
+Within this monorepo, the **docs app does not run that generator** — it has its own richer view implementations in `docs/app/views/docs/` and `docs/app/components/docs/`. If you change a component's API, update the relevant view in `docs/app/views/docs/<component>.rb` to keep the documentation site accurate.
 
-```bash
-bin/rails g ruby_ui:install:docs --force
-```
-
-This will copy the documentation files to `app/views/docs/` in your Rails application.
-
-Thank you for contributing to make RubyUI better! 
+Thanks for helping make RubyUI better!
