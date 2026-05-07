@@ -27,12 +27,19 @@ This workflow allows you to iterate quickly on components while maintaining the 
 
 ## Site Files
 
-The docs app serves `/llms.txt`, `/llms-full.txt`, and `/sitemap.xml` through Rails routes backed by `SiteFiles`.
+The docs app serves `/llms.txt`, `/llms-full.txt`, and `/sitemap.xml` from `public/`.
+Those files are generated from `app/lib/site_files.rb`, which is the source of truth for the LLM link map and sitemap URL list.
 
-To refresh static copies in `public/`, run:
+After changing public routes, controllers, or views, update `SiteFiles` if the change adds, removes, or renames a public URL. Then refresh the generated files:
 
 ```bash
 bin/rails site_files:generate
 ```
 
-Set `SITE_FILES_OUTPUT_DIR=tmp/site_files` to generate into a temporary directory instead.
+Review the resulting diff in:
+
+- `public/llms.txt`
+- `public/llms-full.txt`
+- `public/sitemap.xml`
+
+Set `SITE_FILES_OUTPUT_DIR=tmp/site_files` to generate into a temporary directory instead of overwriting `public/`.
