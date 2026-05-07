@@ -13,18 +13,30 @@ export default class extends Controller {
   };
 
   connect() {
+    this.selectedIndex = -1;
+
+    if (!this.hasInputTarget) {
+      return;
+    }
+
     this.inputTarget.focus();
     this.searchIndex = this.buildSearchIndex();
     this.toggleVisibility(this.emptyTargets, false);
-    this.selectedIndex = -1;
 
-    if (this.openValue) {
+    if (this.openValue && this.hasContentTarget) {
       this.open();
     }
   }
 
   open(e) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
+    if (!this.hasContentTarget) {
+      return;
+    }
+
     document.body.insertAdjacentHTML("beforeend", this.contentTarget.innerHTML);
     // prevent scroll on body
     document.body.classList.add("overflow-hidden");
