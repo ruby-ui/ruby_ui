@@ -21,7 +21,7 @@ GEM
     rainbow (3.1.1)
     rake (13.2.1)
     regexp_parser (2.9.2)
-    rouge (4.2.1)
+    rouge (4.7.0)
     rubocop (1.66.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -62,7 +62,7 @@ DEPENDENCIES
   minitest (~> 5.0)
   phlex (~> 2.1, >= 2.1.2)
   rake (~> 13.0)
-  rouge (~> 4.2.0)
+  rouge (~> 4.7.0)
   ruby_ui!
   standard (~> 1.0)
   tailwind_merge (~> 0.12)
