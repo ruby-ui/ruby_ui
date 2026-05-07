@@ -19,7 +19,7 @@ GEM
     phlex (2.1.2)
     racc (1.8.1)
     rainbow (3.1.1)
-    rake (13.2.1)
+    rake (13.4.2)
     regexp_parser (2.9.2)
     rouge (4.2.1)
     rubocop (1.66.1)
