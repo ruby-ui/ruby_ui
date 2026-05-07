@@ -52,6 +52,12 @@ context_menu:
   js_packages:
     - "tippy.js"
 
+date_picker:
+  components:
+    - "Input"
+    - "Popover"
+    - "Calendar"
+
 data_table:
   components:
     - "Button"
