@@ -16,10 +16,16 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
-    phlex (2.1.2)
+    phlex (2.4.1)
+      refract (~> 1.0)
+      zeitwerk (~> 2.7)
+    prism (1.9.0)
     racc (1.8.1)
     rainbow (3.1.1)
     rake (13.2.1)
+    refract (1.1.0)
+      prism
+      zeitwerk
     regexp_parser (2.9.2)
     rouge (4.2.1)
     rubocop (1.66.1)
@@ -53,6 +59,7 @@ GEM
     tailwind_merge (0.13.2)
       lru_redux (~> 1.1)
     unicode-display_width (2.6.0)
+    zeitwerk (2.7.5)
 
 PLATFORMS
   arm64-darwin-24
