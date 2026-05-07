@@ -1,6 +1,8 @@
 module RubyUI
   module Generators
     module JavascriptUtils
+      TW_ANIMATE_CSS_VERSION = "1.4.0"
+
       def install_js_package(package)
         if using_importmap?
           pin_with_importmap(package)
@@ -21,6 +23,8 @@ module RubyUI
         case package
         when "motion"
           pin_motion
+        when "tw-animate-css"
+          pin_tw_animate_css
         when "tippy.js"
           pin_tippy_js
         else
@@ -29,23 +33,33 @@ module RubyUI
       end
 
       def using_importmap?
-        File.exist?(Rails.root.join("config/importmap.rb")) && File.exist?(Rails.root.join("bin/importmap"))
+        File.exist?(rails_root.join("config/importmap.rb")) && File.exist?(rails_root.join("bin/importmap"))
       end
 
-      def using_bun? = File.exist?(Rails.root.join("bun.lock"))
+      def using_bun? = File.exist?(rails_root.join("bun.lock"))
 
-      def using_npm? = File.exist?(Rails.root.join("package-lock.json"))
+      def using_npm? = File.exist?(rails_root.join("package-lock.json"))
 
-      def using_pnpm? = File.exist?(Rails.root.join("pnpm-lock.yaml"))
+      def using_pnpm? = File.exist?(rails_root.join("pnpm-lock.yaml"))
 
-      def using_yarn? = File.exist?(Rails.root.join("yarn.lock"))
+      def using_yarn? = File.exist?(rails_root.join("yarn.lock"))
+
+      def pin_tw_animate_css
+        say <<~TEXT
+          WARNING: Installing tw-animate-css as a CSS asset because Importmap cannot pin CSS-only package exports.
+        TEXT
+
+        empty_directory rails_root.join("vendor/javascript")
+        get "https://cdn.jsdelivr.net/npm/tw-animate-css@#{TW_ANIMATE_CSS_VERSION}/dist/tw-animate.css",
+          rails_root.join("vendor/javascript/tw-animate-css.css")
+      end
 
       def pin_motion
         say <<~TEXT
           WARNING: Installing motion from CDN because `bin/importmap pin motion` doesn't download the correct file.
         TEXT
 
-        inject_into_file Rails.root.join("config/importmap.rb"), <<~RUBY
+        inject_into_file rails_root.join("config/importmap.rb"), <<~RUBY
           pin "motion", to: "https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm"\n
         RUBY
       end
@@ -55,11 +69,13 @@ module RubyUI
           WARNING: Installing tippy.js from CDN because `bin/importmap pin tippy.js` doesn't download the correct file.
         TEXT
 
-        inject_into_file Rails.root.join("config/importmap.rb"), <<~RUBY
+        inject_into_file rails_root.join("config/importmap.rb"), <<~RUBY
           pin "tippy.js", to: "https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/+esm"
           pin "@popperjs/core", to: "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/+esm"\n
         RUBY
       end
+
+      def rails_root = Rails.root
     end
   end
 end
