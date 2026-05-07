@@ -45,7 +45,7 @@ jobs:
           bundler-cache: true
           working-directory: docs
       - name: Install pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: 10.8.0
           run_install: false
