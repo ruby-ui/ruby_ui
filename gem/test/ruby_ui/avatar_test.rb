@@ -12,5 +12,10 @@ class RubyUI::AvatarTest < ComponentTest
     end
 
     assert_match(/joeldrapper/, output)
+    assert_match(/data-controller="ruby-ui--avatar"/, output)
+    assert_match(/data-ruby-ui--avatar-target="image"/, output)
+    assert_match(/load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback/, output)
+    assert_match(/data-ruby-ui--avatar-target="fallback"/, output)
+    assert_match(/hidden aspect-square/, output)
   end
 end
