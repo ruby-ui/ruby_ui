@@ -25,4 +25,21 @@ gem "ruby_ui", path: "../ruby_ui"
 
 This workflow allows you to iterate quickly on components while maintaining the gem's structure.
 
-Would you like me to expand on any part of the contributing guide?
+## Site Files
+
+The docs app serves `/llms.txt`, `/llms-full.txt`, and `/sitemap.xml` from `public/`.
+Those files are generated from `app/lib/site_files.rb`, which is the source of truth for the LLM link map and sitemap URL list.
+
+After changing public routes, controllers, or views, update `SiteFiles` if the change adds, removes, or renames a public URL. Then refresh the generated files:
+
+```bash
+bin/rails site_files:generate
+```
+
+Review the resulting diff in:
+
+- `public/llms.txt`
+- `public/llms-full.txt`
+- `public/sitemap.xml`
+
+Set `SITE_FILES_OUTPUT_DIR=tmp/site_files` to generate into a temporary directory instead of overwriting `public/`.

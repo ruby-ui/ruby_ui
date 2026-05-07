@@ -1,0 +1,342 @@
+# RubyUI Full LLM Reference
+
+> RubyUI provides accessible, customizable UI components for Ruby and Rails applications. It is built on Phlex for Ruby-rendered views, Tailwind CSS for styling, and Stimulus for small client-side behaviors.
+
+This file expands the curated /llms.txt map into a compact reference that can be loaded as one document. It is intentionally prose-heavy and link-rich so language models can answer common questions without crawling the whole documentation site.
+
+## Product model
+
+- RubyUI is distributed as the `ruby_ui` gem.
+- RubyUI is intended primarily for development-time generation and copy-paste workflows.
+- Components are Ruby classes that render HTML through Phlex.
+- Styling uses Tailwind CSS utilities and CSS variables.
+- Interactive components use lightweight Stimulus controllers.
+- The design language is inspired by shadcn/ui and keeps theme tokens compatible with shadcn/ui-style CSS variables.
+
+## Common installation workflow
+
+1. Add the gem to a Rails application with `bundle add ruby_ui --group development --require false`.
+2. Run `bin/rails g ruby_ui:install` to install RubyUI support files.
+3. Generate a component with `bin/rails g ruby_ui:component ComponentName`, for example `bin/rails g ruby_ui:component Button`.
+4. Customize generated Ruby, Tailwind classes, and Stimulus controllers inside the host app as needed.
+
+## Important implementation notes
+
+- Treat generated components as application code, not a sealed runtime dependency.
+- Prefer the docs installation path matching the Rails JavaScript setup: JS bundler or import maps.
+- Use the theming docs for CSS variable setup before making broad visual changes.
+- Use the dark mode docs when adding or moving `ThemeToggle`.
+- Component documentation pages usually end with setup tabs and a table of component files.
+
+## Core documentation
+
+### Introduction
+
+- URL: https://rubyui.com/docs/introduction
+- Summary: Overview of RubyUI, its Phlex, Tailwind CSS, and Stimulus foundations, and its design goals.
+
+### Installation
+
+- URL: https://rubyui.com/docs/installation
+- Summary: Entry point for choosing a Rails installation path.
+
+### Rails - JS Bundler
+
+- URL: https://rubyui.com/docs/installation/rails_bundler
+- Summary: Install RubyUI in a Rails app that uses JavaScript bundling.
+
+### Rails - Importmaps
+
+- URL: https://rubyui.com/docs/installation/rails_importmaps
+- Summary: Install RubyUI in a Rails app that uses import maps.
+
+### Theming
+
+- URL: https://rubyui.com/docs/theming
+- Summary: Use CSS variables and shadcn/ui-compatible theme tokens with RubyUI.
+
+### Dark mode
+
+- URL: https://rubyui.com/docs/dark_mode
+- Summary: Configure dark mode with the Tailwind CSS class strategy and RubyUI theme toggle.
+
+### Customizing components
+
+- URL: https://rubyui.com/docs/customizing_components
+- Summary: Adapt generated RubyUI components when theme-level customization is not enough.
+
+### Components
+
+- URL: https://rubyui.com/docs/components
+- Summary: Catalog of available RubyUI components.
+
+### Changelog
+
+- URL: https://rubyui.com/docs/changelog
+- Summary: Recent RubyUI component and documentation changes.
+
+
+## Component catalog
+
+### Accordion
+
+- URL: https://rubyui.com/docs/accordion
+- Summary: Vertically stacked interactive headings that reveal sections of content.
+
+### Alert
+
+- URL: https://rubyui.com/docs/alert
+- Summary: Callout component for drawing attention to contextual information.
+
+### Alert Dialog
+
+- URL: https://rubyui.com/docs/alert_dialog
+- Summary: Modal dialog for interruptive content that expects a response.
+
+### Aspect Ratio
+
+- URL: https://rubyui.com/docs/aspect_ratio
+- Summary: Container for displaying content within a desired ratio.
+
+### Avatar
+
+- URL: https://rubyui.com/docs/avatar
+- Summary: Image and fallback primitives for representing a user.
+
+### Badge
+
+- URL: https://rubyui.com/docs/badge
+- Summary: Small status or label element.
+
+### Breadcrumb
+
+- URL: https://rubyui.com/docs/breadcrumb
+- Summary: Navigation trail showing the current location in a hierarchy.
+
+### Button
+
+- URL: https://rubyui.com/docs/button
+- Summary: Button component and button-like variants.
+
+### Calendar
+
+- URL: https://rubyui.com/docs/calendar
+- Summary: Date field component for entering and editing dates.
+
+### Card
+
+- URL: https://rubyui.com/docs/card
+- Summary: Content container with header, content, and footer primitives.
+
+### Carousel
+
+- URL: https://rubyui.com/docs/carousel
+- Summary: Embla-powered carousel with motion and swipe interactions.
+
+### Checkbox
+
+- URL: https://rubyui.com/docs/checkbox
+- Summary: Control for toggling between checked and unchecked states.
+
+### Checkbox Group
+
+- URL: https://rubyui.com/docs/checkbox_group
+- Summary: Grouped checkbox controls.
+
+### Clipboard
+
+- URL: https://rubyui.com/docs/clipboard
+- Summary: Control for copying content to the clipboard.
+
+### Codeblock
+
+- URL: https://rubyui.com/docs/codeblock
+- Summary: Highlighted code display component.
+
+### Collapsible
+
+- URL: https://rubyui.com/docs/collapsible
+- Summary: Interactive component for expanding and collapsing a panel.
+
+### Combobox
+
+- URL: https://rubyui.com/docs/combobox
+- Summary: Autocomplete input and command palette with suggestions.
+
+### Command
+
+- URL: https://rubyui.com/docs/command
+- Summary: Composable command menu for Phlex applications.
+
+### Context Menu
+
+- URL: https://rubyui.com/docs/context_menu
+- Summary: Right-click menu for contextual actions.
+
+### Data Table
+
+- URL: https://rubyui.com/docs/data_table
+- Summary: Data table primitives for search, sorting, pagination, visibility, and bulk actions.
+
+### Date Picker
+
+- URL: https://rubyui.com/docs/date_picker
+- Summary: Date picker component with input.
+
+### Dialog
+
+- URL: https://rubyui.com/docs/dialog
+- Summary: Modal window that renders background content inert.
+
+### Dropdown Menu
+
+- URL: https://rubyui.com/docs/dropdown_menu
+- Summary: Button-triggered menu for actions or functions.
+
+### Form
+
+- URL: https://rubyui.com/docs/form
+- Summary: Form fields with built-in client-side validations.
+
+### Hover Card
+
+- URL: https://rubyui.com/docs/hover_card
+- Summary: Preview content exposed behind a link or trigger.
+
+### Input
+
+- URL: https://rubyui.com/docs/input
+- Summary: Styled input field primitive.
+
+### Link
+
+- URL: https://rubyui.com/docs/link
+- Summary: Link component with button-like and underline variants.
+
+### Masked Input
+
+- URL: https://rubyui.com/docs/masked_input
+- Summary: Form input with an applied mask.
+
+### Pagination
+
+- URL: https://rubyui.com/docs/pagination
+- Summary: Page navigation with next and previous links.
+
+### Popover
+
+- URL: https://rubyui.com/docs/popover
+- Summary: Triggered rich content panel.
+
+### Progress
+
+- URL: https://rubyui.com/docs/progress
+- Summary: Progress bar for task completion state.
+
+### Radio Button
+
+- URL: https://rubyui.com/docs/radio_button
+- Summary: Single-selection control for option lists.
+
+### Native Select
+
+- URL: https://rubyui.com/docs/native_select
+- Summary: Styled native HTML select element.
+
+### Select
+
+- URL: https://rubyui.com/docs/select
+- Summary: Button-triggered option picker.
+
+### Separator
+
+- URL: https://rubyui.com/docs/separator
+- Summary: Visual or semantic divider.
+
+### Sheet
+
+- URL: https://rubyui.com/docs/sheet
+- Summary: Side panel for content that complements the main screen.
+
+### Shortcut Key
+
+- URL: https://rubyui.com/docs/shortcut_key
+- Summary: Keyboard shortcut display component.
+
+### Sidebar
+
+- URL: https://rubyui.com/docs/sidebar
+- Summary: Composable, themeable sidebar component.
+
+### Skeleton
+
+- URL: https://rubyui.com/docs/skeleton
+- Summary: Placeholder for loading states.
+
+### Switch
+
+- URL: https://rubyui.com/docs/switch
+- Summary: Toggle control for binary settings.
+
+### Table
+
+- URL: https://rubyui.com/docs/table
+- Summary: Responsive table component.
+
+### Tabs
+
+- URL: https://rubyui.com/docs/tabs
+- Summary: Layered tab panels displayed one at a time.
+
+### Textarea
+
+- URL: https://rubyui.com/docs/textarea
+- Summary: Styled multiline text input.
+
+### Theme Toggle
+
+- URL: https://rubyui.com/docs/theme_toggle
+- Summary: Toggle control for switching between light and dark themes.
+
+### Tooltip
+
+- URL: https://rubyui.com/docs/tooltip
+- Summary: Popup information shown on keyboard focus or hover.
+
+### Typography
+
+- URL: https://rubyui.com/docs/typography
+- Summary: Text primitives and sensible typography defaults.
+
+
+## Examples and demos
+
+### Data Table Demo
+
+- URL: https://rubyui.com/docs/data_table_demo
+- Summary: Interactive data table example using RubyUI table primitives.
+
+### Sidebar Example
+
+- URL: https://rubyui.com/docs/sidebar/example
+- Summary: Standalone sidebar example page.
+
+### Sidebar Inset Example
+
+- URL: https://rubyui.com/docs/sidebar/inset
+- Summary: Sidebar inset layout example page.
+
+
+## Themes
+
+- [Themes](https://rubyui.com/themes/default): Preview and copy hand-picked themes that are compatible with RubyUI and shadcn/ui token conventions.
+
+## External resources
+
+- [GitHub repository](https://github.com/ruby-ui/ruby_ui): Source code for the RubyUI gem and documentation app.
+- [RubyGems package](https://rubygems.org/gems/ruby_ui): Published ruby_ui gem package.
+
+## Companion machine-readable files
+
+- [llms.txt](https://rubyui.com/llms.txt): Curated LLM link map.
+- [sitemap.xml](https://rubyui.com/sitemap.xml): XML sitemap for public pages.
