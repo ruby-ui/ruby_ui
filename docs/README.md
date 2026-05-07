@@ -25,4 +25,14 @@ gem "ruby_ui", path: "../ruby_ui"
 
 This workflow allows you to iterate quickly on components while maintaining the gem's structure.
 
-Would you like me to expand on any part of the contributing guide?
+## Site Files
+
+The docs app serves `/llms.txt`, `/llms-full.txt`, and `/sitemap.xml` through Rails routes backed by `SiteFiles`.
+
+To refresh static copies in `public/`, run:
+
+```bash
+bin/rails site_files:generate
+```
+
+Set `SITE_FILES_OUTPUT_DIR=tmp/site_files` to generate into a temporary directory instead.
