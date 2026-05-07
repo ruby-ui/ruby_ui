@@ -3,6 +3,7 @@
 require "test_helper"
 require "fileutils"
 require "tmpdir"
+require "yaml"
 
 # Tests the file filtering logic used in ComponentGenerator#components_file_paths
 # to ensure documentation files (*_docs.rb) are excluded from component generation.
@@ -66,5 +67,12 @@ class ComponentGeneratorTest < Minitest::Test
       assert_includes file_names, "link.rb"
       assert_includes file_names, "link_docs.rb"
     end
+  end
+
+  def test_date_picker_installs_composed_components
+    dependencies_path = File.expand_path("../../lib/generators/ruby_ui/dependencies.yml", __dir__)
+    dependencies = YAML.load_file(dependencies_path)
+
+    assert_equal ["Input", "Popover", "Calendar"], dependencies.fetch("date_picker").fetch("components")
   end
 end
