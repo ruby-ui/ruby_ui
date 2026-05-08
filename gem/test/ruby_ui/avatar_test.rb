@@ -16,6 +16,7 @@ class RubyUI::AvatarTest < ComponentTest
     assert_match(/data-ruby-ui--avatar-target="image"/, output)
     assert_match(/load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback/, output)
     assert_match(/data-ruby-ui--avatar-target="fallback"/, output)
-    assert_match(/hidden aspect-square/, output)
+    assert_match(/class="aspect-square h-full w-full"/, output)
+    refute_match(/class="[^"]*\bhidden\b[^"]*aspect-square/, output)
   end
 end

@@ -21,7 +21,7 @@ module RubyUI
           ruby_ui__avatar_target: "image",
           action: "load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback"
         },
-        class: "hidden aspect-square h-full w-full",
+        class: "aspect-square h-full w-full",
         alt: @alt,
         src: @src
       }
