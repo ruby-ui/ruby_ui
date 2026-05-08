@@ -1,0 +1,87 @@
+No installed jimsh or tclsh, building local bootstrap jimsh0
+Configuring SQLite version 3.53.1
+Host System...aarch64-unknown-linux-gnu
+Build System...aarch64-unknown-linux-gnu
+Source dir = /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3/tmp/aarch64-linux-gnu/ports/sqlite3/3.53.1/sqlite-autoconf-3530100
+Build dir  = /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3/tmp/aarch64-linux-gnu/ports/sqlite3/3.53.1/sqlite-autoconf-3530100
+C compiler... gcc -fPIC -O2 -fvisibility=hidden -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1 -DSQLITE_USE_URI=1 -DSQLITE_ENABLE_DBPAGE_VTAB=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 
+C++ compiler... aarch64-linux-gnu-g++ -fPIC -O2 -fvisibility=hidden -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1 -DSQLITE_USE_URI=1 -DSQLITE_ENABLE_DBPAGE_VTAB=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 
+Build C compiler...cc
+Checking for stdlib.h...ok
+Checking for sys/types.h...ok
+Checking if -D_FILE_OFFSET_BITS=64 is needed...no
+SQLITE_DEBUG build? no
+Looking for install ... /usr/bin/install
+Checking for int8_t...ok
+Checking for int16_t...ok
+Checking for int32_t...ok
+Checking for int64_t...ok
+Checking for intptr_t...ok
+Checking for uint8_t...ok
+Checking for uint16_t...ok
+Checking for uint32_t...ok
+Checking for uint64_t...ok
+Checking for uintptr_t...ok
+Checking for gmtime_r...ok
+Checking for isnan...ok
+Checking for localtime_r...ok
+Checking for localtime_s...not found
+Checking for usleep...ok
+Checking for utime...ok
+Checking for pread...ok
+Checking for pread64...ok
+Checking for pwrite...ok
+Checking for pwrite64...ok
+Checking libs for fdatasync...none needed
+Checking libs for nanosleep...none needed
+Checking for sys/types.h...(cached) ok
+Checking for sys/stat.h...ok
+Checking for dlfcn.h...ok
+Checking for unistd.h...ok
+Checking for stdlib.h...ok
+Checking for malloc.h...ok
+Checking for memory.h...ok
+Checking for string.h...ok
+Checking for strings.h...ok
+Checking for inttypes.h...ok
+Checking for zlib.h...ok
+Checking libs for deflate...-lz
+Link library statically into the CLI shell? yes
+Statically link CLI shell? no
+Checking whether the C compiler accepts -rpath /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ports/aarch64-linux-gnu/sqlite3/3.53.1/lib...no
+Checking whether the C compiler accepts -Wl,-rpath,/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ports/aarch64-linux-gnu/sqlite3/3.53.1/lib...yes
+Support threadsafe operation? Checking for libs...
+Checking libs for pthread_create...none needed
+Checking libs for pthread_mutexattr_init...none needed
+Checking libs for dlopen...none needed
+Loadable extension support enabled. 
+Checking libs for ceil...-lm
+Enabling math SQL functions
+ICU support is disabled.
+Checking for line-editing capability...
+Checking libs for tgetent...-lncurses
+Checking libs for readline...-lreadline
+Using readline flags: -I/usr/include -lreadline -lncurses
+Line-editing support for the sqlite3 shell: readline
+Build shared library? no
+Build static library? yes
+Feature flags...
+  - fts3
+  - fts4
+  + fts5
+  - geopoly
+  - rtree
+  - session
+  - update-limit
+  - memsys5
+  - memsys3
+  - scanstatus
+  - dbpage
+  - dbstat
+  - carray
+  + json
+Library feature flags: -DSQLITE_ENABLE_DBPAGE_VTAB=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_PERCENTILE -DSQLITE_HAVE_ZLIB=1 -DSQLITE_THREADSAFE=1
+Shell options: -DHAVE_READLINE=1 -DSQLITE_DQS=0 -DSQLITE_ENABLE_BYTECODE_VTAB -DSQLITE_ENABLE_DBPAGE_VTAB -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_ENABLE_EXPLAIN_COMMENTS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_OFFSET_SQL_FUNC -DSQLITE_ENABLE_PERCENTILE -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_STMTVTAB -DSQLITE_ENABLE_UNKNOWN_SQL_FUNCTION -DSQLITE_HAVE_ZLIB=1 -DSQLITE_STRICT_SUBTYPE=1
+Created Makefile from Makefile.in
+Created sqlite3.pc from sqlite3.pc.in
+Created sqlite_cfg.h

@@ -1,0 +1,74 @@
+find_header: checking for prism.h in /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/include... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed     -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC   -c conftest.c"
+conftest.c:3:10: fatal error: prism.h: No such file or directory
+    3 | #include <prism.h>
+      |          ^~~~~~~~~
+compilation terminated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism.h>
+/* end */
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC  -I/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/include -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism.h>
+/* end */
+
+--------------------
+
+find_header: checking for prism/extension.h in /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/ext... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I. -I/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/include    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC   -c conftest.c"
+conftest.c:3:10: fatal error: prism/extension.h: No such file or directory
+    3 | #include <prism/extension.h>
+      |          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism/extension.h>
+/* end */
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I. -I/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/include    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC  -I/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/ext -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism/extension.h>
+/* end */
+
+--------------------
+
+append_cflags: checking for whether -fvisibility=hidden is accepted as CFLAGS... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I. -I/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/include -I/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/prism-1.9.0/ext    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC  -fvisibility=hidden -Werror -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
+--------------------
+

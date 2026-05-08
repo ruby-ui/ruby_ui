@@ -1,0 +1,19 @@
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/stringio-3.2.0/ext/stringio
+/home/vscode/.local/share/mise/installs/ruby/3.4.7/bin/ruby extconf.rb
+checking for rb_io_mode_t in ruby/io.h... no
+creating Makefile
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/stringio-3.2.0/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-ug7d44 sitelibdir\=./.gem.20260508-6535-ug7d44 clean
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/stringio-3.2.0/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-ug7d44 sitelibdir\=./.gem.20260508-6535-ug7d44
+compiling stringio.c
+linking shared-object stringio.so
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/stringio-3.2.0/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-ug7d44 sitelibdir\=./.gem.20260508-6535-ug7d44 install
+/usr/bin/install -c -m 0755 stringio.so ./.gem.20260508-6535-ug7d44
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/stringio-3.2.0/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-ug7d44 sitelibdir\=./.gem.20260508-6535-ug7d44 clean

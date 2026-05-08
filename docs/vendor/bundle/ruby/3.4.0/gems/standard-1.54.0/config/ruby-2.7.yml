@@ -1,0 +1,10 @@
+inherit_from: ./ruby-3.0.yml
+
+AllCops:
+  TargetRubyVersion: 2.7
+
+Style/HashExcept:
+  Enabled: false
+
+Style/RedundantInterpolationUnfreeze:
+  Enabled: false

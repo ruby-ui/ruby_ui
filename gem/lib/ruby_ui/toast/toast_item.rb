@@ -54,19 +54,16 @@ module RubyUI
 
     def item_classes
       <<~CLASSES.tr("\n", " ").squeeze(" ").strip
-        group/toast pointer-events-auto relative flex w-[356px] max-w-full items-center gap-3
+        group/toast pointer-events-auto absolute bottom-0 left-0 right-0
+        origin-bottom flex w-[356px] max-w-full items-center gap-3
         overflow-hidden rounded-lg border bg-popover text-popover-foreground
         border-border p-4 pr-8 shadow-lg
-        transition-all duration-200 ease-out
+        transition-[transform,opacity] duration-300 ease-out
         will-change-transform
-        translate-y-[var(--y-offset,0px)] scale-[var(--scale,1)] opacity-[var(--opacity,1)]
-        data-[state=pending]:opacity-0 data-[state=pending]:translate-y-2
-        data-[state=open]:animate-in data-[state=open]:fade-in-0
-        data-[state=closing]:animate-out data-[state=closing]:fade-out-0
+        opacity-[var(--opacity,1)]
+        data-[state=pending]:opacity-0
+        data-[state=closing]:opacity-0
         data-[swipe=move]:transition-none
-        data-[swipe=cancel]:translate-x-0
-        data-[swipe=end]:translate-x-[var(--swipe-end-x,0)]
-        data-[swipe=end]:translate-y-[var(--swipe-end-y,0)]
       CLASSES
     end
   end

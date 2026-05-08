@@ -1,0 +1,37 @@
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/bigdecimal-4.1.2/ext/bigdecimal
+/home/vscode/.local/share/mise/installs/ruby/3.4.7/bin/ruby extconf.rb
+checking for __builtin_clz()... yes
+checking for __builtin_clzl()... yes
+checking for __builtin_clzll()... yes
+checking for float.h... yes
+checking for math.h... yes
+checking for stdbool.h... yes
+checking for stdlib.h... yes
+checking for x86intrin.h... no
+checking for intrin.h... no
+checking for ruby/atomic.h... yes
+checking for ruby/internal/has/builtin.h... yes
+checking for ruby/internal/static_assert.h... yes
+checking for rb_complex_real() in ruby.h... yes
+checking for rb_complex_imag() in ruby.h... yes
+checking for rb_opts_exception_p() in ruby.h... yes
+checking for rb_category_warn() in ruby.h... yes
+checking for RB_WARN_CATEGORY_DEPRECATED in ruby.h... yes
+checking for RUBY_TYPED_EMBEDDABLE in ruby.h... yes
+creating Makefile
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/bigdecimal-4.1.2/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-rlhdsc sitelibdir\=./.gem.20260508-6535-rlhdsc clean
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/bigdecimal-4.1.2/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-rlhdsc sitelibdir\=./.gem.20260508-6535-rlhdsc
+compiling bigdecimal.c
+compiling missing.c
+linking shared-object bigdecimal.so
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/bigdecimal-4.1.2/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-rlhdsc sitelibdir\=./.gem.20260508-6535-rlhdsc install
+/usr/bin/install -c -m 0755 bigdecimal.so ./.gem.20260508-6535-rlhdsc
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/bigdecimal-4.1.2/ext/bigdecimal
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-rlhdsc sitelibdir\=./.gem.20260508-6535-rlhdsc clean

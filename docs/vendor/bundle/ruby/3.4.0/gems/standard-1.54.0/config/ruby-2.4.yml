@@ -1,0 +1,10 @@
+inherit_from: ./ruby-2.5.yml
+
+AllCops:
+  TargetRubyVersion: 2.4
+
+Style/RedundantBegin:
+  Enabled: false
+
+Style/HashSlice:
+  Enabled: false

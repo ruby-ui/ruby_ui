@@ -1,0 +1,16 @@
+inherit_from: ./ruby-1.9.yml
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/Lambda:
+  Enabled: false
+
+Style/FileWrite:
+  Enabled: false
+
+Style/FileRead:
+  Enabled: false
+
+Layout/DotPosition:
+  Enabled: false

@@ -1,0 +1,43 @@
+#!/bin/bash
+#/ Usage: script/test <filename:test_line>
+#/ 1. `script/test FILE` runs all tests in the file.
+#/ 1. `script/test FILE:LINE` runs test in specific line of the file.
+#/ 1. `script/test 'GLOB'` runs all tests for matching glob.
+#/     * make sure to wrap the `GLOB` in single quotes `''`.
+
+if ! [ $# -eq 0 ]; then
+  export TEST=$(echo "$1" | cut -d ":" -f 1)
+
+  if [[ "$1" == *":"* ]]; then
+    LINE=$(echo "$1" | cut -d ":" -f 2)
+    LINE=$(head -n $LINE $TEST | tail -1)
+    NAME=$(echo "$LINE" | sed "s/.*def //")
+
+    if ! [[ "$NAME" == "test_"* ]] && ! [[ "$NAME" == "bench_"* ]]; then
+      echo
+      echo "ERROR: Line provided does not define a test case"
+      exit 1
+    fi
+
+    export TESTOPTS="--name=$NAME"
+  fi
+fi
+
+# Check for and parse flags
+for arg in "$@"
+do
+    case $arg in
+        --debug)
+            export DEBUG=true
+        ;;
+        *)
+            # Unknown arguments can be ignored or handled here
+        ;;
+    esac
+done
+
+if  [[ "$TEST" == "test/system"* ]] ; then
+  bundle exec rake test:system
+else
+  bundle exec rake test
+fi

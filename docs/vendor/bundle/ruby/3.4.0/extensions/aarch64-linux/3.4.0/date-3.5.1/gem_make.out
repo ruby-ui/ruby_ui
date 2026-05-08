@@ -1,0 +1,24 @@
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/date-3.5.1/ext/date
+/home/vscode/.local/share/mise/installs/ruby/3.4.7/bin/ruby extconf.rb
+checking for rb_category_warn()... yes
+checking for timezone in time.h with -Werror... yes
+checking for altzone in time.h with -Werror... no
+creating Makefile
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/date-3.5.1/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-dvszlz sitelibdir\=./.gem.20260508-6535-dvszlz clean
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/date-3.5.1/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-dvszlz sitelibdir\=./.gem.20260508-6535-dvszlz
+compiling date_core.c
+compiling date_parse.c
+compiling date_strftime.c
+compiling date_strptime.c
+linking shared-object date_core.so
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/date-3.5.1/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-dvszlz sitelibdir\=./.gem.20260508-6535-dvszlz install
+/usr/bin/install -c -m 0755 date_core.so ./.gem.20260508-6535-dvszlz
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/date-3.5.1/ext/date
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-dvszlz sitelibdir\=./.gem.20260508-6535-dvszlz clean

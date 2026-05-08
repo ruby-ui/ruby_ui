@@ -1,0 +1,11 @@
+inherit_from: ./ruby-3.2.yml
+
+AllCops:
+  TargetRubyVersion: 3.1
+
+Style/DataInheritance:
+  Enabled: false
+
+Style/ArgumentsForwarding:
+  Enabled: false
+  AllowOnlyRestArgument: true

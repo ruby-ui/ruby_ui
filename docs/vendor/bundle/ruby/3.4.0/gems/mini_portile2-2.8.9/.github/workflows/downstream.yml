@@ -1,0 +1,66 @@
+name: downstream
+concurrency:
+  group: "${{github.workflow}}-${{github.ref}}"
+  cancel-in-progress: true
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1,3,5" # At 07:00 on Monday, Wednesday, and Friday # https://crontab.guru/#0_7_*_*_1,3,5
+  push:
+    branches:
+      - main
+      - "v*.*.x"
+    tags:
+      - v*.*.*
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - '*'
+
+jobs:
+  downstream:
+    name: downstream-${{matrix.name}}-${{matrix.platform}}
+    strategy:
+      fail-fast: false
+      matrix:
+        name: [re2, nokogiri, sqlite3]
+        platform: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - name: re2
+            url: https://github.com/mudge/re2
+            command: "bundle exec rake compile spec"
+            ruby: "3.3"
+          - name: nokogiri
+            url: https://github.com/sparklemotion/nokogiri
+            command: "bundle exec rake compile test"
+            ruby: "3.3"
+          - name: sqlite3
+            url: https://github.com/sparklemotion/sqlite3-ruby
+            command: "bundle exec rake compile test"
+            ruby: "3.3"
+    runs-on: ${{matrix.platform}}
+    steps:
+      - name: configure git crlf
+        if: ${{ startsWith(matrix.platform, 'windows') }}
+        run: |
+          git config --system core.autocrlf false
+          git config --system core.eol lf
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{matrix.ruby}}
+          bundler-cache: true
+          bundler: latest
+      - run: git clone --depth=1 ${{matrix.url}} ${{matrix.name}}
+      - uses: actions/cache@v4
+        with:
+          path: ${{matrix.name}}/ports/archives
+          key: tarballs-${{matrix.name}}
+          enableCrossOsArchive: true
+      - name: ${{matrix.name}} test suite
+        working-directory: ${{matrix.name}}
+        run: |
+          bundle remove mini_portile2 || true
+          bundle add mini_portile2 --path=".."
+          bundle install --local || bundle install
+          ${{matrix.command}}

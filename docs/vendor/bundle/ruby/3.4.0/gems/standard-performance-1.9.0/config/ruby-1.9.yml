@@ -1,0 +1,14 @@
+inherit_from: ./ruby-2.0.yml
+
+# String#end_with? added in Ruby 2.0.0
+# https://docs.ruby-lang.org/en/2.0.0/String.html#method-i-end_with-3F
+Performance/EndWith:
+  Enabled: false
+
+# String#start_with? added in Ruby 2.0.0
+# https://docs.ruby-lang.org/en/2.0.0/String.html#method-i-start_with-3F
+Performance/StartWith:
+  Enabled: false
+
+Performance/DoubleStartEndWith:
+  Enabled: false

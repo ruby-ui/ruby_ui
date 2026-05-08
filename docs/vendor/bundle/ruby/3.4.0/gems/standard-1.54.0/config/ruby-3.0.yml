@@ -1,0 +1,13 @@
+inherit_from: ./ruby-3.1.yml
+
+AllCops:
+  TargetRubyVersion: 3.0
+
+Naming/BlockForwarding:
+  Enabled: false
+
+Style/NestedFileDirname:
+  Enabled: false
+
+Lint/RefinementImportMethods:
+  Enabled: false

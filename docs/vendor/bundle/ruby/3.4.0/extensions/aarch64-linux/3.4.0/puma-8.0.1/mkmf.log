@@ -1,0 +1,376 @@
+have_library: checking for BIO_read() in -llibcrypto... -------------------- no
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed     -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed     -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -llibcrypto  -lm -lpthread  -lc"
+conftest.c: In function ‘t’:
+conftest.c:14:57: error: ‘BIO_read’ undeclared (first use in this function)
+   14 | int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+      |                                                         ^~~~~~~~
+conftest.c:14:57: note: each undeclared identifier is reported only once for each function it appears in
+At top level:
+cc1: note: unrecognized command-line option ‘-Wno-self-assign’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-parentheses-equality’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-constant-logical-operand’ may have been intended to silence earlier diagnostics
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+/* end */
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed     -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -llibcrypto  -lm -lpthread  -lc"
+/usr/bin/ld: cannot find -llibcrypto: No such file or directory
+/usr/bin/ld: note to link with /usr/lib/gcc/aarch64-linux-gnu/14/../../../aarch64-linux-gnu/libcrypto.a use -l:libcrypto.a or rename it to liblibcrypto.a
+collect2: error: ld returned 1 exit status
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: extern void BIO_read();
+15: int t(void) { BIO_read(); return 0; }
+/* end */
+
+--------------------
+
+have_library: checking for BIO_read() in -lcrypto... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed     -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lcrypto  -lm -lpthread  -lc"
+conftest.c: In function ‘t’:
+conftest.c:14:57: error: ‘BIO_read’ undeclared (first use in this function)
+   14 | int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+      |                                                         ^~~~~~~~
+conftest.c:14:57: note: each undeclared identifier is reported only once for each function it appears in
+At top level:
+cc1: note: unrecognized command-line option ‘-Wno-self-assign’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-parentheses-equality’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-constant-logical-operand’ may have been intended to silence earlier diagnostics
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))BIO_read; return !p; }
+/* end */
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed     -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: extern void BIO_read();
+15: int t(void) { BIO_read(); return 0; }
+/* end */
+
+--------------------
+
+have_library: checking for SSL_CTX_new() in -lssl... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+conftest.c: In function ‘t’:
+conftest.c:14:57: error: ‘SSL_CTX_new’ undeclared (first use in this function)
+   14 | int t(void) { void ((*volatile p)()); p = (void ((*)()))SSL_CTX_new; return !p; }
+      |                                                         ^~~~~~~~~~~
+conftest.c:14:57: note: each undeclared identifier is reported only once for each function it appears in
+At top level:
+cc1: note: unrecognized command-line option ‘-Wno-self-assign’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-parentheses-equality’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-constant-logical-operand’ may have been intended to silence earlier diagnostics
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))SSL_CTX_new; return !p; }
+/* end */
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: extern void SSL_CTX_new();
+15: int t(void) { SSL_CTX_new(); return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for openssl/bio.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <openssl/bio.h>
+/* end */
+
+--------------------
+
+have_func: checking for DTLS_method() in openssl/ssl.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lssl -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return !!argv[argc];
+15: }
+16: int t(void) { void ((*volatile p)()); p = (void ((*)()))DTLS_method; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for SSL_CTX_set_session_cache_mode(NULL, 0) in openssl/ssl.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lssl -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return !!argv[argc];
+15: }
+16: 
+17: int t(void) { SSL_CTX_set_session_cache_mode(NULL, 0); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for TLS_server_method() in openssl/ssl.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lssl -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return !!argv[argc];
+15: }
+16: int t(void) { void ((*volatile p)()); p = (void ((*)()))TLS_server_method; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for SSL_CTX_set_min_proto_version(NULL, 0) in openssl/ssl.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lssl -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return !!argv[argc];
+15: }
+16: 
+17: int t(void) { SSL_CTX_set_min_proto_version(NULL, 0); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for SSL_CTX_set_dh_auto(NULL, 0) in openssl/ssl.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lssl -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return !!argv[argc];
+15: }
+16: 
+17: int t(void) { SSL_CTX_set_dh_auto(NULL, 0); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for SSL_CTX_set_ciphersuites(NULL, "") in openssl/ssl.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lssl -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+conftest.c: In function ‘t’:
+conftest.c:17:30: warning: ‘s1’ may be used uninitialized [-Wmaybe-uninitialized]
+   17 | int t(void) { char s1[1024]; SSL_CTX_set_ciphersuites(NULL, s1); return 0; }
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from conftest.c:3:
+/usr/include/openssl/ssl.h:1675:12: note: by argument 2 of type ‘const char *’ to ‘SSL_CTX_set_ciphersuites’ declared here
+ 1675 | __owur int SSL_CTX_set_ciphersuites(SSL_CTX *ctx, const char *str);
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+conftest.c:17:20: note: ‘s1’ declared here
+   17 | int t(void) { char s1[1024]; SSL_CTX_set_ciphersuites(NULL, s1); return 0; }
+      |                    ^~
+At top level:
+cc1: note: unrecognized command-line option ‘-Wno-self-assign’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-parentheses-equality’ may have been intended to silence earlier diagnostics
+cc1: note: unrecognized command-line option ‘-Wno-constant-logical-operand’ may have been intended to silence earlier diagnostics
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return !!argv[argc];
+15: }
+16: 
+17: int t(void) { char s1[1024]; SSL_CTX_set_ciphersuites(NULL, s1); return 0; }
+/* end */
+
+--------------------
+
+have_func: checking for SSL_get1_peer_certificate() in openssl/ssl.h... -------------------- yes
+
+LD_LIBRARY_PATH=.:/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib ASAN_OPTIONS=detect_leaks=0 "gcc -o conftest -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/aarch64-linux -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0/ruby/backward -I/home/vscode/.local/share/mise/installs/ruby/3.4.7/include/ruby-3.4.0 -I.    -mbranch-protection=pac-ret -fstack-protector-strong -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wmisleading-indentation -Wundef  -fPIC conftest.c -L. -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed    -lssl -lcrypto  -Wl,-rpath,/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -L/home/vscode/.local/share/mise/installs/ruby/3.4.7/lib -lruby -lssl -lcrypto  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <openssl/ssl.h>
+ 4: 
+ 5: /*top*/
+ 6: extern int t(void);
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     int (* volatile tp)(void)=(int (*)(void))&t;
+11:     printf("%d", (*tp)());
+12:   }
+13: 
+14:   return !!argv[argc];
+15: }
+16: int t(void) { void ((*volatile p)()); p = (void ((*)()))SSL_get1_peer_certificate; return !p; }
+/* end */
+
+--------------------
+

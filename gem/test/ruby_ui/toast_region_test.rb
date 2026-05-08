@@ -5,7 +5,8 @@ require "test_helper"
 class RubyUI::ToastRegionTest < ComponentTest
   def test_renders_ol_with_target_id
     out = phlex { RubyUI.ToastRegion() }
-    assert_match(/<ol[^>]+id="ruby-ui-toaster"/, out)
+    assert_match(/<ol[^>]*id="ruby-ui-toaster"/, out)
+    assert_match(/data-controller="ruby-ui--toaster"/, out)
   end
 
   def test_position_attr

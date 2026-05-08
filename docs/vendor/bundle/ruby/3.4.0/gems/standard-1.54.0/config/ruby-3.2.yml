@@ -1,0 +1,4 @@
+inherit_from: ./ruby-3.3.yml
+
+AllCops:
+  TargetRubyVersion: 3.2

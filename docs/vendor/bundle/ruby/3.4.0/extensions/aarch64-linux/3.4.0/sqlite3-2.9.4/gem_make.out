@@ -1,0 +1,52 @@
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3
+/home/vscode/.local/share/mise/installs/ruby/3.4.7/bin/ruby extconf.rb
+Building sqlite3-ruby using packaged sqlite3.
+Extracting sqlite-autoconf-3530100.tar.gz into tmp/aarch64-linux-gnu/ports/sqlite3/3.53.1... OK
+Running 'configure' for sqlite3 3.53.1... OK
+Running 'compile' for sqlite3 3.53.1... OK
+Running 'install' for sqlite3 3.53.1... OK
+Activating sqlite3 3.53.1 (from /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ports/aarch64-linux-gnu/sqlite3/3.53.1)...
+checking for pkg-config for /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ports/aarch64-linux-gnu/sqlite3/3.53.1/lib/pkgconfig/sqlite3.pc... ["-I/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ports/aarch64-linux-gnu/sqlite3/3.53.1/include ", "", "-lsqlite3"]
+checking for whether -L/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ports/aarch64-linux-gnu/sqlite3/3.53.1/lib is accepted as LDFLAGS... yes
+checking for whether -lsqlite3 is accepted as LDFLAGS... yes
+checking for whether -lm is accepted as LDFLAGS... yes
+checking for whether -lz is accepted as LDFLAGS... yes
+checking for whether -DUSING_PACKAGED_LIBRARIES is accepted as CPPFLAGS... yes
+checking for whether -fvisibility=hidden is accepted as CFLAGS... yes
+checking for sqlite3.h... yes
+checking for sqlite3_libversion_number() in -lsqlite3... yes
+checking for rb_enc_interned_str_cstr()... yes
+checking for rb_proc_arity()... yes
+checking for rb_integer_pack()... yes
+checking for sqlite3_initialize()... yes
+checking for sqlite3_backup_init()... yes
+checking for sqlite3_column_database_name()... no
+checking for sqlite3_enable_load_extension()... yes
+checking for sqlite3_load_extension()... yes
+checking for sqlite3_open_v2()... yes
+checking for sqlite3_prepare_v2()... yes
+checking for sqlite3_db_name() in sqlite3.h... yes
+checking for sqlite3_error_offset() in sqlite3.h... yes
+checking for sqlite3_int64 in sqlite3.h... yes
+checking for sqlite3_uint64 in sqlite3.h... yes
+creating Makefile
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-euxjip sitelibdir\=./.gem.20260508-6535-euxjip clean
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-euxjip sitelibdir\=./.gem.20260508-6535-euxjip
+compiling aggregator.c
+compiling backup.c
+compiling database.c
+compiling exception.c
+compiling sqlite3.c
+compiling statement.c
+linking shared-object sqlite3/sqlite3_native.so
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-euxjip sitelibdir\=./.gem.20260508-6535-euxjip install
+/usr/bin/install -c -m 0755 sqlite3_native.so ./.gem.20260508-6535-euxjip/sqlite3
+
+current directory: /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3
+make DESTDIR\= sitearchdir\=./.gem.20260508-6535-euxjip sitelibdir\=./.gem.20260508-6535-euxjip clean

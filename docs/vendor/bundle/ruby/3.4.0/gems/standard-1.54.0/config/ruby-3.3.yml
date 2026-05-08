@@ -1,0 +1,7 @@
+inherit_from: ./ruby-3.4.yml
+
+AllCops:
+  TargetRubyVersion: 3.3
+
+Style/ItBlockParameter:
+  Enabled: false

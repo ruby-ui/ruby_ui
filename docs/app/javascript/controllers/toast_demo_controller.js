@@ -13,7 +13,7 @@ export default class extends Controller {
   fire(e) {
     const kind = e.params.kind || "default"
     const t = window.RubyUI?.toast
-    if (!t) return console.warn("RubyUI.toast not available")
+    if (!t) return
 
     if (kind === "promise") {
       t.promise(

@@ -23,7 +23,7 @@ export default class extends Controller {
     this._items = []
     this._heights = new Map()
     this._expanded = this.expandValue
-    this._listEl = this.element.tagName === "OL" ? this.element : this.element.querySelector("ol")
+    this._listEl = this.element.querySelector("ol") || (this.element.tagName === "OL" ? this.element : null)
     this._registerGlobalApi()
     if (!this._listEl) return
 
@@ -51,7 +51,7 @@ export default class extends Controller {
     this._listEl.addEventListener("pointerleave", this._onPointerLeave)
     document.addEventListener("keydown", this._onKey)
 
-    Array.from(this._listEl.children).forEach((c) => this._track(c))
+    Array.from(this._listEl.children).filter(c => c.matches?.('[data-controller~="ruby-ui--toast"]')).forEach((c) => this._track(c))
     this._reflow()
   }
 
@@ -167,22 +167,63 @@ export default class extends Controller {
   }
 
   _reflow() {
+    if (!this._listEl) return
     const isBottom = this.positionValue.startsWith("bottom")
-    const items = Array.from(this._listEl.children)
+    const items = Array.from(this._listEl.children).filter(c => c.matches?.('[data-controller~="ruby-ui--toast"]'))
     const order = isBottom ? items.slice().reverse() : items.slice()
-    let cumulative = 0
+    const heights = order.map(el => this._heights.get(el) || el.offsetHeight || 64)
+    const gap = this.gapValue
+    const peekOffset = 16
+    const peekScaleStep = 0.05
+    const peekOpacityStep = 0.2
+
+    const expandedHeight = heights.reduce((a, b) => a + b, 0) + gap * Math.max(0, heights.length - 1)
+    const collapsedHeight = (heights[0] || 0) + Math.min(2, Math.max(0, heights.length - 1)) * peekOffset
+    this._listEl.style.minHeight = `${this._expanded ? expandedHeight : collapsedHeight}px`
+
+    let acc = 0
     order.forEach((el, i) => {
       const visible = i < this.maxValue
-      el.style.setProperty("--opacity", visible ? "1" : "0")
-      el.style.setProperty("--scale", this._expanded ? "1" : String(1 - i * 0.05))
+      let yOffset, scale, opacity
+
+      if (this._expanded) {
+        yOffset = acc + i * gap
+        scale = 1
+        opacity = visible ? 1 : 0
+      } else {
+        yOffset = i * peekOffset
+        scale = Math.max(0.85, 1 - i * peekScaleStep)
+        opacity = visible ? Math.max(0, 1 - i * peekOpacityStep) : 0
+      }
+
       const sign = isBottom ? -1 : 1
-      const off = this._expanded
-        ? sign * (cumulative + (i === 0 ? 0 : this.gapValue))
-        : sign * (i * this.gapValue * 0.5)
-      el.style.setProperty("--y-offset", `${off}px`)
+      const ty = sign * yOffset
+
+      el.style.setProperty("--opacity", String(opacity))
+      el.style.setProperty("--scale", String(scale))
+      el.style.setProperty("--y-offset", `${ty}px`)
+      el.style.transformOrigin = isBottom ? "center bottom" : "center top"
+      el.style.transform = `translate3d(0, ${ty}px, 0) scale(${scale})`
       el.style.zIndex = String(1000 - i)
       el.style.pointerEvents = visible ? "auto" : "none"
-      cumulative += this._heights.get(el) || el.offsetHeight || 64
+
+      acc += heights[i] || 0
+    })
+
+    this._enforceMax(items)
+  }
+
+  _enforceMax(items) {
+    if (items.length <= this.maxValue) return
+    // Items in DOM order: oldest first, newest last (bottom positions reverse for stack).
+    // Drop excess oldest by triggering force-dismiss; let exit anim run.
+    const isBottom = this.positionValue.startsWith("bottom")
+    const dropping = items.length - this.maxValue
+    const candidates = isBottom ? items.slice(0, dropping) : items.slice(-dropping)
+    candidates.forEach(el => {
+      if (el.dataset.state !== "closing") {
+        el.dispatchEvent(new CustomEvent("ruby-ui:toast:force-dismiss", { bubbles: true }))
+      }
     })
   }
 

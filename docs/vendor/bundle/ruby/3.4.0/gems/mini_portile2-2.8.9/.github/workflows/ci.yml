@@ -1,0 +1,165 @@
+name: ci
+concurrency:
+  group: "${{github.workflow}}-${{github.ref}}"
+  cancel-in-progress: true
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - v*.*.x
+    tags:
+      - v*.*.*
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - "*"
+  schedule:
+    - cron: "0 8 * * 5" # At 08:00 on Friday # https://crontab.guru/#0_8_*_*_5
+
+jobs:
+  test-unit:
+    env:
+      MAKEFLAGS: -j2
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest, macos-latest]
+        ruby: ["2.3", "2.4", "2.5", "2.6", "2.7", "3.0", "3.1", "3.2", "3.3", "3.4"]
+        exclude:
+          # I can't figure out how to install these on macos through setup-ruby
+          - ruby: "2.3"
+            platform: "macos-latest"
+          - ruby: "2.4"
+            platform: "macos-latest"
+          - ruby: "2.5"
+            platform: "macos-latest"
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: configure git crlf on windows
+        if: matrix.platform == 'windows-latest'
+        run: |
+          git config --system core.autocrlf false
+          git config --system core.eol lf
+      - uses: actions/checkout@v4
+      - uses: MSP-Greg/setup-ruby-pkgs@v1
+        with:
+          apt-get: _update_ build-essential cmake
+          mingw: _upgrade_ cmake
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bundle exec rake test:unit
+
+  test-examples:
+    env:
+      MAKEFLAGS: -j2
+      LDFLAGS: "-L/usr/local/opt/libiconv/lib" # for macos-13, sigh
+    strategy:
+      fail-fast: false
+      matrix:
+        # use macos-13 (not 14) because libyaml 0.2.5 doesn't have up-to-date config.guess and config.sub
+        platform: [ubuntu-latest, windows-latest, macos-13]
+        ruby: ["3.1"]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: configure git crlf on windows
+        if: matrix.platform == 'windows-latest'
+        run: |
+          git config --system core.autocrlf false
+          git config --system core.eol lf
+      - uses: actions/checkout@v4
+      - uses: MSP-Greg/setup-ruby-pkgs@v1
+        with:
+          apt-get: _update_ build-essential cmake
+          mingw: _upgrade_ cmake
+          brew: libiconv
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - uses: actions/cache@v4
+        with:
+          path: examples/ports/archives
+          key: examples-${{ hashFiles('examples/Rakefile') }}
+      - run: bundle exec rake test:examples
+
+  fedora: # see https://github.com/flavorjones/mini_portile/issues/118
+    strategy:
+      fail-fast: false
+      matrix:
+        task: ["test:unit", "test:examples"]
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:35
+    steps:
+      - run: |
+          dnf group install -y "C Development Tools and Libraries"
+          dnf install -y ruby ruby-devel libyaml-devel git-all patch cmake xz
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: examples/ports/archives
+          key: examples-${{ hashFiles('examples/Rakefile') }}
+      - run: bundle install
+      - run: bundle exec rake ${{ matrix.task }}
+
+  freebsd:
+    strategy:
+      fail-fast: false
+      matrix:
+        task: ["test:unit", "test:examples"]
+    runs-on: ubuntu-latest
+    env:
+      MAKE: gmake
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: examples/ports/archives
+          key: examples-${{ hashFiles('examples/Rakefile') }}
+      - uses: vmactions/freebsd-vm@v1
+        with:
+          envs: MAKE
+          usesh: true
+          copyback: false
+          prepare: pkg install -y ruby devel/ruby-gems pkgconf git cmake devel/gmake textproc/libyaml security/gnupg
+          run: |
+            git config --global --add safe.directory /home/runner/work/mini_portile/mini_portile
+            gem install bundler
+            bundle install
+            bundle exec rake ${{ matrix.task }}
+
+  openbsd:
+    strategy:
+      fail-fast: false
+      matrix:
+        task: ["test:unit", "test:examples"]
+    runs-on: ubuntu-latest
+    env:
+      MAKE: gmake
+    steps:
+    - uses: actions/checkout@v4
+    - uses: vmactions/openbsd-vm@v1
+      with:
+        envs: MAKE
+        usesh: true
+        copyback: false
+        prepare: |
+          pkg_add ruby%3.4 gmake cmake git pkgconf security/gnupg
+          ln -sf /usr/local/bin/ruby34 /usr/local/bin/ruby
+          ln -sf /usr/local/bin/bundle34 /usr/local/bin/bundle
+          ln -sf /usr/local/bin/bundler34 /usr/local/bin/bundler
+          ln -sf /usr/local/bin/erb34 /usr/local/bin/erb
+          ln -sf /usr/local/bin/gem34 /usr/local/bin/gem
+          ln -sf /usr/local/bin/irb34 /usr/local/bin/irb
+          ln -sf /usr/local/bin/racc34 /usr/local/bin/racc
+          ln -sf /usr/local/bin/rake34 /usr/local/bin/rake
+          ln -sf /usr/local/bin/rbs34 /usr/local/bin/rbs
+          ln -sf /usr/local/bin/rdbg34 /usr/local/bin/rdbg
+          ln -sf /usr/local/bin/rdoc34 /usr/local/bin/rdoc
+          ln -sf /usr/local/bin/ri34 /usr/local/bin/ri
+          ln -sf /usr/local/bin/syntax_suggest34 /usr/local/bin/syntax_suggest
+          ln -sf /usr/local/bin/typeprof34 /usr/local/bin/typeprof
+        run: |
+          git config --global --add safe.directory /home/runner/work/mini_portile/mini_portile
+          gem install bundler
+          bundle install
+          bundle exec rake ${{ matrix.task }}

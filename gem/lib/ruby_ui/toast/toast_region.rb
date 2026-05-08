@@ -36,11 +36,13 @@ module RubyUI
     end
 
     def view_template(&block)
-      ol(**attrs) do
-        render_flash if @flash
-        yield(self) if block
+      div(**attrs) do
+        ol(id: "ruby-ui-toaster", class: "pointer-events-auto relative m-0 p-0 list-none w-[356px] max-w-full") do
+          render_flash if @flash
+          yield(self) if block
+        end
+        SKELETON_VARIANTS.each { |v| skeleton(v) }
       end
-      SKELETON_VARIANTS.each { |v| skeleton(v) }
     end
 
     private
@@ -76,7 +78,6 @@ module RubyUI
 
     def default_attrs
       {
-        id: "ruby-ui-toaster",
         role: "region",
         aria_label: "Notifications",
         aria_live: "polite",
@@ -101,13 +102,13 @@ module RubyUI
 
     def region_classes
       <<~CLASSES.tr("\n", " ").squeeze(" ").strip
-        pointer-events-none fixed z-[100] flex max-h-screen w-full flex-col gap-[var(--gap,14px)] p-4 sm:p-6 sm:max-w-[400px]
+        pointer-events-none fixed z-[100] p-4 sm:p-6
         data-[position=top-left]:top-0 data-[position=top-left]:left-0
         data-[position=top-center]:top-0 data-[position=top-center]:left-1/2 data-[position=top-center]:-translate-x-1/2
         data-[position=top-right]:top-0 data-[position=top-right]:right-0
-        data-[position=bottom-left]:bottom-0 data-[position=bottom-left]:left-0 data-[position=bottom-left]:flex-col-reverse
-        data-[position=bottom-center]:bottom-0 data-[position=bottom-center]:left-1/2 data-[position=bottom-center]:-translate-x-1/2 data-[position=bottom-center]:flex-col-reverse
-        data-[position=bottom-right]:bottom-0 data-[position=bottom-right]:right-0 data-[position=bottom-right]:flex-col-reverse
+        data-[position=bottom-left]:bottom-0 data-[position=bottom-left]:left-0
+        data-[position=bottom-center]:bottom-0 data-[position=bottom-center]:left-1/2 data-[position=bottom-center]:-translate-x-1/2
+        data-[position=bottom-right]:bottom-0 data-[position=bottom-right]:right-0
       CLASSES
     end
   end

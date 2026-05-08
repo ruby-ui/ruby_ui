@@ -1,0 +1,8 @@
+gcc -c /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3/tmp/aarch64-linux-gnu/ports/sqlite3/3.53.1/sqlite-autoconf-3530100/sqlite3.c -o sqlite3.o -fPIC -O2 -fvisibility=hidden -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1 -DSQLITE_USE_URI=1  -I. -fPIC  -DSQLITE_ENABLE_DBPAGE_VTAB=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_PERCENTILE -DSQLITE_HAVE_ZLIB=1 -DSQLITE_THREADSAFE=1
+aarch64-linux-gnu-ar cr libsqlite3.a sqlite3.o
+gcc -o sqlite3 \
+	/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3/tmp/aarch64-linux-gnu/ports/sqlite3/3.53.1/sqlite-autoconf-3530100/shell.c /workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ext/sqlite3/tmp/aarch64-linux-gnu/ports/sqlite3/3.53.1/sqlite-autoconf-3530100/sqlite3.c  -Wl,-rpath,/workspaces/ruby_ui/docs/vendor/bundle/ruby/3.4.0/gems/sqlite3-2.9.4/ports/aarch64-linux-gnu/sqlite3/3.53.1/lib  -lm  -lz    \
+	 \
+	-I. -DSQLITE_ENABLE_DBPAGE_VTAB=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_PERCENTILE -DSQLITE_HAVE_ZLIB=1 -DSQLITE_THREADSAFE=1 -DHAVE_READLINE=1 -DSQLITE_DQS=0 -DSQLITE_ENABLE_BYTECODE_VTAB -DSQLITE_ENABLE_DBPAGE_VTAB -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_ENABLE_EXPLAIN_COMMENTS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_OFFSET_SQL_FUNC -DSQLITE_ENABLE_PERCENTILE -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_STMTVTAB -DSQLITE_ENABLE_UNKNOWN_SQL_FUNCTION -DSQLITE_HAVE_ZLIB=1 -DSQLITE_STRICT_SUBTYPE=1 \
+	-fPIC -O2 -fvisibility=hidden -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1 -DSQLITE_USE_URI=1  -I/usr/include  \
+	-lreadline -lncurses
