@@ -20,7 +20,7 @@ module RubyUI
           slot: "cancel",
           action: "click->ruby-ui--toast#dismiss"
         },
-        class: "inline-flex h-8 shrink-0 cursor-pointer items-center justify-center rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+        class: "inline-flex h-6 shrink-0 cursor-pointer items-center justify-center rounded px-2 text-xs font-medium bg-foreground/10 text-foreground border-0 ml-auto hover:bg-foreground/15 focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
       }
     end
   end

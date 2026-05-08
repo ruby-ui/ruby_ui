@@ -66,7 +66,7 @@ module RubyUI
       ) do
         render RubyUI::ToastItem.new(variant: variant) do
           render RubyUI::ToastIcon.new(variant: variant)
-          div(class: "flex flex-col gap-1 flex-1 min-w-0") do
+          div(class: "flex flex-col gap-0.5 flex-1 min-w-0") do
             render RubyUI::ToastTitle.new
             render RubyUI::ToastDescription.new
           end

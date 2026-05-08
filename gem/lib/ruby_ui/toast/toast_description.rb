@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {slot: "description"},
-        class: "text-sm text-muted-foreground"
+        class: "font-normal leading-[1.4] text-muted-foreground"
       }
     end
   end

@@ -6,15 +6,15 @@ module RubyUI
       button(**attrs) do
         svg(
           xmlns: "http://www.w3.org/2000/svg",
-          width: "15",
-          height: "15",
+          width: "12",
+          height: "12",
           viewbox: "0 0 24 24",
           fill: "none",
           stroke: "currentColor",
           stroke_width: "2",
           stroke_linecap: "round",
           stroke_linejoin: "round",
-          class: "size-4"
+          class: "size-3"
         ) do |s|
           s.path(d: "M18 6 6 18")
           s.path(d: "m6 6 12 12")
@@ -33,7 +33,7 @@ module RubyUI
           slot: "close",
           action: "click->ruby-ui--toast#dismiss"
         },
-        class: "absolute right-1 top-1 cursor-pointer rounded-md p-1 text-foreground/60 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-ring group-hover/toast:opacity-100 group-data-[close-button=always]/toaster:opacity-100"
+        class: "absolute left-0 top-0 -translate-x-[35%] -translate-y-[35%] size-5 cursor-pointer rounded-full border border-border bg-popover text-foreground p-0 flex items-center justify-center opacity-0 z-10 transition-opacity hover:bg-muted focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-ring group-hover/toast:opacity-100 group-data-[close-button=always]/toaster:opacity-100"
       }
     end
   end

@@ -20,7 +20,7 @@ module RubyUI
           stroke_width: "2",
           stroke_linecap: "round",
           stroke_linejoin: "round",
-          class: svg_classes
+          class: "#{svg_classes} -ml-px"
         ) { |s| paths(s) }
       end
     end
@@ -59,7 +59,7 @@ module RubyUI
     end
 
     def default_attrs
-      {data: {slot: "icon"}, class: "shrink-0 inline-flex items-center justify-center text-foreground"}
+      {data: {slot: "icon"}, class: "shrink-0 inline-flex items-center justify-start relative size-4 -ml-[3px] mr-1 text-foreground"}
     end
   end
 end

@@ -22,7 +22,7 @@ class Views::Docs::Toast < Views::Base
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(
         title: "Toast",
-        description: "Toast notifications, Hotwire-native. Trigger from the server with Turbo Streams or from JavaScript via window.RubyUI.toast.*. Heavily inspired by the original sonner: https://github.com/emilkowalski/sonner."
+        description: "An opinionated toast component."
       )
 
       Heading(level: 2) { "Mount" }
@@ -99,6 +99,20 @@ class Views::Docs::Toast < Views::Base
       end
 
       render Components::ComponentSetup::Tabs.new(component_name: component)
+
+      Heading(level: 2) { "About" }
+      p(class: "text-muted-foreground text-sm leading-relaxed") do
+        plain "Trigger toasts from the server with Turbo Streams or from JavaScript via "
+        code(class: "rounded bg-muted px-1.5 py-0.5 text-xs") { "window.RubyUI.toast.*" }
+        plain ". Heavily inspired by the original "
+        a(
+          href: "https://github.com/emilkowalski/sonner",
+          target: "_blank",
+          rel: "noopener",
+          class: "underline underline-offset-2 hover:text-foreground"
+        ) { "sonner" }
+        plain "."
+      end
 
       render Docs::ComponentsTable.new(component_files(component))
     end

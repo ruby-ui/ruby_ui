@@ -55,9 +55,9 @@ module RubyUI
     def item_classes
       <<~CLASSES.tr("\n", " ").squeeze(" ").strip
         group/toast pointer-events-auto absolute left-0 right-0
-        flex w-[356px] max-w-full items-center gap-3
+        flex w-[356px] max-w-full items-center gap-1.5
         overflow-hidden rounded-lg border bg-popover text-popover-foreground
-        border-border p-4 pr-8 shadow-lg
+        border-border p-4 text-[13px] shadow-[0_4px_12px_rgba(0,0,0,0.1)]
         transition-[transform,opacity] duration-300 ease-out
         will-change-transform
         opacity-[var(--opacity,1)]

@@ -20,7 +20,7 @@ module RubyUI
       {
         type: "button",
         data: data,
-        class: "inline-flex h-8 shrink-0 cursor-pointer items-center justify-center rounded-md border border-input bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary hover:text-secondary-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        class: "inline-flex h-6 shrink-0 cursor-pointer items-center justify-center rounded px-2 text-xs font-medium bg-foreground text-background border-0 ml-auto hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-ring transition-opacity disabled:pointer-events-none disabled:opacity-50"
       }
     end
   end
