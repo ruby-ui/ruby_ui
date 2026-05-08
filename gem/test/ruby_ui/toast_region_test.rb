@@ -9,6 +9,12 @@ class RubyUI::ToastRegionTest < ComponentTest
     assert_match(/data-controller="ruby-ui--toaster"/, out)
   end
 
+  def test_outer_wrapper_has_id_and_turbo_permanent
+    out = phlex { RubyUI.ToastRegion() }
+    assert_match(/<div[^>]*id="ruby-ui-toaster-region"/, out)
+    assert_match(/data-turbo-permanent/, out)
+  end
+
   def test_position_attr
     out = phlex { RubyUI.ToastRegion(position: :top_left) }
     assert_match(/data-position="top-left"/, out)

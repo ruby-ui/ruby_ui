@@ -77,11 +77,13 @@ module RubyUI
 
     def default_attrs
       {
+        id: "ruby-ui-toaster-region",
         role: "region",
         aria_label: "Notifications",
         aria_live: "polite",
         data: {
           controller: "ruby-ui--toaster",
+          turbo_permanent: "",
           close_button: @close_button.to_s,
           position: @position.to_s.tr("_", "-"),
           ruby_ui__toaster_position_value: @position.to_s.tr("_", "-"),

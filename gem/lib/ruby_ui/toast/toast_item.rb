@@ -40,6 +40,7 @@ module RubyUI
           state: "pending",
           swipe: "none",
           controller: "ruby-ui--toast",
+          ruby_ui__toaster_target: "toast",
           ruby_ui__toast_dismissible_value: @dismissible.to_s,
           ruby_ui__toast_invert_value: @invert.to_s
         },

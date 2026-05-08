@@ -80,13 +80,21 @@ class Views::Docs::Toast < Views::Base
       end
       div(class: "rounded-md border bg-muted/30 p-4 mt-4") do
         Codeblock(<<~RUBY, syntax: :ruby)
-          # In your controller:
+          # Option A — custom Turbo Stream action (compact):
+          render turbo_stream: turbo_stream.action(
+            :toast,
+            target: "ruby-ui-toaster",
+            variant: :success,
+            title: "Saved",
+            description: "Project updated."
+          )
+
+          # Option B — append a fully-rendered ToastItem (for Action / Cancel slots):
           render turbo_stream: turbo_stream.append("ruby-ui-toaster") {
             render RubyUI::ToastItem.new(variant: :success) do
               render RubyUI::ToastIcon.new(variant: :success)
               render RubyUI::ToastTitle.new { "Saved" }
               render RubyUI::ToastDescription.new { "Project updated." }
-              render RubyUI::ToastClose.new
             end
           }
         RUBY

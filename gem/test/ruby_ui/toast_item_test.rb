@@ -8,6 +8,7 @@ class RubyUI::ToastItemTest < ComponentTest
     assert_match(/data-variant="default"/, out)
     assert_match(/role="status"/, out)
     assert_match(/data-controller="ruby-ui--toast"/, out)
+    assert_match(/data-ruby-ui--toaster-target="toast"/, out)
     assert_match(/data-state="pending"/, out)
   end
 

@@ -2,9 +2,29 @@ import { Controller } from "@hotwired/stimulus"
 
 const VARIANTS = ["default", "success", "error", "warning", "info", "loading"]
 
+let streamActionRegistered = false
+
+function registerStreamAction() {
+  if (streamActionRegistered) return
+  if (typeof window === "undefined") return
+  const Turbo = window.Turbo
+  if (!Turbo?.StreamActions) return
+  Turbo.StreamActions.toast = function () {
+    const detail = {}
+    for (const attr of this.attributes) {
+      if (attr.name === "action" || attr.name === "target" || attr.name === "targets") continue
+      detail[attr.name] = attr.value
+    }
+    if (detail.duration != null && detail.duration !== "") detail.duration = Number(detail.duration)
+    if (detail.dismissible != null) detail.dismissible = detail.dismissible !== "false"
+    window.dispatchEvent(new CustomEvent("ruby-ui:toast", { detail }))
+  }
+  streamActionRegistered = true
+}
+
 // Connects to data-controller="ruby-ui--toaster"
 export default class extends Controller {
-  static targets = ["skeleton"]
+  static targets = ["skeleton", "toast"]
   static values = {
     position: { type: String, default: "bottom-right" },
     expand: { type: Boolean, default: false },
@@ -20,53 +40,53 @@ export default class extends Controller {
   }
 
   connect() {
-    this._items = []
     this._heights = new Map()
+    this._resizeObservers = new WeakMap()
     this._expanded = this.expandValue
     this._listEl = this.element.querySelector("ol") || (this.element.tagName === "OL" ? this.element : null)
     this._registerGlobalApi()
+    registerStreamAction()
     if (!this._listEl) return
 
-    this._observer = new MutationObserver((records) => {
-      for (const r of records) {
-        for (const n of r.addedNodes) {
-          if (n.nodeType === 1 && n.matches?.('[data-controller~="ruby-ui--toast"]')) this._track(n)
-        }
-        for (const n of r.removedNodes) {
-          if (n.nodeType === 1) this._untrack(n)
-        }
-      }
-      this._reflow()
-    })
-    this._observer.observe(this._listEl, { childList: true })
-
-    this._onCustomEvent = this._onCustomEvent.bind(this)
     this._onPointerEnter = () => this._setExpanded(true)
     this._onPointerLeave = () => { if (!this.expandValue) this._setExpanded(false) }
+    this._onWindowToast = (e) => this._spawn(e.detail || {})
+    this._onWindowDismissAll = () => this._dismissById(null)
     this._onKey = this._onKey.bind(this)
 
-    window.addEventListener("ruby-ui:toast", this._onCustomEvent)
-    window.addEventListener("ruby-ui:toast:dismiss-all", this._onCustomEvent)
+    window.addEventListener("ruby-ui:toast", this._onWindowToast)
+    window.addEventListener("ruby-ui:toast:dismiss-all", this._onWindowDismissAll)
     this._listEl.addEventListener("pointerenter", this._onPointerEnter)
     this._listEl.addEventListener("pointerleave", this._onPointerLeave)
     document.addEventListener("keydown", this._onKey)
-
-    Array.from(this._listEl.children).filter(c => c.matches?.('[data-controller~="ruby-ui--toast"]')).forEach((c) => this._track(c))
-    this._reflow()
   }
 
   disconnect() {
-    this._observer?.disconnect()
-    window.removeEventListener("ruby-ui:toast", this._onCustomEvent)
-    window.removeEventListener("ruby-ui:toast:dismiss-all", this._onCustomEvent)
+    window.removeEventListener("ruby-ui:toast", this._onWindowToast)
+    window.removeEventListener("ruby-ui:toast:dismiss-all", this._onWindowDismissAll)
     this._listEl?.removeEventListener("pointerenter", this._onPointerEnter)
     this._listEl?.removeEventListener("pointerleave", this._onPointerLeave)
     document.removeEventListener("keydown", this._onKey)
   }
 
-  _onCustomEvent(e) {
-    if (e.type === "ruby-ui:toast") this._spawn(e.detail || {})
-    if (e.type === "ruby-ui:toast:dismiss-all") this._dismissById(null)
+  toastTargetConnected(el) {
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => {
+        this._heights.set(el, el.offsetHeight)
+        this._reflow()
+      })
+      ro.observe(el)
+      this._resizeObservers.set(el, ro)
+    }
+    this._heights.set(el, el.offsetHeight || 64)
+    this._reflow()
+  }
+
+  toastTargetDisconnected(el) {
+    this._resizeObservers.get(el)?.disconnect()
+    this._resizeObservers.delete(el)
+    this._heights.delete(el)
+    this._reflow()
   }
 
   _spawn(detail) {
@@ -139,7 +159,7 @@ export default class extends Controller {
 
   _dismissById(id) {
     if (!id) {
-      this._items.slice().forEach((el) =>
+      this.toastTargets.forEach((el) =>
         el.dispatchEvent(new CustomEvent("ruby-ui:toast:force-dismiss", { bubbles: true }))
       )
       return
@@ -152,24 +172,6 @@ export default class extends Controller {
     return this.skeletonTargets.find((t) => t.dataset.variant === variant)
   }
 
-  _track(el) {
-    if (this._items.includes(el)) return
-    this._items.push(el)
-    if (typeof ResizeObserver !== "undefined") {
-      const ro = new ResizeObserver(() => { this._heights.set(el, el.offsetHeight); this._reflow() })
-      ro.observe(el)
-      el._rubyUiResizeObserver = ro
-    }
-    this._heights.set(el, el.offsetHeight || 64)
-  }
-
-  _untrack(el) {
-    this._items = this._items.filter((i) => i !== el)
-    el._rubyUiResizeObserver?.disconnect()
-    this._heights.delete(el)
-    this._reflow()
-  }
-
   _setExpanded(value) {
     if (this._expanded === value) return
     this._expanded = value
@@ -180,7 +182,7 @@ export default class extends Controller {
   _reflow() {
     if (!this._listEl) return
     const isBottom = this.positionValue.startsWith("bottom")
-    const items = Array.from(this._listEl.children).filter(c => c.matches?.('[data-controller~="ruby-ui--toast"]'))
+    const items = this.toastTargets
     const order = isBottom ? items.slice().reverse() : items.slice()
     const heights = order.map(el => this._heights.get(el) || el.offsetHeight || 64)
     const gap = this.gapValue
@@ -219,6 +221,7 @@ export default class extends Controller {
       el.style.transform = `translate3d(0, ${ty}px, 0) scale(${scale})`
       el.style.zIndex = String(1000 - i)
       el.style.pointerEvents = visible ? "auto" : "none"
+      el.tabIndex = visible ? 0 : -1
 
       acc += heights[i] || 0
     })
@@ -228,8 +231,6 @@ export default class extends Controller {
 
   _enforceMax(items) {
     if (items.length <= this.maxValue) return
-    // Items in DOM order: oldest first, newest last (bottom positions reverse for stack).
-    // Drop excess oldest by triggering force-dismiss; let exit anim run.
     const isBottom = this.positionValue.startsWith("bottom")
     const dropping = items.length - this.maxValue
     const candidates = isBottom ? items.slice(0, dropping) : items.slice(-dropping)
@@ -257,7 +258,9 @@ export default class extends Controller {
 
   _registerGlobalApi() {
     const fire = (variant, message, opts = {}) =>
-      this._spawn({ ...opts, variant, message: opts.title || message })
+      window.dispatchEvent(new CustomEvent("ruby-ui:toast", {
+        detail: { ...opts, variant, message: opts.title || message }
+      }))
 
     const api = (message, opts) => fire("default", message, opts)
     api.success = (m, o) => fire("success", m, o)
@@ -265,7 +268,10 @@ export default class extends Controller {
     api.warning = (m, o) => fire("warning", m, o)
     api.info = (m, o) => fire("info", m, o)
     api.loading = (m, o = {}) => fire("loading", m, { ...o, duration: o.duration ?? 0 })
-    api.dismiss = (id) => this._dismissById(id ?? null)
+    api.dismiss = (id) => {
+      if (id) this._dismissById(id)
+      else window.dispatchEvent(new CustomEvent("ruby-ui:toast:dismiss-all"))
+    }
     api.promise = (p, msgs = {}) => {
       const id = `toast-${this._uuid()}`
       fire("loading", typeof msgs.loading === "function" ? msgs.loading() : (msgs.loading || "Loading..."), { id, duration: 0 })
