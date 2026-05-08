@@ -33,7 +33,7 @@ module RubyUI
           slot: "close",
           action: "click->ruby-ui--toast#dismiss"
         },
-        class: "absolute right-1 top-1 rounded-md p-1 text-foreground/60 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-ring group-hover/toast:opacity-100 group-data-[close-button=always]/toaster:opacity-100"
+        class: "absolute right-1 top-1 cursor-pointer rounded-md p-1 text-foreground/60 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-ring group-hover/toast:opacity-100 group-data-[close-button=always]/toaster:opacity-100"
       }
     end
   end

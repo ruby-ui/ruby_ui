@@ -101,7 +101,7 @@ export default class extends Controller {
       const btn = document.createElement("button")
       btn.type = "button"
       btn.dataset.slot = "action"
-      btn.className = "inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-input bg-transparent px-3 text-sm font-medium hover:bg-secondary"
+      btn.className = "inline-flex h-8 shrink-0 cursor-pointer items-center justify-center rounded-md border border-input bg-transparent px-3 text-sm font-medium hover:bg-secondary"
       btn.textContent = detail.action.label
       btn.addEventListener("click", (ev) => {
         try { detail.action.onClick?.(ev) } finally {
@@ -116,7 +116,7 @@ export default class extends Controller {
       btn.type = "button"
       btn.dataset.slot = "cancel"
       btn.dataset.action = "click->ruby-ui--toast#dismiss"
-      btn.className = "inline-flex h-8 shrink-0 items-center justify-center rounded-md px-3 text-sm font-medium text-muted-foreground hover:bg-muted"
+      btn.className = "inline-flex h-8 shrink-0 cursor-pointer items-center justify-center rounded-md px-3 text-sm font-medium text-muted-foreground hover:bg-muted"
       btn.textContent = detail.cancel.label
       node.appendChild(btn)
     }
