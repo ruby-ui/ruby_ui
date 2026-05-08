@@ -24,6 +24,19 @@ class Views::Docs::Tooltip < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Long content", context: self) do
+        <<~RUBY
+          Tooltip do
+            TooltipTrigger do
+              Button(variant: :outline) { "Hover me" }
+            end
+            TooltipContent do
+              Text { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }
+            end
+          end
+        RUBY
+      end
+
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
