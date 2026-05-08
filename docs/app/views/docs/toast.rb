@@ -27,6 +27,12 @@ class Views::Docs::Toast < Views::Base
         description: "An opinionated toast component."
       )
 
+      Heading(level: 2) { "Examples" }
+      Heading(level: 3) { "Types" }
+      div(class: "grid gap-4 sm:grid-cols-2", data: {controller: "toast-demo"}) do
+        EXAMPLES.each { |ex| example_box(ex) }
+      end
+
       Heading(level: 2) { "About" }
       p(class: "text-muted-foreground text-sm leading-relaxed") do
         plain "Trigger toasts from the server with Turbo Streams or from JavaScript via "
@@ -39,12 +45,6 @@ class Views::Docs::Toast < Views::Base
           class: "underline underline-offset-2 hover:text-foreground"
         ) { "sonner" }
         plain "."
-      end
-
-      Heading(level: 2) { "Examples" }
-      Heading(level: 3) { "Types" }
-      div(class: "grid gap-4 sm:grid-cols-2", data: {controller: "toast-demo"}) do
-        EXAMPLES.each { |ex| example_box(ex) }
       end
 
       Heading(level: 2) { "Mount" }
