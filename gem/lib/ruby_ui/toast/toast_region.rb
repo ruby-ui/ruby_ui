@@ -82,6 +82,7 @@ module RubyUI
         aria_live: "polite",
         data: {
           controller: "ruby-ui--toaster",
+          close_button: @close_button ? "always" : "hover",
           position: @position.to_s.tr("_", "-"),
           ruby_ui__toaster_position_value: @position.to_s.tr("_", "-"),
           ruby_ui__toaster_expand_value: @expand.to_s,
@@ -101,7 +102,7 @@ module RubyUI
 
     def region_classes
       <<~CLASSES.tr("\n", " ").squeeze(" ").strip
-        pointer-events-none fixed z-[100] p-4 sm:p-6
+        group/toaster pointer-events-none fixed z-[100] p-4 sm:p-6
         data-[position=top-left]:top-0 data-[position=top-left]:left-0
         data-[position=top-center]:top-0 data-[position=top-center]:left-1/2 data-[position=top-center]:-translate-x-1/2
         data-[position=top-right]:top-0 data-[position=top-right]:right-0
