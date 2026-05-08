@@ -29,8 +29,31 @@ class Views::Docs::Toast < Views::Base
 
       Heading(level: 2) { "Examples" }
       Heading(level: 3) { "Types" }
-      div(class: "grid gap-4 sm:grid-cols-2", data: {controller: "toast-demo"}) do
-        EXAMPLES.each { |ex| example_box(ex) }
+      render Docs::VisualCodeExample.new(title: "Click any to spawn a toast.", context: self) do
+        <<~RUBY
+          div(class: "grid gap-4 sm:grid-cols-2", data: {controller: "toast-demo"}) do
+            [
+              ["default", "Default"],
+              ["success", "Success"],
+              ["info", "Info"],
+              ["warning", "Warning"],
+              ["error", "Error"],
+              ["with_action", "With Action"],
+              ["promise", "Promise"],
+              ["text_only", "Text Only"],
+              ["close_button", "Close Button"],
+              ["close_action", "Close + Action"]
+            ].each do |key, label|
+              div(class: "rounded-md border p-6 flex items-center justify-center min-h-[100px]") do
+                button(
+                  type: "button",
+                  class: "inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent transition-colors cursor-pointer",
+                  data: {action: "click->toast-demo#fire", toast_demo_kind_param: key}
+                ) { "Show \#{label} toast" }
+              end
+            end
+          end
+        RUBY
       end
 
       Heading(level: 2) { "About" }
