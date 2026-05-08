@@ -156,7 +156,7 @@ class Views::Docs::Toast < Views::Base
     {name: "theme", default: ":system", values: ":system | :light | :dark", description: "Color scheme override."},
     {name: "rich_colors", default: "false", values: "Boolean", description: "Enable variant-tinted backgrounds."},
     {name: "close_button", default: "false", values: "Boolean", description: "Render an X button in every toast (top-right)."},
-    {name: "hotkey", default: '%w[alt t]', values: "Array<String>", description: "Keyboard shortcut to focus the first toast."},
+    {name: "hotkey", default: "%w[alt t]", values: "Array<String>", description: "Keyboard shortcut to focus the first toast."},
     {name: "dir", default: ":ltr", values: ":ltr | :rtl", description: "Text direction."},
     {name: "flash", default: "nil", values: "Hash | nil", description: "Pass `helpers.flash.to_h` to render Rails flash on initial load."}
   ].freeze
