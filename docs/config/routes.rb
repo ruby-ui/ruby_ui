@@ -66,6 +66,13 @@ Rails.application.routes.draw do
     get "tabs", to: "docs#tabs", as: :docs_tabs
     get "textarea", to: "docs#textarea", as: :docs_textarea
     get "theme_toggle", to: "docs#theme_toggle", as: :docs_theme_toggle
+    get "toast", to: "docs#toast", as: :docs_toast
+    post "toast_demo/default", to: "docs/toast_demo#default", as: :docs_toast_demo_default
+    post "toast_demo/success", to: "docs/toast_demo#success", as: :docs_toast_demo_success
+    post "toast_demo/error", to: "docs/toast_demo#error", as: :docs_toast_demo_error
+    post "toast_demo/warning", to: "docs/toast_demo#warning", as: :docs_toast_demo_warning
+    post "toast_demo/info", to: "docs/toast_demo#info", as: :docs_toast_demo_info
+    post "toast_demo/with_action", to: "docs/toast_demo#with_action", as: :docs_toast_demo_with_action
     get "tooltip", to: "docs#tooltip", as: :docs_tooltip
     get "typography", to: "docs#typography", as: :docs_typography
 
