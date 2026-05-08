@@ -59,14 +59,7 @@ module RubyUI
     end
 
     def default_attrs
-      color = case @variant
-      when :success then "text-green-600 dark:text-green-500"
-      when :error then "text-red-600 dark:text-red-500"
-      when :warning then "text-yellow-600 dark:text-yellow-500"
-      when :info then "text-blue-600 dark:text-blue-500"
-      when :loading then "text-muted-foreground"
-      end
-      {data: {slot: "icon"}, class: ["shrink-0 inline-flex items-center justify-center", color].compact}
+      {data: {slot: "icon"}, class: "shrink-0 inline-flex items-center justify-center text-foreground"}
     end
   end
 end

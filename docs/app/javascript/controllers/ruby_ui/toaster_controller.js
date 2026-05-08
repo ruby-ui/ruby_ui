@@ -24,9 +24,8 @@ export default class extends Controller {
     this._heights = new Map()
     this._expanded = this.expandValue
     this._listEl = this.element.tagName === "OL" ? this.element : this.element.querySelector("ol")
-    if (!this._listEl) return
-
     this._registerGlobalApi()
+    if (!this._listEl) return
 
     this._observer = new MutationObserver((records) => {
       for (const r of records) {
@@ -74,6 +73,10 @@ export default class extends Controller {
     const variant = VARIANTS.includes(detail.variant) ? detail.variant : "default"
     const tpl = this._skeletonFor(variant)
     if (!tpl) return null
+    if (detail.position) {
+      this.element.setAttribute("data-position", detail.position)
+      this.positionValue = detail.position
+    }
     const node = tpl.content.firstElementChild.cloneNode(true)
 
     node.id = detail.id || `toast-${this._uuid()}`

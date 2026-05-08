@@ -1,22 +1,48 @@
 import { Controller } from "@hotwired/stimulus"
 
+const PRESETS = {
+  default: { variant: "default", title: "Event has been created", description: "Sunday, December 03, 2023 at 9:00 AM" },
+  success: { variant: "success", title: "Event has been created" },
+  info: { variant: "info", title: "Be at the area 10 minutes before the event time" },
+  warning: { variant: "warning", title: "Event start time cannot be earlier than 8am" },
+  error: { variant: "error", title: "Event has not been created" },
+  with_action: { variant: "default", title: "Event has been created", action: { label: "Undo" } },
+}
+
 export default class extends Controller {
   fire(e) {
-    const variant = e.params.variant || "default"
+    const kind = e.params.kind || "default"
     const t = window.RubyUI?.toast
-    if (!t) return
-    const titles = { success: "Saved", error: "Boom", info: "Heads up", warning: "Storage almost full", default: "Hello" }
-    const descs = { success: "Project updated.", error: "Server returned 500.", info: "New version available.", warning: "Almost out of space.", default: "Just so you know." }
-    t[variant]?.(titles[variant], { description: descs[variant] })
+    if (!t) return console.warn("RubyUI.toast not available")
+
+    if (kind === "promise") {
+      t.promise(
+        new Promise((r) => setTimeout(() => r({ name: "Sonner" }), 1500)),
+        {
+          loading: "Loading...",
+          success: (data) => `${data.name} toast has been added`,
+          error: "Error",
+        }
+      )
+      return
+    }
+
+    const preset = PRESETS[kind] || PRESETS.default
+    const opts = { description: preset.description, action: preset.action }
+    const fn = t[preset.variant] || t
+    fn(preset.title, opts)
   }
 
-  promise() {
-    const p = new Promise((r) => setTimeout(() => r({ id: 42 }), 1500))
-    window.RubyUI?.toast.promise(p, {
-      loading: "Saving...",
-      success: (v) => `Saved (id ${v.id})`,
-      error: "Failed",
-    })
+  position(e) {
+    const position = e.params.position || "bottom-right"
+    window.dispatchEvent(new CustomEvent("ruby-ui:toast", {
+      detail: {
+        variant: "default",
+        title: `Position: ${position}`,
+        description: "Toast spawned in this corner",
+        position,
+      }
+    }))
   }
 
   dismissAll() {

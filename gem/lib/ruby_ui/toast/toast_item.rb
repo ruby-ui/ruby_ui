@@ -67,10 +67,6 @@ module RubyUI
         data-[swipe=cancel]:translate-x-0
         data-[swipe=end]:translate-x-[var(--swipe-end-x,0)]
         data-[swipe=end]:translate-y-[var(--swipe-end-y,0)]
-        data-[variant=success]:border-green-500/30
-        data-[variant=error]:border-red-500/30
-        data-[variant=warning]:border-yellow-500/30
-        data-[variant=info]:border-blue-500/30
       CLASSES
     end
   end
