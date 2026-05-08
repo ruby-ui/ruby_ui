@@ -93,6 +93,12 @@ class Views::Docs::Command < Views::Base
         RUBY
       end
 
+      Heading(level: 2) { "Single instance" }
+
+      p(class: "text-muted-foreground") do
+        plain "The Command dialog is single-instance. Activating a trigger while the dialog is already open refocuses the existing dialog instead of stacking another one on top, so repeated keybindings or trigger clicks behave predictably."
+      end
+
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
