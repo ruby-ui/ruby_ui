@@ -70,7 +70,7 @@ module RubyUI
             render RubyUI::ToastTitle.new
             render RubyUI::ToastDescription.new
           end
-          render RubyUI::ToastClose.new
+          render RubyUI::ToastClose.new if @close_button
         end
       end
     end
@@ -82,7 +82,7 @@ module RubyUI
         aria_live: "polite",
         data: {
           controller: "ruby-ui--toaster",
-          close_button: @close_button ? "always" : "hover",
+          close_button: @close_button.to_s,
           position: @position.to_s.tr("_", "-"),
           ruby_ui__toaster_position_value: @position.to_s.tr("_", "-"),
           ruby_ui__toaster_expand_value: @expand.to_s,
