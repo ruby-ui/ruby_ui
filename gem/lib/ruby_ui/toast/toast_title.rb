@@ -11,7 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {slot: "title"},
-        class: "text-sm font-semibold leading-tight"
+        class: "text-sm font-medium leading-tight"
       }
     end
   end
