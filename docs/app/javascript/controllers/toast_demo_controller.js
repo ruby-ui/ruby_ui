@@ -8,6 +8,7 @@ const PRESETS = {
   error: { variant: "error", title: "Event has not been created" },
   with_action: { variant: "default", title: "Event has been created", action: { label: "Undo" } },
   text_only: { variant: "default", title: "Event has been created" },
+  close_button: { variant: "default", title: "Event has been created", description: "Close it manually with the X.", closeButton: true },
 }
 
 export default class extends Controller {
@@ -29,7 +30,11 @@ export default class extends Controller {
     }
 
     const preset = PRESETS[kind] || PRESETS.default
-    const opts = { description: preset.description, action: preset.action }
+    const opts = {
+      description: preset.description,
+      action: preset.action,
+      closeButton: preset.closeButton,
+    }
     const fn = t[preset.variant] || t
     fn(preset.title, opts)
   }

@@ -121,6 +121,18 @@ export default class extends Controller {
       node.appendChild(btn)
     }
 
+    if (detail.closeButton) {
+      const x = document.createElement("button")
+      x.type = "button"
+      x.dataset.slot = "close"
+      x.dataset.action = "click->ruby-ui--toast#dismiss"
+      x.setAttribute("aria-label", "Close toast")
+      x.className = "absolute right-2 top-2 size-6 cursor-pointer rounded-md text-foreground/60 p-0 flex items-center justify-center transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+      x.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg><span class="sr-only">Close</span>'
+      node.classList.add("pr-10")
+      node.appendChild(x)
+    }
+
     this._listEl.appendChild(node)
     return node.id
   }
