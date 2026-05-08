@@ -95,6 +95,9 @@ select:
   js_packages:
     - "@floating-ui/dom"
 
+toast:
+  js_packages: []
+
 tooltip:
   js_packages:
     - "@floating-ui/dom"
