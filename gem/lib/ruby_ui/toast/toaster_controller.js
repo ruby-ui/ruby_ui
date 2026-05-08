@@ -24,7 +24,7 @@ function registerStreamAction() {
 
 // Connects to data-controller="ruby-ui--toaster"
 export default class extends Controller {
-  static targets = ["skeleton", "toast"]
+  static targets = ["skeleton", "toast", "actionTpl", "cancelTpl", "closeTpl"]
   static values = {
     position: { type: String, default: "bottom-right" },
     expand: { type: Boolean, default: false },
@@ -117,11 +117,8 @@ export default class extends Controller {
       else descEl.remove()
     }
 
-    if (detail.action && detail.action.label) {
-      const btn = document.createElement("button")
-      btn.type = "button"
-      btn.dataset.slot = "action"
-      btn.className = "inline-flex h-6 shrink-0 cursor-pointer items-center justify-center rounded px-2 text-xs font-medium bg-foreground text-background border-0 ml-auto hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-ring transition-opacity"
+    if (detail.action && detail.action.label && this.hasActionTplTarget) {
+      const btn = this._cloneSlot(this.actionTplTarget)
       btn.textContent = detail.action.label
       btn.addEventListener("click", (ev) => {
         try { detail.action.onClick?.(ev) } finally {
@@ -131,24 +128,14 @@ export default class extends Controller {
       node.appendChild(btn)
     }
 
-    if (detail.cancel && detail.cancel.label) {
-      const btn = document.createElement("button")
-      btn.type = "button"
-      btn.dataset.slot = "cancel"
-      btn.dataset.action = "click->ruby-ui--toast#dismiss"
-      btn.className = "inline-flex h-6 shrink-0 cursor-pointer items-center justify-center rounded px-2 text-xs font-medium bg-foreground/10 text-foreground border-0 ml-auto hover:bg-foreground/15 focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+    if (detail.cancel && detail.cancel.label && this.hasCancelTplTarget) {
+      const btn = this._cloneSlot(this.cancelTplTarget)
       btn.textContent = detail.cancel.label
       node.appendChild(btn)
     }
 
-    if (detail.closeButton) {
-      const x = document.createElement("button")
-      x.type = "button"
-      x.dataset.slot = "close"
-      x.dataset.action = "click->ruby-ui--toast#dismiss"
-      x.setAttribute("aria-label", "Close toast")
-      x.className = "absolute right-2 top-2 size-6 cursor-pointer rounded-md text-foreground/60 p-0 flex items-center justify-center transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
-      x.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3.5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg><span class="sr-only">Close</span>'
+    if (detail.closeButton && this.hasCloseTplTarget) {
+      const x = this._cloneSlot(this.closeTplTarget)
       node.classList.add("pr-10")
       node.appendChild(x)
     }
@@ -170,6 +157,10 @@ export default class extends Controller {
 
   _skeletonFor(variant) {
     return this.skeletonTargets.find((t) => t.dataset.variant === variant)
+  }
+
+  _cloneSlot(tpl) {
+    return tpl.content.firstElementChild.cloneNode(true)
   }
 
   _setExpanded(value) {

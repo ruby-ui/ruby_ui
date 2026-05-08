@@ -41,6 +41,9 @@ module RubyUI
           yield(self) if block
         end
         SKELETON_VARIANTS.each { |v| skeleton(v) }
+        slot_template("actionTpl") { render RubyUI::ToastAction.new(label: "") }
+        slot_template("cancelTpl") { render RubyUI::ToastCancel.new(label: "") }
+        slot_template("closeTpl") { render RubyUI::ToastClose.new }
       end
     end
 
@@ -73,6 +76,10 @@ module RubyUI
           render RubyUI::ToastClose.new if @close_button
         end
       end
+    end
+
+    def slot_template(target_name, &)
+      template(data: {ruby_ui__toaster_target: target_name}, &)
     end
 
     def default_attrs
