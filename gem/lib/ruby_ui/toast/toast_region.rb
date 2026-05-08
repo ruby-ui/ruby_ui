@@ -2,8 +2,6 @@
 
 module RubyUI
   class ToastRegion < Base
-    register_element :turbo_frame, tag: "turbo-frame"
-
     SKELETON_VARIANTS = %i[default success error warning info loading].freeze
     POSITIONS = %i[top_left top_center top_right bottom_left bottom_center bottom_right].freeze
 
@@ -38,13 +36,11 @@ module RubyUI
     end
 
     def view_template(&block)
-      turbo_frame(id: "ruby-ui-toaster", refresh: "morph", target: "_top") do
-        ol(**attrs) do
-          render_flash if @flash
-          yield(self) if block
-        end
-        SKELETON_VARIANTS.each { |v| skeleton(v) }
+      ol(**attrs) do
+        render_flash if @flash
+        yield(self) if block
       end
+      SKELETON_VARIANTS.each { |v| skeleton(v) }
     end
 
     private
@@ -80,6 +76,7 @@ module RubyUI
 
     def default_attrs
       {
+        id: "ruby-ui-toaster",
         role: "region",
         aria_label: "Notifications",
         aria_live: "polite",

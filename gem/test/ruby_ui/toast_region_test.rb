@@ -3,10 +3,9 @@
 require "test_helper"
 
 class RubyUI::ToastRegionTest < ComponentTest
-  def test_renders_turbo_frame_with_id
+  def test_renders_ol_with_target_id
     out = phlex { RubyUI.ToastRegion() }
-    assert_match(/<turbo-frame[^>]+id="ruby-ui-toaster"/, out)
-    assert_match(/refresh="morph"/, out)
+    assert_match(/<ol[^>]+id="ruby-ui-toaster"/, out)
   end
 
   def test_position_attr
