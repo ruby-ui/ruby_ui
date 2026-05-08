@@ -1,4 +1,0 @@
-inherit_from: ./base.yml
-
-Performance/ConcurrentMonotonicTime:
-  Enabled: false

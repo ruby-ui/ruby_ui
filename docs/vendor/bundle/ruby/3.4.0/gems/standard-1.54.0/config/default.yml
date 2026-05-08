@@ -1,8 +1,0 @@
-AllCops:
-  TargetRubyVersion: 3.0
-  Exclude: []
-  DisabledByDefault: true
-  StyleGuideBaseURL: https://github.com/standardrb/standard
-
-Lint/Syntax:
-  Enabled: true

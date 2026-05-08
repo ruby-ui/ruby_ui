@@ -1,7 +1,0 @@
-inherit_gem:
-  rubocop-standard:
-    - config/default.yml
-    - config/minitest.yml
-
-Metrics/CollectionLiteralLength:
-  Enabled: false
