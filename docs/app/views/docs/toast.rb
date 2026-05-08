@@ -12,7 +12,8 @@ class Views::Docs::Toast < Views::Base
     {key: "with_action", label: "With Action", title: "Event has been created", action_label: "Undo"},
     {key: "promise", label: "Promise", title: nil},
     {key: "text_only", label: "Text Only", title: "Event has been created"},
-    {key: "close_button", label: "Close Button", title: "Event has been created"}
+    {key: "close_button", label: "Close Button", title: "Event has been created"},
+    {key: "close_action", label: "Close + Action", title: "Event has been created"}
   ].freeze
 
   POSITIONS = %w[top-left top-center top-right bottom-left bottom-center bottom-right].freeze
@@ -26,6 +27,26 @@ class Views::Docs::Toast < Views::Base
         description: "An opinionated toast component."
       )
 
+      Heading(level: 2) { "About" }
+      p(class: "text-muted-foreground text-sm leading-relaxed") do
+        plain "Trigger toasts from the server with Turbo Streams or from JavaScript via "
+        code(class: "rounded bg-muted px-1.5 py-0.5 text-xs") { "window.RubyUI.toast.*" }
+        plain ". Heavily inspired by the original "
+        a(
+          href: "https://github.com/emilkowalski/sonner",
+          target: "_blank",
+          rel: "noopener",
+          class: "underline underline-offset-2 hover:text-foreground"
+        ) { "sonner" }
+        plain "."
+      end
+
+      Heading(level: 2) { "Examples" }
+      Heading(level: 3) { "Types" }
+      div(class: "grid gap-4 sm:grid-cols-2", data: {controller: "toast-demo"}) do
+        EXAMPLES.each { |ex| example_box(ex) }
+      end
+
       Heading(level: 2) { "Mount" }
       div(class: "rounded-md border bg-muted/30 p-4") do
         Codeblock(<<~RUBY, syntax: :ruby)
@@ -35,12 +56,6 @@ class Views::Docs::Toast < Views::Base
           # Pass flash to render Rails flash on initial load:
           render RubyUI::ToastRegion.new(flash: helpers.flash.to_h)
         RUBY
-      end
-
-      Heading(level: 2) { "Examples" }
-      Heading(level: 3) { "Types" }
-      div(class: "grid gap-4 sm:grid-cols-2", data: {controller: "toast-demo"}) do
-        EXAMPLES.each { |ex| example_box(ex) }
       end
 
       Heading(level: 3) { "Position" }
@@ -101,19 +116,7 @@ class Views::Docs::Toast < Views::Base
 
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
-      Heading(level: 2) { "About" }
-      p(class: "text-muted-foreground text-sm leading-relaxed") do
-        plain "Trigger toasts from the server with Turbo Streams or from JavaScript via "
-        code(class: "rounded bg-muted px-1.5 py-0.5 text-xs") { "window.RubyUI.toast.*" }
-        plain ". Heavily inspired by the original "
-        a(
-          href: "https://github.com/emilkowalski/sonner",
-          target: "_blank",
-          rel: "noopener",
-          class: "underline underline-offset-2 hover:text-foreground"
-        ) { "sonner" }
-        plain "."
-      end
+      render Docs::ComponentsTable.new(component_files(component))
 
       Heading(level: 2) { "API Reference" }
 
@@ -132,8 +135,6 @@ class Views::Docs::Toast < Views::Base
         plain " CustomEvent detail."
       end
       props_table(JS_OPTIONS)
-
-      render Docs::ComponentsTable.new(component_files(component))
     end
   end
 

@@ -9,6 +9,7 @@ const PRESETS = {
   with_action: { variant: "default", title: "Event has been created", action: { label: "Undo" } },
   text_only: { variant: "default", title: "Event has been created" },
   close_button: { variant: "default", title: "Event has been created", description: "Close it manually with the X.", closeButton: true },
+  close_action: { variant: "default", title: "Event has been created", description: "Friday at 3:00 PM", closeButton: true, action: { label: "Undo" } },
 }
 
 export default class extends Controller {
