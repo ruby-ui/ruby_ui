@@ -96,5 +96,8 @@ select:
     - "@floating-ui/dom"
 
 tooltip:
+  components:
+    - "Typography"
+
   js_packages:
     - "@floating-ui/dom"
