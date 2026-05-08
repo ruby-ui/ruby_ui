@@ -7,6 +7,7 @@ const PRESETS = {
   warning: { variant: "warning", title: "Event start time cannot be earlier than 8am" },
   error: { variant: "error", title: "Event has not been created" },
   with_action: { variant: "default", title: "Event has been created", action: { label: "Undo" } },
+  text_only: { variant: "default", title: "Event has been created" },
 }
 
 export default class extends Controller {

@@ -10,7 +10,8 @@ class Views::Docs::Toast < Views::Base
     {key: "warning", label: "Warning", title: "Event start time cannot be earlier than 8am"},
     {key: "error", label: "Error", title: "Event has not been created"},
     {key: "with_action", label: "With Action", title: "Event has been created", action_label: "Undo"},
-    {key: "promise", label: "Promise", title: nil}
+    {key: "promise", label: "Promise", title: nil},
+    {key: "text_only", label: "Text Only", title: "Event has been created"}
   ].freeze
 
   POSITIONS = %w[top-left top-center top-right bottom-left bottom-center bottom-right].freeze

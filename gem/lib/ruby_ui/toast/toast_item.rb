@@ -54,8 +54,8 @@ module RubyUI
 
     def item_classes
       <<~CLASSES.tr("\n", " ").squeeze(" ").strip
-        group/toast pointer-events-auto absolute bottom-0 left-0 right-0
-        origin-bottom flex w-[356px] max-w-full items-center gap-3
+        group/toast pointer-events-auto absolute left-0 right-0
+        flex w-[356px] max-w-full items-center gap-3
         overflow-hidden rounded-lg border bg-popover text-popover-foreground
         border-border p-4 pr-8 shadow-lg
         transition-[transform,opacity] duration-300 ease-out

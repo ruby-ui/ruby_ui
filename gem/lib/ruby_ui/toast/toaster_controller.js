@@ -202,6 +202,8 @@ export default class extends Controller {
       el.style.setProperty("--scale", String(scale))
       el.style.setProperty("--y-offset", `${ty}px`)
       el.style.transformOrigin = isBottom ? "center bottom" : "center top"
+      el.style.top = isBottom ? "auto" : "0"
+      el.style.bottom = isBottom ? "0" : "auto"
       el.style.transform = `translate3d(0, ${ty}px, 0) scale(${scale})`
       el.style.zIndex = String(1000 - i)
       el.style.pointerEvents = visible ? "auto" : "none"
