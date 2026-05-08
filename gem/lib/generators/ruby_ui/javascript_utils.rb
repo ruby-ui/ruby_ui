@@ -50,6 +50,7 @@ module RubyUI
         TEXT
 
         empty_directory rails_root.join("vendor/javascript")
+        # CDN serves "tw-animate.css"; we save as "tw-animate-css.css" to match package name. Do not "correct" the URL.
         get "https://cdn.jsdelivr.net/npm/tw-animate-css@#{TW_ANIMATE_CSS_VERSION}/dist/tw-animate.css",
           rails_root.join("vendor/javascript/tw-animate-css.css")
       end
