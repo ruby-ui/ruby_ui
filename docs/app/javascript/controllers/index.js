@@ -7,6 +7,9 @@ import { application } from "./application"
 import IframeThemeController from "./iframe_theme_controller"
 application.register("iframe-theme", IframeThemeController)
 
+import ToastDemoController from "./toast_demo_controller"
+application.register("toast-demo", ToastDemoController)
+
 import RubyUi__AccordionController from "./ruby_ui/accordion_controller"
 application.register("ruby-ui--accordion", RubyUi__AccordionController)
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Views::Docs::Toast < Views::Base
+  include Phlex::Rails::Helpers::ButtonTo
+
   def view_template
     component = "Toast"
 
@@ -20,61 +22,76 @@ class Views::Docs::Toast < Views::Base
       end
 
       Heading(level: 2) { "Variants" }
-
-      render Docs::VisualCodeExample.new(title: "Click any to spawn", context: self) do
-        div(class: "flex flex-wrap gap-2", data_controller: "toast-demo") do
-          variants_buttons
-        end
-        nil
+      p(class: "text-muted-foreground text-sm") { "Click any to push a toast from the server (Turbo Stream)." }
+      div(class: "flex flex-wrap gap-2 mt-2") do
+        button_to "Default", docs_toast_demo_default_path, data: {turbo_stream: true}, class: button_class
+        button_to "Success", docs_toast_demo_success_path, data: {turbo_stream: true}, class: button_class
+        button_to "Error", docs_toast_demo_error_path, data: {turbo_stream: true}, class: button_class
+        button_to "Warning", docs_toast_demo_warning_path, data: {turbo_stream: true}, class: button_class
+        button_to "Info", docs_toast_demo_info_path, data: {turbo_stream: true}, class: button_class
+        button_to "With action", docs_toast_demo_with_action_path, data: {turbo_stream: true}, class: button_class
       end
 
       Heading(level: 2) { "Server-pushed (Turbo Stream)" }
-
-      render Docs::VisualCodeExample.new(title: "Append from controller", context: self) do
-        button_to(
-          "Push from server",
-          docs_toast_demo_with_action_path,
-          class: "inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-2 text-sm font-medium hover:bg-accent",
-          data: {turbo_stream: true}
-        )
-        nil
+      div(class: "rounded-md border bg-muted/30 p-4") do
+        Codeblock(<<~RUBY, syntax: :ruby)
+          # In your controller, respond with a Turbo Stream that appends
+          # a Toast::Item to the global region (id="ruby-ui-toaster"):
+          render turbo_stream: turbo_stream.append("ruby-ui-toaster") {
+            render RubyUI::ToastItem.new(variant: :success) do
+              render RubyUI::ToastIcon.new(variant: :success)
+              render RubyUI::ToastTitle.new { "Saved" }
+              render RubyUI::ToastDescription.new { "Project updated." }
+              render RubyUI::ToastClose.new
+            end
+          }
+        RUBY
       end
 
       Heading(level: 2) { "JS API" }
+      div(class: "flex flex-wrap gap-2 mt-2", data: {controller: "toast-demo"}) do
+        %w[success error info warning].each do |variant|
+          button(
+            type: "button",
+            class: button_class,
+            data: {action: "click->toast-demo#fire", toast_demo_variant_param: variant}
+          ) { "toast.#{variant}" }
+        end
+        button(type: "button", class: button_class, data: {action: "click->toast-demo#promise"}) { "toast.promise" }
+        button(type: "button", class: button_class, data: {action: "click->toast-demo#dismissAll"}) { "dismiss all" }
+      end
 
-      render Docs::VisualCodeExample.new(title: "window.RubyUI.toast", context: self) do
-        <<~JS
+      div(class: "rounded-md border bg-muted/30 p-4 mt-4") do
+        Codeblock(<<~JS, syntax: :javascript)
           RubyUI.toast.success("Saved", { description: "Project updated." })
-          RubyUI.toast.error("Boom", { description: "Server returned 500." })
+          RubyUI.toast.error("Boom")
           RubyUI.toast.info("Heads up")
           RubyUI.toast.warning("Storage almost full")
           RubyUI.toast.loading("Working...")
-          RubyUI.toast.dismiss(id) // or no arg to dismiss all
-
-          RubyUI.toast.promise(
-            fetch("/things"),
-            { loading: "Saving...", success: "Saved", error: "Failed" }
-          )
+          RubyUI.toast.dismiss(id)  // no-arg dismisses all
+          RubyUI.toast.promise(p, { loading, success, error })
         JS
       end
 
       Heading(level: 2) { "Position" }
-
-      render Docs::VisualCodeExample.new(title: "All six positions", context: self) do
+      render Docs::VisualCodeExample.new(title: "Configurable on the Region", context: self) do
         <<~RUBY
-          render RubyUI::ToastRegion.new(position: :top_right, expand: true, max: 5)
+          render RubyUI::ToastRegion.new(
+            position: :top_right,
+            expand: true,
+            max: 5,
+            duration: 6000
+          )
         RUBY
       end
 
       Heading(level: 2) { "Rails flash bridge" }
-
       render Docs::VisualCodeExample.new(title: "Renders flash on initial load", context: self) do
         <<~RUBY
-          # In your controller
-          flash[:notice] = "Saved"
-
-          # In your layout, pass flash to the region
-          render RubyUI::ToastRegion.new(flash: flash.to_h)
+          # In your controller:
+          # flash[:notice] = "Saved"
+          # In your layout:
+          render RubyUI::ToastRegion.new(flash: helpers.flash.to_h)
         RUBY
       end
 
@@ -86,22 +103,7 @@ class Views::Docs::Toast < Views::Base
 
   private
 
-  def variants_buttons
-    [
-      {label: "Default", path: docs_toast_demo_default_path},
-      {label: "Success", path: docs_toast_demo_success_path},
-      {label: "Error", path: docs_toast_demo_error_path},
-      {label: "Warning", path: docs_toast_demo_warning_path},
-      {label: "Info", path: docs_toast_demo_info_path},
-      {label: "With action", path: docs_toast_demo_with_action_path}
-    ].each do |btn|
-      button_to(
-        btn[:label],
-        btn[:path],
-        class: "inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-2 text-sm font-medium hover:bg-accent",
-        data: {turbo_stream: true},
-        form: {class: "inline"}
-      )
-    end
+  def button_class
+    "inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-2 text-sm font-medium hover:bg-accent"
   end
 end
