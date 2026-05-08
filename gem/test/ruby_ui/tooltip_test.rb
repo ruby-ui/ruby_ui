@@ -17,4 +17,14 @@ class RubyUI::TooltipTest < ComponentTest
 
     assert_match(/Add to library/, output)
   end
+
+  def test_tooltip_content_wraps_long_text_within_viewport
+    output = phlex do
+      RubyUI.TooltipContent { "Long tooltip content" }
+    end
+
+    assert_match(/w-fit/, output)
+    assert_match(/max-w-\[calc\(100vw-2rem\)\]/, output)
+    assert_match(/break-words/, output)
+  end
 end
