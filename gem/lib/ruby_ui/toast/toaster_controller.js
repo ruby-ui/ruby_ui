@@ -82,7 +82,6 @@ export default class extends Controller {
     node.id = detail.id || `toast-${this._uuid()}`
     if (detail.duration != null) {
       const dur = detail.duration === Infinity ? 0 : detail.duration
-      node.dataset["rubyUi--ToastDurationValue"] = String(dur)
       node.setAttribute("data-ruby-ui--toast-duration-value", String(dur))
     }
     if (detail.dismissible === false) {
@@ -128,8 +127,8 @@ export default class extends Controller {
 
   _dismissById(id) {
     if (!id) {
-      Array.from(this._listEl.children).forEach((c) =>
-        c.dispatchEvent(new CustomEvent("ruby-ui:toast:force-dismiss", { bubbles: true }))
+      this._items.slice().forEach((el) =>
+        el.dispatchEvent(new CustomEvent("ruby-ui:toast:force-dismiss", { bubbles: true }))
       )
       return
     }
@@ -271,11 +270,22 @@ export default class extends Controller {
     const el = this._listEl.querySelector(`#${CSS.escape(id)}`)
     if (!el) return
     el.dataset.variant = variant
+    el.setAttribute("role", variant === "error" ? "alert" : "status")
+    this._swapIcon(el, variant)
     const t = el.querySelector('[data-slot="title"]')
     if (t && text) t.textContent = text
     const dur = String(this.durationValue)
     el.setAttribute("data-ruby-ui--toast-duration-value", dur)
     el.dispatchEvent(new CustomEvent("ruby-ui:toast:restart", { bubbles: true }))
+  }
+
+  _swapIcon(el, variant) {
+    const iconHost = el.querySelector('[data-slot="icon"]')
+    if (!iconHost) return
+    const tpl = this._skeletonFor(variant)
+    if (!tpl) return
+    const sourceIcon = tpl.content.firstElementChild?.querySelector('[data-slot="icon"]')
+    iconHost.innerHTML = sourceIcon ? sourceIcon.innerHTML : ""
   }
 
   _uuid() {

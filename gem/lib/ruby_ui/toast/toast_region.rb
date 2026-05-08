@@ -3,7 +3,6 @@
 module RubyUI
   class ToastRegion < Base
     SKELETON_VARIANTS = %i[default success error warning info loading].freeze
-    POSITIONS = %i[top_left top_center top_right bottom_left bottom_center bottom_right].freeze
 
     def initialize(
       position: :bottom_right,
