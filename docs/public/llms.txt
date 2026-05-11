@@ -64,6 +64,8 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Tabs](https://rubyui.com/docs/tabs): Layered tab panels displayed one at a time.
 - [Textarea](https://rubyui.com/docs/textarea): Styled multiline text input.
 - [Theme Toggle](https://rubyui.com/docs/theme_toggle): Toggle control for switching between light and dark themes.
+- [Toggle](https://rubyui.com/docs/toggle): Two-state button that can be either on or off.
+- [Toggle Group](https://rubyui.com/docs/toggle_group): Group of two-state toggle buttons.
 - [Tooltip](https://rubyui.com/docs/tooltip): Popup information shown on keyboard focus or hover.
 - [Typography](https://rubyui.com/docs/typography): Text primitives and sensible typography defaults.
 
