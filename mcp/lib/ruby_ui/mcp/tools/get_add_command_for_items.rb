@@ -15,7 +15,7 @@ module RubyUI
             components: known,
             unresolved: unresolved,
             command_string: known.empty? ? "" : "rails g #{GENERATOR} #{known.join(" ")}",
-            gem_version: @registry.version
+            gem_version: gem_version
           }
         end
       end

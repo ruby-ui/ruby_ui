@@ -13,7 +13,7 @@ module RubyUI
             comp = @registry.find(name)
             comp ? resolved << comp : unresolved << name
           end
-          {items: resolved, unresolved: unresolved, gem_version: @registry.version}
+          {items: resolved, unresolved: unresolved, gem_version: gem_version}
         end
       end
     end

@@ -7,7 +7,7 @@ module RubyUI
     module Tools
       class SearchItemsInRegistries < Base
         def call(query:, limit: 10, **)
-          {items: @registry.search(query, limit: limit), gem_version: @registry.version}
+          {items: @registry.search(query, limit: limit), gem_version: gem_version}
         end
       end
     end

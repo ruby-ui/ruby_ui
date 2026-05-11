@@ -11,7 +11,7 @@ module RubyUI
             c = @registry.find(n)
             c ? {name: c[:name], examples: c[:examples] || []} : nil
           end.compact
-          {items: resolved, gem_version: @registry.version}
+          {items: resolved, gem_version: gem_version}
         end
       end
     end

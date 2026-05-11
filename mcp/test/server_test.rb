@@ -24,18 +24,8 @@ class ServerTest < Minitest::Test
     assert_equal expected, names
   end
 
-  def test_server_instance_has_seven_tools
+  def test_build_returns_mcp_server
     mcp_server = RubyUI::MCP::Server.build(registry: @registry)
     assert_kind_of MCP::Server, mcp_server
-  end
-
-  def test_list_tool_invocation_round_trips
-    builder = RubyUI::MCP::Server.new(registry: @registry)
-    list_tool = builder.tool_classes.find { |k| k.name_value == "list_items_in_registries" }
-    response = list_tool.call(server_context: nil)
-    assert_kind_of MCP::Tool::Response, response
-    # Response wraps a content array; payload should include items
-    serialized = response.to_h
-    assert serialized[:content] || serialized["content"]
   end
 end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
 require "mcp"
 require "ruby_ui/mcp/registry"
 require "ruby_ui/mcp/tools/get_project_registries"
@@ -109,15 +108,7 @@ module RubyUI
           description: definition[:description],
           input_schema: definition[:input_schema]
         ) do |server_context: nil, **args|
-          payload = impl.call(**args)
-          ::MCP::Tool::Response.new([
-            {type: "text", text: JSON.pretty_generate(payload)}
-          ])
-        rescue => e
-          ::MCP::Tool::Response.new(
-            [{type: "text", text: "error: #{e.class}: #{e.message}"}],
-            error: true
-          )
+          impl.respond { impl.call(**args) }
         end
       end
     end

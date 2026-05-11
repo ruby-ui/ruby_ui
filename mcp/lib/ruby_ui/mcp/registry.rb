@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "json"
-require "set"
 
 module RubyUI
   module MCP
@@ -22,20 +21,15 @@ module RubyUI
         new(raw)
       end
 
-      attr_reader :version, :generated_at
+      attr_reader :version
 
       def initialize(raw)
         @version = raw[:version]
-        @generated_at = raw[:generated_at]
         @components = raw[:components] || {}
       end
 
       def list
         @components.values.map { |c| {name: c[:name], description: c[:description]} }
-      end
-
-      def all
-        @components.values
       end
 
       def find(name)

@@ -1,6 +1,5 @@
 {
   "version": "1.2.0",
-  "generated_at": "2026-05-09T00:00:00Z",
   "components": {
     "button": {
       "name": "Button",

@@ -7,7 +7,7 @@ module RubyUI
     module Tools
       class ListItemsInRegistries < Base
         def call(**)
-          {items: @registry.list, gem_version: @registry.version}
+          {items: @registry.list, gem_version: gem_version}
         end
       end
     end

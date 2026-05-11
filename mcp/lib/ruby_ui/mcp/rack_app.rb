@@ -6,18 +6,8 @@ require "mcp/server/transports/streamable_http_transport"
 module RubyUI
   module MCP
     class RackApp
-      class << self
-        def call(env)
-          instance.call(env)
-        end
-
-        def instance
-          @instance ||= new
-        end
-
-        def reset!
-          @instance = nil
-        end
+      def self.call(env)
+        (@instance ||= new).call(env)
       end
 
       def initialize(registry: RubyUI::MCP.registry)
