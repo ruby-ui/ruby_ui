@@ -223,9 +223,11 @@ class DocsController < ApplicationController
   end
 
   def toggle
+    render Views::Docs::Toggle.new
   end
 
   def toggle_group
+    render Views::Docs::ToggleGroup.new
   end
 
   def tooltip
