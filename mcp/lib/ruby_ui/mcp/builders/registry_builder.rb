@@ -19,7 +19,6 @@ module RubyUI
         def build
           {
             version: read_version,
-            generated_at: (ENV["SOURCE_DATE_EPOCH"] ? Time.at(ENV["SOURCE_DATE_EPOCH"].to_i).utc : Time.now.utc).iso8601,
             components: components_hash
           }
         end
