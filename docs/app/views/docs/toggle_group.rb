@@ -32,6 +32,16 @@ class Views::Docs::ToggleGroup < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Multiple", context: self) do
+        <<~RUBY
+          ToggleGroup(type: :multiple, name: "fmt_m", variant: :outline, value: %w[bold italic]) do |g|
+            g.ToggleGroupItem(value: "bold") { "B" }
+            g.ToggleGroupItem(value: "italic") { "I" }
+            g.ToggleGroupItem(value: "underline") { "U" }
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Single", context: self) do
         <<~RUBY
           ToggleGroup(type: :single, name: "view", value: "all", variant: :outline) do |g|
