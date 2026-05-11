@@ -32,13 +32,18 @@ module RubyUI
         private
 
         def read_version
-          path = File.join(@gem_path, "lib/ruby_ui/version.rb")
-          src = File.read(path)
-          if (m = src.match(/VERSION\s*=\s*["']([^"']+)["']/))
-            m[1]
-          else
-            "unknown"
+          candidates = [
+            File.join(@gem_path, "lib/ruby_ui/version.rb"),
+            File.join(@gem_path, "lib/ruby_ui.rb")
+          ]
+          candidates.each do |path|
+            next unless File.exist?(path)
+            src = File.read(path)
+            if (m = src.match(/VERSION\s*=\s*["']([^"']+)["']/))
+              return m[1]
+            end
           end
+          "unknown"
         rescue
           "unknown"
         end

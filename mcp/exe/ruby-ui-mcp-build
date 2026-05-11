@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+require "fileutils"
+require "ruby_ui/mcp/builders/registry_builder"
+
+gem_path = ENV["RUBY_UI_GEM_PATH"] || File.expand_path("../../gem", __dir__)
+out = File.expand_path("../data/registry.json", __dir__)
+FileUtils.mkdir_p(File.dirname(out))
+RubyUI::MCP::Builders::RegistryBuilder.new(gem_path: gem_path).write(out)
+puts "Wrote #{out}"

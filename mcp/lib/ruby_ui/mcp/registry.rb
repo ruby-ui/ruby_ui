@@ -53,7 +53,7 @@ module RubyUI
         scored.select { |_, s| s > 0 }
           .sort_by { |_, s| -s }
           .first(limit)
-          .map { |c, _s| {name: c[:name], description: c[:description]} }
+          .map { |c, s| {name: c[:name], description: c[:description], score: s} }
       end
 
       def partition_names(names)
