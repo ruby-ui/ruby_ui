@@ -48,8 +48,9 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     npm install -g pnpm@$PNPM_VERSION && \
     rm -rf /tmp/node-build-master
 
-# Copy the gem first so docs/Gemfile's `path: "../gem"` resolves during bundle install.
+# Copy the gem and mcp sources first so docs/Gemfile's path: "../gem" / "../mcp" resolve during bundle install.
 COPY gem /gem
+COPY mcp /mcp
 
 # Install application gems (cwd = /rails)
 COPY docs/Gemfile docs/Gemfile.lock ./
@@ -78,6 +79,7 @@ FROM base
 # Copy built artifacts: gems, application, and the gem subtree
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /gem /gem
+COPY --from=build /mcp /mcp
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
