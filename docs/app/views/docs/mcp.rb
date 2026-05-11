@@ -146,7 +146,8 @@ class Views::Docs::Mcp < Views::Base
       ["view_items_in_registries", "Returns full source files and dependencies."],
       ["get_item_examples_from_registries", "Returns code examples per component."],
       ["get_add_command_for_items", "Returns a validated rails g ruby_ui:component … command."],
-      ["get_audit_checklist", "Returns a post-install verification checklist."]
+      ["get_audit_checklist", "Returns a post-install verification checklist."],
+      ["get_install_command_for_project", "Returns commands to bootstrap ruby_ui in a fresh Rails project."]
     ]
   end
 end

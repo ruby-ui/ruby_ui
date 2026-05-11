@@ -8,12 +8,13 @@ class ServerTest < Minitest::Test
     @registry = RubyUI::MCP::Registry.load(TestSupport::FIXTURE_PATH)
   end
 
-  def test_builds_with_seven_tools
+  def test_builds_with_eight_tools
     builder = RubyUI::MCP::Server.new(registry: @registry)
     names = builder.tool_classes.map(&:name_value).sort
     expected = %w[
       get_add_command_for_items
       get_audit_checklist
+      get_install_command_for_project
       get_item_examples_from_registries
       get_project_registries
       list_items_in_registries

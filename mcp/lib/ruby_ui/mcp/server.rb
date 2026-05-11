@@ -10,6 +10,7 @@ require "ruby_ui/mcp/tools/view_items_in_registries"
 require "ruby_ui/mcp/tools/get_item_examples_from_registries"
 require "ruby_ui/mcp/tools/get_add_command_for_items"
 require "ruby_ui/mcp/tools/get_audit_checklist"
+require "ruby_ui/mcp/tools/get_install_command_for_project"
 
 module RubyUI
   module MCP
@@ -70,6 +71,12 @@ module RubyUI
           name: "get_audit_checklist",
           klass: Tools::GetAuditChecklist,
           description: "Return a post-install verification checklist.",
+          input_schema: {properties: {}}
+        },
+        {
+          name: "get_install_command_for_project",
+          klass: Tools::GetInstallCommandForProject,
+          description: "Return the commands to bootstrap ruby_ui in a fresh Rails project (gem install + ruby_ui:install generator).",
           input_schema: {properties: {}}
         }
       ].freeze
