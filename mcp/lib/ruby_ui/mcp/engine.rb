@@ -6,9 +6,8 @@ module RubyUI
     class Engine < ::Rails::Engine
       isolate_namespace RubyUI::MCP
 
-      initializer "ruby_ui.mcp.load_registry" do
-        require "ruby_ui/mcp/registry" # TODO: Task 2 — Registry implementation
-        RubyUI::MCP.registry # eager load, fail fast on bad registry
+      initializer "ruby_ui.mcp.eager_load_rack_app", after: :load_config_initializers do
+        require "ruby_ui/mcp/rack_app"
       end
     end
   end
