@@ -33,6 +33,6 @@ export default class extends Controller {
     const dark = theme === "dark"
     this.element.setAttribute("aria-pressed", dark ? "true" : "false")
     this.element.dataset.state = dark ? "on" : "off"
-    this.element.dataset["rubyUi--TogglePressedValue"] = dark ? "true" : "false"
+    this.element.setAttribute("data-ruby-ui--toggle-pressed-value", dark ? "true" : "false")
   }
 }

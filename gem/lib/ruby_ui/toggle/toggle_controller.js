@@ -14,7 +14,7 @@ export default class extends Controller {
     this.pressedValue = !this.pressedValue
   }
 
-  pressedValueChanged(current) {
+  pressedValueChanged(current, previous) {
     this.element.setAttribute("aria-pressed", current ? "true" : "false")
     this.element.dataset.state = current ? "on" : "off"
 
@@ -22,6 +22,8 @@ export default class extends Controller {
       this.inputTarget.value = current ? this.valueValue : this.unpressedValueValue
     }
 
-    this.dispatch("change", { detail: { pressed: current }, bubbles: true })
+    if (previous !== undefined) {
+      this.dispatch("change", { detail: { pressed: current }, bubbles: true })
+    }
   }
 }
