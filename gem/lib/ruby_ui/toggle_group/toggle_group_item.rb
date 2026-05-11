@@ -67,6 +67,23 @@ module RubyUI
         if type == :single && h[:aria].is_a?(Hash)
           h[:aria].delete(:pressed)
         end
+
+        # Append item-level classes for shadcn joined/spaced look
+        extra = ["w-auto min-w-0 shrink-0 px-3 focus:z-10 focus-visible:z-10"]
+        spacing = @group_context[:spacing]
+        orientation = @group_context[:orientation]
+        variant = @group_context[:variant]
+        if spacing == 0
+          extra << "rounded-none shadow-none"
+          if orientation == :vertical
+            extra << "first:rounded-t-md last:rounded-b-md"
+            extra << "border-t-0 first:border-t" if variant == :outline
+          else
+            extra << "first:rounded-l-md last:rounded-r-md"
+            extra << "border-l-0 first:border-l" if variant == :outline
+          end
+        end
+        h[:class] = [h[:class], *extra].flatten.compact
       end
     end
   end

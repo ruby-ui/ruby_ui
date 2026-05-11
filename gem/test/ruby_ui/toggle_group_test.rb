@@ -93,4 +93,59 @@ class RubyUI::ToggleGroupTest < ComponentTest
     # group controller present on wrapper, but item buttons should not be tagged with single-toggle controller
     refute_match(/<button[^>]*data-controller="[^"]*ruby-ui--toggle"/, output)
   end
+
+  def test_joined_items_have_first_last_rounded
+    output = phlex do
+      RubyUI.ToggleGroup(type: :single, name: "x") do |g|
+        g.ToggleGroupItem(value: "a") { "A" }
+        g.ToggleGroupItem(value: "b") { "B" }
+      end
+    end
+    assert_match(/rounded-none/, output)
+    assert_match(/first:rounded-l-md/, output)
+    assert_match(/last:rounded-r-md/, output)
+  end
+
+  def test_spacing_adds_gap_class
+    output = phlex do
+      RubyUI.ToggleGroup(type: :single, name: "x", spacing: 2) do |g|
+        g.ToggleGroupItem(value: "a") { "A" }
+        g.ToggleGroupItem(value: "b") { "B" }
+      end
+    end
+    assert_match(/gap-2/, output)
+    refute_match(/rounded-none/, output)
+  end
+
+  def test_vertical_orientation
+    output = phlex do
+      RubyUI.ToggleGroup(type: :single, name: "x", orientation: :vertical) do |g|
+        g.ToggleGroupItem(value: "a") { "A" }
+        g.ToggleGroupItem(value: "b") { "B" }
+      end
+    end
+    assert_match(/flex-col/, output)
+    assert_match(/first:rounded-t-md/, output)
+  end
+
+  def test_outline_joined_adds_shadow_xs
+    output = phlex do
+      RubyUI.ToggleGroup(type: :single, name: "x", variant: :outline) do |g|
+        g.ToggleGroupItem(value: "a") { "A" }
+      end
+    end
+    assert_match(/shadow-xs/, output)
+    assert_match(/border-l-0/, output)
+    assert_match(/first:border-l/, output)
+  end
+
+  def test_invalid_orientation_raises
+    assert_raises(ArgumentError) do
+      phlex do
+        RubyUI.ToggleGroup(type: :single, name: "x", orientation: :diagonal) do |g|
+          g.ToggleGroupItem(value: "a") { "A" }
+        end
+      end
+    end
+  end
 end
