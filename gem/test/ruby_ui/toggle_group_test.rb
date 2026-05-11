@@ -102,8 +102,8 @@ class RubyUI::ToggleGroupTest < ComponentTest
       end
     end
     assert_match(/rounded-none/, output)
-    assert_match(/first:rounded-l-md/, output)
-    assert_match(/last:rounded-r-md/, output)
+    assert_match(/first-of-type:rounded-l-md/, output)
+    assert_match(/last-of-type:rounded-r-md/, output)
   end
 
   def test_spacing_adds_gap_class
@@ -125,7 +125,7 @@ class RubyUI::ToggleGroupTest < ComponentTest
       end
     end
     assert_match(/flex-col/, output)
-    assert_match(/first:rounded-t-md/, output)
+    assert_match(/first-of-type:rounded-t-md/, output)
   end
 
   def test_outline_joined_adds_shadow_xs
@@ -136,7 +136,7 @@ class RubyUI::ToggleGroupTest < ComponentTest
     end
     assert_match(/shadow-xs/, output)
     assert_match(/border-l-0/, output)
-    assert_match(/first:border-l/, output)
+    assert_match(/first-of-type:border-l/, output)
   end
 
   def test_invalid_orientation_raises

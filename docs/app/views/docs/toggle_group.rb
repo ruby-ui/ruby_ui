@@ -7,24 +7,24 @@ class Views::Docs::ToggleGroup < Views::Base
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(
         title: "Toggle Group",
-        description: "A set of two-state buttons that can be toggled on or off, with single or multiple selection."
+        description: "A set of two-state buttons that can be toggled on or off, with single or multiple selection. Mirrors shadcn/ui ToggleGroup."
       )
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Single selection", context: self) do
+      render Docs::VisualCodeExample.new(title: "Default", context: self) do
         <<~RUBY
-          ToggleGroup(type: :single, name: "align", value: "left") do |g|
-            g.ToggleGroupItem(value: "left") { "Left" }
-            g.ToggleGroupItem(value: "center") { "Center" }
-            g.ToggleGroupItem(value: "right") { "Right" }
+          ToggleGroup(type: :single, name: "letter", value: "a") do |g|
+            g.ToggleGroupItem(value: "a") { "A" }
+            g.ToggleGroupItem(value: "b") { "B" }
+            g.ToggleGroupItem(value: "c") { "C" }
           end
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Multiple selection", context: self) do
+      render Docs::VisualCodeExample.new(title: "Outline", context: self) do
         <<~RUBY
-          ToggleGroup(type: :multiple, name: "fmt", value: %w[bold]) do |g|
+          ToggleGroup(type: :multiple, name: "fmt", variant: :outline, value: %w[bold]) do |g|
             g.ToggleGroupItem(value: "bold") { "B" }
             g.ToggleGroupItem(value: "italic") { "I" }
             g.ToggleGroupItem(value: "underline") { "U" }
@@ -32,9 +32,40 @@ class Views::Docs::ToggleGroup < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Single", context: self) do
+        <<~RUBY
+          ToggleGroup(type: :single, name: "view", value: "all", variant: :outline) do |g|
+            g.ToggleGroupItem(value: "all") { "All" }
+            g.ToggleGroupItem(value: "missed") { "Missed" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Size", context: self) do
+        <<~RUBY
+          div(class: "flex flex-col gap-4") do
+            ToggleGroup(type: :multiple, name: "fmt_sm", variant: :outline, size: :sm) do |g|
+              g.ToggleGroupItem(value: "bold") { "B" }
+              g.ToggleGroupItem(value: "italic") { "I" }
+              g.ToggleGroupItem(value: "underline") { "U" }
+            end
+            ToggleGroup(type: :multiple, name: "fmt_default", variant: :outline) do |g|
+              g.ToggleGroupItem(value: "bold") { "B" }
+              g.ToggleGroupItem(value: "italic") { "I" }
+              g.ToggleGroupItem(value: "underline") { "U" }
+            end
+            ToggleGroup(type: :multiple, name: "fmt_lg", variant: :outline, size: :lg) do |g|
+              g.ToggleGroupItem(value: "bold") { "B" }
+              g.ToggleGroupItem(value: "italic") { "I" }
+              g.ToggleGroupItem(value: "underline") { "U" }
+            end
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Spacing", context: self) do
         <<~RUBY
-          ToggleGroup(type: :single, name: "align", value: "left", variant: :outline, spacing: 2) do |g|
+          ToggleGroup(type: :single, name: "align", value: "top", variant: :outline, spacing: 2) do |g|
             g.ToggleGroupItem(value: "top") { "Top" }
             g.ToggleGroupItem(value: "bottom") { "Bottom" }
             g.ToggleGroupItem(value: "left") { "Left" }
@@ -45,7 +76,17 @@ class Views::Docs::ToggleGroup < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Vertical", context: self) do
         <<~RUBY
-          ToggleGroup(type: :multiple, name: "fmt", orientation: :vertical, value: %w[bold]) do |g|
+          ToggleGroup(type: :multiple, name: "fmt_v", variant: :outline, orientation: :vertical, value: %w[bold]) do |g|
+            g.ToggleGroupItem(value: "bold") { "B" }
+            g.ToggleGroupItem(value: "italic") { "I" }
+            g.ToggleGroupItem(value: "underline") { "U" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
+        <<~RUBY
+          ToggleGroup(type: :multiple, name: "fmt_d", variant: :outline, disabled: true) do |g|
             g.ToggleGroupItem(value: "bold") { "B" }
             g.ToggleGroupItem(value: "italic") { "I" }
             g.ToggleGroupItem(value: "underline") { "U" }
@@ -72,34 +113,6 @@ class Views::Docs::ToggleGroup < Views::Base
               span(class: "text-base font-bold") { "Aa" }
               span(class: "text-xs text-muted-foreground") { "Bold" }
             end
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Outline variant", context: self) do
-        <<~RUBY
-          ToggleGroup(type: :single, name: "align", variant: :outline) do |g|
-            g.ToggleGroupItem(value: "left") { "Left" }
-            g.ToggleGroupItem(value: "center") { "Center" }
-            g.ToggleGroupItem(value: "right") { "Right" }
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Sizes", context: self) do
-        <<~RUBY
-          ToggleGroup(type: :single, name: "size", size: :sm) do |g|
-            g.ToggleGroupItem(value: "a") { "A" }
-            g.ToggleGroupItem(value: "b") { "B" }
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
-        <<~RUBY
-          ToggleGroup(type: :multiple, name: "fmt", disabled: true) do |g|
-            g.ToggleGroupItem(value: "bold") { "B" }
-            g.ToggleGroupItem(value: "italic") { "I" }
           end
         RUBY
       end

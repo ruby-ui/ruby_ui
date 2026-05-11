@@ -76,11 +76,11 @@ module RubyUI
         if spacing == 0
           extra << "rounded-none shadow-none"
           if orientation == :vertical
-            extra << "first:rounded-t-md last:rounded-b-md"
-            extra << "border-t-0 first:border-t" if variant == :outline
+            extra << "first-of-type:rounded-t-md last-of-type:rounded-b-md"
+            extra << "border-t-0 first-of-type:border-t" if variant == :outline
           else
-            extra << "first:rounded-l-md last:rounded-r-md"
-            extra << "border-l-0 first:border-l" if variant == :outline
+            extra << "first-of-type:rounded-l-md last-of-type:rounded-r-md"
+            extra << "border-l-0 first-of-type:border-l" if variant == :outline
           end
         end
         h[:class] = [h[:class], *extra].flatten.compact
