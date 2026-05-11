@@ -62,6 +62,49 @@ jobs:
       - name: Run tests
         run: bin/rails db:test:prepare test
 
+  mcp:
+    name: MCP (Ruby ${{ matrix.ruby }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.3", "3.4"]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+          rubygems: latest
+          working-directory: mcp
+      - name: Run tests
+        run: bundle exec rake test
+
+  mcp-registry-check:
+    name: MCP registry up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: mcp
+      - name: Rebuild registry
+        working-directory: mcp
+        run: bundle exec exe/ruby-ui-mcp-build
+      - name: Fail on diff
+        run: |
+          if ! git diff --exit-code mcp/data/registry.json; then
+            echo "registry.json out of date — run 'cd mcp && bundle exec exe/ruby-ui-mcp-build' and commit"
+            exit 1
+          fi
+
   docker-build:
     name: Docker build (Devcontainer)
     if: github.ref == 'refs/heads/main'
