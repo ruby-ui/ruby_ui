@@ -101,3 +101,13 @@ tooltip:
 
   js_packages:
     - "@floating-ui/dom"
+
+toggle: {}
+
+toggle_group:
+  components:
+    - "Toggle"
+
+theme_toggle:
+  components:
+    - "Toggle"
