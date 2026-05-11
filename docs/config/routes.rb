@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   scope "docs" do
     # GETTING STARTED
+    get "mcp", to: "docs#mcp", as: :docs_mcp
     get "introduction", to: "docs#introduction", as: :docs_introduction
     get "installation", to: "docs#installation", as: :docs_installation
     get "theming", to: "docs#theming", as: :docs_theming

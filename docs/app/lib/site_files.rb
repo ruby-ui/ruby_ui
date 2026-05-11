@@ -68,6 +68,13 @@ class SiteFiles
       description: "Recent RubyUI component and documentation changes.",
       priority: 0.6,
       changefreq: "weekly"
+    },
+    {
+      title: "MCP Server",
+      path: "/docs/mcp",
+      description: "Connect AI agents to Ruby UI components, source, examples, and install commands via the Model Context Protocol.",
+      priority: 0.8,
+      changefreq: "monthly"
     }
   ].freeze
 
