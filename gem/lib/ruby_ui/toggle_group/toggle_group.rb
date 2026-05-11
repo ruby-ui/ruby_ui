@@ -2,6 +2,10 @@
 
 module RubyUI
   class ToggleGroup < Base
+    SPACING_GAP = {0 => nil, 1 => "gap-1", 2 => "gap-2", 3 => "gap-3", 4 => "gap-4"}.freeze
+    VALID_TYPES = [:single, :multiple].freeze
+    VALID_ORIENTATIONS = [:horizontal, :vertical].freeze
+
     def initialize(
       type: :single,
       name: nil,
@@ -14,29 +18,29 @@ module RubyUI
       **attrs
     )
       @type = type.to_sym
-      raise ArgumentError, "type must be :single or :multiple" unless [:single, :multiple].include?(@type)
+      raise ArgumentError, "type must be :single or :multiple" unless VALID_TYPES.include?(@type)
+
+      @orientation = orientation.to_sym
+      raise ArgumentError, "orientation must be :horizontal or :vertical" unless VALID_ORIENTATIONS.include?(@orientation)
+
+      raise ArgumentError, "spacing must be an Integer 0..4" unless spacing.is_a?(Integer) && (0..4).cover?(spacing)
+
       @name = name
       @value = value
       @variant = variant.to_sym
       @size = size.to_sym
       @disabled = disabled
       @spacing = spacing
-      raise ArgumentError, "spacing must be an Integer 0..4" unless @spacing.is_a?(Integer) && (0..4).cover?(@spacing)
-      @orientation = orientation.to_sym
-      raise ArgumentError, "orientation must be :horizontal or :vertical" unless [:horizontal, :vertical].include?(@orientation)
       super(**attrs)
     end
 
     def view_template(&block)
-      @first_item_emitted = false
       div(**attrs) do
-        yield_content(&block)
+        yield(self)
         render_hidden_inputs
       end
     end
 
-    # Called by ToggleGroupItem during rendering — items use this to fetch
-    # group context (avoids global state / view-context hackery).
     def item_context
       {
         type: @type,
@@ -44,28 +48,21 @@ module RubyUI
         size: @size,
         disabled: @disabled,
         selected_values: selected_values,
-        roving_first: !@first_item_emitted,
         spacing: @spacing,
         orientation: @orientation
       }
     end
 
-    def mark_first_item_emitted!
-      @first_item_emitted = true
+    def ToggleGroupItem(**kwargs, &block)
+      render RubyUI::ToggleGroupItem.new(group_context: item_context, **kwargs), &block
     end
 
     private
 
-    def yield_content(&block)
-      yield(self)
-    end
-
     def selected_values
       case @type
-      when :single
-        @value.nil? ? [] : [@value.to_s]
-      when :multiple
-        Array(@value).map(&:to_s)
+      when :single then @value.nil? ? [] : [@value.to_s]
+      when :multiple then Array(@value).map(&:to_s)
       end
     end
 
@@ -92,24 +89,6 @@ module RubyUI
     end
 
     def default_attrs
-      base_class = if @orientation == :vertical
-        "flex w-fit flex-col items-stretch rounded-md"
-      else
-        "flex w-fit items-center rounded-md"
-      end
-
-      gap_class = case @spacing
-      when 0 then nil
-      when 1 then "gap-1"
-      when 2 then "gap-2"
-      when 3 then "gap-3"
-      when 4 then "gap-4"
-      end
-
-      shadow_class = (@spacing == 0 && @variant == :outline) ? "shadow-xs" : nil
-
-      classes = [base_class, gap_class, shadow_class].compact.join(" ")
-
       {
         role: (@type == :single) ? "radiogroup" : "group",
         data: {
@@ -119,17 +98,22 @@ module RubyUI
           orientation: @orientation.to_s,
           spacing: @spacing.to_s
         },
-        class: classes
+        class: container_classes
       }
     end
 
-    public
+    def container_classes
+      base = if @orientation == :vertical
+        "flex w-fit flex-col items-stretch rounded-md"
+      else
+        "flex w-fit items-center rounded-md"
+      end
 
-    # Phlex Kit invocation pattern: items call this via the block argument
-    def ToggleGroupItem(**kwargs, &block)
-      ctx = item_context
-      mark_first_item_emitted!
-      render RubyUI::ToggleGroupItem.new(group_context: ctx, **kwargs), &block
+      [
+        base,
+        SPACING_GAP[@spacing],
+        (@spacing == 0 && @variant == :outline) ? "shadow-xs" : nil
+      ].compact
     end
   end
 end

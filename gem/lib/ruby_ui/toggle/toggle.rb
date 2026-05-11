@@ -13,6 +13,21 @@ module RubyUI
       "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
     ].freeze
 
+    VARIANT_CLASSES = {
+      default: "bg-transparent",
+      outline: "border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground"
+    }.freeze
+
+    SIZE_CLASSES = {
+      sm: "h-8 min-w-8 px-1.5",
+      default: "h-9 min-w-9 px-2",
+      lg: "h-10 min-w-10 px-2.5"
+    }.freeze
+
+    def self.classes_for(variant:, size:)
+      [BASE_CLASSES, VARIANT_CLASSES.fetch(variant, VARIANT_CLASSES[:default]), SIZE_CLASSES.fetch(size, SIZE_CLASSES[:default])]
+    end
+
     def initialize(
       pressed: false,
       name: nil,
@@ -34,15 +49,11 @@ module RubyUI
     end
 
     def view_template(&block)
-      render_button(&block)
+      button(**attrs, &block)
       render_hidden_input if @name
     end
 
     private
-
-    def render_button(&block)
-      button(**attrs, &block)
-    end
 
     def render_hidden_input
       input(
@@ -54,9 +65,7 @@ module RubyUI
     end
 
     def default_attrs
-      base = {
-        type: "button"
-      }
+      base = {type: "button"}
       base[:disabled] = true if @disabled
       base.merge(
         aria: {pressed: @pressed.to_s},
@@ -68,29 +77,8 @@ module RubyUI
           "ruby-ui--toggle-value-value": @value.to_s,
           "ruby-ui--toggle-unpressed-value-value": @unpressed_value.to_s
         },
-        class: classes
+        class: self.class.classes_for(variant: @variant, size: @size)
       )
-    end
-
-    def classes
-      [BASE_CLASSES, variant_classes, size_classes]
-    end
-
-    def variant_classes
-      case @variant
-      when :outline
-        "border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground"
-      else
-        "bg-transparent"
-      end
-    end
-
-    def size_classes
-      case @size
-      when :sm then "h-8 min-w-8 px-1.5"
-      when :lg then "h-10 min-w-10 px-2.5"
-      else "h-9 min-w-9 px-2"
-      end
     end
   end
 end

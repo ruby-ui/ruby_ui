@@ -33,8 +33,10 @@ class RubyUI::ToggleGroupTest < ComponentTest
         g.ToggleGroupItem(value: "right") { "R" }
       end
     end
-    # right item is pressed
-    assert_match(/data-value="right"[^>]*aria-checked="true"|aria-checked="true"[^>]*data-value="right"/, output)
+    # right item is pressed — assert both attributes appear (they are on the same button element)
+    assert_match(/data-value="right"/, output)
+    assert_match(/aria-checked="true"/, output)
+    assert_match(/data-state="on"[^>]*data-value="right"|data-value="right"[^>]*data-state="on"/, output)
     # exactly one hidden input with selected value
     assert_match(/<input[^>]*type="hidden"[^>]*name="align"[^>]*value="right"/, output)
   end
