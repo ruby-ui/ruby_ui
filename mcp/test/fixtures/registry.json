@@ -1,0 +1,24 @@
+{
+  "version": "1.2.0",
+  "generated_at": "2026-05-09T00:00:00Z",
+  "components": {
+    "button": {
+      "name": "Button",
+      "description": "Trigger actions or events.",
+      "files": [{"path": "button.rb", "content": "class Button; end\n"}],
+      "dependencies": {"components": [], "js_packages": [], "gems": []},
+      "install_command": "rails g ruby_ui:component Button",
+      "docs_markdown": "# Button\n",
+      "examples": [{"title": "Basic", "code": "RubyUI.Button { 'x' }"}]
+    },
+    "dialog": {
+      "name": "Dialog",
+      "description": "Modal dialog.",
+      "files": [{"path": "dialog.rb", "content": "class Dialog; end\n"}],
+      "dependencies": {"components": ["Button"], "js_packages": [], "gems": []},
+      "install_command": "rails g ruby_ui:component Dialog",
+      "docs_markdown": "# Dialog\n",
+      "examples": []
+    }
+  }
+}
