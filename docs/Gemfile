@@ -81,3 +81,5 @@ gem "tailwind_merge", "~> 1.4.0"
 gem "rss", "0.3.2"
 
 gem "rouge", "~> 4.7"
+
+gem "ruby_ui-mcp", path: "../mcp"

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount RubyUI::MCP::Engine => "/mcp"
+
   get "llms.txt", to: "site_files#llms", as: :llms_txt, format: false
   get "llms-full.txt", to: "site_files#llms_full", as: :llms_full_txt, format: false
   get "sitemap.xml", to: "site_files#sitemap", as: :sitemap_xml, format: false
