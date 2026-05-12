@@ -10,9 +10,16 @@ module RubyUI
 
     def default_attrs
       {
-        data: {ruby_ui__tooltip_target: "trigger"},
-        variant: :outline,
-        class: "peer"
+        data: {
+          ruby_ui__tooltip_target: "trigger",
+          action: [
+            "mouseenter->ruby-ui--tooltip#show",
+            "mouseleave->ruby-ui--tooltip#hide",
+            "focus->ruby-ui--tooltip#show",
+            "blur->ruby-ui--tooltip#hide"
+          ]
+        },
+        variant: :outline
       }
     end
   end
