@@ -50,6 +50,7 @@ module Components
           {name: "Tabs", path: docs_tabs_path},
           {name: "Textarea", path: docs_textarea_path},
           {name: "Theme Toggle", path: docs_theme_toggle_path},
+          {name: "Toast", path: docs_toast_path},
           {name: "Toggle", path: docs_toggle_path},
           {name: "Toggle Group", path: docs_toggle_group_path},
           {name: "Tooltip", path: docs_tooltip_path},

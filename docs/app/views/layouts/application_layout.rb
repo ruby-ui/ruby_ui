@@ -17,6 +17,7 @@ module Views
             main(&block)
             render Shared::Footer.new
             render Shared::Flashes.new(notice: flash[:notice], alert: flash[:alert])
+            render RubyUI::ToastRegion.new
           end
         end
       end

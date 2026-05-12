@@ -222,6 +222,10 @@ class DocsController < ApplicationController
     render Views::Docs::ThemeToggle.new
   end
 
+  def toast
+    render Views::Docs::Toast.new
+  end
+
   def toggle
     render Views::Docs::Toggle.new
   end

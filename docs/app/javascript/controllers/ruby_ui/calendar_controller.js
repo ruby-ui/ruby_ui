@@ -6,6 +6,7 @@ export default class extends Controller {
     "calendar",
     "title",
     "weekdaysTemplate",
+    "disabledDateTemplate",
     "selectedDateTemplate",
     "todayDateTemplate",
     "currentMonthDateTemplate",
@@ -13,6 +14,10 @@ export default class extends Controller {
   ];
   static values = {
     selectedDate: {
+      type: String,
+      default: null,
+    },
+    minDate: {
       type: String,
       default: null,
     },
@@ -43,13 +48,21 @@ export default class extends Controller {
 
   selectDay(e) {
     e.preventDefault();
+    if (this.isDateDisabled(e.currentTarget.dataset.day)) return;
+
     // Set the selected date value
     this.selectedDateValue = e.currentTarget.dataset.day;
   }
 
   selectedDateValueChanged(value, prevValue) {
+    const selectedDate = this.selectedDate();
+    if (!selectedDate) {
+      this.updateCalendar();
+      return;
+    }
+
     // update the viewDateValue to the first day of month of the selected date (This will trigger updateCalendar() function)
-    const newViewDate = new Date(this.selectedDateValue);
+    const newViewDate = new Date(selectedDate);
     newViewDate.setDate(2); // set the day to the 2nd (to avoid issues with months with different number of days and timezones)
     this.viewDateValue = newViewDate.toISOString().slice(0, 10);
 
@@ -58,7 +71,7 @@ export default class extends Controller {
 
     // update the input value
     this.rubyUiCalendarInputOutlets.forEach((outlet) => {
-      const formattedDate = this.formatDate(this.selectedDate());
+      const formattedDate = this.formatDate(selectedDate);
       outlet.setValue(formattedDate);
     });
   }
@@ -101,10 +114,20 @@ export default class extends Controller {
 
   renderDay(day) {
     const today = new Date();
+    const selectedDate = this.selectedDate();
     let dateHTML = "";
     const data = { day: day, dayDate: day.getDate() };
 
-    if (day.toDateString() === this.selectedDate().toDateString()) {
+    if (this.isDateDisabled(day)) {
+      // disabledDate
+      dateHTML = Mustache.render(
+        this.disabledDateTemplateTarget.innerHTML,
+        data,
+      );
+    } else if (
+      selectedDate &&
+      day.toDateString() === selectedDate.toDateString()
+    ) {
       // selectedDate
       // Render the selected date template target innerHTML with Mustache
       dateHTML = Mustache.render(
@@ -137,13 +160,13 @@ export default class extends Controller {
   }
 
   selectedDate() {
-    return new Date(this.selectedDateValue);
+    return this.parseDate(this.selectedDateValue);
   }
 
   viewDate() {
-    return this.viewDateValue
-      ? new Date(this.viewDateValue)
-      : this.selectedDate();
+    return (
+      this.parseDate(this.viewDateValue) || this.selectedDate() || new Date()
+    );
   }
 
   getFullWeeksStartAndEndInMonth() {
@@ -245,5 +268,41 @@ export default class extends Controller {
       default:
         return "th";
     }
+  }
+
+  minDate() {
+    return this.parseDate(this.minDateValue);
+  }
+
+  isDateDisabled(date) {
+    const minDate = this.minDate();
+    const candidate = this.parseDate(date);
+
+    if (!minDate || !candidate) return false;
+
+    return this.startOfDay(candidate) < this.startOfDay(minDate);
+  }
+
+  parseDate(value) {
+    if (!value) return null;
+    if (value instanceof Date) return new Date(value);
+
+    const isoDate = value.toString().match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (isoDate) {
+      return new Date(
+        Number(isoDate[1]),
+        Number(isoDate[2]) - 1,
+        Number(isoDate[3]),
+      );
+    }
+
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  startOfDay(date) {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+    return normalizedDate;
   }
 }

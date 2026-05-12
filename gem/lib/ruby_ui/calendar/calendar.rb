@@ -2,8 +2,9 @@
 
 module RubyUI
   class Calendar < Base
-    def initialize(selected_date: nil, input_id: nil, date_format: "yyyy-MM-dd", **attrs)
+    def initialize(selected_date: nil, min_date: nil, input_id: nil, date_format: "yyyy-MM-dd", **attrs)
       @selected_date = selected_date
+      @min_date = min_date
       @input_id = input_id
       @date_format = date_format
       super(**attrs)
@@ -30,6 +31,7 @@ module RubyUI
         data: {
           controller: "ruby-ui--calendar",
           ruby_ui__calendar_selected_date_value: @selected_date&.to_s,
+          ruby_ui__calendar_min_date_value: @min_date&.to_s,
           ruby_ui__calendar_format_value: @date_format,
           ruby_ui__calendar_ruby_ui__calendar_input_outlet: @input_id
         }
