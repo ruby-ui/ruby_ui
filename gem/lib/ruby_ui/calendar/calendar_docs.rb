@@ -26,6 +26,15 @@ class Views::Docs::Calendar < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Minimum date", description: "Disable dates before a given date", context: self) do
+        <<~RUBY
+          div(class: 'space-y-4') do
+            Input(type: 'string', placeholder: "Select a date", class: 'rounded-md border shadow', id: 'minimum-date', data_controller: 'ruby-ui--calendar-input')
+            Calendar(input_id: '#minimum-date', min_date: Date.current, class: 'rounded-md border shadow')
+          end
+        RUBY
+      end
+
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
