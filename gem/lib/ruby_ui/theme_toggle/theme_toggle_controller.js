@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="ruby-ui--theme-toggle"
-// Expects to sit on the same element as ruby-ui--toggle and listen to its
+// Sits on the same wrapper as ruby-ui--toggle. Listens for the toggle's
 // ruby-ui--toggle:change event. pressed = dark mode.
 export default class extends Controller {
   connect() {
@@ -30,9 +30,9 @@ export default class extends Controller {
       html.classList.add("light")
       html.classList.remove("dark")
     }
+    // Flip the sibling Toggle controller's pressed value; it will propagate
+    // aria-pressed / data-state to the button target.
     const dark = theme === "dark"
-    this.element.setAttribute("aria-pressed", dark ? "true" : "false")
-    this.element.dataset.state = dark ? "on" : "off"
     this.element.setAttribute("data-ruby-ui--toggle-pressed-value", dark ? "true" : "false")
   }
 }

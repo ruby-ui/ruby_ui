@@ -36,6 +36,7 @@ module RubyUI
       variant: :default,
       size: :default,
       disabled: false,
+      wrapper: {},
       **attrs
     )
       @pressed = pressed
@@ -45,15 +46,35 @@ module RubyUI
       @variant = variant.to_sym
       @size = size.to_sym
       @disabled = disabled
+      @wrapper = wrapper
       super(**attrs)
     end
 
     def view_template(&block)
-      button(**attrs, &block)
-      render_hidden_input if @name
+      span(**wrapper_attrs) do
+        button(**attrs, &block)
+        render_hidden_input if @name
+      end
     end
 
     private
+
+    def wrapper_attrs
+      mix(wrapper_default_attrs, @wrapper)
+    end
+
+    def wrapper_default_attrs
+      {
+        class: "contents",
+        data: {
+          controller: "ruby-ui--toggle",
+          action: "click->ruby-ui--toggle#toggle",
+          "ruby-ui--toggle-pressed-value": @pressed.to_s,
+          "ruby-ui--toggle-value-value": @value.to_s,
+          "ruby-ui--toggle-unpressed-value-value": @unpressed_value.to_s
+        }
+      }
+    end
 
     def render_hidden_input
       input(
@@ -71,11 +92,7 @@ module RubyUI
         aria: {pressed: @pressed.to_s},
         data: {
           state: @pressed ? "on" : "off",
-          controller: "ruby-ui--toggle",
-          action: "click->ruby-ui--toggle#toggle",
-          "ruby-ui--toggle-pressed-value": @pressed.to_s,
-          "ruby-ui--toggle-value-value": @value.to_s,
-          "ruby-ui--toggle-unpressed-value-value": @unpressed_value.to_s
+          "ruby-ui--toggle-target": "button"
         },
         class: self.class.classes_for(variant: @variant, size: @size)
       )

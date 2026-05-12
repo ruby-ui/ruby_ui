@@ -7,9 +7,11 @@ module RubyUI
         variant: :default,
         size: :default,
         aria: {label: "Toggle theme"},
-        data: {
-          controller: "ruby-ui--toggle ruby-ui--theme-toggle",
-          action: "ruby-ui--toggle:change->ruby-ui--theme-toggle#apply"
+        wrapper: {
+          data: {
+            controller: "ruby-ui--theme-toggle",
+            action: "ruby-ui--toggle:change->ruby-ui--theme-toggle#apply"
+          }
         },
         **attrs,
         &block
