@@ -1,8 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import Fuse from "fuse.js";
 
-const OPEN_DIALOG_SELECTOR = "[data-ruby-ui--command-dialog]";
-
 // Connects to data-controller="ruby-ui--command"
 export default class extends Controller {
   static targets = ["input", "group", "item", "empty", "content"];
@@ -14,6 +12,8 @@ export default class extends Controller {
     },
   };
 
+  static openInstance = null;
+
   connect() {
     this.selectedIndex = -1;
 
@@ -21,12 +21,19 @@ export default class extends Controller {
       return;
     }
 
+    this.constructor.openInstance = this;
     this.inputTarget.focus();
     this.searchIndex = this.buildSearchIndex();
     this.toggleVisibility(this.emptyTargets, false);
 
     if (this.openValue && this.hasContentTarget) {
       this.open();
+    }
+  }
+
+  disconnect() {
+    if (this.constructor.openInstance === this) {
+      this.constructor.openInstance = null;
     }
   }
 
@@ -39,9 +46,9 @@ export default class extends Controller {
       return;
     }
 
-    const openDialog = document.querySelector(OPEN_DIALOG_SELECTOR);
-    if (openDialog) {
-      this.focusDialogInput(openDialog);
+    const openInstance = this.constructor.openInstance;
+    if (openInstance) {
+      openInstance.focusInput();
       return;
     }
 
@@ -153,8 +160,7 @@ export default class extends Controller {
     this.selectedIndex = -1;
   }
 
-  focusDialogInput(dialog) {
-    const input = dialog.querySelector("[data-ruby-ui--command-target='input']");
-    input?.focus();
+  focusInput() {
+    this.inputTarget?.focus();
   }
 }
