@@ -8,7 +8,9 @@ module RubyUI
     end
 
     def view_template(&)
-      div(**attrs, &)
+      template(data: {ruby_ui__tooltip_target: "content"}) do
+        div(**attrs, &)
+      end
     end
 
     private
@@ -16,10 +18,7 @@ module RubyUI
     def default_attrs
       {
         id: @id,
-        data: {
-          ruby_ui__tooltip_target: "content"
-        },
-        class: "invisible peer-hover:visible peer-focus:visible w-fit max-w-[calc(100vw-2rem)] text-balance break-words absolute top-0 left-0 z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md peer-focus:zoom-in-95 animate-out fade-out-0 zoom-out-95 peer-hover:animate-in peer-focus:animate-in peer-hover:fade-in-0 peer-focus:fade-in-0 peer-hover:zoom-in-95 group-data-[ruby-ui--tooltip-placement-value=bottom]:slide-in-from-top-2 group-data-[ruby-ui--tooltip-placement-value=left]:slide-in-from-right-2 group-data-[ruby-ui--tooltip-placement-value=right]:slide-in-from-left-2 group-data-[ruby-ui--tooltip-placement-value=top]:slide-in-from-bottom-2 delay-500"
+        class: "invisible pointer-events-none w-fit max-w-[calc(100vw-2rem)] text-balance break-words absolute top-0 left-0 z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md data-[state=open]:visible data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:visible data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:fill-mode-forwards data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2"
       }
     end
   end
