@@ -4,7 +4,7 @@ module RubyUI
   class ThemeToggle < Base
     def view_template(&block)
       RubyUI.Toggle(
-        variant: :outline,
+        variant: :default,
         size: :default,
         aria: {label: "Toggle theme"},
         data: {
