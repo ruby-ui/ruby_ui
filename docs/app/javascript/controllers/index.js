@@ -7,6 +7,9 @@ import { application } from "./application"
 import IframeThemeController from "./iframe_theme_controller"
 application.register("iframe-theme", IframeThemeController)
 
+import ToastDemoController from "./toast_demo_controller"
+application.register("toast-demo", ToastDemoController)
+
 import RubyUi__AccordionController from "./ruby_ui/accordion_controller"
 application.register("ruby-ui--accordion", RubyUi__AccordionController)
 
@@ -93,6 +96,12 @@ application.register("ruby-ui--tabs", RubyUi__TabsController)
 
 import RubyUi__ThemeToggleController from "./ruby_ui/theme_toggle_controller"
 application.register("ruby-ui--theme-toggle", RubyUi__ThemeToggleController)
+
+import RubyUi__ToastController from "./ruby_ui/toast_controller"
+application.register("ruby-ui--toast", RubyUi__ToastController)
+
+import RubyUi__ToasterController from "./ruby_ui/toaster_controller"
+application.register("ruby-ui--toaster", RubyUi__ToasterController)
 
 import RubyUi__TooltipController from "./ruby_ui/tooltip_controller"
 application.register("ruby-ui--tooltip", RubyUi__TooltipController)

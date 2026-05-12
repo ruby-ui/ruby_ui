@@ -222,6 +222,10 @@ class DocsController < ApplicationController
     render Views::Docs::ThemeToggle.new
   end
 
+  def toast
+    render Views::Docs::Toast.new
+  end
+
   def tooltip
     render Views::Docs::Tooltip.new
   end
