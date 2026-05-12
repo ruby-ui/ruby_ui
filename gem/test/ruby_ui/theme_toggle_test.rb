@@ -13,7 +13,7 @@ class RubyUI::ThemeToggleTest < ComponentTest
     output = phlex { RubyUI.ThemeToggle { "icon" } }
     assert_match(/data-controller="[^"]*ruby-ui--theme-toggle/, output)
     assert_match(/data-controller="[^"]*ruby-ui--toggle/, output)
-    assert_match(/ruby-ui:toggle:change->ruby-ui--theme-toggle#apply/, output)
+    assert_match(/ruby-ui--toggle:change->ruby-ui--theme-toggle#apply/, output)
   end
 
   def test_block_content_rendered

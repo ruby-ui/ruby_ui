@@ -9,7 +9,7 @@ module RubyUI
         aria: {label: "Toggle theme"},
         data: {
           controller: "ruby-ui--toggle ruby-ui--theme-toggle",
-          action: "ruby-ui:toggle:change->ruby-ui--theme-toggle#apply"
+          action: "ruby-ui--toggle:change->ruby-ui--theme-toggle#apply"
         },
         **attrs,
         &block

@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="ruby-ui--theme-toggle"
 // Expects to sit on the same element as ruby-ui--toggle and listen to its
-// ruby-ui:toggle:change event. pressed = dark mode.
+// ruby-ui--toggle:change event. pressed = dark mode.
 export default class extends Controller {
   connect() {
     this.applyTheme(this.currentTheme())
