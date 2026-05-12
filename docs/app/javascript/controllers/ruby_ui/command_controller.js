@@ -3,16 +3,7 @@ import Fuse from "fuse.js";
 
 // Connects to data-controller="ruby-ui--command"
 export default class extends Controller {
-  static targets = ["input", "group", "item", "empty", "content"];
-
-  static values = {
-    open: {
-      type: Boolean,
-      default: false,
-    },
-  };
-
-  static openInstance = null;
+  static targets = ["input", "group", "item", "empty"];
 
   connect() {
     this.selectedIndex = -1;
@@ -21,40 +12,9 @@ export default class extends Controller {
       return;
     }
 
-    this.constructor.openInstance = this;
     this.inputTarget.focus();
     this.searchIndex = this.buildSearchIndex();
     this.toggleVisibility(this.emptyTargets, false);
-
-    if (this.openValue && this.hasContentTarget) {
-      this.open();
-    }
-  }
-
-  disconnect() {
-    if (this.constructor.openInstance === this) {
-      this.constructor.openInstance = null;
-    }
-  }
-
-  open(e) {
-    if (e) {
-      e.preventDefault();
-    }
-
-    if (!this.hasContentTarget) {
-      return;
-    }
-
-    const openInstance = this.constructor.openInstance;
-    if (openInstance) {
-      openInstance.focusInput();
-      return;
-    }
-
-    document.body.insertAdjacentHTML("beforeend", this.contentTarget.innerHTML);
-    // prevent scroll on body
-    document.body.classList.add("overflow-hidden");
   }
 
   dismiss() {
@@ -62,6 +22,10 @@ export default class extends Controller {
     document.body.classList.remove("overflow-hidden");
     // remove the element
     this.element.remove();
+  }
+
+  focusInput() {
+    this.inputTarget?.focus();
   }
 
   filter(e) {
@@ -158,9 +122,5 @@ export default class extends Controller {
   deselectAll() {
     this.itemTargets.forEach((item) => this.toggleAriaSelected(item, false));
     this.selectedIndex = -1;
-  }
-
-  focusInput() {
-    this.inputTarget?.focus();
   }
 }

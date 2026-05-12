@@ -40,6 +40,9 @@ application.register("ruby-ui--combobox", RubyUi__ComboboxController)
 import RubyUi__CommandController from "./ruby_ui/command_controller"
 application.register("ruby-ui--command", RubyUi__CommandController)
 
+import RubyUi__CommandDialogController from "./ruby_ui/command_dialog_controller"
+application.register("ruby-ui--command-dialog", RubyUi__CommandDialogController)
+
 import RubyUi__ContextMenuController from "./ruby_ui/context_menu_controller"
 application.register("ruby-ui--context-menu", RubyUi__ContextMenuController)
 

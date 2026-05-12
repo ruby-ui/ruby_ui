@@ -10,7 +10,10 @@ module RubyUI
 
     def default_attrs
       {
-        data: {controller: "ruby-ui--command"}
+        data: {
+          controller: "ruby-ui--command-dialog",
+          ruby_ui__command_dialog_ruby_ui__command_outlet: "[data-ruby-ui--command-dialog-instance]"
+        }
       }
     end
   end
