@@ -17,6 +17,10 @@ module RubyUI
     def default_attrs
       {
         loading: "lazy",
+        data: {
+          ruby_ui__avatar_target: "image",
+          action: "load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback"
+        },
         class: "aspect-square h-full w-full",
         alt: @alt,
         src: @src

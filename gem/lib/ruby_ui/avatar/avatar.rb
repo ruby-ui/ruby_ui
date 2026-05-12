@@ -24,6 +24,9 @@ module RubyUI
 
     def default_attrs
       {
+        data: {
+          controller: "ruby-ui--avatar"
+        },
         class: ["relative flex shrink-0 overflow-hidden rounded-full", @size_classes]
       }
     end

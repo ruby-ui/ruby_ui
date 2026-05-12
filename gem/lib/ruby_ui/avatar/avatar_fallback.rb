@@ -10,6 +10,9 @@ module RubyUI
 
     def default_attrs
       {
+        data: {
+          ruby_ui__avatar_target: "fallback"
+        },
         class: "flex h-full w-full items-center justify-center rounded-full bg-muted"
       }
     end
