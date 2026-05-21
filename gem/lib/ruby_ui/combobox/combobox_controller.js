@@ -4,7 +4,8 @@ import { computePosition, autoUpdate, offset, flip } from "@floating-ui/dom";
 // Connects to data-controller="ruby-ui--combobox"
 export default class extends Controller {
   static values = {
-    term: String
+    term: String,
+    minPopoverWidth: { type: Number, default: 240 }
   }
 
   static targets = [
@@ -186,6 +187,7 @@ export default class extends Controller {
   }
 
   updatePopoverWidth() {
-    this.popoverTarget.style.width = `${this.triggerTarget.offsetWidth}px`
+    const width = Math.max(this.triggerTarget.offsetWidth, this.minPopoverWidthValue)
+    this.popoverTarget.style.width = `${width}px`
   }
 }
