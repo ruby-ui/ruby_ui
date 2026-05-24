@@ -62,7 +62,7 @@ GEM
     standard-performance (1.9.0)
       lint_roller (~> 1.1)
       rubocop-performance (~> 1.26.0)
-    tailwind_merge (1.4.0)
+    tailwind_merge (1.5.1)
       sin_lru_redux (~> 2.5)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
