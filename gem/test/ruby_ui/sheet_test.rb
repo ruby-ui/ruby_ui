@@ -30,4 +30,16 @@ class RubyUI::SheetTest < ComponentTest
 
     assert_match(/Open Sheet/, output)
   end
+
+  def test_render_closed_by_default
+    output = phlex { RubyUI.Sheet { "content" } }
+
+    assert_match(/data-ruby-ui--sheet-open-value="false"/, output)
+  end
+
+  def test_render_open_when_open_is_true
+    output = phlex { RubyUI.Sheet(open: true) { "content" } }
+
+    assert_match(/data-ruby-ui--sheet-open-value="true"/, output)
+  end
 end
