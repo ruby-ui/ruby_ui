@@ -75,6 +75,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/changelog
 - Summary: Recent RubyUI component and documentation changes.
 
+### MCP Server
+
+- URL: https://rubyui.com/docs/mcp
+- Summary: Connect AI agents to Ruby UI components, source, examples, and install commands via the Model Context Protocol.
+
 
 ## Component catalog
 

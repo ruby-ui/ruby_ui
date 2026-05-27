@@ -52,7 +52,8 @@ module Components
           {name: "Dark mode", path: docs_dark_mode_path},
           {name: "Theming", path: docs_theming_path},
           {name: "Customizing components", path: docs_customizing_components_path},
-          {name: "Changelog", path: docs_changelog_path}
+          {name: "Changelog", path: docs_changelog_path},
+          {name: "MCP Server", path: docs_mcp_path}
         ]
       end
 

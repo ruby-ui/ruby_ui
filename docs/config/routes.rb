@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount RubyUI::MCP::Engine => "/mcp"
+
   get "llms.txt", to: "site_files#llms", as: :llms_txt, format: false
   get "llms-full.txt", to: "site_files#llms_full", as: :llms_full_txt, format: false
   get "sitemap.xml", to: "site_files#sitemap", as: :sitemap_xml, format: false
@@ -7,6 +9,7 @@ Rails.application.routes.draw do
 
   scope "docs" do
     # GETTING STARTED
+    get "mcp", to: "docs#mcp", as: :docs_mcp
     get "introduction", to: "docs#introduction", as: :docs_introduction
     get "installation", to: "docs#installation", as: :docs_installation
     get "theming", to: "docs#theming", as: :docs_theming

@@ -4,6 +4,10 @@ class DocsController < ApplicationController
   layout -> { Views::Layouts::DocsLayout }
 
   # GETTING STARTED
+  def mcp
+    render Views::Docs::Mcp.new
+  end
+
   def introduction
     render Views::Docs::GettingStarted::Introduction.new
   end

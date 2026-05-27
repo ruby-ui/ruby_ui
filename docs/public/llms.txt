@@ -17,6 +17,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Customizing components](https://rubyui.com/docs/customizing_components): Adapt generated RubyUI components when theme-level customization is not enough.
 - [Components](https://rubyui.com/docs/components): Catalog of available RubyUI components.
 - [Changelog](https://rubyui.com/docs/changelog): Recent RubyUI component and documentation changes.
+- [MCP Server](https://rubyui.com/docs/mcp): Connect AI agents to Ruby UI components, source, examples, and install commands via the Model Context Protocol.
 
 ## Component docs
 
