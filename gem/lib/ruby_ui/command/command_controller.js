@@ -3,14 +3,7 @@ import Fuse from "fuse.js";
 
 // Connects to data-controller="ruby-ui--command"
 export default class extends Controller {
-  static targets = ["input", "group", "item", "empty", "content"];
-
-  static values = {
-    open: {
-      type: Boolean,
-      default: false,
-    },
-  };
+  static targets = ["input", "group", "item", "empty"];
 
   connect() {
     this.selectedIndex = -1;
@@ -22,24 +15,6 @@ export default class extends Controller {
     this.inputTarget.focus();
     this.searchIndex = this.buildSearchIndex();
     this.toggleVisibility(this.emptyTargets, false);
-
-    if (this.openValue && this.hasContentTarget) {
-      this.open();
-    }
-  }
-
-  open(e) {
-    if (e) {
-      e.preventDefault();
-    }
-
-    if (!this.hasContentTarget) {
-      return;
-    }
-
-    document.body.insertAdjacentHTML("beforeend", this.contentTarget.innerHTML);
-    // prevent scroll on body
-    document.body.classList.add("overflow-hidden");
   }
 
   dismiss() {
@@ -47,6 +22,10 @@ export default class extends Controller {
     document.body.classList.remove("overflow-hidden");
     // remove the element
     this.element.remove();
+  }
+
+  focusInput() {
+    this.inputTarget?.focus();
   }
 
   filter(e) {

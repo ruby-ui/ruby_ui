@@ -8,7 +8,7 @@ module RubyUI
     ].freeze
 
     def initialize(keybindings: DEFAULT_KEYBINDINGS, **attrs)
-      @keybindings = keybindings.map { |kb| "#{kb}->ruby-ui--command#open" }
+      @keybindings = keybindings.map { |kb| "#{kb}->ruby-ui--command-dialog#open" }
       super(**attrs)
     end
 
@@ -21,7 +21,7 @@ module RubyUI
     def default_attrs
       {
         data: {
-          action: ["click->ruby-ui--command#open", @keybindings.join(" ")]
+          action: ["click->ruby-ui--command-dialog#open", @keybindings.join(" ")]
         }
       }
     end
