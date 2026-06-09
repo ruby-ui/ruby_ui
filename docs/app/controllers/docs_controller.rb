@@ -230,6 +230,14 @@ class DocsController < ApplicationController
     render Views::Docs::Toast.new
   end
 
+  def toggle
+    render Views::Docs::Toggle.new
+  end
+
+  def toggle_group
+    render Views::Docs::ToggleGroup.new
+  end
+
   def tooltip
     render Views::Docs::Tooltip.new
   end

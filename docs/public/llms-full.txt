@@ -303,6 +303,16 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/theme_toggle
 - Summary: Toggle control for switching between light and dark themes.
 
+### Toggle
+
+- URL: https://rubyui.com/docs/toggle
+- Summary: Two-state button that can be either on or off.
+
+### Toggle Group
+
+- URL: https://rubyui.com/docs/toggle_group
+- Summary: Group of two-state toggle buttons.
+
 ### Tooltip
 
 - URL: https://rubyui.com/docs/tooltip

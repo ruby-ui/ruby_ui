@@ -281,6 +281,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://rubyui.com/docs/toggle</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rubyui.com/docs/toggle_group</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://rubyui.com/docs/tooltip</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

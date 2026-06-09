@@ -52,11 +52,11 @@ application.register("ruby-ui--command-dialog", RubyUi__CommandDialogController)
 import RubyUi__ContextMenuController from "./ruby_ui/context_menu_controller"
 application.register("ruby-ui--context-menu", RubyUi__ContextMenuController)
 
-import RubyUi__DataTableController from "./ruby_ui/data_table_controller"
-application.register("ruby-ui--data-table", RubyUi__DataTableController)
-
 import RubyUi__DataTableColumnVisibilityController from "./ruby_ui/data_table_column_visibility_controller"
 application.register("ruby-ui--data-table-column-visibility", RubyUi__DataTableColumnVisibilityController)
+
+import RubyUi__DataTableController from "./ruby_ui/data_table_controller"
+application.register("ruby-ui--data-table", RubyUi__DataTableController)
 
 import RubyUi__DataTableSearchController from "./ruby_ui/data_table_search_controller"
 application.register("ruby-ui--data-table-search", RubyUi__DataTableSearchController)
@@ -105,6 +105,12 @@ application.register("ruby-ui--toast", RubyUi__ToastController)
 
 import RubyUi__ToasterController from "./ruby_ui/toaster_controller"
 application.register("ruby-ui--toaster", RubyUi__ToasterController)
+
+import RubyUi__ToggleController from "./ruby_ui/toggle_controller"
+application.register("ruby-ui--toggle", RubyUi__ToggleController)
+
+import RubyUi__ToggleGroupController from "./ruby_ui/toggle_group_controller"
+application.register("ruby-ui--toggle-group", RubyUi__ToggleGroupController)
 
 import RubyUi__TooltipController from "./ruby_ui/tooltip_controller"
 application.register("ruby-ui--tooltip", RubyUi__TooltipController)

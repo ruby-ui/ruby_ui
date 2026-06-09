@@ -123,6 +123,8 @@ class SiteFiles
     {title: "Tabs", path: "/docs/tabs", description: "Layered tab panels displayed one at a time."},
     {title: "Textarea", path: "/docs/textarea", description: "Styled multiline text input."},
     {title: "Theme Toggle", path: "/docs/theme_toggle", description: "Toggle control for switching between light and dark themes."},
+    {title: "Toggle", path: "/docs/toggle", description: "Two-state button that can be either on or off."},
+    {title: "Toggle Group", path: "/docs/toggle_group", description: "Group of two-state toggle buttons."},
     {title: "Tooltip", path: "/docs/tooltip", description: "Popup information shown on keyboard focus or hover."},
     {title: "Typography", path: "/docs/typography", description: "Text primitives and sensible typography defaults."}
   ].freeze

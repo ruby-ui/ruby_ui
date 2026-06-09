@@ -76,6 +76,8 @@ Rails.application.routes.draw do
     post "toast_demo/warning", to: "docs/toast_demo#warning", as: :docs_toast_demo_warning
     post "toast_demo/info", to: "docs/toast_demo#info", as: :docs_toast_demo_info
     post "toast_demo/with_action", to: "docs/toast_demo#with_action", as: :docs_toast_demo_with_action
+    get "toggle", to: "docs#toggle", as: :docs_toggle
+    get "toggle_group", to: "docs#toggle_group", as: :docs_toggle_group
     get "tooltip", to: "docs#tooltip", as: :docs_tooltip
     get "typography", to: "docs#typography", as: :docs_typography
 
