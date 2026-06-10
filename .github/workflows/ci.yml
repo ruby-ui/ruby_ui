@@ -123,7 +123,7 @@ jobs:
       - name: Build and push devcontainer image
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/ruby-ui/web-devcontainer
-          cacheFrom: ghcr.io/ruby-ui/web-devcontainer
+          imageName: ghcr.io/ruby-ui/ruby_ui-devcontainer
+          cacheFrom: ghcr.io/ruby-ui/ruby_ui-devcontainer
           subFolder: docs
           push: always
