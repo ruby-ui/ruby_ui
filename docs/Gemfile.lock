@@ -15,7 +15,7 @@ GIT
 PATH
   remote: ../gem
   specs:
-    ruby_ui (1.2.0)
+    ruby_ui (1.3.0)
 
 PATH
   remote: ../mcp

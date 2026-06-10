@@ -7,7 +7,7 @@ class Views::Pages::Home < Views::Base
       div(class: "container flex max-w-[64rem] flex-col items-center gap-4 text-center mx-auto") do
         Link(href: docs_changelog_path, variant: :outline, class: "rounded-2xl px-4 py-1.5 text-sm font-medium") do
           span(class: "sm:hidden") { "New components available" }
-          span(class: "hidden sm:inline") { "Combobox updates and more" }
+          span(class: "hidden sm:inline") { "Datatable, Toast, and more" }
           svg(xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewbox: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round", class: "ml-2 h-4 w-4") { |s|
             s.path(d: "M5 12h14")
             s.path(d: "m12 5 7 7-7 7")
