@@ -10,11 +10,9 @@ module RubyUI
         def generate_components
           say "Generating all components..."
 
-          Dir.children(self.class.source_root).each do |folder_name|
-            next if folder_name.ends_with?(".rb")
+          folder_names = Dir.children(self.class.source_root).reject { |folder_name| folder_name.ends_with?(".rb") }
 
-            run "bin/rails generate ruby_ui:component #{folder_name} --force #{options["force"]}"
-          end
+          run "bin/rails generate ruby_ui:component #{folder_names.join(" ")} --force #{options["force"]}"
         end
       end
     end
