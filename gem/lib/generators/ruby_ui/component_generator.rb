@@ -31,7 +31,7 @@ module RubyUI
         return if missing.empty?
 
         say "Component(s) not found: #{missing.join(", ")}", :red
-        exit
+        exit 1
       end
 
       def copy_related_component_files(component_name)
