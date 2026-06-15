@@ -26,6 +26,33 @@ class Views::Docs::DropdownMenu < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Non-navigational item", description: "Use as: :div when the item hosts its own interactive element (e.g. a dialog or form trigger). This avoids nesting a <button>/<form> inside the item's <a> while keeping the menu-item styling, role and keyboard behavior.", context: self) do
+        <<~RUBY
+          DropdownMenu do
+            DropdownMenuTrigger(class: 'w-full') do
+              Button(variant: :outline) { "Open" }
+            end
+            DropdownMenuContent do
+              DropdownMenuItem(href: '#') { "Edit" }
+              DropdownMenuItem(as: :div) do
+                Dialog do
+                  DialogTrigger(class: 'w-full text-left') { "Delete" }
+                  DialogContent do
+                    DialogHeader do
+                      DialogTitle { "Are you absolutely sure?" }
+                      DialogDescription { "This action cannot be undone." }
+                    end
+                    DialogFooter do
+                      DialogClose { Button(variant: :destructive) { "Delete" } }
+                    end
+                  end
+                end
+              end
+            end
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Placement", description: "If the DropdownMenu conflicts with edge, it will auto-adjust it's placement", context: self) do
         <<~RUBY
           div(class: 'grid grid-cols-1 sm:grid-cols-3 gap-4') do
