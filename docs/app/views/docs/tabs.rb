@@ -102,6 +102,20 @@ class Views::Docs::Tabs < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "As navigation links", context: self) do
+        <<~RUBY
+          # Render triggers as `<a>` instead of `<button>` for tabs that navigate
+          # (e.g. server-rendered tabs driven by a query param). This avoids
+          # nesting interactive elements and keeps the markup valid and accessible.
+          Tabs(default_value: "account", class: 'w-96') do
+            TabsList do
+              TabsTrigger(value: "account", as: :a, href: "?tab=account") { "Account" }
+              TabsTrigger(value: "password", as: :a, href: "?tab=password") { "Password" }
+            end
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Change default value", context: self) do
         <<~RUBY
           Tabs(default: "password", class: 'w-96') do

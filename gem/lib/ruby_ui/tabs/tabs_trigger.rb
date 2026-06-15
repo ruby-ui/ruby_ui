@@ -2,20 +2,24 @@
 
 module RubyUI
   class TabsTrigger < Base
-    def initialize(value:, **attrs)
+    def initialize(value:, as: :button, **attrs)
       @value = value
+      @as = as
       super(**attrs)
     end
 
     def view_template(&)
-      button(**attrs, &)
+      if @as == :a
+        a(**attrs, &)
+      else
+        button(**attrs, &)
+      end
     end
 
     private
 
     def default_attrs
-      {
-        type: :button,
+      base = {
         data: {
           ruby_ui__tabs_target: "trigger",
           action: "click->ruby-ui--tabs#show",
@@ -29,6 +33,8 @@ module RubyUI
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         ]
       }
+      base[:type] = :button if @as == :button
+      base
     end
   end
 end
