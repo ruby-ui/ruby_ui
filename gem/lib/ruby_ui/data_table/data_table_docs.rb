@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Views::Docs::DataTable < Views::Base
-  Row = Struct.new(:id, :name, :email, :salary, :status, keyword_init: true)
+  Row = Struct.new(:id, :name, :email, :salary, :status)
 
   SAMPLE_ROWS = [
     Row.new(id: 1, name: "Alice", email: "alice@example.com", salary: 90_000, status: "Active"),
