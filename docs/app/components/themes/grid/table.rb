@@ -4,7 +4,7 @@ module Components
   module Themes
     module Grid
       class Table < Components::Base
-        User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
+        User = Struct.new(:avatar_url, :name, :username, :commits, :github_url)
 
         # def view_template
         #   render RubyUI::Card.new(class: "p-6") do

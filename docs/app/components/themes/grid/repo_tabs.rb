@@ -4,7 +4,7 @@ module Components
   module Themes
     module Grid
       class RepoTabs < Components::Base
-        Repo = Struct.new(:github_url, :name, :stars, :version, keyword_init: true)
+        Repo = Struct.new(:github_url, :name, :stars, :version)
 
         def view_template
           Tabs(default_value: "overview", class: "w-full") do

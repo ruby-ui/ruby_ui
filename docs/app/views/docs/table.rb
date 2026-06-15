@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Views::Docs::Table < Views::Base
-  Invoice = Struct.new(:identifier, :status, :method, :amount, keyword_init: true)
-  User = Struct.new(:avatar_url, :name, :username, :commits, :github_url, keyword_init: true)
+  Invoice = Struct.new(:identifier, :status, :method, :amount)
+  User = Struct.new(:avatar_url, :name, :username, :commits, :github_url)
 
   def view_template
     component = "Table"
