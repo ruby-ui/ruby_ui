@@ -33,7 +33,7 @@ module RubyUI
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         ]
       }
-      base[:type] = :button if @as == :button
+      base[:type] = :button unless @as == :a
       base
     end
   end

@@ -22,6 +22,13 @@ class RubyUI::TabsTriggerTest < ComponentTest
     refute_match(/type="button"/, output)
   end
 
+  def test_unexpected_as_value_still_renders_a_typed_button
+    output = phlex { RubyUI.TabsTrigger(value: "account", as: :buton) { "Account" } }
+
+    assert_match(/\A<button/, output)
+    assert_match(/type="button"/, output)
+  end
+
   def test_keeps_trigger_data_attributes_when_rendered_as_anchor
     output = phlex { RubyUI.TabsTrigger(value: "account", as: :a, href: "/account") { "Account" } }
 
