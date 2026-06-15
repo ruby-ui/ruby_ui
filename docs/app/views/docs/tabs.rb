@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Views::Docs::Tabs < Views::Base
-  Repo = Struct.new(:github_url, :name, :stars, :version, keyword_init: true)
+  Repo = Struct.new(:github_url, :name, :stars, :version)
 
   def view_template
     component = "Tabs"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Views::Docs::DataTable < Views::Base
-  Row = Struct.new(:id, :name, :email, :salary, :status, keyword_init: true)
+  Row = Struct.new(:id, :name, :email, :salary, :status)
 
   def view_template
     @rows = [
