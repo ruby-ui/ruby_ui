@@ -24,6 +24,9 @@ module RubyUiWeb
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.exceptions_app = ->(env) { ErrorsController.action(:not_found).call(env) }
+    # Dispatch exceptions through the router (see the /404 and /500 routes) so the
+    # response status matches the actual error. A bare lambda to a single action
+    # rendered every failure as 404, masking 500s (e.g. a raising view) as "not found".
+    config.exceptions_app = routes
   end
 end

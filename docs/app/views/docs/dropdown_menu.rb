@@ -43,7 +43,7 @@ class Views::Docs::DropdownMenu < Views::Base
                       DialogDescription { "This action cannot be undone." }
                     end
                     DialogFooter do
-                      DialogClose { Button(variant: :destructive) { "Delete" } }
+                      Button(variant: :destructive, data: { action: 'click->ruby-ui--dialog#dismiss' }) { "Delete" }
                     end
                   end
                 end
