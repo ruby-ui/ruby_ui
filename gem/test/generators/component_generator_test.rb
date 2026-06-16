@@ -82,4 +82,25 @@ class ComponentGeneratorTest < Minitest::Test
 
     assert_includes dependencies.fetch("tooltip").fetch("components"), "Typography"
   end
+
+  def test_resolves_component_folders_for_multiple_components
+    source_root = File.expand_path("../../lib/ruby_ui", __dir__)
+
+    # Folder names mirror ComponentGenerator's `component_name.underscore`.
+    {"Button" => "button", "Link" => "link", "Input" => "input", "Textarea" => "textarea"}.each do |component_name, folder_name|
+      folder_path = File.join(source_root, folder_name)
+
+      assert(Dir.exist?(folder_path),
+        "Expected folder for #{component_name} to exist at #{folder_path}")
+    end
+  end
+
+  def test_validation_collects_all_missing_components
+    source_root = File.expand_path("../../lib/ruby_ui", __dir__)
+    folder_names = {"Button" => "button", "NotARealComponent" => "not_a_real_component", "AnotherFakeOne" => "another_fake_one"}
+
+    missing = folder_names.reject { |_name, folder| Dir.exist?(File.join(source_root, folder)) }.keys
+
+    assert_equal %w[NotARealComponent AnotherFakeOne], missing
+  end
 end
