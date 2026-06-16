@@ -226,7 +226,7 @@
         },
         {
           "path": "avatar_image.rb",
-          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class AvatarImage < Base\n    def initialize(src:, alt: \"\", **attrs)\n      @src = src\n      @alt = alt\n      super(**attrs)\n    end\n\n    def view_template\n      img(**attrs)\n    end\n\n    private\n\n    def default_attrs\n      {\n        loading: \"lazy\",\n        data: {\n          ruby_ui__avatar_target: \"image\",\n          action: \"load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback\"\n        },\n        class: \"aspect-square h-full w-full\",\n        alt: @alt,\n        src: @src\n      }\n    end\n  end\nend\n"
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class AvatarImage < Base\n    def initialize(src:, alt: \"\", **attrs)\n      @src = src\n      @alt = alt\n      super(**attrs)\n    end\n\n    def view_template\n      img(**attrs)\n    end\n\n    private\n\n    def default_attrs\n      {\n        # NB: do not set loading: \"lazy\" here. avatar_controller hides a not-yet-loaded\n        # image with `display:none` (the `hidden` class) so the fallback shows. The\n        # browser never fetches a `loading=\"lazy\"` image that generates no box, so its\n        # `load` event never fires and the image stays hidden forever (#415). shadcn/radix\n        # do not lazy-load the avatar image either.\n        data: {\n          ruby_ui__avatar_target: \"image\",\n          action: \"load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback\"\n        },\n        class: \"aspect-square h-full w-full\",\n        alt: @alt,\n        src: @src\n      }\n    end\n  end\nend\n"
         }
       ],
       "dependencies": {
