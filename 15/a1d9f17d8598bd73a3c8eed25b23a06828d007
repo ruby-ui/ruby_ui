@@ -1,0 +1,23 @@
+gem/lib/ruby_ui/dialog/dialog_controller.js
+  s_d11c90d0b6e015::t_ee7085edbefc09 3,5,14,20-23,25-27,31-41
+gem/test/ruby_ui/dialog_test.rb
+  s_d11c90d0b6e015::t_15c6ed547c8f3c 36-123
+gem/lib/ruby_ui/dialog/dialog_content.rb
+  s_d11c90d0b6e015::t_efad5db69e01f1 20-22,30-31,33,42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.10",
+  "base_commit_sha": "15a1d9f17d8598bd73a3c8eed25b23a06828d007",
+  "prompts": {},
+  "sessions": {
+    "s_d11c90d0b6e015": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5134e727-b777-4d13-8b00-ef421072eeda",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
