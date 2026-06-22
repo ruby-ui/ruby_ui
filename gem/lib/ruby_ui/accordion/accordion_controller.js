@@ -65,9 +65,15 @@ export default class extends Controller {
 
   // Reveal the accordion content with animation
   revealContent() {
-    const contentHeight = this.contentTarget.scrollHeight;
+    const content = this.contentTarget;
+
+    // Remove hidden so the element participates in layout before measuring
+    content.removeAttribute("hidden");
+    content.dataset.state = "open";
+
+    const contentHeight = content.scrollHeight;
     animate(
-      this.contentTarget,
+      content,
       { height: `${contentHeight}px` },
       {
         duration: this.animationDurationValue,
@@ -78,14 +84,23 @@ export default class extends Controller {
 
   // Hide the accordion content with animation
   hideContent() {
+    const content = this.contentTarget;
+    content.dataset.state = "closed";
+
     animate(
-      this.contentTarget,
+      content,
       { height: 0 },
       {
         duration: this.animationDurationValue,
         easing: this.animationEasingValue,
       },
-    );
+    ).finished.then(() => {
+      // After animation completes, truly hide the element so it is removed
+      // from layout and form focus — prevents trapped validation errors
+      if (content.dataset.state === "closed") {
+        content.setAttribute("hidden", "");
+      }
+    });
   }
 
   // Rotate the accordion icon 180deg using animate function
