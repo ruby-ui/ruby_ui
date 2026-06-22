@@ -1,0 +1,25 @@
+gem/lib/ruby_ui/accordion/accordion_content.rb
+  s_d11c90d0b6e015::t_3cdf4a26357ced 14-15,18-19
+gem/test/ruby_ui/accordion_test.rb
+  s_d11c90d0b6e015::t_72dfac3cedf11c 140-144
+  s_d11c90d0b6e015::t_2c86f38165b92c 84-139,145-155,157,159-170
+  s_d11c90d0b6e015::t_55d1d1285a8ddd 156,158
+gem/lib/ruby_ui/accordion/accordion_controller.js
+  s_d11c90d0b6e015::t_193937b8d37413 68-74,76,87-89,91,97-103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.10",
+  "base_commit_sha": "114a3fdbc2f49eda5b5ed0a29fc811a35b78c973",
+  "prompts": {},
+  "sessions": {
+    "s_d11c90d0b6e015": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5134e727-b777-4d13-8b00-ef421072eeda",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
