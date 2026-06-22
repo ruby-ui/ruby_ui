@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="dialog"
+// Connects to data-controller="ruby-ui--dialog"
 export default class extends Controller {
-  static targets = ["content"]
+  static targets = ["dialog"]
   static values = {
     open: {
       type: Boolean,
@@ -11,22 +11,33 @@ export default class extends Controller {
   }
 
   connect() {
+    this.dialogTarget.addEventListener("close", this.handleClose)
     if (this.openValue) {
       this.open()
     }
   }
 
+  disconnect() {
+    this.dialogTarget.removeEventListener("close", this.handleClose)
+  }
+
   open(e) {
-    e?.preventDefault();
-    document.body.insertAdjacentHTML('beforeend', this.contentTarget.innerHTML)
-    // prevent scroll on body
-    document.body.classList.add('overflow-hidden')
+    e?.preventDefault()
+    this.dialogTarget.showModal()
+    document.body.classList.add("overflow-hidden")
   }
 
   dismiss() {
-    // allow scroll on body
-    document.body.classList.remove('overflow-hidden')
-    // remove the element
-    this.element.remove()
+    this.dialogTarget.close()
+  }
+
+  backdropClick(e) {
+    if (e.target === this.dialogTarget) {
+      this.dismiss()
+    }
+  }
+
+  handleClose = () => {
+    document.body.classList.remove("overflow-hidden")
   }
 }

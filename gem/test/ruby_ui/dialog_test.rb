@@ -33,4 +33,92 @@ class RubyUI::DialogTest < ComponentTest
 
     assert_match(/Open Dialog/, output)
   end
+
+  # Regression test for #343: Dialog content must use native <dialog> element, not <div>
+  def test_dialog_content_renders_native_dialog_element
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/<dialog[\s>]/, output, "DialogContent must render a native <dialog> element")
+    refute_match(/<template[\s>]/, output, "DialogContent must not use a <template> element")
+  end
+
+  def test_dialog_wrapper_renders_as_div_with_stimulus_controller
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/data-controller="ruby-ui--dialog"/, output)
+    assert_match(/<div[^>]*data-controller="ruby-ui--dialog"/, output, "Dialog wrapper must be a <div>")
+  end
+
+  def test_dialog_content_has_stimulus_target
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/data-ruby-ui--dialog-target="dialog"/, output)
+  end
+
+  def test_dialog_content_has_backdrop_click_action
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/data-action="click->ruby-ui--dialog#backdropClick"/, output)
+  end
+
+  def test_dialog_content_sizes
+    {xs: "max-w-sm", sm: "max-w-md", md: "max-w-lg", lg: "max-w-2xl", xl: "max-w-4xl", full: "max-w-full"}.each do |size, expected_class|
+      output = phlex do
+        RubyUI.Dialog do
+          RubyUI.DialogContent(size: size) { "Content" }
+        end
+      end
+
+      assert_match(/#{Regexp.escape(expected_class)}/, output, "Size #{size} should apply class #{expected_class}")
+    end
+  end
+
+  def test_dialog_open_value_is_set_on_wrapper
+    output = phlex do
+      RubyUI.Dialog(open: true) do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/data-ruby-ui--dialog-open-value/, output)
+  end
+
+  def test_close_button_has_dismiss_action
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/data-action="click->ruby-ui--dialog#dismiss"/, output)
+  end
+
+  def test_trigger_has_open_action
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogTrigger do
+          RubyUI.Button { "Open" }
+        end
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/data-action="click->ruby-ui--dialog#open"/, output)
+  end
 end
