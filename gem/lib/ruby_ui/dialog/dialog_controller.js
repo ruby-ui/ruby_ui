@@ -19,6 +19,7 @@ export default class extends Controller {
 
   disconnect() {
     this.dialogTarget.removeEventListener("close", this.handleClose)
+    document.body.classList.remove("overflow-hidden")
   }
 
   open(e) {
