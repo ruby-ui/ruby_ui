@@ -122,7 +122,7 @@ class RubyUI::AccordionTest < ComponentTest
     assert_match(/data-state="closed"/, output)
   end
 
-  def test_open_content_does_not_have_hidden
+  def test_open_item_wires_stimulus_open_value
     output = phlex do
       RubyUI.Accordion do
         RubyUI.AccordionItem(open: true) do
@@ -134,14 +134,16 @@ class RubyUI::AccordionTest < ComponentTest
       end
     end
 
-    # When open: true the JS controller removes hidden on connect —
-    # but at the Ruby/HTML level the content still starts with hidden.
-    # The Stimulus controller handles removal at runtime. What we can assert
-    # at the structural level is that the item is wired up with open: true
-    # (Phlex renders boolean true as a bare attribute, no ="true").
+    # The Stimulus controller removes `hidden` and sets data-state="open" at
+    # runtime (JS). At the server-rendered HTML level we assert that the
+    # AccordionItem is wired up with the open value set to true so the
+    # controller reveals it on connect. Phlex renders `open: true` as a bare
+    # data attribute (no ="true"), so we confirm the attribute is present and
+    # NOT set to the false string.
     assert_match(/data-ruby-ui--accordion-open-value/, output)
-    # Confirm the open: true value is set (bare attribute without ="false")
     refute_match(/data-ruby-ui--accordion-open-value="false"/, output)
+    # The content is present in the DOM (server-rendered)
+    assert_match(/Visible content/, output)
   end
 
   # Structural test: a FormField with a FormFieldError nested inside a closed
