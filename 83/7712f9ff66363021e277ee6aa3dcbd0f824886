@@ -1,0 +1,21 @@
+gem/test/ruby_ui/accordion_test.rb
+  s_d11c90d0b6e015::t_3ab67b4d0d8f7d 125,137-142,145-146
+mcp/data/registry.json
+  s_d11c90d0b6e015::t_b501f3c35c42ed 14,18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.10",
+  "base_commit_sha": "837712f9ff66363021e277ee6aa3dcbd0f824886",
+  "prompts": {},
+  "sessions": {
+    "s_d11c90d0b6e015": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5134e727-b777-4d13-8b00-ef421072eeda",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
