@@ -1,0 +1,23 @@
+gem/lib/ruby_ui/form/form_docs.rb
+  s_d11c90d0b6e015::t_2624f0244a128b 193-200,202-211,214-216,218-223,225-236,238-249,251-255,257-260
+mcp/data/registry.json
+  s_d11c90d0b6e015::t_f7b96cce6db246 1397
+docs/app/views/docs/form.rb
+  s_d11c90d0b6e015::t_0958b86915e93d 193-200,202-211,214-216,218-223,225-236,238-249,251-255,257-260
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.10",
+  "base_commit_sha": "55fd108b7d9fb2b795cf433b7f18a89cedda36ab",
+  "prompts": {},
+  "sessions": {
+    "s_d11c90d0b6e015": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5134e727-b777-4d13-8b00-ef421072eeda",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
