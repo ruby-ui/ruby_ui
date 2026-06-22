@@ -170,6 +170,95 @@ class Views::Docs::Form < Views::Base
         RUBY
       end
 
+      Heading(level: 2) { "Rails Integration" }
+
+      Text do
+        plain "RubyUI Form components are plain HTML — they work with any form submission strategy. "
+        plain "The recommended approach for Rails apps is to use "
+        InlineLink(href: "https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with", target: "_blank") { "form_with" }
+        plain " to generate the "
+        code(class: "font-mono text-sm") { "action" }
+        plain " URL and CSRF token, then pass explicit "
+        code(class: "font-mono text-sm") { "name" }
+        plain " / "
+        code(class: "font-mono text-sm") { "id" }
+        plain " attributes to each RubyUI input so the browser serialises them correctly. "
+        plain "Server-side errors can be surfaced by rendering "
+        code(class: "font-mono text-sm") { "FormFieldError" }
+        plain " with content from "
+        code(class: "font-mono text-sm") { "model.errors.full_messages_for(:attr)" }
+        plain "."
+      end
+
+      Heading(level: 3) { "Minimal Rails form" }
+      Codeblock(<<~RUBY, syntax: :ruby)
+        # In your Phlex view, call form_with via helpers:
+        # form_with(url: users_path, method: :post) passes action + CSRF automatically.
+        #
+        # You can also set action and the CSRF token manually:
+        Form(action: helpers.users_path, method: "post", class: "w-2/3 space-y-6") do
+          input(type: "hidden", name: "authenticity_token", value: helpers.form_authenticity_token)
+
+          FormField do
+            FormFieldLabel(for: "user_email") { "Email" }
+            Input(
+              type: "email",
+              id: "user_email",
+              name: "user[email]",
+              placeholder: "you@example.com",
+              required: true
+            )
+            FormFieldError()
+          end
+
+          Button(type: "submit") { "Continue" }
+        end
+      RUBY
+
+      Heading(level: 3) { "Devise-style login form" }
+      Codeblock(<<~RUBY, syntax: :ruby)
+        # Full sign-in form mirroring Devise session[email] / session[password] params.
+        # Pass backend errors (e.g. "Invalid email or password") into FormFieldError.
+        Form(action: helpers.user_session_path, method: "post", class: "space-y-6") do
+          input(type: "hidden", name: "authenticity_token", value: helpers.form_authenticity_token)
+
+          FormField do
+            FormFieldLabel(for: "session_email") { "Email" }
+            Input(
+              type: "email",
+              id: "session_email",
+              name: "session[email]",
+              placeholder: "you@example.com",
+              autocomplete: "email",
+              required: true
+            )
+            FormFieldError { @error_message }
+          end
+
+          FormField do
+            FormFieldLabel(for: "session_password") { "Password" }
+            Input(
+              type: "password",
+              id: "session_password",
+              name: "session[password]",
+              autocomplete: "current-password",
+              required: true,
+              minlength: "8"
+            )
+            FormFieldError()
+          end
+
+          FormField do
+            div(class: "flex items-center gap-2") do
+              Checkbox(id: "session_remember_me", name: "session[remember_me]", value: "1")
+              FormFieldLabel(for: "session_remember_me") { "Remember me" }
+            end
+          end
+
+          Button(type: "submit", class: "w-full") { "Sign in" }
+        end
+      RUBY
+
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
