@@ -1,0 +1,21 @@
+mcp/data/registry.json
+  s_d11c90d0b6e015::t_5abad262de9be1 1256,1260
+gem/lib/ruby_ui/dialog/dialog_controller.js
+  s_d11c90d0b6e015::t_60cb12630617aa 22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.10",
+  "base_commit_sha": "9290140aa93069bded04df63b558eca07373da79",
+  "prompts": {},
+  "sessions": {
+    "s_d11c90d0b6e015": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5134e727-b777-4d13-8b00-ef421072eeda",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
