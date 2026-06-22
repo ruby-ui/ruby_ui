@@ -190,76 +190,74 @@ class Views::Docs::Form < Views::Base
         plain "."
       end
 
-      render Docs::VisualCodeExample.new(title: "Minimal Rails form", context: self) do
-        <<~RUBY
-          # In your Phlex view, call form_with via helpers:
-          # form_with(url: users_path, method: :post) passes action + CSRF automatically.
-          #
-          # You can also set action and the CSRF token manually:
-          Form(action: helpers.users_path, method: "post", class: "w-2/3 space-y-6") do
-            input(type: "hidden", name: "authenticity_token", value: helpers.form_authenticity_token)
+      Heading(level: 3) { "Minimal Rails form" }
+      Codeblock(<<~RUBY, syntax: :ruby)
+        # In your Phlex view, call form_with via helpers:
+        # form_with(url: users_path, method: :post) passes action + CSRF automatically.
+        #
+        # You can also set action and the CSRF token manually:
+        Form(action: helpers.users_path, method: "post", class: "w-2/3 space-y-6") do
+          input(type: "hidden", name: "authenticity_token", value: helpers.form_authenticity_token)
 
-            FormField do
-              FormFieldLabel(for: "user_email") { "Email" }
-              Input(
-                type: "email",
-                id: "user_email",
-                name: "user[email]",
-                placeholder: "you@example.com",
-                required: true
-              )
-              FormFieldError()
-            end
-
-            Button(type: "submit") { "Continue" }
+          FormField do
+            FormFieldLabel(for: "user_email") { "Email" }
+            Input(
+              type: "email",
+              id: "user_email",
+              name: "user[email]",
+              placeholder: "you@example.com",
+              required: true
+            )
+            FormFieldError()
           end
-        RUBY
-      end
 
-      render Docs::VisualCodeExample.new(title: "Devise-style login form", context: self) do
-        <<~RUBY
-          # Full sign-in form mirroring Devise session[email] / session[password] params.
-          # Pass backend errors (e.g. "Invalid email or password") into FormFieldError.
-          Form(action: helpers.user_session_path, method: "post", class: "space-y-6") do
-            input(type: "hidden", name: "authenticity_token", value: helpers.form_authenticity_token)
+          Button(type: "submit") { "Continue" }
+        end
+      RUBY
 
-            FormField do
-              FormFieldLabel(for: "session_email") { "Email" }
-              Input(
-                type: "email",
-                id: "session_email",
-                name: "session[email]",
-                placeholder: "you@example.com",
-                autocomplete: "email",
-                required: true
-              )
-              FormFieldError { @error_message }
-            end
+      Heading(level: 3) { "Devise-style login form" }
+      Codeblock(<<~RUBY, syntax: :ruby)
+        # Full sign-in form mirroring Devise session[email] / session[password] params.
+        # Pass backend errors (e.g. "Invalid email or password") into FormFieldError.
+        Form(action: helpers.user_session_path, method: "post", class: "space-y-6") do
+          input(type: "hidden", name: "authenticity_token", value: helpers.form_authenticity_token)
 
-            FormField do
-              FormFieldLabel(for: "session_password") { "Password" }
-              Input(
-                type: "password",
-                id: "session_password",
-                name: "session[password]",
-                autocomplete: "current-password",
-                required: true,
-                minlength: "8"
-              )
-              FormFieldError()
-            end
-
-            FormField do
-              div(class: "flex items-center gap-2") do
-                Checkbox(id: "session_remember_me", name: "session[remember_me]", value: "1")
-                FormFieldLabel(for: "session_remember_me") { "Remember me" }
-              end
-            end
-
-            Button(type: "submit", class: "w-full") { "Sign in" }
+          FormField do
+            FormFieldLabel(for: "session_email") { "Email" }
+            Input(
+              type: "email",
+              id: "session_email",
+              name: "session[email]",
+              placeholder: "you@example.com",
+              autocomplete: "email",
+              required: true
+            )
+            FormFieldError { @error_message }
           end
-        RUBY
-      end
+
+          FormField do
+            FormFieldLabel(for: "session_password") { "Password" }
+            Input(
+              type: "password",
+              id: "session_password",
+              name: "session[password]",
+              autocomplete: "current-password",
+              required: true,
+              minlength: "8"
+            )
+            FormFieldError()
+          end
+
+          FormField do
+            div(class: "flex items-center gap-2") do
+              Checkbox(id: "session_remember_me", name: "session[remember_me]", value: "1")
+              FormFieldLabel(for: "session_remember_me") { "Remember me" }
+            end
+          end
+
+          Button(type: "submit", class: "w-full") { "Sign in" }
+        end
+      RUBY
 
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
