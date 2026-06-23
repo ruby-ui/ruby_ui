@@ -52,6 +52,8 @@ export default class extends Controller {
     this.triggerTarget.addEventListener("focusout", this.handleMouseLeave);
     this.contentTarget.addEventListener("mouseenter", this.handleMouseEnter);
     this.contentTarget.addEventListener("mouseleave", this.handleMouseLeave);
+    this.contentTarget.addEventListener("focusin", this.handleMouseEnter);
+    this.contentTarget.addEventListener("focusout", this.handleMouseLeave);
   }
 
   removeEventListeners() {
@@ -61,6 +63,8 @@ export default class extends Controller {
     this.triggerTarget.removeEventListener("focusout", this.handleMouseLeave);
     this.contentTarget.removeEventListener("mouseenter", this.handleMouseEnter);
     this.contentTarget.removeEventListener("mouseleave", this.handleMouseLeave);
+    this.contentTarget.removeEventListener("focusin", this.handleMouseEnter);
+    this.contentTarget.removeEventListener("focusout", this.handleMouseLeave);
   }
 
   handleMouseEnter = () => {
@@ -81,6 +85,7 @@ export default class extends Controller {
   show() {
     this.openValue = true;
     this.contentTarget.classList.remove("hidden");
+    this.contentTarget.dataset.state = "open";
     if (this.matchWidthValue) {
       this.contentTarget.style.width = `${this.triggerTarget.offsetWidth}px`;
     }
@@ -91,6 +96,7 @@ export default class extends Controller {
   hide() {
     this.openValue = false;
     this.contentTarget.classList.add("hidden");
+    this.contentTarget.dataset.state = "closed";
     document.removeEventListener("keydown", this.boundHandleKeydown);
     this.deselectAll();
     if (this.cleanup) {
@@ -117,6 +123,11 @@ export default class extends Controller {
   }
 
   handleKeydown(e) {
+    if (e.key === "Escape") {
+      this.hide();
+      return;
+    }
+
     if (this.menuItemTargets.length === 0) return;
 
     if (e.key === "ArrowDown") {
@@ -128,8 +139,6 @@ export default class extends Controller {
     } else if (e.key === "Enter" && this.selectedIndex !== -1) {
       e.preventDefault();
       this.menuItemTargets[this.selectedIndex].click();
-    } else if (e.key === "Escape") {
-      this.hide();
     }
   }
 

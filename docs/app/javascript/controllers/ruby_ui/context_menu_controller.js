@@ -34,6 +34,7 @@ export default class extends Controller {
   open() {
     this.openValue = true;
     this.contentTarget.classList.remove("hidden");
+    this.contentTarget.dataset.state = "open";
     if (this.matchWidthValue) {
       this.contentTarget.style.width = `${this.triggerTarget.offsetWidth}px`;
     }
@@ -49,6 +50,7 @@ export default class extends Controller {
     if (!this.openValue) return;
     this.openValue = false;
     this.contentTarget.classList.add("hidden");
+    this.contentTarget.dataset.state = "closed";
     this.removeEventListeners();
     this.deselectAll();
     if (this.cleanup) {
@@ -76,15 +78,19 @@ export default class extends Controller {
 
   addEventListeners() {
     document.addEventListener("keydown", this.boundHandleKeydown);
-    document.addEventListener("click", this.handleOutsideClick);
+    document.addEventListener("click", this.handleOutsidePointer);
+    // A right-click outside should dismiss this menu and let the native
+    // context menu (or another trigger's menu) take over.
+    document.addEventListener("contextmenu", this.handleOutsidePointer);
   }
 
   removeEventListeners() {
     document.removeEventListener("keydown", this.boundHandleKeydown);
-    document.removeEventListener("click", this.handleOutsideClick);
+    document.removeEventListener("click", this.handleOutsidePointer);
+    document.removeEventListener("contextmenu", this.handleOutsidePointer);
   }
 
-  handleOutsideClick = (event) => {
+  handleOutsidePointer = (event) => {
     if (!this.element.contains(event.target)) {
       this.hide();
     }
