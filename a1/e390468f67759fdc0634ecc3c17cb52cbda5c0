@@ -1,0 +1,40 @@
+gem/test/ruby_ui/hover_card_test.rb
+  s_cc9044a0f80c53::t_750a64c3064743 25-37
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_cc9044a0f80c53::t_b3e7cf20b9fbc7 67
+  s_cc9044a0f80c53::t_9e1c76955eca1b 43
+gem/lib/ruby_ui/hover_card/hover_card_controller.js
+  s_cc9044a0f80c53::t_98309e8abde9ec 2-8,13-17,20-24,26-27,31-37,40-46,48-54,57-63,66-78,81-88,91-99,102-116,120,122,125,128,131-132,138,160,162,167-169
+docs/app/javascript/controllers/ruby_ui/hover_card_controller.js
+  s_cc9044a0f80c53::t_364886b7e4435d 2-8,13-17,20-24,26-27,31-37,40-46,48-54,57-63,66-78,81-88,91-99,102-116,120,122,125,128,131-132,138,160,162,167-169
+gem/lib/ruby_ui/hover_card/hover_card_content.rb
+  s_cc9044a0f80c53::t_ded307136b2413 5-6,14,17
+gem/lib/ruby_ui/context_menu/context_menu_controller.js
+  s_cc9044a0f80c53::t_971bfe16ebef4f 2-8,13-17,20,22,26,29-31,34-38,40-41,44-56,60-74,77-79,82-84,87-92,94-98,100-102,105,108,116,138,140,145-147
+docs/app/javascript/controllers/ruby_ui/context_menu_controller.js
+  s_cc9044a0f80c53::t_364886b7e4435d 2-8,13-17,20,22,26,29-31,34-38,40-41,44-56,60-74,77-79,82-84,87-92,94-98,100-102,105,108,116,138,140,145-147
+docs/app/components/component_setup/manual_steps.rb
+  s_cc9044a0f80c53::t_1669de46c2b6f2 177
+gem/package.json
+  s_cc9044a0f80c53::t_c26c1a31c2df72 34
+gem/lib/ruby_ui/context_menu/context_menu_content.rb
+  s_cc9044a0f80c53::t_6b364824b701e8 5-6,16,18
+gem/test/ruby_ui/context_menu_test.rb
+  s_cc9044a0f80c53::t_1127b557e067a4 29-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.10",
+  "base_commit_sha": "a1e390468f67759fdc0634ecc3c17cb52cbda5c0",
+  "prompts": {},
+  "sessions": {
+    "s_cc9044a0f80c53": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c5bc1bee-dc86-4209-bce8-f63ff0d198bb",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
