@@ -56,7 +56,7 @@ Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new bac
 
 1. **Bump the version (gem).** Edit `RubyUI::VERSION` in `gem/lib/ruby_ui.rb`. Then from each app dir regenerate lockfiles so the path dependency tracks the new version: `gem/Gemfile.lock` and `docs/Gemfile.lock` should both read `ruby_ui (X.Y.Z)`.
 
-2. **Publish the gem to RubyGems.** From `gem/`: `gem build ruby_ui.gemspec` then `gem push ruby_ui-X.Y.Z.gem`. The account has **MFA**, so `gem push` prompts for a one-time password — have the OTP ready (or pass `--otp <CODE>`). Confirm `djalmaaraujo` is in `gem owner ruby_ui` first. Do not commit the built `.gem` artifact.
+2. **Publish the gem to RubyGems.** From `gem/`: `gem build ruby_ui.gemspec` then `gem push ruby_ui-X.Y.Z.gem`. The account has **MFA**, so `gem push` prompts for a one-time password — have the OTP ready (or pass `--otp <CODE>`). Confirm the publishing account is listed in `gem owner ruby_ui` first. Do not commit the built `.gem` artifact.
 
 3. **Reflect the version on the docs website (PR against `main`).** Releases go through a `[Release] vX.Y.Z` PR (main is protected — no direct pushes). The PR bundles, on a `release/vX.Y.Z` branch:
    - the `gem/lib/ruby_ui.rb` bump + both regenerated `Gemfile.lock`s;
