@@ -174,19 +174,13 @@ module Components
       end
 
       # Temporary solution while we don't remove
-      # motion adn tippy.js dependencies
+      # the motion dependency
       def pin_importmap_instructions(js_package)
         case js_package
         when "motion"
           <<~CODE
             // Add to your config/importmap.rb
             pin "motion", to: "https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm"
-          CODE
-        when "tippy.js"
-          <<~CODE
-            // Add to your config/importmap.rb
-            pin "tippy.js", to: "https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/+esm"
-            pin "@popperjs/core", to: "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/+esm"\n
           CODE
         else
           "bin/importmap pin #{js_package}"
