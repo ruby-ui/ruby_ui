@@ -48,6 +48,39 @@ bundle exec standardrb
 - Stimulus controllers colocated with components: `<component>_controller.js`. JS deps declared in `gem/package.json` and per-component in `dependencies.yml`.
 - Tests extend `ComponentTest`; render via `phlex { ... }` helper.
 
+## Releasing
+
+A release is **not done** until all four steps below are complete. Skipping the publish, the docs/website reflection, or the git tag leaves the release half-finished.
+
+Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new backward-compatible features → **minor**; bug fixes / docs only → **patch**. List the range with `git log --oneline vX.Y.Z..HEAD`.
+
+1. **Bump the version (gem).** Edit `RubyUI::VERSION` in `gem/lib/ruby_ui.rb`. Then from each app dir regenerate lockfiles so the path dependency tracks the new version: `gem/Gemfile.lock` and `docs/Gemfile.lock` should both read `ruby_ui (X.Y.Z)`.
+
+2. **Publish the gem to RubyGems.** From `gem/`: `gem build ruby_ui.gemspec` then `gem push ruby_ui-X.Y.Z.gem`. The account has **MFA**, so `gem push` prompts for a one-time password — have the OTP ready (or pass `--otp <CODE>`). Confirm the publishing account is listed in `gem owner ruby_ui` first. Do not commit the built `.gem` artifact.
+
+3. **Reflect the version on the docs website (PR against `main`).** Releases go through a `[Release] vX.Y.Z` PR (main is protected — no direct pushes). The PR bundles, on a `release/vX.Y.Z` branch:
+   - the `gem/lib/ruby_ui.rb` bump + both regenerated `Gemfile.lock`s;
+   - `docs/app/views/pages/home.rb` — update the home hero badge copy to the headline features (the header version badge reads `RubyUI::VERSION` and updates automatically; do not hardcode it);
+   - `mcp/data/registry.json` — rebuild with `cd mcp && bundle exec rake mcp:build` (reads `../gem`, so it picks up the new version).
+
+4. **Tag + GitHub release.** After the release PR merges, tag `vX.Y.Z` on the merge commit, push the tag, and cut the GitHub release. The git tag and the published gem must both exist — publishing the gem without tagging (or vice versa) is an incomplete release.
+
+5. **Hand over the announcement URL (final step).** As the last step, give the user a ready-to-post X.com (Twitter) share link for the RubyUI account — the user posts it manually. Use the prefilled-tweet intent URL with the body URL-encoded:
+
+   ```
+   https://x.com/intent/post?text=RubyUI%20X.Y.Z%20released%21%20%F0%9F%9A%80%0A%0Ahttps%3A%2F%2Fwww.rubyui.com%2Fdocs%2Fchangelog
+   ```
+
+   which decodes to:
+
+   ```
+   RubyUI X.Y.Z released! 🚀
+
+   https://www.rubyui.com/docs/changelog
+   ```
+
+   Substitute the real full `X.Y.Z` (e.g. `1.4.0`) in the encoded `text` — always include all three numbers so patch releases get announced too. Output the link so the user can open and post it.
+
 ## Commits & PRs
 
 - Bracketed prefixes (`[Feature]`, `[Bug Fix]`, `[Documentation]`) or scoped conventional (`feat(scope): ...`).
@@ -58,5 +91,6 @@ bundle exec standardrb
 
 - Don't run commands from repo root expecting them to work — `cd gem` or `cd docs` first.
 - Don't edit a component without updating its `docs/app/views/docs/<component>.rb` counterpart.
-- Don't bump the gem version or release from `docs/`; releases happen in `gem/`.
+- Don't bump the gem version from `docs/`; `RubyUI::VERSION` lives in `gem/lib/ruby_ui.rb` and the gem is published from `gem/`. (The release PR also reflects the version into `docs/` and `mcp/` — see [Releasing](#releasing).)
+- Don't call a release done after only publishing the gem — tag `vX.Y.Z` and reflect the version on the website too.
 - Don't commit secrets; each app uses local env config.
