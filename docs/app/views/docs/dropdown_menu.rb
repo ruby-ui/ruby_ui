@@ -11,7 +11,7 @@ class Views::Docs::DropdownMenu < Views::Base
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           DropdownMenu do
-            DropdownMenuTrigger(class: 'w-full') do
+            DropdownMenuTrigger do
               Button(variant: :outline) { "Open" }
             end
             DropdownMenuContent do
@@ -29,7 +29,7 @@ class Views::Docs::DropdownMenu < Views::Base
       render Docs::VisualCodeExample.new(title: "Non-navigational item", description: "Use as: :div when the item hosts its own interactive element (e.g. a dialog or form trigger). This avoids nesting a <button>/<form> inside the item's <a> while keeping the menu-item styling, role and keyboard behavior.", context: self) do
         <<~RUBY
           DropdownMenu do
-            DropdownMenuTrigger(class: 'w-full') do
+            DropdownMenuTrigger do
               Button(variant: :outline) { "Open" }
             end
             DropdownMenuContent do
