@@ -1,0 +1,28 @@
+docs/app/javascript/controllers/ruby_ui/hover_card_controller.js
+  s_cc9044a0f80c53::t_bcde99f5741e6f 55-56,66-67,88,99,126-130
+gem/lib/ruby_ui/hover_card/hover_card_controller.js
+  s_cc9044a0f80c53::t_17bf5bfad8f7f3 88,99
+  s_cc9044a0f80c53::t_4369242125966a 55-56,66-67
+  s_cc9044a0f80c53::t_b7f4aab5798090 126-130
+docs/app/javascript/controllers/ruby_ui/context_menu_controller.js
+  s_cc9044a0f80c53::t_bcde99f5741e6f 37,53,81-84,89-90,93
+gem/lib/ruby_ui/context_menu/context_menu_controller.js
+  s_cc9044a0f80c53::t_4703601e5a9c30 37,53
+  s_cc9044a0f80c53::t_392b9379dcbae9 81-84,89-90,93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.10",
+  "base_commit_sha": "b45398fc62c44b01dcafab5b604dda320ef36f07",
+  "prompts": {},
+  "sessions": {
+    "s_cc9044a0f80c53": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c5bc1bee-dc86-4209-bce8-f63ff0d198bb",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
