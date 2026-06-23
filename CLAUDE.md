@@ -68,18 +68,18 @@ Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new bac
 5. **Hand over the announcement URL (final step).** As the last step, give the user a ready-to-post X.com (Twitter) share link for the RubyUI account — the user posts it manually. Use the prefilled-tweet intent URL with the body URL-encoded:
 
    ```
-   https://x.com/intent/post?text=RubyUI%20X.Y%20released%21%20%F0%9F%9A%80%0A%0Ahttps%3A%2F%2Fwww.rubyui.com%2Fdocs%2Fchangelog
+   https://x.com/intent/post?text=RubyUI%20X.Y.Z%20released%21%20%F0%9F%9A%80%0A%0Ahttps%3A%2F%2Fwww.rubyui.com%2Fdocs%2Fchangelog
    ```
 
    which decodes to:
 
    ```
-   RubyUI X.Y released! 🚀
+   RubyUI X.Y.Z released! 🚀
 
    https://www.rubyui.com/docs/changelog
    ```
 
-   Substitute the real `X.Y` (e.g. `1.4`) in the encoded `text`. Output the link so the user can open and post it.
+   Substitute the real full `X.Y.Z` (e.g. `1.4.0`) in the encoded `text` — always include all three numbers so patch releases get announced too. Output the link so the user can open and post it.
 
 ## Commits & PRs
 
