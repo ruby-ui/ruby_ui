@@ -43,7 +43,7 @@ export default class extends Controller {
 
   #computeTooltip() {
     computePosition(this.triggerTarget, this.contentTarget, {
-      placement: this.optionsValue.placement || "top",
+      placement: this.optionsValue.placement || "bottom",
       middleware: [flip(), shift(), offset(8)],
       strategy: this.optionsValue.strategy || "absolute",
     }).then(({ x, y }) => {
@@ -73,12 +73,16 @@ export default class extends Controller {
     this.#deselectAll();
     this.#addEventListeners();
     this.#computeTooltip();
+    // Lift the open menu above sibling dropdowns/elements. The container has no
+    // static z-index, so closed siblings stack in normal flow and never cover it.
+    this.element.style.zIndex = "50";
     this.contentTarget.classList.remove("hidden");
   }
 
   close() {
     this.openValue = false;
     this.#removeEventListeners();
+    this.element.style.zIndex = "";
     this.contentTarget.classList.add("hidden");
   }
 

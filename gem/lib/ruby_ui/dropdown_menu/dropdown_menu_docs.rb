@@ -11,7 +11,7 @@ class Views::Docs::DropdownMenu < Views::Base
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           DropdownMenu do
-            DropdownMenuTrigger(class: 'w-full') do
+            DropdownMenuTrigger do
               Button(variant: :outline) { "Open" }
             end
             DropdownMenuContent do
