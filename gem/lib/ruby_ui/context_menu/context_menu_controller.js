@@ -1,71 +1,29 @@
 import { Controller } from "@hotwired/stimulus";
-import tippy from "tippy.js";
+import {
+  computePosition,
+  flip,
+  shift,
+  offset,
+  autoUpdate,
+} from "@floating-ui/dom";
 
 export default class extends Controller {
   static targets = ["trigger", "content", "menuItem"];
   static values = {
-    options: {
-      type: Object,
-      default: {},
-    },
-    // make content width of the trigger element (true/false)
-    matchWidth: {
-      type: Boolean,
-      default: false,
-    }
-  }
+    open: { type: Boolean, default: false },
+    options: { type: Object, default: {} },
+    // make content width match the trigger element (true/false)
+    matchWidth: { type: Boolean, default: false },
+  };
 
   connect() {
-    this.boundHandleKeydown = this.handleKeydown.bind(this); // Bind the function so we can remove it later
-    this.initializeTippy();
+    this.cleanup = null;
     this.selectedIndex = -1;
+    this.boundHandleKeydown = this.handleKeydown.bind(this);
   }
 
   disconnect() {
-    this.destroyTippy();
-  }
-
-  initializeTippy() {
-    const defaultOptions = {
-      content: this.contentTarget.innerHTML,
-      allowHTML: true,
-      interactive: true,
-      onShow: (instance) => {
-        this.matchWidthValue && this.setContentWidth(instance); // ensure content width matches trigger width
-        this.addEventListeners();
-      },
-      onHide: () => {
-        this.removeEventListeners();
-        this.deselectAll();
-      },
-      popperOptions: {
-        modifiers: [
-          {
-            name: "offset",
-            options: {
-              offset: [0, 4]
-            },
-          },
-        ],
-      }
-    };
-
-    const mergedOptions = { ...this.optionsValue, ...defaultOptions };
-    this.tippy = tippy(this.triggerTarget, mergedOptions);
-  }
-
-  destroyTippy() {
-    if (this.tippy) {
-      this.tippy.destroy();
-    }
-  }
-
-  setContentWidth(instance) {
-    // box-sizing: border-box
-    const content = instance.popper.querySelector('.tippy-content');
-    if (content) {
-      content.style.width = `${instance.reference.offsetWidth}px`;
-    }
+    this.hide();
   }
 
   handleContextMenu(event) {
@@ -74,33 +32,94 @@ export default class extends Controller {
   }
 
   open() {
-    this.tippy.show();
+    this.openValue = true;
+    this.contentTarget.classList.remove("hidden");
+    this.contentTarget.dataset.state = "open";
+    if (this.matchWidthValue) {
+      this.contentTarget.style.width = `${this.triggerTarget.offsetWidth}px`;
+    }
+    this.addEventListeners();
+    this.updatePosition();
   }
 
   close() {
-    this.tippy.hide();
+    this.hide();
   }
 
-  handleKeydown(e) {
-    // return if no menu items (one line fix for)
-    if (this.menuItemTargets.length === 0) { return; }
+  hide() {
+    if (!this.openValue) return;
+    this.openValue = false;
+    this.contentTarget.classList.add("hidden");
+    this.contentTarget.dataset.state = "closed";
+    this.removeEventListeners();
+    this.deselectAll();
+    if (this.cleanup) {
+      this.cleanup();
+      this.cleanup = null;
+    }
+  }
 
-    if (e.key === 'ArrowDown') {
+  updatePosition() {
+    if (this.cleanup) this.cleanup();
+
+    this.cleanup = autoUpdate(this.triggerTarget, this.contentTarget, () => {
+      computePosition(this.triggerTarget, this.contentTarget, {
+        placement: this.optionsValue.placement || "bottom-start",
+        middleware: [offset(4), flip(), shift({ padding: 8 })],
+      }).then(({ x, y, placement }) => {
+        Object.assign(this.contentTarget.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
+        this.contentTarget.dataset.side = placement.split("-")[0];
+      });
+    });
+  }
+
+  addEventListeners() {
+    document.addEventListener("keydown", this.boundHandleKeydown);
+    document.addEventListener("click", this.handleOutsidePointer);
+    // A right-click outside should dismiss this menu and let the native
+    // context menu (or another trigger's menu) take over.
+    document.addEventListener("contextmenu", this.handleOutsidePointer);
+  }
+
+  removeEventListeners() {
+    document.removeEventListener("keydown", this.boundHandleKeydown);
+    document.removeEventListener("click", this.handleOutsidePointer);
+    document.removeEventListener("contextmenu", this.handleOutsidePointer);
+  }
+
+  handleOutsidePointer = (event) => {
+    if (!this.element.contains(event.target)) {
+      this.hide();
+    }
+  };
+
+  handleKeydown(e) {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      this.hide();
+      return;
+    }
+
+    if (this.menuItemTargets.length === 0) return;
+
+    if (e.key === "ArrowDown") {
       e.preventDefault();
       this.updateSelectedItem(1);
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
       this.updateSelectedItem(-1);
-    } else if (e.key === 'Enter' && this.selectedIndex !== -1) {
+    } else if (e.key === "Enter" && this.selectedIndex !== -1) {
       e.preventDefault();
       this.menuItemTargets[this.selectedIndex].click();
     }
   }
 
   updateSelectedItem(direction) {
-    // Check if any of the menuItemTargets have aria-selected="true" and set the selectedIndex to that index
     this.menuItemTargets.forEach((item, index) => {
-      if (item.getAttribute('aria-selected') === 'true') {
+      if (item.getAttribute("aria-selected") === "true") {
         this.selectedIndex = index;
       }
     });
@@ -121,24 +140,17 @@ export default class extends Controller {
   }
 
   toggleAriaSelected(element, isSelected) {
-    // Add or remove attribute
     if (isSelected) {
-      element.setAttribute('aria-selected', 'true');
+      element.setAttribute("aria-selected", "true");
     } else {
-      element.removeAttribute('aria-selected');
+      element.removeAttribute("aria-selected");
     }
   }
 
   deselectAll() {
-    this.menuItemTargets.forEach(item => this.toggleAriaSelected(item, false));
+    this.menuItemTargets.forEach((item) =>
+      this.toggleAriaSelected(item, false)
+    );
     this.selectedIndex = -1;
-  }
-
-  addEventListeners() {
-    document.addEventListener('keydown', this.boundHandleKeydown);
-  }
-
-  removeEventListeners() {
-    document.removeEventListener('keydown', this.boundHandleKeydown);
   }
 }

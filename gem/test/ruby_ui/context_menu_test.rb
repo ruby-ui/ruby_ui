@@ -26,4 +26,19 @@ class RubyUI::ContextMenuTest < ComponentTest
 
     assert_match(/Right click here/, output)
   end
+
+  # Floating UI positions a real element in the DOM (tippy used to clone a
+  # <template>). Content must render as a hidden, absolutely-positioned div.
+  def test_content_renders_hidden_positioned_div_not_template
+    output = phlex do
+      RubyUI.ContextMenuContent do
+        RubyUI.ContextMenuItem(href: "#") { "Back" }
+      end
+    end
+
+    refute_match(/<template/, output)
+    assert_match(/hidden/, output)
+    assert_match(/absolute/, output)
+    assert_match(/Back/, output)
+  end
 end

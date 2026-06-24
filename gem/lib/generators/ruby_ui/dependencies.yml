@@ -40,7 +40,7 @@ command:
 
 context_menu:
   js_packages:
-    - "tippy.js"
+    - "@floating-ui/dom"
 
 date_picker:
   components:
@@ -64,7 +64,7 @@ dropdown_menu:
 
 hover_card:
   js_packages:
-    - "tippy.js"
+    - "@floating-ui/dom"
 
 masked_input:
   components:

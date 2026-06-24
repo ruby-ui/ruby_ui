@@ -31,8 +31,7 @@
     "fuse.js": "^7.0.0",
     "maska": "^3.0.3",
     "motion": "^10.16.4",
-    "mustache": "^4.2.0",
-    "tippy.js": "^6.3.7"
+    "mustache": "^4.2.0"
   },
   "devDependencies": {
     "globals": "^15.8.0"
