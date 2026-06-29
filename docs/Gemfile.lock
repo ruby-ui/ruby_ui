@@ -169,7 +169,7 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.2)
-    mcp (0.21.0)
+    mcp (0.22.0)
       json_schemer (>= 2.4)
     method_source (1.1.0)
     mini_mime (1.1.5)
