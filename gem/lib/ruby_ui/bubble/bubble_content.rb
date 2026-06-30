@@ -16,7 +16,7 @@ module RubyUI
     def default_attrs
       {
         data: {slot: "bubble-content"},
-        class: "w-fit max-w-full min-w-0 overflow-hidden wrap-break-word rounded-3xl border border-transparent px-3 py-2.5 text-sm leading-relaxed group-data-[align=end]/bubble:self-end [button]:text-left [&_button]:transition-colors [&_a]:transition-colors [&_button]:outline-none [&_a]:outline-none [&_button:focus-visible]:border-ring [&_a:focus-visible]:border-ring [&_button:focus-visible]:ring-3 [&_a:focus-visible]:ring-3 [&_button:focus-visible]:ring-ring/30 [&_a:focus-visible]:ring-ring/30"
+        class: "w-fit max-w-full min-w-0 overflow-hidden wrap-break-word rounded-3xl border border-transparent px-3 py-2.5 text-sm leading-relaxed group-data-[align=end]/bubble:self-end [&:is(button,a)]:text-left [&:is(button,a)]:outline-none [&:is(button,a)]:transition-colors [&:is(button,a):focus-visible]:border-ring [&:is(button,a):focus-visible]:ring-3 [&:is(button,a):focus-visible]:ring-ring/30"
       }
     end
   end
