@@ -108,6 +108,7 @@ class SiteFiles
     {title: "Input", path: "/docs/input", description: "Styled input field primitive."},
     {title: "Link", path: "/docs/link", description: "Link component with button-like and underline variants."},
     {title: "Masked Input", path: "/docs/masked_input", description: "Form input with an applied mask."},
+    {title: "Message", path: "/docs/message", description: "Chat message layout pairing an avatar with bubbles, headers, and footers."},
     {title: "Pagination", path: "/docs/pagination", description: "Page navigation with next and previous links."},
     {title: "Popover", path: "/docs/popover", description: "Triggered rich content panel."},
     {title: "Progress", path: "/docs/progress", description: "Progress bar for task completion state."},

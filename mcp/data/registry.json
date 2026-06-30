@@ -1702,6 +1702,68 @@
         }
       ]
     },
+    "message": {
+      "name": "Message",
+      "description": "A chat message layout that pairs an avatar with bubbles, headers, and footers. Built on top of Avatar and Bubble.",
+      "files": [
+        {
+          "path": "message.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Message < Base\n    def initialize(align: :start, **attrs)\n      @align = align\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"message\", align: @align},\n        class: \"group/message relative flex w-full min-w-0 gap-2 text-sm data-[align=end]:flex-row-reverse\"\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "message_avatar.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class MessageAvatar < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"message-avatar\"},\n        class: \"flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-data-[slot=message-footer]/message:-translate-y-8\"\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "message_content.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class MessageContent < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"message-content\"},\n        class: \"flex w-full min-w-0 flex-col gap-2.5 wrap-break-word group-data-[align=end]/message:[&>[data-slot]]:self-end\"\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "message_footer.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class MessageFooter < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"message-footer\"},\n        class: \"flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-data-[align=end]/message:justify-end group-has-data-[variant=ghost]/message:px-0\"\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "message_group.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class MessageGroup < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"message-group\"},\n        class: \"flex min-w-0 flex-col gap-2\"\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "message_header.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class MessageHeader < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"message-header\"},\n        class: \"flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0\"\n      }\n    end\n  end\nend\n"
+        }
+      ],
+      "dependencies": {
+        "components": [
+          "Avatar",
+          "Bubble"
+        ],
+        "js_packages": [],
+        "gems": []
+      },
+      "install_command": "rails g ruby_ui:component Message",
+      "docs_markdown": "# Message\n\nA chat message layout that pairs an avatar with bubbles, headers, and footers. Built on top of Avatar and Bubble.\n\n## Usage\n\n### Conversation\n\n```ruby\ndiv(class: \"flex flex-col gap-6\") do\n  Message(align: :end) do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/joeldrapper.png\", alt: \"@me\")\n        AvatarFallback { \"ME\" }\n      end\n    end\n    MessageContent do\n      Bubble do\n        BubbleContent { \"Deploying to prod real quick.\" }\n      end\n    end\n  end\n\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) do\n        BubbleContent { \"It's 4:55 PM. On a Friday.\" }\n      end\n    end\n  end\n\n  Message(align: :end) do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/joeldrapper.png\", alt: \"@me\")\n        AvatarFallback { \"ME\" }\n      end\n    end\n    MessageContent do\n      Bubble do\n        BubbleContent { \"It's a one-line change.\" }\n      end\n      MessageFooter { \"Delivered\" }\n    end\n  end\n\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      BubbleGroup do\n        Bubble(variant: :muted) do\n          BubbleContent { \"It's always a one-line change 😭.\" }\n        end\n        Bubble(variant: :muted) do\n          BubbleContent { \"Alright, let me take a look.\" }\n          BubbleReactions(role: \"img\", aria_label: \"Reaction: thumbs up\") do\n            span { \"👍\" }\n          end\n        end\n      end\n    end\n  end\nend\n```\n\n## With header\n\n### Header and footer\n\n```ruby\nMessage do\n  MessageAvatar do\n    Avatar(size: :sm) do\n      AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@oliver\")\n      AvatarFallback { \"OL\" }\n    end\n  end\n  MessageContent do\n    MessageHeader { \"Oliver\" }\n    Bubble(variant: :muted) do\n      BubbleContent { \"Pushed the fix, can you review?\" }\n    end\n    MessageFooter { \"9:41 AM\" }\n  end\nend\n```\n\n## Alignment\n\n### Sender and receiver\n\n```ruby\ndiv(class: \"flex flex-col gap-6\") do\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) { BubbleContent { \"Aligned to the start.\" } }\n    end\n  end\n  Message(align: :end) do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/joeldrapper.png\", alt: \"@me\")\n        AvatarFallback { \"ME\" }\n      end\n    end\n    MessageContent do\n      Bubble { BubbleContent { \"Aligned to the end.\" } }\n    end\n  end\nend\n```\n\n## Group\n\n### Message group\n\n```ruby\nMessageGroup do\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) { BubbleContent { \"First message.\" } }\n    end\n  end\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) { BubbleContent { \"Second, tighter spacing.\" } }\n    end\n  end\nend\n```",
+      "examples": [
+        {
+          "title": "Conversation",
+          "code": "div(class: \"flex flex-col gap-6\") do\n  Message(align: :end) do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/joeldrapper.png\", alt: \"@me\")\n        AvatarFallback { \"ME\" }\n      end\n    end\n    MessageContent do\n      Bubble do\n        BubbleContent { \"Deploying to prod real quick.\" }\n      end\n    end\n  end\n\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) do\n        BubbleContent { \"It's 4:55 PM. On a Friday.\" }\n      end\n    end\n  end\n\n  Message(align: :end) do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/joeldrapper.png\", alt: \"@me\")\n        AvatarFallback { \"ME\" }\n      end\n    end\n    MessageContent do\n      Bubble do\n        BubbleContent { \"It's a one-line change.\" }\n      end\n      MessageFooter { \"Delivered\" }\n    end\n  end\n\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      BubbleGroup do\n        Bubble(variant: :muted) do\n          BubbleContent { \"It's always a one-line change 😭.\" }\n        end\n        Bubble(variant: :muted) do\n          BubbleContent { \"Alright, let me take a look.\" }\n          BubbleReactions(role: \"img\", aria_label: \"Reaction: thumbs up\") do\n            span { \"👍\" }\n          end\n        end\n      end\n    end\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Header and footer",
+          "code": "Message do\n  MessageAvatar do\n    Avatar(size: :sm) do\n      AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@oliver\")\n      AvatarFallback { \"OL\" }\n    end\n  end\n  MessageContent do\n    MessageHeader { \"Oliver\" }\n    Bubble(variant: :muted) do\n      BubbleContent { \"Pushed the fix, can you review?\" }\n    end\n    MessageFooter { \"9:41 AM\" }\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Sender and receiver",
+          "code": "div(class: \"flex flex-col gap-6\") do\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) { BubbleContent { \"Aligned to the start.\" } }\n    end\n  end\n  Message(align: :end) do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/joeldrapper.png\", alt: \"@me\")\n        AvatarFallback { \"ME\" }\n      end\n    end\n    MessageContent do\n      Bubble { BubbleContent { \"Aligned to the end.\" } }\n    end\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Message group",
+          "code": "MessageGroup do\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) { BubbleContent { \"First message.\" } }\n    end\n  end\n  Message do\n    MessageAvatar do\n      Avatar(size: :sm) do\n        AvatarImage(src: \"https://github.com/shadcn.png\", alt: \"@rabbit\")\n        AvatarFallback { \"R\" }\n      end\n    end\n    MessageContent do\n      Bubble(variant: :muted) { BubbleContent { \"Second, tighter spacing.\" } }\n    end\n  end\nend\n",
+          "language": "ruby"
+        }
+      ]
+    },
     "native_select": {
       "name": "NativeSelect",
       "description": "A styled native HTML select element with consistent design system integration.",

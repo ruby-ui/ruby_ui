@@ -35,6 +35,7 @@ module Components
           {name: "Input", path: docs_input_path},
           {name: "Link", path: docs_link_path},
           {name: "Masked Input", path: masked_input_path},
+          {name: "Message", path: docs_message_path},
           {name: "Pagination", path: docs_pagination_path},
           {name: "Popover", path: docs_popover_path},
           {name: "Progress", path: docs_progress_path},
