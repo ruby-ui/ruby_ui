@@ -228,6 +228,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/masked_input
 - Summary: Form input with an applied mask.
 
+### Message
+
+- URL: https://rubyui.com/docs/message
+- Summary: Chat message layout pairing an avatar with bubbles, headers, and footers.
+
 ### Pagination
 
 - URL: https://rubyui.com/docs/pagination

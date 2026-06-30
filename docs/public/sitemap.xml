@@ -206,6 +206,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://rubyui.com/docs/message</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://rubyui.com/docs/pagination</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

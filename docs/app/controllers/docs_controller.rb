@@ -166,6 +166,10 @@ class DocsController < ApplicationController
     render Views::Docs::MaskedInput.new
   end
 
+  def message
+    render Views::Docs::Message.new
+  end
+
   def pagination
     render Views::Docs::Pagination.new
   end

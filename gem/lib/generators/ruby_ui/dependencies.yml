@@ -73,6 +73,11 @@ masked_input:
   js_packages:
     - "maska"
 
+message:
+  components:
+    - "Avatar"
+    - "Bubble"
+
 pagination:
   components:
     - "Button"
