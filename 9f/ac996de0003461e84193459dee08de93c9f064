@@ -1,0 +1,20 @@
+design/plans/2026-06-30-input-otp-implementation.md
+  s_8708c7a7a4ad0d::t_05976a2c587abe 1-634,636-783
+  s_8708c7a7a4ad0d::t_6e060c34a9c88c 635
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "9fac996de0003461e84193459dee08de93c9f064",
+  "prompts": {},
+  "sessions": {
+    "s_8708c7a7a4ad0d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2fd9a7f1-af2c-4c4d-aac1-4f5e708ae820",
+        "model": "unknown"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
