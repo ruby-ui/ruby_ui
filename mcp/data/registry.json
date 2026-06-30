@@ -371,6 +371,82 @@
         }
       ]
     },
+    "bubble": {
+      "name": "Bubble",
+      "description": "A chat bubble surface for displaying conversational content, with variants, alignment, grouping, and reactions.",
+      "files": [
+        {
+          "path": "bubble.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Bubble < Base\n    VARIANTS = {\n      default: \"*:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-primary/80\",\n      secondary: \"*:data-[slot=bubble-content]:bg-secondary *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)]\",\n      muted: \"*:data-[slot=bubble-content]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)]\",\n      tinted: \"*:data-[slot=bubble-content]:bg-[oklch(from_var(--primary)_0.93_calc(c*0.4)_h)] dark:*:data-[slot=bubble-content]:bg-[oklch(from_var(--primary)_0.3_calc(c*0.4)_h)] *:data-[slot=bubble-content]:text-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.88_calc(c*0.5)_h)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.35_calc(c*0.5)_h)]\",\n      outline: \"*:data-[slot=bubble-content]:bg-background *:data-[slot=bubble-content]:border-border [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-input/30\",\n      ghost: \"*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:bg-transparent *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted/50 border-none\",\n      destructive: \"*:data-[slot=bubble-content]:bg-destructive/10 dark:*:data-[slot=bubble-content]:bg-destructive/20 *:data-[slot=bubble-content]:text-destructive [&>[data-slot=bubble-content]:is(button,a):hover]:bg-destructive/20 dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-destructive/30\"\n    }\n\n    def initialize(variant: :default, align: :start, **attrs)\n      @variant = variant\n      @align = align\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"bubble\", variant: @variant, align: @align},\n        class: [\n          \"group/bubble relative flex w-fit min-w-0 flex-col gap-1 max-w-[80%] data-[align=end]:self-end data-[variant=ghost]:max-w-full\",\n          VARIANTS[@variant]\n        ]\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "bubble_content.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class BubbleContent < Base\n    def initialize(as: :div, **attrs)\n      @as = as\n      super(**attrs)\n    end\n\n    def view_template(&)\n      send(@as, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"bubble-content\"},\n        class: \"w-fit max-w-full min-w-0 overflow-hidden wrap-break-word rounded-3xl border border-transparent px-3 py-2.5 text-sm leading-relaxed group-data-[align=end]/bubble:self-end [&:is(button,a)]:text-left [&:is(button,a)]:outline-none [&:is(button,a)]:transition-colors [&:is(button,a):focus-visible]:border-ring [&:is(button,a):focus-visible]:ring-3 [&:is(button,a):focus-visible]:ring-ring/30\"\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "bubble_group.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class BubbleGroup < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"bubble-group\"},\n        class: \"flex min-w-0 flex-col gap-2\"\n      }\n    end\n  end\nend\n"
+        },
+        {
+          "path": "bubble_reactions.rb",
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class BubbleReactions < Base\n    SIDES = {\n      top: \"top-0 -translate-y-3/4\",\n      bottom: \"bottom-0 translate-y-3/4\"\n    }\n\n    ALIGNS = {\n      start: \"left-3\",\n      end: \"right-3\"\n    }\n\n    def initialize(side: :bottom, align: :end, **attrs)\n      @side = side\n      @align = align\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"bubble-reactions\", side: @side, align: @align},\n        class: [\n          \"absolute z-10 flex w-fit items-center justify-center rounded-full ring-3 ring-card bg-muted shrink-0 gap-1 px-1.5 py-0.5 has-[button]:p-0 text-sm\",\n          SIDES[@side],\n          ALIGNS[@align]\n        ]\n      }\n    end\n  end\nend\n"
+        }
+      ],
+      "dependencies": {
+        "components": [],
+        "js_packages": [],
+        "gems": []
+      },
+      "install_command": "rails g ruby_ui:component Bubble",
+      "docs_markdown": "# Bubble\n\nA chat bubble surface for displaying conversational content, with variants, alignment, grouping, and reactions.\n\n## Usage\n\n### Default\n\n```ruby\nBubble(align: :end) do\n  BubbleContent { \"Hey there! what's up?\" }\nend\n```\n\n### Conversation\n\n```ruby\ndiv(class: \"flex flex-col gap-8\") do\n  Bubble(align: :end) do\n    BubbleContent { \"Hey there! what's up?\" }\n  end\n  BubbleGroup do\n    Bubble(variant: :muted) do\n      BubbleContent { \"Hey! Want to see chat bubbles?\" }\n    end\n    Bubble(variant: :muted) do\n      BubbleContent { \"I can group messages, switch sides, and keep the whole thread easy to scan.\" }\n      BubbleReactions(role: \"img\", aria_label: \"Reaction: thumbs up\") do\n        span { \"👍\" }\n      end\n    end\n  end\n  Bubble(align: :end) do\n    BubbleContent { \"Sure. Hit me with your best demo.\" }\n  end\nend\n```\n\n## Variants\n\n### Variants\n\n```ruby\ndiv(class: \"flex flex-col gap-4 w-full\") do\n  Bubble(variant: :default) { BubbleContent { \"Default\" } }\n  Bubble(variant: :secondary) { BubbleContent { \"Secondary\" } }\n  Bubble(variant: :muted) { BubbleContent { \"Muted\" } }\n  Bubble(variant: :tinted) { BubbleContent { \"Tinted\" } }\n  Bubble(variant: :outline) { BubbleContent { \"Outline\" } }\n  Bubble(variant: :ghost) { BubbleContent { \"Ghost — unframed, full width for assistant text or markdown.\" } }\n  Bubble(variant: :destructive) { BubbleContent { \"Destructive — something went wrong.\" } }\nend\n```\n\n## Alignment\n\n### Start and end\n\n```ruby\ndiv(class: \"flex flex-col gap-4 w-full\") do\n  Bubble(align: :start, variant: :muted) do\n    BubbleContent { \"Aligned to the start (receiver).\" }\n  end\n  Bubble(align: :end) do\n    BubbleContent { \"Aligned to the end (sender).\" }\n  end\nend\n```\n\n## Reactions\n\n### Reactions\n\n```ruby\ndiv(class: \"flex flex-col gap-10 w-full py-6\") do\n  Bubble(variant: :muted) do\n    BubbleContent { \"Reactions anchor to the bubble edge.\" }\n    BubbleReactions(role: \"img\", aria_label: \"Reactions: thumbs up, fire, eyes, and 2 more\") do\n      span { \"👍\" }\n      span { \"🔥\" }\n      span { \"👀\" }\n      span { \"+2\" }\n    end\n  end\n  Bubble(align: :end) do\n    BubbleContent { \"Place them on top and to the start too.\" }\n    BubbleReactions(side: :top, align: :start, role: \"img\", aria_label: \"Reaction: heart\") do\n      span { \"❤️\" }\n    end\n  end\nend\n```\n\n## Group\n\n### Bubble group\n\n```ruby\nBubbleGroup do\n  Bubble(variant: :muted) { BubbleContent { \"First message in the group.\" } }\n  Bubble(variant: :muted) { BubbleContent { \"Second one, tighter spacing.\" } }\n  Bubble(variant: :muted) { BubbleContent { \"Third, all stacked together.\" } }\nend\n```\n\n## Link or button bubble\n\n### Interactive content\n\n```ruby\ndiv(class: \"flex flex-col gap-4 w-full\") do\n  Bubble(align: :end) do\n    BubbleContent(as: :a, href: \"#\") { \"Tap to open the link →\" }\n  end\n  Bubble(variant: :outline) do\n    BubbleContent(as: :button, type: \"button\") { \"Retry sending\" }\n  end\nend\n```\n\n## With Tooltip\n\n### Reveal metadata on hover\n\n```ruby\nTooltip do\n  TooltipTrigger(class: \"w-fit\") do\n    Bubble(variant: :muted, class: \"max-w-none\") do\n      BubbleContent { \"Read 9:41 AM\" }\n    end\n  end\n  TooltipContent do\n    Text { \"Delivered and read\" }\n  end\nend\n```\n\n## With Popover\n\n### Surface details on demand\n\n```ruby\nPopover do\n  PopoverTrigger do\n    Bubble(variant: :destructive, class: \"max-w-none\") do\n      BubbleContent { \"Message failed to send\" }\n    end\n  end\n  PopoverContent(class: \"w-64\") do\n    Text(weight: :semibold) { \"Delivery error\" }\n    Text(size: :sm, class: \"text-muted-foreground\") { \"The recipient's inbox is full. Try again later.\" }\n  end\nend\n```",
+      "examples": [
+        {
+          "title": "Default",
+          "code": "Bubble(align: :end) do\n  BubbleContent { \"Hey there! what's up?\" }\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Conversation",
+          "code": "div(class: \"flex flex-col gap-8\") do\n  Bubble(align: :end) do\n    BubbleContent { \"Hey there! what's up?\" }\n  end\n  BubbleGroup do\n    Bubble(variant: :muted) do\n      BubbleContent { \"Hey! Want to see chat bubbles?\" }\n    end\n    Bubble(variant: :muted) do\n      BubbleContent { \"I can group messages, switch sides, and keep the whole thread easy to scan.\" }\n      BubbleReactions(role: \"img\", aria_label: \"Reaction: thumbs up\") do\n        span { \"👍\" }\n      end\n    end\n  end\n  Bubble(align: :end) do\n    BubbleContent { \"Sure. Hit me with your best demo.\" }\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Variants",
+          "code": "div(class: \"flex flex-col gap-4 w-full\") do\n  Bubble(variant: :default) { BubbleContent { \"Default\" } }\n  Bubble(variant: :secondary) { BubbleContent { \"Secondary\" } }\n  Bubble(variant: :muted) { BubbleContent { \"Muted\" } }\n  Bubble(variant: :tinted) { BubbleContent { \"Tinted\" } }\n  Bubble(variant: :outline) { BubbleContent { \"Outline\" } }\n  Bubble(variant: :ghost) { BubbleContent { \"Ghost — unframed, full width for assistant text or markdown.\" } }\n  Bubble(variant: :destructive) { BubbleContent { \"Destructive — something went wrong.\" } }\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Start and end",
+          "code": "div(class: \"flex flex-col gap-4 w-full\") do\n  Bubble(align: :start, variant: :muted) do\n    BubbleContent { \"Aligned to the start (receiver).\" }\n  end\n  Bubble(align: :end) do\n    BubbleContent { \"Aligned to the end (sender).\" }\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Reactions",
+          "code": "div(class: \"flex flex-col gap-10 w-full py-6\") do\n  Bubble(variant: :muted) do\n    BubbleContent { \"Reactions anchor to the bubble edge.\" }\n    BubbleReactions(role: \"img\", aria_label: \"Reactions: thumbs up, fire, eyes, and 2 more\") do\n      span { \"👍\" }\n      span { \"🔥\" }\n      span { \"👀\" }\n      span { \"+2\" }\n    end\n  end\n  Bubble(align: :end) do\n    BubbleContent { \"Place them on top and to the start too.\" }\n    BubbleReactions(side: :top, align: :start, role: \"img\", aria_label: \"Reaction: heart\") do\n      span { \"❤️\" }\n    end\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Bubble group",
+          "code": "BubbleGroup do\n  Bubble(variant: :muted) { BubbleContent { \"First message in the group.\" } }\n  Bubble(variant: :muted) { BubbleContent { \"Second one, tighter spacing.\" } }\n  Bubble(variant: :muted) { BubbleContent { \"Third, all stacked together.\" } }\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Interactive content",
+          "code": "div(class: \"flex flex-col gap-4 w-full\") do\n  Bubble(align: :end) do\n    BubbleContent(as: :a, href: \"#\") { \"Tap to open the link →\" }\n  end\n  Bubble(variant: :outline) do\n    BubbleContent(as: :button, type: \"button\") { \"Retry sending\" }\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Reveal metadata on hover",
+          "code": "Tooltip do\n  TooltipTrigger(class: \"w-fit\") do\n    Bubble(variant: :muted, class: \"max-w-none\") do\n      BubbleContent { \"Read 9:41 AM\" }\n    end\n  end\n  TooltipContent do\n    Text { \"Delivered and read\" }\n  end\nend\n",
+          "language": "ruby"
+        },
+        {
+          "title": "Surface details on demand",
+          "code": "Popover do\n  PopoverTrigger do\n    Bubble(variant: :destructive, class: \"max-w-none\") do\n      BubbleContent { \"Message failed to send\" }\n    end\n  end\n  PopoverContent(class: \"w-64\") do\n    Text(weight: :semibold) { \"Delivery error\" }\n    Text(size: :sm, class: \"text-muted-foreground\") { \"The recipient's inbox is full. Try again later.\" }\n  end\nend\n",
+          "language": "ruby"
+        }
+      ]
+    },
     "button": {
       "name": "Button",
       "description": "Displays a button or a component that looks like a button.",
