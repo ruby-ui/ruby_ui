@@ -1,0 +1,23 @@
+gem/lib/ruby_ui/message_scroller/message_scroller_controller.js
+  s_4ff7118e049d85::t_5e8770c3d96aff 312-316,322-323,326-333
+docs/app/javascript/controllers/ruby_ui/message_scroller_controller.js
+  s_4ff7118e049d85::t_189e45d0f69e6d 312-316,322-323,326-333
+mcp/data/registry.json
+  s_4ff7118e049d85::t_cf6dfe7cf66e9a 1839
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "7e4e3edf6346c8f1c2a61fc0db83cb0b7027faea",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
