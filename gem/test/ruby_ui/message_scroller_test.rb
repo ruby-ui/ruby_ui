@@ -70,7 +70,7 @@ class RubyUI::MessageScrollerTest < ComponentTest
     output = phlex { RubyUI.MessageScrollerButton }
 
     assert_match(/message-scroller-target="button"/, output)
-    assert_match(/click->ruby-ui--message-scroller#jumpToEnd/, output)
+    assert_match(/click->ruby-ui--message-scroller#jump/, output)
     assert_match(/data-direction="end"/, output)
     assert_match(/Scroll to end/, output)
   end

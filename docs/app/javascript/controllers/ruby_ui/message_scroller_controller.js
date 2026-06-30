@@ -117,14 +117,29 @@ export default class extends Controller {
   onMutations(records) {
     let appended = null;
     let prependedHeight = 0;
+    let streamed = false;
+    const gap = this.rowGap();
 
     for (const record of records) {
+      // Text streamed into an existing row (e.g. tokens) — not a new turn.
+      if (record.type === "characterData") {
+        streamed = true;
+        continue;
+      }
       if (record.type !== "childList") continue;
+      // Only direct children of the content element are transcript rows.
+      // Markup inserted *inside* a message must not be mistaken for history.
+      if (record.target !== this.contentTarget) {
+        streamed = true;
+        continue;
+      }
       for (const node of record.addedNodes) {
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
         if (record.previousSibling === null && record.nextSibling !== null) {
-          // Inserted above existing rows → history prepend.
-          prependedHeight += node.offsetHeight || 0;
+          // Inserted above existing rows → history prepend. Account for the
+          // flex row gap each prepended row introduces, or the preserved row
+          // drifts down by one gap per insertion.
+          prependedHeight += (node.offsetHeight || 0) + gap;
         } else {
           // Inserted at (or after) the end → new turn.
           appended = node;
@@ -137,21 +152,30 @@ export default class extends Controller {
       this.viewportTarget.scrollTop += prependedHeight;
     }
 
-    if (appended) {
+    // Only move for new/streamed content while the reader is at the live edge.
+    // If they scrolled away, leave them there and let the button surface it.
+    const follow = this.autoScrollValue && this.following;
+    if (appended && follow) {
       const anchor = appended.matches?.("[data-scroll-anchor]")
         ? appended
         : appended.querySelector?.("[data-scroll-anchor]");
       if (anchor) {
         this.scrollToAnchor(anchor);
-      } else if (this.autoScrollValue && this.following) {
+      } else {
         this.scrollToEnd();
       }
-    } else if (this.autoScrollValue && this.following) {
-      // No new row — text streamed into the last row. Stay pinned.
+    } else if (!appended && streamed && follow) {
+      // Text streamed into the last row. Stay pinned.
       this.scrollToEnd("auto");
     }
 
     this.updateButton();
+  }
+
+  rowGap() {
+    if (!this.hasContentTarget) return 0;
+    const value = parseFloat(getComputedStyle(this.contentTarget).rowGap);
+    return Number.isFinite(value) ? value : 0;
   }
 
   // --- Public scroll commands ---------------------------------------------
@@ -184,9 +208,14 @@ export default class extends Controller {
     this.scrollTo(top, behavior);
   }
 
-  // Bound to the scroll button's click action.
-  jumpToEnd() {
-    this.scrollToEnd();
+  // Bound to the scroll button's click action. Honors the button's
+  // data-direction so a start-direction button jumps to the start.
+  jump(event) {
+    if (event?.currentTarget?.dataset.direction === "start") {
+      this.scrollToStart();
+    } else {
+      this.scrollToEnd();
+    }
   }
 
   // --- Internals -----------------------------------------------------------
@@ -254,8 +283,11 @@ export default class extends Controller {
     }
 
     if (position === "last-anchor") {
-      const anchors = this.contentTarget?.querySelectorAll("[data-scroll-anchor]");
-      const last = anchors && anchors[anchors.length - 1];
+      // Stimulus' contentTarget getter throws when missing — guard explicitly.
+      const anchors = this.hasContentTarget
+        ? this.contentTarget.querySelectorAll("[data-scroll-anchor]")
+        : [];
+      const last = anchors[anchors.length - 1];
       // Fall back to the end when there's no anchor, or the last turn already
       // fits in the viewport.
       if (last && last.offsetTop - this.previousItemPeekValue > 0) {
