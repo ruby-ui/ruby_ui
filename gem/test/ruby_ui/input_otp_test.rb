@@ -61,4 +61,19 @@ class RubyUI::InputOtpTest < ComponentTest
     assert_match(/role="separator"/, output)
     refute_match(/<svg/, output)
   end
+
+  def test_slot_renders_aria_hidden_with_index_and_target
+    output = phlex { RubyUI.InputOtpSlot(index: 3) }
+
+    assert_match(/aria-hidden="true"/, output)
+    assert_match(/data-index="3"/, output)
+    assert_match(/data-ruby-ui--input-otp-target="slot"/, output)
+  end
+
+  def test_slot_renders_first_last_rounding_classes
+    output = phlex { RubyUI.InputOtpSlot(index: 0) }
+
+    assert_match(/first:rounded-l-md/, output)
+    assert_match(/last:rounded-r-md/, output)
+  end
 end
