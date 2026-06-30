@@ -7,6 +7,9 @@ import { application } from "./application"
 import IframeThemeController from "./iframe_theme_controller"
 application.register("iframe-theme", IframeThemeController)
 
+import MessageScrollerChatController from "./message_scroller_chat_controller"
+application.register("message-scroller-chat", MessageScrollerChatController)
+
 import RubyUi__AccordionController from "./ruby_ui/accordion_controller"
 application.register("ruby-ui--accordion", RubyUi__AccordionController)
 
