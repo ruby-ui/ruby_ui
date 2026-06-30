@@ -1,0 +1,22 @@
+gem/test/ruby_ui/input_otp_test.rb
+  s_8708c7a7a4ad0d::t_c2780f82d03c98 39,41
+  s_8708c7a7a4ad0d::t_0125e87d6b126d 1-38,40,42-43
+gem/lib/ruby_ui/input_otp/input_otp.rb
+  s_8708c7a7a4ad0d::t_a5dfe4e37800a9 1-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "2ef04cfc7dc58e0f19fb320ff30a6cd64fa2e0aa",
+  "prompts": {},
+  "sessions": {
+    "s_8708c7a7a4ad0d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2fd9a7f1-af2c-4c4d-aac1-4f5e708ae820",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
