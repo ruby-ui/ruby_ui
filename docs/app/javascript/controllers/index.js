@@ -7,9 +7,6 @@ import { application } from "./application"
 import IframeThemeController from "./iframe_theme_controller"
 application.register("iframe-theme", IframeThemeController)
 
-import ToastDemoController from "./toast_demo_controller"
-application.register("toast-demo", ToastDemoController)
-
 import RubyUi__AccordionController from "./ruby_ui/accordion_controller"
 application.register("ruby-ui--accordion", RubyUi__AccordionController)
 
@@ -76,6 +73,9 @@ application.register("ruby-ui--hover-card", RubyUi__HoverCardController)
 import RubyUi__MaskedInputController from "./ruby_ui/masked_input_controller"
 application.register("ruby-ui--masked-input", RubyUi__MaskedInputController)
 
+import RubyUi__MessageScrollerController from "./ruby_ui/message_scroller_controller"
+application.register("ruby-ui--message-scroller", RubyUi__MessageScrollerController)
+
 import RubyUi__PopoverController from "./ruby_ui/popover_controller"
 application.register("ruby-ui--popover", RubyUi__PopoverController)
 
@@ -117,3 +117,6 @@ application.register("ruby-ui--tooltip", RubyUi__TooltipController)
 
 import SidebarMenuController from "./sidebar_menu_controller"
 application.register("sidebar-menu", SidebarMenuController)
+
+import ToastDemoController from "./toast_demo_controller"
+application.register("toast-demo", ToastDemoController)

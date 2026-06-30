@@ -238,6 +238,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/message
 - Summary: Chat message layout pairing an avatar with bubbles, headers, and footers.
 
+### Message Scroller
+
+- URL: https://rubyui.com/docs/message_scroller
+- Summary: Chat scroll container that anchors turns, follows streamed output, and jumps to the latest message.
+
 ### Pagination
 
 - URL: https://rubyui.com/docs/pagination

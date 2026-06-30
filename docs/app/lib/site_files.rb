@@ -110,6 +110,7 @@ class SiteFiles
     {title: "Link", path: "/docs/link", description: "Link component with button-like and underline variants."},
     {title: "Masked Input", path: "/docs/masked_input", description: "Form input with an applied mask."},
     {title: "Message", path: "/docs/message", description: "Chat message layout pairing an avatar with bubbles, headers, and footers."},
+    {title: "Message Scroller", path: "/docs/message_scroller", description: "Chat scroll container that anchors turns, follows streamed output, and jumps to the latest message."},
     {title: "Pagination", path: "/docs/pagination", description: "Page navigation with next and previous links."},
     {title: "Popover", path: "/docs/popover", description: "Triggered rich content panel."},
     {title: "Progress", path: "/docs/progress", description: "Progress bar for task completion state."},

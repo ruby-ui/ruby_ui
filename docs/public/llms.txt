@@ -52,6 +52,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Link](https://rubyui.com/docs/link): Link component with button-like and underline variants.
 - [Masked Input](https://rubyui.com/docs/masked_input): Form input with an applied mask.
 - [Message](https://rubyui.com/docs/message): Chat message layout pairing an avatar with bubbles, headers, and footers.
+- [Message Scroller](https://rubyui.com/docs/message_scroller): Chat scroll container that anchors turns, follows streamed output, and jumps to the latest message.
 - [Pagination](https://rubyui.com/docs/pagination): Page navigation with next and previous links.
 - [Popover](https://rubyui.com/docs/popover): Triggered rich content panel.
 - [Progress](https://rubyui.com/docs/progress): Progress bar for task completion state.
