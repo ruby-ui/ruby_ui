@@ -1,0 +1,59 @@
+docs/app/components/shared/components_list.rb
+  s_4ff7118e049d85::t_aaa913231f7eb5 40
+docs/app/controllers/docs_controller.rb
+  s_4ff7118e049d85::t_65569ee965d97c 177-180
+docs/app/javascript/controllers/index.js
+  s_4ff7118e049d85::t_dd2d3c65d86b28 76-78,120-122
+docs/app/javascript/controllers/ruby_ui/message_scroller_controller.js
+  s_4ff7118e049d85::t_b51656a0e6d127 1-292
+docs/app/lib/site_files.rb
+  s_4ff7118e049d85::t_a03c2930e9dcbc 113
+docs/app/views/docs/message_scroller.rb
+  s_4ff7118e049d85::t_484b309961bc44 1-125
+docs/config/routes.rb
+  s_4ff7118e049d85::t_c12b821fc25b8b 57
+docs/public/llms-full.txt
+  s_4ff7118e049d85::t_45504bcebb37e3 241-245
+docs/public/llms.txt
+  s_4ff7118e049d85::t_c6acf9f1ac794e 55
+docs/public/sitemap.xml
+  s_4ff7118e049d85::t_50a1950f13edaf 217-221
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_4ff7118e049d85::t_3f286a53717267 81-85
+gem/lib/ruby_ui/message_scroller/message_scroller.rb
+  s_4ff7118e049d85::t_ce70dd7700d62a 1-18
+gem/lib/ruby_ui/message_scroller/message_scroller_button.rb
+  s_4ff7118e049d85::t_151d7e90193be3 1-56
+gem/lib/ruby_ui/message_scroller/message_scroller_content.rb
+  s_4ff7118e049d85::t_c6258f61654d08 1-23
+gem/lib/ruby_ui/message_scroller/message_scroller_controller.js
+  s_4ff7118e049d85::t_b5d97146a6421a 1-292
+gem/lib/ruby_ui/message_scroller/message_scroller_docs.rb
+  s_4ff7118e049d85::t_5d66dffb7f3c54 1-125
+gem/lib/ruby_ui/message_scroller/message_scroller_item.rb
+  s_4ff7118e049d85::t_8c3e65685e3118 1-28
+gem/lib/ruby_ui/message_scroller/message_scroller_provider.rb
+  s_4ff7118e049d85::t_6308dbebe38ec9 1-34
+gem/lib/ruby_ui/message_scroller/message_scroller_viewport.rb
+  s_4ff7118e049d85::t_94469e962c4ab4 1-22
+gem/test/ruby_ui/message_scroller_test.rb
+  s_4ff7118e049d85::t_051ebe918cdf6d 1-84
+mcp/data/registry.json
+  s_4ff7118e049d85::t_833101b6ee957e 1821-1881
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "20a26149a4f45cfed8cd6cd672881dfca45221e5",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
