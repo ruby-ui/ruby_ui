@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     get "form", to: "docs#form", as: :docs_form
     get "hover_card", to: "docs#hover_card", as: :docs_hover_card
     get "input", to: "docs#input", as: :docs_input
+    get "input_otp", to: "docs#input_otp", as: :docs_input_otp
     get "link", to: "docs#link", as: :docs_link
     get "masked_input", to: "docs#masked_input", as: :masked_input
     get "message", to: "docs#message", as: :docs_message

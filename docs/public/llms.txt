@@ -48,6 +48,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Form](https://rubyui.com/docs/form): Form fields with built-in client-side validations.
 - [Hover Card](https://rubyui.com/docs/hover_card): Preview content exposed behind a link or trigger.
 - [Input](https://rubyui.com/docs/input): Styled input field primitive.
+- [Input OTP](https://rubyui.com/docs/input_otp): One-time-password input with keyboard navigation and paste support.
 - [Link](https://rubyui.com/docs/link): Link component with button-like and underline variants.
 - [Masked Input](https://rubyui.com/docs/masked_input): Form input with an applied mask.
 - [Message](https://rubyui.com/docs/message): Chat message layout pairing an avatar with bubbles, headers, and footers.

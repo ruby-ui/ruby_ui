@@ -218,6 +218,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/input
 - Summary: Styled input field primitive.
 
+### Input OTP
+
+- URL: https://rubyui.com/docs/input_otp
+- Summary: One-time-password input with keyboard navigation and paste support.
+
 ### Link
 
 - URL: https://rubyui.com/docs/link
