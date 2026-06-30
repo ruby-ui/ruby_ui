@@ -12,6 +12,7 @@ module Components
           {name: "Avatar", path: docs_avatar_path},
           {name: "Badge", path: docs_badge_path},
           {name: "Breadcrumb", path: docs_breadcrumb_path},
+          {name: "Bubble", path: docs_bubble_path},
           {name: "Button", path: docs_button_path},
           {name: "Calendar", path: docs_calendar_path},
           {name: "Card", path: docs_card_path},

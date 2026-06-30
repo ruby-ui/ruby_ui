@@ -86,6 +86,7 @@ class SiteFiles
     {title: "Avatar", path: "/docs/avatar", description: "Image and fallback primitives for representing a user."},
     {title: "Badge", path: "/docs/badge", description: "Small status or label element."},
     {title: "Breadcrumb", path: "/docs/breadcrumb", description: "Navigation trail showing the current location in a hierarchy."},
+    {title: "Bubble", path: "/docs/bubble", description: "Chat bubble surface with variants, alignment, grouping, and reactions."},
     {title: "Button", path: "/docs/button", description: "Button component and button-like variants."},
     {title: "Calendar", path: "/docs/calendar", description: "Date field component for entering and editing dates."},
     {title: "Card", path: "/docs/card", description: "Content container with header, content, and footer primitives."},

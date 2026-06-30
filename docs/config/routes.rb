@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get "avatar", to: "docs#avatar", as: :docs_avatar
     get "badge", to: "docs#badge", as: :docs_badge
     get "breadcrumb", to: "docs#breadcrumb", as: :docs_breadcrumb
+    get "bubble", to: "docs#bubble", as: :docs_bubble
     get "button", to: "docs#button", as: :docs_button
     get "card", to: "docs#card", as: :docs_card
     get "carousel", to: "docs#carousel", as: :docs_carousel
