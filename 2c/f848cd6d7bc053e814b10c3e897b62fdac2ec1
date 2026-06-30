@@ -1,0 +1,69 @@
+docs/app/lib/site_files.rb
+  s_4ff7118e049d85::t_7b8b456972dfe3 112
+docs/public/llms.txt
+  s_4ff7118e049d85::t_d1012e9ec1e441 54
+gem/lib/ruby_ui/message_scroller/message_scroller_controller.js
+  s_4ff7118e049d85::t_433dc4c873644f 194-202,206,208-211,213-231,234,240-243
+  s_4ff7118e049d85::t_7c0a103ed12109 1-82,84-193,203-205,207,212,232-233,235-239,244-292
+  s_4ff7118e049d85::t_9de063ebe29ba1 83
+gem/lib/ruby_ui/message_scroller/message_scroller_item.rb
+  s_4ff7118e049d85::t_fd6681019f6ab6 1-23,25-28
+  s_4ff7118e049d85::t_bb7de8feb6f90d 24
+gem/test/ruby_ui/message_scroller_test.rb
+  s_4ff7118e049d85::t_e1774b967ac129 1-43,45-84
+  s_4ff7118e049d85::t_8fdbef2a045714 44
+docs/app/controllers/docs_controller.rb
+  s_4ff7118e049d85::t_e9e2b159578b86 173-176
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_4ff7118e049d85::t_9c497af6b9baca 81-85
+docs/config/routes.rb
+  s_4ff7118e049d85::t_a2ef33a657925c 56
+gem/lib/ruby_ui/message_scroller/message_scroller_content.rb
+  s_4ff7118e049d85::t_50ae4ec3002e72 1-23
+docs/app/views/docs/message_scroller.rb
+  s_4ff7118e049d85::t_2486c3fd468414 1-45,47-77,79-110,112-125
+  s_4ff7118e049d85::t_0a53704fa1763f 46,78,111
+mcp/data/registry.json
+  s_4ff7118e049d85::t_b466c97a6d3d0b 1767-1827
+docs/app/components/shared/components_list.rb
+  s_4ff7118e049d85::t_377108f971ffc8 39
+docs/app/javascript/controllers/index.js
+  s_4ff7118e049d85::t_d1012e9ec1e441 76-78,120-122
+gem/lib/ruby_ui/message_scroller/message_scroller_provider.rb
+  s_4ff7118e049d85::t_5ece8210d21f3d 1-23,25-26,28-34
+  s_4ff7118e049d85::t_82a87db78303ce 24,27
+docs/public/llms-full.txt
+  s_4ff7118e049d85::t_d1012e9ec1e441 236-240
+docs/public/sitemap.xml
+  s_4ff7118e049d85::t_d1012e9ec1e441 214-216
+  s_4ff7118e049d85::t_9a4b2262c8c4f4 212-213
+gem/lib/ruby_ui/message_scroller/message_scroller.rb
+  s_4ff7118e049d85::t_baece376878ad1 1-18
+gem/lib/ruby_ui/message_scroller/message_scroller_viewport.rb
+  s_4ff7118e049d85::t_066464cd7f90a2 1-22
+gem/lib/ruby_ui/message_scroller/message_scroller_button.rb
+  s_4ff7118e049d85::t_23bc7b4cda6b4b 16
+  s_4ff7118e049d85::t_b49213a5e3f022 1-15,17-56
+gem/lib/ruby_ui/message_scroller/message_scroller_docs.rb
+  s_4ff7118e049d85::t_7e283838b54c62 1-45,47-77,79-110,112-125
+  s_4ff7118e049d85::t_a3bc6c3aa36e3f 46,78,111
+docs/app/javascript/controllers/ruby_ui/message_scroller_controller.js
+  s_4ff7118e049d85::t_2486c3fd468414 1-82,84-193,203-205,212,232-233,235-239,244-292
+  s_4ff7118e049d85::t_283ec88a63481a 83,194-202,206-211,213-231,234,240-243
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "2cf848cd6d7bc053e814b10c3e897b62fdac2ec1",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
