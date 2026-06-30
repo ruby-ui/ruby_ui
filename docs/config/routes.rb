@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     get "date_picker", to: "docs#date_picker", as: :docs_date_picker
     get "dialog", to: "docs#dialog", as: :docs_dialog
     get "dropdown_menu", to: "docs#dropdown_menu", as: :docs_dropdown_menu
+    get "empty", to: "docs#empty", as: :docs_empty
     get "form", to: "docs#form", as: :docs_form
     get "hover_card", to: "docs#hover_card", as: :docs_hover_card
     get "input", to: "docs#input", as: :docs_input

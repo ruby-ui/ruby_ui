@@ -45,6 +45,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Date Picker](https://rubyui.com/docs/date_picker): Date picker component with input.
 - [Dialog](https://rubyui.com/docs/dialog): Modal window that renders background content inert.
 - [Dropdown Menu](https://rubyui.com/docs/dropdown_menu): Button-triggered menu for actions or functions.
+- [Empty](https://rubyui.com/docs/empty): Empty state for when there is no data or content.
 - [Form](https://rubyui.com/docs/form): Form fields with built-in client-side validations.
 - [Hover Card](https://rubyui.com/docs/hover_card): Preview content exposed behind a link or trigger.
 - [Input](https://rubyui.com/docs/input): Styled input field primitive.

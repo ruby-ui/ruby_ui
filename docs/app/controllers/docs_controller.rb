@@ -146,6 +146,10 @@ class DocsController < ApplicationController
     render Views::Docs::DropdownMenu.new
   end
 
+  def empty
+    render Views::Docs::Empty.new
+  end
+
   def form
     render Views::Docs::Form.new
   end
