@@ -309,16 +309,27 @@ export default class extends Controller {
     return scrollHeight - (scrollTop + clientHeight) <= this.endThresholdValue;
   }
 
+  isAtStart() {
+    if (!this.hasViewportTarget) return true;
+    return this.viewportTarget.scrollTop <= this.endThresholdValue;
+  }
+
   hasOverflow() {
     if (!this.hasViewportTarget) return false;
     return this.viewportTarget.scrollHeight - this.viewportTarget.clientHeight > this.endThresholdValue;
   }
 
+  // Each button activates based on its own direction: an end button when the
+  // reader is away from the bottom, a start button when away from the top.
   updateButton() {
     if (!this.hasButtonTarget) return;
-    const active = this.hasOverflow() && !this.isAtEnd();
-    this.buttonTarget.setAttribute("data-active", active ? "true" : "false");
-    // Remove the inert button from the tab order so there are no ghost stops.
-    this.buttonTarget.setAttribute("tabindex", active ? "0" : "-1");
+    const overflow = this.hasOverflow();
+    this.buttonTargets.forEach((button) => {
+      const toStart = button.dataset.direction === "start";
+      const active = overflow && (toStart ? !this.isAtStart() : !this.isAtEnd());
+      button.setAttribute("data-active", active ? "true" : "false");
+      // Remove the inert button from the tab order so there are no ghost stops.
+      button.setAttribute("tabindex", active ? "0" : "-1");
+    });
   }
 }
