@@ -78,6 +78,11 @@ message:
     - "Avatar"
     - "Bubble"
 
+message_scroller:
+  components:
+    - "Message"
+    - "Bubble"
+
 pagination:
   components:
     - "Button"

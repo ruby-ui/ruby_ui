@@ -174,6 +174,10 @@ class DocsController < ApplicationController
     render Views::Docs::Message.new
   end
 
+  def message_scroller
+    render Views::Docs::MessageScroller.new
+  end
+
   def pagination
     render Views::Docs::Pagination.new
   end

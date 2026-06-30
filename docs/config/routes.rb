@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     get "link", to: "docs#link", as: :docs_link
     get "masked_input", to: "docs#masked_input", as: :masked_input
     get "message", to: "docs#message", as: :docs_message
+    get "message_scroller", to: "docs#message_scroller", as: :docs_message_scroller
     get "pagination", to: "docs#pagination", as: :docs_pagination
     get "popover", to: "docs#popover", as: :docs_popover
     get "progress", to: "docs#progress", as: :docs_progress
