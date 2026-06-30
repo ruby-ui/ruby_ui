@@ -24,7 +24,9 @@ class Views::Docs::InputOtp < Views::Base
         RUBY
       end
 
-      Heading(level: 2) { "Grouped with separator" }
+      Heading(level: 2) { "Composition" }
+
+      Text { "InputOtpGroup and InputOtpSeparator compose freely — split slots into however many groups make sense, with a separator between each." }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
@@ -32,11 +34,14 @@ class Views::Docs::InputOtp < Views::Base
             InputOtpGroup do
               InputOtpSlot(index: 0)
               InputOtpSlot(index: 1)
-              InputOtpSlot(index: 2)
             end
             InputOtpSeparator()
             InputOtpGroup do
+              InputOtpSlot(index: 2)
               InputOtpSlot(index: 3)
+            end
+            InputOtpSeparator()
+            InputOtpGroup do
               InputOtpSlot(index: 4)
               InputOtpSlot(index: 5)
             end
@@ -44,11 +49,11 @@ class Views::Docs::InputOtp < Views::Base
         RUBY
       end
 
-      Heading(level: 2) { "Custom pattern" }
+      Heading(level: 2) { "Pattern" }
 
-      Text { "Pass pattern: with a single-character regex class (default is \"[0-9]\") to accept other characters, e.g. letters and digits." }
+      Text { "Pass pattern: with a single-character regex class to define what InputOtp accepts. The default is \"[0-9]\" (digits only)." }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      render Docs::VisualCodeExample.new(title: "Alphanumeric", context: self) do
         <<~RUBY
           InputOtp(length: 6, name: "otp", pattern: "[0-9A-Za-z]") do
             InputOtpGroup do
@@ -58,6 +63,59 @@ class Views::Docs::InputOtp < Views::Base
               InputOtpSlot(index: 3)
               InputOtpSlot(index: 4)
               InputOtpSlot(index: 5)
+            end
+          end
+        RUBY
+      end
+
+      Heading(level: 2) { "Four digits" }
+
+      Text { "A common pattern for PIN codes — just pass a shorter length:." }
+
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+        <<~RUBY
+          InputOtp(length: 4, name: "pin") do
+            InputOtpGroup do
+              InputOtpSlot(index: 0)
+              InputOtpSlot(index: 1)
+              InputOtpSlot(index: 2)
+              InputOtpSlot(index: 3)
+            end
+          end
+        RUBY
+      end
+
+      Heading(level: 2) { "Disabled" }
+
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+        <<~RUBY
+          InputOtp(length: 6, name: "otp", disabled: true) do
+            InputOtpGroup do
+              InputOtpSlot(index: 0)
+              InputOtpSlot(index: 1)
+              InputOtpSlot(index: 2)
+              InputOtpSlot(index: 3)
+              InputOtpSlot(index: 4)
+              InputOtpSlot(index: 5)
+            end
+          end
+        RUBY
+      end
+
+      Heading(level: 2) { "Invalid" }
+
+      Text { "Pass aria_invalid: \"true\" to each InputOtpSlot to show an error state." }
+
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+        <<~RUBY
+          InputOtp(length: 6, name: "otp") do
+            InputOtpGroup do
+              InputOtpSlot(index: 0, aria_invalid: "true")
+              InputOtpSlot(index: 1, aria_invalid: "true")
+              InputOtpSlot(index: 2, aria_invalid: "true")
+              InputOtpSlot(index: 3, aria_invalid: "true")
+              InputOtpSlot(index: 4, aria_invalid: "true")
+              InputOtpSlot(index: 5, aria_invalid: "true")
             end
           end
         RUBY

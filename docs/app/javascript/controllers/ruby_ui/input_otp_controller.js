@@ -44,7 +44,8 @@ export default class extends Controller {
     event.preventDefault()
     const current = this.inputTarget.selectionStart ?? 0
     const next = Math.min(Math.max(current + moves[event.key], 0), this.lengthValue - 1)
-    this.inputTarget.setSelectionRange(next, next)
+    const hasChar = next < this.inputTarget.value.length
+    this.inputTarget.setSelectionRange(next, hasChar ? next + 1 : next)
     this.paint()
   }
 

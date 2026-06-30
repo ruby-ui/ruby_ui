@@ -76,4 +76,22 @@ class RubyUI::InputOtpTest < ComponentTest
     assert_match(/first:rounded-l-md/, output)
     assert_match(/last:rounded-r-md/, output)
   end
+
+  def test_slot_renders_aria_invalid_styling_hook
+    output = phlex { RubyUI.InputOtpSlot(index: 0) }
+
+    assert_match(/aria-invalid:border-destructive/, output)
+  end
+
+  def test_slot_forwards_aria_invalid_attr
+    output = phlex { RubyUI.InputOtpSlot(index: 0, aria_invalid: "true") }
+
+    assert_match(/aria-invalid="true"/, output)
+  end
+
+  def test_render_forwards_disabled_to_real_input
+    output = phlex { RubyUI.InputOtp(length: 4, name: "otp", disabled: true) }
+
+    assert_match(/disabled(="disabled")?/, output)
+  end
 end
