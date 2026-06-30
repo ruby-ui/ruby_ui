@@ -1,0 +1,30 @@
+gem/lib/ruby_ui/message_scroller/message_scroller_controller.js
+  s_4ff7118e049d85::t_d4d1ac02085d7f 120-121,124-128,130-135,139-142,155-158,164,167-168,175-178
+  s_4ff7118e049d85::t_fa3dc5ce347a0c 286-290
+  s_4ff7118e049d85::t_c54b1c618f47c8 211-218
+  s_4ff7118e049d85::t_e432af73a60e29 179-180
+mcp/data/registry.json
+  s_4ff7118e049d85::t_1fd5bf010aeea0 1777,1785
+gem/test/ruby_ui/message_scroller_test.rb
+  s_4ff7118e049d85::t_bf0b6faca9b0a8 73
+gem/lib/ruby_ui/message_scroller/message_scroller_button.rb
+  s_4ff7118e049d85::t_93b95fc12df5a0 32
+docs/app/javascript/controllers/ruby_ui/message_scroller_controller.js
+  s_4ff7118e049d85::t_28ef1f939974ae 120-121,124-128,130-135,139-142,155-158,164,167-168,175-180,211-218,286-290
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "205355d81ae34321e92ac74fc6c350040be7758d",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
