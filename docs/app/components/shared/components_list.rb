@@ -30,6 +30,7 @@ module Components
           {name: "Date Picker", path: docs_date_picker_path},
           {name: "Dialog / Modal", path: docs_dialog_path},
           {name: "Dropdown Menu", path: docs_dropdown_menu_path},
+          {name: "Empty", path: docs_empty_path},
           {name: "Form", path: docs_form_path},
           {name: "Hover Card", path: docs_hover_card_path},
           {name: "Input", path: docs_input_path},

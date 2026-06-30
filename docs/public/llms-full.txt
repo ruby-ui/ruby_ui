@@ -203,6 +203,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/dropdown_menu
 - Summary: Button-triggered menu for actions or functions.
 
+### Empty
+
+- URL: https://rubyui.com/docs/empty
+- Summary: Empty state for when there is no data or content.
+
 ### Form
 
 - URL: https://rubyui.com/docs/form
