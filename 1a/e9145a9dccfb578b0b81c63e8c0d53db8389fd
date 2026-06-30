@@ -1,0 +1,19 @@
+mcp/data/registry.json
+  s_4ff7118e049d85::t_6550761eaaec4f 374-449
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "1ae9145a9dccfb578b0b81c63e8c0d53db8389fd",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
