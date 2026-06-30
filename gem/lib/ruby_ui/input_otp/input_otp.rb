@@ -9,7 +9,14 @@ module RubyUI
     end
 
     def view_template(&block)
-      div(class: "relative inline-flex items-center has-disabled:opacity-50") do
+      div(
+        data: {
+          controller: "ruby-ui--input-otp",
+          ruby_ui__input_otp_length_value: @length,
+          ruby_ui__input_otp_char_class_value: @char_class
+        },
+        class: "relative inline-flex items-center has-disabled:opacity-50"
+      ) do
         div(class: "flex items-center gap-2", &block)
         input(**attrs)
       end
@@ -25,9 +32,6 @@ module RubyUI
         maxlength: @length,
         autocomplete: "one-time-code",
         data: {
-          controller: "ruby-ui--input-otp",
-          ruby_ui__input_otp_length_value: @length,
-          ruby_ui__input_otp_char_class_value: @char_class,
           ruby_ui__input_otp_target: "input",
           action: "input->ruby-ui--input-otp#onInput keydown->ruby-ui--input-otp#onKeydown paste->ruby-ui--input-otp#onPaste focus->ruby-ui--input-otp#onFocus blur->ruby-ui--input-otp#onBlur"
         },
