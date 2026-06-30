@@ -1,0 +1,19 @@
+gem/lib/ruby_ui/bubble/bubble_content.rb
+  s_4ff7118e049d85::t_05b15171d136a1 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "fe28b5a199d967ac00378cfff801d06b788590bd",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
