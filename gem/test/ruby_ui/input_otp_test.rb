@@ -40,4 +40,25 @@ class RubyUI::InputOtpTest < ComponentTest
 
     assert_match(/marker/, output)
   end
+
+  def test_group_renders_flex_wrapper
+    output = phlex { RubyUI.InputOtpGroup { RubyUI.Badge { "marker" } } }
+
+    assert_match(/class="flex items-center"/, output)
+    assert_match(/marker/, output)
+  end
+
+  def test_separator_renders_role_with_default_icon
+    output = phlex { RubyUI.InputOtpSeparator() }
+
+    assert_match(/role="separator"/, output)
+    assert_match(/<svg/, output)
+  end
+
+  def test_separator_renders_custom_block_instead_of_icon
+    output = phlex { RubyUI.InputOtpSeparator { RubyUI.Badge { "-" } } }
+
+    assert_match(/role="separator"/, output)
+    refute_match(/<svg/, output)
+  end
 end
