@@ -74,6 +74,10 @@ class DocsController < ApplicationController
     render Views::Docs::Breadcrumb.new
   end
 
+  def bubble
+    render Views::Docs::Bubble.new
+  end
+
   def button
     render Views::Docs::Button.new
   end

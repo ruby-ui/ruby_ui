@@ -118,6 +118,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/breadcrumb
 - Summary: Navigation trail showing the current location in a hierarchy.
 
+### Bubble
+
+- URL: https://rubyui.com/docs/bubble
+- Summary: Chat bubble surface with variants, alignment, grouping, and reactions.
+
 ### Button
 
 - URL: https://rubyui.com/docs/button
