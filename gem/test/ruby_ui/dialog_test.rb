@@ -77,6 +77,21 @@ class RubyUI::DialogTest < ComponentTest
     assert_match(/data-action="click->ruby-ui--dialog#backdropClick"/, output)
   end
 
+  # Regression test: a closed native <dialog> must stay hidden. The bare `flex`
+  # utility (author CSS) overrides the UA `dialog:not([open]) { display: none }`,
+  # making the dialog always visible. Display must be gated on the open: variant.
+  def test_dialog_content_does_not_force_display_when_closed
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    classes = output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
+    refute_includes classes, "flex", "Bare `flex` forces a closed <dialog> to display; use `open:flex`"
+    assert_includes classes, "open:flex", "Dialog must apply flex only when open (open:flex)"
+  end
+
   def test_dialog_content_sizes
     {xs: "max-w-sm", sm: "max-w-md", md: "max-w-lg", lg: "max-w-2xl", xl: "max-w-4xl", full: "max-w-full"}.each do |size, expected_class|
       output = phlex do
