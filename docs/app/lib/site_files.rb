@@ -107,6 +107,7 @@ class SiteFiles
     {title: "Form", path: "/docs/form", description: "Form fields with built-in client-side validations."},
     {title: "Hover Card", path: "/docs/hover_card", description: "Preview content exposed behind a link or trigger."},
     {title: "Input", path: "/docs/input", description: "Styled input field primitive."},
+    {title: "Input OTP", path: "/docs/input_otp", description: "One-time-password input with keyboard navigation and paste support."},
     {title: "Link", path: "/docs/link", description: "Link component with button-like and underline variants."},
     {title: "Masked Input", path: "/docs/masked_input", description: "Form input with an applied mask."},
     {title: "Message", path: "/docs/message", description: "Chat message layout pairing an avatar with bubbles, headers, and footers."},

@@ -162,6 +162,10 @@ class DocsController < ApplicationController
     render Views::Docs::Input.new
   end
 
+  def input_otp
+    render Views::Docs::InputOtp.new
+  end
+
   def link
     render Views::Docs::Link.new
   end

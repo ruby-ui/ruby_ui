@@ -34,6 +34,7 @@ module Components
           {name: "Form", path: docs_form_path},
           {name: "Hover Card", path: docs_hover_card_path},
           {name: "Input", path: docs_input_path},
+          {name: "Input OTP", path: docs_input_otp_path},
           {name: "Link", path: docs_link_path},
           {name: "Masked Input", path: masked_input_path},
           {name: "Message", path: docs_message_path},

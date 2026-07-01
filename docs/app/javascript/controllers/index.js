@@ -73,6 +73,9 @@ application.register("ruby-ui--form-field", RubyUi__FormFieldController)
 import RubyUi__HoverCardController from "./ruby_ui/hover_card_controller"
 application.register("ruby-ui--hover-card", RubyUi__HoverCardController)
 
+import RubyUi__InputOtpController from "./ruby_ui/input_otp_controller"
+application.register("ruby-ui--input-otp", RubyUi__InputOtpController)
+
 import RubyUi__MaskedInputController from "./ruby_ui/masked_input_controller"
 application.register("ruby-ui--masked-input", RubyUi__MaskedInputController)
 
