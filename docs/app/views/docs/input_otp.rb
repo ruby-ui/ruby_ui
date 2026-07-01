@@ -70,7 +70,7 @@ class Views::Docs::InputOtp < Views::Base
 
       Heading(level: 2) { "Four digits" }
 
-      Text { "A common pattern for PIN codes — just pass a shorter length:." }
+      Text { "A common pattern for PIN codes — just pass a shorter length." }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY

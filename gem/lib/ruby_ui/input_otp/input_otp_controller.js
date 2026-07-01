@@ -6,6 +6,11 @@ export default class extends Controller {
   static values = { length: Number, charClass: String }
 
   connect() {
+    // A server-rendered value (prefilled from a previous submission, a
+    // validation error, etc.) may exceed length or contain characters that
+    // fail pattern. Sanitize it up front so the hidden slots never mask
+    // an invalid/oversized value that would otherwise still get submitted.
+    this.sanitizeValue()
     this.paint()
     this.boundOnSelectionChange = this.onSelectionChange.bind(this)
     document.addEventListener("selectionchange", this.boundOnSelectionChange)
@@ -16,8 +21,8 @@ export default class extends Controller {
   }
 
   onInput() {
-    const filtered = this.filter(this.inputTarget.value).slice(0, this.lengthValue)
-    if (filtered !== this.inputTarget.value) this.inputTarget.value = filtered
+    this.sanitizeValue()
+    const filtered = this.inputTarget.value
 
     this.normalizeSelection()
     this.paint()
@@ -96,6 +101,11 @@ export default class extends Controller {
   filter(raw) {
     const re = new RegExp(this.charClassValue)
     return raw.split("").filter((char) => re.test(char)).join("")
+  }
+
+  sanitizeValue() {
+    const filtered = this.filter(this.inputTarget.value).slice(0, this.lengthValue)
+    if (filtered !== this.inputTarget.value) this.inputTarget.value = filtered
   }
 
   paint() {

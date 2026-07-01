@@ -374,6 +374,8 @@ git commit -m "[Feature] Add InputOtpSlot"
 
 - [ ] **Step 1: Write the implementation**
 
+> **Superseded:** the draft below is what Task 4 originally shipped. Manual browser testing (Task 7) and PR review surfaced real bugs in it — collapsed-caret arrow navigation, no replace-and-advance after editing a full value, no sanitization of a prefilled `value:` on connect — all fixed in follow-up commits. Treat `gem/lib/ruby_ui/input_otp/input_otp_controller.js` as the source of truth, not this snapshot.
+
 Create `gem/lib/ruby_ui/input_otp/input_otp_controller.js`:
 
 ```js
