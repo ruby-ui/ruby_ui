@@ -1,0 +1,32 @@
+design/plans/2026-06-30-input-otp-implementation.md
+  s_8708c7a7a4ad0d::t_50475b97b40cb7 377-378
+gem/lib/ruby_ui/input_otp/input_otp_controller.js
+  s_8708c7a7a4ad0d::t_c9ee7caddcc42a 9
+  s_8708c7a7a4ad0d::t_d85ed6731bbbac 10-13,24-25
+  s_8708c7a7a4ad0d::t_65b7c7d45388dd 106-110
+mcp/data/registry.json
+  s_8708c7a7a4ad0d::t_e3cadf86f10236 1614
+docs/app/javascript/controllers/ruby_ui/input_otp_controller.js
+  s_8708c7a7a4ad0d::t_4856acd3faea33 9-13,24-25,106-108
+  s_8708c7a7a4ad0d::t_12de890627a2e0 109-110
+docs/app/views/docs/input_otp.rb
+  s_8708c7a7a4ad0d::t_4856acd3faea33 73
+gem/lib/ruby_ui/input_otp/input_otp_docs.rb
+  s_8708c7a7a4ad0d::t_eb026593e76e87 73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "f0d898231ab91061e7592a4de1c36c316018c4df",
+  "prompts": {},
+  "sessions": {
+    "s_8708c7a7a4ad0d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2fd9a7f1-af2c-4c4d-aac1-4f5e708ae820",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
