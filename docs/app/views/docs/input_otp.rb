@@ -121,6 +121,69 @@ class Views::Docs::InputOtp < Views::Base
         RUBY
       end
 
+      Heading(level: 2) { "Form" }
+
+      Text { "A full example combining InputOtp with Card, Button, and InlineLink — bigger slots via class:, a resend action, and fallback links." }
+
+      render Docs::VisualCodeExample.new(title: "Verify your login", context: self) do
+        <<~RUBY
+          Card(class: "mx-auto max-w-md") do
+            CardHeader do
+              CardTitle { "Verify your login" }
+              CardDescription do
+                plain "Enter the verification code we sent to your email address: "
+                span(class: "font-medium") { "m@example.com" }
+                plain "."
+              end
+            end
+            CardContent(class: "space-y-4") do
+              div(class: "flex items-center justify-between") do
+                label(class: "text-sm font-medium") { "Verification code" }
+                Button(variant: :outline, size: :sm) do
+                  svg(
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewbox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    stroke_width: "2",
+                    stroke_linecap: "round",
+                    stroke_linejoin: "round",
+                    class: "w-4 h-4 mr-2"
+                  ) do |s|
+                    s.path(d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8")
+                    s.path(d: "M21 3v5h-5")
+                    s.path(d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16")
+                    s.path(d: "M8 16H3v5")
+                  end
+                  plain "Resend Code"
+                end
+              end
+              InputOtp(length: 6, name: "otp", required: true) do
+                InputOtpGroup do
+                  InputOtpSlot(index: 0, class: "h-12 w-11 text-xl")
+                  InputOtpSlot(index: 1, class: "h-12 w-11 text-xl")
+                  InputOtpSlot(index: 2, class: "h-12 w-11 text-xl")
+                end
+                InputOtpSeparator(class: "mx-2")
+                InputOtpGroup do
+                  InputOtpSlot(index: 3, class: "h-12 w-11 text-xl")
+                  InputOtpSlot(index: 4, class: "h-12 w-11 text-xl")
+                  InputOtpSlot(index: 5, class: "h-12 w-11 text-xl")
+                end
+              end
+              InlineLink(href: "#") { "I no longer have access to this email address." }
+            end
+            CardFooter(class: "flex flex-col items-stretch gap-2") do
+              Button(class: "w-full") { "Verify" }
+              Text(size: "sm", weight: "muted") do
+                plain "Having trouble signing in? "
+                InlineLink(href: "#") { "Contact support" }
+              end
+            end
+          end
+        RUBY
+      end
+
       Heading(level: 2) { "Reacting to completion" }
 
       Text { "The controller dispatches a ruby-ui--input-otp:complete custom event (detail: { value }) once the value reaches length characters, and a ruby-ui--input-otp:input event on every change. Wire a Stimulus action on a parent element to react — for example, to auto-submit a form:" }

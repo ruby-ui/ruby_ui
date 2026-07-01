@@ -15,7 +15,7 @@ module RubyUI
           ruby_ui__input_otp_length_value: @length,
           ruby_ui__input_otp_char_class_value: @char_class
         },
-        class: "relative inline-flex items-center has-disabled:opacity-50"
+        class: "relative flex items-center has-disabled:opacity-50"
       ) do
         div(class: "flex items-center gap-2", &block)
         input(**attrs)
