@@ -19,6 +19,7 @@ export default class extends Controller {
     const filtered = this.filter(this.inputTarget.value).slice(0, this.lengthValue)
     if (filtered !== this.inputTarget.value) this.inputTarget.value = filtered
 
+    this.normalizeSelection()
     this.paint()
     this.dispatch("input", { detail: { value: filtered } })
     if (filtered.length === this.lengthValue) {
@@ -71,6 +72,25 @@ export default class extends Controller {
   onSelectionChange() {
     if (document.activeElement !== this.inputTarget) return
     this.paint()
+  }
+
+  // After typing, replacing, or deleting, the browser leaves a collapsed
+  // caret. If it landed on a slot that already has a character (not the
+  // true insert-mode end of the value), re-select that character as a
+  // 1-char range so the next keystroke replaces it instead of being
+  // silently dropped by the native maxlength/no-selection behavior.
+  normalizeSelection() {
+    const input = this.inputTarget
+    const value = input.value
+    const s = input.selectionStart
+    const e = input.selectionEnd
+    if (s === null || e === null || s !== e) return
+
+    const isInsertMode = s === value.length && value.length < this.lengthValue
+    if (isInsertMode) return
+
+    const index = Math.min(s, this.lengthValue - 1)
+    input.setSelectionRange(index, index < value.length ? index + 1 : index)
   }
 
   filter(raw) {
