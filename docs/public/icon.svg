@@ -1,3 +1,15 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <style>
+    .m { fill: #1a1a1a; }
+    @media (prefers-color-scheme: dark) { .m { fill: #ededed; } }
+  </style>
+  <g class="m" transform="translate(30.720,102.219) scale(1.98057)">
+    <polygon points="0,0 0.05,30.23 0,32.22 190.81,32.33 190.81,30.05 190.81,0"/>
+    <polygon points="227.49,60.16 227.49,89.68 68.37,89.63 68.37,87.56 68.37,60.16"/>
+    <polygon points="47.51,149.67 0,149.49 0,117.91 47.51,117.91 47.51,147.54"/>
+    <polygon points="227.49,117.91 227.49,149.1 131.86,149.03 131.86,146.88 131.86,117.91"/>
+    <polygon points="227.49,146.88 0,146.88 0,155.29 227.49,155.17"/>
+    <polygon points="0,87.56 227.49,87.56 227.49,96.2 0,96.2"/>
+    <polygon points="227.49,30.05 0.05,30.23 0,39.17 227.49,39.14"/>
+  </g>
 </svg>
