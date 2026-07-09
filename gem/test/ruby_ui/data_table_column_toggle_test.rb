@@ -34,7 +34,7 @@ class RubyUI::DataTableColumnToggleTest < ComponentTest
         {key: :salary, label: "Salary", visible: false}
       ])
     end
-    # only the visible column renders the `checked` attribute on its checkbox
-    assert_equal 1, output.scan("checked class=").length
+    # only the visible column renders the `checked` boolean attribute on its checkbox
+    assert_equal 1, output.scan(/\bchecked(?:\s|>)/).length
   end
 end
