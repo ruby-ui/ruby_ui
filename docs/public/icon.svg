@@ -1,9 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <style>
-    .m { fill: #1a1a1a; }
-    @media (prefers-color-scheme: dark) { .m { fill: #ededed; } }
-  </style>
-  <g class="m" transform="translate(30.720,102.219) scale(1.98057)">
+  <rect width="512" height="512" rx="81" ry="81" fill="#e6e6e6"/>
+  <g fill="#1a1a1a" transform="translate(71.680,130.179) scale(1.62047)">
     <polygon points="0,0 0.05,30.23 0,32.22 190.81,32.33 190.81,30.05 190.81,0"/>
     <polygon points="227.49,60.16 227.49,89.68 68.37,89.63 68.37,87.56 68.37,60.16"/>
     <polygon points="47.51,149.67 0,149.49 0,117.91 47.51,117.91 47.51,147.54"/>
