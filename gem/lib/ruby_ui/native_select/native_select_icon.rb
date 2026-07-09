@@ -25,9 +25,7 @@ module RubyUI
         stroke_linejoin: "round",
         class: "size-4",
         aria_hidden: "true"
-      ) do |s|
-        s.path(d: "m6 9 6 6 6-6")
-      end
+      )
     end
 
     def default_attrs
