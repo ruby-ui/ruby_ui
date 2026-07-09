@@ -1186,7 +1186,7 @@
         },
         {
           "path": "data_table_column_visibility_controller.js",
-          "content": "// app/javascript/controllers/ruby_ui/data_table_column_visibility_controller.js\nimport { Controller } from \"@hotwired/stimulus\";\n\nexport default class extends Controller {\n  toggle(event) {\n    const key = event.target.dataset.columnKey;\n    const visible = event.target.checked;\n    const root = this.element.closest('[data-controller~=\"ruby-ui--data-table\"]');\n    if (!root) return;\n    root\n      .querySelectorAll(`[data-column=\"${key}\"]`)\n      .forEach((el) => el.classList.toggle(\"hidden\", !visible));\n  }\n}\n"
+          "content": "// app/javascript/controllers/ruby_ui/data_table_column_visibility_controller.js\nimport { Controller } from \"@hotwired/stimulus\";\n\nexport default class extends Controller {\n  connect() {\n    this.element\n      .querySelectorAll(\"input[type=checkbox][data-column-key]\")\n      .forEach((checkbox) =>\n        this._apply(checkbox.dataset.columnKey, checkbox.checked)\n      );\n  }\n\n  toggle(event) {\n    this._apply(event.target.dataset.columnKey, event.target.checked);\n  }\n\n  _apply(key, visible) {\n    const root = this.element.closest('[data-controller~=\"ruby-ui--data-table\"]');\n    if (!root) return;\n    root\n      .querySelectorAll(`[data-column=\"${key}\"]`)\n      .forEach((el) => el.classList.toggle(\"hidden\", !visible));\n  }\n}\n"
         },
         {
           "path": "data_table_controller.js",
