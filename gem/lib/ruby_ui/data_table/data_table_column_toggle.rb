@@ -2,8 +2,9 @@
 
 module RubyUI
   class DataTableColumnToggle < Base
-    def initialize(columns:, **attrs)
+    def initialize(columns:, label: "Columns", **attrs)
       @columns = columns
+      @label = label
       super(**attrs)
     end
 
@@ -12,7 +13,7 @@ module RubyUI
         render RubyUI::DropdownMenu.new do
           render RubyUI::DropdownMenuTrigger.new do
             render RubyUI::Button.new(variant: :outline, size: :sm) do
-              plain "Columns"
+              plain @label
               # inline chevron-down SVG (lucide 24px, 1px stroke)
               svg(
                 xmlns: "http://www.w3.org/2000/svg",
@@ -35,8 +36,11 @@ module RubyUI
               label(class: "flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm cursor-pointer hover:bg-accent") do
                 input(
                   type: "checkbox",
-                  checked: true,
-                  class: "h-4 w-4 rounded border border-input accent-primary cursor-pointer",
+                  checked: col.fetch(:visible, true),
+                  class: [
+                    "h-4 w-4 rounded border border-input accent-primary cursor-pointer",
+                    "checked:bg-primary checked:text-primary-foreground dark:checked:bg-secondary checked:text-primary checked:border-primary"
+                  ],
                   data: {
                     column_key: col[:key].to_s,
                     action: "change->ruby-ui--data-table-column-visibility#toggle"
