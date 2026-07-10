@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/app/assets/images/logo_dark.svg">
+    <img alt="RubyUI" src="docs/app/assets/images/logo.svg" width="200">
+  </picture>
+</p>
+
 # RubyUI
 
 [![CI](https://github.com/ruby-ui/ruby_ui/actions/workflows/ci.yml/badge.svg)](https://github.com/ruby-ui/ruby_ui/actions/workflows/ci.yml)
