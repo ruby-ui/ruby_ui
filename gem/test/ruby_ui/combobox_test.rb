@@ -187,8 +187,7 @@ class RubyUI::ComboboxTest < ComponentTest
 
   def test_combobox_trigger_chevron_down
     output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
-    assert_match(/m7 15 5 5 5-5/, output)
-    assert_match(/m7 9 5-5 5 5/, output)
+    assert_match(/m6 9 6 6 6-6/, output)
   end
 
   def test_combobox_trigger_sets_placeholder_data

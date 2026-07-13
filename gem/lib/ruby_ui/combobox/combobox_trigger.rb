@@ -52,10 +52,7 @@ module RubyUI
         stroke_linejoin: "round"
       ) do |s|
         s.path(
-          d: "m7 15 5 5 5-5"
-        )
-        s.path(
-          d: "m7 9 5-5 5 5"
+          d: "m6 9 6 6 6-6"
         )
       end
     end
