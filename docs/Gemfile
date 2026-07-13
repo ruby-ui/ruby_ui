@@ -77,7 +77,7 @@ gem "ruby_ui", path: "../gem", require: false
 
 gem "pry", "0.16.0"
 
-gem "tailwind_merge", "~> 1.5.1"
+gem "tailwind_merge", "~> 1.5.2"
 gem "rss", "0.3.3"
 
 gem "rouge", "~> 5.0"
