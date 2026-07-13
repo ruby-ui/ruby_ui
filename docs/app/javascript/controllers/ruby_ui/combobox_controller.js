@@ -22,6 +22,8 @@ export default class extends Controller {
 
   connect() {
     this.updateTriggerContent()
+    this.requiredInputs = this.inputTargets.filter((input) => input.required)
+    this.syncValidity()
   }
 
   disconnect() {
@@ -35,6 +37,7 @@ export default class extends Controller {
 
   inputChanged(e) {
     this.updateTriggerContent()
+    this.syncValidity()
 
     if (e.target.type == "radio") {
       this.closePopover()
@@ -45,6 +48,14 @@ export default class extends Controller {
     }
   }
 
+  syncValidity() {
+    if (this.requiredInputs.length === 0) return
+
+    const anyChecked = this.requiredInputs.some((input) => input.checked)
+
+    this.requiredInputs.forEach((input) => { input.required = !anyChecked })
+  }
+
   inputContent(input) {
     return input.dataset.text || input.parentElement.textContent
   }
@@ -53,6 +64,7 @@ export default class extends Controller {
     const isChecked = this.toggleAllTarget.checked
     this.inputTargets.forEach(input => input.checked = isChecked)
     this.updateTriggerContent()
+    this.syncValidity()
   }
 
   updateTriggerContent() {

@@ -19,7 +19,12 @@ module RubyUI
         ],
         data: {
           ruby_ui__combobox_target: "input",
-          action: "ruby-ui--combobox#inputChanged"
+          ruby_ui__form_field_target: "input",
+          action: %w[
+            ruby-ui--combobox#inputChanged
+            input->ruby-ui--form-field#onInput
+            invalid->ruby-ui--form-field#onInvalid
+          ]
         }
       }
     end
