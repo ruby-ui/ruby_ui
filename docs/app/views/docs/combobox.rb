@@ -123,6 +123,49 @@ class Views::Docs::Combobox < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Required Checkbox", context: self) do
+        <<~RUBY
+          form(class: "flex flex-col gap-2 w-96") do
+            FormField do
+              FormFieldLabel { "Pick at least one" }
+
+              Combobox term: "things" do
+                ComboboxTrigger placeholder: "Pick value"
+
+                ComboboxPopover do
+                  ComboboxSearchInput(placeholder: "Pick value or type anything")
+
+                  ComboboxList do
+                    ComboboxEmptyState { "No result" }
+
+                    CheckboxGroup(data_required: true) do
+                      ComboboxItem do
+                        ComboboxCheckbox(name: "food[]", value: "apple", data: {value_missing: "Pick at least one option"})
+                        span { "Apple" }
+                      end
+
+                      ComboboxItem do
+                        ComboboxCheckbox(name: "food[]", value: "banana", data: {value_missing: "Pick at least one option"})
+                        span { "Banana" }
+                      end
+
+                      ComboboxItem do
+                        ComboboxCheckbox(name: "food[]", value: "carrot", data: {value_missing: "Pick at least one option"})
+                        span { "Carrot" }
+                      end
+                    end
+                  end
+                end
+              end
+
+              FormFieldError()
+            end
+
+            Button(type: "submit") { "Submit" }
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
         <<~RUBY
           div(class: "w-96") do

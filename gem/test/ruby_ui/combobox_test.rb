@@ -92,6 +92,15 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/checked:bg-primary/, output)
   end
 
+  def test_combobox_checkbox_wires_checkbox_group_and_form_field
+    output = phlex { RubyUI.ComboboxCheckbox(name: "x", value: "1") }
+    assert_match(/data-ruby-ui--checkbox-group-target="checkbox"/, output)
+    assert_match(/data-ruby-ui--form-field-target="input"/, output)
+    assert_match(/change->ruby-ui--checkbox-group#onChange/, output)
+    assert_match(/change->ruby-ui--form-field#onInput/, output)
+    assert_match(/invalid->ruby-ui--form-field#onInvalid/, output)
+  end
+
   def test_combobox_item_indicator_renders_check_svg
     output = phlex { RubyUI.ComboboxItemIndicator() }
     assert_match(/peer-checked:opacity-100/, output)
