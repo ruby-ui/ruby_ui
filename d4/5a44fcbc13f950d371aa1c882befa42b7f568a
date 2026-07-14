@@ -1,0 +1,27 @@
+gem/AGENTS.md
+  s_e0d013e3405472::t_31ff8b999de5e6 84-85
+.claude/skills/ruby-ui-stimulus/NOTICE.md
+  s_e0d013e3405472::t_212e2c5c37716b 1-37
+.claude/skills/ruby-ui-stimulus/SKILL.md
+  s_e0d013e3405472::t_ba9197dc62c362 1-85
+.claude/skills/ruby-ui-stimulus/references/phlex-stimulus-conventions.md
+  s_e0d013e3405472::t_08eb83aa893046 1-161
+.claude/skills/ruby-ui-stimulus/references/stimulus-fundamentals.md
+  s_e0d013e3405472::t_1312d7f5fd15e1 1-116
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d45a44fcbc13f950d371aa1c882befa42b7f568a",
+  "prompts": {},
+  "sessions": {
+    "s_e0d013e3405472": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "015d7b65-1a89-412f-aa79-134b425f2838",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
