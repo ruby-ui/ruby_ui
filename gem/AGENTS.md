@@ -81,6 +81,8 @@ Rails generators in `lib/generators/ruby_ui/` handle installation into consumer 
 
 Stimulus controllers live alongside their Ruby components. JS dependencies (Chart.js, Embla, Floating UI, etc.) are declared in `package.json` and mapped per-component in `dependencies.yml`.
 
+When writing or reviewing a Stimulus controller, follow the **`ruby-ui-stimulus`** skill (`.claude/skills/ruby-ui-stimulus/` at the monorepo root) — it covers controller lifecycle/guardrails and the ruby_ui wiring conventions. Quick rules: identifier is `ruby-ui--<component>`; wire it from the Phlex component via `data:` in `default_attrs` (no custom helper); keep `connect`/`disconnect` symmetric; register in the manifest with `rake stimulus:manifest:update` (esbuild/webpack; importmap eager-loads); declare new JS packages in both `package.json` and `dependencies.yml`.
+
 ## CI
 
 GitHub Actions (`.github/workflows/ci.yml`) runs `rake test` and `rake standard` against Ruby 3.3 and 3.4 on every push to main and on PRs.
