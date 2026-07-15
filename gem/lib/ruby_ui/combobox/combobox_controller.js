@@ -5,7 +5,8 @@ import { computePosition, autoUpdate, offset, flip } from "@floating-ui/dom";
 export default class extends Controller {
   static values = {
     term: String,
-    minPopoverWidth: { type: Number, default: 240 }
+    minPopoverWidth: { type: Number, default: 240 },
+    placement: { type: String, default: "bottom-start" }
   }
 
   static targets = [
@@ -175,7 +176,7 @@ export default class extends Controller {
   updatePopoverPosition() {
     this.cleanup = autoUpdate(this.triggerTarget, this.popoverTarget, () => {
       computePosition(this.triggerTarget, this.popoverTarget, {
-        placement: 'bottom-start',
+        placement: this.placementValue,
         middleware: [offset(4), flip()],
       }).then(({ x, y }) => {
         Object.assign(this.popoverTarget.style, {

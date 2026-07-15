@@ -2,8 +2,9 @@
 
 module RubyUI
   class Combobox < Base
-    def initialize(term: nil, **)
+    def initialize(term: nil, placement: "bottom-start", **)
       @term = term
+      @placement = placement
       super(**)
     end
 
@@ -19,6 +20,7 @@ module RubyUI
         data: {
           controller: "ruby-ui--combobox",
           ruby_ui__combobox_term_value: @term,
+          ruby_ui__combobox_placement_value: @placement,
           action: "turbo:morph@window->ruby-ui--combobox#updateTriggerContent"
         }
       }
