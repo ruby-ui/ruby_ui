@@ -6,7 +6,7 @@ export default class extends Controller {
   static values = {
     term: String,
     minPopoverWidth: { type: Number, default: 240 },
-    placement: { type: String, default: 'bottom-start' }
+    placement: { type: String, default: "bottom-start" }
   }
 
   static targets = [
