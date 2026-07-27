@@ -20,6 +20,7 @@ Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (�
 - Component docs view → `docs/app/views/docs/<component>.rb`. Update in same PR as the component.
 - Generator/installer logic → `gem/lib/generators/ruby_ui/`. Dependency map → `gem/lib/generators/ruby_ui/dependencies.yml`.
 - Site chrome, routes, marketing pages → `docs/app/`.
+- A component's Stimulus controller lives only in `gem/lib/ruby_ui/<component>/<component>_controller.js`. `docs/app/javascript/controllers/ruby_ui/<component>_controller.js` is a symlink to it, not a copy — editing the gem file is enough for existing components. A brand-new component's controller needs `docs`' `rake ruby_ui:sync_controller_symlinks` to create the symlink, plus `bin/rails stimulus:manifest:update` to register it.
 
 ## Common commands
 

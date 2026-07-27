@@ -41,6 +41,10 @@ Building or changing a Stimulus-backed component:
    - Importmap apps eager-load `controllers/` — no manifest edit needed.
    - esbuild/webpack apps regenerate the manifest with
      `rake stimulus:manifest:update` (`docs/app/javascript/controllers/index.js`).
+   - `docs/app/javascript/controllers/ruby_ui/<component>_controller.js` is a
+     symlink to the gem file above, not a copy. For a brand-new controller, run
+     `bin/rails ruby_ui:sync_controller_symlinks` in `docs/` first to create the
+     symlink, then `stimulus:manifest:update` to register it.
    - New JS packages go in `gem/package.json` **and** per-component in
      `gem/lib/generators/ruby_ui/dependencies.yml`.
 5. **Update docs & tests** in the same PR: `<component>_docs.rb` and
