@@ -2,7 +2,7 @@
 
 Model Context Protocol (MCP) server for [Ruby UI](https://rubyui.com). Lets AI coding agents discover, inspect, and install Ruby UI components.
 
-Hosted endpoint: **https://rubyui.com/mcp**
+Hosted endpoint: **https://www.rubyui.com/mcp**
 
 ## Tools
 

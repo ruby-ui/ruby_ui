@@ -25,7 +25,7 @@ class Views::Docs::Mcp < Views::Base
         # Claude Code
         div(class: "space-y-2") do
           Heading(level: 3) { "Claude Code" }
-          Codeblock("claude mcp add --transport http ruby-ui https://rubyui.com/mcp", syntax: :shell, clipboard: true)
+          Codeblock("claude mcp add --transport http ruby-ui https://www.rubyui.com/mcp", syntax: :shell, clipboard: true)
         end
 
         # Cursor
@@ -118,7 +118,7 @@ class Views::Docs::Mcp < Views::Base
     <<~JSON
       {
         "mcpServers": {
-          "ruby-ui": { "url": "https://rubyui.com/mcp" }
+          "ruby-ui": { "url": "https://www.rubyui.com/mcp" }
         }
       }
     JSON
@@ -132,7 +132,7 @@ class Views::Docs::Mcp < Views::Base
     <<~JSON
       {
         "context_servers": {
-          "ruby-ui": { "source": "http", "url": "https://rubyui.com/mcp" }
+          "ruby-ui": { "source": "http", "url": "https://www.rubyui.com/mcp" }
         }
       }
     JSON
