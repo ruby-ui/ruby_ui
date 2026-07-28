@@ -10,7 +10,7 @@ module RubyUI
           {
             registries: [{
               name: "ruby_ui",
-              url: "https://rubyui.com/mcp",
+              url: "https://www.rubyui.com/mcp",
               description: "Ruby UI components for Phlex + Rails."
             }]
           }
