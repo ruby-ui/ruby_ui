@@ -19,6 +19,10 @@ export default class extends Controller {
     this.closeTimeout = null;
     this.cleanup = null;
     this.addEventListeners();
+    // openValue lives in the DOM, so a reconnect (frame swap, morph, moved element)
+    // arrives already open. Re-arm the parts that live on the controller instead of
+    // the markup — the keydown listener and the autoUpdate positioning.
+    if (this.openValue) this.showPopover();
   }
 
   // Teardown that cannot fail comes first: resolving a target throws once the
@@ -46,12 +50,19 @@ export default class extends Controller {
     }
   }
 
+  // Each target is guarded on its own: losing one of them must not strand the
+  // listeners attached to the other.
   removeElementEventListeners() {
-    this.triggerTarget.removeEventListener("mouseenter", this.handleMouseEnter);
-    this.triggerTarget.removeEventListener("mouseleave", this.handleMouseLeave);
-    this.contentTarget.removeEventListener("mouseenter", this.handleMouseEnter);
-    this.contentTarget.removeEventListener("mouseleave", this.handleMouseLeave);
-    this.triggerTarget.removeEventListener("click", this.handleClick);
+    if (this.hasTriggerTarget) {
+      this.triggerTarget.removeEventListener("mouseenter", this.handleMouseEnter);
+      this.triggerTarget.removeEventListener("mouseleave", this.handleMouseLeave);
+      this.triggerTarget.removeEventListener("click", this.handleClick);
+    }
+
+    if (this.hasContentTarget) {
+      this.contentTarget.removeEventListener("mouseenter", this.handleMouseEnter);
+      this.contentTarget.removeEventListener("mouseleave", this.handleMouseLeave);
+    }
   }
 
   handleMouseEnter = () => {
@@ -90,20 +101,27 @@ export default class extends Controller {
   };
 
   showPopover() {
+    if (!this.hasTriggerTarget || !this.hasContentTarget) return;
+
     this.contentTarget.classList.remove("hidden");
     this.contentTarget.dataset.state = "open";
     document.addEventListener("keydown", this.handleKeydown);
     this.updatePosition();
   }
 
+  // Same rule as disconnect(): release what is held outside the element first, so a
+  // missing content target cannot leave the keydown listener or autoUpdate running.
   hidePopover() {
-    this.contentTarget.classList.add("hidden");
-    this.contentTarget.dataset.state = "closed";
     document.removeEventListener("keydown", this.handleKeydown);
     if (this.cleanup) {
       this.cleanup();
       this.cleanup = null;
     }
+
+    if (!this.hasContentTarget) return;
+
+    this.contentTarget.classList.add("hidden");
+    this.contentTarget.dataset.state = "closed";
   }
 
   updatePosition() {
@@ -112,6 +130,10 @@ export default class extends Controller {
     }
 
     this.cleanup = autoUpdate(this.triggerTarget, this.contentTarget, () => {
+      // autoUpdate keeps firing on scroll/resize; bail out rather than throw once
+      // a target is gone and nothing has torn the popover down yet.
+      if (!this.hasTriggerTarget || !this.hasContentTarget) return;
+
       computePosition(this.triggerTarget, this.contentTarget, {
         placement: this.optionsValue.placement || "bottom",
         middleware: [flip(), shift(), offset(8)],
