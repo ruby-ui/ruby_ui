@@ -21,14 +21,17 @@ export default class extends Controller {
     this.addEventListeners();
   }
 
+  // Teardown that cannot fail comes first: resolving a target throws once the
+  // element is gone, and Stimulus swallows that, skipping the rest of disconnect.
   disconnect() {
-    this.removeEventListeners();
     clearTimeout(this.closeTimeout);
     document.removeEventListener("keydown", this.handleKeydown);
+    document.removeEventListener("click", this.handleOutsideClick);
     if (this.cleanup) {
       this.cleanup();
       this.cleanup = null;
     }
+    this.removeElementEventListeners();
   }
 
   addEventListeners() {
@@ -43,13 +46,12 @@ export default class extends Controller {
     }
   }
 
-  removeEventListeners() {
+  removeElementEventListeners() {
     this.triggerTarget.removeEventListener("mouseenter", this.handleMouseEnter);
     this.triggerTarget.removeEventListener("mouseleave", this.handleMouseLeave);
     this.contentTarget.removeEventListener("mouseenter", this.handleMouseEnter);
     this.contentTarget.removeEventListener("mouseleave", this.handleMouseLeave);
     this.triggerTarget.removeEventListener("click", this.handleClick);
-    document.removeEventListener("click", this.handleOutsideClick);
   }
 
   handleMouseEnter = () => {
