@@ -23,8 +23,11 @@ export default class extends Controller {
 
   disconnect() {
     this.removeEventListeners();
+    clearTimeout(this.closeTimeout);
+    document.removeEventListener("keydown", this.handleKeydown);
     if (this.cleanup) {
       this.cleanup();
+      this.cleanup = null;
     }
   }
 
@@ -75,15 +78,29 @@ export default class extends Controller {
     }
   };
 
+  handleKeydown = (event) => {
+    if (event.key !== "Escape") return;
+    if (!this.openValue) return;
+
+    clearTimeout(this.closeTimeout);
+    this.openValue = false;
+    this.hidePopover();
+  };
+
   showPopover() {
     this.contentTarget.classList.remove("hidden");
+    this.contentTarget.dataset.state = "open";
+    document.addEventListener("keydown", this.handleKeydown);
     this.updatePosition();
   }
 
   hidePopover() {
     this.contentTarget.classList.add("hidden");
+    this.contentTarget.dataset.state = "closed";
+    document.removeEventListener("keydown", this.handleKeydown);
     if (this.cleanup) {
       this.cleanup();
+      this.cleanup = null;
     }
   }
 
@@ -96,11 +113,14 @@ export default class extends Controller {
       computePosition(this.triggerTarget, this.contentTarget, {
         placement: this.optionsValue.placement || "bottom",
         middleware: [flip(), shift(), offset(8)],
-      }).then(({ x, y }) => {
+      }).then(({ x, y, placement }) => {
         Object.assign(this.contentTarget.style, {
           left: `${x}px`,
           top: `${y}px`,
         });
+        // flip() can resolve to the opposite side of the requested placement,
+        // so the directional slide-in classes must follow the resolved value.
+        this.contentTarget.dataset.side = placement.split("-")[0];
       });
     });
   }

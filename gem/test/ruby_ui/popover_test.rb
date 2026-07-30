@@ -25,4 +25,17 @@ class RubyUI::PopoverTest < ComponentTest
 
     assert_match(/Profile/, output)
   end
+
+  # The animation classes on the content are keyed on data-state, so the
+  # attribute has to be present before the Stimulus controller ever runs.
+  def test_content_renders_closed_state_by_default
+    output = phlex do
+      RubyUI.PopoverContent { "popover body" }
+    end
+
+    assert_match(/data-state="closed"/, output)
+    assert_match(/hidden/, output)
+    assert_match(/absolute/, output)
+    assert_match(/popover body/, output)
+  end
 end
