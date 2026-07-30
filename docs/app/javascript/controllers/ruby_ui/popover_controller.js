@@ -31,10 +31,7 @@ export default class extends Controller {
     clearTimeout(this.closeTimeout);
     document.removeEventListener("keydown", this.handleKeydown);
     document.removeEventListener("click", this.handleOutsideClick);
-    if (this.cleanup) {
-      this.cleanup();
-      this.cleanup = null;
-    }
+    this.stopAutoUpdate();
     this.removeElementEventListeners();
   }
 
@@ -67,28 +64,23 @@ export default class extends Controller {
 
   handleMouseEnter = () => {
     clearTimeout(this.closeTimeout);
-    this.openValue = true;
     this.showPopover();
   };
 
   handleMouseLeave = () => {
-    this.closeTimeout = setTimeout(() => {
-      this.openValue = false;
-      this.hidePopover();
-    }, 100);
+    this.closeTimeout = setTimeout(() => this.hidePopover(), 100);
   };
 
   handleClick = (event) => {
     event.stopPropagation();
-    this.openValue = !this.openValue;
-    this.openValue ? this.showPopover() : this.hidePopover();
+    this.openValue ? this.hidePopover() : this.showPopover();
   };
 
   handleOutsideClick = (event) => {
-    if (!this.element.contains(event.target) && this.openValue) {
-      this.openValue = false;
-      this.hidePopover();
-    }
+    if (this.element.contains(event.target)) return;
+    if (!this.openValue) return;
+
+    this.hidePopover();
   };
 
   handleKeydown = (event) => {
@@ -96,13 +88,15 @@ export default class extends Controller {
     if (!this.openValue) return;
 
     clearTimeout(this.closeTimeout);
-    this.openValue = false;
     this.hidePopover();
   };
 
+  // openValue is set here rather than by the callers, so a guarded early return can
+  // never leave the DOM claiming the popover is open while nothing is wired up.
   showPopover() {
     if (!this.hasTriggerTarget || !this.hasContentTarget) return;
 
+    this.openValue = true;
     this.contentTarget.classList.remove("hidden");
     this.contentTarget.dataset.state = "open";
     document.addEventListener("keydown", this.handleKeydown);
@@ -112,11 +106,9 @@ export default class extends Controller {
   // Same rule as disconnect(): release what is held outside the element first, so a
   // missing content target cannot leave the keydown listener or autoUpdate running.
   hidePopover() {
+    this.openValue = false;
     document.removeEventListener("keydown", this.handleKeydown);
-    if (this.cleanup) {
-      this.cleanup();
-      this.cleanup = null;
-    }
+    this.stopAutoUpdate();
 
     if (!this.hasContentTarget) return;
 
@@ -125,27 +117,44 @@ export default class extends Controller {
   }
 
   updatePosition() {
-    if (this.cleanup) {
-      this.cleanup();
-    }
+    this.stopAutoUpdate();
 
-    this.cleanup = autoUpdate(this.triggerTarget, this.contentTarget, () => {
-      // autoUpdate keeps firing on scroll/resize; bail out rather than throw once
-      // a target is gone and nothing has torn the popover down yet.
-      if (!this.hasTriggerTarget || !this.hasContentTarget) return;
+    // Hold the exact pair this run positions. A target can be detached or swapped
+    // while the controller stays connected, and the stale element must not be
+    // written to by an observer callback or an in-flight computePosition.
+    const trigger = this.triggerTarget;
+    const content = this.contentTarget;
 
-      computePosition(this.triggerTarget, this.contentTarget, {
+    this.cleanup = autoUpdate(trigger, content, () => {
+      if (!trigger.isConnected || !content.isConnected) {
+        // Release the observers instead of throwing on every scroll and resize.
+        // Deferred because autoUpdate runs this once synchronously, before the
+        // handle below has been assigned.
+        queueMicrotask(() => this.stopAutoUpdate());
+        return;
+      }
+
+      computePosition(trigger, content, {
         placement: this.optionsValue.placement || "bottom",
         middleware: [flip(), shift(), offset(8)],
       }).then(({ x, y, placement }) => {
-        Object.assign(this.contentTarget.style, {
+        if (!content.isConnected) return;
+
+        Object.assign(content.style, {
           left: `${x}px`,
           top: `${y}px`,
         });
         // flip() can resolve to the opposite side of the requested placement,
         // so the directional slide-in classes must follow the resolved value.
-        this.contentTarget.dataset.side = placement.split("-")[0];
+        content.dataset.side = placement.split("-")[0];
       });
     });
+  }
+
+  stopAutoUpdate() {
+    if (!this.cleanup) return;
+
+    this.cleanup();
+    this.cleanup = null;
   }
 }
