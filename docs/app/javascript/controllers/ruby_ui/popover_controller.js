@@ -125,12 +125,20 @@ export default class extends Controller {
     const trigger = this.triggerTarget;
     const content = this.contentTarget;
 
-    this.cleanup = autoUpdate(trigger, content, () => {
+    // Deferred teardown is bound to this run's own handle, so a newer positioning
+    // run installed before the microtask drains is never torn down by an older one.
+    let stop = null;
+    const releaseThisRun = () => {
+      stop?.();
+      if (this.cleanup === stop) this.cleanup = null;
+    };
+
+    stop = autoUpdate(trigger, content, () => {
       if (!trigger.isConnected || !content.isConnected) {
         // Release the observers instead of throwing on every scroll and resize.
         // Deferred because autoUpdate runs this once synchronously, before the
         // handle below has been assigned.
-        queueMicrotask(() => this.stopAutoUpdate());
+        queueMicrotask(releaseThisRun);
         return;
       }
 
@@ -149,6 +157,8 @@ export default class extends Controller {
         content.dataset.side = placement.split("-")[0];
       });
     });
+
+    this.cleanup = stop;
   }
 
   stopAutoUpdate() {
