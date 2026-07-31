@@ -15,6 +15,15 @@ namespace :ruby_ui do
       abort "No *_controller.js files found under #{gem_root} - is the gem/ checkout present?"
     end
 
+    # The docs controllers directory is flat, so two gem controllers sharing a
+    # basename cannot both be represented - the second symlink would silently
+    # clobber the first and one component would ship the wrong JS.
+    collisions = controller_files.group_by { |p| File.basename(p) }.select { |_, paths| paths.size > 1 }
+    unless collisions.empty?
+      details = collisions.map { |basename, paths| "  #{basename}: #{paths.join(", ")}" }.join("\n")
+      abort "Duplicate controller basenames found under #{gem_root} - rename one of them:\n#{details}"
+    end
+
     controller_files.each do |gem_path|
       gem_path = Pathname.new(gem_path)
       link_path = controllers_dir.join(gem_path.basename)
