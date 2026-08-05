@@ -76,6 +76,16 @@ export default class extends Controller {
     this._listEl = null
   }
 
+  positionValueChanged(value) {
+    this.element.setAttribute("data-position", value)
+    this._reflow()
+  }
+
+  expandValueChanged(value) {
+    this._expanded = value
+    this._reflow()
+  }
+
   toastTargetConnected(el) {
     if (typeof ResizeObserver !== "undefined") {
       const ro = new ResizeObserver(() => {
@@ -101,10 +111,7 @@ export default class extends Controller {
     const variant = VARIANTS.includes(detail.variant) ? detail.variant : "default"
     const tpl = this._skeletonFor(variant)
     if (!tpl) return null
-    if (detail.position) {
-      this.element.setAttribute("data-position", detail.position)
-      this.positionValue = detail.position
-    }
+    if (detail.position) this.positionValue = detail.position
     const node = tpl.content.firstElementChild.cloneNode(true)
 
     node.id = detail.id || `toast-${this._uuid()}`
