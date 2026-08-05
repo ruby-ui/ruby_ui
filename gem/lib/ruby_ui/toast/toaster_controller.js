@@ -40,13 +40,9 @@ export default class extends Controller {
   }
 
   initialize() {
-    // Initialize state in `initialize` (not `connect`) so `toastTargetConnected`
-    // can run safely for toasts already present in the DOM (e.g. server-rendered
-    // flash) before `connect` runs. Stimulus fires `targetConnected` before
-    // `connect` for pre-existing targets, so any state they touch must exist first.
+    this._expanded = false
     this._heights = new Map()
     this._resizeObservers = new WeakMap()
-    this._expanded = false
   }
 
   connect() {
@@ -68,8 +64,6 @@ export default class extends Controller {
     this._listEl.addEventListener("pointerleave", this._onPointerLeave)
     document.addEventListener("keydown", this._onKey)
 
-    // Position toasts already present at connect (server-rendered flash), since
-    // their `toastTargetConnected` ran before `_listEl` existed and returned early.
     this._reflow()
   }
 
