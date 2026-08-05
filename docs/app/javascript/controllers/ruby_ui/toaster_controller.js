@@ -73,6 +73,7 @@ export default class extends Controller {
     this._listEl?.removeEventListener("pointerenter", this._onPointerEnter)
     this._listEl?.removeEventListener("pointerleave", this._onPointerLeave)
     document.removeEventListener("keydown", this._onKey)
+    this._listEl = null
   }
 
   toastTargetConnected(el) {
@@ -96,6 +97,7 @@ export default class extends Controller {
   }
 
   _spawn(detail) {
+    if (!this._listEl) return null
     const variant = VARIANTS.includes(detail.variant) ? detail.variant : "default"
     const tpl = this._skeletonFor(variant)
     if (!tpl) return null
@@ -157,7 +159,7 @@ export default class extends Controller {
       )
       return
     }
-    const el = this._listEl.querySelector(`#${CSS.escape(id)}`)
+    const el = this._listEl?.querySelector(`#${CSS.escape(id)}`)
     if (el) el.dispatchEvent(new CustomEvent("ruby-ui:toast:force-dismiss", { bubbles: true }))
   }
 
@@ -249,7 +251,7 @@ export default class extends Controller {
     if (wantCtrl !== e.ctrlKey) return
     if (wantMeta !== e.metaKey) return
     e.preventDefault()
-    const first = this._listEl.firstElementChild
+    const first = this._listEl?.firstElementChild
     first?.focus()
   }
 
@@ -284,7 +286,7 @@ export default class extends Controller {
   }
 
   _mutate(id, variant, text) {
-    const el = this._listEl.querySelector(`#${CSS.escape(id)}`)
+    const el = this._listEl?.querySelector(`#${CSS.escape(id)}`)
     if (!el) return
     el.dataset.variant = variant
     el.setAttribute("role", variant === "error" ? "alert" : "status")
