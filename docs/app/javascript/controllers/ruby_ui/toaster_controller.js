@@ -87,6 +87,7 @@ export default class extends Controller {
   }
 
   toastTargetConnected(el) {
+    this._resizeObservers.get(el)?.disconnect()
     if (typeof ResizeObserver !== "undefined") {
       const ro = new ResizeObserver(() => {
         this._heights.set(el, el.offsetHeight)
