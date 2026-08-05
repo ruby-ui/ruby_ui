@@ -57,6 +57,8 @@ jobs:
           cache-dependency-path: docs/pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install
+      - name: Build assets
+        run: pnpm build && pnpm build:css
       - name: Lint
         run: bundle exec standardrb
       - name: Run tests

@@ -1,7 +1,1 @@
-import { Controller } from "@hotwired/stimulus"
-
-export default class extends Controller {
-  close() {
-    this.element.remove()
-  }
-}
+../../../../../gem/lib/ruby_ui/sheet/sheet_content_controller.js
