@@ -39,9 +39,13 @@ export default class extends Controller {
     dir: { type: String, default: "ltr" },
   }
 
-  connect() {
+  initialize() {
+    this._expanded = false
     this._heights = new Map()
     this._resizeObservers = new WeakMap()
+  }
+
+  connect() {
     this._expanded = this.expandValue
     this._listEl = this.element.querySelector("ol") || (this.element.tagName === "OL" ? this.element : null)
     this._registerGlobalApi()
@@ -59,6 +63,8 @@ export default class extends Controller {
     this._listEl.addEventListener("pointerenter", this._onPointerEnter)
     this._listEl.addEventListener("pointerleave", this._onPointerLeave)
     document.addEventListener("keydown", this._onKey)
+
+    this._reflow()
   }
 
   disconnect() {
@@ -67,9 +73,21 @@ export default class extends Controller {
     this._listEl?.removeEventListener("pointerenter", this._onPointerEnter)
     this._listEl?.removeEventListener("pointerleave", this._onPointerLeave)
     document.removeEventListener("keydown", this._onKey)
+    this._listEl = null
+  }
+
+  positionValueChanged(value) {
+    this.element.setAttribute("data-position", value)
+    this._reflow()
+  }
+
+  expandValueChanged(value) {
+    this._expanded = value
+    this._reflow()
   }
 
   toastTargetConnected(el) {
+    this._resizeObservers.get(el)?.disconnect()
     if (typeof ResizeObserver !== "undefined") {
       const ro = new ResizeObserver(() => {
         this._heights.set(el, el.offsetHeight)
@@ -90,13 +108,11 @@ export default class extends Controller {
   }
 
   _spawn(detail) {
+    if (!this._listEl) return null
     const variant = VARIANTS.includes(detail.variant) ? detail.variant : "default"
     const tpl = this._skeletonFor(variant)
     if (!tpl) return null
-    if (detail.position) {
-      this.element.setAttribute("data-position", detail.position)
-      this.positionValue = detail.position
-    }
+    if (detail.position) this.positionValue = detail.position
     const node = tpl.content.firstElementChild.cloneNode(true)
 
     node.id = detail.id || `toast-${this._uuid()}`
@@ -151,7 +167,7 @@ export default class extends Controller {
       )
       return
     }
-    const el = this._listEl.querySelector(`#${CSS.escape(id)}`)
+    const el = this._listEl?.querySelector(`#${CSS.escape(id)}`)
     if (el) el.dispatchEvent(new CustomEvent("ruby-ui:toast:force-dismiss", { bubbles: true }))
   }
 
@@ -243,7 +259,7 @@ export default class extends Controller {
     if (wantCtrl !== e.ctrlKey) return
     if (wantMeta !== e.metaKey) return
     e.preventDefault()
-    const first = this._listEl.firstElementChild
+    const first = this._listEl?.firstElementChild
     first?.focus()
   }
 
@@ -278,7 +294,7 @@ export default class extends Controller {
   }
 
   _mutate(id, variant, text) {
-    const el = this._listEl.querySelector(`#${CSS.escape(id)}`)
+    const el = this._listEl?.querySelector(`#${CSS.escape(id)}`)
     if (!el) return
     el.dataset.variant = variant
     el.setAttribute("role", variant === "error" ? "alert" : "status")
