@@ -79,7 +79,11 @@ export default class extends Controller {
         duration: this.animationDurationValue,
         easing: this.animationEasingValue,
       },
-    );
+    )
+      .finished.then(() => {
+        if (content.dataset.state === "open") content.style.height = "auto";
+      })
+      .catch(() => {});
   }
 
   // Hide the accordion content with animation
@@ -87,20 +91,23 @@ export default class extends Controller {
     const content = this.contentTarget;
     content.dataset.state = "closed";
 
+    const currentHeight = content.getBoundingClientRect().height;
     animate(
       content,
-      { height: 0 },
+      { height: [`${currentHeight}px`, "0px"] },
       {
         duration: this.animationDurationValue,
         easing: this.animationEasingValue,
       },
-    ).finished.then(() => {
-      // After animation completes, truly hide the element so it is removed
-      // from layout and form focus — prevents trapped validation errors
-      if (content.dataset.state === "closed") {
-        content.setAttribute("hidden", "");
-      }
-    });
+    )
+      .finished.then(() => {
+        // After animation completes, truly hide the element so it is removed
+        // from layout and form focus — prevents trapped validation errors
+        if (content.dataset.state === "closed") {
+          content.setAttribute("hidden", "");
+        }
+      })
+      .catch(() => {});
   }
 
   // Rotate the accordion icon 180deg using animate function
