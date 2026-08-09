@@ -29,7 +29,7 @@ GEM
       prism
       zeitwerk
     regexp_parser (2.12.0)
-    rouge (5.0.0)
+    rouge (5.1.0)
       strscan (~> 3.1)
     rubocop (1.88.2)
       json (~> 2.3)
@@ -79,7 +79,7 @@ DEPENDENCIES
   minitest (~> 6.0)
   phlex (~> 2.1, >= 2.1.2)
   rake (~> 13.0)
-  rouge (~> 5.0.0)
+  rouge (~> 5.1.0)
   ruby_ui!
   standard (~> 1.0)
   tailwind_merge (~> 1.4)
