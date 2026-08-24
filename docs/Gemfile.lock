@@ -303,9 +303,9 @@ GEM
       websocket (~> 1.0)
     simpleidn (0.2.3)
     sin_lru_redux (2.5.3)
-    sqlite3 (2.9.5)
+    sqlite3 (2.9.6)
       mini_portile2 (~> 2.8.0)
-    sqlite3 (2.9.5-x86_64-linux-gnu)
+    sqlite3 (2.9.6-x86_64-linux-gnu)
     standard (1.56.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -371,7 +371,7 @@ DEPENDENCIES
   ruby_ui!
   ruby_ui-mcp!
   selenium-webdriver
-  sqlite3 (= 2.9.5)
+  sqlite3 (= 2.9.6)
   standard
   stimulus-rails (= 1.3.4)
   tailwind_merge (~> 1.5.3)
