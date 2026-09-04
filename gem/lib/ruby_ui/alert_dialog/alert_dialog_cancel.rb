@@ -11,6 +11,7 @@ module RubyUI
     def default_attrs
       {
         variant: :outline,
+        autofocus: true,
         data: {
           action: "click->ruby-ui--alert-dialog#dismiss"
         },
