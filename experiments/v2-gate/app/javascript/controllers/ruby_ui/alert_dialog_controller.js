@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/alert_dialog/alert_dialog_controller.js

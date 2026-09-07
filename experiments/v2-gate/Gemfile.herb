@@ -1,0 +1,8 @@
+# The gate lane: pinned Rails ref + ReActionView 0.4.0 + Herb 0.10.3.
+# config/initializers/reactionview.rb sets intercept_erb = true and
+# validation_mode = :raise, so every .html.erb under Rails.root compiles
+# through Herb::Engine with its validators on.
+eval_gemfile "Gemfile.base"
+
+gem "reactionview", "0.4.0"
+gem "herb", "0.10.3"

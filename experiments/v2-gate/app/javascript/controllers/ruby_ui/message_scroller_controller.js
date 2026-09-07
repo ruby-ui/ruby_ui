@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/message_scroller/message_scroller_controller.js

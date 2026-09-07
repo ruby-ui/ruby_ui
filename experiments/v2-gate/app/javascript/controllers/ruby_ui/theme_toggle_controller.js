@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/theme_toggle/theme_toggle_controller.js

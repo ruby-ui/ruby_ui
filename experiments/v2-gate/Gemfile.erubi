@@ -1,0 +1,4 @@
+# The control lane: pinned Rails ref, no ReActionView. Templates compile through
+# Erubi (Rails' default handler). herb still appears in the lock because
+# actionview at the pinned ref declares it as a dependency; nothing loads it.
+eval_gemfile "Gemfile.base"

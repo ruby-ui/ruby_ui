@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/toast/toaster_controller.js

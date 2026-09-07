@@ -1,0 +1,5 @@
+<%= render Probes::Div.new(id: "outer") do |g| %>
+  <%= render Probes::Div.new(id: "inner", data: {parent: g.attrs["id"]}) do %>
+    <em>deep</em>
+  <% end %>
+<% end %>

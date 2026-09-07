@@ -1,0 +1,13 @@
+# Spike lane, NOT a gate lane (design/v2/05-decisions.md, deviation 13).
+#
+# Herb `main` for its experimental ComponentTags::Visitor, which turns
+# <RubyUI::Dialog>…</RubyUI::Dialog> into `render RubyUI::Dialog.new do … end`
+# and does not exist in the published 0.10.3. No ReActionView: its 0.4.0
+# handler targets the 0.10.x engine, so templates compile through Rails' own
+# ActionView::Template::Handlers::ERB::Herb at the pinned ref, subclassed in
+# config/initializers/component_tags.rb to add the visitor. Herb from git needs
+# a git-sourced Prism for its C sources (herb's ext/herb/extconf.rb).
+eval_gemfile "Gemfile.base"
+
+gem "prism", github: "ruby/prism", tag: "v1.9.0"
+gem "herb", github: "marcoroth/herb", ref: "4269f79f97a7106c610ad2cdf6059b410f5ebeb4"

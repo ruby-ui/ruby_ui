@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/data_table/data_table_column_visibility_controller.js

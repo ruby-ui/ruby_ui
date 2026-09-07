@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "RubyUI 2.0 gate" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%# Tailwind through the play CDN so hidden, open:flex and the animation
+        classes resolve in the browser (plan §4). Evidence only: no test
+        compares pixels. %>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="p-8">
+    <%= yield %>
+  </body>
+</html>

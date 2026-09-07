@@ -1,0 +1,8 @@
+/.bundle
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+/storage/*
+/config/master.key
+.DS_Store

@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/tabs/tabs_controller.js

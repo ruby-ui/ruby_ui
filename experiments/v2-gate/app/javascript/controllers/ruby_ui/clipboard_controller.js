@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/clipboard/clipboard_controller.js

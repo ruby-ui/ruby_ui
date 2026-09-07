@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/command/command_dialog_controller.js

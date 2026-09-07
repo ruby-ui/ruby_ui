@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/input_otp/input_otp_controller.js

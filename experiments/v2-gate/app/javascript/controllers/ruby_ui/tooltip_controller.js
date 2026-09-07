@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/tooltip/tooltip_controller.js

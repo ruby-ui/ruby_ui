@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/hover_card/hover_card_controller.js

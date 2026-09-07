@@ -1,0 +1,37 @@
+# Shared by every lane. Each Gemfile.<lane> evals this file and adds the lane's
+# own gems. Select a lane with BUNDLE_GEMFILE=Gemfile.<lane>; config/boot.rb
+# defaults to Gemfile.herb (the gate lane).
+
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby "3.4.7"
+
+# Charter baseline (design/v2/00-charter.md §3): rails/rails at the merge commit
+# of #58552, which adds ActionView::Template::Handlers::ERB::Herb. Do not float.
+gem "rails", github: "rails/rails", ref: "60eb5cb72dbf06ef9de39c6786df2f20e838884f"
+
+gem "propshaft"
+gem "puma", ">= 5.0"
+gem "importmap-rails"
+gem "turbo-rails"
+gem "stimulus-rails"
+
+# The layer's only runtime dependency besides Rails. Pinned to the version the
+# 1.6 golden snapshots were recorded with (gem/Gemfile.lock).
+gem "tailwind_merge", "1.5.5"
+
+group :development, :test do
+  gem "debug", platforms: %i[mri], require: "debug/prelude"
+end
+
+group :test do
+  # gem/test/golden/canonical_html.rb (the parity ruler) is nokogiri-only.
+  gem "nokogiri"
+  # Differential oracle for RubyUI::Attributes: Phlex::HTML#div(**h) vs the
+  # layer's serializer. Phlex alone, never the 1.6 ruby_ui gem — the 1.6 gem and
+  # the 2.0 layer collide on RubyUI::Base.
+  gem "phlex", "2.4.1"
+  gem "capybara"
+  gem "selenium-webdriver"
+end

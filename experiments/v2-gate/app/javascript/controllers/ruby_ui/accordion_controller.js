@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/accordion/accordion_controller.js

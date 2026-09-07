@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/sheet/sheet_content_controller.js

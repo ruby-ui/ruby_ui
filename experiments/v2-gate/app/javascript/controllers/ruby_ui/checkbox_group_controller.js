@@ -1,0 +1,1 @@
+../../../../../../gem/lib/ruby_ui/checkbox/checkbox_group_controller.js

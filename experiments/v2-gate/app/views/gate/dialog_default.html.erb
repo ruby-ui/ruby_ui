@@ -1,0 +1,16 @@
+<%= render RubyUI::Dialog.new do %>
+  <%= render RubyUI::DialogTrigger.new do %>
+    <%= render RubyUI::Button.new do %>Open Dialog<% end %>
+  <% end %>
+  <%= render RubyUI::DialogContent.new do %>
+    <%= render RubyUI::DialogHeader.new do %>
+      <%= render RubyUI::DialogTitle.new do %>RubyUI to the rescue<% end %>
+      <%= render RubyUI::DialogDescription.new do %>Build accessible apps with ease.<% end %>
+    <% end %>
+    <%= render RubyUI::DialogMiddle.new do %>Body<% end %>
+    <%= render RubyUI::DialogFooter.new do %>
+      <%= render RubyUI::Button.new(variant: :outline) do %>Cancel<% end %>
+      <%= render RubyUI::Button.new do %>Save<% end %>
+    <% end %>
+  <% end %>
+<% end %>
