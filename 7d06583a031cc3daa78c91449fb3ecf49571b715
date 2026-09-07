@@ -1,0 +1,140 @@
+gem/test/ruby_ui/bubble_test.rb
+  s_4ff7118e049d85::t_de2acdf95eead9 1-55,73-83
+  s_4ff7118e049d85::t_d362c6e755f5bc 56-72
+docs/app/lib/site_files.rb
+  s_4ff7118e049d85::t_47ec9fa79365fb 89
+  s_4ff7118e049d85::t_e40dba6e82bcec 112
+  s_4ff7118e049d85::t_7b8b456972dfe3 113
+docs/app/views/docs/bubble.rb
+  s_4ff7118e049d85::t_7334fcb9e1d95f 1-116,118-119,121-130,133-148,150-167
+  s_4ff7118e049d85::t_94bd7365c1a101 131
+  s_4ff7118e049d85::t_3d663cabfdf55d 117,120,132,149
+docs/config/routes.rb
+  s_4ff7118e049d85::t_642f16869c8a92 33
+  s_4ff7118e049d85::t_22b2bbc52c469f 56
+  s_4ff7118e049d85::t_a2ef33a657925c 57
+gem/lib/ruby_ui/bubble/bubble_group.rb
+  s_4ff7118e049d85::t_d2fed8c5367a97 1-18
+gem/lib/ruby_ui/bubble/bubble_content.rb
+  s_4ff7118e049d85::t_ba66b13a674761 5-9,11
+  s_4ff7118e049d85::t_0e2eeeae75d529 1-4,10,12-18,20-23
+  s_4ff7118e049d85::t_05b15171d136a1 19
+gem/lib/ruby_ui/bubble/bubble_docs.rb
+  s_4ff7118e049d85::t_5405ae9027f66c 1-116,118-119,121-130,133-148,150-167
+  s_4ff7118e049d85::t_fa1af97e50006f 117,120
+  s_4ff7118e049d85::t_a7ce343db22b27 149
+  s_4ff7118e049d85::t_f00d08f2d4042d 131
+  s_4ff7118e049d85::t_fec29a4e89cc57 132
+docs/app/controllers/docs_controller.rb
+  s_4ff7118e049d85::t_a4e79c99c65329 77-80
+  s_4ff7118e049d85::t_bf28db98af36ac 173-176
+  s_4ff7118e049d85::t_e9e2b159578b86 177-180
+gem/lib/ruby_ui/bubble/bubble_reactions.rb
+  s_4ff7118e049d85::t_5cf7bef33899b8 1-30,32-38
+  s_4ff7118e049d85::t_6646d947b01927 31
+docs/app/components/shared/components_list.rb
+  s_4ff7118e049d85::t_2e897ef43cd5d7 15
+  s_4ff7118e049d85::t_a00db4ecefdd9c 39
+  s_4ff7118e049d85::t_377108f971ffc8 40
+docs/public/llms-full.txt
+  s_4ff7118e049d85::t_59880f8e8696be 121-125
+  s_4ff7118e049d85::t_55de72a284d132 236-240
+  s_4ff7118e049d85::t_d1012e9ec1e441 241-245
+docs/public/sitemap.xml
+  s_4ff7118e049d85::t_59880f8e8696be 99-102
+  s_4ff7118e049d85::t_4117f83e36ff55 98
+  s_4ff7118e049d85::t_55de72a284d132 214-216
+  s_4ff7118e049d85::t_8529139df51f3e 212-213
+  s_4ff7118e049d85::t_d1012e9ec1e441 219-221
+  s_4ff7118e049d85::t_9a4b2262c8c4f4 217-218
+docs/public/llms.txt
+  s_4ff7118e049d85::t_59880f8e8696be 31
+  s_4ff7118e049d85::t_55de72a284d132 54
+  s_4ff7118e049d85::t_d1012e9ec1e441 55
+gem/lib/ruby_ui/bubble/bubble.rb
+  s_4ff7118e049d85::t_8780dfd44f2fc7 1-37
+mcp/data/registry.json
+  s_4ff7118e049d85::t_6550761eaaec4f 374-449
+  s_4ff7118e049d85::t_75ede9cd75e1da 1759-1820
+  s_4ff7118e049d85::t_b466c97a6d3d0b 1821-1830,1832-1838,1840-1881
+  s_4ff7118e049d85::t_1fd5bf010aeea0 1831,1839
+gem/lib/ruby_ui/message/message_footer.rb
+  s_4ff7118e049d85::t_b273f7ef1e0b49 1-18
+gem/lib/ruby_ui/message/message_content.rb
+  s_4ff7118e049d85::t_f9bd686e5c55d8 1-18
+gem/lib/ruby_ui/message/message_avatar.rb
+  s_4ff7118e049d85::t_d79b5b94bb045b 1-18
+docs/app/views/docs/message.rb
+  s_4ff7118e049d85::t_05de28a249127b 1-17,19-31,33-45,47-60,62-89,91-111,116-122,127-142,147-153,158-173
+  s_4ff7118e049d85::t_3b2fc0d13121fb 18,32,46,61,90,112-115,123-126,143-146,154-157
+gem/lib/ruby_ui/message/message_group.rb
+  s_4ff7118e049d85::t_51acf013a65bd7 1-18
+gem/lib/ruby_ui/message/message_header.rb
+  s_4ff7118e049d85::t_3dab6a0c1501b0 1-18
+gem/lib/ruby_ui/message/message.rb
+  s_4ff7118e049d85::t_16220206cad814 1-23
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_4ff7118e049d85::t_a6595efc483313 76-80
+  s_4ff7118e049d85::t_9c497af6b9baca 81-85
+gem/test/ruby_ui/message_test.rb
+  s_4ff7118e049d85::t_2fef844841bb40 1-60
+gem/lib/ruby_ui/message/message_docs.rb
+  s_4ff7118e049d85::t_7972825d63d10c 1-17,19-31,33-45,47-60,62-89,91-111,116-122,127-142,147-153,158-173
+  s_4ff7118e049d85::t_88288a920ec4ff 18,32,46,61,90,112-115,123-126,143-146,154-157
+gem/lib/ruby_ui/message_scroller/message_scroller_controller.js
+  s_4ff7118e049d85::t_433dc4c873644f 223-231,235,237-240,242-260,263,269-272
+  s_4ff7118e049d85::t_7c0a103ed12109 1-82,84-119,122-123,129,136-138,143-154,159-163,165-166,169-174,181-210,219-222,232-234,236,241,261-262,264-268,273-285,291-324
+  s_4ff7118e049d85::t_9de063ebe29ba1 83
+  s_4ff7118e049d85::t_d4d1ac02085d7f 120-121,124-128,130-135,139-142,155-158,164,167-168,175-178
+  s_4ff7118e049d85::t_fa3dc5ce347a0c 286-290
+  s_4ff7118e049d85::t_c54b1c618f47c8 211-218
+  s_4ff7118e049d85::t_e432af73a60e29 179-180
+gem/lib/ruby_ui/message_scroller/message_scroller_item.rb
+  s_4ff7118e049d85::t_fd6681019f6ab6 1-23,25-28
+  s_4ff7118e049d85::t_bb7de8feb6f90d 24
+gem/test/ruby_ui/message_scroller_test.rb
+  s_4ff7118e049d85::t_e1774b967ac129 1-43,45-72,74-84
+  s_4ff7118e049d85::t_8fdbef2a045714 44
+  s_4ff7118e049d85::t_bf0b6faca9b0a8 73
+gem/lib/ruby_ui/message_scroller/message_scroller_content.rb
+  s_4ff7118e049d85::t_50ae4ec3002e72 1-23
+docs/app/views/docs/message_scroller.rb
+  s_4ff7118e049d85::t_2486c3fd468414 1-45,47-77,79-110,112-125
+  s_4ff7118e049d85::t_0a53704fa1763f 46,78,111
+docs/app/javascript/controllers/index.js
+  s_4ff7118e049d85::t_d1012e9ec1e441 76-78,120-122
+gem/lib/ruby_ui/message_scroller/message_scroller_provider.rb
+  s_4ff7118e049d85::t_5ece8210d21f3d 1-23,25-26,28-34
+  s_4ff7118e049d85::t_82a87db78303ce 24,27
+gem/lib/ruby_ui/message_scroller/message_scroller.rb
+  s_4ff7118e049d85::t_baece376878ad1 1-18
+gem/lib/ruby_ui/message_scroller/message_scroller_viewport.rb
+  s_4ff7118e049d85::t_066464cd7f90a2 1-22
+gem/lib/ruby_ui/message_scroller/message_scroller_button.rb
+  s_4ff7118e049d85::t_23bc7b4cda6b4b 16
+  s_4ff7118e049d85::t_b49213a5e3f022 1-15,17-31,33-56
+  s_4ff7118e049d85::t_93b95fc12df5a0 32
+gem/lib/ruby_ui/message_scroller/message_scroller_docs.rb
+  s_4ff7118e049d85::t_7e283838b54c62 1-45,47-77,79-110,112-125
+  s_4ff7118e049d85::t_a3bc6c3aa36e3f 46,78,111
+docs/app/javascript/controllers/ruby_ui/message_scroller_controller.js
+  s_4ff7118e049d85::t_2486c3fd468414 1-82,84-119,122-123,129,136-138,143-154,159-163,165-166,169-174,181-210,219-222,232-234,241,261-262,264-268,273-285,291-324
+  s_4ff7118e049d85::t_283ec88a63481a 83,223-231,235-240,242-260,263,269-272
+  s_4ff7118e049d85::t_28ef1f939974ae 120-121,124-128,130-135,139-142,155-158,164,167-168,175-180,211-218,286-290
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "7d06583a031cc3daa78c91449fb3ecf49571b715",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}

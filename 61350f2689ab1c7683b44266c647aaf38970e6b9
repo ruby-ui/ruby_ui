@@ -1,0 +1,54 @@
+gem/lib/ruby_ui/message/message_footer.rb
+  s_4ff7118e049d85::t_b273f7ef1e0b49 1-18
+gem/lib/ruby_ui/message/message_content.rb
+  s_4ff7118e049d85::t_f9bd686e5c55d8 1-18
+gem/lib/ruby_ui/message/message_avatar.rb
+  s_4ff7118e049d85::t_d79b5b94bb045b 1-18
+docs/app/views/docs/message.rb
+  s_4ff7118e049d85::t_05de28a249127b 1-17,19-31,33-45,47-60,62-89,91-111,116-122,127-142,147-153,158-173
+  s_4ff7118e049d85::t_3b2fc0d13121fb 18,32,46,61,90,112-115,123-126,143-146,154-157
+docs/app/lib/site_files.rb
+  s_4ff7118e049d85::t_e40dba6e82bcec 111
+docs/public/sitemap.xml
+  s_4ff7118e049d85::t_55de72a284d132 209-211
+  s_4ff7118e049d85::t_8529139df51f3e 207-208
+gem/lib/ruby_ui/message/message_group.rb
+  s_4ff7118e049d85::t_51acf013a65bd7 1-18
+docs/app/components/shared/components_list.rb
+  s_4ff7118e049d85::t_a00db4ecefdd9c 38
+gem/lib/ruby_ui/message/message_header.rb
+  s_4ff7118e049d85::t_3dab6a0c1501b0 1-18
+docs/public/llms-full.txt
+  s_4ff7118e049d85::t_55de72a284d132 231-235
+gem/lib/ruby_ui/message/message.rb
+  s_4ff7118e049d85::t_16220206cad814 1-23
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_4ff7118e049d85::t_a6595efc483313 76-80
+gem/test/ruby_ui/message_test.rb
+  s_4ff7118e049d85::t_2fef844841bb40 1-60
+docs/app/controllers/docs_controller.rb
+  s_4ff7118e049d85::t_bf28db98af36ac 169-172
+gem/lib/ruby_ui/message/message_docs.rb
+  s_4ff7118e049d85::t_7972825d63d10c 1-17,19-31,33-45,47-60,62-89,91-111,116-122,127-142,147-153,158-173
+  s_4ff7118e049d85::t_88288a920ec4ff 18,32,46,61,90,112-115,123-126,143-146,154-157
+docs/public/llms.txt
+  s_4ff7118e049d85::t_55de72a284d132 53
+docs/config/routes.rb
+  s_4ff7118e049d85::t_22b2bbc52c469f 55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "61350f2689ab1c7683b44266c647aaf38970e6b9",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": null
+    }
+  }
+}

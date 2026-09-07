@@ -1,0 +1,28 @@
+docs/app/javascript/controllers/message_scroller_chat_controller.js
+  s_4ff7118e049d85::t_ff7e802f5f80e3 1-61
+docs/app/views/docs/message_scroller.rb
+  s_4ff7118e049d85::t_29c41c456fc332 10-92
+docs/app/javascript/controllers/index.js
+  s_4ff7118e049d85::t_29c41c456fc332 10-12
+gem/lib/ruby_ui/message_scroller/message_scroller_docs.rb
+  s_4ff7118e049d85::t_400f0a43d5659b 10-92
+mcp/data/registry.json
+  s_4ff7118e049d85::t_47b9e271aece12 1863,1866-1869
+  s_4ff7118e049d85::t_d9847aeb578640 1870
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "fb46ef42eb66ec74f5f5ac9f9a8b96a0a6aae02c",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "unknown"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}

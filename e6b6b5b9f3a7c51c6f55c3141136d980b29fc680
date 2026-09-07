@@ -1,0 +1,27 @@
+docs/app/javascript/controllers/ruby_ui/dropdown_menu_controller.js
+  s_da49dfa3225368::t_1ce82cc886139a 76-78,85
+  s_da49dfa3225368::t_c35cb8168c0836 46
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_docs.rb
+  s_da49dfa3225368::t_2f20760ea7f0fc 14
+docs/app/views/docs/dropdown_menu.rb
+  s_da49dfa3225368::t_c03c0adc8993e5 14,32
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_controller.js
+  s_da49dfa3225368::t_408b698cc65cbd 76-78,85
+  s_da49dfa3225368::t_4db8612f92cc81 46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.11",
+  "base_commit_sha": "e6b6b5b9f3a7c51c6f55c3141136d980b29fc680",
+  "prompts": {},
+  "sessions": {
+    "s_da49dfa3225368": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3c30b4ef-50a1-4411-9917-941338d3bb9e",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}

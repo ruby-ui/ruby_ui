@@ -1,0 +1,40 @@
+docs/app/components/shared/components_list.rb
+  s_8708c7a7a4ad0d::t_b386c0094f26a6 36
+docs/app/views/docs/input_otp.rb
+  s_8708c7a7a4ad0d::t_83207ed06a2de0 1-92
+docs/public/llms-full.txt
+  s_8708c7a7a4ad0d::t_86ae268831c449 221-225
+docs/app/lib/site_files.rb
+  s_8708c7a7a4ad0d::t_c99c9f4e4db7ab 109
+mcp/data/registry.json
+  s_8708c7a7a4ad0d::t_ea7a67c61b8926 1604-1653
+docs/app/controllers/docs_controller.rb
+  s_8708c7a7a4ad0d::t_7508a7b4270dd1 161-164
+docs/app/javascript/controllers/index.js
+  s_8708c7a7a4ad0d::t_98b3e624082ce8 76-78
+docs/config/routes.rb
+  s_8708c7a7a4ad0d::t_a4b1fe17a6c6ef 53
+docs/public/sitemap.xml
+  s_8708c7a7a4ad0d::t_86ae268831c449 199-202
+  s_8708c7a7a4ad0d::t_a08d4edb5a3f05 198
+docs/app/javascript/controllers/ruby_ui/input_otp_controller.js
+  s_8708c7a7a4ad0d::t_83207ed06a2de0 1-97
+docs/public/llms.txt
+  s_8708c7a7a4ad0d::t_86ae268831c449 51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "428bdeecdeedac0532f9f7b8072444bcd9db58fb",
+  "prompts": {},
+  "sessions": {
+    "s_8708c7a7a4ad0d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2fd9a7f1-af2c-4c4d-aac1-4f5e708ae820",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}

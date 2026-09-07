@@ -1,0 +1,52 @@
+gem/lib/ruby_ui/empty/empty_docs.rb
+  s_4ff7118e049d85::t_77f1e746ede15b 1-69
+docs/app/lib/site_files.rb
+  s_4ff7118e049d85::t_986a55d9c868b1 106
+gem/lib/ruby_ui/empty/empty_header.rb
+  s_4ff7118e049d85::t_9f9a2678758111 1-18
+docs/app/views/docs/empty.rb
+  s_4ff7118e049d85::t_cd7b00e815edb7 1-69
+gem/lib/ruby_ui/empty/empty_media.rb
+  s_4ff7118e049d85::t_e297f89863d4b5 1-31
+docs/public/sitemap.xml
+  s_4ff7118e049d85::t_caf118d8bc72be 184-187
+  s_4ff7118e049d85::t_2d690a42bca47d 183
+gem/lib/ruby_ui/empty/empty.rb
+  s_4ff7118e049d85::t_8bb095279dd36f 1-18
+gem/test/ruby_ui/empty_test.rb
+  s_4ff7118e049d85::t_282fe30f66647e 1-39
+mcp/data/registry.json
+  s_4ff7118e049d85::t_caf118d8bc72be 1438-1491
+docs/public/llms-full.txt
+  s_4ff7118e049d85::t_caf118d8bc72be 206-210
+docs/app/controllers/docs_controller.rb
+  s_4ff7118e049d85::t_a79f2b29f6138c 149-152
+docs/config/routes.rb
+  s_4ff7118e049d85::t_c0e7721e0a4878 50
+gem/lib/ruby_ui/empty/empty_title.rb
+  s_4ff7118e049d85::t_ed5a8dd2342abc 1-18
+gem/lib/ruby_ui/empty/empty_description.rb
+  s_4ff7118e049d85::t_1d05c1317fb1ec 1-18
+gem/lib/ruby_ui/empty/empty_content.rb
+  s_4ff7118e049d85::t_3e75d34b4e8d7f 1-18
+docs/public/llms.txt
+  s_4ff7118e049d85::t_caf118d8bc72be 48
+docs/app/components/shared/components_list.rb
+  s_4ff7118e049d85::t_393d2cbe3b4332 33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "66b0f376850dd5c47e30b102e4db33cb12a961a1",
+  "prompts": {},
+  "sessions": {
+    "s_4ff7118e049d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f34bff8-4340-456e-af2e-1d1537ef9ac1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+gem/lib/ruby_ui/input_otp/input_otp_controller.js
+  s_8708c7a7a4ad0d::t_6c9623b1211da8 1-97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "81dc70b5782160be3fc83d5759cdea3fcc89badc",
+  "prompts": {},
+  "sessions": {
+    "s_8708c7a7a4ad0d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2fd9a7f1-af2c-4c4d-aac1-4f5e708ae820",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Djalma Araújo <djalma@nossomos.cc>"
+    }
+  }
+}
