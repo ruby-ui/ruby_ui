@@ -20,6 +20,7 @@ Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (�
 - Component docs view → `docs/app/views/docs/<component>.rb`. Update in same PR as the component.
 - Generator/installer logic → `gem/lib/generators/ruby_ui/`. Dependency map → `gem/lib/generators/ruby_ui/dependencies.yml`.
 - Site chrome, routes, marketing pages → `docs/app/`.
+- Component markup is pinned by the golden HTML suite (`gem/test/golden_test.rb`). Changing a component's output means re-recording its snapshot with `cd gem && bundle exec rake golden:update` and reviewing the diff in the PR; adding a component means adding a scenario to `gem/test/golden/scenarios.rb`, which the suite enforces. Scope and normalization rules: `design/v2/01-research/golden-suite.md`.
 - A component's Stimulus controller lives only in `gem/lib/ruby_ui/<component>/<component>_controller.js`. `docs/app/javascript/controllers/ruby_ui/<component>_controller.js` is a symlink to it, not a copy — editing the gem file is enough for existing components. A brand-new component's controller needs `docs`' `rake ruby_ui:sync_controller_symlinks` to create the symlink, plus `bin/rails stimulus:manifest:update` to register it.
 
 ## Common commands
@@ -30,7 +31,9 @@ Run from the relevant subdir, not root.
 # Gem
 cd gem
 bundle exec rake                                  # tests + standardrb
-bundle exec rake test TEST=test/ruby_ui/button_test.rb
+bundle exec rake golden                           # golden HTML suite (parity ruler)
+bundle exec rake golden:update                    # re-record snapshots, then review the diff
+bundle exec rake test N=/button/                  # single test by name
 bundle exec standardrb --fix
 
 # Docs site

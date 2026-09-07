@@ -1,0 +1,38 @@
+<div data-controller="ruby-ui--sheet" data-ruby-ui--sheet-open-value="false">
+  <div data-action="click-&gt;ruby-ui--sheet#open">
+    <button class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground" type="button">
+      Open Sheet
+    </button>
+  </div>
+  <template data-ruby-ui--sheet-target="content">
+    <div data-controller="ruby-ui--sheet-content">
+      <div class="fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:fill-mode-forwards" data-action="click-&gt;ruby-ui--sheet-content#close" data-ruby-ui--sheet-content-target="backdrop" data-state="open"></div>
+      <div class="fixed pointer-events-auto z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards data-[state=closed]:duration-300 data-[state=open]:duration-500 overflow-scroll inset-y-0 right-0 h-full border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm" data-ruby-ui--sheet-content-target="panel" data-state="open">
+        <div class="flex flex-col space-y-1.5 text-center sm:text-left">
+          <h3 class="text-lg font-semibold leading-none tracking-tight">
+            Edit profile
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            Make changes to your profile here.
+          </p>
+        </div>
+        <div class="py-4">
+          <input class="flex h-9 w-full rounded-md border bg-background px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] border-border ring-0 ring-ring/0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:border-ring focus-visible:shadow-sm" data-action="input-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--form-field-target="input" name="name" type="string">
+        </div>
+        <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 gap-y-2 sm:gap-y-0">
+          <button class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm bg-primary text-primary-foreground shadow hover:bg-primary/90" type="submit">
+            Save
+          </button>
+        </div>
+        <button class="absolute end-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground" data-action="click-&gt;ruby-ui--sheet-content#close" type="button">
+          <svg class="h-4 w-4" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns:xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fill-rule="evenodd"></path>
+          </svg>
+          <span class="sr-only">
+            Close
+          </span>
+        </button>
+      </div>
+    </div>
+  </template>
+</div>

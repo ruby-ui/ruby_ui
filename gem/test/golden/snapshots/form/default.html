@@ -1,0 +1,14 @@
+<form action="/users" method="post">
+  <div class="flex flex-col gap-2" data-controller="ruby-ui--form-field">
+    <label class="empty:hidden text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-70 peer-aria-disabled:pointer-events-none" for="name">
+      Name
+    </label>
+    <input class="flex h-9 w-full rounded-md border bg-background px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] border-border ring-0 ring-ring/0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:border-ring focus-visible:shadow-sm" data-action="input-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--form-field-target="input" id="name" minlength="3" name="name" placeholder="Jane Doe" required type="string">
+    <p class="empty:hidden text-sm text-muted-foreground">
+      At least 3 characters.
+    </p>
+    <p class="empty:hidden text-sm font-medium text-destructive" data-ruby-ui--form-field-target="error">
+      Name is required.
+    </p>
+  </div>
+</form>

@@ -1,0 +1,40 @@
+<div data-action="ruby--ui-sidebar:open-&gt;ruby-ui--sheet#open:self" data-controller="ruby-ui--sheet" data-ruby-ui--sheet-open-value="false" data-ruby-ui--sidebar-target="mobileSidebar">
+  <template data-ruby-ui--sheet-target="content">
+    <div data-controller="ruby-ui--sheet-content">
+      <div class="fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:fill-mode-forwards" data-action="click-&gt;ruby-ui--sheet-content#close" data-ruby-ui--sheet-content-target="backdrop" data-state="open"></div>
+      <div class="fixed pointer-events-auto z-50 gap-4 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards data-[state=closed]:duration-300 data-[state=open]:duration-500 overflow-scroll inset-y-0 right-0 h-full border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground [&amp;&gt;button]:hidden" data-mobile="true" data-ruby-ui--sheet-content-target="panel" data-sidebar="sidebar" data-state="open" style="--sidebar-width: 18rem;">
+        <div class="flex flex-col space-y-1.5 text-center sm:text-left sr-only">
+          <h3 class="text-lg font-semibold leading-none tracking-tight">
+            Sidebar
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            Displays the mobile sidebar.
+          </p>
+        </div>
+        <div class="flex h-full w-full flex-col">
+          <div class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden" data-sidebar="content">
+            Body
+          </div>
+        </div>
+        <button class="absolute end-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground" data-action="click-&gt;ruby-ui--sheet-content#close" type="button">
+          <svg class="h-4 w-4" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns:xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fill-rule="evenodd"></path>
+          </svg>
+          <span class="sr-only">
+            Close
+          </span>
+        </button>
+      </div>
+    </div>
+  </template>
+</div>
+<div class="group peer hidden text-sidebar-foreground md:block" data-collapsible="icon" data-collapsible-kind="icon" data-ruby-ui--sidebar-target="sidebar" data-side="right" data-state="collapsed" data-variant="floating">
+  <div class="relative w-[var(--sidebar-width)] bg-transparent transition-[width] duration-200 ease-linear group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"></div>
+  <div class="fixed inset-y-0 z-10 hidden h-svh w-[var(--sidebar-width)] transition-[left,right,width] duration-200 ease-linear md:flex right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)] p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]">
+    <div class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow" data-sidebar="sidebar">
+      <div class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden" data-sidebar="content">
+        Body
+      </div>
+    </div>
+  </div>
+</div>
