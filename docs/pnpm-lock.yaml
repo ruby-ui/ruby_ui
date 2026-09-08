@@ -45,8 +45,8 @@ importers:
         specifier: 7.5.0
         version: 7.5.0
       maska:
-        specifier: 3.2.0
-        version: 3.2.0
+        specifier: 3.2.1
+        version: 3.2.1
       motion:
         specifier: 13.1.1
         version: 13.1.1
@@ -322,8 +322,8 @@ packages:
     resolution: {integrity: sha512-sQtrEfA+ez/3G0cCZecF70oqpCRttCexYUG4mUrtWL49ULUzUyxokt5kyqwtKzj1270RaKih+hcP3qLcumccow==}
     engines: {node: '>=10'}
 
-  maska@3.2.0:
-    resolution: {integrity: sha512-zSmSgs5/q9vMSmrdZT3rKOv9uLznNWR/niuuAdBZDTvB3SMKOX9vhMtDijFyExz+B4UClu2rvksylUh/ea1bLA==}
+  maska@3.2.1:
+    resolution: {integrity: sha512-YXMSyY6QPhf+knXWpHEWMswFQMGzYv5rjIOSPgjLibKkA8AlfBf2HT7XHJoTL6Pm1obXQ+tsM1AnyC/AkcVGnQ==}
 
   mini-svg-data-uri@1.4.4:
     resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
@@ -587,7 +587,7 @@ snapshots:
 
   fuse.js@7.5.0: {}
 
-  maska@3.2.0: {}
+  maska@3.2.1: {}
 
   mini-svg-data-uri@1.4.4: {}
 
