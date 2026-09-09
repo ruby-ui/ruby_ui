@@ -52,6 +52,21 @@ class Views::Docs::HoverCard < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Escaping a clipping ancestor", description: "The card is positioned absolutely by default, so a positioned ancestor that hides its overflow — a scroll area, a table cell, a truncating container — clips it. The fixed strategy positions the card against the viewport instead, so it escapes.", context: self) do
+        <<~RUBY
+          div(class: "relative h-24 w-64 overflow-hidden rounded-md border p-4") do
+            HoverCard(option: {strategy: "fixed"}) do
+              HoverCardTrigger do
+                Button(variant: :link) { "@joeldrapper" }
+              end
+              HoverCardContent do
+                p(class: "text-sm") { "Not clipped by the container above." }
+              end
+            end
+          end
+        RUBY
+      end
+
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))

@@ -17,11 +17,21 @@ module RubyUI
 
     def default_attrs
       {
+        class: [
+          "group/hover-card",
+          (strategy == "absolute") ? "is-absolute" : "is-fixed"
+        ],
         data: {
           controller: "ruby-ui--hover-card",
           ruby_ui__hover_card_options_value: @options.to_json
         }
       }
+    end
+
+    # An ancestor with `overflow: hidden` clips an absolutely positioned card;
+    # `strategy: "fixed"` positions it against the viewport instead.
+    def strategy
+      @_strategy ||= @options[:strategy] || "absolute"
     end
   end
 end

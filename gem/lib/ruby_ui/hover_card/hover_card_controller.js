@@ -164,6 +164,9 @@ export default class extends Controller {
       computePosition(this.triggerTarget, this.contentTarget, {
         placement: this.optionsValue.placement || "bottom",
         middleware: [offset(4), flip(), shift({ padding: 8 })],
+        // `fixed` positions against the viewport, so an ancestor with
+        // `overflow: hidden` no longer clips the card.
+        strategy: this.optionsValue.strategy || "absolute",
       }).then(({ x, y, placement }) => {
         Object.assign(this.contentTarget.style, {
           left: `${x}px`,
