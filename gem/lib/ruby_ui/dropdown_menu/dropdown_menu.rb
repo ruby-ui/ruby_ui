@@ -17,7 +17,7 @@ module RubyUI
       {
         class: [
           "group/dropdown-menu",
-          (strategy == "absolute") ? "is-absolute" : "is-fixed"
+          (strategy == "fixed") ? "is-fixed" : "is-absolute"
         ],
         data: {
           controller: "ruby-ui--dropdown-menu",

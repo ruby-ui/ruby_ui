@@ -19,7 +19,7 @@ module RubyUI
       {
         class: [
           "group/hover-card",
-          (strategy == "absolute") ? "is-absolute" : "is-fixed"
+          (strategy == "fixed") ? "is-fixed" : "is-absolute"
         ],
         data: {
           controller: "ruby-ui--hover-card",

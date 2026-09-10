@@ -61,6 +61,15 @@ class RubyUI::HoverCardTest < ComponentTest
     assert_match(/&quot;strategy&quot;:&quot;fixed&quot;/, output)
   end
 
+  # Floating UI treats anything but "fixed" as absolute, so the class has to
+  # fall back the same way — otherwise a typo renders `fixed` while the
+  # positioning engine computes `absolute`.
+  def test_root_falls_back_to_absolute_for_an_unsupported_strategy
+    output = phlex { RubyUI.HoverCard(option: {strategy: "absolut"}) { "card" } }
+
+    assert_match(%r{class="group/hover-card is-absolute"}, output)
+  end
+
   # `hidden` lands a frame after the animation ends; without a forwards fill mode that frame flashes.
   def test_content_holds_the_last_frame_of_the_exit_animation
     output = phlex do
