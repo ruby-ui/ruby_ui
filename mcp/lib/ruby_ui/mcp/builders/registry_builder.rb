@@ -136,6 +136,15 @@ module RubyUI
               next
             end
 
+            # Codeblock(<<~LANG, ...) — standalone sample, not a live example
+            if (m = line.match(/\bCodeblock\(<<~([A-Z]+)/))
+              lang = m[1]
+              code, k = heredoc_body(lines, i + 1, lang)
+              markdown << "```#{lang.downcase}\n#{code}```\n\n"
+              i = k + 1
+              next
+            end
+
             # VisualCodeExample.new(...)
             if line.match(/VisualCodeExample\.new\(/)
               # collect full invocation (may span multiple lines until closing paren + do)
@@ -164,15 +173,7 @@ module RubyUI
               end
 
               if heredoc_lang
-                # accumulate heredoc body
-                body_lines = []
-                while k < lines.length
-                  break if lines[k].match(/^\s*#{Regexp.escape(heredoc_lang)}\s*$/)
-                  body_lines << lines[k]
-                  k += 1
-                end
-                # strip common leading whitespace (squiggly heredoc)
-                code = dedent(body_lines)
+                code, k = heredoc_body(lines, k, heredoc_lang)
                 lang = heredoc_lang.downcase == "ruby" ? "ruby" : heredoc_lang.downcase
 
                 examples << {title: title, code: code, language: lang}
@@ -201,6 +202,18 @@ module RubyUI
           if (m = str.match(/#{Regexp.escape(key)}:\s*["']([^"']+)["']/))
             m[1]
           end
+        end
+
+        # Collects a squiggly-heredoc body starting at `start`; returns [dedented code, terminator index].
+        def heredoc_body(lines, start, terminator)
+          k = start
+          body = []
+          while k < lines.length
+            break if lines[k].match?(/^\s*#{Regexp.escape(terminator)}\s*$/)
+            body << lines[k]
+            k += 1
+          end
+          [dedent(body), k]
         end
 
         def dedent(lines)

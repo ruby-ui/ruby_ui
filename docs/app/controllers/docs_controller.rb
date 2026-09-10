@@ -226,6 +226,10 @@ class DocsController < ApplicationController
     render Views::Docs::Skeleton.new
   end
 
+  def spinner
+    render Views::Docs::Spinner.new
+  end
+
   def switch
     render Views::Docs::Switch.new
   end

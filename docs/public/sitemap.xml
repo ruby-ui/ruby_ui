@@ -281,6 +281,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://rubyui.com/docs/spinner</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://rubyui.com/docs/switch</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
