@@ -29,6 +29,7 @@ module Components
           {name: "Data Table", path: docs_data_table_path},
           {name: "Date Picker", path: docs_date_picker_path},
           {name: "Dialog / Modal", path: docs_dialog_path},
+          {name: "Drawer", path: docs_drawer_path},
           {name: "Dropdown Menu", path: docs_dropdown_menu_path},
           {name: "Empty", path: docs_empty_path},
           {name: "Form", path: docs_form_path},

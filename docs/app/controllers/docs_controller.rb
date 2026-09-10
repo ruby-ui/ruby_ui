@@ -142,6 +142,10 @@ class DocsController < ApplicationController
     render Views::Docs::Dialog.new
   end
 
+  def drawer
+    render Views::Docs::Drawer.new
+  end
+
   def dropdown_menu
     render Views::Docs::DropdownMenu.new
   end

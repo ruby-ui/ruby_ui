@@ -198,6 +198,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/dialog
 - Summary: Modal window that renders background content inert.
 
+### Drawer
+
+- URL: https://rubyui.com/docs/drawer
+- Summary: Bottom sheet with a swipe handle, drag, snap points and swipe-to-dismiss.
+
 ### Dropdown Menu
 
 - URL: https://rubyui.com/docs/dropdown_menu
