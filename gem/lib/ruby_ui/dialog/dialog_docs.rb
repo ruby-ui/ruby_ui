@@ -13,7 +13,7 @@ class Views::Docs::Dialog < Views::Base
         <<~RUBY
           Dialog do
             DialogTrigger do
-              Button { "Open Dialog" }
+              Button(variant: :outline) { "Open Dialog" }
             end
             DialogContent do
               DialogHeader do
@@ -43,7 +43,7 @@ class Views::Docs::Dialog < Views::Base
           div(class: 'flex flex-wrap justify-center gap-2') do
             Dialog do
               DialogTrigger do
-                Button { "Small Dialog" }
+                Button(variant: :outline) { "Small Dialog" }
               end
               DialogContent(size: :sm) do
                 DialogHeader do
@@ -68,7 +68,7 @@ class Views::Docs::Dialog < Views::Base
 
             Dialog do
               DialogTrigger do
-                Button { "Large Dialog" }
+                Button(variant: :outline) { "Large Dialog" }
               end
               DialogContent(size: :lg) do
                 DialogHeader do
@@ -88,6 +88,25 @@ class Views::Docs::Dialog < Views::Base
                   Button(variant: :outline, data: { action: 'click->ruby-ui--dialog#dismiss' }) { "Cancel" }
                   Button { "Save" }
                 end
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "No close button", description: "Hide the corner close button and provide your own close action.", context: self) do
+        <<~RUBY
+          Dialog do
+            DialogTrigger do
+              Button(variant: :outline) { "No Close Button" }
+            end
+            DialogContent(show_close_button: false) do
+              DialogHeader do
+                DialogTitle { "No close button" }
+                DialogDescription { "This dialog has no close button in the corner. Escape and a click outside still close it." }
+              end
+              DialogFooter do
+                Button(variant: :outline, data: { action: 'click->ruby-ui--dialog#dismiss' }) { "Close" }
               end
             end
           end

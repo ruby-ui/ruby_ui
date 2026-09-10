@@ -11,15 +11,16 @@ module RubyUI
       full: "max-w-full"
     }
 
-    def initialize(size: :md, **attrs)
+    def initialize(size: :md, show_close_button: true, **attrs)
       @size = size
+      @show_close_button = show_close_button
       super(**attrs)
     end
 
     def view_template
       dialog(**attrs) do
         yield
-        close_button
+        close_button if @show_close_button
       end
     end
 
@@ -30,7 +31,9 @@ module RubyUI
         data_ruby_ui__dialog_target: "dialog",
         data_action: "click->ruby-ui--dialog#backdropClick",
         class: [
-          "fixed open:flex flex-col pointer-events-auto left-[50%] top-[50%] z-50 w-full max-h-screen overflow-y-auto translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 backdrop:bg-background/80 backdrop:backdrop-blur-sm open:animate-in open:fade-in-0 open:zoom-in-95 sm:rounded-lg md:w-full",
+          "fixed open:flex flex-col pointer-events-auto left-[50%] top-[50%] z-50 w-full max-h-screen overflow-y-auto translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg sm:rounded-lg md:w-full",
+          "duration-200 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:fill-mode-forwards",
+          "backdrop:bg-background/80 backdrop:backdrop-blur-sm backdrop:duration-200 data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0 data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 data-[state=closed]:backdrop:fill-mode-forwards",
           SIZES[@size]
         ]
       }

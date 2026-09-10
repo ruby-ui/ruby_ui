@@ -3,6 +3,8 @@
 require "test_helper"
 
 class RubyUI::DialogTest < ComponentTest
+  CLOSE_BUTTON = /<span class="sr-only">Close<\/span>/
+
   def test_render_with_all_items
     output = phlex do
       RubyUI.Dialog do
@@ -81,13 +83,8 @@ class RubyUI::DialogTest < ComponentTest
   # utility (author CSS) overrides the UA `dialog:not([open]) { display: none }`,
   # making the dialog always visible. Display must be gated on the open: variant.
   def test_dialog_content_does_not_force_display_when_closed
-    output = phlex do
-      RubyUI.Dialog do
-        RubyUI.DialogContent { "Content" }
-      end
-    end
+    classes = dialog_classes
 
-    classes = output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
     refute_includes classes, "flex", "Bare `flex` forces a closed <dialog> to display; use `open:flex`"
     assert_includes classes, "open:flex", "Dialog must apply flex only when open (open:flex)"
   end
@@ -135,5 +132,66 @@ class RubyUI::DialogTest < ComponentTest
     end
 
     assert_match(/data-action="click->ruby-ui--dialog#open"/, output)
+  end
+
+  # Animations key on data-state (set by the controller) so the closed state can still render the exit.
+  def test_dialog_content_animates_enter_and_exit_on_data_state
+    classes = dialog_classes
+
+    %w[
+      duration-200
+      data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+      data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:fill-mode-forwards
+    ].each { |klass| assert_includes classes, klass }
+
+    refute classes.any? { |klass| klass.start_with?("open:animate", "open:fade", "open:zoom") }, "Animations must key on data-state, not on the open: variant"
+    assert_includes classes, "open:flex", "Display must still be gated on the open attribute"
+  end
+
+  # The ::backdrop's animationend lands on the <dialog> itself, so both exits must share one duration.
+  def test_dialog_content_animates_backdrop_on_data_state
+    classes = dialog_classes
+
+    %w[
+      backdrop:bg-background/80 backdrop:backdrop-blur-sm backdrop:duration-200
+      data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0
+      data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 data-[state=closed]:backdrop:fill-mode-forwards
+    ].each { |klass| assert_includes classes, klass }
+  end
+
+  def test_dialog_content_renders_the_close_button_by_default
+    assert_match(CLOSE_BUTTON, dialog_output)
+  end
+
+  def test_dialog_content_omits_the_close_button_when_disabled
+    output = dialog_output(show_close_button: false)
+
+    assert_match(/Content/, output)
+    refute_match(CLOSE_BUTTON, output, "show_close_button: false must not render the close button")
+    refute_match(/data-action="click->ruby-ui--dialog#dismiss"/, output, "The only dismiss action came from the close button")
+  end
+
+  def test_dialog_content_does_not_render_data_state_when_closed
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    refute_match(/<dialog\b[^>]*\sdata-state=/, output, "data-state is owned by the controller; a closed dialog must not render one")
+  end
+
+  private
+
+  def dialog_output(**attrs)
+    phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(**attrs) { "Content" }
+      end
+    end
+  end
+
+  def dialog_classes
+    dialog_output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
   end
 end
