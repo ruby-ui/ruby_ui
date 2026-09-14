@@ -65,6 +65,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Shortcut Key](https://rubyui.com/docs/shortcut_key): Keyboard shortcut display component.
 - [Sidebar](https://rubyui.com/docs/sidebar): Composable, themeable sidebar component.
 - [Skeleton](https://rubyui.com/docs/skeleton): Placeholder for loading states.
+- [Spinner](https://rubyui.com/docs/spinner): Animated indicator for loading states.
 - [Switch](https://rubyui.com/docs/switch): Toggle control for binary settings.
 - [Table](https://rubyui.com/docs/table): Responsive table component.
 - [Tabs](https://rubyui.com/docs/tabs): Layered tab panels displayed one at a time.
