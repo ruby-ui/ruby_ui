@@ -18,9 +18,12 @@ export default class extends Controller {
   }
 
   disconnect() {
-    // Torn down without dismiss() (Turbo nav/morph) never runs afterExit, which is
-    // the only place the <body> scroll lock is released. Release it here regardless.
-    document.body.classList.remove("overflow-hidden");
+    // Torn down mid-open (Turbo nav/morph) never runs afterExit, the only place the
+    // <body> scroll lock is released. Release it here for that path only; on a normal
+    // close afterExit already handled it.
+    if (this.hasPanelTarget && this.panelTarget.dataset.state !== "closed") {
+      document.body.classList.remove("overflow-hidden");
+    }
     // Nothing is left to wait for the exit animation, so apply the pending removal now.
     if (this.hasPanelTarget) this.settleExit(this.panelTarget);
   }
