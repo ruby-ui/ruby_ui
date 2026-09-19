@@ -728,7 +728,7 @@ This is the last hole in the contract Phase 2 freezes. It is a 1.6 bug fix in it
 - Modify: `gem/test/ruby_ui/context_menu_test.rb`
 - Modify: `gem/test/golden/scenarios.rb:447-449`
 - Modify (by rebuilding): `mcp/data/registry.json` — it embeds the source of `context_menu_label.rb`, and CI fails on a stale copy
-- Create (by re-recording): `gem/test/golden/snapshots/context_menu/label_default.html`, `gem/test/golden/snapshots/context_menu/label_inset.html`
+- Create (by re-recording): `gem/test/golden/snapshots/context_menu/label_flush.html`, `gem/test/golden/snapshots/context_menu/label_inset.html`
 
 **Interfaces:**
 - Consumes: `bundle exec rake golden:update` and `Golden::Catalog.scenario(name, pending: nil)` from Task 1.
@@ -819,7 +819,7 @@ git status --porcelain gem/test/golden/snapshots
 Expected, exactly these two lines:
 
 ```
-?? gem/test/golden/snapshots/context_menu/label_default.html
+?? gem/test/golden/snapshots/context_menu/label_flush.html
 ?? gem/test/golden/snapshots/context_menu/label_inset.html
 ```
 
