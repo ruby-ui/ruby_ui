@@ -44,8 +44,12 @@ is the reason that cannot be caught automatically before Phase 3.
 ## 2. Normalizer observations from the whole-branch review — 2026-09-19
 
 Three more gaps the review of this branch surfaced in `Golden::CanonicalHtml`.
-No code changes here — each is a candidate for Phase 2.0's strict lane to
-weigh when it settles its scope.
+
+**Decision: none of the three observations below is acted on in Phase 1.**
+Each is real, none changes what the ruler measures today, and each is an
+input to the strict lane Phase 2.0 defines — that is where they are weighed.
+What would reverse this: a Phase 2 component whose parity depends on one of
+them before the strict lane exists.
 
 **F4.** Adjacent text nodes separated only by an HTML comment
 (`<div>a<!-- -->b</div>`) are not a fixed point (`a\n  b` → `a b`) and

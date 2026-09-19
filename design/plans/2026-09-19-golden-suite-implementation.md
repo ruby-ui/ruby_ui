@@ -47,7 +47,7 @@
 The suite exists as a single self-contained commit on `v2-herb` (`f7cbeda`). It touches nothing that `main` has changed since, so it cherry-picks cleanly. After porting it, exactly two snapshots are stale — HoverCard's — because `10c01f0` (#530, "let the card escape a clipping ancestor") landed on `main` after the branch point. Re-recording those two and reviewing the diff is what validates the ruler: if anything else differs, the ruler is wrong and the task stops.
 
 **Files:**
-- Create (via cherry-pick): `gem/test/golden_test.rb`, `gem/test/golden/canonical_html.rb`, `gem/test/golden/catalog.rb`, `gem/test/golden/harness.rb`, `gem/test/golden/scenarios.rb`, 188 files under `gem/test/golden/snapshots/`
+- Create (via cherry-pick): `gem/test/golden_test.rb`, `gem/test/golden/canonical_html.rb`, `gem/test/golden/catalog.rb`, `gem/test/golden/harness.rb`, `gem/test/golden/scenarios.rb`, 186 files under `gem/test/golden/snapshots/`
 - Create (separately): `design/v2/01-research/golden-suite.md`
 - Modify (via cherry-pick): `gem/Rakefile`, `gem/ruby_ui.gemspec`, `gem/Gemfile.lock`, `CLAUDE.md`, `gem/AGENTS.md`
 - Modify (by re-recording): `gem/test/golden/snapshots/hover_card/default.html`, `gem/test/golden/snapshots/hover_card/with_options.html`
@@ -1008,3 +1008,37 @@ MSG
 - `git status --porcelain docs` is empty.
 
 Phase 2 branches from `main` after this merges.
+
+---
+
+## Addendum — after the whole-branch review and the PR review
+
+The tasks above are the plan as executed. Two review rounds changed the branch
+after Task 4; the plan text above is left as the record of what each task did,
+and this addendum is the record of what came after.
+
+**Whole-branch review fix wave** (commits `ce55e9c` … `9b7bb76`):
+
+- `design/v2/01-research/golden-suite.md` brought in line with the hardened
+  normalizer (it still asserted the empty/whitespace-only equivalence).
+- `canonical_html.rb`: the LF the HTML parser drops after `<pre>` and
+  `<textarea>` is re-emitted, so preserved content that starts with a blank
+  line is a fixed point. Two tests joined `canonical_html_test.rb` —
+  `test_preserved_content_with_leading_newline_is_a_fixed_point` and
+  `test_preserved_leading_newline_that_a_browser_drops_stays_equal` — so
+  Task 2's "5 runs" is 7 on the shipped branch.
+- `gem/Gemfile.lock` gained the `x86_64-linux` platform.
+- `gem/Rakefile`: the `golden` task's glob gained `test/golden/*_test.rb`, so
+  `rake golden` runs the ruler's own tests. Task 2 Step 9's `191 runs` was
+  correct when Task 2 ran; on the shipped branch `rake golden` reports 199
+  (188 scenarios + 3 coverage + 7 canonicalizer + 1 harness).
+- Current-state counts moved from 186 to 188; Task 1's own counts stay 186.
+
+**PR #536 review follow-ups** (the four commits after `9b7bb76`):
+
+- `xmlns:xmlns` → `xmlns` in 47 snapshots: a libxml2 namespace artifact in
+  `attribute_name`, never something a renderer emitted; parity unaffected.
+- `harness.rb`: the pinned-range guard checks `Range#size` before `to_a`.
+- `Rakefile`: `golden:update` reenables `golden` before invoking it.
+- `design/v2/follow-up-issues.md`: seven 1.6 defects the ruler pinned
+  faithfully, each to be fixed in its own PR with a re-record.
