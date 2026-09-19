@@ -19,14 +19,16 @@ which the normalizer preserves verbatim; Carousel's 2 are absolutely
 positioned; Command's and ContextMenu's anchors are `flex` and so block-level.
 The script also cannot see the text–element case at all, which is the one that
 carries behaviour — `FormField` flips on `<div></div>` versus
-`<div>\n</div>`, and that is now caught by the hardened canonical form (Phase 1
-plan, Task 2), not by this inventory.
+`<div>\n</div>`, and that is now caught by the hardened canonical form (the
+`test_distinguishes_an_empty_element_from_a_whitespace_only_one` test), not by
+this inventory.
 
 **Decision.** The number is not the criterion and does not need to be
 accurate. Three things are:
 
 1. The canonical form distinguishes an empty element from a whitespace-only
-   one, for every component, as of Phase 1 Task 2.
+   one, for every component, per the canonical form's
+   `test_distinguishes_an_empty_element_from_a_whitespace_only_one` test.
 2. Phase 2 sidecars are written in ERB trim mode (`<%-` / `-%>`), so the ERB
    lane emits no whitespace Phlex did not. This is a rule for all 256
    classes, not for eight.
@@ -38,3 +40,26 @@ accurate. Three things are:
 **What would reverse this.** A Phase 2 component showing a visible spacing
 difference in a browser that both lanes reported as parity. §9.4 of the design
 is the reason that cannot be caught automatically before Phase 3.
+
+## 2. Normalizer observations from the whole-branch review — 2026-09-19
+
+Three more gaps the review of this branch surfaced in `Golden::CanonicalHtml`.
+No code changes here — each is a candidate for Phase 2.0's strict lane to
+weigh when it settles its scope.
+
+**F4.** Adjacent text nodes separated only by an HTML comment
+(`<div>a<!-- -->b</div>`) are not a fixed point (`a\n  b` → `a b`) and
+over-strict against a browser (`ab`). Reachable only through a comment
+sitting between two text runs; 1.6 emits comments only in Rails development.
+Candidate fix: merge consecutive text children in `significant_children`
+after dropping comments.
+
+**F5.** §9.1's exclusion should also name whitespace runs inside text under
+CSS `white-space: pre*` (no component sets `whitespace-pre*` today), and that
+`combobox_controller.js` reads `input.parentElement.textContent` — so
+`ComboboxItem` joins the strict-lane candidate list alongside
+`FormFieldError`.
+
+**F9.** U+00A0 is written literally by `escape_text`; a snapshot line holding
+one is indistinguishable from spaces in a PR diff. No component emits it
+today; escaping it to `&nbsp;` would keep review honest.

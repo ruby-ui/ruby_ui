@@ -33,12 +33,12 @@
 | `gem/test/golden/canonical_html.rb` | Parse, normalize, serialize. The executable definition of "acceptable difference". |
 | `gem/test/golden/catalog.rb` | The `component`/`scenario` DSL and the coverage queries (`component_directories`, `component_classes`). |
 | `gem/test/golden/harness.rb` | Pins the two sources of randomness; records which classes a render touched. |
-| `gem/test/golden/snapshots/**/*.html` | 186 recorded snapshots, one file per pinned scenario. |
-| `gem/test/golden/tools/inline_adjacency.rb` | Task 2 only. A standalone report that counts where the canonical form is blind to whitespace. Not loaded by the suite. |
+| `gem/test/golden/snapshots/**/*.html` | 188 recorded snapshots, one file per pinned scenario. |
+| `gem/test/golden/tools/inline_adjacency.rb` | Task 3 only. A standalone report that counts where the canonical form is blind to whitespace. Not loaded by the suite. |
 | `gem/Rakefile` | Adds the `golden` and `golden:update` tasks. `golden` is also reached by `rake test`, so CI covers it with no workflow change. |
 | `gem/ruby_ui.gemspec` | Adds `nokogiri` as a development dependency. |
 | `design/v2/01-research/golden-suite.md` | What the suite covers, what it deliberately does not, and what its normalization treats as acceptable. `CLAUDE.md` links to it. |
-| `design/v2/decisions.md` | The living decision log. Created in Task 2 with its first entry. |
+| `design/v2/decisions.md` | The living decision log. Created in Task 3 with its first entry. |
 
 ---
 
@@ -47,7 +47,7 @@
 The suite exists as a single self-contained commit on `v2-herb` (`f7cbeda`). It touches nothing that `main` has changed since, so it cherry-picks cleanly. After porting it, exactly two snapshots are stale — HoverCard's — because `10c01f0` (#530, "let the card escape a clipping ancestor") landed on `main` after the branch point. Re-recording those two and reviewing the diff is what validates the ruler: if anything else differs, the ruler is wrong and the task stops.
 
 **Files:**
-- Create (via cherry-pick): `gem/test/golden_test.rb`, `gem/test/golden/canonical_html.rb`, `gem/test/golden/catalog.rb`, `gem/test/golden/harness.rb`, `gem/test/golden/scenarios.rb`, 186 files under `gem/test/golden/snapshots/`
+- Create (via cherry-pick): `gem/test/golden_test.rb`, `gem/test/golden/canonical_html.rb`, `gem/test/golden/catalog.rb`, `gem/test/golden/harness.rb`, `gem/test/golden/scenarios.rb`, 188 files under `gem/test/golden/snapshots/`
 - Create (separately): `design/v2/01-research/golden-suite.md`
 - Modify (via cherry-pick): `gem/Rakefile`, `gem/ruby_ui.gemspec`, `gem/Gemfile.lock`, `CLAUDE.md`, `gem/AGENTS.md`
 - Modify (by re-recording): `gem/test/golden/snapshots/hover_card/default.html`, `gem/test/golden/snapshots/hover_card/with_options.html`
@@ -130,7 +130,7 @@ The two failures must be, and only be:
 - `GoldenSuiteTest#test_hover_card__default`
 - `GoldenSuiteTest#test_hover_card__with_options`
 
-The two skips are `context_menu/label_*`, declared `pending:` in `scenarios.rb` because of a 1.6 bug that Task 3 fixes.
+The two skips are `context_menu/label_*`, declared `pending:` in `scenarios.rb` because of a 1.6 bug that Task 4 fixes.
 
 **If any other scenario fails, STOP.** The port is not a port any more — something about the ruler or about `main` is not what this plan assumes. Report the failing scenarios and their diffs.
 
@@ -193,7 +193,7 @@ git commit -m "$(cat <<'MSG'
 [Feature] Golden HTML suite: the 1.6 parity ruler
 
 Renders every component in the catalog, reduces each render to a
-canonical form and compares it against a committed snapshot. 186
+canonical form and compares it against a committed snapshot. 188
 snapshots over 54 component directories, plus three coverage tests
 that fail if a component, a class or a snapshot falls out of the
 catalog.

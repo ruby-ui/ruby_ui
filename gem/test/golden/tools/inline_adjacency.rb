@@ -12,8 +12,9 @@
 # That is enough to find candidates and not enough to prove absence — it does
 # not see `absolute`, `hidden`, `sr-only`, `block` on an inline tag,
 # responsive or state variants, or whitespace at a text–element boundary.
-# Task 2 of the Phase 1 plan closes the empty-versus-whitespace-only case for
-# every component; Phase 2's strict lane covers text-bearing components raw.
+# The canonical form's `test_distinguishes_an_empty_element_from_a_whitespace_only_one`
+# test closes the empty-versus-whitespace-only case for every component;
+# Phase 2's strict lane covers text-bearing components raw.
 
 require "nokogiri"
 

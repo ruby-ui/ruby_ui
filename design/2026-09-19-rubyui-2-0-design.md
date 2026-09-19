@@ -234,7 +234,7 @@ directories, validated against today's code.
 
 The suite renders every component in the 1.6 catalog, reduces each render to a
 canonical form and compares it to a committed snapshot. Its output is the thing
-everything else depends on: **once recorded, the 186 snapshots are the frozen
+everything else depends on: **once recorded, the 188 snapshots are the frozen
 contract of 1.6's rendered HTML, and the Phlex source can be deleted.** Phase 2
 compares against the snapshot, not against a running Phlex component.
 
@@ -245,7 +245,7 @@ compares against the snapshot, not against a running Phlex component.
    `component`/`scenario` DSL), `harness.rb` (pins the two sources of
    randomness), `scenarios.rb` (the catalog), `golden_test.rb` (the runner),
    the rake task, and `nokogiri` as a development dependency.
-2. Record the snapshots **fresh** against current `main`. Do not copy the 186
+2. Record the snapshots **fresh** against current `main`. Do not copy the 188
    from `v2-herb`.
 3. Diff the fresh recording against `v2-herb`'s. `main` has moved nine commits
    since the branch point and exactly one touches a component —
@@ -284,7 +284,7 @@ code.
   with a view path into `gem/lib/ruby_ui`, with ReActionView's handler
   registered so tests compile exactly as users will.
   `ComponentTest#phlex { }` is replaced by rendering an ERB fixture.
-- Add the **ERB lane** to the golden suite: the 186 scenarios become
+- Add the **ERB lane** to the golden suite: the 188 scenarios become
   `.html.erb` fixtures under `gem/test/golden/views/`, rendered through the 2.0
   component and compared against the frozen snapshot.
 - Implement the `enum` coercion helper in `Base`.
