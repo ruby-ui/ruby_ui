@@ -4,7 +4,7 @@
 
 **Goal:** Land the golden HTML suite on `main`, validated against today's components, so that RubyUI 1.6's rendered HTML becomes a frozen, executable contract that the 2.0 migration can be measured against.
 
-**Architecture:** The suite renders every component in the 1.6 catalog, reduces each render to a canonical form with an HTML5-spec parser, and compares it byte-for-byte against a committed snapshot. The code already exists and was proved on the `v2-herb` branch; this plan ports it to `main`, re-records the one component that changed since, resolves the one known blind spot in the normalizer, and closes the one bug that prevents the catalog from being complete.
+**Architecture:** The suite renders every component in the 1.6 catalog, reduces each render to a canonical form with an HTML5-spec parser, and compares it byte-for-byte against a committed snapshot. The code already exists and was proved on the `v2-herb` branch; this plan ports it to `main`, re-records the one component that changed since, hardens the normalizer against the false equivalences review found, inventories what it still cannot see, and closes the one bug that prevents the catalog from being complete.
 
 **Tech Stack:** Ruby 3.3 and 3.4, Minitest, Nokogiri 1.18 (development dependency, golden suite only), Phlex 2.4.1, tailwind_merge.
 
@@ -14,7 +14,8 @@
 
 - Work in `gem/`. Run every command from `gem/`, never from the repo root.
 - Ruby 3.2+ syntax, 2-space indent, `snake_case` files, `CamelCase` classes. StandardRB is enforced and `bundle exec rake` runs it.
-- Do not touch `docs/` or `mcp/` in any task of this plan. `git status --porcelain docs mcp` must be empty at the end of every task.
+- Do not touch `docs/` in any task of this plan. `git status --porcelain docs` must be empty at the end of every task.
+- `mcp/data/registry.json` is generated and embeds the source of every component file. Never hand-edit it. Any task that changes a file under `gem/lib/ruby_ui/` rebuilds it with `cd mcp && bundle install && bundle exec exe/ruby-ui-mcp-build` and commits the result — CI rebuilds it and fails on a diff.
 - Do not modify any file under `gem/lib/ruby_ui/` except in Task 3, which changes exactly one line of one file.
 - `nokogiri` is a **development** dependency. Nothing in this plan may add a runtime dependency; `ruby_ui.gemspec` has none and Phase 1 does not change that.
 - Never hand-edit a file under `gem/test/golden/snapshots/`. Snapshots are produced by `bundle exec rake golden:update` and reviewed as a diff.
@@ -211,11 +212,307 @@ MSG
 
 ---
 
-## Task 2: Measure the normalizer's whitespace blind spot
+## Task 2: Harden the ruler
 
-`Golden::CanonicalHtml` collapses runs of whitespace to a single space and drops text nodes that collapse to empty, preserving whitespace only inside `pre` and `textarea`. So it treats `<span>a</span><span>b</span>` and `<span>a</span>\n<span>b</span>` as identical — and a browser does not, when the parent lays its children out in an inline formatting context.
+Adversarial review of `canonical_html.rb` found three ways two fragments a browser distinguishes canonicalize to the same string, and one way input is silently truncated. None of them changes a recorded snapshot — the raw Phlex output of all 188 scenarios contains zero elements with whitespace-only content and zero `</template>` or U+000B — but every one of them is a difference the ERB lane in Phase 2 could introduce and the ruler would miss. The one that matters most is behavioural: `FormField`'s controller (`gem/lib/ruby_ui/form/form_field_controller.js:9`) enables validation when `errorTarget.textContent` is truthy, and `FormFieldError` uses `empty:hidden`, so `<div></div>` and `<div>\n</div>` are different components to a browser. The ruler on `v2-herb` calls them identical.
 
-This matters for Phase 2, not for Phase 1: ERB emits a newline where Phlex emitted nothing, so an inline-adjacent pair could render differently in a browser while the ruler reports parity. `scenarios.rb` already acknowledges the blindness in its header comment; this task counts how much of the catalog it touches and records the decision that follows.
+Separately, the coverage guard records a class when it is **instantiated**, not when it renders. A component that is only ever `new`ed for its `attrs` — `PaginationItem` does this with `Button` — would count as covered without a single byte of its markup being measured. Today every recorded class does reach `view_template` (review checked), so moving the hook changes nothing now and closes the loophole for later.
+
+This task is TDD in the plain sense: each defect gets a test that fails on the ported code, then the fix.
+
+**Files:**
+- Create: `gem/test/golden/canonical_html_test.rb`
+- Create: `gem/test/golden/harness_test.rb`
+- Modify: `gem/test/golden/canonical_html.rb` (`parse`, `emit_element`, `significant_children`'s comment, `collapse`, `canonical_attribute`, one new constant, one new predicate)
+- Modify: `gem/test/golden/harness.rb` (`RecordsRenderedClass`, and the comment above `classes_rendered`)
+
+**Interfaces:**
+- Consumes: `Golden::CanonicalHtml.call(html)`, `Golden::Harness.render(&block)`, `Golden::Harness.classes_rendered` from Task 1.
+- Produces: the same names with tightened semantics. `CanonicalHtml.call` raises `ArgumentError` on a fragment that escapes the wrapper; canonicalizes an element with only whitespace children as `<tag> </tag>`; splits token lists and collapses text on `[\t\n\f\r ]` only. `Harness.classes_rendered` contains a class only after that class's `before_template` ran.
+
+- [ ] **Step 1: Write the failing canonicalizer tests**
+
+Create `gem/test/golden/canonical_html_test.rb`:
+
+```ruby
+# frozen_string_literal: true
+
+require "test_helper"
+require "golden/canonical_html"
+
+# Adversarial tests for the normalizer: inputs a browser distinguishes that the
+# canonical form must not conflate, and input it must refuse rather than
+# silently truncate. Each of these compared equal on the ported code.
+class GoldenCanonicalHtmlTest < Minitest::Test
+  def canonical(html)
+    Golden::CanonicalHtml.call(html)
+  end
+
+  def test_refuses_a_fragment_that_escapes_the_template_wrapper
+    error = assert_raises(ArgumentError) do
+      canonical("<div>safe</div></template><button>lost</button>")
+    end
+
+    assert_match(/escaped the <template> wrapper/, error.message)
+  end
+
+  def test_distinguishes_an_empty_element_from_a_whitespace_only_one
+    # `:empty` matches only the first; `textContent` is truthy only on the second.
+    refute_equal canonical(%(<div data-x="e"></div>)), canonical(%(<div data-x="e">\n</div>))
+  end
+
+  def test_whitespace_only_content_is_a_fixed_point
+    once = canonical("<div>\n  \n</div>")
+
+    assert_equal "<div> </div>\n", once
+    assert_equal once, canonical(once)
+  end
+
+  def test_class_tokens_split_on_html_whitespace_only
+    # U+000B is Ruby whitespace but not HTML whitespace: "a\vb" is one token.
+    refute_equal canonical(%(<div class="a\vb"></div>)), canonical(%(<div class="a b"></div>))
+  end
+
+  def test_text_collapses_html_whitespace_only
+    refute_equal canonical("<p>a\vb</p>"), canonical("<p>a b</p>")
+  end
+end
+```
+
+- [ ] **Step 2: Run them and confirm all five fail**
+
+```bash
+cd gem
+bundle exec rake test N=/GoldenCanonicalHtmlTest/
+```
+
+Expected: `5 runs, ... 5 failures` (or 4 failures and 1 error — the first test raises nothing, so `assert_raises` fails; the fixed-point test's first assertion gets `"<div></div>\n"` instead of `"<div> </div>\n"`). No test may pass before the fix.
+
+- [ ] **Step 3: Patch `canonical_html.rb`**
+
+Four edits to `gem/test/golden/canonical_html.rb`.
+
+**(a)** Add a constant next to `TOKEN_LISTS`:
+
+```ruby
+    # HTML's ASCII whitespace: tab, LF, FF, CR, space. Ruby's `\s` also matches
+    # U+000B, which HTML does not treat as whitespace — `"a\vb"` is one class
+    # token to a browser and has to stay one here.
+    HTML_WHITESPACE = /[\t\n\f\r ]+/
+```
+
+**(b)** Replace `parse`:
+
+```ruby
+      def parse(html)
+        wrapped = Nokogiri::HTML5.fragment("<template>#{html}</template>")
+
+        # A stray `</template>` in the input closes the wrapper early, and
+        # whatever follows lands beside it — outside what gets compared.
+        # Refuse rather than silently drop it.
+        unless wrapped.children.size == 1
+          raise ArgumentError,
+            "fragment escaped the <template> wrapper (a stray </template>?): #{html[0, 120].inspect}"
+        end
+
+        wrapped.children.first.children
+      end
+```
+
+**(c)** In `emit_element`, replace the `elsif children.empty?` branch, and add the predicate below `significant_children`. Replace the comment on `significant_children` too — its claim that `<div></div>` and `<div>\n</div>` are identical to a browser is the defect.
+
+```ruby
+        elsif children.empty?
+          # `<div></div>` and `<div>\n</div>` are not the same element to a
+          # browser: `:empty` matches only the first, and `textContent` is
+          # truthy only on the second. Keep a single space to tell them apart.
+          filler = whitespace_only_content?(node) ? " " : ""
+          out << (INDENT * depth) << open << filler << close << "\n"
+```
+
+```ruby
+      # Comments and formatting whitespace are not children for layout
+      # purposes: `<div>\n  <span/>\n</div>` and `<div><span/></div>` build the
+      # same tree. Whether an element had *only* such children is a separate
+      # question, answered by whitespace_only_content? — see emit_element.
+      def significant_children(node, mode)
+        return node.children.to_a unless mode == :normal
+        node.children.reject { |child| child.comment? || (child.text? && collapse(child.text).empty?) }
+      end
+
+      def whitespace_only_content?(node)
+        node.children.any? { |child| child.text? && !child.text.empty? && collapse(child.text).empty? }
+      end
+```
+
+**(d)** Use HTML whitespace in `collapse` and in the token-list branch of `canonical_attribute`:
+
+```ruby
+      def collapse(text)
+        text.gsub(HTML_WHITESPACE, " ").delete_prefix(" ").delete_suffix(" ")
+      end
+```
+
+```ruby
+        elsif TOKEN_LISTS.include?(name)
+          [name, value.split(HTML_WHITESPACE).reject(&:empty?).join(" ")]
+```
+
+- [ ] **Step 4: Run the canonicalizer tests and confirm all five pass**
+
+```bash
+cd gem
+bundle exec rake test N=/GoldenCanonicalHtmlTest/
+```
+
+Expected: `5 runs, ... 0 failures, 0 errors`.
+
+- [ ] **Step 5: Write the failing harness test**
+
+Create `gem/test/golden/harness_test.rb`:
+
+```ruby
+# frozen_string_literal: true
+
+require "test_helper"
+require "golden/harness"
+
+class GoldenHarnessTest < Minitest::Test
+  def test_records_a_class_when_it_renders_not_when_it_is_instantiated
+    with_fresh_recording do
+      Golden::Harness.render { RubyUI::Button.new(variant: :outline).attrs }
+
+      refute_includes Golden::Harness.classes_rendered.keys, "RubyUI::Button",
+        "an instantiated-but-unrendered component must not count as covered"
+
+      Golden::Harness.render { RubyUI.Button { "x" } }
+
+      assert_includes Golden::Harness.classes_rendered.keys, "RubyUI::Button"
+    end
+  end
+
+  private
+
+  # The recording hash is process-wide and the golden scenarios fill it; swap
+  # it out so this test sees only its own renders.
+  def with_fresh_recording
+    saved = Golden::Harness.classes_rendered
+    Golden::Harness.instance_variable_set(:@classes_rendered, {})
+    yield
+  ensure
+    Golden::Harness.instance_variable_set(:@classes_rendered, saved)
+  end
+end
+```
+
+- [ ] **Step 6: Run it and confirm it fails**
+
+```bash
+cd gem
+bundle exec rake test N=/GoldenHarnessTest/
+```
+
+Expected: `1 runs, ... 1 failures` — the `refute_includes`, because `Button.new` records on `initialize`.
+
+- [ ] **Step 7: Patch `harness.rb`**
+
+Replace the `RecordsRenderedClass` module at the bottom of `gem/test/golden/harness.rb`:
+
+```ruby
+  # Recording on render rather than on instantiation: a component that is only
+  # `new`ed for its computed attributes (PaginationItem does this with Button)
+  # has not been measured, and the coverage guard must not count it.
+  # `before_template` is the hook Phlex calls on every render and no component
+  # overrides, so prepending it on Base reaches every subclass.
+  module RecordsRenderedClass
+    def before_template
+      Golden::Harness.record(self.class)
+      super
+    end
+  end
+```
+
+And replace the comment above `classes_rendered`:
+
+```ruby
+      # Coverage bookkeeping: which classes have rendered while a scenario was
+      # active. See RecordsRenderedClass for why render, not instantiation.
+      def classes_rendered
+        @classes_rendered ||= {}
+      end
+```
+
+- [ ] **Step 8: Run the harness test and confirm it passes**
+
+```bash
+cd gem
+bundle exec rake test N=/GoldenHarnessTest/
+```
+
+Expected: `1 runs, ... 0 failures`.
+
+- [ ] **Step 9: Run the golden suite and confirm no snapshot changed**
+
+The hardening tightens what the ruler distinguishes; it must not move what it already measures.
+
+```bash
+cd gem
+bundle exec rake golden
+```
+
+Expected: `191 runs, ... 0 failures, 0 errors, 2 skips`. The coverage test `test_every_component_class_is_rendered_by_a_scenario` still passes — if it fails naming a class, that class is only instantiated and never rendered by any scenario, which is a real gap in the catalog; add a scenario that renders it rather than reverting the hook.
+
+```bash
+cd /Users/cirdes/Workspaces/ruby_ui
+git status --porcelain gem/test/golden/snapshots
+```
+
+Expected: no output. **If any snapshot shows as modified, STOP.** Either the measurement that justified this task is wrong or a patch changed more than it should; report the file and its diff.
+
+- [ ] **Step 10: Run the full default task**
+
+```bash
+cd gem
+bundle exec rake
+```
+
+Expected: green, `409 files inspected, no offenses detected` — 407 plus the two test files this task adds. StandardRB counts one per Ruby file; fix any offense with `bundle exec standardrb --fix`.
+
+- [ ] **Step 11: Commit**
+
+```bash
+cd /Users/cirdes/Workspaces/ruby_ui
+git add gem/test/golden/
+git commit -m "$(cat <<'MSG'
+[Feature] Golden suite: harden the canonical form and the coverage guard
+
+Four false equivalences the ruler accepted, each now a failing test
+before its fix: a stray </template> escaped the parsing wrapper and
+silently dropped everything after it; an empty element and a
+whitespace-only element canonicalized the same (FormField's controller
+and `empty:hidden` behave differently on them); class tokens and text
+collapsed on Ruby's \s, which includes U+000B, rather than HTML's
+whitespace.
+
+The coverage guard recorded a class on instantiation; it now records on
+render, so a component that is only ever `new`ed for its attrs cannot
+count as measured.
+
+No snapshot changes: the raw Phlex output of all 188 scenarios has no
+whitespace-only element and no U+000B.
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+MSG
+)"
+```
+
+---
+
+## Task 3: Inventory the normalizer's remaining blind spot
+
+Task 2 closed the cases the canonical form *can* close without changing what it measures. What remains, by design, is whitespace between two element siblings and at a text–element boundary in `:normal` mode: `<span>a</span><span>b</span>` and `<span>a</span>\n<span>b</span>` still canonicalize the same, as do `Hello <em>` and `Hello<em>`. In an inline formatting context a browser renders those differently, and ERB emits newlines where Phlex emitted nothing.
+
+This task ships a script that lists candidate spots, and records the decision. **The script is an inventory, not a criterion.** Review of its output showed it over- and under-counts — it classifies by tag name and a few Tailwind classes, ignores `absolute`, `hidden`, `sr-only` and responsive variants, and never looks at text nodes — and the decision below does not depend on its number being right. It depends on Task 2 (the case that flips behaviour is now caught for every component) and on Phase 2's strict lane.
 
 It changes no component and no snapshot.
 
@@ -224,36 +521,30 @@ It changes no component and no snapshot.
 - Create: `design/v2/decisions.md`
 
 **Interfaces:**
-- Consumes: the snapshots recorded in Task 1, read from disk at `gem/test/golden/snapshots`.
+- Consumes: the snapshots on disk at `gem/test/golden/snapshots`.
 - Produces: `design/v2/decisions.md`, the living decision log that every later phase appends to. One entry per decision or deviation, newest last, each with a reason.
 
-- [ ] **Step 1: Write the report script**
+- [ ] **Step 1: Write the inventory script**
 
 Create `gem/test/golden/tools/inline_adjacency.rb`:
 
 ```ruby
 # frozen_string_literal: true
 
-# Counts where the golden suite's canonical form is blind to whitespace.
+# Lists candidate spots where the golden suite's canonical form is blind to
+# whitespace: two adjacent inline-level elements under a parent that lays out
+# inline. An inventory to read, not a number to rely on.
 #
 #   cd gem && bundle exec ruby test/golden/tools/inline_adjacency.rb
 #
-# The canonical form collapses whitespace between elements, so two adjacent
-# inline-level elements compare equal whether or not a space separated them.
-# A browser renders those two cases differently. This report finds every such
-# adjacency in the recorded snapshots, so Phase 2 knows which sidecars have to
-# be written whitespace-tight.
-#
-# Two judgements, both approximations, both deliberate:
-#
-#   * Inline-level is an intrinsically inline tag, or any element whose class
-#     list contains `inline`, `inline-block` or `inline-flex` — because
-#     Tailwind overrides display and the tag name alone is not enough.
-#   * Whitespace between siblings only renders as a space when the parent
-#     establishes an inline formatting context. A flex or grid parent ignores
-#     it, so those parents are skipped. Without this filter the count is
-#     inflated roughly threefold by icons sitting next to labels inside
-#     flex buttons.
+# Known limits, all deliberate: inline-level is judged from the tag name plus
+# `inline`, `inline-block` and `inline-flex` in the class list; a parent is
+# skipped if its class list has `flex`, `grid`, `inline-flex` or `inline-grid`.
+# That is enough to find candidates and not enough to prove absence — it does
+# not see `absolute`, `hidden`, `sr-only`, `block` on an inline tag,
+# responsive or state variants, or whitespace at a text–element boundary.
+# Task 2 of the Phase 1 plan closes the empty-versus-whitespace-only case for
+# every component; Phase 2's strict lane covers text-bearing components raw.
 
 require "nokogiri"
 
@@ -300,8 +591,8 @@ Dir.glob(File.join(SNAPSHOT_ROOT, "**", "*.html")).sort.each do |path|
   end
 end
 
-puts "components affected: #{findings.keys.size}"
-puts "adjacent inline pairs: #{findings.values.sum(&:size)}"
+puts "components with candidates: #{findings.keys.size}"
+puts "candidate pairs: #{findings.values.sum(&:size)}"
 puts
 
 findings.keys.sort.each do |component|
@@ -311,7 +602,7 @@ findings.keys.sort.each do |component|
 end
 ```
 
-- [ ] **Step 2: Run it and confirm the count**
+- [ ] **Step 2: Run it and confirm the output**
 
 ```bash
 cd gem
@@ -321,24 +612,11 @@ bundle exec ruby test/golden/tools/inline_adjacency.rb
 Expected, exactly:
 
 ```
-components affected: 8
-adjacent inline pairs: 50
+components with candidates: 8
+candidate pairs: 50
 ```
 
-and these eight components, with these counts:
-
-| Component | Pairs |
-| --- | --- |
-| `badge` | 27 |
-| `codeblock` | 5 |
-| `dialog` | 6 |
-| `sheet` | 5 |
-| `sidebar` | 3 |
-| `carousel` | 2 |
-| `command` | 1 |
-| `context_menu` | 1 |
-
-If the numbers differ, the snapshots on disk are not the ones Task 1 recorded, or Nokogiri's HTML5 parser behaves differently on this machine. Investigate before writing the decision — the decision is only worth what the number is worth.
+with `badge` 27, `dialog` 6, `codeblock` 5, `sheet` 5, `sidebar` 3, `carousel` 2, `command` 1, `context_menu` 1. If the numbers differ, the snapshots on disk are not the ones Task 1 recorded; investigate before continuing.
 
 - [ ] **Step 3: Write the decision log**
 
@@ -348,43 +626,43 @@ Create `design/v2/decisions.md`:
 # RubyUI 2.0 — decisions
 
 One entry per decision or deviation from `design/2026-09-19-rubyui-2-0-design.md`,
-newest last, each with the reason. The ten decisions taken before execution
-started are in §5 of that document; this file records what happens after.
+newest last, each with the reason. The eleven decisions taken before execution
+started are in §5 and §6 of that document; this file records what happens after.
 
-## 1. The normalizer's whitespace blind spot (§9.1) — measured 2026-09-19
+## 1. The normalizer's whitespace blind spot (§9.1) — 2026-09-19
 
-`Golden::CanonicalHtml` is blind to whitespace between adjacent inline-level
-elements whose parent establishes an inline formatting context. Measured with
-`gem/test/golden/tools/inline_adjacency.rb` over the recorded snapshots:
-**8 components, 50 adjacent inline pairs**.
+`Golden::CanonicalHtml` does not see whitespace between two element siblings,
+or at a text–element boundary, in `:normal` mode. It cannot without giving up
+the fixed-point property that makes the byte comparison a structural one.
 
-| Component | Pairs | What they are |
-| --- | --- | --- |
-| `badge` | 27 | the `all_variants` scenario, 28 badges in a row — an artefact of how the scenario is written, not of a composition users write |
-| `dialog` | 6 | the close button's `<svg>` next to its `sr-only` label |
-| `codeblock` | 5 | highlighted token spans |
-| `sheet` | 5 | the close button, as in `dialog` |
-| `sidebar` | 3 | icon next to label |
-| `carousel` | 2 | the previous and next buttons |
-| `command` | 1 | adjacent `<a>` items |
-| `context_menu` | 1 | adjacent `<a>` items |
+`gem/test/golden/tools/inline_adjacency.rb` lists 8 components and 50 candidate
+pairs. Reading them: Badge's 27 are the `all_variants` scenario laying 28
+badges side by side — an artefact of the scenario, not a composition users
+write; Dialog's, Sheet's and Sidebar's 14 are the close button's icon beside
+its `sr-only` label, invisible either way; Codeblock's 5 sit inside `pre`,
+which the normalizer preserves verbatim; Carousel's 2 are absolutely
+positioned; Command's and ContextMenu's anchors are `flex` and so block-level.
+The script also cannot see the text–element case at all, which is the one that
+carries behaviour — `FormField` flips on `<div></div>` versus
+`<div>\n</div>`, and that is now caught by the hardened canonical form (Phase 1
+plan, Task 2), not by this inventory.
 
-**Decision: leave the normalizer alone; write these eight components' sidecars
-whitespace-tight in Phase 2.** Each of the eight gets an explicit line in its
-Phase 2 task saying so, and the sidecar must not put a newline between the
-inline siblings named above.
+**Decision.** The number is not the criterion and does not need to be
+accurate. Three things are:
 
-**Why not extend the normalizer.** A second comparison mode that records
-inter-element whitespace would have to be threaded through the canonical form,
-the fixed-point assertion and all 186 snapshots, for eight components — most of
-which are benign anyway: the `sr-only` label next to a close icon renders the
-same either way, and `codeblock`'s tokens sit inside `pre`, which the
-normalizer already preserves. The cost is not proportional to the risk.
+1. The canonical form distinguishes an empty element from a whitespace-only
+   one, for every component, as of Phase 1 Task 2.
+2. Phase 2 sidecars are written in ERB trim mode (`<%-` / `-%>`), so the ERB
+   lane emits no whitespace Phlex did not. This is a rule for all 256
+   classes, not for eight.
+3. Phase 2.0 defines a strict lane — raw output, attribute order normalized,
+   nothing else — and every component that carries text runs through it.
+   Badge, Typography, InlineCode, InlineLink, ShortcutKey and FormFieldError
+   are the first entries on that list; this inventory is one way to find more.
 
 **What would reverse this.** A Phase 2 component showing a visible spacing
-difference that the suite reported as parity. That is the failure this decision
-accepts, and §9.4 is the reason it cannot be caught automatically before
-Phase 3.
+difference in a browser that both lanes reported as parity. §9.4 of the design
+is the reason that cannot be caught automatically before Phase 3.
 ```
 
 - [ ] **Step 4: Verify nothing else changed**
@@ -394,14 +672,14 @@ cd gem
 bundle exec rake
 ```
 
-Expected: green, `407 files inspected, no offenses detected`. The report script lives under `test/` and is not loaded by the suite, but StandardRB does inspect it — fix any offense with `bundle exec standardrb --fix` and re-run.
+Expected: green, `410 files inspected, no offenses detected` — one more than Task 2 for the script. Fix any offense with `bundle exec standardrb --fix`.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
 git status --porcelain gem/test/golden/snapshots gem/lib docs mcp
 ```
 
-Expected: no output. This task changes no snapshot, no component, and nothing outside `gem/test/golden/tools/` and `design/`.
+Expected: no output.
 
 - [ ] **Step 5: Commit**
 
@@ -409,26 +687,23 @@ Expected: no output. This task changes no snapshot, no component, and nothing ou
 cd /Users/cirdes/Workspaces/ruby_ui
 git add gem/test/golden/tools/inline_adjacency.rb design/v2/decisions.md
 git commit -m "$(cat <<'MSG'
-[Documentation] Measure the golden suite's whitespace blind spot
+[Documentation] Inventory the golden suite's remaining whitespace blind spot
 
-The canonical form collapses whitespace between elements, so adjacent
-inline-level elements compare equal whether or not a space separated
-them — and a browser renders those two cases differently when the
-parent lays out inline. ERB emits a newline where Phlex emitted
-nothing, so Phase 2 needs to know how much of the catalog this touches.
+The canonical form cannot see whitespace between element siblings or at
+a text boundary without losing its fixed-point property. Adds a script
+that lists candidate spots — an inventory, explicitly not a bound — and
+records the decision: the protection is the hardened canonical form,
+trim mode in every Phase 2 sidecar, and a strict raw lane for
+text-bearing components, not a count.
 
-8 components, 50 pairs. Adds the report that counts it and records the
-decision: write those eight whitespace-tight rather than grow a second
-comparison mode.
-
-Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 MSG
 )"
 ```
 
 ---
 
-## Task 3: Fix `ContextMenuLabel` and pin its two scenarios
+## Task 4: Fix `ContextMenuLabel` and pin its two scenarios
 
 Two scenarios in the catalog are declared `pending:` and carry no snapshot, so two of the catalog's renders are not pinned. The reason is a one-line bug in `ContextMenuLabel`:
 
@@ -446,17 +721,18 @@ Three consequences: `pl-8` is never applied, so `inset:` does nothing; a garbage
 
 This is the last hole in the contract Phase 2 freezes. It is a 1.6 bug fix in its own right. `grep` confirms it is the only occurrence of the pattern in the gem.
 
-> **Scope note.** This task goes beyond the spec's Phase 1, which asks only for the ruler. It is here because Phase 2 freezes the contract, and a scenario with no snapshot is a render nobody is measuring. It is independently reviewable: Tasks 1, 2 and 4 stand without it. Drop it and Phase 1 still succeeds, with two unpinned renders and a known bug shipping in 1.6.
+> **Scope note.** This task goes beyond the spec's Phase 1, which asks only for the ruler. It is here because Phase 2 freezes the contract, and a scenario with no snapshot is a render nobody is measuring. It is independently reviewable: Tasks 1, 2, 3 and 5 stand without it. Drop it and Phase 1 still succeeds, with two unpinned renders and a known bug shipping in 1.6.
 
 **Files:**
 - Modify: `gem/lib/ruby_ui/context_menu/context_menu_label.rb:20`
 - Modify: `gem/test/ruby_ui/context_menu_test.rb`
 - Modify: `gem/test/golden/scenarios.rb:447-449`
+- Modify (by rebuilding): `mcp/data/registry.json` — it embeds the source of `context_menu_label.rb`, and CI fails on a stale copy
 - Create (by re-recording): `gem/test/golden/snapshots/context_menu/label_default.html`, `gem/test/golden/snapshots/context_menu/label_inset.html`
 
 **Interfaces:**
 - Consumes: `bundle exec rake golden:update` and `Golden::Catalog.scenario(name, pending: nil)` from Task 1.
-- Produces: a catalog with no `pending:` scenarios — `Golden::Catalog.scenarios.all?(&:pinned?)` is true.
+- Produces: a catalog with no `pending:` scenarios — `Golden::Catalog.scenarios.all?(&:pinned?)` is true — and a registry that matches the gem.
 
 - [ ] **Step 1: Read the two pending scenarios**
 
@@ -495,9 +771,7 @@ cd gem
 bundle exec rake test N=/context_menu_label/
 ```
 
-Expected: both new tests FAIL.
-- The first fails because the output contains `{inset?: &quot;pl-8&quot;}`.
-- The second fails because `pl-8` is absent from the `inset: true` render and the literal `"pl-8"` inside the Hash makes it present in both, depending on which assertion runs first.
+Expected: both new tests FAIL. The first because the output contains `{inset?: &quot;pl-8&quot;}`; the second because the literal `"pl-8"` inside the serialized Hash is present in both renders, so `refute_includes plain, "pl-8"` fails.
 
 - [ ] **Step 4: Fix the one line**
 
@@ -562,20 +836,41 @@ cat test/golden/snapshots/context_menu/label_*.html
 
 Expected: no `inset?` anywhere; `pl-8` present in the inset snapshot and absent from the other.
 
-- [ ] **Step 10: Run the full default task**
+- [ ] **Step 10: Rebuild the MCP registry**
+
+`mcp/data/registry.json` embeds the full source of every component file; CI rebuilds it and fails on any diff.
+
+```bash
+cd /Users/cirdes/Workspaces/ruby_ui/mcp
+bundle install
+bundle exec exe/ruby-ui-mcp-build
+cd ..
+git status --porcelain mcp
+```
+
+Expected: `Wrote /Users/cirdes/Workspaces/ruby_ui/mcp/data/registry.json`, then exactly ` M mcp/data/registry.json`. Confirm the diff is only the `context_menu_label.rb` content:
+
+```bash
+git diff --stat mcp/data/registry.json
+git diff mcp/data/registry.json | grep '^[-+]' | grep -v '^[-+][-+]' | grep -c 'inset'
+```
+
+Expected: one file changed; the second command prints a small positive number (the changed line appears in both `-` and `+` forms). If the diff touches any other component, STOP — the registry on `main` was already stale and that is a separate finding.
+
+- [ ] **Step 11: Run the full default task**
 
 ```bash
 cd gem
 bundle exec rake
 ```
 
-Expected: green, and the skip count is now **0** — `rake golden` no longer reports "You have skipped tests".
+Expected: green, `410 files inspected, no offenses detected`, and the skip count is now **0** — `rake golden` no longer reports "You have skipped tests".
 
-- [ ] **Step 11: Commit**
+- [ ] **Step 12: Commit**
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
-git add -A
+git add gem/lib/ruby_ui/context_menu/context_menu_label.rb gem/test/ruby_ui/context_menu_test.rb gem/test/golden/scenarios.rb gem/test/golden/snapshots/context_menu/ mcp/data/registry.json
 git commit -m "$(cat <<'MSG'
 [Bug Fix] ContextMenuLabel: stop serializing a Hash into the class attribute
 
@@ -585,21 +880,22 @@ class token, `inset:` never applied `pl-8`, and the output differed
 between Ruby 3.3 and 3.4.
 
 Pins the two golden scenarios that were pending on this bug, so the
-catalog now has no unpinned renders.
+catalog now has no unpinned renders. Rebuilds the MCP registry, which
+embeds the component's source.
 
-Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 MSG
 )"
 ```
 
 ---
 
-## Task 4: Open the pull request
+## Task 5: Open the pull request
 
 **Files:** none.
 
 **Interfaces:**
-- Consumes: the three commits from Tasks 1–3.
+- Consumes: the four commits from Tasks 1–4.
 - Produces: a PR against `main`. Phase 2 branches from `main` after it merges, so that the 2.0 line inherits the ruler rather than forking it.
 
 - [ ] **Step 1: Confirm the branch is clean and complete**
@@ -610,16 +906,18 @@ git status --porcelain
 git log --oneline main..HEAD
 ```
 
-Expected: no output from the first command; three commits from the second.
+Expected: no output from the first command; four commits from the second.
 
 - [ ] **Step 2: Run everything one more time from a clean state**
 
 ```bash
 cd gem
 bundle exec rake
+cd ../mcp
+bundle exec exe/ruby-ui-mcp-build && git diff --exit-code data/registry.json
 ```
 
-Expected: green, `407 files inspected, no offenses detected`, zero skips.
+Expected: gem green, `410 files inspected, no offenses detected`, zero skips; the registry rebuild produces no diff.
 
 - [ ] **Step 3: Ask the user before pushing**
 
@@ -635,14 +933,14 @@ gh pr create --base main --title "[Feature] Golden HTML suite: the 1.6 parity ru
 
 Adds the golden HTML suite: every component in the catalog is rendered, reduced
 to a canonical form by an HTML5-spec parser, and compared byte-for-byte against
-a committed snapshot. 186 snapshots over 54 component directories.
+a committed snapshot. 188 snapshots over 54 component directories.
 
 Three coverage tests stop the ruler from quietly shrinking: every component
-directory must have a scenario, every `RubyUI::Base` subclass must be reached by
-one, and no snapshot may exist without a scenario. The normalizer is asserted to
-be idempotent over every snapshot, which is what makes the final byte comparison
-a structural comparison rather than a string one, and every scenario is rendered
-twice to catch unpinned randomness.
+directory must have a scenario, every `RubyUI::Base` subclass must actually
+render in one, and no snapshot may exist without a scenario. The normalizer is
+asserted to be idempotent over every snapshot, which is what makes the final
+byte comparison a structural comparison rather than a string one, and every
+scenario is rendered twice to catch unpinned randomness.
 
 `rake golden` is reached by `rake test`, so CI covers it on Ruby 3.3 and 3.4
 with no workflow change. `nokogiri` is added as a development dependency; the
@@ -660,6 +958,13 @@ ordinary bug-fix PRs today.
 
 ## Also in this PR
 
+- **The ruler is hardened against four false equivalences** found in review,
+  each with a test that failed before the fix: a stray `</template>` silently
+  truncated the input; an empty element and a whitespace-only element compared
+  equal (they are different to `FormField`'s controller and to `empty:hidden`);
+  class tokens and text collapsed on Ruby's `\s`, which includes U+000B, rather
+  than HTML's whitespace. The coverage guard now records a class when it
+  renders, not when it is instantiated. No recorded snapshot changed.
 - **HoverCard snapshots re-recorded.** #530 changed its markup after the
   snapshots were first taken. Those two files are the only difference between
   the recording on `v2-herb` and the recording against `main` — which is what
@@ -667,11 +972,11 @@ ordinary bug-fix PRs today.
 - **`ContextMenuLabel` bug fix.** `class: [..., inset?: "pl-8"]` is an Array
   whose second element is a Hash, so every label shipped a literal
   `{inset?: "pl-8"}` class token and `inset:` never applied `pl-8`. Fixing it
-  pins the last two unpinned scenarios.
-- **The whitespace report.** The canonical form is blind to whitespace between
-  adjacent inline elements. `gem/test/golden/tools/inline_adjacency.rb` counts
-  where that matters; the finding and the decision are in
-  `design/v2/decisions.md`.
+  pins the last two unpinned scenarios. The MCP registry is rebuilt to match.
+- **A whitespace inventory.** The canonical form is, by design, blind to
+  whitespace between element siblings. `gem/test/golden/tools/inline_adjacency.rb`
+  lists candidate spots; the decision it informs — an inventory, not a bound —
+  is in `design/v2/decisions.md`.
 
 ## Test steps
 
@@ -682,7 +987,8 @@ bundle exec rake           # unit tests + golden + standardrb
 ```
 
 Both green, zero skips. To see the ruler work, change a class in any component
-and re-run `rake golden`.
+and re-run `rake golden`. To see the hardening, feed
+`Golden::CanonicalHtml.call` a `<div>\n</div>` and a `<div></div>`.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 MSG
@@ -693,11 +999,12 @@ MSG
 
 ## Definition of done for Phase 1
 
-- `bundle exec rake` is green on `main` on Ruby 3.3 and 3.4.
+- `bundle exec rake` is green on `main` on Ruby 3.3 and 3.4, and `mcp/data/registry.json` is current.
 - 188 snapshots exist; no scenario is `pending:`; the suite reports zero skips.
-- Every one of the 54 component directories has at least one scenario; every `RubyUI::Base` subclass is reached; no orphan snapshot files.
+- Every one of the 54 component directories has at least one scenario; every `RubyUI::Base` subclass **renders** in one (recorded at `before_template`, not at `initialize`); no orphan snapshot files.
+- The canonical form refuses a fragment that escapes its `<template>` wrapper, distinguishes `<div></div>` from `<div>\n</div>`, and treats only `[\t\n\f\r ]` as whitespace — each with a test that failed before the fix.
 - The only snapshot difference between the `v2-herb` recording and the `main` recording is HoverCard, explained by #530.
-- `design/v2/decisions.md` exists and records the whitespace finding with a real number.
-- `git status --porcelain docs mcp` is empty.
+- `design/v2/decisions.md` exists and records the whitespace finding as an inventory with the three-part resolution, not as a bound.
+- `git status --porcelain docs` is empty.
 
 Phase 2 branches from `main` after this merges.
