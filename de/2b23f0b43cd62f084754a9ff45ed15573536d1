@@ -1,0 +1,32 @@
+gem/test/golden/canonical_html_test.rb
+  s_02296ba27f582b::t_83cbc82d03fa7a 1-42
+gem/test/golden/harness_test.rb
+  s_02296ba27f582b::t_e89e0e556ae320 1-31
+gem/test/golden/canonical_html.rb
+  s_02296ba27f582b::t_c8debf94d58940 156-159,165-166
+  s_02296ba27f582b::t_d1c379e12d6db7 85-95
+  s_02296ba27f582b::t_bac8108f4dd1ec 127-131
+  s_02296ba27f582b::t_0737f962ec3612 186
+  s_02296ba27f582b::t_0ecfaf9af0f671 198
+  s_02296ba27f582b::t_88b6b32a04cc88 62-66
+  s_02296ba27f582b::t_0bac3a5637557b 167-168
+gem/test/golden/harness.rb
+  s_02296ba27f582b::t_1c454d72f3cc70 64-65
+  s_02296ba27f582b::t_74dec356df732e 90-94,96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "de2b23f0b43cd62f084754a9ff45ed15573536d1",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
