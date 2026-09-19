@@ -1,0 +1,19 @@
+design/plans/2026-09-19-golden-suite-implementation.md
+  s_02296ba27f582b::t_ce06e6428a0b0d 19,208
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4b309ad4b19eb34533e212baf6a1843c6f5d9a73",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
