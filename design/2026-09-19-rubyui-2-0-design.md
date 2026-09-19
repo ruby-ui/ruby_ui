@@ -50,9 +50,9 @@ the code we ask users to edit.
 ## 3. Scope
 
 **In scope.** The 1.6 component surface, ported — 54 component directories,
-256 component classes. The 52 doc-page classes the gem ships (`*_docs.rb`),
-which leave the gem (decision 11, Phase 2.3). The generators and installer.
-The documentation site.
+256 component classes. The 52 doc-page classes the gem ships (`*_docs.rb`)
+and the `DocsGenerator` that copies them, migrated in Phase 2 (decision 11,
+Phase 2.3). The generators and installer. The documentation site.
 
 **Out of scope.** New components. Visual redesign. API redesign without a
 written reason. A Phlex compatibility layer. A Phlex-to-ERB codemod (see
@@ -352,7 +352,45 @@ attribute; **its existing unit tests in `gem/test/ruby_ui/` ported to the new
 harness, none deleted** — they are the inventory of what the component promises
 beyond its markup; the Stimulus controller untouched; the MCP registry rebuilt.
 
-#### 2.3 Generators and installer
+#### 2.3 Packaged documentation
+
+**Decision 11 — `ruby_ui:install:docs` stays, and the pages it ships migrate
+in Phase 2.** (Reversed on 2026-09-19 from "remove in 2.0"; see
+`design/v2/decisions.md` entry 4.) `DocsGenerator` copies the gem's 52
+`*_docs.rb` pages into a host application's `app/views/docs/`; the maintainer
+wants that to keep working in 2.0.0, so the pages cannot still be Phlex when
+2.5 ships.
+
+What that pulls into Phase 2:
+
+- **The docs primitives in `gem/lib/ruby_ui/docs/`** — six Phlex classes
+  (`visual_code_example`, `header`, `components_table`,
+  `component_setup_tabs`, `sidebar_examples`, `base`) — become 2.0 components
+  like any other: class plus sidecar, in the gem, installable.
+- **The `VisualCodeExample` redesign**, originally Phase 3.0. Today a page
+  passes a heredoc of Phlex source that the primitive `eval`s for the live
+  preview and prints as the code sample. In 2.0 an example is ERB, not Ruby,
+  so the primitive renders a real `.html.erb` file for the preview and reads
+  the same file for the code block. Each example becomes a file next to its
+  page — roughly 450 files of one to five lines — and the tag syntax works in
+  examples because they are genuinely compiled.
+- **The 52 pages themselves**, from Phlex classes to ERB templates with their
+  example files, shipped in the gem and copied by `DocsGenerator`, which
+  learns to copy the example files alongside each page. The drift between a
+  gem page and its copy in `docs/app` (10 of 52 today) is reconciled here,
+  page by page, with the reason recorded.
+- **`RegistryBuilder`** (`mcp/`) extracts MCP examples from `*_docs.rb`
+  today; it is pointed at the ERB example files in the same change.
+
+The doc pages are not components and the golden suite does not cover them;
+Phase 3 is where they are first looked at on screen, in the site.
+
+**Acceptance.** In the fresh-app install script (Phase 2.0),
+`rails g ruby_ui:install:docs` copies pages and example files that render
+through a request; every example file compiles through Herb; the golden suite
+is unaffected; no `*_docs.rb` remains in the gem.
+
+#### 2.4 Generators and installer
 
 `component_generator.rb` copies `.rb` and `.html.erb`. `install_generator.rb`
 writes the initializer of §4.4, runs the Herb preflight, and copies `base.rb`
@@ -360,20 +398,7 @@ and `attributes.rb`. `dependencies.yml` is unchanged — it describes JS
 packages. The gemspec drops `phlex` and gains `tailwind_merge` and
 `reactionview` as runtime dependencies.
 
-**Decision 11 — `ruby_ui:install:docs` is removed in 2.0.** `DocsGenerator`
-copies the gem's 52 `*_docs.rb` pages into a host application's
-`app/views/docs/`. Those pages are Phlex — `Views::Base`, `view_template`,
-`Docs::VisualCodeExample` with `eval`'d Phlex examples — and Phase 3.0 is what
-redesigns them. Shipping 2.4 with the generator intact would ship an installer
-that generates code requiring the renderer the gem just removed. The
-alternative, migrating the 52 pages before 2.4, pulls the whole
-`VisualCodeExample` redesign into Phase 2. The feature is documented nowhere —
-not on the site, not in the README — so it is removed with a CHANGELOG line,
-and the pages leave the gem in Phase 3.1 with the other documentation
-primitives. `RegistryBuilder` reads the same files for MCP examples and is
-updated in that same Phase 3.1 change.
-
-#### 2.4 Release
+#### 2.5 Release
 
 Version, CHANGELOG, and the manual migration guide. At this point the
 documentation site is still Phlex; the announcement has to say so.
@@ -395,59 +420,40 @@ docs/app/views/docs/button.rb             the installed copy
 ```
 
 `DocsGenerator` ships the doc pages to any host app, so they are part of the
-library surface. The site's copies are copies, not symlinks — unlike the
-Stimulus controllers — and **10 of the 52 have already drifted from their
-source**. Migrating a doc page is therefore gem work with a site consumer, and
-the drift should be resolved in the same pass rather than carried into 2.0.
+library surface — and decision 11 keeps them there. By the time this phase
+starts, Phase 2.3 has migrated the 52 pages, their example files and the six
+docs primitives to 2.0, and the site's copies are simply stale Phlex. Phase 3
+is therefore the site's own code: its chrome, its 16 pages that come from
+nowhere else, and the switch from its copies to the gem's pages.
 
-Decision 11 (Phase 2.3) removes `ruby_ui:install:docs` in 2.0, so by the time
-this phase starts the pages are no longer a shipped feature — they are site
-content that happens to live in the gem, and 3.1 moves them out.
-
-#### 3.0 Redesign `VisualCodeExample`
-
-Today a doc page passes a heredoc of Phlex source to
-`Docs::VisualCodeExample`, which `eval`s it in the page's context to render the
-live preview and prints the same string as the code sample. In 2.0 the example
-is ERB, not Ruby, so `eval` cannot survive.
-
-**Each example becomes a real `.html.erb` file.** The page renders the file for
-the preview and reads the same file from disk for the code block. The `eval`
-goes away, the example is genuinely compiled — so the tag syntax works in
-examples — and what is on screen is literally what is in the file. Roughly 450
-files of one to five lines each.
-
-#### 3.1 Move the documentation primitives out of the gem
-
-`gem/lib/ruby_ui/docs/` holds six Phlex classes — `visual_code_example`,
-`header`, `components_table`, `component_setup_tabs`, `sidebar_examples`,
-`base`. They are site infrastructure, not library surface, and they are already
-excluded from the gem's test autoload. They move to `docs/app/`, and so do
-the 52 `*_docs.rb` pages (decision 11). `RegistryBuilder` extracts MCP examples
-from those pages (`mcp/lib/ruby_ui/mcp/builders/registry_builder.rb`); it is
-pointed at their new home in the same change.
-
-#### 3.2 Chrome and layout
+#### 3.0 Chrome and layout
 
 `Views::Base`, layouts, navigation, marketing pages — the ~86 Ruby files that
-are not component pages.
+are not component pages. Phlex to ERB, page by page.
 
-#### 3.3 The pages
+#### 3.1 The site's own pages
 
-The 52 `_docs.rb` sources in the gem, plus the 16 site-only pages
-(installation, theming and the rest). Depends on 3.0 and 3.2. Mechanical and
-large. Each of the 10 drifted pages is reconciled against its source as it is
-migrated, with the reason for the drift recorded.
+The 16 pages under `app/views/docs` that have no `*_docs.rb` source
+(installation, theming and the rest). They use the docs primitives, which by
+now are 2.0 components in the gem.
 
-#### 3.4 Close-out
+#### 3.2 Replace the copies with the gem's pages
+
+The 52 Phlex copies under `docs/app/views/docs` are deleted and the site
+renders the gem's migrated pages — either by running `ruby_ui:install:docs`
+as any host app would, or by pointing a view path at the gem, decided when
+this sub-phase starts and recorded in `design/v2/decisions.md`. Either way
+the site stops carrying a second copy that can drift.
+
+#### 3.3 Close-out
 
 `docs/Gemfile` points back at `path: "../gem"`; `phlex` and `phlex-rails` come
 out; `mcp/data/registry.json` is rebuilt; the CI Docs job is green without the
 pin.
 
-**Acceptance.** No view `.rb` under `docs/app/views`; no `_docs.rb` left in the
-gem; no mention of phlex in `docs/Gemfile.lock`; all 68 pages rendering; no
-drift between a doc page in the gem and its copy in the site.
+**Acceptance.** No view `.rb` under `docs/app/views`; no `*_docs.rb` left in
+the gem (already true after 2.3); no mention of phlex in `docs/Gemfile.lock`;
+all 68 pages rendering; no second copy of a doc page anywhere in `docs/app`.
 
 ## 7. Testing strategy
 
@@ -659,7 +665,7 @@ and Phase 3 is where a browser first looks.
 | Two pre-1.0 gems become required for every user | Decision D | Verified working on released Rails (§8). ReActionView is a handler over ActionView, not a framework. |
 | `intercept_erb` validates the host app's own templates | A user with malformed HTML anywhere sees errors on install day — and `validation_mode` does not soften it: `:none` empties the template, `:overlay` replaces it (§8) | The installer preflights every host template through `Herb::Engine` before enabling interception and lists what would break; the only opt-out is `intercept_erb = false`, documented as also disabling the tag syntax |
 | herb 0.11 requires a new ReActionView release too | The tag syntax waits on two projects, not one | Decision D ships 2.0.0 without depending on either date |
-| The documentation site runs Phlex while the library no longer does | Between 2.4 and Phase 3 | Acknowledged in the release announcement rather than discovered by readers |
+| The documentation site runs Phlex while the library no longer does | Between 2.5 and Phase 3 | Acknowledged in the release announcement rather than discovered by readers |
 | `app/components` is also ViewComponent's directory | ViewComponent users | `app/components` is not added to the view paths; the sidecar lookup is scoped to `component_root` (§4.4) |
 | Sidecar name collision with a host template | Silent replacement in either direction with a view-path lookup | Lookup scoped to the component root; collision is an error (§4.3) |
 | Removing Phlex's attribute guards | Untrusted attribute values reach the page as `javascript:` URLs or `on*` handlers | Guards ported into `Attributes` with their own tests (§4.3) |

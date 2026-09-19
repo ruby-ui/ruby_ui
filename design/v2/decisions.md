@@ -94,3 +94,17 @@ as 1.6 patches; the 2.0 migration therefore ports those components as they are
 and fixes them with a reviewed snapshot change. Phase 2 branches from
 `feat/golden-suite`, stacked on PR #536, rather than from `main`.
 
+## 4. Decision 11 reversed: `ruby_ui:install:docs` stays — 2026-09-19
+
+Spec §6 originally removed the docs generator in 2.0, because the 52 pages it
+ships are Phlex and migrating them pulls the `VisualCodeExample` redesign into
+Phase 2. The maintainer chose the other side: the generator keeps working in
+2.0.0. So the pages, the six docs primitives and the redesign become Phase 2
+sub-phase 2.3, and Phase 3 shrinks to the site's own chrome and pages.
+
+**Cost accepted:** roughly 450 example files and the primitive redesign land
+before the gem release instead of after it.
+
+**What would reverse this:** sub-phase 2.3 proving larger than the component
+migration itself, in which case the generator ships in 2.1 instead.
+
