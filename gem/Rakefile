@@ -8,10 +8,11 @@ Minitest::TestTask.create(:test) do |t|
 end
 
 # The golden suite (test/golden_test.rb) also runs as part of `rake test`, so
-# CI covers it on every Ruby in the matrix. This task exists to run it — and
-# only it — while working on component markup.
+# CI covers it on every Ruby in the matrix. This task exists to run it, plus
+# the ruler's own tests (test/golden/*_test.rb: the canonical form and the
+# harness), while working on component markup.
 Minitest::TestTask.create(:golden) do |t|
-  t.test_globs = ["test/golden_test.rb"]
+  t.test_globs = ["test/golden_test.rb", "test/golden/*_test.rb"]
   t.warning = false
 end
 
