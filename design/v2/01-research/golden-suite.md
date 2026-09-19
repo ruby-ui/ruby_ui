@@ -35,7 +35,7 @@ on every push and PR — no CI change was needed.
 | `gem/test/golden/canonical_html.rb` | Parse, normalize, serialize. The executable definition of "acceptable difference". |
 | `gem/test/golden/harness.rb` | Pins the two sources of randomness; records class coverage. |
 | `gem/test/golden/catalog.rb` | The `component` / `scenario` DSL and the coverage queries. |
-| `gem/test/golden/snapshots/**.html` | 186 recorded snapshots, one file per scenario. |
+| `gem/test/golden/snapshots/**.html` | 188 recorded snapshots, one file per scenario. |
 
 The only new dependency is `nokogiri`, added as a **development** dependency of
 the gem. Nothing ships to consumers; `ruby_ui.gemspec` packages `lib/**` only.
@@ -55,7 +55,7 @@ reasons that have nothing to do with what a browser builds.
 The canonical form is a **fixed point** of the normalization: feeding a
 snapshot back through the normalizer returns the snapshot unchanged. That
 property is what makes the final byte comparison a structural comparison rather
-than a string one, and `golden_test.rb` asserts it for all 186 snapshots on
+than a string one, and `golden_test.rb` asserts it for all 188 snapshots on
 every run. If the normalizer ever stopped being idempotent, every snapshot
 would quietly revert to being a string test — so it is checked rather than
 assumed.
@@ -102,7 +102,7 @@ reproduce.
 
 ## What is covered
 
-54 component directories, 251 `RubyUI::Base` subclasses, 188 scenarios, 186
+54 component directories, 251 `RubyUI::Base` subclasses, 188 scenarios, 188
 recorded snapshots.
 
 Coverage is compositional where a component is composed (the scenario renders
@@ -133,7 +133,7 @@ sizes and four weights.
 | `collapsible` | 3 | 2 |
 | `combobox` | 16 | 5 |
 | `command` | 9 | 5 |
-| `context_menu` | 6 | 4 (2 pending) |
+| `context_menu` | 6 | 4 |
 | `data_table` | 14 | 7 |
 | `date_picker` | 1 | 3 |
 | `dialog` | 8 | 6 |
@@ -186,12 +186,16 @@ a place where a 2.0 implementation can pass the golden suite and still be wrong.
    changed meaning across a Tailwind major — looks identical to this suite. A
    visual/screenshot check is separate work and is not proposed here.
 
-3. **Whitespace between a text node and a sibling element.** `<p>foo <b>bar</b></p>`
-   and `<p>foo<b>bar</b></p>` canonicalize the same. This is the direct cost of
-   the whitespace-insensitivity the suite is required to have: there is no way
-   to tell a meaningful space from template indentation without reintroducing
-   the string comparison. Scenario text is kept free of leading and trailing
-   spaces so the suite is never relied on for something it cannot see.
+3. **Whitespace at two boundaries, in `:normal` mode.** Between two element
+   siblings — `<span>a</span><span>b</span>` and `<span>a</span>\n<span>b</span>`
+   canonicalize the same — and at a text–element boundary, including against
+   the parent's own tags — `<p>foo <b>bar</b></p>` ≡ `<p>foo<b>bar</b></p>`,
+   and `<div> a</div>` ≡ `<div>a</div>`. This is the direct cost of the
+   whitespace-insensitivity the suite is required to have: there is no way to
+   tell a meaningful space from template indentation without reintroducing the
+   string comparison. Scenario text is kept free of leading and trailing
+   spaces so the suite is never relied on for something it cannot see. See
+   spec §9.1 and `design/v2/decisions.md` for the resolution.
 
 4. **The Rails-integrated render path.** Scenarios render with no Rails, no
    request and no view context, exactly like the existing component tests. Two
@@ -224,9 +228,6 @@ a place where a 2.0 implementation can pass the golden suite and still be wrong.
 9. **Caller-supplied markup.** Scenarios pass short, plain text into blocks. A
    component that mangles rich caller content would not be caught.
 
-10. **`ContextMenuLabel`** — two scenarios are declared but not pinned. See
-    below.
-
 ## What the normalization treats as an acceptable difference
 
 The list below is the prose copy of the constants in
@@ -256,8 +257,21 @@ fail the suite.
 8. **Element and attribute name case, including the SVG adjustment table.** The
    parser rewrites the gem's `viewbox:` to `viewBox`, which is what a browser
    builds. The suite compares the DOM, not the source string.
-9. **Empty versus whitespace-only element bodies.** `<div></div>` and
-   `<div>\n</div>` canonicalize identically.
+9. **Empty versus whitespace-only element bodies canonicalize *differently*.**
+   `<div></div>` and `<div>\n</div>` are not the same element to a browser:
+   `:empty` matches only the first and `textContent` is truthy only on the
+   second, and `FormField`'s controller and `empty:hidden` behave differently
+   on them. An element whose only children are whitespace text serializes as
+   `<tag> </tag>` — a single kept space is the marker that tells them apart.
+10. **A fragment that escapes the parsing wrapper is refused, not truncated.**
+    A stray `</template>` in the input closes the `<template>` wrapper early,
+    and whatever follows it would land outside what gets compared; rather than
+    silently dropping it, `parse` raises `ArgumentError`.
+11. **Class tokens and text collapse on HTML's ASCII whitespace only.** Tab,
+    LF, FF, CR and space — the set the HTML5 spec treats as whitespace. Ruby's
+    `\s` also matches U+000B (vertical tab), which HTML does not, so `"a\vb"`
+    stays one class token and one run of text rather than splitting or
+    collapsing.
 
 Everything else is significant, and three cases are worth naming because they
 are easy to assume away:
@@ -273,32 +287,15 @@ are easy to assume away:
 
 ## Findings from the first run
 
-Two came out of writing the ruler. Neither is fixed here — this session was
-scoped to the ruler, not to the components — and both are recorded because they
-are exactly what it is for.
+One came out of writing the ruler. It is not fixed here — this session was
+scoped to the ruler, not to the components — and it is recorded because that
+is exactly what it is for.
 
-1. **`ContextMenuLabel` renders a Ruby `Hash#inspect` into its class attribute.**
-   `default_attrs` reads
+**`TooltipTrigger#default_attrs` carries a stray `variant: :outline`**, which
+renders as a bogus `variant="outline"` attribute on the trigger `div`. It is
+in the snapshots as recorded 1.6 behaviour.
 
-   ```ruby
-   class: ["px-2 py-1.5 text-sm font-semibold text-foreground", inset?: "pl-8"]
-   ```
-
-   The trailing pair is a `Hash` in the class list, not a condition, so the
-   literal inspect output lands in the class attribute for every value of
-   `inset:`. Ruby 3.4 changed that inspect format (`{inset?: "pl-8"}` vs
-   `{:inset?=>"pl-8"}`), so the rendered HTML differs between the two Rubies CI
-   runs and cannot be pinned by a single snapshot. `context_menu/label_inset`
-   and `context_menu/label_flush` are declared with a `pending:` reason: they
-   are still rendered and still count for class coverage, but their markup is
-   not recorded. Removing `pending:` and running `rake golden:update` is the
-   last step of the fix.
-
-2. **`TooltipTrigger#default_attrs` carries a stray `variant: :outline`**, which
-   renders as a bogus `variant="outline"` attribute on the trigger `div`. It is
-   in the snapshots as recorded 1.6 behaviour.
-
-Both are 1.6 bugs and should be fixed on `main` before 2.0 takes 1.6 as its
+It is a 1.6 bug and should be fixed on `main` before 2.0 takes 1.6 as its
 reference, otherwise 2.0 inherits a snapshot it has to reproduce bug-for-bug.
 
 ## Using it against 2.0
