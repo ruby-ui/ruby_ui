@@ -1,0 +1,23 @@
+<div data-action="turbo:morph@window-&gt;ruby-ui--combobox#updateTriggerContent" data-controller="ruby-ui--combobox" data-ruby-ui--combobox-placement-value="top-start" data-ruby-ui--combobox-term-value="frameworks" multiple role="combobox">
+  <div aria-expanded="false" aria-haspopup="listbox" class="flex h-9 w-full flex-wrap items-center gap-1 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 cursor-text" data-action="click-&gt;ruby-ui--combobox#openPopover focusin-&gt;ruby-ui--combobox#openPopover" data-ruby-ui--combobox-target="trigger">
+    <div class="hidden" data-ruby-ui--combobox-target="badgeContainer"></div>
+    <input autocomplete="off" autocorrect="off" class="flex-1 min-w-8 bg-transparent border-0 px-0 outline-none focus:ring-0 placeholder:text-muted-foreground text-sm" data-action="keyup-&gt;ruby-ui--combobox#filterItems input-&gt;ruby-ui--combobox#filterItems keydown.backspace-&gt;ruby-ui--combobox#handleBadgeInputBackspace" data-ruby-ui--combobox-target="badgeInput" placeholder="Select" spellcheck="false" type="text">
+    <button aria-label="Clear selection" class="ml-auto shrink-0 rounded-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hidden" data-action="ruby-ui--combobox#clearAll" data-ruby-ui--combobox-target="clearButton" type="button">
+      <svg class="size-3.5" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns:xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6 6 18"></path>
+        <path d="m6 6 12 12"></path>
+      </svg>
+    </button>
+  </div>
+  <div autofocus class="inset-auto m-0 absolute border bg-background shadow-lg rounded-lg" data-action="toggle-&gt;ruby-ui--combobox#handlePopoverToggle keydown.down-&gt;ruby-ui--combobox#keyDownPressed keydown.up-&gt;ruby-ui--combobox#keyUpPressed keydown.enter-&gt;ruby-ui--combobox#keyEnterPressed keydown.esc-&gt;ruby-ui--combobox#closePopover:prevent resize@window-&gt;ruby-ui--combobox#updatePopoverWidth" data-ruby-ui--combobox-target="popover" popover="" role="popover">
+    <div class="flex flex-col gap-1 p-1 max-h-72 overflow-y-auto text-foreground" role="listbox">
+      <input class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background accent-primary disabled:cursor-not-allowed disabled:opacity-50 checked:bg-primary checked:text-primary-foreground aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" data-action="change-&gt;ruby-ui--combobox#toggleAllItems" data-ruby-ui--combobox-target="toggleAll" type="checkbox">
+      <label class="flex flex-row w-full text-wrap [&amp;&gt;span,&amp;&gt;div]:truncate gap-2 items-center rounded-sm text-sm outline-none cursor-pointer select-none has-[:checked]:bg-accent hover:bg-accent p-2 [&amp;&gt;svg]:pointer-events-none [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2 has-disabled:opacity-50 has-disabled:cursor-not-allowed" data-ruby-ui--combobox-target="item" role="option">
+        <input class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background accent-primary disabled:cursor-not-allowed disabled:opacity-50 checked:bg-primary checked:text-primary-foreground aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" data-action="ruby-ui--combobox#inputChanged change-&gt;ruby-ui--checkbox-group#onChange change-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--checkbox-group-target="checkbox" data-ruby-ui--combobox-target="input" data-ruby-ui--form-field-target="input" name="Rails" type="checkbox" value="rails">
+        <svg class="ml-auto size-4 shrink-0 opacity-0 peer-checked:opacity-100" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns:xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </label>
+    </div>
+  </div>
+</div>

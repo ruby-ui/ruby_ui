@@ -1,0 +1,158 @@
+<turbo-frame id="employees" target="_top">
+  <div class="w-full space-y-4" data-controller="ruby-ui--data-table">
+    <form action="/employees/bulk" id="employees_form" method="post">
+      <input name="authenticity_token" type="hidden" value="csrf-token-placeholder">
+      <div class="flex items-center justify-between gap-2">
+        <form action="/employees" class="max-w-sm flex-1" data-action="input-&gt;ruby-ui--data-table-search#submit" data-controller="ruby-ui--data-table-search" data-ruby-ui--data-table-search-delay-value="300" data-turbo-frame="employees" method="get">
+          <input autocomplete="off" class="flex h-9 w-full rounded-md border bg-background px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] border-border ring-0 ring-ring/0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:border-ring focus-visible:shadow-sm" data-action="input-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--form-field-target="input" name="search" placeholder="Search..." type="search" value="alice">
+        </form>
+        <div class="relative" data-controller="ruby-ui--data-table-column-visibility">
+          <div class="group/dropdown-menu is-absolute" data-action="click@window-&gt;ruby-ui--dropdown-menu#onClickOutside" data-controller="ruby-ui--dropdown-menu" data-ruby-ui--dropdown-menu-options-value="{}">
+            <div class="inline-block" data-action="click-&gt;ruby-ui--dropdown-menu#toggle" data-ruby-ui--dropdown-menu-target="trigger">
+              <button class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-3 py-1.5 h-8 text-xs border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground" type="button">
+                Columns
+                <svg class="w-4 h-4 ml-1" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16" xmlns:xmlns="http://www.w3.org/2000/svg">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="z-50 hidden group-[.is-absolute]/dropdown-menu:absolute group-[.is-fixed]/dropdown-menu:fixed" data-ruby-ui--dropdown-menu-target="content" style="width: max-content; top: 0; left: 0;">
+              <div class="z-50 min-w-[8rem] rounded-md border bg-background p-1 text-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fill-mode-forwards data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 w-56" data-ruby-ui--dropdown-menu-target="panel" data-state="open">
+                <label class="flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm cursor-pointer hover:bg-accent">
+                  <input checked class="h-4 w-4 rounded border border-input accent-primary cursor-pointer checked:bg-primary checked:text-primary-foreground dark:checked:bg-secondary checked:text-primary checked:border-primary" data-action="change-&gt;ruby-ui--data-table-column-visibility#toggle" data-column-key="email" type="checkbox">
+                  <span>
+                    Email
+                  </span>
+                </label>
+                <label class="flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm cursor-pointer hover:bg-accent">
+                  <input class="h-4 w-4 rounded border border-input accent-primary cursor-pointer checked:bg-primary checked:text-primary-foreground dark:checked:bg-secondary checked:text-primary checked:border-primary" data-action="change-&gt;ruby-ui--data-table-column-visibility#toggle" data-column-key="salary" type="checkbox">
+                  <span>
+                    Salary
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden items-center gap-2" data-ruby-ui--data-table-target="bulkActions">
+          <button class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm bg-destructive text-white shadow-sm [a&amp;]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60" type="button">
+            Delete
+          </button>
+        </div>
+      </div>
+      <div class="relative w-full overflow-auto">
+        <table class="w-full caption-bottom text-sm">
+          <thead class="[&amp;_tr]:border-b">
+            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+              <th class="h-10 px-2 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 [&amp;&gt;[role=checkbox]]:translate-y-[2px]">
+                <input aria-label="Select all" class="peer h-4 w-4 shrink-0 rounded-sm border-input ring-offset-background accent-primary disabled:cursor-not-allowed disabled:opacity-50 checked:bg-primary dark:checked:bg-secondary checked:text-primary checked:border-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" data-action="change-&gt;ruby-ui--checkbox-group#onChange change-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid change-&gt;ruby-ui--data-table#toggleAll" data-ruby-ui--checkbox-group-target="checkbox" data-ruby-ui--data-table-target="selectAll" data-ruby-ui--form-field-target="input" type="checkbox">
+              </th>
+              <th class="h-10 px-2 text-left align-middle font-medium [&amp;:has([role=checkbox])]:pr-0 [&amp;&gt;[role=checkbox]]:translate-y-[2px] text-foreground whitespace-nowrap">
+                <a class="inline-flex items-center gap-1 text-inherit no-underline hover:text-foreground transition-colors" href="/employees?search=alice&amp;sort=name&amp;direction=desc">
+                  Name
+                  <svg class="inline-block w-3 h-3" fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="12" xmlns:xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                  </svg>
+                </a>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="[&amp;_tr:last-child]:border-0">
+            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+              <td class="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;&gt;[role=checkbox]]:translate-y-[2px]">
+                <input aria-label="Select Alice" class="peer h-4 w-4 shrink-0 rounded-sm border-input ring-offset-background accent-primary disabled:cursor-not-allowed disabled:opacity-50 checked:bg-primary dark:checked:bg-secondary checked:text-primary checked:border-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" data-action="change-&gt;ruby-ui--checkbox-group#onChange change-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid change-&gt;ruby-ui--data-table#toggleRow" data-ruby-ui--checkbox-group-target="checkbox" data-ruby-ui--data-table-target="rowCheckbox" data-ruby-ui--form-field-target="input" name="ids[]" type="checkbox" value="42">
+              </td>
+              <td class="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;&gt;[role=checkbox]]:translate-y-[2px]">
+                Alice
+              </td>
+              <td class="p-2 align-middle [&amp;:has([role=checkbox])]:pr-0 [&amp;&gt;[role=checkbox]]:translate-y-[2px]">
+                <button aria-controls="employee-42-detail" aria-expanded="false" aria-label="Toggle row details" class="group inline-flex items-center justify-center h-8 w-8 rounded-md hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" data-action="click-&gt;ruby-ui--data-table#toggleRowDetail" type="button">
+                  <svg class="h-4 w-4 transition-transform duration-150 group-aria-expanded:rotate-90" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16" xmlns:xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-between gap-4 py-2">
+        <div class="text-sm text-muted-foreground" data-ruby-ui--data-table-target="selectionSummary">
+          0 of 10 row(s) selected.
+        </div>
+        <form action="/employees" method="get">
+          <div class="group/native-select relative w-fit has-[select:disabled]:opacity-50">
+            <select class="border-border bg-transparent text-sm w-full min-w-0 appearance-none rounded-md border py-1 pr-8 pl-2.5 shadow-xs transition-[color,box-shadow] outline-none select-none ring-0 ring-ring/0 placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-destructive/20 aria-invalid:border-destructive aria-invalid:ring-2 h-9" data-action="change-&gt;ruby-ui--form-field#onChange invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--form-field-target="input" name="per_page" onchange="this.form.requestSubmit()">
+              <option value="5">
+                5
+              </option>
+              <option value="10">
+                10
+              </option>
+              <option selected value="25">
+                25
+              </option>
+              <option value="50">
+                50
+              </option>
+            </select>
+            <span class="text-muted-foreground pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 select-none">
+              <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns:xmlns="http://www.w3.org/2000/svg">
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </span>
+          </div>
+        </form>
+        <nav aria-label="pagination" class="flex mx-0 w-auto justify-end" role="navigation">
+          <ul class="flex flex-row items-center gap-1">
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=2">
+                &lt;
+              </a>
+            </li>
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=1">
+                1
+              </a>
+            </li>
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=2">
+                2
+              </a>
+            </li>
+            <li>
+              <a aria-current="page" class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=3">
+                3
+              </a>
+            </li>
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=4">
+                4
+              </a>
+            </li>
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=5">
+                5
+              </a>
+            </li>
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=6">
+                6
+              </a>
+            </li>
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=7">
+                7
+              </a>
+            </li>
+            <li>
+              <a class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm hover:bg-accent hover:text-accent-foreground" href="/employees?search=alice&amp;page=4">
+                &gt;
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </form>
+  </div>
+</turbo-frame>

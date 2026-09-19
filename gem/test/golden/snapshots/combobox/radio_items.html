@@ -1,0 +1,32 @@
+<div data-action="turbo:morph@window-&gt;ruby-ui--combobox#updateTriggerContent" data-controller="ruby-ui--combobox" data-ruby-ui--combobox-placement-value="bottom-start" data-ruby-ui--combobox-term-value="frameworks" role="combobox">
+  <button aria-expanded="false" aria-haspopup="listbox" class="flex w-full items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors border border-input bg-background h-9 px-4 py-2 justify-between hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" data-action="ruby-ui--combobox#togglePopover" data-placeholder="Select your framework" data-ruby-ui--combobox-target="trigger" type="button">
+    <span class="truncate" data-ruby-ui--combobox-target="triggerContent">
+      Select your framework
+    </span>
+    <svg class="ml-2 h-4 w-4 shrink-0 opacity-50" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns:xmlns="http://www.w3.org/2000/svg">
+      <path d="m6 9 6 6 6-6"></path>
+    </svg>
+  </button>
+  <div autofocus class="inset-auto m-0 absolute border bg-background shadow-lg rounded-lg" data-action="toggle-&gt;ruby-ui--combobox#handlePopoverToggle keydown.down-&gt;ruby-ui--combobox#keyDownPressed keydown.up-&gt;ruby-ui--combobox#keyUpPressed keydown.enter-&gt;ruby-ui--combobox#keyEnterPressed keydown.esc-&gt;ruby-ui--combobox#closePopover:prevent resize@window-&gt;ruby-ui--combobox#updatePopoverWidth" data-ruby-ui--combobox-target="popover" popover="" role="popover">
+    <div class="flex text-muted-foreground items-center border-b px-3">
+      <svg class="mr-2 h-4 w-4 shrink-0 opacity-50" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns:xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input autocomplete="off" autocorrect="off" class="flex h-9 w-full rounded-md bg-transparent py-3 text-sm outline-none border-none focus:ring-0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none" data-action="keyup-&gt;ruby-ui--combobox#filterItems search-&gt;ruby-ui--combobox#filterItems" data-ruby-ui--combobox-target="searchInput" placeholder="Type the framework name" role="searchbox" spellcheck="false" type="search">
+    </div>
+    <div class="flex flex-col gap-1 p-1 max-h-72 overflow-y-auto text-foreground" role="listbox">
+      <div class="hidden py-6 text-center text-sm" data-ruby-ui--combobox-target="emptyState" role="presentation">
+        No results
+      </div>
+      <div class="hidden has-[label:not(.hidden)]:flex flex-col py-1 gap-1 border-b before:content-[attr(label)] before:px-2 before:py-1.5 before:text-xs before:font-medium before:text-muted-foreground before:not-italic" label="Ruby" role="group">
+        <label class="flex flex-row w-full text-wrap [&amp;&gt;span,&amp;&gt;div]:truncate gap-2 items-center rounded-sm text-sm outline-none cursor-pointer select-none has-[:checked]:bg-accent hover:bg-accent p-2 [&amp;&gt;svg]:pointer-events-none [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2 has-disabled:opacity-50 has-disabled:cursor-not-allowed" data-ruby-ui--combobox-target="item" role="option">
+          <input class="aspect-square h-4 w-4 rounded-full border border-primary accent-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 checked:bg-primary checked:text-primary-foreground aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none" data-action="ruby-ui--combobox#inputChanged input-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--combobox-target="input" data-ruby-ui--form-field-target="input" name="Rails" type="radio" value="rails">
+        </label>
+        <label class="flex flex-row w-full text-wrap [&amp;&gt;span,&amp;&gt;div]:truncate gap-2 items-center rounded-sm text-sm outline-none cursor-pointer select-none has-[:checked]:bg-accent hover:bg-accent p-2 [&amp;&gt;svg]:pointer-events-none [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 aria-[current=true]:bg-accent aria-[current=true]:ring aria-[current=true]:ring-offset-2 has-disabled:opacity-50 has-disabled:cursor-not-allowed" data-ruby-ui--combobox-target="item" role="option">
+          <input class="aspect-square h-4 w-4 rounded-full border border-primary accent-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 checked:bg-primary checked:text-primary-foreground aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none" data-action="ruby-ui--combobox#inputChanged input-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--combobox-target="input" data-ruby-ui--form-field-target="input" name="Hanami" type="radio" value="hanami">
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

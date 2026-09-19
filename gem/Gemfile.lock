@@ -11,9 +11,15 @@ GEM
     json (2.21.1)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
+    mini_portile2 (2.8.9)
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
+    nokogiri (1.19.4)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.19.4-arm64-darwin)
+      racc (~> 1.4)
     parallel (1.28.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
@@ -77,6 +83,7 @@ PLATFORMS
 
 DEPENDENCIES
   minitest (~> 6.0)
+  nokogiri (~> 1.18)
   phlex (~> 2.1, >= 2.1.2)
   rake (~> 13.0)
   rouge (~> 5.1.0)

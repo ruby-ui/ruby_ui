@@ -1,0 +1,42 @@
+<div data-controller="ruby-ui--command-dialog" data-ruby-ui--command-dialog-ruby-ui--command-outlet="[data-ruby-ui--command-dialog-instance]">
+  <div data-action="click-&gt;ruby-ui--command-dialog#open keydown.ctrl+k@window-&gt;ruby-ui--command-dialog#open keydown.meta+k@window-&gt;ruby-ui--command-dialog#open">
+    <button class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground" type="button">
+      <kbd class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+        K
+      </kbd>
+    </button>
+  </div>
+  <template data-ruby-ui--command-dialog-target="content">
+    <div data-controller="ruby-ui--command" data-ruby-ui--command-dialog-instance="">
+      <div class="fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:fill-mode-forwards" data-action="click-&gt;ruby-ui--command#dismiss esc-&gt;ruby-ui--command#dismiss" data-ruby-ui--command-target="backdrop" data-state="open"></div>
+      <div class="fixed pointer-events-auto left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fill-mode-forwards data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full max-w-lg" data-ruby-ui--command-target="panel" data-state="open">
+        <div>
+          <div class="flex items-center border-b px-3">
+            <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20" xmlns:xmlns="http://www.w3.org/2000/svg">
+              <path clip-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" fill-rule="evenodd"></path>
+            </svg>
+            <input aria-autocomplete="list" aria-expanded="" autocomplete="off" autocorrect="off" autofocus class="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50" data-action="input-&gt;ruby-ui--command#filter keydown.down-&gt;ruby-ui--command#handleKeydown keydown.up-&gt;ruby-ui--command#handleKeydown keydown.enter-&gt;ruby-ui--command#handleKeydown keydown.esc-&gt;ruby-ui--command#dismiss" data-ruby-ui--command-target="input" placeholder="Type a command or search..." role="combobox" value="">
+          </div>
+          <div class="py-6 text-center text-sm" data-ruby-ui--command-target="empty" role="presentation">
+            No results found.
+          </div>
+          <div class="divide-y divide-border">
+            <div class="overflow-hidden p-1 text-foreground [&amp;_[group-heading]]:px-2 [&amp;_[group-heading]]:py-1.5 [&amp;_[group-heading]]:text-xs [&amp;_[group-heading]]:font-medium [&amp;_[group-heading]]:text-muted-foreground" data-ruby-ui--command-target="group" data-value="Components" role="presentation">
+              <div group-heading="Components">
+                Components
+              </div>
+              <div group-items="" role="group">
+                <a class="relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" data-ruby-ui--command-target="item" data-text="" data-value="Accordion" href="/docs/accordion" role="option">
+                  Accordion
+                </a>
+                <a class="relative flex cursor-pointer select-none items-center gap-x-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" data-ruby-ui--command-target="item" data-text="" data-value="Alert" href="/docs/alert" role="option">
+                  Alert
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</div>

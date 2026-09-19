@@ -1,0 +1,157 @@
+<div class="group/sidebar-wrapper [&amp;:has([data-variant=inset])]:bg-sidebar flex min-h-svh w-full" data-controller="ruby-ui--sidebar" style="--sidebar-width: 16rem; --sidebar-width-icon: 3rem;">
+  <div data-action="ruby--ui-sidebar:open-&gt;ruby-ui--sheet#open:self" data-controller="ruby-ui--sheet" data-ruby-ui--sheet-open-value="false" data-ruby-ui--sidebar-target="mobileSidebar">
+    <template data-ruby-ui--sheet-target="content">
+      <div data-controller="ruby-ui--sheet-content">
+        <div class="fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:fill-mode-forwards" data-action="click-&gt;ruby-ui--sheet-content#close" data-ruby-ui--sheet-content-target="backdrop" data-state="open"></div>
+        <div class="fixed pointer-events-auto z-50 gap-4 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards data-[state=closed]:duration-300 data-[state=open]:duration-500 overflow-scroll inset-y-0 left-0 h-full border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground [&amp;&gt;button]:hidden" data-mobile="true" data-ruby-ui--sheet-content-target="panel" data-sidebar="sidebar" data-state="open" style="--sidebar-width: 18rem;">
+          <div class="flex flex-col space-y-1.5 text-center sm:text-left sr-only">
+            <h3 class="text-lg font-semibold leading-none tracking-tight">
+              Sidebar
+            </h3>
+            <p class="text-sm text-muted-foreground">
+              Displays the mobile sidebar.
+            </p>
+          </div>
+          <div class="flex h-full w-full flex-col">
+            <div class="flex flex-col gap-2 p-2" data-sidebar="header">
+              <div class="relative flex w-full min-w-0 flex-col p-2" data-sidebar="group">
+                <div class="w-full text-sm" data-sidebar="group-content">
+                  <input class="flex rounded-md border px-3 py-1 text-sm transition-[color,box-shadow] border-border ring-0 ring-ring/0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:border-ring focus-visible:shadow-sm h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring" data-action="input-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--form-field-target="input" data-sidebar="input" id="search" placeholder="Search the docs" type="string">
+                </div>
+              </div>
+            </div>
+            <div class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden" data-sidebar="content">
+              <div class="relative flex w-full min-w-0 flex-col p-2" data-sidebar="group">
+                <div class="flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">
+                  Application
+                </div>
+                <button class="absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 after:absolute after:-inset-2 after:md:hidden group-data-[collapsible=icon]:hidden" data-sidebar="group-action">
+                  Add
+                </button>
+                <div class="w-full text-sm" data-sidebar="group-content">
+                  <ul class="flex w-full min-w-0 flex-col gap-1" data-sidebar="menu">
+                    <ul class="group/menu-item relative" data-sidebar="menu-item">
+                      <a class="peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&amp;&gt;span:last-child]:truncate [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm" data-active="true" data-sidebar="menu-button" data-size="default" href="/settings">
+                        Settings
+                      </a>
+                      <button class="absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 after:absolute after:-inset-2 after:md:hidden peer-data-[size=sm]/menu-button:top-1 peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 group-data-[collapsible=icon]:hidden" data-sidebar="menu-action">
+                        More
+                      </button>
+                      <div class="pointer-events-none absolute right-1 flex h-5 min-w-5 select-none items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-sidebar-foreground peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground peer-data-[size=sm]/menu-button:top-1 peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 group-data-[collapsible=icon]:hidden" data-sidebar="menu-badge">
+                        3
+                      </div>
+                      <ul class="mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5 group-data-[collapsible=icon]:hidden" data-sidebar="menu-sub">
+                        <li>
+                          <a class="flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&amp;&gt;span:last-child]:truncate [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 [&amp;&gt;svg]:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden text-sm" data-active="false" data-sidebar="menu-sub-button" data-size="md" href="/settings/team">
+                            Team
+                          </a>
+                        </li>
+                      </ul>
+                    </ul>
+                    <ul class="group/menu-item relative" data-sidebar="menu-item">
+                      <div class="flex h-8 items-center gap-2 rounded-md px-2" data-sidebar="menu-skeleton">
+                        <div class="animate-pulse bg-primary/10 size-4 rounded-md" data-sidebar="menu-skeleton-icon"></div>
+                        <div class="animate-pulse rounded-md bg-primary/10 h-4 max-w-[var(--skeleton-width)] flex-1" data-sidebar="menu-skeleton-text" style="--skeleton-width: 51%;"></div>
+                      </div>
+                    </ul>
+                    <ul class="group/menu-item relative" data-sidebar="menu-item">
+                      <div class="flex h-8 items-center gap-2 rounded-md px-2" data-sidebar="menu-skeleton">
+                        <div class="animate-pulse rounded-md bg-primary/10 h-4 max-w-[var(--skeleton-width)] flex-1" data-sidebar="menu-skeleton-text" style="--skeleton-width: 52%;"></div>
+                      </div>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <div class="shrink-0 h-[1px] mx-2 w-auto bg-sidebar-border" data-sidebar="separator" role="none"></div>
+            </div>
+            <div class="flex flex-col gap-2 p-2" data-sidebar="footer">
+              Footer
+            </div>
+            <button class="absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex [[data-side=left]_&amp;]:cursor-w-resize [[data-side=right]_&amp;]:cursor-e-resize [[data-side=left][data-state=collapsed]_&amp;]:cursor-e-resize [[data-side=right][data-state=collapsed]_&amp;]:cursor-w-resize group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar [[data-side=left][data-collapsible=offcanvas]_&amp;]:-right-2 [[data-side=right][data-collapsible=offcanvas]_&amp;]:-left-2" data-action="click-&gt;ruby-ui--sidebar#toggle" data-sidebar="rail" data-tabindex="-1"></button>
+          </div>
+          <button class="absolute end-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground" data-action="click-&gt;ruby-ui--sheet-content#close" type="button">
+            <svg class="h-4 w-4" fill="none" height="15" viewBox="0 0 15 15" width="15" xmlns:xmlns="http://www.w3.org/2000/svg">
+              <path clip-rule="evenodd" d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fill-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">
+              Close
+            </span>
+          </button>
+        </div>
+      </div>
+    </template>
+  </div>
+  <div class="group peer hidden text-sidebar-foreground md:block" data-collapsible="" data-collapsible-kind="offcanvas" data-ruby-ui--sidebar-target="sidebar" data-side="left" data-state="expanded" data-variant="sidebar">
+    <div class="relative w-[var(--sidebar-width)] bg-transparent transition-[width] duration-200 ease-linear group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180 group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)]"></div>
+    <div class="fixed inset-y-0 z-10 hidden h-svh w-[var(--sidebar-width)] transition-[left,right,width] duration-200 ease-linear md:flex left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)] group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l">
+      <div class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow" data-sidebar="sidebar">
+        <div class="flex flex-col gap-2 p-2" data-sidebar="header">
+          <div class="relative flex w-full min-w-0 flex-col p-2" data-sidebar="group">
+            <div class="w-full text-sm" data-sidebar="group-content">
+              <input class="flex rounded-md border px-3 py-1 text-sm transition-[color,box-shadow] border-border ring-0 ring-ring/0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 file:border-0 file:bg-transparent file:text-sm file:font-medium aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:border-ring focus-visible:shadow-sm h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring" data-action="input-&gt;ruby-ui--form-field#onInput invalid-&gt;ruby-ui--form-field#onInvalid" data-ruby-ui--form-field-target="input" data-sidebar="input" id="search" placeholder="Search the docs" type="string">
+            </div>
+          </div>
+        </div>
+        <div class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden" data-sidebar="content">
+          <div class="relative flex w-full min-w-0 flex-col p-2" data-sidebar="group">
+            <div class="flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">
+              Application
+            </div>
+            <button class="absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 after:absolute after:-inset-2 after:md:hidden group-data-[collapsible=icon]:hidden" data-sidebar="group-action">
+              Add
+            </button>
+            <div class="w-full text-sm" data-sidebar="group-content">
+              <ul class="flex w-full min-w-0 flex-col gap-1" data-sidebar="menu">
+                <ul class="group/menu-item relative" data-sidebar="menu-item">
+                  <a class="peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&amp;&gt;span:last-child]:truncate [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm" data-active="true" data-sidebar="menu-button" data-size="default" href="/settings">
+                    Settings
+                  </a>
+                  <button class="absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 after:absolute after:-inset-2 after:md:hidden peer-data-[size=sm]/menu-button:top-1 peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 group-data-[collapsible=icon]:hidden" data-sidebar="menu-action">
+                    More
+                  </button>
+                  <div class="pointer-events-none absolute right-1 flex h-5 min-w-5 select-none items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-sidebar-foreground peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground peer-data-[size=sm]/menu-button:top-1 peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 group-data-[collapsible=icon]:hidden" data-sidebar="menu-badge">
+                    3
+                  </div>
+                  <ul class="mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5 group-data-[collapsible=icon]:hidden" data-sidebar="menu-sub">
+                    <li>
+                      <a class="flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&amp;&gt;span:last-child]:truncate [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 [&amp;&gt;svg]:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden text-sm" data-active="false" data-sidebar="menu-sub-button" data-size="md" href="/settings/team">
+                        Team
+                      </a>
+                    </li>
+                  </ul>
+                </ul>
+                <ul class="group/menu-item relative" data-sidebar="menu-item">
+                  <div class="flex h-8 items-center gap-2 rounded-md px-2" data-sidebar="menu-skeleton">
+                    <div class="animate-pulse bg-primary/10 size-4 rounded-md" data-sidebar="menu-skeleton-icon"></div>
+                    <div class="animate-pulse rounded-md bg-primary/10 h-4 max-w-[var(--skeleton-width)] flex-1" data-sidebar="menu-skeleton-text" style="--skeleton-width: 53%;"></div>
+                  </div>
+                </ul>
+                <ul class="group/menu-item relative" data-sidebar="menu-item">
+                  <div class="flex h-8 items-center gap-2 rounded-md px-2" data-sidebar="menu-skeleton">
+                    <div class="animate-pulse rounded-md bg-primary/10 h-4 max-w-[var(--skeleton-width)] flex-1" data-sidebar="menu-skeleton-text" style="--skeleton-width: 54%;"></div>
+                  </div>
+                </ul>
+              </ul>
+            </div>
+          </div>
+          <div class="shrink-0 h-[1px] mx-2 w-auto bg-sidebar-border" data-sidebar="separator" role="none"></div>
+        </div>
+        <div class="flex flex-col gap-2 p-2" data-sidebar="footer">
+          Footer
+        </div>
+        <button class="absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex [[data-side=left]_&amp;]:cursor-w-resize [[data-side=right]_&amp;]:cursor-e-resize [[data-side=left][data-state=collapsed]_&amp;]:cursor-e-resize [[data-side=right][data-state=collapsed]_&amp;]:cursor-w-resize group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar [[data-side=left][data-collapsible=offcanvas]_&amp;]:-right-2 [[data-side=right][data-collapsible=offcanvas]_&amp;]:-left-2" data-action="click-&gt;ruby-ui--sidebar#toggle" data-sidebar="rail" data-tabindex="-1"></button>
+      </div>
+    </div>
+  </div>
+  <main class="relative flex w-full flex-1 flex-col bg-background md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow">
+    <button class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed hover:bg-accent hover:text-accent-foreground h-7 w-7 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0" data-action="click-&gt;ruby-ui--sidebar#toggle" data-sidebar="trigger" type="button">
+      <svg class="lucide lucide-panel-left" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns:xmlns="http://www.w3.org/2000/svg">
+        <rect height="18" rx="2" width="18" x="3" y="3"></rect>
+        <path d="M9 3v18"></path>
+      </svg>
+      <span class="sr-only">
+        Toggle Sidebar
+      </span>
+    </button>
+  </main>
+</div>
