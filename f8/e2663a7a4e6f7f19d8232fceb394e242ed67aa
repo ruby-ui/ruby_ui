@@ -1,0 +1,21 @@
+gem/test/golden/tools/inline_adjacency.rb
+  s_02296ba27f582b::t_0159cbb5ecf22e 1-71
+design/v2/decisions.md
+  s_02296ba27f582b::t_f3a10098c48b34 1-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "f8e2663a7a4e6f7f19d8232fceb394e242ed67aa",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
