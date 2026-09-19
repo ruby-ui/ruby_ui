@@ -473,11 +473,23 @@ ERB emits newlines where Phlex emitted nothing. Most of RubyUI lays out with
 flex and `gap-*` and is immune; `Typography`, `InlineCode`, `InlineLink`,
 `ShortcutKey` and inline badges are not.
 
-**Resolution:** during Phase 1, count how many components actually place inline
-siblings next to each other. If the number is small, write those sidecars
-whitespace-tight and assert it. If it is not, the canonical form needs a second
-mode that records whether inter-element whitespace was present. Deciding before
-the count is deciding without the number.
+**Measured 2026-09-19, while planning Phase 1: 8 components, 50 adjacent inline
+pairs** — `badge` (27, an artefact of the `all_variants` scenario), `dialog`
+(6), `codeblock` (5), `sheet` (5), `sidebar` (3), `carousel` (2), `command` (1),
+`context_menu` (1). The count excludes pairs whose parent is a flex or grid
+container, which ignores the whitespace; including them inflates it to 21
+components and 86 pairs.
+
+**Resolution:** leave the normalizer alone and write those eight components'
+sidecars whitespace-tight in Phase 2, named explicitly in each component's
+task. A second comparison mode would have to be threaded through the canonical
+form, the fixed-point assertion and all 186 snapshots for eight components,
+most of them benign — the `sr-only` label beside a close icon renders the same
+either way, and `codeblock`'s tokens sit inside `pre`, which the normalizer
+already preserves.
+
+Phase 1 reproduces the measurement and records it in `design/v2/decisions.md`;
+the script is `gem/test/golden/tools/inline_adjacency.rb`.
 
 ### 9.2 Three questions for upstream
 
@@ -510,7 +522,12 @@ The mitigation is the argument that byte-identical HTML plus unchanged
 JavaScript implies unchanged behaviour: the Stimulus controllers see the same
 DOM and the same `data-*` attributes. That argument is strong but not total,
 and its gap is precisely §9.1 — the canonical form cannot see the whitespace a
-browser renders. Accepted knowingly; revisit if §9.1's count comes back large.
+browser renders.
+
+With §9.1 now measured at eight components, the gap is bounded and named rather
+than unknown. Accepted knowingly: those eight are the only places where Phase 2
+could ship a visible difference the suite reports as parity, and their tasks
+carry the instruction that closes it.
 
 ## 10. Risks
 
