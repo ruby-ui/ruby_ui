@@ -435,18 +435,8 @@ Golden::Catalog.component "context_menu" do
     end
   end
 
-  # ContextMenuLabel#default_attrs reads
-  #
-  #   class: ["px-2 py-1.5 ...", inset?: "pl-8"]
-  #
-  # so the trailing pair is a Hash in the class list, not a condition: the
-  # literal `Hash#inspect` of `{inset?: "pl-8"}` lands in the class attribute
-  # for every value of `inset:`. Ruby 3.4 changed that inspect format, so the
-  # rendered HTML differs between the two Rubies CI runs and cannot be pinned
-  # by one snapshot. Recorded here rather than dropped, so the ruler names the
-  # bug instead of hiding it. Remove `pending:` when the component is fixed.
   %i[inset flush].each do |style|
-    scenario "label_#{style}", pending: "ContextMenuLabel renders Hash#inspect into class; output differs on Ruby 3.3 vs 3.4" do
+    scenario "label_#{style}" do
       RubyUI.ContextMenuLabel(inset: style == :inset) { "More Tools" }
     end
   end
