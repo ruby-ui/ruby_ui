@@ -245,7 +245,7 @@ compares against the snapshot, not against a running Phlex component.
    `component`/`scenario` DSL), `harness.rb` (pins the two sources of
    randomness), `scenarios.rb` (the catalog), `golden_test.rb` (the runner),
    the rake task, and `nokogiri` as a development dependency.
-2. Record the snapshots **fresh** against current `main`. Do not copy the 188
+2. Record the snapshots **fresh** against current `main`. Do not copy the 186
    from `v2-herb`.
 3. Diff the fresh recording against `v2-herb`'s. `main` has moved nine commits
    since the branch point and exactly one touches a component —

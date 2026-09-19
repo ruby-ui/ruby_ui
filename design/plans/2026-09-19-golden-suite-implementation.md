@@ -193,7 +193,7 @@ git commit -m "$(cat <<'MSG'
 [Feature] Golden HTML suite: the 1.6 parity ruler
 
 Renders every component in the catalog, reduces each render to a
-canonical form and compares it against a committed snapshot. 188
+canonical form and compares it against a committed snapshot. 186
 snapshots over 54 component directories, plus three coverage tests
 that fail if a component, a class or a snapshot falls out of the
 catalog.
