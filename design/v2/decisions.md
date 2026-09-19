@@ -67,3 +67,30 @@ CSS `white-space: pre*` (no component sets `whitespace-pre*` today), and that
 **F9.** U+00A0 is written literally by `escape_text`; a snapshot line holding
 one is indistinguishable from spaces in a PR diff. No component emits it
 today; escaping it to `&nbsp;` would keep review honest.
+
+## 3. Paths chosen ahead of the upstream conversation — 2026-09-19
+
+The maintainer meets Herb's author the following week. Rather than hold Phase 2
+on the three questions in spec §9.2, a path is chosen for each now and
+validated afterwards — changing course is cheap while nothing has merged to
+`main`.
+
+- **Attribute typing.** Decision B stands: the component coerces and validates
+  its enum attributes (`enum` helper in `Base`); nothing depends on Herb typing
+  attributes. If upstream ships typed attributes, the coercion becomes
+  redundant and stays harmless.
+- **Block parameters.** `ToggleGroup` and `ToastRegion` keep the ERB form
+  (`render X.new do |group|`), documented as the exception to the tag syntax.
+  No implicit-context redesign in 2.0. If a `<Card as |c|>` form is on Herb's
+  roadmap, 2.0 waits for it; if not, the redesign is a 2.1 item.
+- **herb 0.11 and the ReActionView release that accepts it.** Decision D
+  stands: Herb is required from 2.0.0 via ReActionView, the gemspec constraint
+  is `reactionview >= 0.4.1` with no upper bound, and the tag syntax arrives
+  through `bundle update`. Only the date is open.
+
+**Also decided the same day:** `main` stays as is. The seven 1.6 defects in
+`design/v2/follow-up-issues.md` (#537–#543) are addressed on the 2.0 line, not
+as 1.6 patches; the 2.0 migration therefore ports those components as they are
+and fixes them with a reviewed snapshot change. Phase 2 branches from
+`feat/golden-suite`, stacked on PR #536, rather than from `main`.
+

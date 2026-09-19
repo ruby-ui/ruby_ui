@@ -1,18 +1,19 @@
 # Follow-up issues surfaced by the golden suite
 
 Date: 2026-09-19
-Status: to be opened as GitHub issues; not yet opened
+Status: opened 2026-09-19 as #537–#543
 
 The golden suite pins what 1.6 renders today, defects included — that is
 what makes it a ruler. These are the defects the recording made visible
-(most were raised by the automated review of PR #536). Each is fixed in its
-own PR against `main`, with `bundle exec rake golden:update` re-recording the
-affected snapshots and the diff reviewed in that PR. None is fixed in the
-suite's own PR, and the snapshots that pin them are correct until then.
+(most were raised by the automated review of PR #536). Per maintainer
+decision (2026-09-19), `main` stays as is: each is addressed on the 2.0 line,
+with `bundle exec rake golden:update` re-recording the affected snapshots
+there and the diff reviewed. The snapshots that pin them are correct until
+then.
 
 Ordered by user impact.
 
-## 1. DataTable nests `<form>` inside `<form>`
+## 1. DataTable nests `<form>` inside `<form>` — #537
 
 - **Where:** `DataTableForm` wraps the table; `DataTableSearch` and
   `DataTablePerPageSelect` each render their own `<form>` inside it.
@@ -29,7 +30,7 @@ Ordered by user impact.
   time, which makes it a template adjustment in the DataTable migration.
   Fixing it on 1.6 first keeps the migration a pure port.
 
-## 2. `aria-*` boolean attributes serialize as the empty string
+## 2. `aria-*` boolean attributes serialize as the empty string — #538
 
 - **Where:** every `aria: {hidden: true}`, `aria_disabled: true`,
   `aria_expanded: true` in the catalog — breadcrumb separators and ellipsis,
@@ -48,7 +49,7 @@ Ordered by user impact.
   (`true` → `""`). The right 2.0 behaviour is `aria-x="true"`; decide it
   explicitly and let the re-record show the blast radius.
 
-## 3. `TableFooter` ships a corrupted class string
+## 3. `TableFooter` ships a corrupted class string — #539
 
 - **Where:** `gem/lib/ruby_ui/table/table_footer.rb:13`:
   `"border-t bg-muted/50 font-medium[& amp;>tr]:last:border-b-0"`. The
@@ -60,7 +61,7 @@ Ordered by user impact.
 - **Fix:** `"border-t bg-muted/50 font-medium [&>tr]:last:border-b-0"`;
   re-record `table/*`.
 
-## 4. Carousel buttons have the wrong or missing screen-reader label
+## 4. Carousel buttons have the wrong or missing screen-reader label — #540
 
 - **Where:** `carousel_previous.rb` renders `span.sr-only "Next slide"`;
   `carousel_next.rb` renders no `sr-only` span at all. Snapshot
@@ -70,7 +71,7 @@ Ordered by user impact.
 - **Fix:** "Previous slide" on the previous button, add "Next slide" to the
   next button; re-record `carousel/*`.
 
-## 5. `Input` defaults to `type="string"`
+## 5. `Input` defaults to `type="string"` — #541
 
 - **Where:** `Input`'s default `type:` in `input.rb`, and `date_picker.rb`'s
   `input_attrs` (`type: "string"`). Snapshot `date_picker/without_label`.
@@ -80,7 +81,7 @@ Ordered by user impact.
 - **Fix:** `type: "text"` in both places; re-record `input/*`,
   `date_picker/*` and whatever else changes.
 
-## 6. `TooltipTrigger` emits a dead `variant="outline"` attribute
+## 6. `TooltipTrigger` emits a dead `variant="outline"` attribute — #542
 
 - **Where:** `tooltip_trigger.rb` default attrs. Snapshot `tooltip/default`.
   Already listed in `design/v2/01-research/golden-suite.md`.
@@ -89,7 +90,7 @@ Ordered by user impact.
   outline look comes from the `Button` inside.
 - **Fix:** remove it; re-record `tooltip/*`.
 
-## 7. `CommandInput` sets `aria-expanded` to a boolean
+## 7. `CommandInput` sets `aria-expanded` to a boolean — #543
 
 - **Where:** `command_input.rb`, `aria_expanded: true`. Snapshot
   `command/dialog` line 18.
