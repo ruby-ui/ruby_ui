@@ -53,11 +53,13 @@ module Golden
             "Pin the new shape in test/golden/harness.rb before recording a snapshot that depends on it."
         end
 
-        values = argument.to_a
-        if values.size > MAX_PINNED_RANGE
-          raise ArgumentError, "refusing to pin rand(#{argument.inspect}): #{values.size} values exceeds MAX_PINNED_RANGE."
+        size = argument.size
+        if size.nil? || size > MAX_PINNED_RANGE
+          reason = size.nil? ? "not an Integer range, so its extent cannot be bounded" : "#{size} values exceeds MAX_PINNED_RANGE"
+          raise ArgumentError, "refusing to pin rand(#{argument.inspect}): #{reason}."
         end
 
+        values = argument.to_a
         values.fetch((@rand_calls += 1) % values.size)
       end
 
