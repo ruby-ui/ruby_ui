@@ -1,0 +1,21 @@
+gem/test/golden/harness.rb
+  s_02296ba27f582b::t_5d7c380c944308 56-59,62
+gem/test/golden/harness_test.rb
+  s_02296ba27f582b::t_16c1fc77bd2182 20-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4a29d3ac714a6bddc5e57e384227d3f215dae265",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
