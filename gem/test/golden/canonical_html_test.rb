@@ -52,4 +52,19 @@ class GoldenCanonicalHtmlTest < Minitest::Test
   def test_preserved_leading_newline_that_a_browser_drops_stays_equal
     assert_equal canonical("<pre>\nfoo</pre>"), canonical("<pre>foo</pre>")
   end
+
+  def test_plain_xmlns_declaration_is_not_prefixed
+    once = canonical(%(<svg xmlns="http://www.w3.org/2000/svg"></svg>))
+
+    assert_includes once, %( xmlns="http://www.w3.org/2000/svg")
+    refute_includes once, "xmlns:xmlns"
+    assert_equal once, canonical(once)
+  end
+
+  def test_prefixed_xmlns_declaration_keeps_its_prefix
+    once = canonical(%(<svg xmlns:xlink="http://www.w3.org/1999/xlink"></svg>))
+
+    assert_includes once, %(xmlns:xlink="http://www.w3.org/1999/xlink")
+    assert_equal once, canonical(once)
+  end
 end

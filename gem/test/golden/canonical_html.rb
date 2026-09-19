@@ -194,8 +194,15 @@ module Golden
         end
       end
 
+      # libxml2 files a plain `xmlns="…"` declaration under the xmlns namespace
+      # with prefix "xmlns" and local name "xmlns"; rebuilding that as
+      # prefix:name gave `xmlns:xmlns`, which no renderer emits. A prefixed
+      # declaration (`xmlns:xlink`) has a different local name and keeps its
+      # prefix.
       def attribute_name(attribute)
         prefix = attribute.namespace&.prefix
+        return attribute.name if prefix == "xmlns" && attribute.name == "xmlns"
+
         prefix ? "#{prefix}:#{attribute.name}" : attribute.name
       end
 
