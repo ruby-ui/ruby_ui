@@ -16,7 +16,7 @@
 - Ruby 3.2+ syntax, 2-space indent, `snake_case` files, `CamelCase` classes. StandardRB is enforced and `bundle exec rake` runs it.
 - Do not touch `docs/` in any task of this plan. `git status --porcelain docs` must be empty at the end of every task.
 - `mcp/data/registry.json` is generated and embeds the source of every component file. Never hand-edit it. Any task that changes a file under `gem/lib/ruby_ui/` rebuilds it with `cd mcp && bundle install && bundle exec exe/ruby-ui-mcp-build` and commits the result — CI rebuilds it and fails on a diff.
-- Do not modify any file under `gem/lib/ruby_ui/` except in Task 3, which changes exactly one line of one file.
+- Do not modify any file under `gem/lib/ruby_ui/` except in Task 4, which changes exactly one line of one file.
 - `nokogiri` is a **development** dependency. Nothing in this plan may add a runtime dependency; `ruby_ui.gemspec` has none and Phase 1 does not change that.
 - Never hand-edit a file under `gem/test/golden/snapshots/`. Snapshots are produced by `bundle exec rake golden:update` and reviewed as a diff.
 - Never commit with `bundle exec rake` failing.
@@ -205,7 +205,7 @@ snapshots were first taken.
 `rake golden` is reached by `rake test`, so CI covers it on Ruby 3.3
 and 3.4 with no workflow change.
 
-Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 MSG
 )"
 ```
