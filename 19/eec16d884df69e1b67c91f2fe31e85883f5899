@@ -1,0 +1,27 @@
+design/2026-09-19-rubyui-2-0-design.md
+  s_02296ba27f582b::t_88ba08f3faccf6 362,364-367
+  s_02296ba27f582b::t_e4a6f48c76e85d 210,502
+  s_02296ba27f582b::t_71bd08d02b2c33 375-377
+  s_02296ba27f582b::t_ced7ff5774fa52 52-54
+  s_02296ba27f582b::t_dd48267fbca83e 1-51,55-200,202-209,211-254,260-311,335-361,363,368-374,378-384,386-442,456-501,503-536
+  s_02296ba27f582b::t_74a65d003b6f1c 312-334
+  s_02296ba27f582b::t_fd8d9a827356a5 201,385
+  s_02296ba27f582b::t_1495dbc313a186 443-455
+  s_02296ba27f582b::t_caa485318175c6 255-259
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "19eec16d884df69e1b67c91f2fe31e85883f5899",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
