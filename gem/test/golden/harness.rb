@@ -61,10 +61,8 @@ module Golden
         values.fetch((@rand_calls += 1) % values.size)
       end
 
-      # Coverage bookkeeping. Recording on instantiation rather than on render
-      # is deliberate: it is the cheapest hook that sees every class, and a
-      # component instantiated inside a scenario is a component the scenario
-      # reaches.
+      # Coverage bookkeeping: which classes have rendered while a scenario was
+      # active. See RecordsRenderedClass for why render, not instantiation.
       def classes_rendered
         @classes_rendered ||= {}
       end
@@ -89,8 +87,13 @@ module Golden
     end
   end
 
+  # Recording on render rather than on instantiation: a component that is only
+  # `new`ed for its computed attributes (PaginationItem does this with Button)
+  # has not been measured, and the coverage guard must not count it.
+  # `before_template` is the hook Phlex calls on every render and no component
+  # overrides, so prepending it on Base reaches every subclass.
   module RecordsRenderedClass
-    def initialize(...)
+    def before_template
       Golden::Harness.record(self.class)
       super
     end

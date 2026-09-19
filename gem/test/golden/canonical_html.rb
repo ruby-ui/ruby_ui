@@ -59,6 +59,11 @@ module Golden
     # the same reason: Stimulus invokes handlers in the order they are listed.
     TOKEN_LISTS = %w[class data-action].freeze
 
+    # HTML's ASCII whitespace: tab, LF, FF, CR, space. Ruby's `\s` also matches
+    # U+000B, which HTML does not treat as whitespace — `"a\vb"` is one class
+    # token to a browser and has to stay one here.
+    HTML_WHITESPACE = /[\t\n\f\r ]+/
+
     class << self
       def call(html)
         out = +""
@@ -77,7 +82,17 @@ module Golden
       # wrapper keeps the tree as authored while still going through the real
       # spec parser.
       def parse(html)
-        Nokogiri::HTML5.fragment("<template>#{html}</template>").children.first.children
+        wrapped = Nokogiri::HTML5.fragment("<template>#{html}</template>")
+
+        # A stray `</template>` in the input closes the wrapper early, and
+        # whatever follows lands beside it — outside what gets compared.
+        # Refuse rather than silently drop it.
+        unless wrapped.children.size == 1
+          raise ArgumentError,
+            "fragment escaped the <template> wrapper (a stray </template>?): #{html[0, 120].inspect}"
+        end
+
+        wrapped.children.first.children
       end
 
       private
@@ -109,7 +124,11 @@ module Golden
           children.each { |child| emit(child, depth, out, inner_mode) }
           out << close << "\n"
         elsif children.empty?
-          out << (INDENT * depth) << open << close << "\n"
+          # `<div></div>` and `<div>\n</div>` are not the same element to a
+          # browser: `:empty` matches only the first, and `textContent` is
+          # truthy only on the second. Keep a single space to tell them apart.
+          filler = whitespace_only_content?(node) ? " " : ""
+          out << (INDENT * depth) << open << filler << close << "\n"
         else
           out << (INDENT * depth) << open << "\n"
           children.each { |child| emit(child, depth + 1, out, :normal) }
@@ -134,13 +153,17 @@ module Golden
         :normal
       end
 
-      # An element whose only children are comments and formatting whitespace
-      # has to canonicalise the same way as an element with no children at all,
-      # otherwise `<div></div>` and `<div>\n</div>` — identical to a browser —
-      # would compare unequal.
+      # Comments and formatting whitespace are not children for layout
+      # purposes: `<div>\n  <span/>\n</div>` and `<div><span/></div>` build the
+      # same tree. Whether an element had *only* such children is a separate
+      # question, answered by whitespace_only_content? — see emit_element.
       def significant_children(node, mode)
         return node.children.to_a unless mode == :normal
         node.children.reject { |child| child.comment? || (child.text? && collapse(child.text).empty?) }
+      end
+
+      def whitespace_only_content?(node)
+        node.children.any? { |child| child.text? && !child.text.empty? && collapse(child.text).empty? }
       end
 
       def open_tag(node)
@@ -160,7 +183,7 @@ module Golden
         if BOOLEAN.include?(name) && (value.empty? || value.downcase == name)
           [name, nil]
         elsif TOKEN_LISTS.include?(name)
-          [name, value.split(/\s+/).reject(&:empty?).join(" ")]
+          [name, value.split(HTML_WHITESPACE).reject(&:empty?).join(" ")]
         else
           [name, value]
         end
@@ -172,7 +195,7 @@ module Golden
       end
 
       def collapse(text)
-        text.gsub(/\s+/, " ").strip
+        text.gsub(HTML_WHITESPACE, " ").delete_prefix(" ").delete_suffix(" ")
       end
 
       def escape_text(text)
