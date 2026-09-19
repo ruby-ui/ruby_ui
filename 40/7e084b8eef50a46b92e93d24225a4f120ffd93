@@ -1,0 +1,32 @@
+gem/test/golden/tools/inline_adjacency.rb
+  s_02296ba27f582b::t_16361b44fd4522 15-17
+design/v2/decisions.md
+  s_02296ba27f582b::t_ffa370fc882499 22-24,30-31
+  s_02296ba27f582b::t_5493461b512b2c 43-65
+design/plans/2026-09-19-golden-suite-implementation.md
+  s_02296ba27f582b::t_82f76c53790ece 41
+  s_02296ba27f582b::t_de4290d8b729fb 36-37
+  s_02296ba27f582b::t_e08f19d0e45ebc 50
+  s_02296ba27f582b::t_afd768dcb4f44f 196
+  s_02296ba27f582b::t_90dd4a0c85e712 133
+design/2026-09-19-rubyui-2-0-design.md
+  s_02296ba27f582b::t_3050927bde1b73 248
+  s_02296ba27f582b::t_c4a51b7b46f341 287
+  s_02296ba27f582b::t_6f12bdb71ff5ec 237
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "407e084b8eef50a46b92e93d24225a4f120ffd93",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
