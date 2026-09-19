@@ -1,0 +1,21 @@
+design/2026-09-19-rubyui-2-0-design.md
+  s_02296ba27f582b::t_d733794cce5528 53-55,355-393,401,423-427,429,431-432,434,436-438,440,442-446,448,454-456,668
+design/v2/decisions.md
+  s_02296ba27f582b::t_f0ebe8b367448d 97-110
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "6397e9ea1b2d4b0b6c239c2e0db999c1bf0ca078",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
