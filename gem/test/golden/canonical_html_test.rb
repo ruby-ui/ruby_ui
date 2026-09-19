@@ -39,4 +39,17 @@ class GoldenCanonicalHtmlTest < Minitest::Test
   def test_text_collapses_html_whitespace_only
     refute_equal canonical("<p>a\vb</p>"), canonical("<p>a b</p>")
   end
+
+  def test_preserved_content_with_leading_newline_is_a_fixed_point
+    # The parser drops one LF right after <pre>; the serializer must put it back
+    # or the second pass eats a real blank line.
+    once = canonical("<pre>\n\nfoo</pre>")
+
+    assert_equal once, canonical(once)
+    assert_equal "<pre>\n\nfoo</pre>\n", once
+  end
+
+  def test_preserved_leading_newline_that_a_browser_drops_stays_equal
+    assert_equal canonical("<pre>\nfoo</pre>"), canonical("<pre>foo</pre>")
+  end
 end

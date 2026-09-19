@@ -121,6 +121,11 @@ module Golden
           out << close
         elsif inner_mode != :normal
           out << (INDENT * depth) << open
+          # The parser drops exactly one LF immediately after a preserved-content
+          # start tag. Put it back, or a second pass over content that legitimately
+          # starts with a blank line would eat it and stop being a fixed point.
+          first_child = children.first
+          out << "\n" if inner_mode == :preserve && first_child.is_a?(Nokogiri::XML::Text) && first_child.text.start_with?("\n")
           children.each { |child| emit(child, depth, out, inner_mode) }
           out << close << "\n"
         elsif children.empty?
