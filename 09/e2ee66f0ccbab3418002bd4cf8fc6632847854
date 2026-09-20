@@ -1,0 +1,22 @@
+gem/test/golden/canonical_html_test.rb
+  s_02296ba27f582b::t_cb28b7a1cbe79b 96-99
+gem/test/golden/canonical_html.rb
+  s_02296ba27f582b::t_cb28b7a1cbe79b 75,104-108
+  s_02296ba27f582b::t_a9c0901154a1c6 109
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "09e2ee66f0ccbab3418002bd4cf8fc6632847854",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
