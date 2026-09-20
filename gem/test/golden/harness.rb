@@ -29,6 +29,17 @@ module Golden
         @active = false
       end
 
+      # The ERB lane: renders a scenario's fixture through the same harness a
+      # host application's templates go through, with the same pins active.
+      def render_erb(scenario)
+        @active = true
+        @hex_calls = 0
+        @rand_calls = 0
+        RubyUI::TestApp.view(Golden::Catalog::VIEWS_ROOT).render(template: "#{scenario.component}/#{scenario.name}")
+      ensure
+        @active = false
+      end
+
       # `SecureRandom.hex` and `rand` are the only two sources of
       # non-determinism in the 1.6 surface: TooltipContent, SelectContent and
       # DatePicker mint DOM ids with `SecureRandom.hex(4)`, and
@@ -100,6 +111,15 @@ module Golden
       super
     end
   end
+
+  # The 2.0 layer has no before_template; render_in is the hook that fires on
+  # every render and nothing overrides.
+  module RecordsRenderedComponent
+    def render_in(...)
+      Golden::Harness.record(self.class)
+      super
+    end
+  end
 end
 
 SecureRandom.singleton_class.prepend(Golden::DeterministicSecureRandom)
@@ -109,3 +129,6 @@ SecureRandom.singleton_class.prepend(Golden::DeterministicSecureRandom)
 # seeding.
 RubyUI::Base.prepend(Golden::DeterministicRandom)
 RubyUI::Base.prepend(Golden::RecordsRenderedClass)
+
+RubyUI::Component.prepend(Golden::DeterministicRandom)
+RubyUI::Component.prepend(Golden::RecordsRenderedComponent)

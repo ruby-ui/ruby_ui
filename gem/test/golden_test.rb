@@ -21,27 +21,30 @@ class GoldenSuiteTest < Minitest::Test
   UPDATE = ENV["UPDATE_GOLDEN_SNAPSHOTS"] == "1"
 
   Golden::Catalog.scenarios.each do |scenario|
-    define_method(scenario.test_name) { assert_golden(scenario) }
+    scenario.lanes.each do |lane|
+      define_method(scenario.test_name(lane)) { assert_golden(scenario, lane) }
+    end
+  end
+
+  def self.recorded
+    @recorded ||= {}
   end
 
   private
 
-  def assert_golden(scenario)
-    canonical = canonicalize(scenario)
+  def assert_golden(scenario, lane)
+    canonical = canonicalize(scenario, lane)
 
     # Rendering twice catches any source of non-determinism the harness has not
     # pinned, wherever it lives, before it can be baked into a snapshot.
-    assert_equal canonical, canonicalize(scenario),
+    assert_equal canonical, canonicalize(scenario, lane),
       "#{scenario.slug} does not render deterministically; pin the new source in test/golden/harness.rb"
 
     # A pending scenario has been rendered — it must not raise, and must be
     # stable within one Ruby — but its markup is not pinned. See the reason.
     skip "#{scenario.slug} is not pinned: #{scenario.pending}" unless scenario.pinned?
 
-    if UPDATE
-      FileUtils.mkdir_p(File.dirname(scenario.snapshot_path))
-      File.write(scenario.snapshot_path, canonical)
-    end
+    record!(scenario) if UPDATE
 
     assert_path_exists scenario.snapshot_path,
       "no snapshot for #{scenario.slug} — run `bundle exec rake golden:update` and review the diff"
@@ -60,8 +63,24 @@ class GoldenSuiteTest < Minitest::Test
       "HTML for #{scenario.slug} no longer matches the recorded 1.6 snapshot"
   end
 
-  def canonicalize(scenario)
-    Golden::CanonicalHtml.call(Golden::Harness.render(&scenario.block))
+  def canonicalize(scenario, lane)
+    Golden::CanonicalHtml.call(render(scenario, lane))
+  end
+
+  def render(scenario, lane)
+    (lane == :erb) ? Golden::Harness.render_erb(scenario) : Golden::Harness.render(&scenario.block)
+  end
+
+  # In update mode the authoritative lane writes the snapshot before either
+  # lane compares, once per scenario per process, so the order Minitest picks
+  # for a scenario's lane tests cannot make one of them read a stale or absent
+  # file.
+  def record!(scenario)
+    self.class.recorded[scenario.slug] ||= begin
+      FileUtils.mkdir_p(File.dirname(scenario.snapshot_path))
+      File.write(scenario.snapshot_path, Golden::CanonicalHtml.call(render(scenario, scenario.recording_lane)))
+      true
+    end
   end
 end
 
@@ -92,12 +111,30 @@ class GoldenCoverageTest < Minitest::Test
       "snapshot files with no scenario (delete them): #{orphans.map { |path| path.delete_prefix("#{Golden::Catalog::SNAPSHOT_ROOT}/") }.join(", ")}"
   end
 
+  def test_every_scenario_has_at_least_one_lane
+    laneless = Golden::Catalog.scenarios.reject { |scenario| scenario.lanes.any? }.map(&:slug)
+
+    assert_empty laneless,
+      "scenarios with neither a Phlex block nor an ERB fixture (they would define no test): #{laneless.join(", ")}"
+  end
+
+  def test_no_orphan_fixture_files
+    expected = Golden::Catalog.scenarios.map(&:fixture_path).sort
+    orphans = Golden::Catalog.fixture_files - expected
+
+    assert_empty orphans,
+      "fixture files with no scenario (delete them): #{orphans.map { |path| path.delete_prefix("#{Golden::Catalog::VIEWS_ROOT}/") }.join(", ")}"
+  end
+
   # Rendering the whole catalog once, memoized, because Minitest runs tests in
   # a random order and the coverage check cannot rely on the scenario tests
   # having run first.
   def self.rendered_classes
     @rendered_classes ||= begin
-      Golden::Catalog.scenarios.each { |scenario| Golden::Harness.render(&scenario.block) }
+      Golden::Catalog.scenarios.each do |scenario|
+        Golden::Harness.render(&scenario.block) if scenario.block
+        Golden::Harness.render_erb(scenario) if scenario.fixture?
+      end
       Golden::Harness.classes_rendered.keys.sort
     end
   end
