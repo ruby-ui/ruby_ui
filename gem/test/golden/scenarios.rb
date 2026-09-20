@@ -412,7 +412,7 @@ Golden::Catalog.component "command" do
   end
 
   scenario "trigger_with_custom_keybindings" do
-    RubyUI.CommandDialogTrigger(keybindings: ["ctrl+p"]) { "Open" }
+    RubyUI.CommandDialogTrigger(keybindings: ["keydown.ctrl+p@window"]) { "Open" }
   end
 end
 
