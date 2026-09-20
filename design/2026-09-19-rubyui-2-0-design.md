@@ -296,8 +296,10 @@ code.
   under `gem/test/golden/views/`, rendered through the harness and compared
   against the same frozen snapshot as its own test. With `phlex-rails` loaded a
   fixture renders a component that is still Phlex, so all 188 fixtures are
-  written before any migration — Button's 15 in plan 2.0a, the rest in 2.0b
-  (decision 7).
+  written before any migration — Button's 15 in plan 2.0a, the other 173 in
+  plan 2.0b (decision 7). Every fixture is one line: under Herb 0.10.4, trim
+  mode keeps the newline after an `end` that follows content on its line and
+  emits the indentation before an output tag (decision 10).
 - Implement the `enum` coercion helper in `Base`.
 - Port Phlex's attribute guards into `Attributes` (§4.3), with unit tests
   that assert an unsafe name raises and a `javascript:` reference is dropped.
@@ -357,8 +359,9 @@ a sidecar, or the difference is listed in §4.3.
 The remaining ~50 components, in batches.
 
 **Definition of done, per component.** A plain Ruby class with no Phlex; a
-sidecar in trim mode; the snapshot matching; the strict lane matching if the
-component carries text; a scenario passing the String form of every enum
+sidecar that emits no whitespace Phlex did not (decision 10); the canonical
+and the strict snapshot matching for every one of its scenarios (decision
+8); a scenario passing the String form of every enum
 attribute; **its existing unit tests in `gem/test/ruby_ui/` ported to the new
 harness, none deleted** — they are the inventory of what the component promises
 beyond its markup; the Stimulus controller untouched; the MCP registry rebuilt.
@@ -632,8 +635,12 @@ count never named.
    all 188 scenarios: **zero** elements with whitespace-only content and
    **zero** text–element boundaries carrying a space, so the hardening changes
    no recorded snapshot. It changes what Phase 2 is allowed to emit.
-2. **Phase 2 sidecars use ERB trim mode**, so they emit no whitespace Phlex
-   did not.
+2. **Phase 2 sidecars emit no whitespace Phlex did not.** Trim mode was the
+   intended means; measured through Herb 0.10.4 it keeps the newline after
+   an `end` that follows content on its line and emits the indentation
+   before an output tag, so an indented one-render-per-line sidecar is not
+   whitespace-tight. What is: one line, a break only after opening tags with
+   every `end` adjacent, or a break inside an ERB tag (decision 10).
 3. **Phase 2.0 defines a strict lane** — raw output, attribute order
    normalized, nothing else — for components that carry text.
 
