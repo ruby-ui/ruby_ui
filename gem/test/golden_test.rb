@@ -143,6 +143,17 @@ class GoldenCoverageTest < Minitest::Test
       "scenarios with neither a Phlex block nor an ERB fixture (they would define no test): #{laneless.join(", ")}"
   end
 
+  # Decision 7: every scenario has an ERB fixture before any component
+  # migrates, so a migration can only ever change an implementation, never the
+  # ruler. Red until the last batch of plan 2.0b lands; its message is the
+  # remaining work, by slug.
+  def test_every_scenario_has_a_fixture
+    missing = Golden::Catalog.scenarios.reject(&:fixture?).map(&:slug)
+
+    assert_empty missing,
+      "#{missing.size} scenarios without an ERB fixture under test/golden/views: #{missing.join(", ")}"
+  end
+
   def test_no_orphan_fixture_files
     expected = Golden::Catalog.scenarios.map(&:fixture_path).sort
     orphans = Golden::Catalog.fixture_files - expected
