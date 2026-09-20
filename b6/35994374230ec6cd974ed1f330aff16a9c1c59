@@ -1,0 +1,36 @@
+gem/lib/ruby_ui/component.rb
+  s_02296ba27f582b::t_0bcefed93e7fe2 100
+  s_02296ba27f582b::t_75c50ecb54c79a 122-126
+  s_02296ba27f582b::t_e992116d174d50 77
+gem/test/ruby_ui/enum_test.rb
+  s_02296ba27f582b::t_0b187645d3d20a 42-56
+gem/test/ruby_ui/attributes_differential_test.rb
+  s_02296ba27f582b::t_255ee7670fee75 36-37,40-55
+  s_02296ba27f582b::t_15c2141232194c 56
+gem/lib/ruby_ui/attributes.rb
+  s_02296ba27f582b::t_2e7d4d6f8a3105 20-28,37,39-40
+  s_02296ba27f582b::t_748baaf559aeb5 94-97,104
+  s_02296ba27f582b::t_5034c092527137 203-204,213-219
+  s_02296ba27f582b::t_f0ae44033336fa 179-181
+gem/test/ruby_ui/component_test.rb
+  s_02296ba27f582b::t_08c90ae20cb090 103-104,112-115
+  s_02296ba27f582b::t_3d01e1a8988c02 105-111
+gem/test/test_helper.rb
+  s_02296ba27f582b::t_7898bd3dccd1e6 3-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "b635994374230ec6cd974ed1f330aff16a9c1c59",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
