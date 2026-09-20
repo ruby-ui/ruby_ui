@@ -108,5 +108,18 @@ module RubyUI
     def default_attrs
       {}
     end
+
+    # Coerces and validates an enumerated attribute. `size: "lg"` from a tag or
+    # from params arrives as a String, `size: :lg` from Ruby as a Symbol, and
+    # both must select `table[:lg]`; nil takes the default. Anything else names
+    # the allowed values instead of silently dropping the class.
+    def enum(value, table, default:)
+      key = value.nil? ? default : value
+      key = key.to_sym if key.respond_to?(:to_sym)
+      return key if table.key?(key)
+
+      raise ArgumentError,
+        "#{self.class.name}: #{value.inspect} is not one of #{table.keys.map(&:inspect).join(", ")}"
+    end
   end
 end
