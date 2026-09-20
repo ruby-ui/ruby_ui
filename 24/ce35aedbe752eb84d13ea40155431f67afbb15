@@ -1,0 +1,20 @@
+design/plans/2026-09-20-phase-2-0a-foundation-implementation.md
+  s_02296ba27f582b::t_b53718805a26a9 1-2016
+  s_02296ba27f582b::t_c7688308e71d96 2017-2030
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "24ce35aedbe752eb84d13ea40155431f67afbb15",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "unknown"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
