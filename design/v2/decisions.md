@@ -111,16 +111,28 @@ migration itself, in which case the generator ships in 2.1 instead.
 ## 5. The gem's test harness is an inline Rails application — 2026-09-20
 
 Decision A said `actionview` + `reactionview`, no controller, no dummy app.
-ReActionView's handler reads `Rails.root` without a guard, and a template
-outside `Rails.root` is "external": when Herb rejects it, `external_template_mode`
-falls back to Erubi silently. So the tests need a `Rails`, and its root must be
-the gem. `test_helper.rb` boots the smallest `Rails::Application` — no `app/`
-directory, no routes, no database — with `config.root` at the gem and
-`RAILS_ENV=test`. Measured: the existing suite is unchanged under it and
-`ActionView::Template.handler_for_extension(:erb)` is ReActionView's.
+The premise this started from — that `local_template?` treats a template
+outside `Rails.root` as "external" and falls back to Erubi — doesn't hold
+without an application: `Rails.root` is then `nil`, `nil.to_s` is `""`, and
+every identifier `start_with?("")`, so every template counts as local. The
+reasons that do hold: ReActionView's Railtie registers its ERB handler
+(`ActionView::Template.register_template_handler :erb, …`) only from
+`config.after_initialize`, which a Railtie runs only when a
+`Rails::Application` boots — without one, Erubi stays the `:erb` handler and
+Herb's validation never runs on anything, local or not; and `Rails.env`
+defaults to `development` unless `RAILS_ENV`/`RACK_ENV` is set (it does not
+need an application, but nothing else in a bare `require "rails"` sets it
+either), which turns on 1.6 `Base`'s dev comment. So the tests need a `Rails`,
+and its root must be the gem. `test_helper.rb` boots the smallest
+`Rails::Application` — no `app/` directory, no routes, no database — with
+`config.root` at the gem and `RAILS_ENV=test`. Measured: the existing suite is
+unchanged under it and `ActionView::Template.handler_for_extension(:erb)` is
+ReActionView's.
 **Cost if wrong:** `railties` as a development dependency and ~1 s of boot per
-test run. **What would reverse it:** ReActionView dropping its `Rails.root`
-reads, at which point the app object goes.
+test run. **What would reverse it:** ReActionView registering its ERB handler
+outside an application-boot initializer, at which point the app object's only
+remaining job is `Rails.env`, which `ENV["RAILS_ENV"] = "test"` alone already
+covers.
 
 ## 6. The 2.0 layer is `RubyUI::Component` until the last Phlex component is gone — 2026-09-20
 
@@ -178,5 +190,13 @@ class" cannot happen (one class file, one directory). The fresh-app install
 script the spec put in Phase 2.0 moves to Phase 2.4: until the installer writes
 the 2.0 initializer, the script would only exercise the 1.6 installer, which
 proves nothing about 2.0.
+
+The scoped lookup registers each root's resolver through
+`ActionView::PathRegistry.cast_file_system_resolvers` — a `:nodoc:` API
+present since Rails 7.1 — because that registration is what lets the
+reloader's `DetailsKey.clear` and `CacheExpiry` see the sidecars; a test pins
+it. ReActionView allows `actionview >= 7.0`; the 2.4 gemspec floors Rails at
+7.1.
+
 **Cost if wrong:** installation is first exercised end to end in 2.4 rather
 than now.

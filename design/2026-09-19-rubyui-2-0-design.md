@@ -129,7 +129,7 @@ they were written and proved:
 
 | File | Responsibility |
 | --- | --- |
-| `base.rb` | `initialize(**attrs)` → `attrs`; `render_in(view_context, **, &block)` → capture into `content`, render the sidecar; `template_path` derived from the class file; `helpers` (view context, render-time only) |
+| `base.rb` | `initialize(**attrs)` → `attrs`; `render_in(view_context, **, &block)` → capture into `content`, render the sidecar; `template` resolved from `source_file` under the class's `component_root`; `helpers` (view context, render-time only) |
 | `attributes.rb` | `mix` (Phlex `Helpers#mix` semantics), `merge_classes` (tailwind_merge), `flat` (Phlex 2.4.1 serialization → flat string-keyed hash for `tag.attributes`) |
 
 226 lines at the end of the gate, against a 500-line ceiling. The ceiling
@@ -159,12 +159,14 @@ Differences from 1.6's `Base` to carry into the documentation:
 - `render_in` assigns `content` on every call — `nil` when there is no block.
   The gate's version assigned it only with a block, so an instance rendered
   twice repeated its first content.
-- The sidecar is found through a lookup **scoped to the directory that holds
-  `ruby_ui/`**, not through the application's view-path chain, and two
-  candidates for one component is an error. Review showed that with the
-  chain, `append` lets a host `ruby_ui/…` template silently replace the
-  sidecar and `prepend` lets the sidecar silently shadow the host — the
-  ordering only picks which side loses quietly.
+- The sidecar is found through a lookup **scoped to the root that holds the
+  class file** (`RubyUI.component_roots`, §4.4), not through the application's
+  view-path chain: the host's view paths are never consulted, so a host
+  template at the same virtual path is not picked (tested; decision 9), and a
+  class has exactly one sidecar — one class file, one directory. Review showed
+  that with the chain, `append` lets a host `ruby_ui/…` template silently
+  replace the sidecar and `prepend` lets the sidecar silently shadow the host
+  — the ordering only picks which side loses quietly.
 - The development-only `<!-- Before RubyUI::X -->` comment is dropped.
 
 ### 4.4 Distribution and install
@@ -226,7 +228,7 @@ execution go in `design/v2/decisions.md`, one line each, with the reason.
 | 6 | The golden suite lands on `main` in its own PR, before any 2.0 work | It protects 1.6 today — it catches regressions in ordinary bug-fix PRs. On a v2 branch it would protect nothing, and `main` and the branch would diverge in exactly the file that defines what "identical" means. `f7cbeda` is self-contained and cherry-picks cleanly. |
 | 7 | **A.** Test harness is `actionview` + `reactionview`, no controller, no dummy app | Exactly one component touches the view context — `DataTableForm`, for CSRF — and it already falls back to the literal `"csrf-token-placeholder"` that the snapshots recorded. `DataTableSortHead`, the obvious candidate for needing routes, builds its URL with `CGI` from an explicit `path:`. `reactionview` is included because decision D makes Herb what users compile with; testing on Erubi would test something we do not ship, and it puts the Herb validators over every sidecar on every CI run. |
 | 8 | **B.** A coercion helper in `Base`; not the `literal` gem | ~14 components index Symbol-keyed hashes with a user-supplied value and 11 already call `.to_sym`. `DialogContent` and `Badge` do not: `SIZES["lg"]` is `nil`, the class is dropped, nothing is raised. This is a 1.6 bug reachable from `params`, independent of any tag syntax. `Literal::Enum#coerce` looks up by member value and never treats `"lg"` and `:lg` as equivalent, so it does not remove the coercion — it would earn its place only as a full object model (`Base < Literal::Object`, `prop` replacing every constructor), which is a second large migration stacked on the first. Recorded as a legitimate 3.0 direction. |
-| 9 | **C.** Sidecar next to the class, found by a lookup scoped to the component root | Keeps class, template and Stimulus controller in one directory, as 1.6 already keeps class and controller. The gate proved the sidecar-next-to-class shape in development with reloading and in production with eager loading, but resolved it through the application's view-path chain; review showed that both `prepend` and `append` merely choose which side of a name collision loses silently. A lookup scoped to one root has no other side: a collision with the host is impossible, and two sidecars for one class is an error. |
+| 9 | **C.** Sidecar next to the class, found by a lookup scoped to the component root | Keeps class, template and Stimulus controller in one directory, as 1.6 already keeps class and controller. The gate proved the sidecar-next-to-class shape in development with reloading and in production with eager loading, but resolved it through the application's view-path chain; review showed that both `prepend` and `append` merely choose which side of a name collision loses silently. A lookup scoped to one root has no other side: a collision with the host is impossible, and a class has exactly one sidecar (one class file, one directory). |
 | 10 | **D.** Herb is required from 2.0.0, through ReActionView | Verified on released Rails (§8): `rails 8.1.3.1 + reactionview 0.4.1 + herb 0.10.4` resolves, boots, renders, runs custom transform visitors, and rejects malformed HTML at compile time. Every user gets validation from day one, and when herb ships component tags every user gets the tag syntax through `bundle update` — no reinstall, no migration. The accepted cost: two pre-1.0 gems become required, and `intercept_erb` compiles the whole host app through Herb, so a user with malformed HTML anywhere sees it on install day. `validation_mode` does not soften this — `:none` empties the template and `:overlay` replaces it — so the installer preflights the host's templates (§4.4), and the only opt-out is `intercept_erb = false`, which also disables the tag syntax. |
 
 ## 6. Phases
@@ -325,8 +327,7 @@ code.
 **Acceptance.** The layer is in the gem with its own tests, guards included.
 The ERB lane is green for Button's 15 scenarios against the frozen snapshots
 with Button still Phlex, and the strict lane holds one recorded snapshot per
-scenario (188). All
-three CI jobs are green with the registry unchanged.
+scenario (188). All five CI jobs are green with the registry unchanged.
 
 #### 2.1 The hard components first
 
@@ -345,6 +346,11 @@ stays available and documented. This is item 2 of §9.2.
 
 **Acceptance.** The 18 snapshots of these four components identical to the
 frozen contract; the 1.6 Stimulus controllers unedited.
+
+Decide whether a subclass inherits its parent's sidecar: a host `class
+MyButton < RubyUI::Button` has no sidecar of its own, and 1.6 inherited
+`view_template`. Either `template` walks `ancestors` to the first class with
+a sidecar, or the difference is listed in §4.3.
 
 #### 2.2 The bulk
 
@@ -407,6 +413,15 @@ writes the initializer of §4.4, runs the Herb preflight, and copies `base.rb`
 and `attributes.rb`. `dependencies.yml` is unchanged — it describes JS
 packages. The gemspec drops `phlex` and gains `tailwind_merge` and
 `reactionview` as runtime dependencies.
+
+`component_root` compares `const_source_location` with `component_roots` by
+prefix; normalise both with `File.expand_path` so a symlinked `Rails.root` (a
+Capistrano `current/`) cannot make them disagree.
+
+`attributes.rb` defines its constants unguarded; 1.6's `Base` guards
+`TAILWIND_MERGER` with `unless defined?` for the gem-plus-copy case. Decide
+whether the installer copies `attributes.rb` at all or the gem's copy is
+authoritative, and guard or not accordingly.
 
 #### 2.5 Release
 
@@ -680,7 +695,7 @@ and Phase 3 is where a browser first looks.
 | herb 0.11 requires a new ReActionView release too | The tag syntax waits on two projects, not one | Decision D ships 2.0.0 without depending on either date |
 | The documentation site runs Phlex while the library no longer does | Between 2.5 and Phase 3 | Acknowledged in the release announcement rather than discovered by readers |
 | `app/components` is also ViewComponent's directory | ViewComponent users | `app/components` is not added to the view paths; the sidecar lookup is scoped to `component_roots` (§4.4) |
-| Sidecar name collision with a host template | Silent replacement in either direction with a view-path lookup | Lookup scoped to the component root; collision is an error (§4.3) |
+| Sidecar name collision with a host template | Silent replacement in either direction with a view-path lookup | Lookup scoped to the component root; the host's view paths are never consulted, so a host template at the same virtual path is not picked (§4.3, tested) |
 | Removing Phlex's attribute guards | Untrusted attribute values reach the page as `javascript:` URLs or `on*` handlers | Guards ported into `Attributes` with their own tests (§4.3) |
 | `mcp/data/registry.json` embeds component source | Every gem change; CI fails on a stale registry | Rebuilt and committed in every PR that touches `gem/lib/ruby_ui` (Phase 2.0) |
 | Single-maintainer upstream | Herb and ReActionView | With `intercept_erb = false` the components render through Erubi unchanged — the gate proved byte parity on both lanes — so the library still functions if upstream stalls, minus validation and the tag syntax |

@@ -2115,7 +2115,7 @@ MSG
 ## Definition of done for Phase 2.0a
 
 - `bundle exec rake` green on Ruby 3.3 and 3.4 (CI), zero skips; `mcp/data/registry.json` unchanged.
-- `RubyUI::Component` and `RubyUI::Attributes` in `gem/lib/ruby_ui/`, with the differential test against Phlex 2.4.1 green (24 cases) and the guard tests green (9).
+- `RubyUI::Component` and `RubyUI::Attributes` in `gem/lib/ruby_ui/`, with the differential test against Phlex 2.4.1 green (30 cases) and the guard tests green (11).
 - The 188 golden snapshots byte-identical to `feat/golden-suite`.
 - The ERB lane green for Button's 15 scenarios with `RubyUI::Button` still Phlex.
 - 188 strict snapshots recorded; the strict form a fixed point over every one; every scenario has at least one lane.
