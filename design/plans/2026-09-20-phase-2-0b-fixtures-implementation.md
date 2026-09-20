@@ -1248,7 +1248,7 @@ bundle exec rake golden 2>&1 | grep -oE "[0-9]+ runs, [0-9]+ assertions, [0-9]+ 
 bundle exec standardrb
 ```
 
-Expected: `1 runs, 2 assertions, 0 failures`; then `374 runs, … 1 failures, 0 errors, 0 skips` with only `GoldenCoverageTest#test_every_scenario_has_a_fixture` and `36 scenarios without an ERB fixture` (373 + this test); `423 files inspected, no offenses detected`.
+Expected: `1 runs, 3 assertions, 0 failures` (`assert_includes` counts two); then `374 runs, … 1 failures, 0 errors, 0 skips` with only `GoldenCoverageTest#test_every_scenario_has_a_fixture` and `36 scenarios without an ERB fixture` (373 + this test); `423 files inspected, no offenses detected`.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1691,7 +1691,9 @@ seven batches, each green before the next.
   `tooltip/default`, `select/default` or `date_picker/generated_id` failed
   their own determinism check when one of them ran first (about 3 runs in
   190). `render_erb` now creates the instrumenter before the pin; a test
-  renders twice on a fresh thread and asserts identical output.
+  renders twice on a fresh thread and asserts identical output. This amended
+  the plan's "harness does not change" boundary by a ruling taken during
+  execution — please ratify or revert it explicitly in review.
 
 No component changes, no snapshot changes. Nothing under `gem/lib/`, `docs/`
 or `mcp/` moves; the harness changes by that one line.
@@ -1708,7 +1710,7 @@ failure. Plan: `design/plans/2026-09-20-phase-2-0b-fixtures-implementation.md`.
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui/gem
 bundle exec rake            # 776 runs, 0 failures, 0 skips; 423 files, no offenses
-bundle exec rake golden     # 410 runs: 188 Phlex-lane + 188 ERB-lane + 8 coverage + 26 of the ruler's own
+bundle exec rake golden     # 410 runs: 188 Phlex-lane + 188 ERB-lane + 7 coverage + 27 of the ruler's own
 ```
 
 To see a fixture fail, add a space before `<% end %>` in
@@ -1781,6 +1783,6 @@ p9  SRC "<%= render RubyUI::Card.new do -%>\n<%= render RubyUI::CardContent.new 
     — p5's layout with a sibling render on its own line: the newline after `<% end %>` reaches the output.
 ```
 
-Why p1, p7 and p9 behave as they do: in `herb/engine/compiler.rb` (0.10.4), `visit_erb_block_end_node` — the visitor for the `end` that closes a `<%= … do %>` block — sets `@trim_next_whitespace` only when `at_line_start?` is true, and never consults `right_trim?`/`left_trim?` of the end tag for that purpose; `process_erb_output` (for `<%=` tags) honours `right_trim?` but does nothing about the text token that precedes the tag, which is where indentation lives.
+Why p1, p7 and p9 behave as they do: in `herb/engine/compiler.rb` (0.10.4), `visit_erb_block_end_node` — the visitor for the `end` that closes a `<%= … do %>` block — sets `@trim_next_whitespace` only when `at_line_start?` is true, and never consults `right_trim?`/`left_trim?` of the end tag for that purpose; the output-tag visitors — `process_erb_output` for `<%= … %>` and `visit_erb_block_node` for `<%= … do %>` — honour `right_trim?` but do nothing about the text token that precedes the tag, which is where indentation lives; `apply_trim`, for statement tags, consults only `left_trim?` and `at_line_start?`, so a statement tag alone on its line trims with or without markers and a mid-line `-%>` is ignored.
 
 The same session measured the ERB lane's pins: `date_picker/generated_id`, `select/default` and `tooltip/default` rendered strict-identical to their snapshots, identical across two renders, with the minted ids `date-picker-00000001`, `content00000001` and `tooltip00000001`; a `SidebarWrapper` with two `SidebarMenuSkeleton` rendered identical widths across two renders.

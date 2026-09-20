@@ -145,8 +145,8 @@ class GoldenCoverageTest < Minitest::Test
 
   # Decision 7: every scenario has an ERB fixture before any component
   # migrates, so a migration can only ever change an implementation, never the
-  # ruler. Red until the last batch of plan 2.0b lands; its message is the
-  # remaining work, by slug.
+  # ruler. Red from plan 2.0b's first task until its last batch landed; its
+  # message is whatever is missing, by slug.
   def test_every_scenario_has_a_fixture
     missing = Golden::Catalog.scenarios.reject(&:fixture?).map(&:slug)
 

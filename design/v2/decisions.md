@@ -213,13 +213,17 @@ and every 2.0 sidecar compiles with (a `<div><span></div>` probe raised
 the following. Each line is reproduced from a probe whose source and output
 are in plan 2.0b's Appendix A.
 
-- `-%>` on an opening tag removes the newline after it, and `<%-` removes
-  the indentation before the tag on the same line
-  (`  <%- if true -%>\nA<% end %>\n` → `A\n`).
+- `-%>` on an output tag (`<%= … -%>`, `<%= … do -%>`) removes the newline
+  after it. A statement tag (`<% … %>`) alone on its line loses the
+  indentation before it and the newline after it whether or not it carries
+  markers (`  <% if true %>\nA<% end %>\n` → `A\n`, exactly as with
+  `<%- … -%>`); mid-line, its `-%>` is ignored — `apply_trim` consults only
+  `left_trim?` and `at_line_start?`.
 - The `end` that closes a `<%= … do %>` block ignores its own `-%>` and `<%-`
   for the newline after it (`Body<% end -%>\nAfter` → `Body</div>\nAfter`):
   `visit_erb_block_end_node` in `herb/engine/compiler.rb` never reads the
-  end tag's trim markers. It trims Erubi-style — the indentation before it
+  end tag's `-%>`, and its `<%-` changes nothing the line-start rule does not
+  already do. It trims Erubi-style — the indentation before it
   and the newline after it — only when it stands alone at the start of its
   line, and then the newline *before* it, the one ending the content line,
   stays (`Body\n<% end %>\nAfter` → `Body\n</div>After`).
@@ -246,7 +250,9 @@ for the sidecars, where users read and edit the file; plan 2.1 chooses when it
 writes the first one, measures again under whatever Herb it pins, and records
 the choice here.
 
-**Cost if wrong:** about fifteen composite fixtures between 700 and 3,000
-characters on one line. **What would reverse it:** Herb honouring the trim
-markers on a block-closing `end`, at which point `-%>` is enough and decision
-8 stands as written.
+**Cost if wrong:** six composite fixtures between 700 and 1,726 characters
+on one line (`data_table/full_frame` is the longest). **What would reverse
+it:** Herb honouring `-%>` on a block-closing `end` *and* dropping the
+indentation before an output tag — both, since either alone still leaks
+whitespace — at which point trim mode is enough and decision 8 stands as
+written.

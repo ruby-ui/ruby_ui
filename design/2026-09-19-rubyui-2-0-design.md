@@ -491,7 +491,7 @@ all 68 pages rendering; no second copy of a doc page anywhere in `docs/app`.
 | --- | --- |
 | Does a component render the same HTML as 1.6? | The golden suite's ERB lane, against the frozen snapshot |
 | Is an element that was empty still empty, not whitespace-only? | The canonical form, after Phase 1 hardens it (§9.1) |
-| Did whitespace at a text boundary change? | The strict lane, raw output, for text-bearing components (Phase 2.0) |
+| Did whitespace at a text boundary change? | The strict lane — the canonical form in preserve mode — for every scenario (Phase 2.0, decision 8) |
 | Does an attribute reach the element correctly? | The differential test against Phlex 2.4.1 in `Attributes` |
 | Is an unsafe attribute still refused? | Unit tests on `Attributes`' guards, not the golden suite |
 | Is a sidecar valid HTML? | Herb's validators, over every sidecar, on every CI run |
@@ -687,8 +687,9 @@ Review showed the gap is wider than an inline-pair count: `FormField` flips
 behaviour on an empty-versus-whitespace-only element (§9.1), which no
 inline-adjacency measure names. What bounds it now is §9.1's three-part
 resolution — the hardened canonical form catches the empty/whitespace-only
-case for every component, trim mode stops the ERB lane emitting what Phlex did
-not, and the strict lane compares every scenario in preserve mode (decision 8).
+case for every component, the whitespace-tight sidecar rule (decision 10)
+stops the ERB lane emitting what Phlex did not, and the strict lane compares
+every scenario in preserve mode (decision 8).
 Accepted knowingly, with that shape: what remains unseen is what no HTML
 comparison can see — layout, focus, the controllers' behaviour — and Phase 3
 is where a browser first looks.
