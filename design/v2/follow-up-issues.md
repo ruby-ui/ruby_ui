@@ -1,8 +1,8 @@
 # Follow-up issues surfaced by the golden suite
 
 Date: 2026-09-19
-Status: 1–7 opened 2026-09-19 as #537–#543; 8–11 added 2026-09-20 from the
-review of PR #548, to be opened
+Status: 1–7 opened 2026-09-19 as #537–#543; 8–11 opened 2026-09-20 as
+#550–#553 from the review of PR #548
 
 The golden suite pins what 1.6 renders today, defects included — that is
 what makes it a ruler. These are the defects the recording made visible
@@ -111,7 +111,7 @@ Ordered by user impact.
 - **Fix:** `aria_expanded: "false"` and have `command_controller.js` set it;
   re-record `command/*`.
 
-## 8. `Switch` is neither perceivable nor operable by assistive technology
+## 8. `Switch` is neither perceivable nor operable by assistive technology — #550
 
 - **Where:** `switch.rb`: `role: "switch"` on the label with no
   `aria-checked`; the checkbox input carries `class: "hidden peer"`
@@ -123,7 +123,7 @@ Ordered by user impact.
   `sr-only` instead of `hidden` so the input stays focusable; re-record
   `switch/*`.
 
-## 9. `ComboboxInputTrigger` puts the combobox states on a role-less `<div>`
+## 9. `ComboboxInputTrigger` puts the combobox states on a role-less `<div>` — #551
 
 - **Where:** `combobox_input_trigger.rb`: `aria-expanded` and
   `aria-haspopup="listbox"` on the wrapper `div`; the `<input>` has no
@@ -135,7 +135,7 @@ Ordered by user impact.
 - **Fix:** move `role: "combobox"`, `aria-haspopup`, `aria-expanded` and
   `aria-controls` onto the input; re-record `combobox/*`.
 
-## 10. `ClipboardPopover` starts hidden with `data-state="open"`
+## 10. `ClipboardPopover` starts hidden with `data-state="open"` — #552
 
 - **Where:** `clipboard_popover.rb` `default_attrs` sets `state: :open` on a
   panel that starts hidden; `clipboard_controller.js` sets `open` in
@@ -146,7 +146,7 @@ Ordered by user impact.
   classes still run when the element is first displayed.
 - **Fix:** `state: :closed`; re-record `clipboard/popover_*`.
 
-## 11. `Link` carries `type="button"` on an `<a>`
+## 11. `Link` carries `type="button"` on an `<a>` — #553
 
 - **Where:** `link.rb` `default_attrs` `{type: "button", ...}`, copied from
   Button. Snapshots `link/*`.
