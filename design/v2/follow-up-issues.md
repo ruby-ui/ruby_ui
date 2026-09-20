@@ -18,30 +18,40 @@ Ordered by user impact.
 - **Where:** `DataTableForm` wraps the table; `DataTableSearch` and
   `DataTablePerPageSelect` each render their own `<form>` inside it.
   Snapshot `data_table/full_frame` holds three `<form` elements.
-- **Effect:** nested forms are invalid HTML. A browser ignores the inner
-  `<form>` start tags when a form is in scope, so the search input and the
-  per-page select become children of the outer bulk form, and
-  `this.form.requestSubmit()` in `data_table_search_controller.js` submits
-  the wrong form.
+- **Effect:** nested forms are invalid HTML. The parser ignores the nested
+  search form's start tag — with its attributes and its
+  `data-controller="ruby-ui--data-table-search"` — and its end tag closes the
+  outer bulk form early, so the search controller never connects and the
+  per-page form that follows ends up outside the bulk form. The controller's
+  `this.element.requestSubmit()` therefore never runs at all. (The golden
+  snapshot keeps all three forms because the suite parses inside a
+  `<template>`, where the form-pointer rule does not apply.)
 - **Fix:** render the search and per-page forms outside the bulk form, or
   make their controls reference it with the `form=` attribute; re-record
   `data_table/*`.
 - **2.0 note:** Herb's `NestingValidator` will likely reject this at compile
-  time, which makes it a template adjustment in the DataTable migration.
-  Fixing it on 1.6 first keeps the migration a pure port.
+  time, so the DataTable migration ports the three forms as they are and then
+  restructures them — a template adjustment with a reviewed snapshot change,
+  on the 2.0 line, since `main` stays as is.
 
 ## 2. `aria-*` boolean attributes serialize as the empty string — #538
 
-- **Where:** every `aria: {hidden: true}`, `aria_disabled: true`,
-  `aria_expanded: true` in the catalog — breadcrumb separators and ellipsis,
-  `CommandInput`, and every decorative `<svg aria-hidden>`. Snapshots carry
-  `aria-hidden=""`, `aria-disabled=""`, `aria-expanded=""`.
+- **Where:** the components that pass a boolean under the `aria` hash:
+  `aria: {hidden: true}` in `BreadcrumbSeparator`, `BreadcrumbEllipsis` and
+  `PaginationEllipsis` (also reached through `DataTablePagination`),
+  `aria: {disabled: true}` in `BreadcrumbPage`, `aria_expanded: true` in
+  `CommandInput`. The breadcrumb, pagination, data_table and command
+  snapshots carry `aria-hidden=""`, `aria-disabled=""` or `aria-expanded=""`.
+  Components that pass the String `"true"` — `InputOtpSlot`,
+  `NativeSelectIcon`, `AlertDialogContent` — already serialize correctly and
+  are not affected.
 - **Effect:** the ARIA value grammar accepts `true`/`false`/`undefined`; an
-  empty string is invalid and browsers resolve it as *not set*. Decorative
-  icons are therefore exposed to assistive technology, "current" breadcrumb
-  items are not announced as disabled, and the command input's expanded
-  state is unset. This is Phlex's serialization of `true` (a bare
-  attribute), so it is library-wide, not one component.
+  empty string is invalid and browsers resolve it as *not set*. The breadcrumb
+  and pagination separators and ellipses are therefore exposed to assistive
+  technology, "current" breadcrumb items are not announced as disabled, and the
+  command input's expanded state is unset. This is Phlex's serialization of
+  `true` under a nested hash (a bare attribute), so any component that passes
+  a boolean there is affected — five today.
 - **Fix:** pass `"true"` (a String) for `aria-*` attributes, or add a
   serialization rule in `Base` that stringifies booleans under the `aria`
   key; re-record everything that changes and review the diff.

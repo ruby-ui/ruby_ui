@@ -379,6 +379,11 @@ What that pulls into Phase 2:
   learns to copy the example files alongside each page. The drift between a
   gem page and its copy in `docs/app` (10 of 52 today) is reconciled here,
   page by page, with the reason recorded.
+- **`DocsGenerator` itself.** It discovers pages with the glob `*/*_docs.rb`
+  (`gem/lib/generators/ruby_ui/install/docs_generator.rb`); once no
+  `*_docs.rb` remains it finds nothing. It is rewritten in this sub-phase to
+  discover the migrated pages and their example files and copy them together,
+  keeping the paths a host application already has under `app/views/docs/`.
 - **`RegistryBuilder`** (`mcp/`) extracts MCP examples from `*_docs.rb`
   today; it is pointed at the ERB example files in the same change.
 
@@ -428,8 +433,10 @@ nowhere else, and the switch from its copies to the gem's pages.
 
 #### 3.0 Chrome and layout
 
-`Views::Base`, layouts, navigation, marketing pages — the ~86 Ruby files that
-are not component pages. Phlex to ERB, page by page.
+`docs/app/views/base.rb` — the site's own `Views::Base`; the gem's
+`docs/base.rb`, which also defines one, is among the six primitives Phase 2.3
+migrates — plus layouts, navigation and marketing pages: the ~86 Ruby files
+that are not component pages. Phlex to ERB, page by page.
 
 #### 3.1 The site's own pages
 
