@@ -1,0 +1,33 @@
+design/2026-09-19-rubyui-2-0-design.md
+  s_02296ba27f582b::t_ea5644d3679725 304-308
+  s_02296ba27f582b::t_858c3c2aa33319 326-329
+  s_02296ba27f582b::t_d9501f5cac7386 184
+  s_02296ba27f582b::t_bd5a1248be1701 625-629
+  s_02296ba27f582b::t_8434f186226635 309-312
+  s_02296ba27f582b::t_b8b9a49d69a977 293-298
+  s_02296ba27f582b::t_58deea44d9d511 682
+  s_02296ba27f582b::t_852868a199c37b 191-192
+  s_02296ba27f582b::t_77c28a6fa60741 398
+  s_02296ba27f582b::t_b1977778284047 286-292
+  s_02296ba27f582b::t_57ea67592546f8 193-194
+  s_02296ba27f582b::t_4c9f9ee5ef56b6 137-140
+  s_02296ba27f582b::t_5a9e028157b058 319-320
+design/v2/decisions.md
+  s_02296ba27f582b::t_8986fb92786375 111-182
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "922f2b11d308d5069bd55ff3042e880fb09e0530",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "unknown"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
