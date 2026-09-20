@@ -1,0 +1,24 @@
+design/plans/2026-09-20-phase-2-0b-fixtures-implementation.md
+  s_76d07be8c07832::t_0622f5702184a3 109-110,1424,1599,1651,1710-1711,1729-1730
+  s_76d07be8c07832::t_90fb3ea0b4855f 1731
+  s_76d07be8c07832::t_54426f6b134461 1161-1287
+  s_76d07be8c07832::t_3b00ef0c4a134b 19
+  s_76d07be8c07832::t_99b971eeb90328 1633-1634,1637
+  s_76d07be8c07832::t_6949b0937ddc94 1686-1697
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "1c2a6e8d7743ef546ddda9025f8a748ec5be7abb",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
