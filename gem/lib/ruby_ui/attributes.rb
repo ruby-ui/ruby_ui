@@ -85,9 +85,16 @@ module RubyUI
           name = key_name(key)
           case value
           when Hash
-            (name == "style") ? emit(out, name, styles(value)) : nested(value, "#{name}-", out)
+            if name == "style"
+              emit(out, name, styles(value))
+            else
+              refuse_url_value!(name, value)
+              nested(value, "#{name}-", out)
+            end
           when Array, Set
-            emit(out, name, (name == "style") ? styles(value) : tokens(value))
+            serialized = (name == "style") ? styles(value) : tokens(value)
+            refuse_url_value!(name, value) if serialized.nil?
+            emit(out, name, serialized)
           else
             emit(out, name, scalar(value))
           end
@@ -111,6 +118,14 @@ module RubyUI
         return if serialized.nil?
 
         out[name] = serialized unless guard(name, serialized) == :drop
+      end
+
+      # Phlex raises for a URL attribute whose value has no String form — an
+      # empty token list or a Hash — rather than omitting it.
+      def refuse_url_value!(name, value)
+        return unless REF_ATTRIBUTES.include?(name.downcase.delete("^a-z-"))
+
+        raise ArgumentError, "invalid value for #{name}: #{value.inspect}"
       end
 
       # :keep or :drop. Raises for the names Phlex refuses.

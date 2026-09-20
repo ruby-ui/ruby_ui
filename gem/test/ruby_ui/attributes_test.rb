@@ -73,4 +73,11 @@ class AttributesTest < Minitest::Test
     assert_equal({"class" => "a b", "data-open" => "", "aria-label" => "L"},
       flat(class: ["a", "b"], data: {open: true}, aria: {label: "L"}))
   end
+
+  def test_a_url_attribute_with_no_string_form_raises_as_in_phlex
+    # Phlex 2.4.1 raises "Invalid attribute value" for a URL attribute given an
+    # empty token list or a Hash, rather than omitting it.
+    assert_raises(ArgumentError) { flat(href: []) }
+    assert_raises(ArgumentError) { flat(src: {}) }
+  end
 end
