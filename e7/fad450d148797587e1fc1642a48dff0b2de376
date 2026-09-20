@@ -1,0 +1,61 @@
+gem/test/golden/views/context_menu/label_flush.html.erb
+  s_76d07be8c07832::t_3a414d7019277c 1
+gem/test/golden/views/combobox/clear_button.html.erb
+  s_76d07be8c07832::t_8c93607734da76 1
+gem/test/golden/views/collapsible/closed.html.erb
+  s_76d07be8c07832::t_91f8925d15f120 1
+gem/test/golden/views/context_menu/default.html.erb
+  s_76d07be8c07832::t_3a414d7019277c 1
+gem/test/golden/views/combobox/input_trigger.html.erb
+  s_76d07be8c07832::t_8c93607734da76 1
+gem/test/golden/views/context_menu/label_inset.html.erb
+  s_76d07be8c07832::t_3a414d7019277c 1
+gem/test/golden/views/command/trigger_with_custom_keybindings.html.erb
+  s_76d07be8c07832::t_b6ea47a8fbf816 1
+gem/test/golden/views/popover/with_options.html.erb
+  s_76d07be8c07832::t_0c3bd882114890 1
+gem/test/golden/views/context_menu/with_options.html.erb
+  s_76d07be8c07832::t_3a414d7019277c 1
+gem/test/golden/views/command/dialog_content_sm.html.erb
+  s_76d07be8c07832::t_b6ea47a8fbf816 1
+gem/test/golden/views/dropdown_menu/default.html.erb
+  s_76d07be8c07832::t_0fcf888e95c97b 1
+gem/test/golden/views/hover_card/default.html.erb
+  s_76d07be8c07832::t_4074629e037c33 1
+gem/test/golden/views/command/dialog_content_lg.html.erb
+  s_76d07be8c07832::t_b6ea47a8fbf816 1
+gem/test/golden/views/combobox/radio_items.html.erb
+  s_76d07be8c07832::t_8c93607734da76 1
+gem/test/golden/views/command/dialog_content_md.html.erb
+  s_76d07be8c07832::t_b6ea47a8fbf816 1
+gem/test/golden/views/combobox/multiple_with_badges.html.erb
+  s_76d07be8c07832::t_8c93607734da76 1
+gem/test/golden/views/combobox/badge.html.erb
+  s_76d07be8c07832::t_8c93607734da76 1
+gem/test/golden/views/hover_card/with_options.html.erb
+  s_76d07be8c07832::t_4074629e037c33 1
+gem/test/golden/views/command/dialog.html.erb
+  s_76d07be8c07832::t_b6ea47a8fbf816 1
+gem/test/golden/views/collapsible/open.html.erb
+  s_76d07be8c07832::t_91f8925d15f120 1
+gem/test/golden/views/popover/default.html.erb
+  s_76d07be8c07832::t_0c3bd882114890 1
+gem/test/golden/views/dropdown_menu/fixed_strategy.html.erb
+  s_76d07be8c07832::t_0fcf888e95c97b 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e7fad450d148797587e1fc1642a48dff0b2de376",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
