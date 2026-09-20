@@ -1,0 +1,30 @@
+design/2026-09-19-rubyui-2-0-design.md
+  s_02296ba27f582b::t_7df3cb0080c8d9 132
+  s_02296ba27f582b::t_511ea1590e6e27 162-169
+  s_02296ba27f582b::t_3f22be31366890 231
+  s_02296ba27f582b::t_16d55e1d564796 350-354
+  s_02296ba27f582b::t_6a8b3bb185c577 417-425
+  s_02296ba27f582b::t_bf3debf8e90160 330
+  s_02296ba27f582b::t_412c0932b272be 698
+design/plans/2026-09-20-phase-2-0a-foundation-implementation.md
+  s_02296ba27f582b::t_9c039e705a2543 2118
+design/v2/decisions.md
+  s_02296ba27f582b::t_65d90b4154638d 193-200
+  s_02296ba27f582b::t_e28d55faf889ef 114-130,132-135
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "044316c200a8adcca2c6098e851319afb74d95e6",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
