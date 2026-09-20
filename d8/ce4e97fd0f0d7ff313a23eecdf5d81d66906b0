@@ -1,0 +1,27 @@
+gem/ruby_ui.gemspec
+  s_02296ba27f582b::t_215e04190fa475 26-33
+gem/test/erb_harness_test.rb
+  s_02296ba27f582b::t_674ec89900ef30 1-23
+gem/test/test_helper.rb
+  s_02296ba27f582b::t_ef758cee33d637 3-4,10-13,24-53,56-60,70-73
+gem/test/probes/views/probe/malformed.html.erb
+  s_02296ba27f582b::t_3572d97e7fca24 1
+gem/Gemfile.lock
+  s_02296ba27f582b::t_f8b593e93d5e1d 9-37,39-47,49-61,65-68,87-93,96-119,122-134,139-140,162,179-182,186-187,196,200-201,203
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d8ce4e97fd0f0d7ff313a23eecdf5d81d66906b0",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
