@@ -1,0 +1,21 @@
+gem/test/golden/scenarios.rb
+  s_02296ba27f582b::t_b8e0c7b8a3646f 415
+gem/test/golden/snapshots/command/trigger_with_custom_keybindings.html
+  s_02296ba27f582b::t_b8e0c7b8a3646f 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "ca928cbacc7e0e4ca18b258df15d110898751286",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
