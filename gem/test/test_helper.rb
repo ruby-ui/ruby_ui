@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
+ENV["RAILS_ENV"] ||= "test"
+
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "ruby_ui"
 require "phlex"
 require "json"
 require "securerandom"
+require "rails"
+require "action_controller/railtie"
+require "reactionview"
+require "phlex-rails"
 require "minitest/autorun"
 
 module RubyUI
@@ -15,7 +21,42 @@ module RubyUI
 
     autoload class_name, path
   end
+
+  # The smallest Rails application that gives ReActionView what it reads:
+  # `Rails.root` (a template under it is "local", so a Herb rejection raises
+  # instead of falling back to Erubi), `Rails.env` and `Rails.logger`. No app/
+  # directory, no routes, no database — an object, so the gem's tests compile
+  # ERB exactly as a host application will.
+  class TestApp < Rails::Application
+    ROOT = File.expand_path("..", __dir__)
+    PROBE_VIEWS = File.join(ROOT, "test/probes/views")
+
+    config.root = ROOT
+    config.eager_load = false
+    config.secret_key_base = "ruby_ui-test"
+    config.logger = Logger.new(IO::NULL)
+    config.hosts.clear
+
+    class << self
+      # One compiled-template cache per process, as in an app; a fresh view
+      # context per call, with the given view paths.
+      def view(*paths)
+        view_class.with_view_paths(paths.empty? ? [PROBE_VIEWS] : paths)
+      end
+
+      private
+
+      def view_class
+        @view_class ||= ActionView::Base.with_empty_template_cache
+      end
+    end
+  end
 end
+
+ReActionView.config.intercept_erb = true
+ReActionView.config.validation_mode = :raise
+ReActionView.config.debug_mode = false
+Rails.application.initialize!
 
 class ComponentTest < Minitest::Test
   def render(component, &)
@@ -25,10 +66,8 @@ class ComponentTest < Minitest::Test
   def phlex(&)
     render Phlex::HTML.new, &
   end
-end
 
-# this is a tracepoint that will output the path of all files loaded that contain the string "phlex"
-# trace = TracePoint.new(:class) do |tp|
-#   puts "Loaded: #{tp.path}" if tp.path.include?("phlex")
-# end
-# trace.enable
+  def render_erb(template)
+    RubyUI::TestApp.view.render(template: template)
+  end
+end
