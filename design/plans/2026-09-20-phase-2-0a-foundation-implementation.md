@@ -53,7 +53,7 @@
 
 ## Task 1: The harness — an inline Rails application
 
-ReActionView's handler reads `Rails.root` without a guard (`local_template?`, `project_path`), and a template outside `Rails.root` is "external": when Herb rejects it, `external_template_mode: :fallback` **silently recompiles it with Erubi**. So the gem's tests need a `Rails`, and its root must be the gem directory. The smallest honest thing is an inline `Rails::Application` — no `app/` directory, no routes, no database — booted from `test_helper.rb`. Measured on this branch: with it in place the existing suite stays at 500 runs, 0 failures, 0 snapshot changes, and `ActionView::Template.handler_for_extension(:erb)` is `ReActionView::Template::Handlers::ERB`.
+ReActionView's handler reads `Rails.root` without a guard (`local_template?`, `project_path`), and a template outside `Rails.root` is "external": when Herb rejects it, `external_template_mode: :fallback` **silently recompiles it with Erubi**. So the gem's tests need a `Rails`, and its root must be the gem directory. The smallest honest thing is an inline `Rails::Application` — no `app/` directory, no routes, no database — booted from `test_helper.rb`. Measured on this branch: with it in place the existing suite stays at 503 runs, 0 failures, 0 snapshot changes, and `ActionView::Template.handler_for_extension(:erb)` is `ReActionView::Template::Handlers::ERB`.
 
 One trap, also measured: without `RAILS_ENV=test`, `Rails.env` is `development` and 1.6's `Base#before_template` emits `<!-- Before RubyUI::X -->`, which fails six unit tests. The helper sets the env first.
 
@@ -236,7 +236,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `502 runs, ... 0 failures, 0 errors, 0 skips` and `411 files inspected, no offenses detected`. Then:
+Expected: `505 runs, ... 0 failures, 0 errors, 0 skips` and `411 files inspected, no offenses detected`. Then:
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -553,7 +553,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `539 runs, ... 0 failures, 0 errors, 0 skips`, `414 files inspected, no offenses detected`. Snapshots unchanged; registry current (`attributes.rb` is a top-level file, not under a component directory, so the builder does not embed it):
+Expected: `542 runs, ... 0 failures, 0 errors, 0 skips`, `414 files inspected, no offenses detected`. Snapshots unchanged; registry current (`attributes.rb` is a top-level file, not under a component directory, so the builder does not embed it):
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1077,7 +1077,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `554 runs, ... 0 failures, 0 errors, 0 skips`, `422 files inspected, no offenses detected` (414 + `component.rb` + `component_test.rb` + six probe `.rb` files). Snapshots unchanged; registry current.
+Expected: `557 runs, ... 0 failures, 0 errors, 0 skips`, `422 files inspected, no offenses detected` (414 + `component.rb` + `component_test.rb` + six probe `.rb` files). Snapshots unchanged; registry current.
 
 - [ ] **Step 9: Commit**
 
@@ -1212,7 +1212,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `559 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Snapshots unchanged; registry current.
+Expected: `562 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Snapshots unchanged; registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1466,7 +1466,7 @@ cd gem
 bundle exec rake golden
 ```
 
-Expected: `206 runs, ... 0 failures, 0 errors, 0 skips` — 188 Phlex-lane scenarios, 5 coverage tests, 9 canonicalizer tests, 4 harness tests.
+Expected: `209 runs, ... 0 failures, 0 errors, 0 skips` — 188 Phlex-lane scenarios, 5 coverage tests, 12 canonicalizer tests, 4 harness tests.
 
 - [ ] **Step 5: Write Button's fixtures**
 
@@ -1523,7 +1523,7 @@ cd gem
 bundle exec rake golden
 ```
 
-Expected: `221 runs, ... 0 failures, 0 errors, 0 skips` — the 15 `test_button__*__erb` tests are new and green against the frozen snapshots, rendering the still-Phlex `RubyUI::Button` through phlex-rails. Then:
+Expected: `224 runs, ... 0 failures, 0 errors, 0 skips` — the 15 `test_button__*__erb` tests are new and green against the frozen snapshots, rendering the still-Phlex `RubyUI::Button` through phlex-rails. Then:
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1539,7 +1539,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `576 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Registry current.
+Expected: `579 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1664,59 +1664,7 @@ In `gem/test/golden/canonical_html.rb`:
       end
 ```
 
-**(b)** Replace the whole `emit_element` method. The newline the HTML parser drops after a `<pre>` or `<textarea>` start tag was only restored when the outer mode was `:normal`; in strict mode the whole fragment starts in `:preserve`, so `<pre>\n\nx</pre>` lost its blank line on the second pass. The restoration now depends on the element, not on the outer mode:
-
-```ruby
-      def emit_element(node, depth, out, mode)
-        open = open_tag(node)
-        close = VOID.include?(node.name) ? "" : "</#{node.name}>"
-        inner_mode = child_mode(node, mode)
-        children = significant_children(node, inner_mode)
-        # The parser drops exactly one LF immediately after a <pre> or
-        # <textarea> start tag. Put it back whatever the outer mode, or a second
-        # pass over content that starts with a blank line eats it and the form
-        # stops being a fixed point.
-        restored = restored_newline(node, children)
-
-        if mode != :normal
-          # Inside a preserved region we may not add a single character of our
-          # own, or the round trip would change the content.
-          out << open << restored
-          children.each { |child| emit(child, depth, out, inner_mode) }
-          out << close
-        elsif inner_mode != :normal
-          out << (INDENT * depth) << open << restored
-          children.each { |child| emit(child, depth, out, inner_mode) }
-          out << close << "\n"
-        elsif children.empty?
-          # `<div></div>` and `<div>\n</div>` are not the same element to a
-          # browser: `:empty` matches only the first, and `textContent` is
-          # truthy only on the second. Keep a single space to tell them apart.
-          filler = whitespace_only_content?(node) ? " " : ""
-          out << (INDENT * depth) << open << filler << close << "\n"
-        else
-          out << (INDENT * depth) << open << "\n"
-          children.each { |child| emit(child, depth + 1, out, :normal) }
-          out << (INDENT * depth) << close << "\n"
-        end
-      end
-
-      def restored_newline(node, children)
-        first = children.first
-        (PRESERVE_WHITESPACE.include?(node.name) && first.is_a?(Nokogiri::XML::Text) && first.text.start_with?("\n")) ? "\n" : ""
-      end
-```
-
-**(c)** In `child_mode`, move the raw-text check ahead of the mode check, so a `<script>` or `<style>` inside a strict fragment is still emitted raw (escaping it would break the fixed point):
-
-```ruby
-      def child_mode(node, mode)
-        return :raw if RAW_TEXT.include?(node.name)
-        return mode unless mode == :normal
-        return :preserve if PRESERVE_WHITESPACE.include?(node.name)
-        :normal
-      end
-```
+The two things strict mode needs from `emit_element` and `child_mode` — the newline the parser drops after `<pre>`/`<textarea>` restored whatever the outer mode, and raw-text elements emitted raw wherever they sit — are already on the branch (`64cf273` on `feat/golden-suite`, which fixed them as normal-mode fixed-point holes). `(a)` is the only code change here; the eight tests exercise both in strict mode.
 
 - [ ] **Step 4: Run the canonicalizer tests and confirm they pass**
 
@@ -1725,13 +1673,13 @@ cd gem
 bundle exec rake test N=/GoldenCanonicalHtmlTest/
 ```
 
-Expected: `17 runs, ... 0 failures, 0 errors` (the 9 existing and the 8 new). Then confirm nothing moved in normal mode:
+Expected: `20 runs, ... 0 failures, 0 errors` (the 12 existing and the 8 new). Then confirm nothing moved in normal mode:
 
 ```bash
 bundle exec rake golden
 ```
 
-Expected: `229 runs, 0 failures` (the eight strict tests join the ruler's own), no snapshot change.
+Expected: `232 runs, 0 failures` (the eight strict tests join the ruler's own), no snapshot change.
 
 - [ ] **Step 5: Wire strict snapshots into the catalog and the runner**
 
@@ -1850,7 +1798,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `585 runs, ... 0 failures, 0 errors, 0 skips` (576 + 8 strict canonicalizer tests + 1 coverage test), `423 files inspected, no offenses detected`. Registry current.
+Expected: `588 runs, ... 0 failures, 0 errors, 0 skips` (579 + 8 strict canonicalizer tests + 1 coverage test), `423 files inspected, no offenses detected`. Registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1864,8 +1812,8 @@ form: text verbatim, attributes sorted, the fragment's own edges
 trimmed. 188 strict snapshots recorded from the Phlex lane while Phlex
 still renders; a fixture or a migrated component that adds a newline
 where Phlex emitted none fails here even though the canonical form
-cannot see it. The newline the parser drops after <pre> and <textarea>
-is now restored in every mode, so the strict form is a fixed point too.
+cannot see it. The fixed-point fix already on the branch (64cf273) is what
+makes the strict form a fixed point too.
 
 Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
 MSG
@@ -2102,7 +2050,7 @@ bundle exec rake
 cd ../mcp && bundle exec exe/ruby-ui-mcp-build >/dev/null && git diff --exit-code data/registry.json && echo "registry current"
 ```
 
-Expected: `585 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`, `registry current`.
+Expected: `588 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`, `registry current`.
 
 - [ ] **Step 3: Ask the user before pushing**
 
@@ -2150,8 +2098,8 @@ spec deferred to this phase are decided in `design/v2/decisions.md` entries 5–
 
 ```bash
 cd gem
-bundle exec rake            # 585 runs, 0 skips; 423 files, no offenses
-bundle exec rake golden     # 230 runs: 188 Phlex-lane + 15 ERB-lane + 6 coverage + 21 of the ruler's own
+bundle exec rake            # 588 runs, 0 skips; 423 files, no offenses
+bundle exec rake golden     # 233 runs: 188 Phlex-lane + 15 ERB-lane + 6 coverage + 24 of the ruler's own
 ```
 
 To see the ERB lane work, edit `test/golden/views/button/size_md.html.erb` to
