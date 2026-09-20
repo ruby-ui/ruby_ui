@@ -16,7 +16,7 @@
 - Work in `gem/`. Run every command from `gem/` unless the step says otherwise (the `git status` guards run from the repo root). `ENV["RAILS_ENV"]` is `test` for every test run (the helper sets it).
 - **No file under `gem/lib/` changes.** Not a component, not `component.rb`, not `attributes.rb`. This plan touches only `gem/test/golden/views/**`, `gem/test/golden_test.rb` (one test), the header comment of `gem/test/golden/scenarios.rb`, `design/v2/decisions.md` and the spec.
 - **No snapshot changes.** Never run `bundle exec rake golden:update` in this plan. `git status --porcelain gem/test/golden/snapshots gem/test/golden/strict` (from the repo root) is empty at the end of every task. Never hand-edit a file under either directory.
-- **The harness does not change.** `gem/test/golden/harness.rb`, `catalog.rb`, `canonical_html.rb` and `test_helper.rb` are not touched. If a fixture cannot be made green without touching one of them, that is a STOP (see "When an ERB test fails" below), not a change.
+- **The harness does not change.** `gem/test/golden/harness.rb`, `catalog.rb`, `canonical_html.rb` and `test_helper.rb` are not touched. If a fixture cannot be made green without touching one of them, that is a STOP (see "When an ERB test fails" below), not a change. *Amended during execution:* Task 7b changes one line of `harness.rb` (and adds one test) to fix a pin defect the ERB lane exposed — the ruling and the evidence are in that task.
 - **A fixture is one line plus a trailing newline** and emits no whitespace of its own — no leading whitespace, no newline between siblings, no indentation. The strict lane sees every character a fixture adds (decision 8), and under Herb 0.10.4 trim mode keeps the newline after an `end` that follows content on its line and emits the indentation before an output tag (decision 10, measured below). Button's 15 fixtures are the model.
 - **Exactly one test may fail between Task 1 and Task 8**: `GoldenCoverageTest#test_every_scenario_has_a_fixture`, and each task states the count it must report. Any other failure — an `__erb` scenario test, a `__phlex` one, a coverage test, a canonicalizer test — blocks the commit. From Task 8 on, nothing fails.
 - StandardRB stays at `423 files inspected, no offenses detected`: this plan adds no Ruby file. Fixtures are `.html.erb` and are not inspected.
@@ -106,7 +106,8 @@ A determinism failure ("does not render deterministically") is reported the same
 | Task 5 | 106 | 327 | 1 | 82 | 693 |
 | Task 6 | 129 | 350 | 1 | 59 | 716 |
 | Task 7 | 152 | 373 | 1 | 36 | 739 |
-| Task 8 | 188 | 409 | 0 | 0 | 775 |
+| Task 7b | 152 | 374 | 1 | 36 | 740 |
+| Task 8 | 188 | 410 | 0 | 0 | 776 |
 
 The `rake` column is what `bundle exec rake test` reports. Until Task 8 the default `bundle exec rake` task stops at the one expected failure before it reaches StandardRB, so the tasks that change a Ruby file (1 and 9) run `bundle exec standardrb` on its own.
 
@@ -1157,6 +1158,133 @@ MSG
 
 ---
 
+## Task 7b: The first ERB render on a thread — create ActiveSupport's instrumenter before the pin
+
+**Added during execution, after Task 7.** A controller run of the suite after Task 7 failed `GoldenSuiteTest#test_tooltip__default__erb` on its first assertion — the two consecutive renders of the fixture differed — while the same test passed in the Task 3 run and in thirteen other runs. Traced with a caller log on `Golden::Harness.next_hex`: the first `SecureRandom.hex` call inside the very first `render_erb` of the process comes from `ActiveSupport::Notifications::Instrumenter#unique_id` (`SecureRandom.hex(10)`), because ActionView instruments every render and the per-thread `Instrumenter` is created lazily on the first instrumented event. That call lands inside the pin window, takes the counter's first value, and every generated id in that one render is shifted by one (`tooltip00000002`); the next render, with the instrumenter already created, mints `tooltip00000001`. The scenario fails its own determinism check whenever one of the three fixtures whose component mints an id (`tooltip/default`, `select/default`, `date_picker/generated_id`) happens to be the first ERB-lane test Minitest runs — about 3 in 190 runs. The Phlex lane never instruments, so Phase 1 and 2.0a could not see it, and Button's fixtures mint no id.
+
+Reproduced deterministically: in a fresh `Thread` (the instrumenter registry is per thread, `isolation_level = :thread`) two consecutive `render_erb` calls give `["tooltip00000002", "tooltip00000001"]`; with `ActiveSupport::Notifications.instrumenter` called before `@active = true`, `["tooltip00000001", "tooltip00000001"]` — same for the other two.
+
+**Ruling recorded in the SDD ledger:** the Global Constraint "the harness does not change" is amended for this task only. The plan's STOP protects the spec's requirement that the harness pins the two sources of randomness so both lanes are stable; the defect is in the pin itself and the fix is one line plus one test, both reviewable and revertible. It is surfaced here, in the commit, in the PR body and in the execution's rulings list.
+
+**Files:**
+- Modify: `gem/test/golden/harness.rb` (`render_erb`, one line)
+- Modify: `gem/test/golden/harness_test.rb` (two `require`s, one test)
+
+**Interfaces:**
+- Consumes: `Golden::Harness.render_erb(scenario)`, `Golden::Catalog.scenarios`, `Scenario#slug`.
+- Produces: `render_erb` creates the current thread's `ActiveSupport::Notifications` instrumenter before activating the pin; `GoldenHarnessTest#test_erb_lane_mints_the_same_ids_on_a_threads_first_render`.
+
+- [ ] **Step 1: Write the failing test**
+
+In `gem/test/golden/harness_test.rb`, after `require "golden/harness"` add:
+
+```ruby
+require "golden/catalog"
+require "golden/scenarios"
+```
+
+and inside `class GoldenHarnessTest`, after `test_pins_rand_to_the_same_value_on_every_render` and before `private`, add:
+
+```ruby
+  # ActionView instruments every render, and the first instrumentation on a
+  # thread creates the Instrumenter, whose id is SecureRandom.hex(10). A fresh
+  # thread reproduces "the first ERB render of the process": the pin must not
+  # hand that call the counter's first value, or every generated id in that one
+  # render is shifted by one and the scenario fails its own determinism check.
+  def test_erb_lane_mints_the_same_ids_on_a_threads_first_render
+    scenario = Golden::Catalog.scenarios.find { |candidate| candidate.slug == "tooltip/default" }
+    first, second = Thread.new { Array.new(2) { Golden::Harness.render_erb(scenario) } }.value
+
+    assert_equal second, first
+    assert_includes first, 'id="tooltip00000001"'
+  end
+```
+
+- [ ] **Step 2: Run it and confirm it fails**
+
+```bash
+cd /Users/cirdes/Workspaces/ruby_ui/gem
+bundle exec rake test N=/test_erb_lane_mints_the_same_ids_on_a_threads_first_render/ 2>&1 | grep -v 'warning:' | grep -E "runs,|Failure|tooltip0000000[12]" | head -6
+```
+
+Expected: `1 runs, 1 assertions, 1 failures` — the `assert_equal` fails, and the diff it prints shows `id="tooltip00000002"` in the first render against `id="tooltip00000001"` in the second.
+
+- [ ] **Step 3: Create the instrumenter before the pin**
+
+In `gem/test/golden/harness.rb`, inside `render_erb`, before the line `@active = true`, insert:
+
+```ruby
+        # ActionView instruments the render, and the first instrumentation on a
+        # thread creates the Instrumenter, whose id is SecureRandom.hex(10).
+        # Inside the pin that call would take the counter's first value and
+        # shift every generated id in that one render by one. Create it first.
+        ActiveSupport::Notifications.instrumenter
+```
+
+so the method reads:
+
+```ruby
+      def render_erb(scenario)
+        # ActionView instruments the render, and the first instrumentation on a
+        # thread creates the Instrumenter, whose id is SecureRandom.hex(10).
+        # Inside the pin that call would take the counter's first value and
+        # shift every generated id in that one render by one. Create it first.
+        ActiveSupport::Notifications.instrumenter
+        @active = true
+        @hex_calls = 0
+        @rand_calls = 0
+        RubyUI::TestApp.view(Golden::Catalog::VIEWS_ROOT).render(template: "#{scenario.component}/#{scenario.name}")
+      ensure
+        @active = false
+      end
+```
+
+- [ ] **Step 4: Run the test and the suite**
+
+```bash
+cd /Users/cirdes/Workspaces/ruby_ui/gem
+bundle exec rake test N=/test_erb_lane_mints_the_same_ids_on_a_threads_first_render/ 2>&1 | grep -E "runs,"
+bundle exec rake golden 2>&1 | grep -oE "[0-9]+ runs, [0-9]+ assertions, [0-9]+ failures, [0-9]+ errors, [0-9]+ skips|[0-9]+ scenarios without an ERB fixture|(Failure|Error):.*|Golden[A-Za-z]+Test#test_[a-z_0-9]+"
+bundle exec standardrb
+```
+
+Expected: `1 runs, 2 assertions, 0 failures`; then `374 runs, … 1 failures, 0 errors, 0 skips` with only `GoldenCoverageTest#test_every_scenario_has_a_fixture` and `36 scenarios without an ERB fixture` (373 + this test); `423 files inspected, no offenses detected`.
+
+```bash
+cd /Users/cirdes/Workspaces/ruby_ui
+git status --porcelain gem/test/golden/snapshots gem/test/golden/strict
+```
+
+Expected: no output.
+
+- [ ] **Step 5: Commit**
+
+```bash
+cd /Users/cirdes/Workspaces/ruby_ui
+git add gem/test/golden/harness.rb gem/test/golden/harness_test.rb
+git commit -m "$(cat <<'MSG'
+[Bug Fix] Golden suite: the first ERB render no longer hands the instrumenter id to the pin
+
+ActionView instruments every render, and the first instrumentation on a
+thread creates ActiveSupport's Instrumenter, whose id is
+SecureRandom.hex(10). That call landed inside the harness pin on the
+first ERB render of a process, took the counter's first value, and
+shifted every generated id in that one render by one — so
+tooltip/default, select/default or date_picker/generated_id failed
+their own determinism check whenever one of them was the first ERB-lane
+test to run (about 3 runs in 190). render_erb now creates the
+instrumenter before activating the pin; a test renders twice on a fresh
+thread, where the registry is empty, and asserts identical output.
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+MSG
+)"
+```
+
+From here every count is one higher than the progress table shows: `rake golden` 410 and `rake` 776 at the end.
+
+---
+
 ## Task 8: Batch 7 — the enumerative families, and the coverage test goes green (36 fixtures)
 
 link (11), typography (25). Generated scenarios in the catalog (`%i[…].each`, `(1..9).each`) — each interpolated value written out (rule 9). After this task no scenario lacks a fixture and the suite is entirely green.
@@ -1293,7 +1421,7 @@ cd /Users/cirdes/Workspaces/ruby_ui/gem
 bundle exec rake golden 2>&1 | grep -oE "[0-9]+ runs, [0-9]+ assertions, [0-9]+ failures, [0-9]+ errors, [0-9]+ skips|[0-9]+ scenarios without an ERB fixture|(Failure|Error):.*|Golden[A-Za-z]+Test#test_[a-z_0-9]+"
 ```
 
-Expected: exactly one line, `409 runs, … 0 failures, 0 errors, 0 skips`. No `Failure:`, no test name, no `scenarios without an ERB fixture`.
+Expected: exactly one line, `410 runs, … 0 failures, 0 errors, 0 skips`. No `Failure:`, no test name, no `scenarios without an ERB fixture`.
 
 - [ ] **Step 3: Confirm the ruler did not move and the lane is complete**
 
@@ -1468,7 +1596,7 @@ cd /Users/cirdes/Workspaces/ruby_ui/gem
 bundle exec rake
 ```
 
-Expected: `775 runs, … 0 failures, 0 errors, 0 skips`; `423 files inspected, no offenses detected`.
+Expected: `776 runs, … 0 failures, 0 errors, 0 skips`; `423 files inspected, no offenses detected`.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1502,10 +1630,11 @@ MSG
 cd /Users/cirdes/Workspaces/ruby_ui
 git status --porcelain
 git log --oneline v2/foundation..HEAD
-git diff --stat v2/foundation..HEAD -- gem/lib gem/test/golden/snapshots gem/test/golden/strict gem/test/golden/harness.rb gem/test/golden/catalog.rb gem/test/golden/canonical_html.rb gem/test/test_helper.rb docs mcp
+git diff --stat v2/foundation..HEAD -- gem/lib gem/test/golden/snapshots gem/test/golden/strict gem/test/golden/catalog.rb gem/test/golden/canonical_html.rb gem/test/test_helper.rb docs mcp
+git diff --stat v2/foundation..HEAD -- gem/test/golden/harness.rb gem/test/golden/harness_test.rb
 ```
 
-Expected: no output from the first; ten commits from the second (the plan, Task 1, seven batches, Task 9); **no output from the third** — nothing under `gem/lib`, no snapshot, no harness file, nothing in `docs/` or `mcp/` changed.
+Expected: no output from the first; twelve commits from the second (the plan, Task 1, seven batches, the plan amendment that added Task 7b, Task 7b, Task 9); **no output from the third** — nothing under `gem/lib`, no snapshot, no catalog/canonicalizer/helper change, nothing in `docs/` or `mcp/` changed; from the fourth, exactly two files — `harness.rb` with a handful of inserted lines and `harness_test.rb` with one test — Task 7b's change and nothing else.
 
 - [ ] **Step 2: Run everything from a clean state**
 
@@ -1519,7 +1648,7 @@ find test/golden/views -name '*.html.erb' -exec sh -c 'for f; do [ "$(tail -c1 "
 cd /Users/cirdes/Workspaces/ruby_ui/mcp && bundle exec exe/ruby-ui-mcp-build >/dev/null && git diff --exit-code data/registry.json && echo "registry current"
 ```
 
-Expected: `775 runs, … 0 failures, 0 errors, 0 skips` and `423 files inspected, no offenses detected`; `409 runs, … 0 failures`; `188`; no output from the `awk` line or the `tail` line (every fixture is exactly one line, and that line ends in a newline — `awk`'s `NR == 1` alone would also accept an unterminated line); `registry current`.
+Expected: `776 runs, … 0 failures, 0 errors, 0 skips` and `423 files inspected, no offenses detected`; `410 runs, … 0 failures`; `188`; no output from the `awk` line or the `tail` line (every fixture is exactly one line, and that line ends in a newline — `awk`'s `NR == 1` alone would also accept an unterminated line); `registry current`.
 
 - [ ] **Step 3: Ask the user before pushing**
 
@@ -1554,8 +1683,18 @@ seven batches, each green before the next.
   each measured strict-identical before the plan was written; the plan's
   evidence table has the list.
 
-No component changes, no snapshot changes, no harness change. Nothing under
-`gem/lib/`, `docs/` or `mcp/` moves.
+- **One harness fix the lane exposed (Task 7b).** ActionView instruments every
+  render, and the first instrumentation on a thread creates ActiveSupport's
+  `Instrumenter`, whose id is `SecureRandom.hex(10)` — inside the harness pin,
+  on the first ERB render of a process, that call took the counter's first
+  value and shifted every generated id in that render by one, so
+  `tooltip/default`, `select/default` or `date_picker/generated_id` failed
+  their own determinism check when one of them ran first (about 3 runs in
+  190). `render_erb` now creates the instrumenter before the pin; a test
+  renders twice on a fresh thread and asserts identical output.
+
+No component changes, no snapshot changes. Nothing under `gem/lib/`, `docs/`
+or `mcp/` moves; the harness changes by that one line.
 
 ## Why
 
@@ -1568,8 +1707,8 @@ failure. Plan: `design/plans/2026-09-20-phase-2-0b-fixtures-implementation.md`.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui/gem
-bundle exec rake            # 775 runs, 0 failures, 0 skips; 423 files, no offenses
-bundle exec rake golden     # 409 runs: 188 Phlex-lane + 188 ERB-lane + 8 coverage + 25 of the ruler's own
+bundle exec rake            # 776 runs, 0 failures, 0 skips; 423 files, no offenses
+bundle exec rake golden     # 410 runs: 188 Phlex-lane + 188 ERB-lane + 8 coverage + 26 of the ruler's own
 ```
 
 To see a fixture fail, add a space before `<% end %>` in
@@ -1587,9 +1726,9 @@ MSG
 ## Definition of done for Phase 2.0b
 
 - 188 fixtures under `gem/test/golden/views/`, one per scenario, each one line; `test_every_scenario_has_a_fixture` green; `test_no_orphan_fixture_files` green.
-- `bundle exec rake golden`: 409 runs, 0 failures — 188 Phlex-lane and 188 ERB-lane scenario tests, each also passing the strict comparison.
-- `bundle exec rake` green (775 runs, 0 skips), `423 files inspected, no offenses detected`; `mcp/data/registry.json` unchanged.
-- No file under `gem/lib/` changed; no canonical or strict snapshot changed; `harness.rb`, `catalog.rb`, `canonical_html.rb`, `test_helper.rb` unchanged.
+- `bundle exec rake golden`: 410 runs, 0 failures — 188 Phlex-lane and 188 ERB-lane scenario tests, each also passing the strict comparison.
+- `bundle exec rake` green (776 runs, 0 skips), `423 files inspected, no offenses detected`; `mcp/data/registry.json` unchanged.
+- No file under `gem/lib/` changed; no canonical or strict snapshot changed; `catalog.rb`, `canonical_html.rb`, `test_helper.rb` unchanged; `harness.rb` changed only by Task 7b's instrumenter line, with its regression test in `harness_test.rb`.
 - `design/v2/decisions.md` entry 10; spec §6 Phase 2.0 and §9.1 part 2 amended; the catalog header points at the fixtures.
 - Every finding of the "STOP" kind (a faithful fixture that does not match; a missing pin) reported to the maintainer, none patched around.
 
