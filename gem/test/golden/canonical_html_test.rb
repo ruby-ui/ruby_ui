@@ -93,6 +93,10 @@ class GoldenCanonicalHtmlTest < Minitest::Test
     Golden::CanonicalHtml.call(html, strict: true)
   end
 
+  def test_strict_trims_only_html_whitespace_at_the_edges
+    assert_equal "\vx\v", strict("\n\vx\v\n")
+  end
+
   def test_strict_sees_whitespace_between_inline_siblings
     refute_equal strict("<span>a</span><span>b</span>"), strict("<span>a</span> <span>b</span>")
   end

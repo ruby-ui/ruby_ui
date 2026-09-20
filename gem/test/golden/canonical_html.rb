@@ -72,7 +72,7 @@ module Golden
       def call(html, strict: false)
         out = +""
         parse(html).each { |node| emit(node, 0, out, strict ? :preserve : :normal) }
-        strict ? out.strip : out
+        strict ? trim_edges(out) : out
       end
 
       # Every fragment is parsed inside a `<template>`, and that is not
@@ -100,6 +100,12 @@ module Golden
       end
 
       private
+
+      # Only HTML's whitespace at the fragment's edges. Ruby's `strip` would
+      # also take U+000B and NUL, which are text here (see HTML_WHITESPACE).
+      def trim_edges(out)
+        out.sub(/\A[\t\n\f\r ]+/, "").sub(/[\t\n\f\r ]+\z/, "")
+      end
 
       def emit(node, depth, out, mode)
         case node
