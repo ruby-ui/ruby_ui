@@ -32,6 +32,11 @@ module Golden
       # The ERB lane: renders a scenario's fixture through the same harness a
       # host application's templates go through, with the same pins active.
       def render_erb(scenario)
+        # ActionView instruments the render, and the first instrumentation on a
+        # thread creates the Instrumenter, whose id is SecureRandom.hex(10).
+        # Inside the pin that call would take the counter's first value and
+        # shift every generated id in that one render by one. Create it first.
+        ActiveSupport::Notifications.instrumenter
         @active = true
         @hex_calls = 0
         @rand_calls = 0
