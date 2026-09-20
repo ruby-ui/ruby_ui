@@ -22,6 +22,13 @@ class AttributesTest < Minitest::Test
     assert_raises(ArgumentError) { flat("http-equiv" => "refresh") }
   end
 
+  # Phlex checks the name before it looks at the value, so a Hash under an
+  # unsafe name cannot smuggle it in through the `_` root key.
+  def test_an_unsafe_name_is_refused_before_its_hash_value_is_read
+    assert_raises(ArgumentError) { flat(onclick: {_: "x"}) }
+    assert_raises(ArgumentError) { flat(srcdoc: {_: "<p>"}) }
+  end
+
   def test_a_name_with_forbidden_characters_raises_at_any_level
     assert_raises(ArgumentError) { flat("bad name" => "1") }
     assert_raises(ArgumentError) { flat("a=b" => "1") }

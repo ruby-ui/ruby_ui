@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "date"
 require "tailwind_merge"
 
 module RubyUI
@@ -89,6 +90,9 @@ module RubyUI
           next unless value
 
           name = key_name(key)
+          # Phlex refuses the name before it looks at the value, so an unsafe
+          # name with a Hash value (`onclick: {_: "x"}`) is refused too.
+          refuse_unsafe_name!(name)
           case value
           when Hash
             # Phlex keys this on the Symbol `:style` itself, not on the
@@ -137,8 +141,11 @@ module RubyUI
         raise ArgumentError, "invalid value for #{name}: #{value.inspect}"
       end
 
-      # :keep or :drop. Raises for the names Phlex refuses.
-      def guard(name, serialized)
+      # The names Phlex refuses: forbidden characters, `srcdoc`/`sandbox`/
+      # `http-equiv`, and any `on*` handler. Checked on the top-level name
+      # before the value is read; a nested name only gets the character check,
+      # as in Phlex (`foo-onclick` is allowed there too).
+      def refuse_unsafe_name!(name)
         raise ArgumentError, "unsafe attribute name #{name.inspect}" if name.match?(UNSAFE_ATTRIBUTE_NAME_CHARS)
 
         normalized = name.downcase.delete("^a-z-")
@@ -146,8 +153,12 @@ module RubyUI
             (normalized.bytesize > 2 && normalized.start_with?("on") && !normalized.include?("-"))
           raise ArgumentError, "unsafe attribute name #{name.inspect}"
         end
+      end
 
-        return :keep unless REF_ATTRIBUTES.include?(normalized)
+      # :keep or :drop — the `javascript:` check on a URL attribute's serialized
+      # value. The name was refused or accepted before the value was read.
+      def guard(name, serialized)
+        return :keep unless REF_ATTRIBUTES.include?(name.downcase.delete("^a-z-"))
 
         decode_references(serialized).downcase.delete("^a-z:").start_with?("javascript:") ? :drop : :keep
       end
