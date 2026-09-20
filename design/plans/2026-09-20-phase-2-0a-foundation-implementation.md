@@ -53,7 +53,7 @@
 
 ## Task 1: The harness — an inline Rails application
 
-ReActionView's handler reads `Rails.root` without a guard (`local_template?`, `project_path`), and a template outside `Rails.root` is "external": when Herb rejects it, `external_template_mode: :fallback` **silently recompiles it with Erubi**. So the gem's tests need a `Rails`, and its root must be the gem directory. The smallest honest thing is an inline `Rails::Application` — no `app/` directory, no routes, no database — booted from `test_helper.rb`. Measured on this branch: with it in place the existing suite stays at 503 runs, 0 failures, 0 snapshot changes, and `ActionView::Template.handler_for_extension(:erb)` is `ReActionView::Template::Handlers::ERB`.
+ReActionView's handler reads `Rails.root` without a guard (`local_template?`, `project_path`), and a template outside `Rails.root` is "external": when Herb rejects it, `external_template_mode: :fallback` **silently recompiles it with Erubi**. So the gem's tests need a `Rails`, and its root must be the gem directory. The smallest honest thing is an inline `Rails::Application` — no `app/` directory, no routes, no database — booted from `test_helper.rb`. Measured on this branch: with it in place the existing suite stays at 504 runs, 0 failures, 0 snapshot changes, and `ActionView::Template.handler_for_extension(:erb)` is `ReActionView::Template::Handlers::ERB`.
 
 One trap, also measured: without `RAILS_ENV=test`, `Rails.env` is `development` and 1.6's `Base#before_template` emits `<!-- Before RubyUI::X -->`, which fails six unit tests. The helper sets the env first.
 
@@ -236,7 +236,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `505 runs, ... 0 failures, 0 errors, 0 skips` and `411 files inspected, no offenses detected`. Then:
+Expected: `506 runs, ... 0 failures, 0 errors, 0 skips` and `411 files inspected, no offenses detected`. Then:
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -553,7 +553,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `542 runs, ... 0 failures, 0 errors, 0 skips`, `414 files inspected, no offenses detected`. Snapshots unchanged; registry current (`attributes.rb` is a top-level file, not under a component directory, so the builder does not embed it):
+Expected: `543 runs, ... 0 failures, 0 errors, 0 skips`, `414 files inspected, no offenses detected`. Snapshots unchanged; registry current (`attributes.rb` is a top-level file, not under a component directory, so the builder does not embed it):
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1077,7 +1077,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `557 runs, ... 0 failures, 0 errors, 0 skips`, `422 files inspected, no offenses detected` (414 + `component.rb` + `component_test.rb` + six probe `.rb` files). Snapshots unchanged; registry current.
+Expected: `558 runs, ... 0 failures, 0 errors, 0 skips`, `422 files inspected, no offenses detected` (414 + `component.rb` + `component_test.rb` + six probe `.rb` files). Snapshots unchanged; registry current.
 
 - [ ] **Step 9: Commit**
 
@@ -1212,7 +1212,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `562 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Snapshots unchanged; registry current.
+Expected: `563 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Snapshots unchanged; registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1466,7 +1466,7 @@ cd gem
 bundle exec rake golden
 ```
 
-Expected: `209 runs, ... 0 failures, 0 errors, 0 skips` — 188 Phlex-lane scenarios, 5 coverage tests, 12 canonicalizer tests, 4 harness tests.
+Expected: `210 runs, ... 0 failures, 0 errors, 0 skips` — 188 Phlex-lane scenarios, 5 coverage tests, 12 canonicalizer tests, 5 harness tests.
 
 - [ ] **Step 5: Write Button's fixtures**
 
@@ -1523,7 +1523,7 @@ cd gem
 bundle exec rake golden
 ```
 
-Expected: `224 runs, ... 0 failures, 0 errors, 0 skips` — the 15 `test_button__*__erb` tests are new and green against the frozen snapshots, rendering the still-Phlex `RubyUI::Button` through phlex-rails. Then:
+Expected: `225 runs, ... 0 failures, 0 errors, 0 skips` — the 15 `test_button__*__erb` tests are new and green against the frozen snapshots, rendering the still-Phlex `RubyUI::Button` through phlex-rails. Then:
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1539,7 +1539,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `579 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Registry current.
+Expected: `580 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1679,7 +1679,7 @@ Expected: `20 runs, ... 0 failures, 0 errors` (the 12 existing and the 8 new). T
 bundle exec rake golden
 ```
 
-Expected: `232 runs, 0 failures` (the eight strict tests join the ruler's own), no snapshot change.
+Expected: `233 runs, 0 failures` (the eight strict tests join the ruler's own), no snapshot change.
 
 - [ ] **Step 5: Wire strict snapshots into the catalog and the runner**
 
@@ -1798,7 +1798,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `588 runs, ... 0 failures, 0 errors, 0 skips` (579 + 8 strict canonicalizer tests + 1 coverage test), `423 files inspected, no offenses detected`. Registry current.
+Expected: `589 runs, ... 0 failures, 0 errors, 0 skips` (580 + 8 strict canonicalizer tests + 1 coverage test), `423 files inspected, no offenses detected`. Registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -2050,7 +2050,7 @@ bundle exec rake
 cd ../mcp && bundle exec exe/ruby-ui-mcp-build >/dev/null && git diff --exit-code data/registry.json && echo "registry current"
 ```
 
-Expected: `588 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`, `registry current`.
+Expected: `589 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`, `registry current`.
 
 - [ ] **Step 3: Ask the user before pushing**
 
@@ -2098,8 +2098,8 @@ spec deferred to this phase are decided in `design/v2/decisions.md` entries 5–
 
 ```bash
 cd gem
-bundle exec rake            # 588 runs, 0 skips; 423 files, no offenses
-bundle exec rake golden     # 233 runs: 188 Phlex-lane + 15 ERB-lane + 6 coverage + 24 of the ruler's own
+bundle exec rake            # 589 runs, 0 skips; 423 files, no offenses
+bundle exec rake golden     # 234 runs: 188 Phlex-lane + 15 ERB-lane + 6 coverage + 25 of the ruler's own
 ```
 
 To see the ERB lane work, edit `test/golden/views/button/size_md.html.erb` to
