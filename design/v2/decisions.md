@@ -118,8 +118,10 @@ every identifier `start_with?("")`, so every template counts as local. The
 reasons that do hold: ReActionView's Railtie registers its ERB handler
 (`ActionView::Template.register_template_handler :erb, …`) only from
 `config.after_initialize`, which a Railtie runs only when a
-`Rails::Application` boots — without one, Erubi stays the `:erb` handler and
-Herb's validation never runs on anything, local or not; and `Rails.env`
+`Rails::Application` boots, inside the `:action_view` load hook that fires
+when `ActionView::Base` loads — without an application, Erubi stays the
+`:erb` handler and Herb's validation never runs on anything, local or not;
+and `Rails.env`
 defaults to `development` unless `RAILS_ENV`/`RACK_ENV` is set (it does not
 need an application, but nothing else in a bare `require "rails"` sets it
 either), which turns on 1.6 `Base`'s dev comment. So the tests need a `Rails`,

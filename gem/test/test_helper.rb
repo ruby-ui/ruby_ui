@@ -27,10 +27,11 @@ module RubyUI
   end
 
   # The smallest Rails application: ReActionView's Railtie registers its ERB
-  # handler only from `config.after_initialize`, which runs when an application
-  # boots — without one Erubi stays the `:erb` handler and Herb never sees a
-  # template (decision 5). No app/ directory, no routes, no database — an
-  # object, so the gem's tests compile ERB exactly as a host application will.
+  # handler from `config.after_initialize` (inside the `:action_view` load
+  # hook), which runs when an application boots — without one Erubi stays the
+  # `:erb` handler and Herb never sees a template (decision 5). No app/
+  # directory, no routes, no database — an object, so the gem's tests compile
+  # ERB exactly as a host application will.
   class TestApp < Rails::Application
     ROOT = File.expand_path("..", __dir__)
     PROBE_VIEWS = File.join(ROOT, "test/probes/views")

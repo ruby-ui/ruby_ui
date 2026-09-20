@@ -1,7 +1,8 @@
 # Follow-up issues surfaced by the golden suite
 
 Date: 2026-09-19
-Status: opened 2026-09-19 as #537–#543
+Status: 1–7 opened 2026-09-19 as #537–#543; 8–11 added 2026-09-20 from the
+review of PR #548, to be opened
 
 The golden suite pins what 1.6 renders today, defects included — that is
 what makes it a ruler. These are the defects the recording made visible
@@ -109,6 +110,49 @@ Ordered by user impact.
   not just `"true"`.
 - **Fix:** `aria_expanded: "false"` and have `command_controller.js` set it;
   re-record `command/*`.
+
+## 8. `Switch` is neither perceivable nor operable by assistive technology
+
+- **Where:** `switch.rb`: `role: "switch"` on the label with no
+  `aria-checked`; the checkbox input carries `class: "hidden peer"`
+  (`display: none`). Snapshots `switch/*`.
+- **Effect:** the switch role requires `aria-checked`; a `display: none`
+  input leaves the accessibility tree and the tab order, so keyboard users
+  cannot toggle it and the label's `focus-visible:` classes never apply.
+- **Fix:** render `aria-checked` and keep it in sync from the controller;
+  `sr-only` instead of `hidden` so the input stays focusable; re-record
+  `switch/*`.
+
+## 9. `ComboboxInputTrigger` puts the combobox states on a role-less `<div>`
+
+- **Where:** `combobox_input_trigger.rb`: `aria-expanded` and
+  `aria-haspopup="listbox"` on the wrapper `div`; the `<input>` has no
+  `role="combobox"`, `aria-controls` or `aria-activedescendant`. Snapshot
+  `combobox/input_trigger`.
+- **Effect:** ARIA 1.2 puts those states on the element with the combobox
+  role; on a role-less div they are not conveyed, and the listbox
+  relationship is never announced.
+- **Fix:** move `role: "combobox"`, `aria-haspopup`, `aria-expanded` and
+  `aria-controls` onto the input; re-record `combobox/*`.
+
+## 10. `ClipboardPopover` starts hidden with `data-state="open"`
+
+- **Where:** `clipboard_popover.rb` `default_attrs` sets `state: :open` on a
+  panel that starts hidden; `clipboard_controller.js` sets `open` in
+  `showPopover` and `closed` in `hidePopover`. Snapshots
+  `clipboard/popover_*`.
+- **Effect:** the hidden panel is labelled open, unlike ContextMenu,
+  HoverCard and Popover (`closed` at rest). Low user impact: the animate-in
+  classes still run when the element is first displayed.
+- **Fix:** `state: :closed`; re-record `clipboard/popover_*`.
+
+## 11. `Link` carries `type="button"` on an `<a>`
+
+- **Where:** `link.rb` `default_attrs` `{type: "button", ...}`, copied from
+  Button. Snapshots `link/*`.
+- **Effect:** `type` on an anchor names the linked resource's MIME type;
+  `button` is meaningless there. Invalid, harmless.
+- **Fix:** drop `type:` from Link's `default_attrs`; re-record `link/*`.
 
 ## Rejected review findings, for the record
 

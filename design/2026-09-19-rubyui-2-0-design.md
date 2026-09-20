@@ -681,10 +681,10 @@ behaviour on an empty-versus-whitespace-only element (§9.1), which no
 inline-adjacency measure names. What bounds it now is §9.1's three-part
 resolution — the hardened canonical form catches the empty/whitespace-only
 case for every component, trim mode stops the ERB lane emitting what Phlex did
-not, and the strict lane compares text-bearing components raw. Accepted
-knowingly, with that shape: what remains unseen is whitespace between element
-siblings and at text boundaries in components the strict lane does not cover,
-and Phase 3 is where a browser first looks.
+not, and the strict lane compares every scenario in preserve mode (decision 8).
+Accepted knowingly, with that shape: what remains unseen is what no HTML
+comparison can see — layout, focus, the controllers' behaviour — and Phase 3
+is where a browser first looks.
 
 ## 10. Risks
 

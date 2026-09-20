@@ -101,9 +101,10 @@ module Golden
           .sort
       end
 
-      # Every RubyUI::Base subclass shipped by the gem. Non-Base classes in the
-      # same directories (the DataTable pagination adapters, the Toast flash
-      # helper module) emit no HTML and are covered by their own unit tests.
+      # Every RubyUI::Base or RubyUI::Component subclass shipped by the gem.
+      # Other classes in the same directories (the DataTable pagination
+      # adapters, the Toast flash helper module) emit no HTML and are covered
+      # by their own unit tests.
       def component_classes
         component_directories
           .flat_map { |directory| Dir.glob(File.join(LIB_ROOT, directory, "*.rb")) }
