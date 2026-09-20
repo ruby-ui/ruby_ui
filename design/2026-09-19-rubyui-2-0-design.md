@@ -287,9 +287,9 @@ code.
   own and the differential test against Phlex 2.4.1 kept.
 - Replace the test harness: `railties`, `actionview`, `reactionview` and
   `phlex-rails` as development dependencies, and an inline `Rails::Application`
-  in `test_helper.rb` with the gem as `Rails.root` — ReActionView's handler
-  reads `Rails.root`, and a template outside it falls back to Erubi silently
-  when Herb rejects it (decision 5). `ComponentTest#phlex { }` stays for the
+  in `test_helper.rb` with the gem as `Rails.root` — ReActionView registers its ERB
+  handler only when an application boots; without one Erubi compiles every
+  template and Herb validates nothing (decision 5). `ComponentTest#phlex { }` stays for the
   Phlex-lane tests until the last Phlex component goes; `render_erb` renders a
   test view through the harness.
 - Add the **ERB lane** to the golden suite: a scenario may have an ERB fixture

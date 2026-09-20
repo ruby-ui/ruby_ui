@@ -26,11 +26,11 @@ module RubyUI
     autoload class_name, path
   end
 
-  # The smallest Rails application that gives ReActionView what it reads:
-  # `Rails.root` (a template under it is "local", so a Herb rejection raises
-  # instead of falling back to Erubi), `Rails.env` and `Rails.logger`. No app/
-  # directory, no routes, no database — an object, so the gem's tests compile
-  # ERB exactly as a host application will.
+  # The smallest Rails application: ReActionView's Railtie registers its ERB
+  # handler only from `config.after_initialize`, which runs when an application
+  # boots — without one Erubi stays the `:erb` handler and Herb never sees a
+  # template (decision 5). No app/ directory, no routes, no database — an
+  # object, so the gem's tests compile ERB exactly as a host application will.
   class TestApp < Rails::Application
     ROOT = File.expand_path("..", __dir__)
     PROBE_VIEWS = File.join(ROOT, "test/probes/views")
