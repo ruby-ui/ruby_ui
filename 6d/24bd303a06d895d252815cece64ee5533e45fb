@@ -1,0 +1,63 @@
+gem/test/golden/views/carousel/vertical.html.erb
+  s_76d07be8c07832::t_38a1f727048de6 1
+gem/test/golden/views/table/detached_row.html.erb
+  s_76d07be8c07832::t_a7afffdab1c7b5 1
+gem/test/golden/views/empty/default.html.erb
+  s_76d07be8c07832::t_c84ff417257fb1 1
+gem/test/golden/views/table/default.html.erb
+  s_76d07be8c07832::t_a7afffdab1c7b5 1
+gem/test/golden/views/carousel/horizontal.html.erb
+  s_76d07be8c07832::t_38a1f727048de6 1
+gem/test/golden/views/chart/bar.html.erb
+  s_76d07be8c07832::t_050414c9a3a783 1
+gem/test/golden/views/carousel/with_options.html.erb
+  s_76d07be8c07832::t_38a1f727048de6 1
+gem/test/golden/views/bubble/reactions_top_start.html.erb
+  s_76d07be8c07832::t_f52a62ee78af50 1
+gem/test/golden/views/message_scroller/provider_custom_values.html.erb
+  s_76d07be8c07832::t_6bc2a8f5cbdc7d 1
+gem/test/golden/views/message_scroller/default.html.erb
+  s_76d07be8c07832::t_6bc2a8f5cbdc7d 1
+gem/test/golden/views/bubble/muted_aligned_end_with_reactions.html.erb
+  s_76d07be8c07832::t_f52a62ee78af50 1
+gem/test/golden/views/bubble/default.html.erb
+  s_76d07be8c07832::t_f52a62ee78af50 1
+gem/test/golden/views/empty/media_default.html.erb
+  s_76d07be8c07832::t_c84ff417257fb1 1
+gem/test/golden/views/tabs/default.html.erb
+  s_76d07be8c07832::t_c6d184574f938f 1
+gem/test/golden/views/clipboard/custom_source_and_trigger.html.erb
+  s_76d07be8c07832::t_ccc59cc5e8b74b 1
+gem/test/golden/views/bubble/content_as_anchor.html.erb
+  s_76d07be8c07832::t_f52a62ee78af50 1
+gem/test/golden/views/message/group_with_avatar_header_footer.html.erb
+  s_76d07be8c07832::t_c50890db112dfb 1
+gem/test/golden/views/message_scroller/button_start.html.erb
+  s_76d07be8c07832::t_6bc2a8f5cbdc7d 1
+gem/test/golden/views/clipboard/popover_error.html.erb
+  s_76d07be8c07832::t_ccc59cc5e8b74b 1
+gem/test/golden/views/pagination/default.html.erb
+  s_76d07be8c07832::t_791ab0706f93f9 1
+gem/test/golden/views/clipboard/default.html.erb
+  s_76d07be8c07832::t_ccc59cc5e8b74b 1
+gem/test/golden/views/clipboard/popover_success.html.erb
+  s_76d07be8c07832::t_ccc59cc5e8b74b 1
+gem/test/golden/views/theme_toggle/default.html.erb
+  s_76d07be8c07832::t_aeb82fda4eee98 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "6d24bd303a06d895d252815cece64ee5533e45fb",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
