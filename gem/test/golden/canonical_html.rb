@@ -112,20 +112,20 @@ module Golden
         close = VOID.include?(node.name) ? "" : "</#{node.name}>"
         inner_mode = child_mode(node, mode)
         children = significant_children(node, inner_mode)
+        # The parser drops exactly one LF immediately after a <pre> or
+        # <textarea> start tag. Put it back whatever the outer mode, or a second
+        # pass over content that starts with a blank line eats it and the form
+        # stops being a fixed point.
+        restored = restored_newline(node, children)
 
         if mode != :normal
           # Inside a preserved region we may not add a single character of our
           # own, or the round trip would change the content.
-          out << open
+          out << open << restored
           children.each { |child| emit(child, depth, out, inner_mode) }
           out << close
         elsif inner_mode != :normal
-          out << (INDENT * depth) << open
-          # The parser drops exactly one LF immediately after a preserved-content
-          # start tag. Put it back, or a second pass over content that legitimately
-          # starts with a blank line would eat it and stop being a fixed point.
-          first_child = children.first
-          out << "\n" if inner_mode == :preserve && first_child.is_a?(Nokogiri::XML::Text) && first_child.text.start_with?("\n")
+          out << (INDENT * depth) << open << restored
           children.each { |child| emit(child, depth, out, inner_mode) }
           out << close << "\n"
         elsif children.empty?
@@ -141,6 +141,11 @@ module Golden
         end
       end
 
+      def restored_newline(node, children)
+        first = children.first
+        (PRESERVE_WHITESPACE.include?(node.name) && first.is_a?(Nokogiri::XML::Text) && first.text.start_with?("\n")) ? "\n" : ""
+      end
+
       def emit_text(node, depth, out, mode)
         case mode
         when :raw then out << node.text
@@ -151,9 +156,11 @@ module Golden
         end
       end
 
+      # Raw text first: a <script> or <style> is raw wherever it sits, and
+      # escaping it inside a preserved element would break the round trip.
       def child_mode(node, mode)
-        return mode unless mode == :normal
         return :raw if RAW_TEXT.include?(node.name)
+        return mode unless mode == :normal
         return :preserve if PRESERVE_WHITESPACE.include?(node.name)
         :normal
       end

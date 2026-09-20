@@ -67,4 +67,25 @@ class GoldenCanonicalHtmlTest < Minitest::Test
     assert_includes once, %(xmlns:xlink="http://www.w3.org/1999/xlink")
     assert_equal once, canonical(once)
   end
+
+  def test_a_raw_text_element_inside_a_preserved_one_is_a_fixed_point
+    once = canonical("<pre><script>if (a < b) {}</script></pre>")
+
+    assert_equal once, canonical(once)
+    assert_includes once, "a < b"
+  end
+
+  def test_a_pre_inside_a_pre_keeps_its_leading_newline
+    once = canonical("<pre><pre>\n\nx</pre></pre>")
+
+    assert_equal once, canonical(once)
+    assert_includes once, "<pre>\n\nx</pre>"
+  end
+
+  def test_a_textarea_inside_a_pre_keeps_its_leading_newline
+    once = canonical("<pre><textarea>\n\nx</textarea></pre>")
+
+    assert_equal once, canonical(once)
+    assert_includes once, "<textarea>\n\nx</textarea>"
+  end
 end
