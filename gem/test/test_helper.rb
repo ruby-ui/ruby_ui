@@ -58,6 +58,15 @@ ReActionView.config.validation_mode = :raise
 ReActionView.config.debug_mode = false
 Rails.application.initialize!
 
+# component_roots= is a module method, not a constant: the autoload above does
+# not reach it, so the file is required outright.
+require "ruby_ui/component"
+
+# Two component roots: the gem's own components, and the test-only probes.
+# A class's sidecar is looked up under the root that contains the class file.
+RubyUI.component_roots = [File.join(RubyUI::TestApp::ROOT, "lib"), File.join(RubyUI::TestApp::ROOT, "test/probes")]
+Dir.glob(File.join(RubyUI::TestApp::ROOT, "test/probes/ruby_ui/**/*.rb")).sort.each { |probe| require probe }
+
 class ComponentTest < Minitest::Test
   def render(component, &)
     component.call(&)
