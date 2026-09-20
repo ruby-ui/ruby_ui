@@ -134,7 +134,10 @@ they were written and proved:
 
 226 lines at the end of the gate, against a 500-line ceiling. The ceiling
 stands for 2.0. `base.rb` and `attributes.rb` are copied into the host app by
-the installer, so every line is a line the user reads.
+the installer, so every line is a line the user reads. During Phase 2 the
+class is named `RubyUI::Component`, because `RubyUI::Base` is still the Phlex
+base the unmigrated components inherit; it takes the name `Base` in Phase 2.4
+(decision 6).
 
 Differences from 1.6's `Base` to carry into the documentation:
 
@@ -178,16 +181,17 @@ Rails.autoloaders.main.inflector.inflect("ruby_ui" => "RubyUI")
 Rails.autoloaders.main.push_dir(Rails.root.join("app/components/ruby_ui"), namespace: RubyUI)
 Rails.autoloaders.main.collapse(Rails.root.join("app/components/ruby_ui/*"))
 
-RubyUI.component_root = Rails.root.join("app/components")
+RubyUI.component_roots = [Rails.root.join("app/components")]
 
 ReActionView.config.intercept_erb = true
 ReActionView.config.validation_mode = :raise
 ```
 
 `extend Phlex::Kit` is removed. Zeitwerk ignores `.html.erb`, so the sidecar
-living in an autoloaded directory is inert. `component_root` is the one
-directory the sidecar lookup searches (§4.3); `app/components` is **not**
-added to the application's view paths, so nothing about how the host resolves
+living in an autoloaded directory is inert. `component_roots` lists the
+directories the sidecar lookup searches — one, in a host app (§4.3);
+`app/components` is **not** added to the application's view paths, so nothing
+about how the host resolves
 its own templates changes, and ViewComponent — whose home directory this is —
 is untouched.
 
@@ -279,49 +283,50 @@ code.
 
 - Promote `Base` and `Attributes` into `gem/lib/ruby_ui/`, with tests of their
   own and the differential test against Phlex 2.4.1 kept.
-- Replace the test harness: `actionview` as a development dependency
-  (`reactionview` is already a runtime one, §4.4); a minimal `ActionView::Base`
-  with a view path into `gem/lib/ruby_ui`, with ReActionView's handler
-  registered so tests compile exactly as users will.
-  `ComponentTest#phlex { }` is replaced by rendering an ERB fixture.
-- Add the **ERB lane** to the golden suite: the 188 scenarios become
-  `.html.erb` fixtures under `gem/test/golden/views/`, rendered through the 2.0
-  component and compared against the frozen snapshot.
+- Replace the test harness: `railties`, `actionview`, `reactionview` and
+  `phlex-rails` as development dependencies, and an inline `Rails::Application`
+  in `test_helper.rb` with the gem as `Rails.root` — ReActionView's handler
+  reads `Rails.root`, and a template outside it falls back to Erubi silently
+  when Herb rejects it (decision 5). `ComponentTest#phlex { }` stays for the
+  Phlex-lane tests until the last Phlex component goes; `render_erb` renders a
+  test view through the harness.
+- Add the **ERB lane** to the golden suite: a scenario may have an ERB fixture
+  under `gem/test/golden/views/`, rendered through the harness and compared
+  against the same frozen snapshot as its own test. With `phlex-rails` loaded a
+  fixture renders a component that is still Phlex, so all 188 fixtures are
+  written before any migration — Button's 15 in plan 2.0a, the rest in 2.0b
+  (decision 7).
 - Implement the `enum` coercion helper in `Base`.
 - Port Phlex's attribute guards into `Attributes` (§4.3), with unit tests
   that assert an unsafe name raises and a `javascript:` reference is dropped.
 - `render_in` assigns `content` on every call; test that an instance rendered
   twice, the second time without a block, renders empty content.
-- Implement the scoped sidecar lookup (§4.3, §4.4) and test it against a
-  host template at the same virtual path, against two overlapping roots, and
-  across two view contexts. The gate's `@template_path ||=` cache is keyed per
-  class and ignored the view context; the scoped lookup must not.
-- Define the **strict lane**. The canonical form is, by design, blind to
-  whitespace at a text–element boundary and between inline siblings (§9.1).
-  Sidecars are therefore written in ERB trim mode (`<%-` / `-%>`) so they emit
-  no whitespace Phlex did not, and the components that carry text —
-  Typography, InlineCode, InlineLink, ShortcutKey, Badge, FormFieldError and
-  the others the Phase 1 inventory names — are additionally compared **raw**,
-  with only attribute order normalized. A strict-lane failure is a real
+- Implement the scoped sidecar lookup: `RubyUI.component_roots`, a
+  `LookupContext` per root, the sidecar found under the root that holds the
+  class file and nowhere else; the `Template` is not cached on the class, so
+  Rails' reloader reaches it (decision 9). Tested against a host template at
+  the same virtual path, a class under no root, and a class with no sidecar.
+- Define the **strict lane**: `CanonicalHtml.call(html, strict: true)`, the
+  preserve-mode form, with its own snapshot for every scenario under
+  `gem/test/golden/strict/`, recorded from Phlex (decision 8). Sidecars and
+  fixtures are written whitespace-tight. A strict-lane failure is a real
   difference, not noise.
 - **MCP.** `mcp/data/registry.json` embeds the source of every component file
   and CI rebuilds it and fails on any diff. Every Phase 2 PR that touches
   `gem/lib/ruby_ui` rebuilds it (`cd mcp && bundle exec exe/ruby-ui-mcp-build`)
   and commits the result. `RegistryBuilder` also extracts examples from
   `*_docs.rb`; decision 11 (Phase 2.3) says what happens to those.
-- **Fresh-app install test.** A script, run in CI, that does `rails new`, adds
-  the gem, runs the installer and the preflight, generates one component and
-  renders it through a request. The golden suite renders without Rails and
-  cannot see installation, reloading, CSRF (`DataTableForm` falls back to a
-  placeholder outside a request) or assets.
+- **Fresh-app install test** — moved to Phase 2.4 (decision 9): it only means
+  something once the installer writes the 2.0 initializer.
 - Point `docs/Gemfile` at the published `ruby_ui` 1.6 instead of
   `path: "../gem"`, so the site keeps building and the CI Docs job stays green
   while the gem is mid-migration. Phase 3 reverts it.
 
 **Acceptance.** The layer is in the gem with its own tests, guards included.
-The ERB lane runs with at least one component at parity, and the strict lane
-with at least one text-bearing component. The fresh-app script passes. All
-three CI jobs are green with the registry rebuilt.
+The ERB lane is green for Button's 15 scenarios against the frozen snapshots
+with Button still Phlex, and the strict lane holds one recorded snapshot per
+scenario (188). All
+three CI jobs are green with the registry unchanged.
 
 #### 2.1 The hard components first
 
@@ -390,7 +395,7 @@ What that pulls into Phase 2:
 The doc pages are not components and the golden suite does not cover them;
 Phase 3 is where they are first looked at on screen, in the site.
 
-**Acceptance.** In the fresh-app install script (Phase 2.0),
+**Acceptance.** In the fresh-app install script (Phase 2.4),
 `rails g ruby_ui:install:docs` copies pages and example files that render
 through a request; every example file compiles through Herb; the golden suite
 is unaffected; no `*_docs.rb` remains in the gem.
@@ -617,10 +622,11 @@ count never named.
 3. **Phase 2.0 defines a strict lane** — raw output, attribute order
    normalized, nothing else — for components that carry text.
 
-What the canonical form still does not see, stated as the contract's
-exclusion: whitespace between two element siblings, and whitespace at a
-text–element boundary, in `:normal` mode. The inventory script stays in the
-tree as a way to find candidates, not as a criterion.
+As of Phase 2.0a the strict lane closes this for every scenario: each also
+keeps its preserve-mode form, so whitespace between element siblings and at
+text–element boundaries is part of the contract, not an exclusion (decision 8).
+The inventory script stays in the tree as a way to read the catalog, not as a
+criterion.
 
 ### 9.2 Three questions for upstream
 
@@ -673,7 +679,7 @@ and Phase 3 is where a browser first looks.
 | `intercept_erb` validates the host app's own templates | A user with malformed HTML anywhere sees errors on install day — and `validation_mode` does not soften it: `:none` empties the template, `:overlay` replaces it (§8) | The installer preflights every host template through `Herb::Engine` before enabling interception and lists what would break; the only opt-out is `intercept_erb = false`, documented as also disabling the tag syntax |
 | herb 0.11 requires a new ReActionView release too | The tag syntax waits on two projects, not one | Decision D ships 2.0.0 without depending on either date |
 | The documentation site runs Phlex while the library no longer does | Between 2.5 and Phase 3 | Acknowledged in the release announcement rather than discovered by readers |
-| `app/components` is also ViewComponent's directory | ViewComponent users | `app/components` is not added to the view paths; the sidecar lookup is scoped to `component_root` (§4.4) |
+| `app/components` is also ViewComponent's directory | ViewComponent users | `app/components` is not added to the view paths; the sidecar lookup is scoped to `component_roots` (§4.4) |
 | Sidecar name collision with a host template | Silent replacement in either direction with a view-path lookup | Lookup scoped to the component root; collision is an error (§4.3) |
 | Removing Phlex's attribute guards | Untrusted attribute values reach the page as `javascript:` URLs or `on*` handlers | Guards ported into `Attributes` with their own tests (§4.3) |
 | `mcp/data/registry.json` embeds component source | Every gem change; CI fails on a stale registry | Rebuilt and committed in every PR that touches `gem/lib/ruby_ui` (Phase 2.0) |
