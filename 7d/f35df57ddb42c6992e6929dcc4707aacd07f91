@@ -1,0 +1,22 @@
+gem/lib/ruby_ui/attributes.rb
+  s_02296ba27f582b::t_b3090498f4363c 88-93,95-97
+  s_02296ba27f582b::t_400db405aeb6ef 123-130
+gem/test/ruby_ui/attributes_test.rb
+  s_02296ba27f582b::t_1f94641e320bc0 76-82
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "7df35df57ddb42c6992e6929dcc4707aacd07f91",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
