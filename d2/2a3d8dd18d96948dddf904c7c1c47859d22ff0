@@ -1,0 +1,63 @@
+gem/test/golden/views/sheet/content_right.html.erb
+  s_76d07be8c07832::t_151e15f2690df8 1
+gem/test/golden/views/sheet/open.html.erb
+  s_76d07be8c07832::t_151e15f2690df8 1
+gem/test/golden/views/tooltip/default.html.erb
+  s_76d07be8c07832::t_75d04bd86abe96 1
+gem/test/golden/views/dialog/content_lg.html.erb
+  s_76d07be8c07832::t_ed50886354f9ab 1
+gem/test/golden/views/sheet/content_left.html.erb
+  s_76d07be8c07832::t_151e15f2690df8 1
+gem/test/golden/views/dialog/open.html.erb
+  s_76d07be8c07832::t_ed50886354f9ab 1
+gem/test/golden/views/date_picker/default.html.erb
+  s_76d07be8c07832::t_3e97b41a9c888f 1
+gem/test/golden/views/sidebar/non_collapsible.html.erb
+  s_76d07be8c07832::t_cb2a94f0fc5d00 1
+gem/test/golden/views/dialog/default.html.erb
+  s_76d07be8c07832::t_ed50886354f9ab 1
+gem/test/golden/views/sidebar/mobile.html.erb
+  s_76d07be8c07832::t_cb2a94f0fc5d00 1
+gem/test/golden/views/dialog/content_sm.html.erb
+  s_76d07be8c07832::t_ed50886354f9ab 1
+gem/test/golden/views/alert_dialog/default.html.erb
+  s_76d07be8c07832::t_5faecac845e8bc 1
+gem/test/golden/views/alert_dialog/open.html.erb
+  s_76d07be8c07832::t_5faecac845e8bc 1
+gem/test/golden/views/date_picker/generated_id.html.erb
+  s_76d07be8c07832::t_3e97b41a9c888f 1
+gem/test/golden/views/sheet/content_bottom.html.erb
+  s_76d07be8c07832::t_151e15f2690df8 1
+gem/test/golden/views/sheet/default.html.erb
+  s_76d07be8c07832::t_151e15f2690df8 1
+gem/test/golden/views/sheet/content_top.html.erb
+  s_76d07be8c07832::t_151e15f2690df8 1
+gem/test/golden/views/date_picker/without_label.html.erb
+  s_76d07be8c07832::t_3e97b41a9c888f 1
+gem/test/golden/views/dialog/content_xl.html.erb
+  s_76d07be8c07832::t_ed50886354f9ab 1
+gem/test/golden/views/tooltip/placement_right.html.erb
+  s_76d07be8c07832::t_75d04bd86abe96 1
+gem/test/golden/views/dialog/content_md.html.erb
+  s_76d07be8c07832::t_ed50886354f9ab 1
+gem/test/golden/views/sidebar/collapsible_offcanvas.html.erb
+  s_76d07be8c07832::t_cb2a94f0fc5d00 1
+gem/test/golden/views/sidebar/collapsible_icon_right_floating.html.erb
+  s_76d07be8c07832::t_cb2a94f0fc5d00 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d22a3d8dd18d96948dddf904c7c1c47859d22ff0",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
