@@ -1,0 +1,19 @@
+gem/test/golden/strict/command/trigger_with_custom_keybindings.html
+  s_02296ba27f582b::t_04d46777284083 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "f8554238ed8f76908544188f8b60e5f46a0179d5",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "unknown"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
