@@ -4,7 +4,7 @@
 
 **Goal:** Put the 2.0 component layer, the test harness it needs, and the golden suite's ERB and strict lanes into the gem — with every component still Phlex — so that the fixtures plan (2.0b) and the migrations (2.1+) change only what they say they change.
 
-**Architecture:** A plain-Ruby `RubyUI::Component` (the 2.0 layer; it takes the name `Base` only when the last Phlex component is gone) renders an ERB sidecar found under the `RubyUI.component_roots` entry that contains its class file — never through the host's view paths. The gem's tests run inside a minimal inline `Rails::Application` so ReActionView's handler compiles every template through Herb exactly as a host app will. The golden suite gains an ERB lane (fixtures under `test/golden/views/`, rendered against the frozen snapshots — still-Phlex components render through `phlex-rails`) and a strict lane (the canonical form in preserve mode, for text-bearing components). Nothing under `gem/lib/ruby_ui/<component>/` changes.
+**Architecture:** A plain-Ruby `RubyUI::Component` (the 2.0 layer; it takes the name `Base` only when the last Phlex component is gone) renders an ERB sidecar found under the `RubyUI.component_roots` entry that contains its class file — never through the host's view paths. The gem's tests run inside a minimal inline `Rails::Application` so ReActionView's handler compiles every template through Herb exactly as a host app will. The golden suite gains an ERB lane (fixtures under `test/golden/views/`, rendered against the frozen snapshots — still-Phlex components render through `phlex-rails`) and a strict lane (the canonical form in preserve mode, for every scenario). Nothing under `gem/lib/ruby_ui/<component>/` changes.
 
 **Tech Stack:** Ruby 3.3 and 3.4, Minitest, ActionView / Railties 8.1, ReActionView 0.4, Herb 0.10, phlex-rails 2.4 (development only, for the transition), Nokogiri, tailwind_merge.
 
@@ -45,7 +45,7 @@
 | `gem/test/golden_test.rb` | One test per scenario per lane; strict comparison where a strict snapshot exists; two more coverage tests. |
 | `gem/test/golden/views/<component>/<name>.html.erb` | The ERB lane's fixtures. This plan writes Button's 15; 2.0b writes the other 173. |
 | `gem/test/golden/canonical_html.rb` | `strict:` mode. |
-| `gem/test/golden/strict/<component>/<name>.html` | Strict snapshots, 36 files, recorded from the Phlex lane. |
+| `gem/test/golden/strict/<component>/<name>.html` | Strict snapshots, one per scenario (188), recorded from the Phlex lane. |
 | `design/v2/decisions.md` | Entries 5–9. |
 | `design/2026-09-19-rubyui-2-0-design.md` | §4.4 and §6 Phase 2.0 amended to what this plan built. |
 
@@ -115,8 +115,7 @@ require "test_helper"
 # the ERB lane and the component layer do later stands on these two facts.
 class ErbHarnessTest < Minitest::Test
   def test_erb_is_compiled_by_reactionview_under_rails_root
-    ActionView::Base # the handler is swapped when ActionView::Base loads
-
+    assert_kind_of Class, ActionView::Base # loading it is what swaps the handler in
     assert_equal ReActionView::Template::Handlers::ERB, ActionView::Template.handler_for_extension(:erb)
     assert_equal File.expand_path("..", __dir__), Rails.root.to_s
     assert_equal "test", Rails.env
@@ -228,7 +227,7 @@ cd gem
 bundle exec rake test N=/ErbHarnessTest/
 ```
 
-Expected: `2 runs, 4 assertions, 0 failures, 0 errors`.
+Expected: `2 runs, ... 0 failures, 0 errors`.
 
 - [ ] **Step 6: Run everything and confirm nothing else moved**
 
@@ -351,10 +350,19 @@ class AttributesTest < Minitest::Test
     assert_equal({"src" => "javascript-guide.png"}, flat(src: "javascript-guide.png"))
   end
 
-  def test_a_non_string_value_for_a_url_attribute_raises
-    assert_raises(ArgumentError) { flat(href: 1) }
-    assert_raises(ArgumentError) { flat(href: :edit) }
-    assert_raises(ArgumentError) { flat(href: {}) }
+  def test_a_non_string_value_is_serialized_then_checked
+    # Phlex serializes first and checks the result: 1 and :edit are ordinary
+    # values, a Symbol that spells a javascript: URL is not.
+    assert_equal({"href" => "1"}, flat(href: 1))
+    assert_equal({"href" => "edit"}, flat(href: :edit))
+    assert_equal({"href" => "/ edit"}, flat(href: ["/", "edit"]))
+    assert_equal({}, flat(href: :"javascript:x"))
+  end
+
+  def test_an_out_of_range_character_reference_decodes_to_nothing
+    # Phlex rescues the failed pack and treats the reference as empty, which
+    # leaves `javascript:` in front.
+    assert_equal({}, flat(href: "java&#999999999999999999;script:alert(1)"))
   end
 
   def test_true_is_allowed_on_a_url_attribute
@@ -381,7 +389,7 @@ cd gem
 bundle exec rake test N=/AttributesTest/
 ```
 
-Expected: 9 runs; `test_an_ordinary_url_is_kept`, `test_true_is_allowed_on_a_url_attribute`, `test_a_nested_on_key_is_not_an_event_handler` and `test_the_guard_does_not_touch_ordinary_attributes` pass (the ported layer already does that); the other 5 FAIL — nothing raises, nothing is dropped.
+Expected: 10 runs; `test_an_ordinary_url_is_kept`, `test_true_is_allowed_on_a_url_attribute`, `test_a_nested_on_key_is_not_an_event_handler` and `test_the_guard_does_not_touch_ordinary_attributes` pass (the ported layer already does that); the other 6 FAIL — nothing raises, nothing is dropped, and the javascript-spelling Symbol and the out-of-range reference come through as ordinary strings.
 
 - [ ] **Step 4: Patch `attributes.rb` with the guards**
 
@@ -394,10 +402,12 @@ In `gem/lib/ruby_ui/attributes.rb`:
   # untrusted values keeps the protection it has today: a name with `<>&"'/=`,
   # whitespace or NUL raises; `srcdoc`, `sandbox`, `http-equiv` and any `on*`
   # handler name raise; a URL-bearing attribute (`href`, `src`, `action`, …)
-  # whose decoded value starts with `javascript:` is dropped, and a non-String
-  # value for one of them raises. Not ported: Phlex's `:id`-must-be-a-lowercase-
-  # Symbol check (a Phlex convention) and the leading space it leaves when the
-  # first `style:` value is nil (no snapshot depends on it).
+  # whose serialized value, character references decoded, starts with
+  # `javascript:` is dropped — serialized first, as Phlex does, so `href: 1`
+  # renders and `href: :"javascript:x"` does not. Not ported: Phlex's
+  # `:id`-must-be-a-lowercase-Symbol check (a Phlex convention) and the leading
+  # space it leaves when the first `style:` value is nil (no snapshot depends
+  # on it).
 ```
 
 **(b)** After `TAILWIND_MERGER = TailwindMerge::Merger.new.freeze`, add:
@@ -405,31 +415,32 @@ In `gem/lib/ruby_ui/attributes.rb`:
 ```ruby
     UNSAFE_ATTRIBUTES = Set.new(%w[srcdoc sandbox http-equiv]).freeze
     REF_ATTRIBUTES = Set.new(%w[href src action formaction lowsrc dynsrc background ping xlinkhref]).freeze
-    UNSAFE_ATTRIBUTE_NAME_CHARS = %r([<>&"'/=\s\x00])
+    UNSAFE_ATTRIBUTE_NAME_CHARS = %r{[<>&"'/=\s\x00]}
 
-    # The character references decoded before the `javascript:` check. Phlex
-    # decodes every named reference; these are the numeric forms plus the
-    # named ones that can hide a scheme separator.
-    NAMED_REFERENCES = {
-      "colon" => ":", "tab" => "\t", "newline" => "\n",
-      "amp" => "&", "lt" => "<", "gt" => ">", "quot" => '"', "apos" => "'"
-    }.freeze
+    # The named character references Phlex decodes before the `javascript:`
+    # check — exactly these three; every other named reference decodes to
+    # nothing, as in Phlex. Numeric references are decoded in full.
+    NAMED_REFERENCES = {"colon" => ":", "tab" => "\t", "newline" => "\n"}.freeze
 ```
 
-**(c)** In `flat`, replace the two lines
+**(c)** Replace the whole `flat` method with:
 
 ```ruby
+      def flat(attributes)
+        attributes.each_with_object({}) do |(key, value), out|
+          next unless value
+
           name = key_name(key)
           case value
-```
-
-with
-
-```ruby
-          name = key_name(key)
-          next if guard(name, value) == :drop
-
-          case value
+          when Hash
+            (name == "style") ? emit(out, name, styles(value)) : nested(value, "#{name}-", out)
+          when Array, Set
+            emit(out, name, (name == "style") ? styles(value) : tokens(value))
+          else
+            emit(out, name, scalar(value))
+          end
+        end
+      end
 ```
 
 **(d)** In `nested`, replace the line that computes `name` — it begins `name = (key == :_) ?` — so that it is followed by the name-character check:
@@ -440,11 +451,20 @@ with
 
 ```
 
-**(e)** Add two private methods after `key_name`:
+**(e)** Add four private methods after `key_name`:
 
 ```ruby
+      # Phlex serializes first and guards the serialized value, so `href: 1`
+      # renders `href="1"` and `href: :"javascript:x"` is dropped. A nil here
+      # is an empty token list, which omits the attribute.
+      def emit(out, name, serialized)
+        return if serialized.nil?
+
+        out[name] = serialized unless guard(name, serialized) == :drop
+      end
+
       # :keep or :drop. Raises for the names Phlex refuses.
-      def guard(name, value)
+      def guard(name, serialized)
         raise ArgumentError, "unsafe attribute name #{name.inspect}" if name.match?(UNSAFE_ATTRIBUTE_NAME_CHARS)
 
         normalized = name.downcase.delete("^a-z-")
@@ -453,17 +473,23 @@ with
           raise ArgumentError, "unsafe attribute name #{name.inspect}"
         end
 
-        return :keep unless value != true && REF_ATTRIBUTES.include?(normalized)
-        raise ArgumentError, "invalid value for #{name}: #{value.inspect}" unless value.is_a?(String)
+        return :keep unless REF_ATTRIBUTES.include?(normalized)
 
-        decode_references(value).downcase.delete("^a-z:").start_with?("javascript:") ? :drop : :keep
+        decode_references(serialized).downcase.delete("^a-z:").start_with?("javascript:") ? :drop : :keep
       end
 
       def decode_references(value)
         value
-          .gsub(/&#x([0-9a-f]+);?/i) { [$1.to_i(16)].pack("U*") }
-          .gsub(/&#(\d+);?/) { [$1.to_i].pack("U*") }
+          .gsub(/&#x([0-9a-f]+);?/i) { codepoint($1.to_i(16)) }
+          .gsub(/&#(\d+);?/) { codepoint($1.to_i) }
           .gsub(/&([a-z][a-z0-9]+);?/i) { NAMED_REFERENCES[$1.downcase] || "" }
+      end
+
+      # Phlex swallows a reference it cannot pack; so does this.
+      def codepoint(number)
+        [number].pack("U*")
+      rescue RangeError
+        ""
       end
 ```
 
@@ -474,7 +500,7 @@ cd gem
 bundle exec rake test N=/AttributesTest/
 ```
 
-Expected: `9 runs, ... 0 failures, 0 errors`.
+Expected: `10 runs, ... 0 failures, 0 errors`.
 
 - [ ] **Step 6: Adapt the differential test to the harness**
 
@@ -503,6 +529,14 @@ In `gem/test/ruby_ui/attributes_differential_test.rb`:
   end
   ```
 
+- Add three cases to `FLAT_CASES`, after the `"empty token list omits the attribute"` entry — the URL-value shapes the guards must serialize before checking, compared against Phlex like every other case:
+
+  ```ruby
+    "url attribute from a non-string" => {href: 1, src: ["/", "a.png"]},
+    "javascript url is dropped, a data attribute is not" => {href: :"javascript:x", "data-href" => "javascript:kept"},
+    "out-of-range character reference" => {href: "java&#999999999999999999;script:alert(1)"}
+  ```
+
 - [ ] **Step 7: Run the differential test and confirm it passes**
 
 ```bash
@@ -510,7 +544,7 @@ cd gem
 bundle exec rake test N=/AttributesDifferentialTest/
 ```
 
-Expected: `24 runs, ... 0 failures, 0 errors` — 15 flat cases, 8 mix cases, 1 merge case. If any flat or mix case fails, STOP: the layer disagrees with Phlex 2.4.1 for that shape and the disagreement is the finding.
+Expected: `27 runs, ... 0 failures, 0 errors` — 18 flat cases, 8 mix cases, 1 merge case. If any flat or mix case fails, STOP: the layer disagrees with Phlex 2.4.1 for that shape and the disagreement is the finding.
 
 - [ ] **Step 8: Run everything**
 
@@ -519,7 +553,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `535 runs, ... 0 failures, 0 errors, 0 skips`, `414 files inspected, no offenses detected`. Snapshots unchanged; registry current (`attributes.rb` is a top-level file, not under a component directory, so the builder does not embed it):
+Expected: `539 runs, ... 0 failures, 0 errors, 0 skips`, `414 files inspected, no offenses detected`. Snapshots unchanged; registry current (`attributes.rb` is a top-level file, not under a component directory, so the builder does not embed it):
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -760,7 +794,7 @@ module RubyUI
 
       def initialize(**attrs)
         @id = "content#{SecureRandom.hex(4)}"
-        super(**attrs)
+        super
       end
     end
   end
@@ -890,6 +924,10 @@ HOST SHADOW
 In `gem/test/test_helper.rb`, after `Rails.application.initialize!`, add:
 
 ```ruby
+# component_roots= is a module method, not a constant: the autoload above does
+# not reach it, so the file is required outright.
+require "ruby_ui/component"
+
 # Two component roots: the gem's own components, and the test-only probes.
 # A class's sidecar is looked up under the root that contains the class file.
 RubyUI.component_roots = [File.join(RubyUI::TestApp::ROOT, "lib"), File.join(RubyUI::TestApp::ROOT, "test/probes")]
@@ -1039,7 +1077,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `550 runs, ... 0 failures, 0 errors, 0 skips`, `422 files inspected, no offenses detected` (414 + `component.rb` + `component_test.rb` + six probe `.rb` files). Snapshots unchanged; registry current.
+Expected: `554 runs, ... 0 failures, 0 errors, 0 skips`, `422 files inspected, no offenses detected` (414 + `component.rb` + `component_test.rb` + six probe `.rb` files). Snapshots unchanged; registry current.
 
 - [ ] **Step 9: Commit**
 
@@ -1149,7 +1187,8 @@ In `gem/lib/ruby_ui/component.rb`, inside `class Component`, in the `private` se
     # both must select `table[:lg]`; nil takes the default. Anything else names
     # the allowed values instead of silently dropping the class.
     def enum(value, table, default:)
-      key = value.nil? ? default : (value.respond_to?(:to_sym) ? value.to_sym : value)
+      key = value.nil? ? default : value
+      key = key.to_sym if key.respond_to?(:to_sym)
       return key if table.key?(key)
 
       raise ArgumentError,
@@ -1173,7 +1212,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `555 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Snapshots unchanged; registry current.
+Expected: `559 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Snapshots unchanged; registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1197,7 +1236,7 @@ MSG
 
 Every scenario keeps its Phlex block. A scenario may also have an ERB fixture at `test/golden/views/<component>/<name>.html.erb`; when it does, the suite renders the fixture through the harness and compares it against the **same frozen snapshot**. The two lanes are independent tests. Because `phlex-rails` is loaded, a fixture can render a component that is still Phlex — so the fixtures for all 188 scenarios can be written and made green before a single component migrates (decision 7). This task builds the lane and writes Button's 15 fixtures as the proof; plan 2.0b writes the other 173.
 
-During the transition the Phlex lane records (`golden:update` writes from it when a scenario has a block); the ERB lane only compares. When the last block goes, the ERB lane records.
+During the transition the Phlex lane records; the ERB lane only compares. When the last block goes, the ERB lane records. Because Minitest runs a scenario's two lane tests in random order, the recording is done once per scenario **before either lane compares**, not inside the recording lane's own test — otherwise `golden:update` could read a stale or absent file in the lane that happened to run first.
 
 **Files:**
 - Modify: `gem/test/golden/catalog.rb`
@@ -1239,6 +1278,12 @@ In `gem/test/golden/catalog.rb`:
       # one, its ERB fixture once it has one. Both compare against one snapshot.
       def lanes
         [(:phlex if block), (:erb if fixture?)].compact
+      end
+
+      # The lane whose render is written to disk on `golden:update`: the Phlex
+      # block while the scenario has one, the ERB fixture after.
+      def recording_lane
+        block ? :phlex : :erb
       end
 
       def test_name(lane = nil)
@@ -1344,10 +1389,10 @@ with
   end
 ```
 
-**(b)** Change `def assert_golden(scenario)` to `def assert_golden(scenario, lane)`, and inside it replace every `canonicalize(scenario)` with `canonicalize(scenario, lane)`. Replace the `if UPDATE` line with
+**(b)** Change `def assert_golden(scenario)` to `def assert_golden(scenario, lane)`, and inside it replace every `canonicalize(scenario)` with `canonicalize(scenario, lane)`. Replace the whole `if UPDATE … end` block (three lines) with
 
 ```ruby
-    if UPDATE && recording_lane?(scenario, lane)
+    record!(scenario) if UPDATE
 ```
 
 **(c)** Replace `canonicalize` and add the two helpers:
@@ -1361,11 +1406,20 @@ with
     (lane == :erb) ? Golden::Harness.render_erb(scenario) : Golden::Harness.render(&scenario.block)
   end
 
-  # While a scenario still has a Phlex block, that lane is the one that
-  # records; the ERB lane only compares. Once the block is gone, the ERB lane
-  # records.
-  def recording_lane?(scenario, lane)
-    (lane == :phlex) || scenario.block.nil?
+  # In update mode the authoritative lane writes the snapshot before either
+  # lane compares, once per scenario per process, so the order Minitest picks
+  # for a scenario's lane tests cannot make one of them read a stale or absent
+  # file.
+  def record!(scenario)
+    self.class.recorded[scenario.slug] ||= begin
+      FileUtils.mkdir_p(File.dirname(scenario.snapshot_path))
+      File.write(scenario.snapshot_path, Golden::CanonicalHtml.call(render(scenario, scenario.recording_lane)))
+      true
+    end
+  end
+
+  def self.recorded
+    @recorded ||= {}
   end
 ```
 
@@ -1384,9 +1438,16 @@ with
       end
 ```
 
-**(e)** Add a coverage test to `GoldenCoverageTest`:
+**(e)** Add two coverage tests to `GoldenCoverageTest`. A scenario with neither a block nor a fixture would define no test at all and pass by absence; the first test makes that a failure:
 
 ```ruby
+  def test_every_scenario_has_at_least_one_lane
+    laneless = Golden::Catalog.scenarios.reject { |scenario| scenario.lanes.any? }.map(&:slug)
+
+    assert_empty laneless,
+      "scenarios with neither a Phlex block nor an ERB fixture (they would define no test): #{laneless.join(", ")}"
+  end
+
   def test_no_orphan_fixture_files
     expected = Golden::Catalog.scenarios.map(&:fixture_path).sort
     orphans = Golden::Catalog.fixture_files - expected
@@ -1405,7 +1466,7 @@ cd gem
 bundle exec rake golden
 ```
 
-Expected: `200 runs, ... 0 failures, 0 errors, 0 skips` — 188 Phlex-lane scenarios, 4 coverage tests, 7 canonicalizer tests, 1 harness test.
+Expected: `206 runs, ... 0 failures, 0 errors, 0 skips` — 188 Phlex-lane scenarios, 5 coverage tests, 9 canonicalizer tests, 4 harness tests.
 
 - [ ] **Step 5: Write Button's fixtures**
 
@@ -1462,7 +1523,7 @@ cd gem
 bundle exec rake golden
 ```
 
-Expected: `215 runs, ... 0 failures, 0 errors, 0 skips` — the 15 `test_button__*__erb` tests are new and green against the frozen snapshots, rendering the still-Phlex `RubyUI::Button` through phlex-rails. Then:
+Expected: `221 runs, ... 0 failures, 0 errors, 0 skips` — the 15 `test_button__*__erb` tests are new and green against the frozen snapshots, rendering the still-Phlex `RubyUI::Button` through phlex-rails. Then:
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1478,7 +1539,7 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `571 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Registry current.
+Expected: `576 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`. Registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
@@ -1506,20 +1567,20 @@ MSG
 
 ## Task 6: The strict lane
 
-The canonical form is blind, by design, to whitespace between element siblings and at text–element boundaries (§9.1). For the components whose output is text — Typography, InlineCode and InlineLink (`typography`), Badge, FormFieldError (`form`), ComboboxItem (`combobox`), ShortcutKey — the suite keeps a second snapshot: the canonical form in **preserve mode** over the whole fragment (text verbatim, whitespace kept, attributes still sorted, comments still dropped, the fragment's own leading and trailing whitespace trimmed). Recorded from the Phlex lane now, while Phlex still renders; a fixture or a migrated component that adds a newline where Phlex emitted none fails it.
+The canonical form is blind, by design, to whitespace between element siblings and at text–element boundaries (§9.1). Every scenario now keeps a second snapshot: the canonical form in **preserve mode** over the whole fragment (text verbatim, whitespace kept, attributes still sorted, comments still dropped, the fragment's own leading and trailing whitespace trimmed). Recorded from the Phlex lane now, while Phlex still renders; a fixture or a migrated component that adds a newline where Phlex emitted none fails it — for every component, not a chosen list (decision 8: an audit of the catalog found text inside inline elements in 38 of 54 components, and any list is one review away from missing one).
 
 **Files:**
 - Modify: `gem/test/golden/canonical_html.rb`
 - Modify: `gem/test/golden/canonical_html_test.rb`
 - Modify: `gem/test/golden/catalog.rb`
 - Modify: `gem/test/golden_test.rb`
-- Create (by re-recording): 36 files under `gem/test/golden/strict/`
+- Create (by re-recording): 188 files under `gem/test/golden/strict/`
 
 **Interfaces:**
 - Consumes: Task 5's lanes.
 - Produces:
   - `Golden::CanonicalHtml.call(html, strict: false)`; `strict: true` is the preserve-mode form.
-  - `Golden::Catalog::STRICT_ROOT`, `STRICT_COMPONENTS`; `Scenario#strict?`, `#strict_snapshot_path`; `Golden::Catalog.strict_files`.
+  - `Golden::Catalog::STRICT_ROOT`; `Scenario#strict_snapshot_path`; `Golden::Catalog.strict_files`; `record!` writes both forms.
 
 - [ ] **Step 1: Write the failing canonicalizer tests**
 
@@ -1558,6 +1619,22 @@ Add to `gem/test/golden/canonical_html_test.rb`, inside the class:
     assert_equal once, strict(once)
     assert_includes once, "a < b"
   end
+
+  def test_strict_restores_the_newline_the_parser_drops_after_pre_and_textarea
+    %w[pre textarea].each do |tag|
+      once = strict("<#{tag}>\n\nx</#{tag}>")
+
+      assert_equal "<#{tag}>\n\nx</#{tag}>", once
+      assert_equal once, strict(once)
+    end
+  end
+
+  def test_strict_restores_it_for_a_nested_pre_too
+    once = strict("<div><pre>\n\nx</pre></div>")
+
+    assert_equal "<div><pre>\n\nx</pre></div>", once
+    assert_equal once, strict(once)
+  end
 ```
 
 - [ ] **Step 2: Run them and confirm they fail**
@@ -1567,7 +1644,7 @@ cd gem
 bundle exec rake test N=/GoldenCanonicalHtmlTest#test_strict/
 ```
 
-Expected: 6 runs, 6 errors — `ArgumentError: unknown keyword: :strict`.
+Expected: 8 runs, 8 errors — `ArgumentError: unknown keyword: :strict`.
 
 - [ ] **Step 3: Add strict mode**
 
@@ -1587,7 +1664,50 @@ In `gem/test/golden/canonical_html.rb`:
       end
 ```
 
-**(b)** In `child_mode`, move the raw-text check ahead of the mode check, so a `<script>` or `<style>` inside a strict fragment is still emitted raw (escaping it would break the fixed point):
+**(b)** Replace the whole `emit_element` method. The newline the HTML parser drops after a `<pre>` or `<textarea>` start tag was only restored when the outer mode was `:normal`; in strict mode the whole fragment starts in `:preserve`, so `<pre>\n\nx</pre>` lost its blank line on the second pass. The restoration now depends on the element, not on the outer mode:
+
+```ruby
+      def emit_element(node, depth, out, mode)
+        open = open_tag(node)
+        close = VOID.include?(node.name) ? "" : "</#{node.name}>"
+        inner_mode = child_mode(node, mode)
+        children = significant_children(node, inner_mode)
+        # The parser drops exactly one LF immediately after a <pre> or
+        # <textarea> start tag. Put it back whatever the outer mode, or a second
+        # pass over content that starts with a blank line eats it and the form
+        # stops being a fixed point.
+        restored = restored_newline(node, children)
+
+        if mode != :normal
+          # Inside a preserved region we may not add a single character of our
+          # own, or the round trip would change the content.
+          out << open << restored
+          children.each { |child| emit(child, depth, out, inner_mode) }
+          out << close
+        elsif inner_mode != :normal
+          out << (INDENT * depth) << open << restored
+          children.each { |child| emit(child, depth, out, inner_mode) }
+          out << close << "\n"
+        elsif children.empty?
+          # `<div></div>` and `<div>\n</div>` are not the same element to a
+          # browser: `:empty` matches only the first, and `textContent` is
+          # truthy only on the second. Keep a single space to tell them apart.
+          filler = whitespace_only_content?(node) ? " " : ""
+          out << (INDENT * depth) << open << filler << close << "\n"
+        else
+          out << (INDENT * depth) << open << "\n"
+          children.each { |child| emit(child, depth + 1, out, :normal) }
+          out << (INDENT * depth) << close << "\n"
+        end
+      end
+
+      def restored_newline(node, children)
+        first = children.first
+        (PRESERVE_WHITESPACE.include?(node.name) && first.is_a?(Nokogiri::XML::Text) && first.text.start_with?("\n")) ? "\n" : ""
+      end
+```
+
+**(c)** In `child_mode`, move the raw-text check ahead of the mode check, so a `<script>` or `<style>` inside a strict fragment is still emitted raw (escaping it would break the fixed point):
 
 ```ruby
       def child_mode(node, mode)
@@ -1605,13 +1725,13 @@ cd gem
 bundle exec rake test N=/GoldenCanonicalHtmlTest/
 ```
 
-Expected: `13 runs, ... 0 failures, 0 errors` (the 7 existing and the 6 new). Then confirm nothing moved in normal mode:
+Expected: `17 runs, ... 0 failures, 0 errors` (the 9 existing and the 8 new). Then confirm nothing moved in normal mode:
 
 ```bash
 bundle exec rake golden
 ```
 
-Expected: `221 runs, 0 failures` (the six strict tests join the ruler's own), no snapshot change.
+Expected: `229 runs, 0 failures` (the eight strict tests join the ruler's own), no snapshot change.
 
 - [ ] **Step 5: Wire strict snapshots into the catalog and the runner**
 
@@ -1620,20 +1740,15 @@ In `gem/test/golden/catalog.rb`:
 **(a)** After `VIEWS_ROOT`, add:
 
 ```ruby
+    # Every scenario also keeps its strict form — the same fragment in
+    # preserve mode — so whitespace between siblings and at text boundaries is
+    # part of the contract for every component (spec §9.1, decision 8).
     STRICT_ROOT = File.expand_path("strict", __dir__)
-
-    # The components whose output is text, and so whose whitespace is part of
-    # what they render: spec §9.1. Their scenarios keep a strict snapshot too.
-    STRICT_COMPONENTS = %w[badge combobox form shortcut_key typography].freeze
 ```
 
-**(b)** Inside `Scenario`, after `lanes`, add:
+**(b)** Inside `Scenario`, after `recording_lane`, add:
 
 ```ruby
-      def strict?
-        STRICT_COMPONENTS.include?(component)
-      end
-
       def strict_snapshot_path
         File.join(STRICT_ROOT, component, "#{name}.html")
       end
@@ -1652,7 +1767,7 @@ In `gem/test/golden_test.rb`:
 **(d)** At the end of `assert_golden`, after the final `assert_equal recorded, canonical, …`, add:
 
 ```ruby
-    assert_strict(scenario, lane) if scenario.strict?
+    assert_strict(scenario, lane)
 ```
 
 **(e)** Add the method after `assert_golden`:
@@ -1665,11 +1780,6 @@ In `gem/test/golden_test.rb`:
 
     assert_equal strict, Golden::CanonicalHtml.call(render(scenario, lane), strict: true),
       "#{scenario.slug} does not render deterministically in strict form"
-
-    if UPDATE && recording_lane?(scenario, lane)
-      FileUtils.mkdir_p(File.dirname(scenario.strict_snapshot_path))
-      File.write(scenario.strict_snapshot_path, strict)
-    end
 
     assert_path_exists scenario.strict_snapshot_path,
       "no strict snapshot for #{scenario.slug} — run `bundle exec rake golden:update` and review the diff"
@@ -1684,11 +1794,26 @@ In `gem/test/golden_test.rb`:
   end
 ```
 
-**(f)** Add a coverage test to `GoldenCoverageTest`:
+**(f)** Replace `record!` so one render writes both forms:
+
+```ruby
+  def record!(scenario)
+    self.class.recorded[scenario.slug] ||= begin
+      rendered = render(scenario, scenario.recording_lane)
+      FileUtils.mkdir_p(File.dirname(scenario.snapshot_path))
+      File.write(scenario.snapshot_path, Golden::CanonicalHtml.call(rendered))
+      FileUtils.mkdir_p(File.dirname(scenario.strict_snapshot_path))
+      File.write(scenario.strict_snapshot_path, Golden::CanonicalHtml.call(rendered, strict: true))
+      true
+    end
+  end
+```
+
+**(g)** Add a coverage test to `GoldenCoverageTest`:
 
 ```ruby
   def test_no_orphan_strict_snapshot_files
-    expected = Golden::Catalog.scenarios.select { |scenario| scenario.strict? && scenario.pinned? }.map(&:strict_snapshot_path).sort
+    expected = Golden::Catalog.scenarios.select(&:pinned?).map(&:strict_snapshot_path).sort
     orphans = Golden::Catalog.strict_files - expected
 
     assert_empty orphans,
@@ -1703,7 +1828,7 @@ cd gem
 bundle exec rake golden 2>&1 | grep -c "no strict snapshot"
 ```
 
-Expected: `36` — 4 badge + 5 combobox + 1 form + 1 shortcut_key + 25 typography scenarios, all failing on the missing file and nothing else. If the number differs, STOP and list the scenarios.
+Expected: `203` — every one of the 188 Phlex-lane tests and the 15 Button ERB-lane tests failing on the missing file and nothing else. If the number differs, STOP and list the scenarios.
 
 - [ ] **Step 7: Record the strict snapshots**
 
@@ -1712,11 +1837,11 @@ cd gem
 bundle exec rake golden:update
 cd /Users/cirdes/Workspaces/ruby_ui
 git status --porcelain gem/test/golden/snapshots | wc -l
-git status --porcelain gem/test/golden/strict | wc -l
+git status --porcelain --untracked-files=all gem/test/golden/strict | wc -l
 find gem/test/golden/strict -name '*.html' | wc -l
 ```
 
-Expected: `0` (no canonical snapshot changed), `36`, `36`. Read three of them — `badge/all_variants.html`, `typography/inline_link.html`, `form/default.html` — and confirm they are the raw Phlex output with attributes sorted: no indentation, no added newlines, text verbatim.
+Expected: `0` (no canonical snapshot changed), `188`, `188`. Read three of them — `badge/all_variants.html`, `dialog/default.html`, `codeblock/ruby_with_clipboard.html` — and confirm they are the raw Phlex output with attributes sorted: no indentation, no added newlines, text verbatim, the `<pre>` content intact.
 
 - [ ] **Step 8: Run everything and commit**
 
@@ -1725,22 +1850,22 @@ cd gem
 bundle exec rake
 ```
 
-Expected: `578 runs, ... 0 failures, 0 errors, 0 skips` (571 + 6 strict canonicalizer tests + 1 coverage test), `423 files inspected, no offenses detected`. Registry current.
+Expected: `585 runs, ... 0 failures, 0 errors, 0 skips` (576 + 8 strict canonicalizer tests + 1 coverage test), `423 files inspected, no offenses detected`. Registry current.
 
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
 git add gem/test/golden/canonical_html.rb gem/test/golden/canonical_html_test.rb gem/test/golden/catalog.rb gem/test/golden_test.rb gem/test/golden/strict
 git commit -m "$(cat <<'MSG'
-[Feature] Golden suite: a strict lane for the components whose output is text
+[Feature] Golden suite: a strict lane for every scenario
 
 The canonical form is blind to whitespace between siblings and at text
-boundaries by design. For badge, combobox, form, shortcut_key and
-typography — the components whose whitespace is part of what they
-render — the suite now also keeps the preserve-mode form: text verbatim,
-attributes sorted, the fragment's own edges trimmed. 36 strict snapshots
-recorded from the Phlex lane while Phlex still renders; a fixture or a
-migrated component that adds a newline where Phlex emitted none fails
-here even though the canonical form cannot see it.
+boundaries by design. Every scenario now also keeps the preserve-mode
+form: text verbatim, attributes sorted, the fragment's own edges
+trimmed. 188 strict snapshots recorded from the Phlex lane while Phlex
+still renders; a fixture or a migrated component that adds a newline
+where Phlex emitted none fails here even though the canonical form
+cannot see it. The newline the parser drops after <pre> and <textarea>
+is now restored in every mode, so the strict form is a fixed point too.
 
 Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
 MSG
@@ -1801,18 +1926,29 @@ Phlex block, that lane records and the ERB lane compares.
 **Cost if wrong:** ~2,000 lines of ERB written ahead of the first migration.
 `phlex-rails` leaves the gemspec with the last Phlex component.
 
-## 8. The strict lane is the canonical form in preserve mode — 2026-09-20
+## 8. The strict lane is the canonical form in preserve mode, for every scenario — 2026-09-20
 
-For badge, combobox, form, shortcut_key and typography — the components whose
-output is text — a second snapshot holds `CanonicalHtml.call(html, strict: true)`:
+Every scenario keeps a second snapshot, `CanonicalHtml.call(html, strict: true)`:
 the whole fragment in the normalizer's preserve mode (text and whitespace
 verbatim, attributes sorted, comments dropped, the fragment's own edges
-trimmed). Same fixed-point discipline, same recording rule, same runner. The 36
-strict snapshots were recorded from Phlex. Fixtures for those components are
-written whitespace-tight — one line, or `<%-`/`-%>` — because the strict form
-sees every newline the fixture adds.
-**Cost if wrong:** 36 more files to keep, and strictness where a browser would
-not have cared (inside a flex parent, say).
+trimmed). Same fixed-point discipline, same recording rule, same runner. The 188
+strict snapshots were recorded from Phlex.
+
+The spec named seven text-bearing components; the plan first mapped that to
+five directories. Review found a sixth (Breadcrumb), and an audit of the raw
+Phlex output found text inside an inline element in 38 of 54 components — any
+list is one review away from missing one. So there is no list: the contract is
+the literal one, *the 2.0 sidecar emits what Phlex emitted*, and Phlex never
+emitted whitespace between elements. Fixtures and sidecars are written
+whitespace-tight — one line, or `<%-`/`-%>` — because the strict form sees
+every newline they add; the canonical form stays as the diagnostic (canonical
+passes, strict fails: whitespace only).
+**Cost if wrong:** 188 more files to keep, sidecars without newlines between
+static elements, and strictness where a browser would not have cared (inside a
+flex parent, say). **What would reverse it:** sidecars for the large composites
+proving unreadable under the rule, at which point the strict lane narrows to a
+criterion computed from the output (text adjacent to an element sibling) rather
+than a hand-picked list.
 
 ## 9. Sidecar lookup takes a list of roots; the fresh-app script moves to 2.4 — 2026-09-20
 
@@ -1874,10 +2010,24 @@ directory the sidecar lookup searches (§4.3) `` with `` `component_roots` lists
 
 ```markdown
 - Define the **strict lane**: `CanonicalHtml.call(html, strict: true)`, the
-  preserve-mode form, with its own snapshots under `gem/test/golden/strict/`
-  for badge, combobox, form, shortcut_key and typography, recorded from Phlex
-  (decision 8). Sidecars and fixtures for those components are written
-  whitespace-tight. A strict-lane failure is a real difference, not noise.
+  preserve-mode form, with its own snapshot for every scenario under
+  `gem/test/golden/strict/`, recorded from Phlex (decision 8). Sidecars and
+  fixtures are written whitespace-tight. A strict-lane failure is a real
+  difference, not noise.
+```
+
+**(i)** In §10's risk table, in the row that begins `| \`app/components\` is also ViewComponent's directory |`, replace `scoped to \`component_root\` (§4.4)` with `scoped to \`component_roots\` (§4.4)`.
+
+**(j)** In §6 Phase 2.3's acceptance paragraph, replace `In the fresh-app install script (Phase 2.0),` with `In the fresh-app install script (Phase 2.4),`.
+
+**(k)** In §9.1, replace the closing paragraph that begins `What the canonical form still does not see, stated as the contract's` (four lines, through `not as a criterion.`) with:
+
+```markdown
+As of Phase 2.0a the strict lane closes this for every scenario: each also
+keeps its preserve-mode form, so whitespace between element siblings and at
+text–element boundaries is part of the contract, not an exclusion (decision 8).
+The inventory script stays in the tree as a way to read the catalog, not as a
+criterion.
 ```
 
 **(g)** Replace the bullet that begins `- **Fresh-app install test.**` (five lines) with:
@@ -1892,7 +2042,8 @@ directory the sidecar lookup searches (§4.3) `` with `` `component_roots` lists
 ```markdown
 **Acceptance.** The layer is in the gem with its own tests, guards included.
 The ERB lane is green for Button's 15 scenarios against the frozen snapshots
-with Button still Phlex, and the strict lane holds 36 recorded snapshots. All
+with Button still Phlex, and the strict lane holds one recorded snapshot per
+scenario (188). All
 three CI jobs are green with the registry unchanged.
 ```
 
@@ -1901,10 +2052,11 @@ three CI jobs are green with the registry unchanged.
 ```bash
 cd /Users/cirdes/Workspaces/ruby_ui
 grep -n "component_root\b" design/2026-09-19-rubyui-2-0-design.md
-grep -n "Fresh-app install test" design/2026-09-19-rubyui-2-0-design.md
+grep -n "install script (Phase 2.0)" design/2026-09-19-rubyui-2-0-design.md
+grep -n "stated as the contract's" design/2026-09-19-rubyui-2-0-design.md
 ```
 
-Expected: the first prints nothing (every mention is now `component_roots`); the second prints exactly the one amended bullet and the Phase 2.4 mention, if any.
+Expected: all three print nothing — every `component_root` is now `component_roots`, the fresh-app script is attributed to Phase 2.4 everywhere, and §9.1 no longer states an exclusion.
 
 - [ ] **Step 4: Commit**
 
@@ -1950,7 +2102,7 @@ bundle exec rake
 cd ../mcp && bundle exec exe/ruby-ui-mcp-build >/dev/null && git diff --exit-code data/registry.json && echo "registry current"
 ```
 
-Expected: `578 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`, `registry current`.
+Expected: `585 runs, ... 0 failures, 0 errors, 0 skips`, `423 files inspected, no offenses detected`, `registry current`.
 
 - [ ] **Step 3: Ask the user before pushing**
 
@@ -1981,8 +2133,8 @@ still Phlex:
   rendered and compared against the same frozen snapshot. With `phlex-rails`
   loaded a fixture renders a still-Phlex component, so all 188 fixtures can be
   green before any migration. Button's 15 are here as the proof.
-- **The strict lane** — the canonical form in preserve mode, with 36 snapshots
-  for the components whose output is text, recorded from Phlex.
+- **The strict lane** — the canonical form in preserve mode, with one snapshot
+  per scenario (188), recorded from Phlex.
 
 No component migrates. Nothing under `gem/lib/ruby_ui/<component>/` changes;
 the 188 golden snapshots are byte-identical to #536. No runtime dependency is
@@ -1998,8 +2150,8 @@ spec deferred to this phase are decided in `design/v2/decisions.md` entries 5–
 
 ```bash
 cd gem
-bundle exec rake            # 578 runs, 0 skips; 423 files, no offenses
-bundle exec rake golden     # 222 runs: 188 Phlex-lane + 15 ERB-lane + 5 coverage + 14 of the ruler's own
+bundle exec rake            # 585 runs, 0 skips; 423 files, no offenses
+bundle exec rake golden     # 230 runs: 188 Phlex-lane + 15 ERB-lane + 6 coverage + 21 of the ruler's own
 ```
 
 To see the ERB lane work, edit `test/golden/views/button/size_md.html.erb` to
@@ -2018,13 +2170,13 @@ MSG
 - `RubyUI::Component` and `RubyUI::Attributes` in `gem/lib/ruby_ui/`, with the differential test against Phlex 2.4.1 green (24 cases) and the guard tests green (9).
 - The 188 golden snapshots byte-identical to `feat/golden-suite`.
 - The ERB lane green for Button's 15 scenarios with `RubyUI::Button` still Phlex.
-- 36 strict snapshots recorded; the strict form a fixed point over every one.
+- 188 strict snapshots recorded; the strict form a fixed point over every one; every scenario has at least one lane.
 - No file under `gem/lib/ruby_ui/<component>/` changed; no runtime dependency added.
 - `design/v2/decisions.md` entries 5–9; spec §4.4 and §6 Phase 2.0 amended.
 
 ## Not in this plan
 
-- **Plan 2.0b** — the other 173 ERB fixtures, component by component, each batch green against the frozen snapshots (and the strict snapshots for the five strict components) before the next. Its first task adds the coverage test `every scenario has a fixture`, which cannot pass until it is done.
+- **Plan 2.0b** — the other 173 ERB fixtures, component by component, each batch green against the frozen canonical and strict snapshots before the next — so every fixture is written whitespace-tight. Its first task adds the coverage test `every scenario has a fixture`, which cannot pass until it is done.
 - **`docs/Gemfile` pinned to the published 1.6 gem** — nothing in `docs/` breaks until the first component migrates, so the pin is the first task of the 2.1 plan.
 - **The fresh-app install script** — Phase 2.4, with the installer.
 - **Runtime dependencies in the gemspec, the installer, `Component` → `Base`** — Phase 2.4.
