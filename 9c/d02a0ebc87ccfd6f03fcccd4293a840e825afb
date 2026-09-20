@@ -1,0 +1,67 @@
+gem/test/golden/views/data_table/pagination_first_page.html.erb
+  s_76d07be8c07832::t_b5bc12fdc70522 1
+gem/test/golden/views/codeblock/ruby_without_clipboard.html.erb
+  s_76d07be8c07832::t_f5493568ab71a5 1
+gem/test/golden/views/toggle/pressed_outline_with_name.html.erb
+  s_76d07be8c07832::t_a8419f278d047c 1
+gem/test/golden/views/codeblock/ruby_with_clipboard.html.erb
+  s_76d07be8c07832::t_f5493568ab71a5 1
+gem/test/golden/views/toast/region_with_flash.html.erb
+  s_76d07be8c07832::t_14903523aab15b 1
+gem/test/golden/views/accordion/custom_trigger_with_icon.html.erb
+  s_76d07be8c07832::t_a9a1b686a367d6 1
+gem/test/golden/views/toggle_group/single.html.erb
+  s_76d07be8c07832::t_29b48fa58d2fbc 1
+gem/test/golden/views/toast/item_with_all_slots.html.erb
+  s_76d07be8c07832::t_14903523aab15b 1
+gem/test/golden/views/data_table/full_frame.html.erb
+  s_76d07be8c07832::t_b5bc12fdc70522 1
+gem/test/golden/views/select/value_falls_back_to_placeholder.html.erb
+  s_76d07be8c07832::t_eb2303daa7e339 1
+gem/test/golden/views/select/default.html.erb
+  s_76d07be8c07832::t_eb2303daa7e339 1
+gem/test/golden/views/aspect_ratio/default.html.erb
+  s_76d07be8c07832::t_4bd92d14a8ee6e 1
+gem/test/golden/views/toggle/disabled_small.html.erb
+  s_76d07be8c07832::t_a8419f278d047c 1
+gem/test/golden/views/toggle/default.html.erb
+  s_76d07be8c07832::t_a8419f278d047c 1
+gem/test/golden/views/data_table/expand_toggle_expanded.html.erb
+  s_76d07be8c07832::t_b5bc12fdc70522 1
+gem/test/golden/views/data_table/pagination_manual_adapter.html.erb
+  s_76d07be8c07832::t_b5bc12fdc70522 1
+gem/test/golden/views/toast/region_top_center_with_close_button.html.erb
+  s_76d07be8c07832::t_14903523aab15b 1
+gem/test/golden/views/data_table/pagination_wide_window.html.erb
+  s_76d07be8c07832::t_b5bc12fdc70522 1
+gem/test/golden/views/data_table/search_without_debounce.html.erb
+  s_76d07be8c07832::t_b5bc12fdc70522 1
+gem/test/golden/views/toggle_group/multiple_outline_spaced_vertical.html.erb
+  s_76d07be8c07832::t_29b48fa58d2fbc 1
+gem/test/golden/views/aspect_ratio/square.html.erb
+  s_76d07be8c07832::t_4bd92d14a8ee6e 1
+gem/test/golden/views/toggle_group/disabled.html.erb
+  s_76d07be8c07832::t_29b48fa58d2fbc 1
+gem/test/golden/views/data_table/sort_head_unsorted.html.erb
+  s_76d07be8c07832::t_b5bc12fdc70522 1
+gem/test/golden/views/shortcut_key/default.html.erb
+  s_76d07be8c07832::t_ebc10c526c526b 1
+gem/test/golden/views/accordion/default_trigger_and_content.html.erb
+  s_76d07be8c07832::t_a9a1b686a367d6 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "9cd02a0ebc87ccfd6f03fcccd4293a840e825afb",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
