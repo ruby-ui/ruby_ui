@@ -17,10 +17,15 @@ module RubyUI
   # bare attribute (here "" — Rails renders `disabled="disabled"` for boolean
   # attributes and `aria-x=""` for the rest, which canonicalize like Phlex's
   # bare form); Symbol values are dasherized; Integer/Float use to_s; Date and
-  # Time use iso8601; a Hash nests as `name-key`, with `_:` naming the parent
-  # itself; Array/Set values are space-joined tokens (nil skipped, nested arrays
-  # flattened, empty result omits the attribute); `style:` Hash becomes
-  # "prop: value; prop: value;" and `style:` Array "a; b;".
+  # Time use iso8601 at the top level — nested under a Hash they raise, as
+  # Phlex has no case for them there; a Hash nests as `name-key`, with `_:`
+  # naming the parent itself; Array/Set values are space-joined tokens of
+  # String/Symbol/Integer/Float (nil skipped, nested arrays flattened, empty
+  # result omits the attribute, anything else — `true`, a Date, … — raises, as
+  # Phlex has no case for it in a token list either); `style:` — the Symbol key
+  # only, a String `"style"` key nests like any other Hash key — Hash becomes
+  # "prop: value; prop: value;" (a non-String/Symbol/Integer/Float value
+  # raises) and `style:` Array "a; b;".
   #
   # Phlex's guards (phlex/sgml/attributes.rb) are ported, so a component given
   # untrusted values keeps the protection it has today: a name with `<>&"'/=`,
@@ -29,9 +34,10 @@ module RubyUI
   # whose serialized value, character references decoded, starts with
   # `javascript:` is dropped — serialized first, as Phlex does, so `href: 1`
   # renders and `href: :"javascript:x"` does not. Not ported: Phlex's
-  # `:id`-must-be-a-lowercase-Symbol check (a Phlex convention) and the leading
+  # `:id`-must-be-a-lowercase-Symbol check (a Phlex convention), the leading
   # space it leaves when the first `style:` value is nil (no snapshot depends
-  # on it).
+  # on it), and an object that only responds to `to_h` — Phlex nests it, `flat`
+  # refuses it (fail-loud, deliberate).
   module Attributes
     TAILWIND_MERGER = TailwindMerge::Merger.new.freeze
 
@@ -85,14 +91,17 @@ module RubyUI
           name = key_name(key)
           case value
           when Hash
-            if name == "style"
+            # Phlex keys this on the Symbol `:style` itself, not on the
+            # dasherized name: a String `"style"` key nests like any other
+            # Hash key (`style-width="1px"`) rather than being read as CSS.
+            if key == :style
               emit(out, name, styles(value))
             else
               refuse_url_value!(name, value)
               nested(value, "#{name}-", out)
             end
           when Array, Set
-            serialized = (name == "style") ? styles(value) : tokens(value)
+            serialized = (key == :style) ? styles(value) : tokens(value)
             refuse_url_value!(name, value) if serialized.nil?
             emit(out, name, serialized)
           else
@@ -167,6 +176,9 @@ module RubyUI
           case value
           when Hash then nested(value, "#{name}-", out)
           when Array, Set then (joined = tokens(value)) && out[name] = joined
+          # Phlex's nested-attributes case has no branch for Date/Time (only
+          # the top-level case does), so nesting one raises here too.
+          when Date, Time then raise ArgumentError, "invalid attribute value #{value.inspect}"
           else out[name] = scalar(value)
           end
         end
@@ -188,7 +200,8 @@ module RubyUI
           case token
           when nil then nil
           when Array, Set then tokens(token)
-          else scalar(token)
+          when String, Symbol, Integer, Float then scalar(token)
+          else raise ArgumentError, "invalid token type #{token.class}"
           end
         end
         list.join(" ") unless list.empty?
@@ -197,7 +210,13 @@ module RubyUI
       def styles(value)
         case value
         when Hash
-          value.filter_map { |property, v| "#{key_name(property)}: #{scalar(v)};" unless v.nil? }.join(" ")
+          value.filter_map do |property, v|
+            case v
+            when nil then nil
+            when String, Symbol, Integer, Float then "#{key_name(property)}: #{scalar(v)};"
+            else raise ArgumentError, "invalid style value #{v.inspect}"
+            end
+          end.join(" ")
         else
           value.filter_map do |style|
             case style

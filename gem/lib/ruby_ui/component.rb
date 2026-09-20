@@ -74,7 +74,7 @@ module RubyUI
 
     # The view context, for a component that needs a Rails helper from Ruby
     # (`helpers.form_authenticity_token`) or renders a neighbour from a method.
-    # Only available during render_in.
+    # Set by render_in; raises before the first render.
     def helpers
       @view_context or raise ArgumentError, "#{self.class.name} has no view context outside render_in"
     end
@@ -97,6 +97,7 @@ module RubyUI
           raise ArgumentError, "#{name}: no source location to derive a sidecar template from"
       end
 
+      # Memoized on first use: set RubyUI.component_roots in an initializer, before any render.
       def component_root
         @component_root ||= RubyUI.component_roots.map(&:to_s).find { |root| source_file.start_with?("#{root}/") } or
           raise ArgumentError, "#{name}: #{source_file} is under none of RubyUI.component_roots #{RubyUI.component_roots.inspect}"
@@ -117,6 +118,11 @@ module RubyUI
       key = value.nil? ? default : value
       key = key.to_sym if key.respond_to?(:to_sym)
       return key if table.key?(key)
+
+      if value.nil?
+        raise ArgumentError,
+          "#{self.class.name}: default: #{default.inspect} is not one of #{table.keys.map(&:inspect).join(", ")}"
+      end
 
       raise ArgumentError,
         "#{self.class.name}: #{value.inspect} is not one of #{table.keys.map(&:inspect).join(", ")}"

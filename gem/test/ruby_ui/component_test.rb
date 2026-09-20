@@ -100,6 +100,19 @@ class LayerTest < ComponentTest
     RubyUI::Probes::Div.instance_variable_set(:@component_root, nil)
   end
 
+  def test_component_roots_are_registered_resolvers_the_reloader_can_see
+    RubyUI::Probes::Div.template
+    # Phase 2.0a has no real gem component under the `lib` root yet — every
+    # component that exists is a probe under `test/probes` — so nothing but
+    # this test ever resolves a sidecar there. Call `lookup_for` on every
+    # configured root directly (the same call `Component.template` makes) so
+    # the assertion below does not depend on some other root having already
+    # been exercised by an unrelated test.
+    RubyUI.component_roots.each { |root| RubyUI.lookup_for(root) }
+    paths = ActionView::PathRegistry.all_file_system_resolvers.map(&:path)
+    RubyUI.component_roots.each { |root| assert_includes paths, root.to_s }
+  end
+
   class Homeless < RubyUI::Component
   end
 

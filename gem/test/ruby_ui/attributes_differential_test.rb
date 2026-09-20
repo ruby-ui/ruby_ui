@@ -33,8 +33,26 @@ class AttributesDifferentialTest < Minitest::Test
     "empty token list omits the attribute" => {class: [], data: {tokens: [nil]}},
     "url attribute from a non-string" => {href: 1, src: ["/", "a.png"]},
     "javascript url is dropped, a data attribute is not" => {:href => :"javascript:x", "data-href" => "javascript:kept"},
-    "out-of-range character reference" => {href: "java&#999999999999999999;script:alert(1)"}
+    "out-of-range character reference" => {href: "java&#999999999999999999;script:alert(1)"},
+    "a String \"style\" key nests instead of matching Phlex's Symbol :style" => {"style" => {width: "1px"}}
   }.freeze
+
+  # Shapes where Phlex 2.4.1 raises inside `generate_nested_tokens` or
+  # `generate_styles` — no `case` branch there for `true`/`false` or for
+  # Date/Time — so `RubyUI::Attributes.flat` must raise too rather than
+  # silently serialize something Phlex would refuse.
+  RAISE_CASES = {
+    "true has no case in a token list" => {class: [true]},
+    "true has no case as a style value" => {style: {display: true}},
+    "a Date has no case in nested attributes" => {data: {at: Date.today}}
+  }.freeze
+
+  RAISE_CASES.each do |label, attributes|
+    define_method(:"test_raises_#{label.tr(" ", "_")}") do
+      assert_raises(Phlex::ArgumentError) { PhlexDiv.new(attributes).call }
+      assert_raises(ArgumentError) { RubyUI::Attributes.flat(attributes) }
+    end
+  end
 
   FLAT_CASES.each do |label, attributes|
     define_method(:"test_flat_#{label.tr(" ", "_")}") do

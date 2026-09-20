@@ -39,4 +39,19 @@ class EnumTest < Minitest::Test
 
     assert_match(/42/, error.message)
   end
+
+  class BadDefault < RubyUI::Component
+    SIZES = {sm: "h-8", md: "h-9"}.freeze
+
+    def initialize(size: nil, **attrs)
+      @size = enum(size, SIZES, default: :xlg)
+      super(**attrs)
+    end
+  end
+
+  def test_a_bad_default_names_the_default_not_nil
+    error = assert_raises(ArgumentError) { BadDefault.new }
+
+    assert_match(/default: :xlg/, error.message)
+  end
 end

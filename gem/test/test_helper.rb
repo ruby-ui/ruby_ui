@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-ENV["RAILS_ENV"] ||= "test"
+# A gem test suite has no other legitimate environment; unlike an application's
+# test_helper, a developer's exported RAILS_ENV must not leak in here — a
+# stray RAILS_ENV=development would turn on 1.6's dev comment and fail six
+# unit tests.
+ENV["RAILS_ENV"] = "test"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "ruby_ui"
