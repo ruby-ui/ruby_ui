@@ -6,6 +6,12 @@ module Golden
   module Catalog
     SNAPSHOT_ROOT = File.expand_path("snapshots", __dir__)
     LIB_ROOT = File.expand_path("../../lib/ruby_ui", __dir__)
+    VIEWS_ROOT = File.expand_path("views", __dir__)
+
+    # Every scenario also keeps its strict form — the same fragment in
+    # preserve mode — so whitespace between siblings and at text boundaries is
+    # part of the contract for every component (spec §9.1, decision 8).
+    STRICT_ROOT = File.expand_path("strict", __dir__)
 
     # `pending` holds a reason string when a scenario cannot be pinned by a
     # snapshot. A pending scenario is still declared, still rendered, and still
@@ -24,8 +30,32 @@ module Golden
         File.join(SNAPSHOT_ROOT, component, "#{name}.html")
       end
 
-      def test_name
-        :"test_#{component}__#{name}"
+      def fixture_path
+        File.join(VIEWS_ROOT, component, "#{name}.html.erb")
+      end
+
+      def fixture?
+        File.exist?(fixture_path)
+      end
+
+      # The renderers this scenario runs through: its Phlex block while it has
+      # one, its ERB fixture once it has one. Both compare against one snapshot.
+      def lanes
+        [(:phlex if block), (:erb if fixture?)].compact
+      end
+
+      # The lane whose render is written to disk on `golden:update`: the Phlex
+      # block while the scenario has one, the ERB fixture after.
+      def recording_lane
+        block ? :phlex : :erb
+      end
+
+      def strict_snapshot_path
+        File.join(STRICT_ROOT, component, "#{name}.html")
+      end
+
+      def test_name(lane = nil)
+        lane ? :"test_#{component}__#{name}__#{lane}" : :"test_#{component}__#{name}"
       end
     end
 
@@ -51,6 +81,16 @@ module Golden
         scenarios << Scenario.new(@component, name.to_s, block, pending)
       end
 
+      # Every .html.erb fixture under VIEWS_ROOT — the ERB lane's coverage
+      # source, mirrored against the catalog by test_no_orphan_fixture_files.
+      def fixture_files
+        Dir.glob(File.join(VIEWS_ROOT, "**", "*.html.erb")).sort
+      end
+
+      def strict_files
+        Dir.glob(File.join(STRICT_ROOT, "**", "*.html")).sort
+      end
+
       # Every directory under lib/ruby_ui/ is a component and must appear in the
       # catalog. `docs/` holds the documentation views that ship with the gem,
       # not components.
@@ -61,15 +101,16 @@ module Golden
           .sort
       end
 
-      # Every RubyUI::Base subclass shipped by the gem. Non-Base classes in the
-      # same directories (the DataTable pagination adapters, the Toast flash
-      # helper module) emit no HTML and are covered by their own unit tests.
+      # Every RubyUI::Base or RubyUI::Component subclass shipped by the gem.
+      # Other classes in the same directories (the DataTable pagination
+      # adapters, the Toast flash helper module) emit no HTML and are covered
+      # by their own unit tests.
       def component_classes
         component_directories
           .flat_map { |directory| Dir.glob(File.join(LIB_ROOT, directory, "*.rb")) }
           .reject { |path| path.end_with?("_docs.rb") }
           .map { |path| constant_for(path) }
-          .select { |constant| constant.is_a?(Class) && constant < RubyUI::Base }
+          .select { |constant| constant.is_a?(Class) && (constant < RubyUI::Base || constant < RubyUI::Component) }
           .map(&:name)
           .sort
       end

@@ -88,4 +88,57 @@ class GoldenCanonicalHtmlTest < Minitest::Test
     assert_equal once, canonical(once)
     assert_includes once, "<textarea>\n\nx</textarea>"
   end
+
+  def strict(html)
+    Golden::CanonicalHtml.call(html, strict: true)
+  end
+
+  def test_strict_trims_only_html_whitespace_at_the_edges
+    assert_equal "\vx\v", strict("\n\vx\v\n")
+  end
+
+  def test_strict_sees_whitespace_between_inline_siblings
+    refute_equal strict("<span>a</span><span>b</span>"), strict("<span>a</span> <span>b</span>")
+  end
+
+  def test_strict_sees_whitespace_at_a_text_element_boundary
+    refute_equal strict("<p>Hello <em>w</em></p>"), strict("<p>Hello<em>w</em></p>")
+  end
+
+  def test_strict_keeps_text_verbatim_and_still_sorts_attributes
+    assert_equal %(<div class="a" id="x">\n  two  words\n</div>), strict(%(<div id="x" class="a">\n  two  words\n</div>))
+  end
+
+  def test_strict_trims_the_fragments_own_edges
+    assert_equal "<b>x</b>", strict("\n  <b>x</b>\n")
+  end
+
+  def test_strict_is_a_fixed_point
+    once = strict(%(<p>Hello <em>w</em>\n<code>a &lt; b</code></p>\n))
+
+    assert_equal once, strict(once)
+  end
+
+  def test_strict_keeps_raw_text_elements_raw
+    once = strict("<div><script>if (a < b) {}</script></div>")
+
+    assert_equal once, strict(once)
+    assert_includes once, "a < b"
+  end
+
+  def test_strict_restores_the_newline_the_parser_drops_after_pre_and_textarea
+    %w[pre textarea].each do |tag|
+      once = strict("<#{tag}>\n\nx</#{tag}>")
+
+      assert_equal "<#{tag}>\n\nx</#{tag}>", once
+      assert_equal once, strict(once)
+    end
+  end
+
+  def test_strict_restores_it_for_a_nested_pre_too
+    once = strict("<div><pre>\n\nx</pre></div>")
+
+    assert_equal "<div><pre>\n\nx</pre></div>", once
+    assert_equal once, strict(once)
+  end
 end
