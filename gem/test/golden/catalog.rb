@@ -8,6 +8,11 @@ module Golden
     LIB_ROOT = File.expand_path("../../lib/ruby_ui", __dir__)
     VIEWS_ROOT = File.expand_path("views", __dir__)
 
+    # Every scenario also keeps its strict form — the same fragment in
+    # preserve mode — so whitespace between siblings and at text boundaries is
+    # part of the contract for every component (spec §9.1, decision 8).
+    STRICT_ROOT = File.expand_path("strict", __dir__)
+
     # `pending` holds a reason string when a scenario cannot be pinned by a
     # snapshot. A pending scenario is still declared, still rendered, and still
     # counts towards class coverage — it just has no recorded HTML. That keeps
@@ -45,6 +50,10 @@ module Golden
         block ? :phlex : :erb
       end
 
+      def strict_snapshot_path
+        File.join(STRICT_ROOT, component, "#{name}.html")
+      end
+
       def test_name(lane = nil)
         lane ? :"test_#{component}__#{name}__#{lane}" : :"test_#{component}__#{name}"
       end
@@ -76,6 +85,10 @@ module Golden
       # source, mirrored against the catalog by test_no_orphan_fixture_files.
       def fixture_files
         Dir.glob(File.join(VIEWS_ROOT, "**", "*.html.erb")).sort
+      end
+
+      def strict_files
+        Dir.glob(File.join(STRICT_ROOT, "**", "*.html")).sort
       end
 
       # Every directory under lib/ruby_ui/ is a component and must appear in the

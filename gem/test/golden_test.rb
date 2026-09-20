@@ -61,6 +61,28 @@ class GoldenSuiteTest < Minitest::Test
 
     assert_equal recorded, canonical,
       "HTML for #{scenario.slug} no longer matches the recorded 1.6 snapshot"
+
+    assert_strict(scenario, lane)
+  end
+
+  # The strict form: text and whitespace verbatim. Same discipline as the
+  # canonical snapshot — determinism, fixed point, then equality.
+  def assert_strict(scenario, lane)
+    strict = Golden::CanonicalHtml.call(render(scenario, lane), strict: true)
+
+    assert_equal strict, Golden::CanonicalHtml.call(render(scenario, lane), strict: true),
+      "#{scenario.slug} does not render deterministically in strict form"
+
+    assert_path_exists scenario.strict_snapshot_path,
+      "no strict snapshot for #{scenario.slug} — run `bundle exec rake golden:update` and review the diff"
+
+    recorded = File.read(scenario.strict_snapshot_path)
+
+    assert_equal recorded, Golden::CanonicalHtml.call(recorded, strict: true),
+      "the recorded strict form of #{scenario.slug} is not a fixed point of the normalizer"
+
+    assert_equal recorded, strict,
+      "strict HTML for #{scenario.slug} no longer matches the recorded 1.6 snapshot"
   end
 
   def canonicalize(scenario, lane)
@@ -77,8 +99,11 @@ class GoldenSuiteTest < Minitest::Test
   # file.
   def record!(scenario)
     self.class.recorded[scenario.slug] ||= begin
+      rendered = render(scenario, scenario.recording_lane)
       FileUtils.mkdir_p(File.dirname(scenario.snapshot_path))
-      File.write(scenario.snapshot_path, Golden::CanonicalHtml.call(render(scenario, scenario.recording_lane)))
+      File.write(scenario.snapshot_path, Golden::CanonicalHtml.call(rendered))
+      FileUtils.mkdir_p(File.dirname(scenario.strict_snapshot_path))
+      File.write(scenario.strict_snapshot_path, Golden::CanonicalHtml.call(rendered, strict: true))
       true
     end
   end
@@ -124,6 +149,14 @@ class GoldenCoverageTest < Minitest::Test
 
     assert_empty orphans,
       "fixture files with no scenario (delete them): #{orphans.map { |path| path.delete_prefix("#{Golden::Catalog::VIEWS_ROOT}/") }.join(", ")}"
+  end
+
+  def test_no_orphan_strict_snapshot_files
+    expected = Golden::Catalog.scenarios.select(&:pinned?).map(&:strict_snapshot_path).sort
+    orphans = Golden::Catalog.strict_files - expected
+
+    assert_empty orphans,
+      "strict snapshot files with no scenario (delete them): #{orphans.map { |path| path.delete_prefix("#{Golden::Catalog::STRICT_ROOT}/") }.join(", ")}"
   end
 
   # Rendering the whole catalog once, memoized, because Minitest runs tests in

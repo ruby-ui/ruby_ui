@@ -65,10 +65,14 @@ module Golden
     HTML_WHITESPACE = /[\t\n\f\r ]+/
 
     class << self
-      def call(html)
+      # `strict: true` is the preserve-mode form: text verbatim, whitespace
+      # kept, only the fragment's own edges trimmed. The normal form is blind to
+      # whitespace between siblings and at text boundaries by design; the
+      # strict form is for the components whose output is text.
+      def call(html, strict: false)
         out = +""
-        parse(html).each { |node| emit(node, 0, out, :normal) }
-        out
+        parse(html).each { |node| emit(node, 0, out, strict ? :preserve : :normal) }
+        strict ? out.strip : out
       end
 
       # Every fragment is parsed inside a `<template>`, and that is not
