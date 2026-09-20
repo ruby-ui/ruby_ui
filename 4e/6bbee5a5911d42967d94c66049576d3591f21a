@@ -1,0 +1,19 @@
+design/v2/follow-up-issues.md
+  s_02296ba27f582b::t_046f2b4902db6e 4-5,114,126,138,149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4e6bbee5a5911d42967d94c66049576d3591f21a",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "unknown"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
