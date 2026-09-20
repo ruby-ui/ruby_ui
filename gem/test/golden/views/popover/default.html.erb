@@ -1,0 +1,1 @@
+<%= render RubyUI::Popover.new do %><%= render RubyUI::PopoverTrigger.new(class: "w-full") do %><%= render RubyUI::Button.new(variant: :outline) do %>Open Popover<% end %><% end %><%= render RubyUI::PopoverContent.new(class: "w-40") do %><%= render RubyUI::Link.new(href: "/profile", variant: :ghost) do %>Profile<% end %><% end %><% end %>
