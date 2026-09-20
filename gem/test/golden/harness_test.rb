@@ -23,16 +23,33 @@ class GoldenHarnessTest < Minitest::Test
     end
   end
 
+  def test_rejects_an_unbounded_range_before_materialising_it
+    # An endless range cannot be turned into an Array at all: if the guard ran
+    # after `to_a`, this would raise RangeError from Ruby, not our ArgumentError.
+    Golden::Harness.render do
+      error = assert_raises(ArgumentError) { Golden::Harness.next_rand(1..) }
+
+      assert_match(/refusing to pin/, error.message)
+    end
+  end
+
   def test_rejects_a_numeric_range_over_the_pin_limit
     Golden::Harness.render do
       assert_raises(ArgumentError) { Golden::Harness.next_rand(1..(Golden::Harness::MAX_PINNED_RANGE + 1)) }
     end
   end
 
-  def test_pins_the_shape_1_6_uses
-    Golden::Harness.render do
-      assert_includes 50..89, Golden::Harness.next_rand(50..89)
+  def test_pins_rand_to_the_same_value_on_every_render
+    # The property the snapshots rely on: a component's rand(50..89) yields the
+    # same number on every scenario render, not merely a number in range.
+    values = Array.new(2) do
+      value = nil
+      Golden::Harness.render { value = Golden::Harness.next_rand(50..89) }
+      value
     end
+
+    assert_equal values.first, values.last
+    assert_includes 50..89, values.first
   end
 
   private
