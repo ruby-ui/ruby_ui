@@ -1,0 +1,59 @@
+gem/test/probes/ruby_ui/probes/fallback.html.erb
+  s_02296ba27f582b::t_3203764b895f4c 1
+gem/test/probes/views/probe/div_nested.html.erb
+  s_02296ba27f582b::t_755295cb346bfa 1
+gem/test/probes/ruby_ui/probes/rootless.rb
+  s_02296ba27f582b::t_de8c1671d46042 1-15
+gem/test/ruby_ui/component_test.rb
+  s_02296ba27f582b::t_268d8d2c2b53f7 1-111
+gem/test/probes/ruby_ui/probes/fallback.rb
+  s_02296ba27f582b::t_05411ab329183c 1-15
+gem/test/probes/ruby_ui/probes/with_id.html.erb
+  s_02296ba27f582b::t_007516fa2607b9 1
+gem/test/probes/ruby_ui/probes/with_id.rb
+  s_02296ba27f582b::t_5f72618b88228e 1-15
+gem/test/probes/views/probe/fallback_empty.html.erb
+  s_02296ba27f582b::t_45bd427ba071a8 1
+gem/test/probes/ruby_ui/probes/div.rb
+  s_02296ba27f582b::t_fcd9ba6f1c6727 1-14
+gem/test/probes/ruby_ui/probes/rootless.html.erb
+  s_02296ba27f582b::t_75db59999a1705 1
+gem/test/probes/ruby_ui/probes/frame.rb
+  s_02296ba27f582b::t_da4eee7d6458c2 1-14
+gem/test/probes/views/probe/fallback_blank.html.erb
+  s_02296ba27f582b::t_82655517a27d28 1-2
+gem/test/probes/ruby_ui/probes/bare.rb
+  s_02296ba27f582b::t_0186db32f3abf7 1-9
+gem/test/probes/views/probe/div_default.html.erb
+  s_02296ba27f582b::t_3ec6d8b90ca085 1
+gem/lib/ruby_ui/component.rb
+  s_02296ba27f582b::t_444e23c886556d 1-112
+gem/test/probes/ruby_ui/probes/frame.html.erb
+  s_02296ba27f582b::t_ab3dff6de7d6c0 1
+gem/test/probes/views/probe/fallback_text.html.erb
+  s_02296ba27f582b::t_1d699a3ea7aa0f 1
+gem/test/probes/views/ruby_ui/probes/div.html.erb
+  s_02296ba27f582b::t_53adb299873369 1
+gem/test/probes/ruby_ui/probes/div.html.erb
+  s_02296ba27f582b::t_cc10282d1c032d 1
+gem/test/probes/views/probe/div_block_arg.html.erb
+  s_02296ba27f582b::t_224b6f0a95aff6 1
+gem/test/test_helper.rb
+  s_02296ba27f582b::t_e6db011eb627f7 61-69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e5e7a3e8c8f81d2b38e82a79586e40ef5c82e2a0",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
