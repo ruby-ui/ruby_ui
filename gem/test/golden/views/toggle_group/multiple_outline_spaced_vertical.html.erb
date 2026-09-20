@@ -1,0 +1,1 @@
+<%= render RubyUI::ToggleGroup.new(type: :multiple, name: "fmt", value: %w[bold italic], variant: :outline, size: :sm, spacing: 2, orientation: :vertical) do |group| %><%= group.ToggleGroupItem(value: "bold") { "B" } %><%= group.ToggleGroupItem(value: "italic") { "I" } %><%= group.ToggleGroupItem(value: "underline") { "U" } %><% end %>
