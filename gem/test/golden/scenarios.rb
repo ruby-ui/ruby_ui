@@ -532,32 +532,9 @@ Golden::Catalog.component "date_picker" do
 end
 
 Golden::Catalog.component "dialog" do
-  scenario "default" do
-    RubyUI.Dialog do
-      RubyUI.DialogTrigger { RubyUI.Button { "Open Dialog" } }
-      RubyUI.DialogContent do
-        RubyUI.DialogHeader do
-          RubyUI.DialogTitle { "RubyUI to the rescue" }
-          RubyUI.DialogDescription { "Build accessible apps with ease." }
-        end
-        RubyUI.DialogMiddle { "Body" }
-        RubyUI.DialogFooter do
-          RubyUI.Button(variant: :outline) { "Cancel" }
-          RubyUI.Button { "Save" }
-        end
-      end
-    end
-  end
-
-  %i[sm md lg xl].each do |size|
-    scenario "content_#{size}" do
-      RubyUI.DialogContent(size: size) { "body" }
-    end
-  end
-
-  scenario "open" do
-    RubyUI.Dialog(open: true) { RubyUI.DialogContent { "body" } }
-  end
+  scenario "default"
+  %i[sm md lg xl].each { |size| scenario "content_#{size}" }
+  scenario "open"
 end
 
 Golden::Catalog.component "dropdown_menu" do
