@@ -121,4 +121,58 @@ class LayerTest < ComponentTest
 
     assert_match(/component_roots/, error.message)
   end
+
+  def test_mixed_attrs_is_the_nested_hash_with_classes_merged
+    component = RubyUI::Probes::Div.new(class: "p-4", data: {x: 1})
+
+    assert_equal({class: "probe p-4", data: {probe: true, x: 1}}, component.mixed_attrs)
+    assert_equal({"class" => "probe p-4", "data-probe" => "", "data-x" => "1"}, component.attrs)
+  end
+
+  def test_mixed_attrs_is_frozen
+    assert_predicate RubyUI::Probes::Div.new.mixed_attrs, :frozen?
+  end
+
+  def test_the_sidecars_final_newline_is_not_output
+    sidecar = File.join(RubyUI::TestApp::ROOT, "test/probes/ruby_ui/probes/div.html.erb")
+    assert File.read(sidecar).end_with?("\n"), "the probe's sidecar must end with a newline for this test to mean anything"
+
+    assert_equal %(<div class="probe" data-probe="">x</div>), view.render(RubyUI::Probes::Div.new) { "x" }
+  end
+
+  def test_nested_components_emit_nothing_between_them
+    v = view
+    html = v.render(RubyUI::Probes::Div.new(id: "o")) { v.render(RubyUI::Probes::Div.new(id: "i")) { "x" } }
+
+    assert_equal %(<div class="probe" data-probe="" id="o"><div class="probe" data-probe="" id="i">x</div></div>), html
+  end
+
+  # A host's `class MyButton < RubyUI::Button`: defined under no component root,
+  # with no sidecar of its own.
+  class HostSubclass < RubyUI::Probes::Div
+  end
+
+  def test_a_subclass_without_a_sidecar_renders_its_nearest_ancestors
+    assert_equal %(<div class="probe" data-probe="">i</div>), view.render(RubyUI::Probes::Inherited.new) { "i" }
+    assert_equal %(<div class="probe" data-probe="">h</div>), view.render(HostSubclass.new) { "h" }
+  end
+
+  def test_a_subclass_with_its_own_sidecar_uses_it
+    assert_equal %(<p class="probe" data-probe="">o</p>), view.render(RubyUI::Probes::Overridden.new) { "o" }
+  end
+
+  # A host's app/components/my_button.rb: the class file directly under a
+  # root, where File.split gives "." for the prefix.
+  def test_a_class_directly_under_a_root_finds_its_sidecar
+    assert_equal "<i>r</i>", view.render(RootProbe.new) { "r" }
+  end
+
+  def test_the_contents_own_trailing_newline_survives
+    assert_equal %(<div class="probe" data-probe="">body\n</div>), view.render(RubyUI::Probes::Div.new) { "body\n" }
+  end
+
+  def test_erb_compiles_an_inline_template_through_herb
+    assert_raises(ActionView::SyntaxErrorInTemplate) { erb("<div><span></div>") }
+    assert_equal %(<div class="probe" data-probe="">Hello</div>), erb(%(<%= render RubyUI::Probes::Div.new do %>Hello<% end %>))
+  end
 end
