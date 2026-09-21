@@ -177,6 +177,9 @@ class LayerTest < ComponentTest
   end
 
   def test_the_sidecar_source_is_read_once_per_template_not_per_render
+    # Warm the template: ActionView reads the source to compile it, and the
+    # newline flag is read once more on the first render. After that, no read.
+    view.render(RubyUI::Probes::Div.new) { "warm" }
     template = RubyUI::Probes::Div.template
     reads = 0
     source = template.source
@@ -187,7 +190,7 @@ class LayerTest < ComponentTest
 
     3.times { view.render(RubyUI::Probes::Div.new) { "x" } }
 
-    assert_operator reads, :<=, 1, "Template#source rereads the file; render_in must not call it on every render"
+    assert_equal 0, reads, "Template#source rereads the file; render_in must not call it on every render"
   end
 
   # A sidecar file without a final newline: nothing is dropped, so content

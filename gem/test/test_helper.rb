@@ -89,11 +89,14 @@ class ComponentTest < Minitest::Test
   # Rails.root: ReActionView decides by the identifier, so an identifier under
   # the gem puts Herb in front of it (a malformed snippet raises), and a unit
   # test renders a composition without a fixture file. `render(inline:)` would
-  # go through Erubi instead.
+  # go through Erubi instead. The view is built before the handler is looked
+  # up: loading ActionView::Base fires the :action_view load hook in which
+  # ReActionView registers the handler — fetched earlier, it is still Erubi.
   def erb(source)
+    view = RubyUI::TestApp.view
     handler = ActionView::Template.handler_for_extension(:erb)
     identifier = File.join(RubyUI::TestApp::ROOT, "test/inline.html.erb")
-    ActionView::Template.new(source, identifier, handler, locals: [], format: :html).render(RubyUI::TestApp.view, {})
+    ActionView::Template.new(source, identifier, handler, locals: [], format: :html).render(view, {})
   end
 
   # In an attribute value that `tag.attributes` serialized, `->` is `-&gt;`
