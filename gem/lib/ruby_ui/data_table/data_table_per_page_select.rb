@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTablePerPageSelect < Base
+  class DataTablePerPageSelect < Component
+    attr_reader :name, :options
+
     def initialize(path:, name: "per_page", value: nil, frame_id: nil, options: [5, 10, 25, 50], **attrs)
       @path = path
       @name = name
@@ -11,25 +13,24 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template
-      form_attrs = {action: @path, method: "get"}
-      form_attrs[:data] = {turbo_frame: @frame_id} if @frame_id
-
-      form(**attrs.merge(form_attrs)) do
-        render RubyUI::NativeSelect.new(name: @name, onchange: safe("this.form.requestSubmit()")) do
-          @options.each do |opt|
-            option_attrs = {value: opt.to_s}
-            option_attrs[:selected] = true if opt.to_s == @value.to_s
-            option(**option_attrs) { plain opt.to_s }
-          end
-        end
-      end
+    def form_attrs
+      form = {action: @path, method: "get"}
+      form[:data] = {turbo_frame: @frame_id} if @frame_id
+      Attributes.flat(mixed_attrs.merge(form))
     end
 
-    private
+    def option_attrs(option)
+      attributes = {value: option.to_s}
+      attributes[:selected] = true if option.to_s == @value.to_s
+      Attributes.flat(attributes)
+    end
 
-    def default_attrs
-      {}
+    # 1.6 passed the handler through Phlex's `safe`. NativeSelect is still
+    # Phlex and refuses an `on*` attribute unless its value is a SafeObject;
+    # the 2.0 Attributes has no such bypass, so this goes when NativeSelect
+    # migrates and Phase 2.2 chooses between a bypass and a Stimulus action.
+    def onchange
+      Phlex::SGML::SafeValue.new("this.form.requestSubmit()")
     end
   end
 end

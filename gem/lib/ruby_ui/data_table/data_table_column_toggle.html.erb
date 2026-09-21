@@ -1,0 +1,17 @@
+<div <%= tag.attributes(component.attrs) %>><%= render RubyUI::DropdownMenu.new do %><%=
+  render RubyUI::DropdownMenuTrigger.new do %><%=
+    render RubyUI::Button.new(variant: :outline, size: :sm) do %><%= component.label %><svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="w-4 h-4 ml-1"
+    ><polyline points="6 9 12 15 18 9"></polyline></svg><% end %><% end %><%=
+  render RubyUI::DropdownMenuContent.new do %><%
+    component.columns.each do |column| %><label class="flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm cursor-pointer hover:bg-accent"><input <%= tag.attributes(component.checkbox_attrs(column)) %>><span><%= column[:label] %></span></label><%
+    end %><% end %><% end %></div>

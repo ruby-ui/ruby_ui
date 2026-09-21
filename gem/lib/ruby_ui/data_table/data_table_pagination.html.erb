@@ -1,0 +1,13 @@
+<% if component.paginate? %><%= render RubyUI::Pagination.new(class: "mx-0 w-auto justify-end", **component.mixed_attrs) do %><%=
+  render RubyUI::PaginationContent.new do %><%
+    if component.current <= 1 %><li><span class="opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm"><%= component.prev_label %></span></li><%
+    else %><%= render RubyUI::PaginationItem.new(href: component.page_href(component.current - 1)) do %><%= component.prev_label %><% end %><%
+    end %><%
+    component.windowed_pages.each do |page| %><%
+      if page == :gap %><%= render RubyUI::PaginationEllipsis.new %><%
+      else %><%= render RubyUI::PaginationItem.new(href: component.page_href(page), active: page == component.current) do %><%= page %><% end %><%
+      end %><%
+    end %><%
+    if component.current >= component.total %><li><span class="opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm"><%= component.next_label %></span></li><%
+    else %><%= render RubyUI::PaginationItem.new(href: component.page_href(component.current + 1)) do %><%= component.next_label %><% end %><%
+    end %><% end %><% end %><% end %>

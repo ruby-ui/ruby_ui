@@ -452,32 +452,12 @@ end
 
 Golden::Catalog.component "data_table" do
   scenario "full_frame"
-
-  scenario "pagination_first_page" do
-    RubyUI.DataTablePagination(page: 1, per_page: 10, total_count: 30, path: "/x", query: {})
-  end
-
-  scenario "pagination_wide_window" do
-    RubyUI.DataTablePagination(page: 10, per_page: 1, total_count: 20, path: "/x", query: {}, window: 2)
-  end
-
-  scenario "pagination_manual_adapter" do
-    RubyUI.DataTablePagination(
-      with: RubyUI::DataTableManualAdapter.new(page: 2, per_page: 5, total_count: 21),
-      path: "/x",
-      query: {}
-    )
-  end
-
-  scenario "sort_head_unsorted" do
-    RubyUI.DataTableSortHead(column_key: :name, label: "Name", path: "/x", query: {})
-  end
-
+  scenario "pagination_first_page"
+  scenario "pagination_wide_window"
+  scenario "pagination_manual_adapter"
+  scenario "sort_head_unsorted"
   scenario "expand_toggle_expanded"
-
-  scenario "search_without_debounce" do
-    RubyUI.DataTableSearch(path: "/x", debounce: false, preserved_params: {"sort" => "name"})
-  end
+  scenario "search_without_debounce"
 end
 
 Golden::Catalog.component "date_picker" do

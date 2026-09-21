@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTableSearch < Base
+  class DataTableSearch < Component
+    attr_reader :name, :value, :placeholder
+
     def initialize(path:, name: "search", value: nil, frame_id: nil, placeholder: "Search...", debounce: 300, preserved_params: {}, **attrs)
       @path = path
       @name = name
@@ -13,24 +15,26 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template
-      form_attrs = {method: "get", action: @path}
-      form_attrs[:data] = form_data
+    # 1.6 merged the form's own attributes over the caller's — a caller's
+    # `data:` gave way to the controller wiring; `merge` in that direction.
+    def form_attrs
+      Attributes.flat(mixed_attrs.merge(method: "get", action: @path, data: form_data))
+    end
 
-      form(**attrs.merge(form_attrs)) do
-        render RubyUI::Input.new(
-          type: :search,
-          name: @name,
-          value: @value,
-          placeholder: @placeholder,
-          autocomplete: "off"
-        )
-        @preserved_params.each do |k, v|
-          next if v.nil? || (v.respond_to?(:empty?) && v.empty?)
-          next if k.to_s == @name
-          input(type: "hidden", name: k.to_s, value: v.to_s)
-        end
+    # [name, value] for the hidden inputs that carry the other query parameters
+    # through a search. Blank values and the search parameter itself are
+    # skipped, as in 1.6.
+    def preserved_inputs
+      @preserved_params.filter_map do |key, value|
+        next if value.nil? || (value.respond_to?(:empty?) && value.empty?)
+        next if key.to_s == @name
+
+        [key.to_s, value.to_s]
       end
+    end
+
+    def hidden_input_attrs(name, value)
+      Attributes.flat(type: "hidden", name: name, value: value)
     end
 
     private
