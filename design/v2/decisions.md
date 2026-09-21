@@ -314,6 +314,11 @@ none exists. The four largest 2.1 sidecars — `DialogContent`,
 `DataTableColumnToggle`, `DataTableSortHead`, `DataTablePagination` — were
 written out in plan 2.1 and read before it executed; they are the readability
 test decision 8 named.
+Two raw-byte differences the lanes do not see and a raw diff would: Herb
+emits a `\n` (indentation stripped) where a start tag breaks between
+attributes, so the raw output reads `<svg\nxmlns=…>`; and `SelectItem`'s
+class string has a space where 1.6 had a stray tab. Both parse to the same
+attributes; the contract is the parsed form, not the bytes.
 **Cost:** Herb's formatter would reintroduce the whitespace between elements;
 that is question 4 of spec §9.2 for the upstream conversation. **What would
 reverse it:** the maintainer judging the composites unreadable, at which point
@@ -357,6 +362,15 @@ every enumerated argument — `DialogContent#size`, `variant` and `size` on
 `Toggle` and `ToggleGroup`, `ToggleGroup`'s `type` and `orientation`, the
 item-level overrides — because the golden suite is the 1.6 contract and
 String coercion is 2.0 behaviour.
+
+**Also recorded here (final review of plan 2.1):** `group.ToggleGroupItem(…)`
+returns the item's markup, and `render_in` captures the block with
+ActionView's `capture`, which keeps a block's return value only when the
+block output nothing. `<%= g.ToggleGroupItem(…) %>` in ERB outputs, so the
+fixtures and every test render every item; a Ruby block that calls the
+method twice and returns the second renders one item where 1.6 rendered two.
+Ordinary ActionView semantics, kept; the remedy (`safe_join`, or output each
+call) is in spec §4.3, and the 2.2 upgrade notes carry it.
 
 ## 15. `docs/` pins a git ref of `main`, not RubyGems 1.6.0 — 2026-09-20
 

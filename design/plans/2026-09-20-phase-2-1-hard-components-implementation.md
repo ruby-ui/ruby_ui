@@ -3860,7 +3860,7 @@ git diff --stat v2/fixtures -- gem/test/golden/snapshots gem/test/golden/strict 
 Expected: no output (nothing under those paths changed). Then the shape of the migration:
 
 ```bash
-grep -rlE "Phlex|view_template|< Base\b" gem/lib/ruby_ui/dialog gem/lib/ruby_ui/select gem/lib/ruby_ui/toggle gem/lib/ruby_ui/toggle_group gem/lib/ruby_ui/theme_toggle gem/lib/ruby_ui/data_table --include='*.rb' | grep -v _docs.rb
+grep -rlE "Phlex::|view_template|< Base\b" gem/lib/ruby_ui/dialog gem/lib/ruby_ui/select gem/lib/ruby_ui/toggle gem/lib/ruby_ui/toggle_group gem/lib/ruby_ui/theme_toggle gem/lib/ruby_ui/data_table --include='*.rb' | grep -v _docs.rb
 ```
 
 Expected: exactly one file, `gem/lib/ruby_ui/data_table/data_table_per_page_select.rb` (the `Phlex::SGML::SafeValue` for NativeSelect, with its comment).

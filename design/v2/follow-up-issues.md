@@ -155,6 +155,19 @@ Ordered by user impact.
   `button` is meaningless there. Invalid, harmless.
 - **Fix:** drop `type:` from Link's `default_attrs`; re-record `link/*`.
 
+## 12. `RegistryBuilder` reads a component's description from its first file — now a sidecar
+
+- **Where:** `mcp/lib/ruby_ui/mcp/builders/registry_builder.rb`,
+  `extract_description`: with no `Docs::Header` and no markdown heading it
+  takes the first comment line of `files.first`. Files are sorted, so
+  `x.html.erb` now precedes `x.rb` and the fallback finds no `#` line;
+  `toggle`, `toggle_group` and `data_table` went from
+  `"frozen_string_literal: true"` (already not a description) to `""`.
+- **Effect:** an empty `description` for every migrated component without a
+  docs header — universal once Phase 2.2 gives every component a sidecar.
+- **Fix:** skip non-`.rb` files and the `frozen_string_literal` magic comment
+  in the fallback, or drop the fallback; rebuild the registry. Before 2.2.
+
 ## Rejected review findings, for the record
 
 Two findings from the same review were checked and are wrong; they are

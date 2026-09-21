@@ -171,6 +171,14 @@ Differences from 1.6's `Base` to carry into the documentation:
   — a host's `class MyButton < RubyUI::Button` keeps rendering as it did when
   it inherited `view_template`; `ToggleGroupItem < Toggle` has its own sidecar
   and uses it (decision 13).
+- A block is captured with ActionView's `capture`: what it *outputs* is the
+  content, and its return value counts only when it output nothing. In ERB
+  every `<%= %>` outputs, so nothing changes. From a Ruby block — a host
+  rendering from Ruby, a unit test — a component-scoped method that returns
+  markup (`group.ToggleGroupItem(…)`) must be output, not just called:
+  `safe_join([group.ToggleGroupItem(…), group.ToggleGroupItem(…)])`, or one
+  call per block. Calling it twice and returning the second renders only the
+  second; 1.6's Phlex `render` appended to the buffer, so both rendered.
 - The sidecar is found through a lookup **scoped to the root that holds the
   class file** (`RubyUI.component_roots`, §4.4), not through the application's
   view-path chain: the host's view paths are never consulted, so a host
