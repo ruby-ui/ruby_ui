@@ -25,6 +25,10 @@
 # compare against the same snapshots; while a scenario keeps its Phlex block,
 # that lane records and the ERB lane compares.
 #
+# A scenario whose component has migrated to 2.0 declares no block: its ERB
+# fixture is its only lane and the one that records (decision 14). The Phlex
+# block it had is in this file's history; the fixture is its translation.
+#
 # Variant coverage is enumerative where a component exposes a closed set:
 # Button and Link have six variants and four sizes, Badge has 28 colours, and
 # those are the cases a restyle regresses.

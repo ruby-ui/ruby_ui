@@ -143,7 +143,11 @@ Differences from 1.6's `Base` to carry into the documentation:
 
 - `attrs` keys are Strings (`attrs["class"]`), the flat form `tag.attributes`
   consumes. 1.6 code reading `attrs[:class]` — `PaginationItem` — changes one
-  character.
+  character. `mixed_attrs` is the nested, Symbol-keyed hash after `mix` and
+  the class merge — 1.6's `attrs` — for the 17 sites that forward attributes
+  to another component (`Checkbox.new(**mixed_attrs)`) or merge more in before
+  serializing; forwarding the flat form would put `"data-action"` beside a
+  neighbour's `data: {action:}` (decision 11).
 - `true` serializes as `""`; Rails then emits `disabled="disabled"` for HTML
   boolean attributes and `aria-x=""` for the rest. Both canonicalize like
   Phlex's bare attribute.
@@ -159,6 +163,14 @@ Differences from 1.6's `Base` to carry into the documentation:
 - `render_in` assigns `content` on every call — `nil` when there is no block.
   The gate's version assigned it only with a block, so an instance rendered
   twice repeated its first content.
+- The sidecar file's final newline is not output. Every file ends with one,
+  and rendered inside a parent it was a text node after the component; a
+  sidecar itself emits no whitespace between elements — a line breaks only
+  inside an ERB tag or inside a start tag between attributes (decision 12).
+- A class with no sidecar beside its own file renders its nearest ancestor's
+  — a host's `class MyButton < RubyUI::Button` keeps rendering as it did when
+  it inherited `view_template`; `ToggleGroupItem < Toggle` has its own sidecar
+  and uses it (decision 13).
 - The sidecar is found through a lookup **scoped to the root that holds the
   class file** (`RubyUI.component_roots`, §4.4), not through the application's
   view-path chain: the host's view paths are never consulted, so a host
@@ -322,9 +334,11 @@ code.
   `*_docs.rb`; decision 11 (Phase 2.3) says what happens to those.
 - **Fresh-app install test** — moved to Phase 2.4 (decision 9): it only means
   something once the installer writes the 2.0 initializer.
-- Point `docs/Gemfile` at the published `ruby_ui` 1.6 instead of
-  `path: "../gem"`, so the site keeps building and the CI Docs job stays green
-  while the gem is mid-migration. Phase 3 reverts it.
+- Point `docs/Gemfile` at the gem at `main`'s commit — a git source with
+  `glob: "gem/*.gemspec"` — instead of `path: "../gem"`, so the site keeps
+  building and the CI Docs job stays green while the gem is mid-migration.
+  Not the published 1.6.0, which is 21 files behind `main` (decision 15).
+  Phase 3 reverts it.
 
 **Acceptance.** The layer is in the gem with its own tests, guards included.
 The ERB lane is green for Button's 15 scenarios against the frozen snapshots
@@ -333,11 +347,14 @@ scenario (188). All five CI jobs are green with the registry unchanged.
 
 #### 2.1 The hard components first
 
-Dialog (9 classes), Select (8), ToggleGroup and Toggle (3), Data Table (32).
-About 52 classes, and they are the ones that exercise everything that can go
-wrong: a block that receives the component, a generated id, a component that
-renders no root element, a `<turbo-frame>` root, one component reading
-another's computed `attrs`, a `style:` hash, merged `data-action` ordering.
+Dialog (8 classes), Select (8), Toggle and ToggleGroup (3), Data Table (14,
+plus 3 adapters that emit no HTML) and ThemeToggle (1, pulled in because it
+renders Toggle — decision 14). 34 classes, and they are the ones that
+exercise everything that can go wrong: a block that receives the component, a
+generated id, a component that renders no root element, a `<turbo-frame>`
+root, one component forwarding its computed attributes to another, a second
+attribute hash mixed for a wrapper element, merged `data-action` ordering, a
+CSRF token through the view context, an inline handler for a Phlex neighbour.
 
 Dialog is already proved. The other three are not.
 
@@ -346,23 +363,22 @@ Herb's component-tag visitor emits a bare `do` with no block parameter, so they
 cannot be written as tags. They keep the `render X.new do |group|` form, which
 stays available and documented. This is item 2 of §9.2.
 
-**Acceptance.** The 18 snapshots of these four components identical to the
-frozen contract; the 1.6 Stimulus controllers unedited.
+**Acceptance.** The 22 scenarios of these five families identical to the
+frozen contract in both forms, through their ERB fixtures alone; the 1.6
+Stimulus controllers unedited; every unit test ported, none deleted.
 
-Decide whether a subclass inherits its parent's sidecar: a host `class
-MyButton < RubyUI::Button` has no sidecar of its own, and 1.6 inherited
-`view_template`. Either `template` walks `ancestors` to the first class with
-a sidecar, or the difference is listed in §4.3.
+Decided in 2.1 (decision 13): a subclass with no sidecar of its own renders
+its nearest ancestor's. Plan: `design/plans/2026-09-20-phase-2-1-hard-components-implementation.md`.
 
 #### 2.2 The bulk
 
 The remaining ~50 components, in batches.
 
 **Definition of done, per component.** A plain Ruby class with no Phlex; a
-sidecar that emits no whitespace Phlex did not (decision 10); the canonical
+sidecar that emits no whitespace Phlex did not (decisions 10 and 12); the canonical
 and the strict snapshot matching for every one of its scenarios (decision
-8); a scenario passing the String form of every enum
-attribute; **its existing unit tests in `gem/test/ruby_ui/` ported to the new
+8); a unit test passing the String form of every enum
+attribute (decision 14); **its existing unit tests in `gem/test/ruby_ui/` ported to the new
 harness, none deleted** — they are the inventory of what the component promises
 beyond its markup; the Stimulus controller untouched; the MCP registry rebuilt.
 
@@ -664,6 +680,12 @@ To settle with Herb's maintainer:
    release that accepts it — 0.4.1 pins `herb < 0.11.0`, so both are needed.
    Decision D is designed so the answer changes the announcement, not the
    architecture.
+4. **Formatting whitespace-sensitive markup.** A 2.0 sidecar keeps no
+   whitespace between elements, because 1.6 emitted none and a browser renders
+   it in an inline context; the layout puts line breaks only inside tags
+   (decision 12). Herb's formatter would reintroduce the whitespace. Is a mode
+   that never adds text between `>` and `<` — Prettier's
+   `htmlWhitespaceSensitivity: strict` — on the roadmap?
 
 ### 9.3 Codemod — revisit after Phase 2
 

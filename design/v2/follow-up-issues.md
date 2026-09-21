@@ -30,10 +30,11 @@ Ordered by user impact.
 - **Fix:** render the search and per-page forms outside the bulk form, or
   make their controls reference it with the `form=` attribute; re-record
   `data_table/*`.
-- **2.0 note:** Herb's `NestingValidator` will likely reject this at compile
-  time, so the DataTable migration ports the three forms as they are and then
-  restructures them — a template adjustment with a reviewed snapshot change,
-  on the 2.0 line, since `main` stays as is.
+- **2.0 note (amended 2026-09-20, plan 2.1):** each sidecar compiles alone,
+  so Herb never sees one component's `<form>` inside another's; the DataTable
+  migration ported the three forms as they are and `data_table/full_frame`
+  still holds all three. The restructure is a reviewed snapshot change on the
+  2.0 line, after Phase 2.1.
 
 ## 2. `aria-*` boolean attributes serialize as the empty string — #538
 
