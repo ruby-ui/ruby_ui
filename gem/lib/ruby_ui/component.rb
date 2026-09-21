@@ -68,6 +68,11 @@ module RubyUI
   class Component
     attr_reader :attrs, :mixed_attrs, :content
 
+    # Whether a compiled Template's sidecar source ends with a newline,
+    # keyed by the Template object itself so a reload (a new Template) is
+    # never stale.
+    FINAL_NEWLINE = ObjectSpace::WeakMap.new
+
     def initialize(**user_attrs)
       mixed = Attributes.mix(default_attrs, user_attrs)
       mixed[:class] = Attributes.merge_classes(mixed[:class]) if mixed[:class]
@@ -87,7 +92,7 @@ module RubyUI
       # The file's final newline, when the file has one; a sidecar never
       # carries a trim marker (decision 12), so the last byte of the source
       # is the last byte of the output.
-      (template.source.end_with?("\n") && rendered.end_with?("\n")) ? rendered.chomp.html_safe : rendered
+      (self.class.source_ends_with_newline?(template) && rendered.end_with?("\n")) ? rendered.chomp.html_safe : rendered
     end
 
     # The view context, for a component that needs a Rails helper from Ruby
@@ -139,9 +144,25 @@ module RubyUI
       end
 
       # Memoized on first use: set RubyUI.component_roots in an initializer,
-      # before any render. nil when the file is under no root.
+      # before any render. nil when the file is under no root; `defined?`
+      # (not `||=`) so that nil is memoized too, instead of re-scanning
+      # every root on every call for a class under none of them.
       def component_root
-        @component_root ||= RubyUI.component_roots.map(&:to_s).find { |root| source_file.start_with?("#{root}/") }
+        return @component_root if defined?(@component_root)
+
+        @component_root = RubyUI.component_roots.map(&:to_s).find { |root| source_file.start_with?("#{root}/") }
+      end
+
+      # Whether the sidecar file ends with a newline, read once per compiled
+      # Template: Template#source rereads the file on every call, and Rails'
+      # reloader builds a new Template after an edit, so the object is the
+      # right cache key.
+      def source_ends_with_newline?(template)
+        if FINAL_NEWLINE.key?(template)
+          FINAL_NEWLINE[template]
+        else
+          FINAL_NEWLINE[template] = template.source.end_with?("\n")
+        end
       end
     end
 

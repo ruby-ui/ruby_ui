@@ -17,15 +17,17 @@ module RubyUI
       Attributes.flat(form.merge(mixed_attrs))
     end
 
+    def token_input_attrs
+      Attributes.flat(type: "hidden", name: "authenticity_token", value: csrf_token)
+    end
+
+    private
+
     # In a Rails request the view context answers form_authenticity_token.
     # Outside one (the gem's tests) it does not, and the placeholder is what
     # the golden snapshots recorded.
     def csrf_token
       helpers.respond_to?(:form_authenticity_token) ? helpers.form_authenticity_token : "csrf-token-placeholder"
-    end
-
-    def token_input_attrs
-      Attributes.flat(type: "hidden", name: "authenticity_token", value: csrf_token)
     end
   end
 end
