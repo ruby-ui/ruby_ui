@@ -1,0 +1,43 @@
+gem/lib/ruby_ui/theme_toggle/theme_toggle.rb
+  s_d12e1df3e04021::t_64495128ff2294 4
+gem/lib/ruby_ui/theme_toggle/theme_toggle.html.erb
+  s_d12e1df3e04021::t_ad51e2ff821771 1
+gem/lib/ruby_ui/toggle/toggle.rb
+  s_d12e1df3e04021::t_b21ba097db9b37 4,31-32,48-49,55-57,60-66,69
+  s_d12e1df3e04021::t_23a6f167f31cc5 70
+gem/lib/ruby_ui/toggle_group/toggle_group.rb
+  s_d12e1df3e04021::t_2eb242874f4940 4,30-31,49-50,52-69
+gem/test/ruby_ui/theme_toggle_test.rb
+  s_d12e1df3e04021::t_dede2134ca238f 7,13,16,20
+gem/test/golden/scenarios.rb
+  s_d12e1df3e04021::t_54bb0c04e010f6 1020-1022,1026-1028
+  s_d12e1df3e04021::t_f8ada4fe0f2ff8 983
+gem/test/ruby_ui/toggle_test.rb
+  s_d12e1df3e04021::t_be12fd85eae9d9 7,15,21,27,32,37,42,47,52,57,59,63,68-83
+gem/lib/ruby_ui/toggle_group/toggle_group.html.erb
+  s_d12e1df3e04021::t_c3d87dca2e2fb8 1
+gem/lib/ruby_ui/toggle/toggle.html.erb
+  s_d12e1df3e04021::t_6891b2e4caf999 1
+gem/test/ruby_ui/toggle_group_test.rb
+  s_d12e1df3e04021::t_3045ed76399408 6-10,12,18,25,35,42,48,53,60,66,73,79,85,92-121
+gem/lib/ruby_ui/toggle_group/toggle_group_item.html.erb
+  s_d12e1df3e04021::t_1216d1fb93015e 1
+mcp/data/registry.json
+  s_d12e1df3e04021::t_a3e98a4de4fbf4 2750-2753,2756,2845,2847-2850,2853,2871,2873-2876,2879,2885-2888,2891
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "afffff5931718532eb40f9649ac9bb6bf2ffbb49",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
