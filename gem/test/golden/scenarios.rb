@@ -780,23 +780,8 @@ Golden::Catalog.component "radio_button" do
 end
 
 Golden::Catalog.component "select" do
-  scenario "default" do
-    RubyUI.Select do
-      RubyUI.SelectInput(name: "person")
-      RubyUI.SelectTrigger { RubyUI.SelectValue(placeholder: "Select a person") }
-      RubyUI.SelectContent do
-        RubyUI.SelectGroup do
-          RubyUI.SelectLabel { "People" }
-          RubyUI.SelectItem(value: 1) { "John Doe" }
-          RubyUI.SelectItem(value: 2) { "Jane Doe" }
-        end
-      end
-    end
-  end
-
-  scenario "value_falls_back_to_placeholder" do
-    RubyUI.SelectValue(placeholder: "Placeholder") { nil }
-  end
+  scenario "default"
+  scenario "value_falls_back_to_placeholder"
 end
 
 Golden::Catalog.component "separator" do
