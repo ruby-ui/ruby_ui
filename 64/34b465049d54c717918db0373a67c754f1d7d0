@@ -1,0 +1,33 @@
+gem/test/probes/ruby_ui/probes/unterminated.html.erb
+  s_d12e1df3e04021::t_284ee3fecd185b 1
+gem/lib/ruby_ui/data_table/data_table_form.rb
+  s_d12e1df3e04021::t_311de218245629 20-25
+gem/test/probes/ruby_ui/probes/unterminated.rb
+  s_d12e1df3e04021::t_087d46f98882ef 1-10
+gem/test/ruby_ui/component_test.rb
+  s_d12e1df3e04021::t_abd1dc6dd248d4 95,100
+  s_d12e1df3e04021::t_169f1ccedbe53d 183-186
+  s_d12e1df3e04021::t_024760a1f3469b 178-182,187-200
+gem/lib/ruby_ui/component.rb
+  s_d12e1df3e04021::t_fc1c64ee8fff55 95
+  s_d12e1df3e04021::t_d3494a0b683e1d 147-149,151-165
+  s_d12e1df3e04021::t_b29b7df2e7f325 71-75
+mcp/data/registry.json
+  s_d12e1df3e04021::t_e02414cee71d41 1221
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "6434b465049d54c717918db0373a67c754f1d7d0",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
