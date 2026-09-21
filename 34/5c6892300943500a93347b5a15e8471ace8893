@@ -1,0 +1,21 @@
+gem/test/test_helper.rb
+  s_d12e1df3e04021::t_6e88e8226a460d 92-94,96,99
+gem/test/ruby_ui/component_test.rb
+  s_d12e1df3e04021::t_4e86007da4d60f 180-182,193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "345c6892300943500a93347b5a15e8471ace8893",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
