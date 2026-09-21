@@ -20,10 +20,6 @@ module RubyUI
       )
     end
 
-    def view_template(&block)
-      button(**attrs, &block)
-    end
-
     private
 
     def default_attrs

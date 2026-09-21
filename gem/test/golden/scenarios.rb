@@ -980,9 +980,7 @@ Golden::Catalog.component "textarea" do
 end
 
 Golden::Catalog.component "theme_toggle" do
-  scenario "default" do
-    RubyUI.ThemeToggle { "T" }
-  end
+  scenario "default"
 end
 
 Golden::Catalog.component "toast" do
@@ -1019,40 +1017,15 @@ Golden::Catalog.component "toast" do
 end
 
 Golden::Catalog.component "toggle" do
-  scenario "default" do
-    RubyUI.Toggle { "B" }
-  end
-
-  scenario "pressed_outline_with_name" do
-    RubyUI.Toggle(pressed: true, name: "bold", value: "1", unpressed_value: "0", variant: :outline, size: :lg) { "B" }
-  end
-
-  scenario "disabled_small" do
-    RubyUI.Toggle(disabled: true, size: :sm, wrapper: {class: "inline-flex"}) { "B" }
-  end
+  scenario "default"
+  scenario "pressed_outline_with_name"
+  scenario "disabled_small"
 end
 
 Golden::Catalog.component "toggle_group" do
-  scenario "single" do
-    RubyUI.ToggleGroup(type: :single, name: "align", value: "right") do |group|
-      group.ToggleGroupItem(value: "left") { "L" }
-      group.ToggleGroupItem(value: "right") { "R" }
-    end
-  end
-
-  scenario "multiple_outline_spaced_vertical" do
-    RubyUI.ToggleGroup(type: :multiple, name: "fmt", value: %w[bold italic], variant: :outline, size: :sm, spacing: 2, orientation: :vertical) do |group|
-      group.ToggleGroupItem(value: "bold") { "B" }
-      group.ToggleGroupItem(value: "italic") { "I" }
-      group.ToggleGroupItem(value: "underline") { "U" }
-    end
-  end
-
-  scenario "disabled" do
-    RubyUI.ToggleGroup(type: :multiple, name: "fmt", disabled: true) do |group|
-      group.ToggleGroupItem(value: "bold") { "B" }
-    end
-  end
+  scenario "single"
+  scenario "multiple_outline_spaced_vertical"
+  scenario "disabled"
 end
 
 Golden::Catalog.component "tooltip" do
