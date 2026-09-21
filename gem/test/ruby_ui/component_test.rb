@@ -92,12 +92,12 @@ class LayerTest < ComponentTest
     # is the same one.
     original = RubyUI.component_roots
     RubyUI.component_roots = [RubyUI::TestApp::ROOT, *original]
-    RubyUI::Probes::Div.instance_variable_set(:@component_root, nil)
+    RubyUI::Probes::Div.remove_instance_variable(:@component_root) if RubyUI::Probes::Div.instance_variable_defined?(:@component_root)
 
     assert_equal canonical(%(<div class="probe" data-probe="">Hello</div>)), canonical(render_erb("probe/div_default"))
   ensure
     RubyUI.component_roots = original
-    RubyUI::Probes::Div.instance_variable_set(:@component_root, nil)
+    RubyUI::Probes::Div.remove_instance_variable(:@component_root) if RubyUI::Probes::Div.instance_variable_defined?(:@component_root)
   end
 
   def test_component_roots_are_registered_resolvers_the_reloader_can_see
@@ -120,5 +120,85 @@ class LayerTest < ComponentTest
     error = assert_raises(ArgumentError) { Homeless.template }
 
     assert_match(/component_roots/, error.message)
+  end
+
+  def test_mixed_attrs_is_the_nested_hash_with_classes_merged
+    component = RubyUI::Probes::Div.new(class: "p-4", data: {x: 1})
+
+    assert_equal({class: "probe p-4", data: {probe: true, x: 1}}, component.mixed_attrs)
+    assert_equal({"class" => "probe p-4", "data-probe" => "", "data-x" => "1"}, component.attrs)
+  end
+
+  def test_mixed_attrs_is_frozen
+    assert_predicate RubyUI::Probes::Div.new.mixed_attrs, :frozen?
+  end
+
+  def test_the_sidecars_final_newline_is_not_output
+    sidecar = File.join(RubyUI::TestApp::ROOT, "test/probes/ruby_ui/probes/div.html.erb")
+    assert File.read(sidecar).end_with?("\n"), "the probe's sidecar must end with a newline for this test to mean anything"
+
+    assert_equal %(<div class="probe" data-probe="">x</div>), view.render(RubyUI::Probes::Div.new) { "x" }
+  end
+
+  def test_nested_components_emit_nothing_between_them
+    v = view
+    html = v.render(RubyUI::Probes::Div.new(id: "o")) { v.render(RubyUI::Probes::Div.new(id: "i")) { "x" } }
+
+    assert_equal %(<div class="probe" data-probe="" id="o"><div class="probe" data-probe="" id="i">x</div></div>), html
+  end
+
+  # A host's `class MyButton < RubyUI::Button`: defined under no component root,
+  # with no sidecar of its own.
+  class HostSubclass < RubyUI::Probes::Div
+  end
+
+  def test_a_subclass_without_a_sidecar_renders_its_nearest_ancestors
+    assert_equal %(<div class="probe" data-probe="">i</div>), view.render(RubyUI::Probes::Inherited.new) { "i" }
+    assert_equal %(<div class="probe" data-probe="">h</div>), view.render(HostSubclass.new) { "h" }
+  end
+
+  def test_a_subclass_with_its_own_sidecar_uses_it
+    assert_equal %(<p class="probe" data-probe="">o</p>), view.render(RubyUI::Probes::Overridden.new) { "o" }
+  end
+
+  # A host's app/components/my_button.rb: the class file directly under a
+  # root, where File.split gives "." for the prefix.
+  def test_a_class_directly_under_a_root_finds_its_sidecar
+    assert_equal "<i>r</i>", view.render(RootProbe.new) { "r" }
+  end
+
+  def test_the_contents_own_trailing_newline_survives
+    assert_equal %(<div class="probe" data-probe="">body\n</div>), view.render(RubyUI::Probes::Div.new) { "body\n" }
+  end
+
+  def test_erb_compiles_an_inline_template_through_herb
+    assert_raises(ActionView::SyntaxErrorInTemplate) { erb("<div><span></div>") }
+    assert_equal %(<div class="probe" data-probe="">Hello</div>), erb(%(<%= render RubyUI::Probes::Div.new do %>Hello<% end %>))
+  end
+
+  def test_the_sidecar_source_is_read_once_per_template_not_per_render
+    # Warm the template: ActionView reads the source to compile it, and the
+    # newline flag is read once more on the first render. After that, no read.
+    view.render(RubyUI::Probes::Div.new) { "warm" }
+    template = RubyUI::Probes::Div.template
+    reads = 0
+    source = template.source
+    template.define_singleton_method(:source) do
+      reads += 1
+      source
+    end
+
+    3.times { view.render(RubyUI::Probes::Div.new) { "x" } }
+
+    assert_equal 0, reads, "Template#source rereads the file; render_in must not call it on every render"
+  end
+
+  # A sidecar file without a final newline: nothing is dropped, so content
+  # that itself ends in a newline keeps it.
+  def test_a_sidecar_without_a_final_newline_drops_nothing
+    sidecar = File.join(RubyUI::TestApp::ROOT, "test/probes/ruby_ui/probes/unterminated.html.erb")
+    refute File.read(sidecar).end_with?("\n"), "the probe's sidecar must not end with a newline for this test to mean anything"
+
+    assert_equal "<u>body\n</u>", view.render(RubyUI::Probes::Unterminated.new) { "body\n" }
   end
 end

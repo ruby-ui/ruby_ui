@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTableSelectAllCheckbox < Base
-    def view_template
-      render RubyUI::Checkbox.new(**attrs)
-    end
-
+  class DataTableSelectAllCheckbox < Component
     private
 
     def default_attrs

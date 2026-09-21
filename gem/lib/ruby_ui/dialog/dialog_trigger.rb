@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DialogTrigger < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
-
+  class DialogTrigger < Component
     private
 
     def default_attrs

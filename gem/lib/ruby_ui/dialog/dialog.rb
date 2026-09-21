@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Dialog < Base
+  class Dialog < Component
     def initialize(open: false, **attrs)
       @open = open
       super(**attrs)
-    end
-
-    def view_template(&)
-      div(**attrs, &)
     end
 
     private

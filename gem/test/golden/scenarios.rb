@@ -25,6 +25,10 @@
 # compare against the same snapshots; while a scenario keeps its Phlex block,
 # that lane records and the ERB lane compares.
 #
+# A scenario whose component has migrated to 2.0 declares no block: its ERB
+# fixture is its only lane and the one that records (decision 14). The Phlex
+# block it had is in this file's history; the fixture is its translation.
+#
 # Variant coverage is enumerative where a component exposes a closed set:
 # Button and Link have six variants and four sizes, Badge has 28 colours, and
 # those are the cases a restyle regresses.
@@ -451,70 +455,13 @@ Golden::Catalog.component "context_menu" do
 end
 
 Golden::Catalog.component "data_table" do
-  columns = [
-    {key: :email, label: "Email"},
-    {key: :salary, label: "Salary", visible: false}
-  ].freeze
-
-  scenario "full_frame" do
-    RubyUI.DataTable(id: "employees") do
-      RubyUI.DataTableForm(action: "/employees/bulk", id: "employees_form") do
-        RubyUI.DataTableToolbar do
-          RubyUI.DataTableSearch(path: "/employees", value: "alice", frame_id: "employees")
-          RubyUI.DataTableColumnToggle(columns: columns)
-          RubyUI.DataTableBulkActions { RubyUI.Button(variant: :destructive) { "Delete" } }
-        end
-        RubyUI.Table do
-          RubyUI.TableHeader do
-            RubyUI.TableRow do
-              RubyUI.TableHead { RubyUI.DataTableSelectAllCheckbox }
-              RubyUI.DataTableSortHead(column_key: :name, label: "Name", sort: "name", direction: "asc", path: "/employees", query: {"search" => "alice"})
-            end
-          end
-          RubyUI.TableBody do
-            RubyUI.TableRow do
-              RubyUI.TableCell { RubyUI.DataTableRowCheckbox(value: 42, label: "Select Alice") }
-              RubyUI.TableCell { "Alice" }
-              RubyUI.TableCell { RubyUI.DataTableExpandToggle(controls: "employee-42-detail") }
-            end
-          end
-        end
-        RubyUI.DataTablePaginationBar do
-          RubyUI.DataTableSelectionSummary(total_on_page: 10)
-          RubyUI.DataTablePerPageSelect(path: "/employees", value: 25)
-          RubyUI.DataTablePagination(page: 3, per_page: 10, total_count: 61, path: "/employees", query: {"search" => "alice"})
-        end
-      end
-    end
-  end
-
-  scenario "pagination_first_page" do
-    RubyUI.DataTablePagination(page: 1, per_page: 10, total_count: 30, path: "/x", query: {})
-  end
-
-  scenario "pagination_wide_window" do
-    RubyUI.DataTablePagination(page: 10, per_page: 1, total_count: 20, path: "/x", query: {}, window: 2)
-  end
-
-  scenario "pagination_manual_adapter" do
-    RubyUI.DataTablePagination(
-      with: RubyUI::DataTableManualAdapter.new(page: 2, per_page: 5, total_count: 21),
-      path: "/x",
-      query: {}
-    )
-  end
-
-  scenario "sort_head_unsorted" do
-    RubyUI.DataTableSortHead(column_key: :name, label: "Name", path: "/x", query: {})
-  end
-
-  scenario "expand_toggle_expanded" do
-    RubyUI.DataTableExpandToggle(controls: "row-1", expanded: true, label: "Toggle")
-  end
-
-  scenario "search_without_debounce" do
-    RubyUI.DataTableSearch(path: "/x", debounce: false, preserved_params: {"sort" => "name"})
-  end
+  scenario "full_frame"
+  scenario "pagination_first_page"
+  scenario "pagination_wide_window"
+  scenario "pagination_manual_adapter"
+  scenario "sort_head_unsorted"
+  scenario "expand_toggle_expanded"
+  scenario "search_without_debounce"
 end
 
 Golden::Catalog.component "date_picker" do
@@ -532,32 +479,9 @@ Golden::Catalog.component "date_picker" do
 end
 
 Golden::Catalog.component "dialog" do
-  scenario "default" do
-    RubyUI.Dialog do
-      RubyUI.DialogTrigger { RubyUI.Button { "Open Dialog" } }
-      RubyUI.DialogContent do
-        RubyUI.DialogHeader do
-          RubyUI.DialogTitle { "RubyUI to the rescue" }
-          RubyUI.DialogDescription { "Build accessible apps with ease." }
-        end
-        RubyUI.DialogMiddle { "Body" }
-        RubyUI.DialogFooter do
-          RubyUI.Button(variant: :outline) { "Cancel" }
-          RubyUI.Button { "Save" }
-        end
-      end
-    end
-  end
-
-  %i[sm md lg xl].each do |size|
-    scenario "content_#{size}" do
-      RubyUI.DialogContent(size: size) { "body" }
-    end
-  end
-
-  scenario "open" do
-    RubyUI.Dialog(open: true) { RubyUI.DialogContent { "body" } }
-  end
+  scenario "default"
+  %i[sm md lg xl].each { |size| scenario "content_#{size}" }
+  scenario "open"
 end
 
 Golden::Catalog.component "dropdown_menu" do
@@ -803,23 +727,8 @@ Golden::Catalog.component "radio_button" do
 end
 
 Golden::Catalog.component "select" do
-  scenario "default" do
-    RubyUI.Select do
-      RubyUI.SelectInput(name: "person")
-      RubyUI.SelectTrigger { RubyUI.SelectValue(placeholder: "Select a person") }
-      RubyUI.SelectContent do
-        RubyUI.SelectGroup do
-          RubyUI.SelectLabel { "People" }
-          RubyUI.SelectItem(value: 1) { "John Doe" }
-          RubyUI.SelectItem(value: 2) { "Jane Doe" }
-        end
-      end
-    end
-  end
-
-  scenario "value_falls_back_to_placeholder" do
-    RubyUI.SelectValue(placeholder: "Placeholder") { nil }
-  end
+  scenario "default"
+  scenario "value_falls_back_to_placeholder"
 end
 
 Golden::Catalog.component "separator" do
@@ -1003,9 +912,7 @@ Golden::Catalog.component "textarea" do
 end
 
 Golden::Catalog.component "theme_toggle" do
-  scenario "default" do
-    RubyUI.ThemeToggle { "T" }
-  end
+  scenario "default"
 end
 
 Golden::Catalog.component "toast" do
@@ -1042,40 +949,15 @@ Golden::Catalog.component "toast" do
 end
 
 Golden::Catalog.component "toggle" do
-  scenario "default" do
-    RubyUI.Toggle { "B" }
-  end
-
-  scenario "pressed_outline_with_name" do
-    RubyUI.Toggle(pressed: true, name: "bold", value: "1", unpressed_value: "0", variant: :outline, size: :lg) { "B" }
-  end
-
-  scenario "disabled_small" do
-    RubyUI.Toggle(disabled: true, size: :sm, wrapper: {class: "inline-flex"}) { "B" }
-  end
+  scenario "default"
+  scenario "pressed_outline_with_name"
+  scenario "disabled_small"
 end
 
 Golden::Catalog.component "toggle_group" do
-  scenario "single" do
-    RubyUI.ToggleGroup(type: :single, name: "align", value: "right") do |group|
-      group.ToggleGroupItem(value: "left") { "L" }
-      group.ToggleGroupItem(value: "right") { "R" }
-    end
-  end
-
-  scenario "multiple_outline_spaced_vertical" do
-    RubyUI.ToggleGroup(type: :multiple, name: "fmt", value: %w[bold italic], variant: :outline, size: :sm, spacing: 2, orientation: :vertical) do |group|
-      group.ToggleGroupItem(value: "bold") { "B" }
-      group.ToggleGroupItem(value: "italic") { "I" }
-      group.ToggleGroupItem(value: "underline") { "U" }
-    end
-  end
-
-  scenario "disabled" do
-    RubyUI.ToggleGroup(type: :multiple, name: "fmt", disabled: true) do |group|
-      group.ToggleGroupItem(value: "bold") { "B" }
-    end
-  end
+  scenario "single"
+  scenario "multiple_outline_spaced_vertical"
+  scenario "disabled"
 end
 
 Golden::Catalog.component "tooltip" do

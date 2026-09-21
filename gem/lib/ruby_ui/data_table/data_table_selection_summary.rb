@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTableSelectionSummary < Base
+  class DataTableSelectionSummary < Component
+    attr_reader :total_on_page
+
     def initialize(total_on_page: 0, **attrs)
       @total_on_page = total_on_page
       super(**attrs)
-    end
-
-    def view_template
-      div(**attrs) do
-        plain "0 of #{@total_on_page} row(s) selected."
-      end
     end
 
     private

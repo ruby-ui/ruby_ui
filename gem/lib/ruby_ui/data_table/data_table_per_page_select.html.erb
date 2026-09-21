@@ -1,0 +1,1 @@
+<form <%= tag.attributes(component.form_attrs) %>><%= render RubyUI::NativeSelect.new(name: component.name, onchange: component.onchange) do %><% component.options.each do |option| %><option <%= tag.attributes(component.option_attrs(option)) %>><%= option %></option><% end %><% end %></form>
