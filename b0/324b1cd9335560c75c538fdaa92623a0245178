@@ -1,0 +1,29 @@
+design/plans/2026-09-20-phase-2-1-hard-components-implementation.md
+  s_d12e1df3e04021::t_fa022369c1245b 3863
+docs/Dockerfile
+  s_d12e1df3e04021::t_d8d203fa813777 51-54
+design/v2/follow-up-issues.md
+  s_d12e1df3e04021::t_eab488e5c588fe 158-170
+design/2026-09-19-rubyui-2-0-design.md
+  s_d12e1df3e04021::t_d3bf8da70605c7 174-181
+design/v2/decisions.md
+  s_d12e1df3e04021::t_9fda36b894efce 317-321
+  s_d12e1df3e04021::t_b791fcb420886a 366-373
+  s_d12e1df3e04021::t_4d8a5edae6fd58 374
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "b0324b1cd9335560c75c538fdaa92623a0245178",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
