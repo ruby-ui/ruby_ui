@@ -1,0 +1,21 @@
+docs/Gemfile
+  s_d12e1df3e04021::t_0a5bb5c223baf4 76-79
+docs/Gemfile.lock
+  s_d12e1df3e04021::t_7c4ef21af491a0 15-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "de3389011ee4fa7a4f60f565879998813ce99ee7",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
