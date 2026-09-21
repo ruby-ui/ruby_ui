@@ -1,0 +1,55 @@
+gem/test/ruby_ui/dialog_test.rb
+  s_d12e1df3e04021::t_376777af42b3b6 6-7,9-11,18,25,32,36,43,52,59,65,69-81,83
+gem/lib/ruby_ui/dialog/dialog_title.html.erb
+  s_d12e1df3e04021::t_9556ebb2c43f73 1
+gem/lib/ruby_ui/dialog/dialog_header.rb
+  s_d12e1df3e04021::t_af7c7cdecc8c53 4
+gem/lib/ruby_ui/dialog/dialog_footer.html.erb
+  s_d12e1df3e04021::t_0505447be5a72b 1
+mcp/data/registry.json
+  s_d12e1df3e04021::t_5a6d9179b97510 1326-1329,1332-1336,1340,1346-1349,1352-1356,1360-1364,1368-1372,1376-1380,1384-1388,1392
+gem/lib/ruby_ui/dialog/dialog_content.rb
+  s_d12e1df3e04021::t_6407c4422ee739 4,15
+gem/lib/ruby_ui/dialog/dialog_middle.rb
+  s_d12e1df3e04021::t_52dde9591d9eb5 4
+gem/lib/ruby_ui/dialog/dialog_description.html.erb
+  s_d12e1df3e04021::t_ba902245677afa 1
+gem/lib/ruby_ui/dialog/dialog.html.erb
+  s_d12e1df3e04021::t_7ec053e6318fc4 1
+gem/lib/ruby_ui/dialog/dialog_header.html.erb
+  s_d12e1df3e04021::t_b05d0d946a9b53 1
+gem/lib/ruby_ui/dialog/dialog_middle.html.erb
+  s_d12e1df3e04021::t_7b002050c5e7fa 1
+gem/lib/ruby_ui/dialog/dialog_footer.rb
+  s_d12e1df3e04021::t_8d19a6df1697a4 4
+gem/lib/ruby_ui/dialog/dialog_title.rb
+  s_d12e1df3e04021::t_b4e541ab0a6d86 4
+gem/lib/ruby_ui/dialog/dialog.rb
+  s_d12e1df3e04021::t_6c045f2d57d8ce 4
+gem/lib/ruby_ui/dialog/dialog_content.html.erb
+  s_d12e1df3e04021::t_7ea409b8e01ad7 1-17
+gem/lib/ruby_ui/dialog/dialog_trigger.html.erb
+  s_d12e1df3e04021::t_31d0b11c6847d2 1
+gem/test/golden/scenarios.rb
+  s_d12e1df3e04021::t_f73593480ff0e9 535-537
+gem/lib/ruby_ui/dialog/dialog_description.rb
+  s_d12e1df3e04021::t_43b6792fdbce8f 4
+gem/lib/ruby_ui/dialog/dialog_trigger.rb
+  s_d12e1df3e04021::t_4d30820f5da97f 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4e179043aadfb2ca0e1142d88fdde73bfeb85862",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
