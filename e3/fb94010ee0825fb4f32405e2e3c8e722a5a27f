@@ -1,0 +1,55 @@
+gem/lib/ruby_ui/select/select_input.html.erb
+  s_d12e1df3e04021::t_cb9feba437e170 1
+mcp/data/registry.json
+  s_d12e1df3e04021::t_a156b9b11c43e2 2203-2206,2209-2213,2217,2223-2226,2229-2233,2237-2241,2245,2251-2254,2257-2261,2265-2269,2273
+gem/lib/ruby_ui/select/select_trigger.rb
+  s_d12e1df3e04021::t_fc6c9af01cf949 4
+gem/lib/ruby_ui/select/select.rb
+  s_d12e1df3e04021::t_a3dd341074855b 4
+gem/lib/ruby_ui/select/select_value.rb
+  s_d12e1df3e04021::t_d2f7f44db69e64 4-6,12-16
+gem/lib/ruby_ui/select/select_label.rb
+  s_d12e1df3e04021::t_51d743f27853ab 4
+gem/test/ruby_ui/select_test.rb
+  s_d12e1df3e04021::t_15ef82d141cb9c 7-9,16,21-42,45
+gem/lib/ruby_ui/select/select_group.rb
+  s_d12e1df3e04021::t_c3dc5f677d78d0 4
+gem/lib/ruby_ui/select/select_input.rb
+  s_d12e1df3e04021::t_9c503aa0c60a5d 4
+gem/lib/ruby_ui/select/select_label.html.erb
+  s_d12e1df3e04021::t_dccc0f6d68cd78 1
+gem/lib/ruby_ui/select/select_trigger.html.erb
+  s_d12e1df3e04021::t_530726aad6f3c3 1-10
+gem/lib/ruby_ui/select/select_item.rb
+  s_d12e1df3e04021::t_9db8ceda0c763e 4
+gem/test/golden/scenarios.rb
+  s_d12e1df3e04021::t_d31aa0e55b96e4 783-784
+gem/lib/ruby_ui/select/select.html.erb
+  s_d12e1df3e04021::t_b840e9b9d0d63e 1
+gem/lib/ruby_ui/select/select_value.html.erb
+  s_d12e1df3e04021::t_62b99eb871f4a9 1
+gem/lib/ruby_ui/select/select_content.html.erb
+  s_d12e1df3e04021::t_e1977e614fd201 1-5
+gem/lib/ruby_ui/select/select_group.html.erb
+  s_d12e1df3e04021::t_cb82a32cd6f276 1
+gem/lib/ruby_ui/select/select_item.html.erb
+  s_d12e1df3e04021::t_42ecc1bbb95d18 1-10
+gem/lib/ruby_ui/select/select_content.rb
+  s_d12e1df3e04021::t_c009aa987bee7e 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e3fb94010ee0825fb4f32405e2e3c8e722a5a27f",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
