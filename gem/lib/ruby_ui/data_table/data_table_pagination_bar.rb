@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTablePaginationBar < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
-
+  class DataTablePaginationBar < Component
     private
 
     def default_attrs

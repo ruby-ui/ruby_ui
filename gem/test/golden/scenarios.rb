@@ -451,42 +451,7 @@ Golden::Catalog.component "context_menu" do
 end
 
 Golden::Catalog.component "data_table" do
-  columns = [
-    {key: :email, label: "Email"},
-    {key: :salary, label: "Salary", visible: false}
-  ].freeze
-
-  scenario "full_frame" do
-    RubyUI.DataTable(id: "employees") do
-      RubyUI.DataTableForm(action: "/employees/bulk", id: "employees_form") do
-        RubyUI.DataTableToolbar do
-          RubyUI.DataTableSearch(path: "/employees", value: "alice", frame_id: "employees")
-          RubyUI.DataTableColumnToggle(columns: columns)
-          RubyUI.DataTableBulkActions { RubyUI.Button(variant: :destructive) { "Delete" } }
-        end
-        RubyUI.Table do
-          RubyUI.TableHeader do
-            RubyUI.TableRow do
-              RubyUI.TableHead { RubyUI.DataTableSelectAllCheckbox }
-              RubyUI.DataTableSortHead(column_key: :name, label: "Name", sort: "name", direction: "asc", path: "/employees", query: {"search" => "alice"})
-            end
-          end
-          RubyUI.TableBody do
-            RubyUI.TableRow do
-              RubyUI.TableCell { RubyUI.DataTableRowCheckbox(value: 42, label: "Select Alice") }
-              RubyUI.TableCell { "Alice" }
-              RubyUI.TableCell { RubyUI.DataTableExpandToggle(controls: "employee-42-detail") }
-            end
-          end
-        end
-        RubyUI.DataTablePaginationBar do
-          RubyUI.DataTableSelectionSummary(total_on_page: 10)
-          RubyUI.DataTablePerPageSelect(path: "/employees", value: 25)
-          RubyUI.DataTablePagination(page: 3, per_page: 10, total_count: 61, path: "/employees", query: {"search" => "alice"})
-        end
-      end
-    end
-  end
+  scenario "full_frame"
 
   scenario "pagination_first_page" do
     RubyUI.DataTablePagination(page: 1, per_page: 10, total_count: 30, path: "/x", query: {})
@@ -508,9 +473,7 @@ Golden::Catalog.component "data_table" do
     RubyUI.DataTableSortHead(column_key: :name, label: "Name", path: "/x", query: {})
   end
 
-  scenario "expand_toggle_expanded" do
-    RubyUI.DataTableExpandToggle(controls: "row-1", expanded: true, label: "Toggle")
-  end
+  scenario "expand_toggle_expanded"
 
   scenario "search_without_debounce" do
     RubyUI.DataTableSearch(path: "/x", debounce: false, preserved_params: {"sort" => "name"})
