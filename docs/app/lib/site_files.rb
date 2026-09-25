@@ -123,6 +123,7 @@ class SiteFiles
     {title: "Shortcut Key", path: "/docs/shortcut_key", description: "Keyboard shortcut display component."},
     {title: "Sidebar", path: "/docs/sidebar", description: "Composable, themeable sidebar component."},
     {title: "Skeleton", path: "/docs/skeleton", description: "Placeholder for loading states."},
+    {title: "Spinner", path: "/docs/spinner", description: "Animated indicator for loading states."},
     {title: "Switch", path: "/docs/switch", description: "Toggle control for binary settings."},
     {title: "Table", path: "/docs/table", description: "Responsive table component."},
     {title: "Tabs", path: "/docs/tabs", description: "Layered tab panels displayed one at a time."},
