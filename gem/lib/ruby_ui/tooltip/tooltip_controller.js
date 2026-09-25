@@ -14,7 +14,10 @@ export default class extends Controller {
     document.body.appendChild(element);
 
     this.triggerTarget.setAttribute("aria-describedby", element.id);
-    element.addEventListener("animationend", (event) => this.animationEnd(event));
+    // animationcancel covers an exit run cut short (backgrounded tab, interrupting
+    // style change) — without it the cloned node is never removed from <body>.
+    element.addEventListener("animationend", this.handleExitAnimationEnd);
+    element.addEventListener("animationcancel", this.handleExitAnimationEnd);
 
     const onBeforeCache = () => this.unmount();
     document.addEventListener("turbo:before-cache", onBeforeCache);
@@ -50,12 +53,12 @@ export default class extends Controller {
     this.mounted?.element.setAttribute("data-state", "closed");
   }
 
-  animationEnd(event) {
+  handleExitAnimationEnd = (event) => {
     if (event.animationName !== "exit") return;
     if (this.mounted?.element.getAttribute("data-state") !== "closed") return;
 
     this.unmount();
-  }
+  };
 
   cloneTemplate() {
     return this.contentTarget.content.firstElementChild.cloneNode(true);
