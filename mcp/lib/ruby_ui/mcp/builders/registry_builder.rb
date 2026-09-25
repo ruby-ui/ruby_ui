@@ -129,8 +129,8 @@ module RubyUI
               next
             end
 
-            # P { "X" } or p { "X" } (standalone paragraph)
-            if (m = line.match(/\bP\s*\{\s*"([^"]+)"\s*\}/) || line.match(/\bp\s*\{\s*"([^"]+)"\s*\}/))
+            # P { "X" }, p { "X" } or p(class: "...") { "X" } (standalone paragraph)
+            if (m = line.match(/\bP\s*\{\s*"([^"]+)"\s*\}/) || line.match(/\bp(?:\([^)]*\))?\s*\{\s*"([^"]+)"\s*\}/))
               markdown << "#{m[1]}\n\n"
               i += 1
               next
