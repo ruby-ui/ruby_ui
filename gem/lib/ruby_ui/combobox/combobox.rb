@@ -21,7 +21,11 @@ module RubyUI
           controller: "ruby-ui--combobox",
           ruby_ui__combobox_term_value: @term,
           ruby_ui__combobox_placement_value: @placement,
-          action: "turbo:morph@window->ruby-ui--combobox#updateTriggerContent"
+          action: %w[
+            turbo:morph@window->ruby-ui--combobox#updateTriggerContent
+            click@window->ruby-ui--combobox#handleOutsideClick
+            keydown.esc@window->ruby-ui--combobox#handleEscape
+          ]
         }
       }
     end
