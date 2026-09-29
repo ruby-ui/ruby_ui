@@ -107,7 +107,7 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     ast (2.4.3)
     base64 (0.3.0)
-    bigdecimal (4.1.2)
+    bigdecimal (4.1.3)
     bindex (0.8.1)
     bootsnap (1.26.0)
       msgpack (~> 1.5)
@@ -169,7 +169,7 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.2)
-    mcp (1.5.1)
+    mcp (1.6.0)
       json_schemer (>= 2.4)
     method_source (1.1.0)
     mini_mime (1.1.5)
@@ -264,7 +264,7 @@ GEM
       prism (>= 1.6.0)
       rbs (>= 4.0.0)
       tsort
-    regexp_parser (2.12.0)
+    regexp_parser (2.13.0)
     reline (0.6.3)
       io-console (~> 0.5)
     reverse_markdown (3.0.2)
