@@ -64,6 +64,12 @@ application.register("ruby-ui--data-table-search", RubyUi__DataTableSearchContro
 import RubyUi__DialogController from "./ruby_ui/dialog_controller"
 application.register("ruby-ui--dialog", RubyUi__DialogController)
 
+import RubyUi__DrawerContentController from "./ruby_ui/drawer_content_controller"
+application.register("ruby-ui--drawer-content", RubyUi__DrawerContentController)
+
+import RubyUi__DrawerController from "./ruby_ui/drawer_controller"
+application.register("ruby-ui--drawer", RubyUi__DrawerController)
+
 import RubyUi__DropdownMenuController from "./ruby_ui/dropdown_menu_controller"
 application.register("ruby-ui--dropdown-menu", RubyUi__DropdownMenuController)
 

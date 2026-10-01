@@ -102,6 +102,7 @@ class SiteFiles
     {title: "Data Table", path: "/docs/data_table", description: "Data table primitives for search, sorting, pagination, visibility, and bulk actions."},
     {title: "Date Picker", path: "/docs/date_picker", description: "Date picker component with input."},
     {title: "Dialog", path: "/docs/dialog", description: "Modal window that renders background content inert."},
+    {title: "Drawer", path: "/docs/drawer", description: "Bottom sheet with a swipe handle, drag, snap points and swipe-to-dismiss."},
     {title: "Dropdown Menu", path: "/docs/dropdown_menu", description: "Button-triggered menu for actions or functions."},
     {title: "Empty", path: "/docs/empty", description: "Empty state for when there is no data or content."},
     {title: "Form", path: "/docs/form", description: "Form fields with built-in client-side validations."},

@@ -44,6 +44,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Data Table](https://rubyui.com/docs/data_table): Data table primitives for search, sorting, pagination, visibility, and bulk actions.
 - [Date Picker](https://rubyui.com/docs/date_picker): Date picker component with input.
 - [Dialog](https://rubyui.com/docs/dialog): Modal window that renders background content inert.
+- [Drawer](https://rubyui.com/docs/drawer): Bottom sheet with a swipe handle, drag, snap points and swipe-to-dismiss.
 - [Dropdown Menu](https://rubyui.com/docs/dropdown_menu): Button-triggered menu for actions or functions.
 - [Empty](https://rubyui.com/docs/empty): Empty state for when there is no data or content.
 - [Form](https://rubyui.com/docs/form): Form fields with built-in client-side validations.

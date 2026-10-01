@@ -1,0 +1,1 @@
+../../../../../gem/lib/ruby_ui/drawer/drawer_content_controller.js
