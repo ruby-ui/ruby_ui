@@ -25,11 +25,17 @@ RubyUI is a Ruby gem providing a collection of Phlex-based UI components for Rai
 # Run all tests + linter (default rake task)
 bundle exec rake
 
-# Tests only
+# Tests only (includes the golden suite)
 bundle exec rake test
 
-# Single test file
-bundle exec rake test TEST=test/ruby_ui/button_test.rb
+# Golden HTML suite only — verify component markup against the recorded snapshots
+bundle exec rake golden
+
+# Re-record the golden snapshots, then review the diff before committing
+bundle exec rake golden:update
+
+# Single test by name (minitest's -n filter; TEST= is not supported)
+bundle exec rake test N=/button/
 
 # Linter (StandardRB)
 bundle exec rake standard
@@ -68,6 +74,24 @@ end
 ```
 
 Components are invoked via `RubyUI.<ComponentName>()` through Phlex::Kit.
+
+### Golden HTML suite
+
+`test/golden_test.rb` renders every component in the catalog, reduces the output
+to a canonical form (HTML5 parse → normalized re-serialization, so whitespace
+and attribute order cannot break it) and compares it against a committed
+snapshot under `test/golden/snapshots/`. It is the operational definition of
+"parity" and is the reference for the v2 ERB rewrite.
+
+- Add a component → add a scenario in `test/golden/scenarios.rb`. The suite
+  fails if a `RubyUI::Base` subclass or a `lib/ruby_ui/` directory has no
+  scenario, so this is enforced, not remembered.
+- Change a component's markup → `bundle exec rake golden:update` and **review
+  the snapshot diff in the PR**. An unreviewed re-record defeats the point.
+- What the normalization considers an acceptable difference, and what the suite
+  deliberately does not cover, is documented in
+  `design/v2/01-research/golden-suite.md`. Read it before changing
+  `test/golden/canonical_html.rb`.
 
 ### Generator System
 
