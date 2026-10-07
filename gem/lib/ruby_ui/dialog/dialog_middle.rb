@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DialogMiddle < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
-
+  class DialogMiddle < Component
     private
 
     def default_attrs

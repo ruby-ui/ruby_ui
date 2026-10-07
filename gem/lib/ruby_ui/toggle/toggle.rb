@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Toggle < Base
+  class Toggle < Component
     BASE_CLASSES = [
       "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap",
       "transition-[color,box-shadow] outline-none",
@@ -28,6 +28,8 @@ module RubyUI
       [BASE_CLASSES, VARIANT_CLASSES.fetch(variant, VARIANT_CLASSES[:default]), SIZE_CLASSES.fetch(size, SIZE_CLASSES[:default])]
     end
 
+    attr_reader :name
+
     def initialize(
       pressed: false,
       name: nil,
@@ -43,25 +45,28 @@ module RubyUI
       @name = name
       @value = value
       @unpressed_value = unpressed_value
-      @variant = variant.to_sym
-      @size = size.to_sym
+      @variant = enum(variant, VARIANT_CLASSES, default: :default)
+      @size = enum(size, SIZE_CLASSES, default: :default)
       @disabled = disabled
       @wrapper = wrapper
       super(**attrs)
     end
 
-    def view_template(&block)
-      span(**wrapper_attrs) do
-        button(**attrs, &block)
-        render_hidden_input if @name
-      end
+    # The wrapper's attributes, mixed as 1.6 did — no Tailwind merge on them.
+    def wrapper_attrs
+      Attributes.flat(Attributes.mix(wrapper_default_attrs, @wrapper))
+    end
+
+    def hidden_input_attrs
+      Attributes.flat(
+        type: "hidden",
+        name: @name,
+        value: @pressed ? @value : @unpressed_value.to_s,
+        data: {"ruby-ui--toggle-target": "input"}
+      )
     end
 
     private
-
-    def wrapper_attrs
-      mix(wrapper_default_attrs, @wrapper)
-    end
 
     def wrapper_default_attrs
       {
@@ -74,15 +79,6 @@ module RubyUI
           "ruby-ui--toggle-unpressed-value-value": @unpressed_value.to_s
         }
       }
-    end
-
-    def render_hidden_input
-      input(
-        type: "hidden",
-        name: @name,
-        value: @pressed ? @value : @unpressed_value.to_s,
-        data: {"ruby-ui--toggle-target": "input"}
-      )
     end
 
     def default_attrs

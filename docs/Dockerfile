@@ -48,7 +48,10 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     npm install -g pnpm@$PNPM_VERSION && \
     rm -rf /tmp/node-build-master
 
-# Copy the gem and mcp sources first so docs/Gemfile's path: "../gem" / "../mcp" resolve during bundle install.
+# Copy the gem and mcp sources first: docs/Gemfile's path: "../mcp" resolves during bundle install,
+# and Tailwind's @source "../../../../gem/lib/ruby_ui" (application.tailwind.css) scans /gem during
+# assets:precompile. docs/Gemfile no longer points at ../gem (it pins a git ref, decision 15) but the
+# COPY must stay for the CSS build.
 COPY gem /gem
 COPY mcp /mcp
 

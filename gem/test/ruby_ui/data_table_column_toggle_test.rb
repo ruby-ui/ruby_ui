@@ -4,12 +4,7 @@ require "test_helper"
 
 class RubyUI::DataTableColumnToggleTest < ComponentTest
   def test_renders_dropdown_with_checkbox_per_column
-    output = phlex do
-      RubyUI.DataTableColumnToggle(columns: [
-        {key: :email, label: "Email"},
-        {key: :salary, label: "Salary"}
-      ])
-    end
+    output = erb(%(<%= render RubyUI::DataTableColumnToggle.new(columns: [{key: :email, label: "Email"}, {key: :salary, label: "Salary"}]) %>))
     assert_match(/Columns/, output)
     assert_match(/data-controller="[^"]*ruby-ui--data-table-column-visibility/, output)
     assert_match(/data-column-key="email"/, output)
@@ -19,22 +14,14 @@ class RubyUI::DataTableColumnToggleTest < ComponentTest
   end
 
   def test_renders_a_custom_trigger_label
-    output = phlex do
-      RubyUI.DataTableColumnToggle(label: "Colunas", columns: [
-        {key: :email, label: "Email"}
-      ])
-    end
+    output = erb(%(<%= render RubyUI::DataTableColumnToggle.new(label: "Colunas", columns: [{key: :email, label: "Email"}]) %>))
     assert_match(/Colunas/, output)
   end
 
   def test_column_can_start_hidden
-    output = phlex do
-      RubyUI.DataTableColumnToggle(columns: [
-        {key: :email, label: "Email"},
-        {key: :salary, label: "Salary", visible: false}
-      ])
-    end
-    # only the visible column renders the `checked` boolean attribute on its checkbox
-    assert_equal 1, output.scan(/\bchecked(?:\s|>)/).length
+    output = erb(%(<%= render RubyUI::DataTableColumnToggle.new(columns: [{key: :email, label: "Email"}, {key: :salary, label: "Salary", visible: false}]) %>))
+    # only the visible column renders the `checked` attribute — bare in Phlex,
+    # checked="checked" through tag.attributes
+    assert_equal 1, output.scan(/\bchecked(?:="checked")?(?:\s|>)/).length
   end
 end

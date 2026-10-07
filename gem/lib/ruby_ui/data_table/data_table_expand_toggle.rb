@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTableExpandToggle < Base
+  class DataTableExpandToggle < Component
     def initialize(controls:, expanded: false, label: "Toggle row details", **attrs)
       @controls = controls
       @expanded = expanded
@@ -9,40 +9,19 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template
-      button(
+    # 1.6 spread the caller's attributes after the button's own, so a caller's
+    # key replaced the button's; `merge` keeps that order.
+    def button_attrs
+      Attributes.flat({
         type: "button",
         aria_expanded: @expanded.to_s,
         aria_controls: @controls,
         aria_label: @label,
-        data: {
-          action: "click->ruby-ui--data-table#toggleRowDetail"
-        },
-        **attrs
-      ) do
-        render_icon
-      end
+        data: {action: "click->ruby-ui--data-table#toggleRowDetail"}
+      }.merge(mixed_attrs))
     end
 
     private
-
-    def render_icon
-      # inline chevron-right SVG (lucide)
-      svg(
-        xmlns: "http://www.w3.org/2000/svg",
-        width: "16",
-        height: "16",
-        viewBox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round",
-        class: "h-4 w-4 transition-transform duration-150 group-aria-expanded:rotate-90"
-      ) do |s|
-        s.polyline(points: "9 18 15 12 9 6")
-      end
-    end
 
     def default_attrs
       {

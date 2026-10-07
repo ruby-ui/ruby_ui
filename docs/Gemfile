@@ -73,7 +73,10 @@ end
 gem "phlex", github: "phlex-ruby/phlex"
 gem "phlex-rails", github: "phlex-ruby/phlex-rails"
 
-gem "ruby_ui", path: "../gem", require: false
+# Pinned to main's commit while ../gem migrates to 2.0 (spec §6 Phase 2.0,
+# last bullet; decision 15 — RubyGems 1.6.0 is behind main). Phase 3.3 points
+# it back at path: "../gem".
+gem "ruby_ui", github: "ruby-ui/ruby_ui", ref: "92f261931eb78bcc4682f4afb72b139553aba957", glob: "gem/*.gemspec", require: false
 
 gem "pry", "0.16.0"
 

@@ -70,7 +70,7 @@ require "ruby_ui/component"
 # Two component roots: the gem's own components, and the test-only probes.
 # A class's sidecar is looked up under the root that contains the class file.
 RubyUI.component_roots = [File.join(RubyUI::TestApp::ROOT, "lib"), File.join(RubyUI::TestApp::ROOT, "test/probes")]
-Dir.glob(File.join(RubyUI::TestApp::ROOT, "test/probes/ruby_ui/**/*.rb")).sort.each { |probe| require probe }
+Dir.glob(File.join(RubyUI::TestApp::ROOT, "test/probes/**/*.rb")).sort.each { |probe| require probe }
 
 class ComponentTest < Minitest::Test
   def render(component, &)
@@ -83,5 +83,27 @@ class ComponentTest < Minitest::Test
 
   def render_erb(template)
     RubyUI::TestApp.view.render(template: template)
+  end
+
+  # An inline template compiled through the same handler as a file under
+  # Rails.root: ReActionView decides by the identifier, so an identifier under
+  # the gem puts Herb in front of it (a malformed snippet raises), and a unit
+  # test renders a composition without a fixture file. `render(inline:)` would
+  # go through Erubi instead. The view is built before the handler is looked
+  # up: loading ActionView::Base fires the :action_view load hook in which
+  # ReActionView registers the handler — fetched earlier, it is still Erubi.
+  def erb(source)
+    view = RubyUI::TestApp.view
+    handler = ActionView::Template.handler_for_extension(:erb)
+    identifier = File.join(RubyUI::TestApp::ROOT, "test/inline.html.erb")
+    ActionView::Template.new(source, identifier, handler, locals: [], format: :html).render(view, {})
+  end
+
+  # In an attribute value that `tag.attributes` serialized, `->` is `-&gt;`
+  # (ERB::Util.html_escape); in one a sidecar wrote literally, or a Phlex
+  # neighbour rendered, it is `->`. A test that reads a Stimulus descriptor
+  # accepts both, so it survives the neighbour's own migration.
+  def descriptor(text)
+    Regexp.escape(text).gsub('\->', "-(?:>|&gt;)")
   end
 end

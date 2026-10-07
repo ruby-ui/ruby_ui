@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class ToggleGroup < Base
+  class ToggleGroup < Component
     SPACING_GAP = {0 => nil, 1 => "gap-1", 2 => "gap-2", 3 => "gap-3", 4 => "gap-4"}.freeze
     VALID_TYPES = [:single, :multiple].freeze
     VALID_ORIENTATIONS = [:horizontal, :vertical].freeze
@@ -27,18 +27,11 @@ module RubyUI
 
       @name = name
       @value = value
-      @variant = variant.to_sym
-      @size = size.to_sym
+      @variant = enum(variant, Toggle::VARIANT_CLASSES, default: :default)
+      @size = enum(size, Toggle::SIZE_CLASSES, default: :default)
       @disabled = disabled
       @spacing = spacing
       super(**attrs)
-    end
-
-    def view_template(&block)
-      div(**attrs) do
-        yield(self)
-        render_hidden_inputs
-      end
     end
 
     def item_context
@@ -53,8 +46,27 @@ module RubyUI
       }
     end
 
+    # Called on the block argument — `render ToggleGroup.new do |group| … group.ToggleGroupItem(…) { "L" } end` —
+    # from inside the block render_in is capturing, so the view context is there.
     def ToggleGroupItem(**kwargs, &block)
-      render RubyUI::ToggleGroupItem.new(group_context: item_context, **kwargs), &block
+      helpers.render(RubyUI::ToggleGroupItem.new(group_context: item_context, **kwargs), &block)
+    end
+
+    # [name, value] for each hidden input; none without a name. The single
+    # name is passed as given — a Symbol dasherizes in Attributes.flat, as it
+    # did in Phlex; the multiple names are interpolated Strings, as in 1.6.
+    def hidden_inputs
+      return [] unless @name
+
+      if @type == :single
+        [[@name, selected_values.first.to_s]]
+      else
+        selected_values.map { |v| ["#{@name}[]", v] }
+      end
+    end
+
+    def hidden_input_attrs(name, value)
+      Attributes.flat(type: "hidden", name: name, value: value, data: {"ruby-ui--toggle-group-target": "input"})
     end
 
     private
@@ -63,28 +75,6 @@ module RubyUI
       case @type
       when :single then @value.nil? ? [] : [@value.to_s]
       when :multiple then Array(@value).map(&:to_s)
-      end
-    end
-
-    def render_hidden_inputs
-      return unless @name
-
-      if @type == :single
-        input(
-          type: "hidden",
-          name: @name,
-          value: selected_values.first.to_s,
-          data: {"ruby-ui--toggle-group-target": "input"}
-        )
-      else
-        selected_values.each do |v|
-          input(
-            type: "hidden",
-            name: "#{@name}[]",
-            value: v,
-            data: {"ruby-ui--toggle-group-target": "input"}
-          )
-        end
       end
     end
 

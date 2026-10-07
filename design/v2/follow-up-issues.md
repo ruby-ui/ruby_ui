@@ -30,10 +30,11 @@ Ordered by user impact.
 - **Fix:** render the search and per-page forms outside the bulk form, or
   make their controls reference it with the `form=` attribute; re-record
   `data_table/*`.
-- **2.0 note:** Herb's `NestingValidator` will likely reject this at compile
-  time, so the DataTable migration ports the three forms as they are and then
-  restructures them — a template adjustment with a reviewed snapshot change,
-  on the 2.0 line, since `main` stays as is.
+- **2.0 note (amended 2026-09-20, plan 2.1):** each sidecar compiles alone,
+  so Herb never sees one component's `<form>` inside another's; the DataTable
+  migration ported the three forms as they are and `data_table/full_frame`
+  still holds all three. The restructure is a reviewed snapshot change on the
+  2.0 line, after Phase 2.1.
 
 ## 2. `aria-*` boolean attributes serialize as the empty string — #538
 
@@ -153,6 +154,19 @@ Ordered by user impact.
 - **Effect:** `type` on an anchor names the linked resource's MIME type;
   `button` is meaningless there. Invalid, harmless.
 - **Fix:** drop `type:` from Link's `default_attrs`; re-record `link/*`.
+
+## 12. `RegistryBuilder` reads a component's description from its first file — now a sidecar
+
+- **Where:** `mcp/lib/ruby_ui/mcp/builders/registry_builder.rb`,
+  `extract_description`: with no `Docs::Header` and no markdown heading it
+  takes the first comment line of `files.first`. Files are sorted, so
+  `x.html.erb` now precedes `x.rb` and the fallback finds no `#` line;
+  `toggle`, `toggle_group` and `data_table` went from
+  `"frozen_string_literal: true"` (already not a description) to `""`.
+- **Effect:** an empty `description` for every migrated component without a
+  docs header — universal once Phase 2.2 gives every component a sidecar.
+- **Fix:** skip non-`.rb` files and the `frozen_string_literal` magic comment
+  in the fallback, or drop the fallback; rebuild the registry. Before 2.2.
 
 ## Rejected review findings, for the record
 

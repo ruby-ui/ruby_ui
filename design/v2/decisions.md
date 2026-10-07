@@ -256,3 +256,142 @@ it:** Herb honouring `-%>` on a block-closing `end` *and* dropping the
 indentation before an output tag — both, since either alone still leaks
 whitespace — at which point trim mode is enough and decision 8 stands as
 written.
+
+## 11. `attrs` stays flat; `mixed_attrs` is the hash a component forwards — 2026-09-20
+
+Spec §4.3 made `attrs` the flat, String-keyed hash `tag.attributes` consumes.
+1.6 components also *forward* their attributes in Ruby — `Checkbox.new(**attrs)`
+in `DataTableRowCheckbox` and `DataTableSelectAllCheckbox`,
+`TableHead.new(class: …, **attrs)` in `DataTableSortHead`,
+`Pagination.new(class: …, **attrs)` in `DataTablePagination`,
+`attrs.merge(form_attrs)` in `DataTableSearch` and `DataTablePerPageSelect`,
+`**attrs` into `Toggle` from `ThemeToggle`; across the gem, `Button(**attrs)`
+in `SidebarTrigger`, `CarouselNext` and `CarouselPrevious`, `Sheet(**attrs)`
+in `MobileSidebar`, `Input(**attrs)` in `SidebarInput` and `MaskedInput`,
+`Separator(**attrs)`, the three sidebar variants, `render RubyUI::Button.new(**attrs)`
+in `AlertDialogAction` and `AlertDialogCancel`, `attrs.merge` in `Switch`, and
+`attrs[:class]` in `PaginationItem`. Measured before the first migration
+(plan 2.1, probes 1a/1b): forwarding the flat hash into a Phlex neighbour puts
+`"data-action"` beside the neighbour's `data: {action:}` and two `data-action`
+attributes reach the page, where 1.6's `mix` concatenated them.
+
+**Decision.** `Component` keeps the nested, Symbol-keyed hash after `mix` and
+the class merge — exactly 1.6's `attrs` — as `mixed_attrs`, frozen; `attrs`
+stays the flat form. A forwarding site changes `**attrs` to `**mixed_attrs`
+(and a merge before a raw element becomes `Attributes.flat({…}.merge(mixed_attrs))`);
+a sidecar never needs it. **Alternative rejected:** making `attrs` nested
+again and giving the sidecar another name for the flat form — it would change
+the idiom in every sidecar (about 200 by the end of Phase 2.2) to spare 17
+Ruby sites, and the spec, the layer's tests and the probes already use
+`tag.attributes(component.attrs)`. **What would reverse it:** a 2.2 batch
+finding a forwarding shape `mixed_attrs` cannot express.
+
+## 12. Sidecars are whitespace-tight; a line breaks only inside a tag; the layer drops the file's final newline — 2026-09-20
+
+Decision 10 left the sidecar layout to the first sidecar. Measured under the
+same Herb 0.10.4 (plan 2.1, probe 4 and the r-series in its Appendix A): a
+break inside an ERB tag — after `<%=` or `<%`, before `%>`, in a block-closing
+`<% end %>` too — emits nothing; a break inside an HTML start tag, between two
+attributes, is not text either; everything else between `>` and `<` is. And the
+sidecar *file's* final newline is output: rendered inside a parent it becomes a
+text node after the component (`<b><i>B</i>\n</b>`) — the whitespace Phlex
+never emitted, in every composition, from a newline no editor lets a file omit.
+
+**Decision.** (a) A sidecar has no whitespace between `>` and `<` and none at
+a text–element boundary; a line breaks only inside an ERB tag or inside a
+start tag between two attributes, so the Ruby and the attribute lists are
+indented and the markup stays tight; it carries no trim marker (`-%>`,
+`<%-`) — Herb honours them only partly (decision 10), and one on the last tag
+would already have removed the file's newline, leaving (b) to eat the
+content's own. (b) `Component#render_in` removes one trailing newline from the
+sidecar's rendered output when the template source ends with one, so the file
+ends with a newline like any other, a rootless render is `""`, and content
+that itself ends in a newline keeps it. **Alternatives weighed:** ending every
+sidecar with `<%= "" -%>` — measured to work, a ritual line in every file that
+users would delete; omitting the file's final newline — editors, `git diff`
+and Herb's formatter all put it back; a parser-level option in ReActionView —
+none exists. The four largest 2.1 sidecars — `DialogContent`,
+`DataTableColumnToggle`, `DataTableSortHead`, `DataTablePagination` — were
+written out in plan 2.1 and read before it executed; they are the readability
+test decision 8 named.
+Two raw-byte differences the lanes do not see and a raw diff would: Herb
+emits a `\n` (indentation stripped) where a start tag breaks between
+attributes, so the raw output reads `<svg\nxmlns=…>`; and `SelectItem`'s
+class string has a space where 1.6 had a stray tab. Both parse to the same
+attributes; the contract is the parsed form, not the bytes.
+**Cost:** Herb's formatter would reintroduce the whitespace between elements;
+that is question 4 of spec §9.2 for the upstream conversation. **What would
+reverse it:** the maintainer judging the composites unreadable, at which point
+decision 8's alternative — a strict-lane criterion computed from the output —
+is the next plan, not a looser sidecar.
+
+## 13. A class without a sidecar renders its nearest ancestor's — 2026-09-20
+
+Spec §6.2.1's open question. 1.6 users subclass a component to change its
+defaults (`class MyButton < RubyUI::Button` with a `default_attrs` override)
+and inherited `view_template`; a 2.0 subclass has no sidecar beside its own
+file, and before this decision the lookup refused it (plan 2.1, probe 10).
+**Decision.** `Component.template` walks the superclass chain to the first
+class with a sidecar beside its own file under a component root; a class with
+its own sidecar (`ToggleGroupItem < Toggle`) uses its own; a chain with none
+up to `Component` raises naming every file looked for. `exists?` runs before
+`find`, so an inherited sidecar costs no exception per render. A class
+directly under a root (a host's `app/components/my_button.rb`) looks its
+sidecar up with an empty prefix list — `File.split` gives `"."` there, which
+the lookup does not resolve (plan 2.1, probe 24).
+**Cost:** a misnamed sidecar on a subclass silently renders the parent's; the
+error a sidecar-less chain raises names the paths tried, so the failure is
+diagnosable once noticed. **What would reverse it:** a 2.2 batch finding a
+component whose subclass must *not* inherit.
+
+## 14. ThemeToggle migrates in 2.1; a migrated scenario keeps no Phlex block; the String form of an enum is a unit test — 2026-09-20
+
+`ThemeToggle` (one class) renders `RubyUI.Toggle(…)` through `Phlex::Kit`. A
+Kit defines no method for a constant that is not `Phlex::SGML` (probe 9), and a
+Phlex component can render a 2.0 component only through phlex-rails with a
+view context (probes 8a/8b), which the golden suite's Phlex lane does not
+have. So Toggle cannot migrate without ThemeToggle: it joins 2.1 as a fifth
+family (1 class, 1 scenario). The same mechanism means a migrated component's
+scenarios keep no Phlex block: the ERB fixture is the only lane and the
+recording lane, as the catalog already allowed. The 22 scenarios of plan 2.1
+(Dialog 6, Select 2, Toggle 3, ToggleGroup 3, DataTable 7, ThemeToggle 1) are
+declared with no block; none of the 188 snapshots changed. Spec §6.2.2's
+"a scenario passing the String form of every enum attribute" is a unit test
+(`render(size: :lg) == render(size: "lg")` and an unknown value raising), for
+every enumerated argument — `DialogContent#size`, `variant` and `size` on
+`Toggle` and `ToggleGroup`, `ToggleGroup`'s `type` and `orientation`, the
+item-level overrides — because the golden suite is the 1.6 contract and
+String coercion is 2.0 behaviour.
+
+**Also recorded here (final review of plan 2.1):** `group.ToggleGroupItem(…)`
+returns the item's markup, and `render_in` captures the block with
+ActionView's `capture`, which keeps a block's return value only when the
+block output nothing. `<%= g.ToggleGroupItem(…) %>` in ERB outputs, so the
+fixtures and every test render every item; a Ruby block that calls the
+method twice and returns the second renders one item where 1.6 rendered two.
+Ordinary ActionView semantics, kept; the remedy (`safe_join`, or output each
+call) is in spec §4.3, and the 2.2 upgrade notes carry it.
+
+## 15. `docs/` pins a git ref of `main`, not RubyGems 1.6.0 — 2026-09-20
+
+Spec §6 Phase 2.0 said to point `docs/Gemfile` at the published `ruby_ui`
+1.6 while the gem migrates. Measured (plan 2.1): the published 1.6.0 gem is
+21 files behind `main` — Select, DropdownMenu, Popover, Sheet, HoverCard,
+Command, ContextMenu and Clipboard classes and controllers, from #506 and
+#530 after the release — and the site renders `main`. A RubyGems pin would
+have regressed the site and paired old markup with the checkout's newer
+controllers (the docs' controller symlinks point at `../gem`;
+`select_controller.js` reads a `panel` target the published `SelectContent`
+lacks).
+**Decision.** `gem "ruby_ui", github: "ruby-ui/ruby_ui", ref: "92f261931eb78bcc4682f4afb72b139553aba957", glob: "gem/*.gemspec"`
+— `main`'s tip and the merge base of the 2.0 stack, a commit that cannot move.
+`Gem.loaded_specs["ruby_ui"].gem_dir` resolves to the git checkout's `gem/`,
+so the docs initializer is unchanged; Tailwind keeps scanning the
+repository's `gem/lib/ruby_ui` directory (a migration keeps every class
+string) and the controller symlinks keep pointing at the checkout (Phase 2
+edits no controller). The pinned sources differ from the branch's only in
+`context_menu_label.rb`, the Phase 1 fix `main` does not have yet.
+**Cost:** the docs bundle clones the repository in CI; the pin is bumped by
+hand if the site should carry a fix merged to `main` before Phase 3.3 removes
+it. **What would reverse it:** a 1.6.x release cut from `main`, at which point
+the RubyGems pin the spec asked for becomes equivalent.

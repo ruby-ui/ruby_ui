@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTableBulkActions < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
-
+  class DataTableBulkActions < Component
     private
 
     def default_attrs

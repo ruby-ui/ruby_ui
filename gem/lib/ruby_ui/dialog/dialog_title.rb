@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DialogTitle < Base
-    def view_template(&)
-      h3(**attrs, &)
-    end
-
+  class DialogTitle < Component
     private
 
     def default_attrs

@@ -1,0 +1,1 @@
+<div <%= tag.attributes(component.attrs) %>><%= component.content %><% component.hidden_inputs.each do |name, value| %><input <%= tag.attributes(component.hidden_input_attrs(name, value)) %>><% end %></div>

@@ -1,0 +1,1 @@
+<form <%= tag.attributes(component.form_attrs) %>><%= render RubyUI::Input.new(type: :search, name: component.name, value: component.value, placeholder: component.placeholder, autocomplete: "off") %><% component.preserved_inputs.each do |name, value| %><input <%= tag.attributes(component.hidden_input_attrs(name, value)) %>><% end %></form>

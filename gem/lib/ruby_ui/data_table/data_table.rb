@@ -1,20 +1,16 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTable < Base
-    register_element :turbo_frame, tag: "turbo-frame"
-
+  class DataTable < Component
     def initialize(id:, **attrs)
       @id = id
       super(**attrs)
     end
 
-    def view_template(&block)
-      turbo_frame(id: @id, target: "_top") do
-        div(**attrs) do
-          yield if block
-        end
-      end
+    # The frame's own attributes, serialized as Phlex did: a nil id is omitted,
+    # a Symbol dasherizes.
+    def frame_attrs
+      Attributes.flat(id: @id, target: "_top")
     end
 
     private

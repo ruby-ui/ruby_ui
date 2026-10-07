@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class Select < Base
-    def view_template(&)
-      div(**attrs, &)
-    end
-
+  class Select < Component
     private
 
     def default_attrs

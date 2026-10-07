@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 module RubyUI
-  class DataTableRowCheckbox < Base
+  class DataTableRowCheckbox < Component
     def initialize(value:, name: "ids[]", label: nil, **attrs)
       @value = value
       @name = name
       @label = label
       super(**attrs)
-    end
-
-    def view_template
-      render RubyUI::Checkbox.new(**attrs)
     end
 
     private
