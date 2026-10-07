@@ -23,4 +23,12 @@ Gem::Specification.new do |s|
   s.add_development_dependency "minitest", "~> 6.0"
   # Golden suite only: the HTML5-spec parser the snapshot comparison is built on.
   s.add_development_dependency "nokogiri", "~> 1.18"
+  # 2.0 harness: the inline Rails application the tests boot, ReActionView's
+  # handler (so ERB compiles through Herb as it will in a host app), and
+  # phlex-rails so ERB fixtures can render components that are still Phlex
+  # during the migration. phlex-rails leaves with the last Phlex component.
+  s.add_development_dependency "railties", "~> 8.1"
+  s.add_development_dependency "actionview", "~> 8.1"
+  s.add_development_dependency "reactionview", "~> 0.4"
+  s.add_development_dependency "phlex-rails", "~> 2.4"
 end

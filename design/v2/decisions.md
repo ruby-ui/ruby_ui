@@ -108,3 +108,97 @@ before the gem release instead of after it.
 **What would reverse this:** sub-phase 2.3 proving larger than the component
 migration itself, in which case the generator ships in 2.1 instead.
 
+## 5. The gem's test harness is an inline Rails application — 2026-09-20
+
+Decision A said `actionview` + `reactionview`, no controller, no dummy app.
+The premise this started from — that `local_template?` treats a template
+outside `Rails.root` as "external" and falls back to Erubi — doesn't hold
+without an application: `Rails.root` is then `nil`, `nil.to_s` is `""`, and
+every identifier `start_with?("")`, so every template counts as local. The
+reasons that do hold: ReActionView's Railtie registers its ERB handler
+(`ActionView::Template.register_template_handler :erb, …`) only from
+`config.after_initialize`, which a Railtie runs only when a
+`Rails::Application` boots, inside the `:action_view` load hook that fires
+when `ActionView::Base` loads — without an application, Erubi stays the
+`:erb` handler and Herb's validation never runs on anything, local or not;
+and `Rails.env`
+defaults to `development` unless `RAILS_ENV`/`RACK_ENV` is set (it does not
+need an application, but nothing else in a bare `require "rails"` sets it
+either), which turns on 1.6 `Base`'s dev comment. So the tests need a `Rails`,
+and its root must be the gem. `test_helper.rb` boots the smallest
+`Rails::Application` — no `app/` directory, no routes, no database — with
+`config.root` at the gem and `RAILS_ENV=test`. Measured: the existing suite is
+unchanged under it and `ActionView::Template.handler_for_extension(:erb)` is
+ReActionView's.
+**Cost if wrong:** `railties` as a development dependency and ~1 s of boot per
+test run. **What would reverse it:** ReActionView registering its ERB handler
+outside an application-boot initializer, at which point the app object's only
+remaining job is `Rails.env`, which `ENV["RAILS_ENV"] = "test"` alone already
+covers.
+
+## 6. The 2.0 layer is `RubyUI::Component` until the last Phlex component is gone — 2026-09-20
+
+`RubyUI::Base` is the Phlex base that 256 components inherit; the 2.0 layer
+cannot take the name while they exist. It lands as `RubyUI::Component`, every
+migrated component inherits `Component`, and one mechanical commit in Phase
+2.4 — after the last migration, before the installer is rewritten — renames
+`Component` to `Base`. Users never see `Component`. The alternative, renaming
+the Phlex base first, touches all 256 files for no user benefit.
+**Cost if wrong:** one sed across the migrated files at the end.
+
+## 7. Every ERB fixture is written before any component migrates — 2026-09-20
+
+With `phlex-rails` loaded (development only), an ERB fixture renders a
+component that is still Phlex, so the ERB lane can be green for all 188
+scenarios while nothing has migrated. Plan 2.0a proves it on Button's 15;
+plan 2.0b writes the other 173. After that a migration changes only an
+implementation, never the ruler — "did I write the fixture right" and "did I
+port the component right" stop being one failure. While a scenario keeps its
+Phlex block, that lane records and the ERB lane compares.
+**Cost if wrong:** ~2,000 lines of ERB written ahead of the first migration.
+`phlex-rails` leaves the gemspec with the last Phlex component.
+
+## 8. The strict lane is the canonical form in preserve mode, for every scenario — 2026-09-20
+
+Every scenario keeps a second snapshot, `CanonicalHtml.call(html, strict: true)`:
+the whole fragment in the normalizer's preserve mode (text and whitespace
+verbatim, attributes sorted, comments dropped, the fragment's own edges
+trimmed). Same fixed-point discipline, same recording rule, same runner. The 188
+strict snapshots were recorded from Phlex.
+
+The spec named seven text-bearing components; the plan first mapped that to
+five directories. Review found a sixth (Breadcrumb), and an audit of the raw
+Phlex output found text inside an inline element in 38 of 54 components — any
+list is one review away from missing one. So there is no list: the contract is
+the literal one, *the 2.0 sidecar emits what Phlex emitted*, and Phlex never
+emitted whitespace between elements. Fixtures and sidecars are written
+whitespace-tight — one line, or `<%-`/`-%>` — because the strict form sees
+every newline they add; the canonical form stays as the diagnostic (canonical
+passes, strict fails: whitespace only).
+**Cost if wrong:** 188 more files to keep, sidecars without newlines between
+static elements, and strictness where a browser would not have cared (inside a
+flex parent, say). **What would reverse it:** sidecars for the large composites
+proving unreadable under the rule, at which point the strict lane narrows to a
+criterion computed from the output (text adjacent to an element sibling) rather
+than a hand-picked list.
+
+## 9. Sidecar lookup takes a list of roots; the fresh-app script moves to 2.4 — 2026-09-20
+
+`RubyUI.component_roots` is an Array — `lib` and `test/probes` in the gem, one
+entry in a host app — and a class's sidecar is found under the root that
+contains its file, through a `LookupContext` scoped to that root. Collision
+with a host template is impossible by construction, and "two sidecars for one
+class" cannot happen (one class file, one directory). The fresh-app install
+script the spec put in Phase 2.0 moves to Phase 2.4: until the installer writes
+the 2.0 initializer, the script would only exercise the 1.6 installer, which
+proves nothing about 2.0.
+
+The scoped lookup registers each root's resolver through
+`ActionView::PathRegistry.cast_file_system_resolvers` — a `:nodoc:` API
+present since Rails 7.1 — because that registration is what lets the
+reloader's `DetailsKey.clear` and `CacheExpiry` see the sidecars; a test pins
+it. ReActionView allows `actionview >= 7.0`; the 2.4 gemspec floors Rails at
+7.1.
+
+**Cost if wrong:** installation is first exercised end to end in 2.4 rather
+than now.

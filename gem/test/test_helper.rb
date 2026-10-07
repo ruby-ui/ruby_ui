@@ -1,10 +1,20 @@
 # frozen_string_literal: true
 
+# A gem test suite has no other legitimate environment; unlike an application's
+# test_helper, a developer's exported RAILS_ENV must not leak in here — a
+# stray RAILS_ENV=development would turn on 1.6's dev comment and fail six
+# unit tests.
+ENV["RAILS_ENV"] = "test"
+
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "ruby_ui"
 require "phlex"
 require "json"
 require "securerandom"
+require "rails"
+require "action_controller/railtie"
+require "reactionview"
+require "phlex-rails"
 require "minitest/autorun"
 
 module RubyUI
@@ -15,7 +25,52 @@ module RubyUI
 
     autoload class_name, path
   end
+
+  # The smallest Rails application: ReActionView's Railtie registers its ERB
+  # handler from `config.after_initialize` (inside the `:action_view` load
+  # hook), which runs when an application boots — without one Erubi stays the
+  # `:erb` handler and Herb never sees a template (decision 5). No app/
+  # directory, no routes, no database — an object, so the gem's tests compile
+  # ERB exactly as a host application will.
+  class TestApp < Rails::Application
+    ROOT = File.expand_path("..", __dir__)
+    PROBE_VIEWS = File.join(ROOT, "test/probes/views")
+
+    config.root = ROOT
+    config.eager_load = false
+    config.secret_key_base = "ruby_ui-test"
+    config.logger = Logger.new(IO::NULL)
+    config.hosts.clear
+
+    class << self
+      # One compiled-template cache per process, as in an app; a fresh view
+      # context per call, with the given view paths.
+      def view(*paths)
+        view_class.with_view_paths(paths.empty? ? [PROBE_VIEWS] : paths)
+      end
+
+      private
+
+      def view_class
+        @view_class ||= ActionView::Base.with_empty_template_cache
+      end
+    end
+  end
 end
+
+ReActionView.config.intercept_erb = true
+ReActionView.config.validation_mode = :raise
+ReActionView.config.debug_mode = false
+Rails.application.initialize!
+
+# component_roots= is a module method, not a constant: the autoload above does
+# not reach it, so the file is required outright.
+require "ruby_ui/component"
+
+# Two component roots: the gem's own components, and the test-only probes.
+# A class's sidecar is looked up under the root that contains the class file.
+RubyUI.component_roots = [File.join(RubyUI::TestApp::ROOT, "lib"), File.join(RubyUI::TestApp::ROOT, "test/probes")]
+Dir.glob(File.join(RubyUI::TestApp::ROOT, "test/probes/ruby_ui/**/*.rb")).sort.each { |probe| require probe }
 
 class ComponentTest < Minitest::Test
   def render(component, &)
@@ -25,10 +80,8 @@ class ComponentTest < Minitest::Test
   def phlex(&)
     render Phlex::HTML.new, &
   end
-end
 
-# this is a tracepoint that will output the path of all files loaded that contain the string "phlex"
-# trace = TracePoint.new(:class) do |tp|
-#   puts "Loaded: #{tp.path}" if tp.path.include?("phlex")
-# end
-# trace.enable
+  def render_erb(template)
+    RubyUI::TestApp.view.render(template: template)
+  end
+end
