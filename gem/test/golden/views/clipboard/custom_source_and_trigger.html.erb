@@ -1,0 +1,1 @@
+<%= render RubyUI::Clipboard.new(success: "Copiado!", error: "Falhou!") do %><%= render RubyUI::ClipboardSource.new do %>gem install ruby_ui<% end %><%= render RubyUI::ClipboardTrigger.new do %><%= render RubyUI::Button.new(icon: true) do %>C<% end %><% end %><% end %>

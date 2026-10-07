@@ -2,6 +2,8 @@
 
 require "test_helper"
 require "golden/harness"
+require "golden/catalog"
+require "golden/scenarios"
 
 class GoldenHarnessTest < Minitest::Test
   def test_records_a_class_when_it_renders_not_when_it_is_instantiated
@@ -50,6 +52,19 @@ class GoldenHarnessTest < Minitest::Test
 
     assert_equal values.first, values.last
     assert_includes 50..89, values.first
+  end
+
+  # ActionView instruments every render, and the first instrumentation on a
+  # thread creates the Instrumenter, whose id is SecureRandom.hex(10). A fresh
+  # thread reproduces "the first ERB render of the process": the pin must not
+  # hand that call the counter's first value, or every generated id in that one
+  # render is shifted by one and the scenario fails its own determinism check.
+  def test_erb_lane_mints_the_same_ids_on_a_threads_first_render
+    scenario = Golden::Catalog.scenarios.find { |candidate| candidate.slug == "tooltip/default" }
+    first, second = Thread.new { Array.new(2) { Golden::Harness.render_erb(scenario) } }.value
+
+    assert_equal second, first
+    assert_includes first, 'id="tooltip00000001"'
   end
 
   private

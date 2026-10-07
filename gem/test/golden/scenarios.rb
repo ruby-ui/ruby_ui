@@ -17,6 +17,14 @@
 #     what users write, and for table/list/select fragments it is also what
 #     keeps the scenario meaningful rather than a bare `<td>`.
 #
+# Every scenario also has an ERB fixture at
+# test/golden/views/<component>/<name>.html.erb: the same composition written
+# as `<%= render RubyUI::X.new(...) do %>...<% end %>`, on one line, because
+# the strict lane sees every newline a fixture adds and Herb's trim mode keeps
+# the one after an `end` that follows content (decisions 7, 8 and 10). Both lanes
+# compare against the same snapshots; while a scenario keeps its Phlex block,
+# that lane records and the ERB lane compares.
+#
 # Variant coverage is enumerative where a component exposes a closed set:
 # Button and Link have six variants and four sizes, Badge has 28 colours, and
 # those are the cases a restyle regresses.
