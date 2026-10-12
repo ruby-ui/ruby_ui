@@ -303,6 +303,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/skeleton
 - Summary: Placeholder for loading states.
 
+### Spinner
+
+- URL: https://rubyui.com/docs/spinner
+- Summary: Animated indicator for loading states.
+
 ### Switch
 
 - URL: https://rubyui.com/docs/switch

@@ -50,6 +50,7 @@ module Components
           {name: "Shortcut Key", path: docs_shortcut_key_path},
           {name: "Sidebar", path: docs_sidebar_path},
           {name: "Skeleton", path: docs_skeleton_path},
+          {name: "Spinner", path: docs_spinner_path},
           {name: "Switch", path: docs_switch_path},
           {name: "Table", path: docs_table_path},
           {name: "Tabs", path: docs_tabs_path},
