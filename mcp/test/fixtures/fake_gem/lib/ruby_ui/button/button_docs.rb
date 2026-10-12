@@ -1,6 +1,7 @@
 class Views::Docs::Button
   def view_template
     render Docs::Header.new(title: "Button", description: "A clickable button.")
+    p(class: "text-muted-foreground") { "A styled note about the button." }
 
     Heading(level: 2) { "Usage" }
 
