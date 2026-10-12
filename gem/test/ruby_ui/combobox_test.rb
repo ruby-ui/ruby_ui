@@ -227,7 +227,6 @@ class RubyUI::ComboboxTest < ComponentTest
     assert_match(/keydown\.down/, output)
     assert_match(/keydown\.up/, output)
     assert_match(/keydown\.enter/, output)
-    assert_match(/keydown\.esc/, output)
   end
 
   def test_combobox_input_trigger_focusin_action
@@ -248,5 +247,62 @@ class RubyUI::ComboboxTest < ComponentTest
   def test_combobox_popover_has_autofocus
     output = phlex { RubyUI.ComboboxPopover { "" } }
     assert_match(/autofocus/, output)
+  end
+
+  # The browser's light dismiss hides an auto popover before any exit animation can run.
+  def test_combobox_popover_is_a_manual_popover
+    output = phlex { RubyUI.ComboboxPopover { "options" } }
+
+    assert_match(/popover="manual"/, output)
+    refute_match(/role="popover"/, output)
+  end
+
+  # data-state is set by the controller on open; rendering it closed would start an exit run.
+  def test_combobox_popover_renders_without_state
+    output = phlex { RubyUI.ComboboxPopover { "options" } }
+
+    refute_match(/data-state/, output)
+    refute_match(/data-side/, output)
+  end
+
+  def test_combobox_popover_animates_open_and_closed
+    output = phlex { RubyUI.ComboboxPopover { "options" } }
+
+    assert_match(/data-\[state=open\]:animate-in/, output)
+    assert_match(/data-\[state=open\]:fade-in-0/, output)
+    assert_match(/data-\[state=open\]:zoom-in-95/, output)
+    assert_match(/data-\[state=closed\]:animate-out/, output)
+    assert_match(/data-\[state=closed\]:fade-out-0/, output)
+    assert_match(/data-\[state=closed\]:zoom-out-95/, output)
+    assert_match(/\bduration-100\b/, output)
+  end
+
+  # hidePopover() lands a frame after the animation ends; without a forwards fill mode that frame flashes.
+  def test_combobox_popover_holds_the_last_frame_of_the_exit_animation
+    output = phlex { RubyUI.ComboboxPopover { "options" } }
+
+    assert_match(/data-\[state=closed\]:fill-mode-forwards/, output)
+  end
+
+  def test_combobox_popover_slides_in_from_the_trigger_side
+    output = phlex { RubyUI.ComboboxPopover { "options" } }
+
+    assert_match(/data-\[side=bottom\]:slide-in-from-top-2/, output)
+    assert_match(/data-\[side=top\]:slide-in-from-bottom-2/, output)
+    assert_match(/data-\[side=left\]:slide-in-from-right-2/, output)
+    assert_match(/data-\[side=right\]:slide-in-from-left-2/, output)
+  end
+
+  def test_combobox_popover_keeps_positioning_classes
+    output = phlex { RubyUI.ComboboxPopover { "options" } }
+
+    assert_match(/inset-auto m-0 absolute/, output)
+  end
+
+  def test_combobox_owns_outside_click_and_escape
+    output = phlex { RubyUI.Combobox { "" } }
+
+    assert_match(/click@window->ruby-ui--combobox#handleOutsideClick/, output)
+    assert_match(/keydown\.esc@window->ruby-ui--combobox#handleEscape/, output)
   end
 end
