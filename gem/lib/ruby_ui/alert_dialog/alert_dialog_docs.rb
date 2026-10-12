@@ -11,7 +11,7 @@ class Views::Docs::AlertDialog < Views::Base
         <<~RUBY
           AlertDialog do
             AlertDialogTrigger do
-              Button { "Show dialog" }
+              Button(variant: :outline) { "Show dialog" }
             end
             AlertDialogContent do
               AlertDialogHeader do

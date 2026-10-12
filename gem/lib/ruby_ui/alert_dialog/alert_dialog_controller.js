@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="ruby-ui--alert-dialog"
 export default class extends Controller {
-  static targets = ["content"];
+  static targets = ["dialog"];
   static values = {
     open: {
       type: Boolean,
@@ -11,21 +11,85 @@ export default class extends Controller {
   };
 
   connect() {
+    this.dialogTarget.addEventListener("cancel", this.handleCancel);
+    this.dialogTarget.addEventListener("close", this.handleClose);
     if (this.openValue) {
       this.open();
     }
   }
 
+  disconnect() {
+    // The <dialog> may already be gone; the scroll lock must be lifted either way.
+    if (this.hasDialogTarget) {
+      this.dialogTarget.removeEventListener("cancel", this.handleCancel);
+      this.dialogTarget.removeEventListener("close", this.handleClose);
+      // Nothing is left to wait for the exit animation, so apply the pending close now.
+      this.settleExit(this.dialogTarget);
+    }
+    document.body.classList.remove("overflow-hidden");
+  }
+
   open() {
-    document.body.insertAdjacentHTML("beforeend", this.contentTarget.innerHTML);
-    // prevent scroll on body
+    this.dialogTarget.dataset.state = "open";
+    if (!this.dialogTarget.open) this.dialogTarget.showModal();
     document.body.classList.add("overflow-hidden");
   }
 
-  dismiss(e) {
-    // allow scroll on body
+  dismiss() {
+    if (this.dialogTarget.dataset.state === "closed") return;
+
+    this.dialogTarget.dataset.state = "closed";
+    this.hideAfterExitAnimation(this.dialogTarget);
+  }
+
+  afterExit() {
+    this.dialogTarget.close();
+  }
+
+  // Escape (and requestClose) must play the exit animation instead of closing at once.
+  handleCancel = (event) => {
+    // Already on its way out: let a second Escape close natively where the browser allows it.
+    if (this.dialogTarget.dataset.state === "closed") return;
+
+    event.preventDefault();
+    this.dismiss();
+  };
+
+  handleClose = () => {
     document.body.classList.remove("overflow-hidden");
-    // remove the element
-    this.element.remove();
+    // A close this controller did not start (a second Escape mid-exit) must not leave a pending exit behind.
+    this.settleExit(this.dialogTarget);
+  };
+
+  // Overlay exit — unlike the other overlays this waits on the Animation objects: the ::backdrop animates too,
+  // and its events land on the <dialog> under the same keyframe names as the panel's.
+  hideAfterExitAnimation(animated) {
+    const run = (this.exitRun = {});
+    // subtree: true is what lists the ::backdrop's animation; descendants are filtered back out.
+    const exitAnimations = animated
+      .getAnimations({ subtree: true })
+      .filter((animation) => animation instanceof CSSAnimation && animation.effect?.target === animated);
+
+    // No exit animation, or no box to run it in: nothing would ever finish.
+    if (exitAnimations.length === 0) {
+      this.settleExit(animated);
+      return;
+    }
+
+    // A cancelled exit (reopened mid-exit) counts as finished too.
+    Promise.allSettled(exitAnimations.map((animation) => animation.finished)).then(() => {
+      // A later dismiss or close owns the dialog now; this run is stale.
+      if (this.exitRun !== run) return;
+
+      this.settleExit(animated);
+    });
+  }
+
+  settleExit(animated) {
+    this.exitRun = null;
+    // Reopened mid-exit: it is on its way back in, leave it visible.
+    if (animated.dataset.state !== "closed") return;
+
+    this.afterExit(animated);
   }
 }
