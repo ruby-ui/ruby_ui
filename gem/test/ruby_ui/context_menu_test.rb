@@ -52,4 +52,19 @@ class RubyUI::ContextMenuTest < ComponentTest
 
     assert_match(/data-\[state=closed\]:fill-mode-forwards/, output)
   end
+
+  def test_context_menu_label_does_not_leak_a_hash_into_the_class_attribute
+    output = phlex { RubyUI.ContextMenuLabel { "Label" } }
+
+    refute_includes output, "inset?",
+      "ContextMenuLabel serialized its conditional-class Hash into the class attribute"
+  end
+
+  def test_context_menu_label_applies_the_inset_class_only_when_inset
+    inset = phlex { RubyUI.ContextMenuLabel(inset: true) { "Label" } }
+    plain = phlex { RubyUI.ContextMenuLabel(inset: false) { "Label" } }
+
+    assert_includes inset, "pl-8"
+    refute_includes plain, "pl-8"
+  end
 end
