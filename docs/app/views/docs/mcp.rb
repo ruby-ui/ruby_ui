@@ -132,7 +132,7 @@ class Views::Docs::Mcp < Views::Base
     <<~JSON
       {
         "context_servers": {
-          "ruby-ui": { "source": "http", "url": "https://www.rubyui.com/mcp" }
+          "ruby-ui": { "url": "https://www.rubyui.com/mcp" }
         }
       }
     JSON
