@@ -33,6 +33,7 @@ class RegistryBuilderTest < Minitest::Test
 
     assert_match(/# Button/, md)
     assert_match(/A clickable button\./, md)
+    assert_match(/A styled note about the button\./, md)
     assert_match(/### Example/, md)
     assert_match(/```ruby/, md)
   end
