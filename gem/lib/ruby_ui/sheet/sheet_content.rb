@@ -2,28 +2,25 @@
 
 module RubyUI
   class SheetContent < Base
+    # Per side: release the opposite edge (a modal <dialog> is pinned to all four by inset: 0),
+    # then the default size and the direction to slide in from.
     SIDE_CLASS = {
-      top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
-      right: "inset-y-0 right-0 h-full border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
-      bottom: "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-      left: "inset-y-0 left-0 h-full border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left"
+      top: "inset-x-0 top-0 bottom-auto w-full h-auto border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+      right: "inset-y-0 right-0 left-auto h-full w-3/4 sm:max-w-sm border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
+      bottom: "inset-x-0 bottom-0 top-auto w-full h-auto border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+      left: "inset-y-0 left-0 right-auto h-full w-3/4 sm:max-w-sm border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left"
     }
 
-    def initialize(side: :right, **attrs)
+    def initialize(side: :right, show_close_button: true, **attrs)
       @side = side
-      @side_classes = SIDE_CLASS[side]
+      @show_close_button = show_close_button
       super(**attrs)
     end
 
     def view_template(&block)
-      template(data: {ruby_ui__sheet_target: "content"}) do
-        div(data: {controller: "ruby-ui--sheet-content"}) do
-          backdrop
-          div(**attrs) do
-            block&.call
-            close_button
-          end
-        end
+      dialog(**attrs) do
+        block&.call
+        close_button if @show_close_button
       end
     end
 
@@ -31,11 +28,20 @@ module RubyUI
 
     def default_attrs
       {
-        data_state: "open", # For animate in
-        data_ruby_ui__sheet_content_target: "panel",
+        data: {
+          controller: "ruby-ui--sheet-content",
+          ruby_ui__sheet_target: "dialog",
+          action: "click->ruby-ui--sheet-content#backdropClick",
+          side: @side
+        },
         class: [
-          "fixed pointer-events-auto z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards data-[state=closed]:duration-300 data-[state=open]:duration-500 overflow-scroll",
-          @side_classes
+          # UA <dialog> reset; not-open:hidden keeps a caller's bare `flex` from overriding the display: none of a closed dialog.
+          "m-0 max-w-full max-h-full not-open:hidden",
+          "fixed pointer-events-auto z-50 gap-4 bg-background text-foreground p-6 shadow-lg transition ease-in-out overflow-scroll",
+          "data-[state=open]:animate-in data-[state=open]:duration-500 data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=closed]:fill-mode-forwards",
+          # ::backdrop does not inherit the panel's --tw-duration; give it the same exit so both fade in step.
+          "backdrop:bg-background/80 backdrop:backdrop-blur-sm data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0 data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 data-[state=closed]:backdrop:duration-300 data-[state=closed]:backdrop:fill-mode-forwards",
+          SIDE_CLASS[@side]
         ]
       }
     end
@@ -64,16 +70,6 @@ module RubyUI
         end
         span(class: "sr-only") { "Close" }
       end
-    end
-
-    def backdrop
-      div(
-        data_state: "open",
-        data_action: "click->ruby-ui--sheet-content#close",
-        data_ruby_ui__sheet_content_target: "backdrop",
-        class:
-              "fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:fill-mode-forwards"
-      )
     end
   end
 end
