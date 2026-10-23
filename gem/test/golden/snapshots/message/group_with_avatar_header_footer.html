@@ -1,0 +1,33 @@
+<div class="flex min-w-0 flex-col gap-2" data-slot="message-group">
+  <div class="group/message relative flex w-full min-w-0 gap-2 text-sm data-[align=end]:flex-row-reverse" data-align="start" data-slot="message">
+    <div class="flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-data-[slot=message-footer]/message:-translate-y-8" data-slot="message-avatar">
+      <span class="relative flex shrink-0 overflow-hidden rounded-full h-10 w-10 text-base" data-controller="ruby-ui--avatar">
+        <span class="flex h-full w-full items-center justify-center rounded-full bg-muted" data-ruby-ui--avatar-target="fallback">
+          OL
+        </span>
+      </span>
+    </div>
+    <div class="flex w-full min-w-0 flex-col gap-2.5 wrap-break-word group-data-[align=end]/message:[&amp;&gt;[data-slot]]:self-end" data-slot="message-content">
+      <div class="flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0" data-slot="message-header">
+        Oliver
+      </div>
+      <div class="group/bubble relative flex w-fit min-w-0 flex-col gap-1 max-w-[80%] data-[align=end]:self-end data-[variant=ghost]:max-w-full *:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&amp;&gt;[data-slot=bubble-content]:is(button,a):hover]:bg-primary/80" data-align="start" data-slot="bubble" data-variant="default">
+        <div class="w-fit max-w-full min-w-0 overflow-hidden wrap-break-word rounded-3xl border border-transparent px-3 py-2.5 text-sm leading-relaxed group-data-[align=end]/bubble:self-end [&amp;:is(button,a)]:text-left [&amp;:is(button,a)]:outline-none [&amp;:is(button,a)]:transition-colors [&amp;:is(button,a):focus-visible]:border-ring [&amp;:is(button,a):focus-visible]:ring-3 [&amp;:is(button,a):focus-visible]:ring-ring/30" data-slot="bubble-content">
+          Hi
+        </div>
+      </div>
+      <div class="flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-data-[align=end]/message:justify-end group-has-data-[variant=ghost]/message:px-0" data-slot="message-footer">
+        Delivered
+      </div>
+    </div>
+  </div>
+  <div class="group/message relative flex w-full min-w-0 gap-2 text-sm data-[align=end]:flex-row-reverse" data-align="end" data-slot="message">
+    <div class="flex w-full min-w-0 flex-col gap-2.5 wrap-break-word group-data-[align=end]/message:[&amp;&gt;[data-slot]]:self-end" data-slot="message-content">
+      <div class="group/bubble relative flex w-fit min-w-0 flex-col gap-1 max-w-[80%] data-[align=end]:self-end data-[variant=ghost]:max-w-full *:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&amp;&gt;[data-slot=bubble-content]:is(button,a):hover]:bg-primary/80" data-align="end" data-slot="bubble" data-variant="default">
+        <div class="w-fit max-w-full min-w-0 overflow-hidden wrap-break-word rounded-3xl border border-transparent px-3 py-2.5 text-sm leading-relaxed group-data-[align=end]/bubble:self-end [&amp;:is(button,a)]:text-left [&amp;:is(button,a)]:outline-none [&amp;:is(button,a)]:transition-colors [&amp;:is(button,a):focus-visible]:border-ring [&amp;:is(button,a):focus-visible]:ring-3 [&amp;:is(button,a):focus-visible]:ring-ring/30" data-slot="bubble-content">
+          Hey
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

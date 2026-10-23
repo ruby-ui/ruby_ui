@@ -1,0 +1,21 @@
+<div class="group/dropdown-menu is-absolute" data-action="click@window-&gt;ruby-ui--dropdown-menu#onClickOutside" data-controller="ruby-ui--dropdown-menu" data-ruby-ui--dropdown-menu-options-value="{}">
+  <div class="inline-block w-full" data-action="click-&gt;ruby-ui--dropdown-menu#toggle" data-ruby-ui--dropdown-menu-target="trigger">
+    <button class="whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed px-4 py-2 h-9 text-sm border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground" type="button">
+      Open
+    </button>
+  </div>
+  <div class="z-50 hidden group-[.is-absolute]/dropdown-menu:absolute group-[.is-fixed]/dropdown-menu:fixed" data-ruby-ui--dropdown-menu-target="content" style="width: max-content; top: 0; left: 0;">
+    <div class="z-50 min-w-[8rem] rounded-md border bg-background p-1 text-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fill-mode-forwards data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 w-56" data-ruby-ui--dropdown-menu-target="panel" data-state="open">
+      <h3 class="px-2 py-1.5 text-sm font-semibold">
+        My Account
+      </h3>
+      <div aria-orientation="horizontal" class="-mx-1 my-1 h-px bg-muted" role="separator"></div>
+      <a class="relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" data-action="click-&gt;ruby-ui--dropdown-menu#close" data-orientation="vertical" data-ruby-ui--dropdown-menu-target="menuItem" href="/profile" role="menuitem" tabindex="-1">
+        Profile
+      </a>
+      <div class="relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" data-action="click-&gt;ruby-ui--dropdown-menu#close" data-orientation="vertical" data-ruby-ui--dropdown-menu-target="menuItem" role="menuitem" tabindex="-1">
+        Billing
+      </div>
+    </div>
+  </div>
+</div>

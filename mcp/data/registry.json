@@ -1135,7 +1135,7 @@
         },
         {
           "path": "context_menu_label.rb",
-          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class ContextMenuLabel < Base\n    def initialize(inset: false, **attrs)\n      @inset = inset\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def inset? = @inset\n\n    def default_attrs\n      {\n        class: [\"px-2 py-1.5 text-sm font-semibold text-foreground\", inset?: \"pl-8\"]\n      }\n    end\n  end\nend\n"
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class ContextMenuLabel < Base\n    def initialize(inset: false, **attrs)\n      @inset = inset\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def inset? = @inset\n\n    def default_attrs\n      {\n        class: [\"px-2 py-1.5 text-sm font-semibold text-foreground\", (inset? ? \"pl-8\" : nil)]\n      }\n    end\n  end\nend\n"
         },
         {
           "path": "context_menu_separator.rb",
