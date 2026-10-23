@@ -136,4 +136,17 @@ class RubyUI::DialogTest < ComponentTest
 
     assert_match(/data-action="click->ruby-ui--dialog#open"/, output)
   end
+
+  # Every modal shares shadcn's overlay: black at 10% in both themes, blurred only where backdrop-filter is supported.
+  def test_dialog_content_uses_the_shared_modal_overlay
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_includes output, "backdrop:bg-black/10"
+    assert_includes output, "backdrop:supports-backdrop-filter:backdrop-blur-xs"
+    refute_match(/bg-background\/80|bg-black\/80|backdrop-blur-sm/, output)
+  end
 end

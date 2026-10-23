@@ -14,7 +14,7 @@ module RubyUI
     def background
       div(
         data_state: "open",
-        class: "fixed inset-0 z-50 bg-black/80 backdrop-blur-sm data-[state=open]:animate-in",
+        class: "fixed inset-0 z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs data-[state=open]:animate-in",
         style: "pointer-events:auto",
         data_aria_hidden: "true",
         aria_hidden: "true"
