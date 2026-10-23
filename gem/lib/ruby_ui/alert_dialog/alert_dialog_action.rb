@@ -10,7 +10,10 @@ module RubyUI
 
     def default_attrs
       {
-        variant: :primary
+        variant: :primary,
+        data: {
+          action: "click->ruby-ui--alert-dialog#dismiss"
+        }
       }
     end
   end
