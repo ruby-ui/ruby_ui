@@ -13,7 +13,8 @@ module ShadcnAudit
       "target" => ->(args, out:) { target(args, out: out) },
       "reference" => ->(args, out:) { reference(args, out: out) },
       "theme" => ->(args, out:) { theme(args, out: out) },
-      "sandbox" => ->(args, out:) { sandbox(args, out: out) }
+      "sandbox" => ->(args, out:) { sandbox(args, out: out) },
+      "preview" => ->(args, out:) { preview(args, out: out) }
     }
 
     def self.start(argv, out: $stdout)
@@ -57,6 +58,11 @@ module ShadcnAudit
 
     def self.sandbox(args, out:)
       Sandbox.new(shell: Shell.new, dir: ShadcnAudit.workspace_dir).prepare
+    end
+
+    def self.preview(args, out:)
+      sha = args.first or raise ArgumentError, "usage: preview <sha>"
+      RubyuiPreview.new(shell: Shell.new, dir: ShadcnAudit.workspace_dir).prepare(sha)
     end
 
     def self.workspace(args, out:)
