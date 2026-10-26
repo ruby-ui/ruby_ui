@@ -1,0 +1,23 @@
+CLAUDE.md
+  s_e8f7f6f328faa0::t_0ac8d654df55b2 13,23,49,100
+gem/AGENTS.md
+  s_e8f7f6f328faa0::t_0ac8d654df55b2 22-31
+audit/README.md
+  s_e8f7f6f328faa0::t_0ac8d654df55b2 14-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e35bd98da6e28bf134d95333b0ecc6aa747c936",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
