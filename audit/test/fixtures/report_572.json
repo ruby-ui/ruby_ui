@@ -1,0 +1,49 @@
+{
+  "target": {
+    "kind": "pr", "repo": "ruby-ui/ruby_ui", "pr": 572, "state": "OPEN",
+    "base_sha": "ddcff1c6e26825512006d732bbe408c48065c5d1",
+    "head_sha": "a9a5d1faee2257e8e83c144a5be88c378347640d",
+    "changed_files": ["gem/lib/ruby_ui/dialog/dialog_content.rb", "gem/lib/ruby_ui/alert_dialog/alert_dialog_content.rb"],
+    "components": ["alert_dialog", "dialog"], "unmapped": [], "needs_selection": false, "candidates": []
+  },
+  "shadcn_sha": "8f04138777c1b6996e709993362a7b0a12888ecf",
+  "sandbox_lock": {"next": "15.0.0", "react": "19.0.0"},
+  "environment_diffs": ["Inter loads from Google Fonts in the docs app and from next/font in the sandbox"],
+  "theme": {
+    "status": "fail",
+    "diffs": [
+      {"mode": "light", "token": "chart-1", "rubyui": "oklch(0.646 0.222 41.116)", "shadcn": "oklch(0.809 0.105 251.813)"},
+      {"mode": "light", "token": "chart-2", "rubyui": "oklch(0.6 0.118 184.704)", "shadcn": "oklch(0.623 0.214 259.815)"},
+      {"mode": "light", "token": "chart-3", "rubyui": "oklch(0.398 0.07 227.392)", "shadcn": "oklch(0.546 0.245 262.881)"},
+      {"mode": "light", "token": "chart-4", "rubyui": "oklch(0.828 0.189 84.429)", "shadcn": "oklch(0.488 0.243 264.376)"},
+      {"mode": "light", "token": "chart-5", "rubyui": "oklch(0.769 0.188 70.08)", "shadcn": "oklch(0.424 0.199 265.638)"}
+    ]
+  },
+  "components": [
+    {
+      "folder": "dialog",
+      "shadcn_file": "bases/base/ui/dialog.tsx + style-vega.css",
+      "lines": [
+        {"dimension": "Look", "status": "pass", "basis": null, "rubyui": "overlay bg-black/10 + supports-backdrop-filter:backdrop-blur-xs", "shadcn": "same", "source": "style-vega.css:462", "note": ""},
+        {"dimension": "Look", "status": "fail", "basis": null, "rubyui": "p-6 gap-4 border shadow-lg sm:rounded-lg max-w-lg", "shadcn": "p-6 gap-6 ring-1 ring-foreground/10 rounded-xl sm:max-w-md", "source": "style-vega.css:467", "note": ""},
+        {"dimension": "Animation", "status": "warn", "basis": null, "rubyui": "no exit fade", "shadcn": "data-closed:fade-out-0 duration-100", "source": "style-vega.css:468", "note": ""},
+        {"dimension": "HTML", "status": "pass", "basis": "intentional", "rubyui": "native <dialog>", "shadcn": "<div role=\"dialog\">", "source": "audit/divergences.yml", "note": "registered divergence"},
+        {"dimension": "ARIA", "status": "warn", "basis": null, "rubyui": "no aria-labelledby/aria-describedby", "shadcn": "Base UI wires Title/Description", "source": "bases/base/ui/dialog.tsx:60", "note": ""},
+        {"dimension": "Behavior", "status": "inconclusive", "basis": null, "rubyui": "", "shadcn": "", "source": "", "note": "scroll lock not exercised: sandbox page has no scrollable body"},
+        {"dimension": "Native", "status": "pass", "basis": "native", "rubyui": "showModal(): inert, Esc and focus from the browser", "shadcn": "", "source": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal", "note": ""}
+      ],
+      "screenshots": [
+        {"state": "closed", "rubyui": "screens/dialog-closed-rubyui.png", "shadcn": "screens/dialog-closed-shadcn.png"},
+        {"state": "open (dark)", "rubyui": "screens/dialog-open-rubyui.png", "shadcn": "screens/dialog-open-shadcn.png"}
+      ]
+    },
+    {
+      "folder": "alert_dialog",
+      "shadcn_file": "bases/base/ui/alert-dialog.tsx",
+      "lines": [
+        {"dimension": "Native", "status": "fail", "basis": null, "rubyui": "<div role=\"alertdialog\"> + JS", "shadcn": "", "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog", "note": "candidate for <dialog>"}
+      ],
+      "screenshots": []
+    }
+  ]
+}

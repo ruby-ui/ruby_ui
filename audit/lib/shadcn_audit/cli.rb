@@ -14,7 +14,9 @@ module ShadcnAudit
       "reference" => ->(args, out:) { reference(args, out: out) },
       "theme" => ->(args, out:) { theme(args, out: out) },
       "sandbox" => ->(args, out:) { sandbox(args, out: out) },
-      "preview" => ->(args, out:) { preview(args, out: out) }
+      "preview" => ->(args, out:) { preview(args, out: out) },
+      "render" => ->(args, out:) { render(args, out: out) },
+      "comment" => ->(args, out:) { comment(args, out: out) }
     }
 
     def self.start(argv, out: $stdout)
@@ -63,6 +65,37 @@ module ShadcnAudit
     def self.preview(args, out:)
       sha = args.first or raise ArgumentError, "usage: preview <sha>"
       RubyuiPreview.new(shell: Shell.new, dir: ShadcnAudit.workspace_dir).prepare(sha)
+    end
+
+    # The terminal text is the payload so the one-JSON-object contract holds.
+    def self.render(args, out:)
+      html = false
+      out_dir = nil
+      parser = OptionParser.new do |o|
+        o.on("--html") { html = true }
+        o.on("--out DIR") { |v| out_dir = v }
+      end
+      path = parser.parse!(args).first or raise ArgumentError, "usage: render <report.json> [--html] [--out DIR]"
+      report = Report.load(path)
+      {
+        "text" => Renderers::Terminal.render(report),
+        "html" => html ? Renderers::Html.render(report, out_dir: out_dir || File.dirname(path)) : nil
+      }
+    end
+
+    # Without --post this only returns the body; --post is the one write path.
+    def self.comment(args, out:)
+      post = false
+      parser = OptionParser.new { |o| o.on("--post") { post = true } }
+      path = parser.parse!(args).first or raise ArgumentError, "usage: comment <report.json> [--post]"
+      report = Report.load(path)
+      body = Renderers::Markdown.render(report)
+      return {"posted" => false, "body" => body} unless post
+
+      pr = report.target["pr"] or raise ArgumentError, "report target is not a PR"
+      PrComment.new(shell: Shell.new)
+        .upsert(pr: pr, body: body, expected_head_sha: report.target["head_sha"])
+        .merge("posted" => true)
     end
 
     def self.workspace(args, out:)
