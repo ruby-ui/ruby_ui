@@ -1,0 +1,51 @@
+audit/Rakefile
+  s_e8f7f6f328faa0::t_03dc3b95c3ca32 1-14
+audit/test/workspace_test.rb
+  s_e8f7f6f328faa0::t_16f53c5d9a1d13 46-52
+  s_e8f7f6f328faa0::t_03dc3b95c3ca32 1-45
+audit/lib/shadcn_audit.rb
+  s_e8f7f6f328faa0::t_cad758ee54769f 1-4,6-14
+  s_e8f7f6f328faa0::t_16f53c5d9a1d13 5
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_cad758ee54769f 1-25
+audit/exe/shadcn-audit
+  s_e8f7f6f328faa0::t_cad758ee54769f 1-10
+audit/README.md
+  s_e8f7f6f328faa0::t_cad758ee54769f 1-13
+audit/Gemfile
+  s_e8f7f6f328faa0::t_03dc3b95c3ca32 1-5
+audit/lib/shadcn_audit/workspace.rb
+  s_e8f7f6f328faa0::t_cad758ee54769f 1-32
+audit/.gitignore
+  s_e8f7f6f328faa0::t_03dc3b95c3ca32 1
+audit/test/test_helper.rb
+  s_e8f7f6f328faa0::t_03dc3b95c3ca32 1-56
+audit/.tool-versions
+  s_e8f7f6f328faa0::t_03dc3b95c3ca32 1
+.gitignore
+  s_e8f7f6f328faa0::t_cad758ee54769f 3-4
+audit/lib/shadcn_audit/shell.rb
+  s_e8f7f6f328faa0::t_cad758ee54769f 1-14
+.github/workflows/ci.yml
+  s_e8f7f6f328faa0::t_cad758ee54769f 89-110
+audit/.standard.yml
+  s_e8f7f6f328faa0::t_03dc3b95c3ca32 1
+audit/Gemfile.lock
+  s_e8f7f6f328faa0::t_96918b24261bc3 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bf4d9f89a4ba9a64ecc8d12254699961a6a17472",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
