@@ -1,0 +1,27 @@
+audit/test/fixtures/registry/bases/base/ui/badge.tsx
+  s_e8f7f6f328faa0::t_4cd982a8f5d059 1-47
+audit/test/reference_test.rb
+  s_e8f7f6f328faa0::t_4cd982a8f5d059 115-129,133-153
+  s_e8f7f6f328faa0::t_bdd99accc073b6 130-132
+audit/lib/shadcn_audit/reference.rb
+  s_e8f7f6f328faa0::t_6870c0ec2f264a 254-257,266-314,323-324,328,331
+  s_e8f7f6f328faa0::t_ae3fe6ff0f63a5 12-16,34,40,47-69,134,445
+audit/test/fixtures/registry/styles/style-vega.css
+  s_e8f7f6f328faa0::t_4cd982a8f5d059 43-70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "054fb786d1dc016bdca093828c30103cf7376724",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
