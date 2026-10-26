@@ -1,0 +1,31 @@
+audit/preview_overlay/docs/config/initializers/zz_shadcn_audit.rb
+  s_e8f7f6f328faa0::t_fbc9729f4b0fce 1-15
+audit/preview_overlay/docs/app/controllers/shadcn_audit_fixtures_controller.rb
+  s_e8f7f6f328faa0::t_fd7994cd4ecef8 1-20,22-26,28,30-34,36-43,46-49
+  s_e8f7f6f328faa0::t_88fc27cd31c020 21,27,29,35,44-45
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_88fc27cd31c020 16-17,63-65
+  s_e8f7f6f328faa0::t_12d780d9c27b0d 66-67
+audit/test/rubyui_preview_test.rb
+  s_e8f7f6f328faa0::t_b94b649d026956 1-91
+audit/lib/shadcn_audit/rubyui_preview.rb
+  s_e8f7f6f328faa0::t_8086bd07531f28 1-85
+audit/lib/shadcn_audit.rb
+  s_e8f7f6f328faa0::t_88fc27cd31c020 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5adf11ab561416b77bf9cf6d9d94534c93b94394",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
