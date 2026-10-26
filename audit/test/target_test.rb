@@ -7,6 +7,8 @@ class TargetTest < Minitest::Test
       nil
     end
 
+    def entry(_folder) = nil
+
     def folder_for_name(name)
       snake = name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
       snake if all_folders.include?(snake)
@@ -37,6 +39,7 @@ class TargetTest < Minitest::Test
     stub_pr(%w[gem/lib/ruby_ui/dialog/dialog_content.rb gem/test/ruby_ui/sheet_test.rb mcp/data/registry.json])
     result = resolve("572")
     assert_equal "pr", result["kind"]
+    assert_equal "OPEN", result["state"]
     assert_equal 572, result["pr"]
     assert_equal "ruby-ui/ruby_ui", result["repo"]
     assert_equal "base1", result["base_sha"]
@@ -89,14 +92,42 @@ class TargetTest < Minitest::Test
       assert_equal "main1", result["head_sha"]
       assert_equal "main1", result["base_sha"]
     end
+    assert @shell.called?("git", "fetch", "origin", "main")
+  end
+
+  def real_map
+    ShadcnAudit::ComponentMap.new("dialog" => {"parts" => {"DialogContent" => {}}}, "sheet" => {})
+  end
+
+  def test_branch_wins_over_prefix_component_match
+    @shell.stub(%w[git rev-parse --verify --quiet dialog_fix^{commit}], "headx\n")
+    @shell.stub(%w[git merge-base origin/main dialog_fix], "basex\n")
+    @shell.stub(%w[git diff --name-only basex...headx], "gem/lib/ruby_ui/sheet/sheet.rb\n")
+    result = ShadcnAudit::Target.resolve("dialog_fix", shell: @shell, map: real_map, root: ROOT)
+    assert_equal "branch", result["kind"]
+    assert_equal %w[sheet], result["components"]
+  end
+
+  def test_part_name_without_branch_is_component
+    result = ShadcnAudit::Target.resolve("DialogContent", shell: @shell, map: real_map, root: ROOT)
+    assert_equal "component", result["kind"]
+    assert_equal %w[dialog], result["components"]
+  end
+
+  def test_unknown_arg_raises
+    assert_raises(ArgumentError) do
+      ShadcnAudit::Target.resolve("dialog_fix", shell: @shell, map: real_map, root: ROOT)
+    end
   end
 
   def test_branch_arg
-    @shell.stub(%w[git rev-parse feature/x], "head2\n")
+    @shell.stub(%w[git rev-parse --verify --quiet feature/x^{commit}], "head2\n")
     @shell.stub(%w[git merge-base origin/main feature/x], "base2\n")
     @shell.stub(%w[git diff --name-only base2...head2], "gem/lib/ruby_ui/sheet/sheet.rb\n")
     result = resolve("feature/x")
     assert_equal "branch", result["kind"]
+    assert @shell.called?("git", "fetch", "origin", "main")
+    assert_nil result["state"]
     assert_nil result["pr"]
     assert_equal "base2", result["base_sha"]
     assert_equal "head2", result["head_sha"]
