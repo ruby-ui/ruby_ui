@@ -205,8 +205,11 @@ Then:
    posting. Tell the user why (no PR, or the PR is MERGED/CLOSED).
 4. On an explicit "ok"/"pode mandar" for that body:
    `comment <report.json> --post` → `action` `created`/`updated` (give the
-   `url`) or `refused`: the PR head moved since the audit pinned it (`reason`).
-   Say so and offer a re-run. `posted: false` means nothing was sent.
+   `url`) or `refused` (`reason`): the PR head moved since the audit pinned it
+   (offer a re-run), or the PR is no longer `OPEN`. `posted: false` means
+   nothing was sent. Only a marked comment authored by the `gh` user is
+   updated; a marked comment by anyone else is left alone and a new one is
+   created.
    Without an ok, don't post.
 
 ### 9. Clean up

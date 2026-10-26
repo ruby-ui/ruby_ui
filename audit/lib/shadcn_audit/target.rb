@@ -22,9 +22,10 @@ module ShadcnAudit
       end
     end
 
-    def self.head_sha_for_pr(number, shell:)
-      json = shell.capture("gh", "pr", "view", number.to_s, "--repo", REPO, "--json", "headRefOid")
-      JSON.parse(json).fetch("headRefOid")
+    # Current head SHA and state (OPEN, MERGED, CLOSED) of a PR.
+    def self.pr_head(number, shell:)
+      data = JSON.parse(shell.capture("gh", "pr", "view", number.to_s, "--repo", REPO, "--json", "headRefOid,state"))
+      {"head_sha" => data.fetch("headRefOid"), "state" => data["state"]}
     end
 
     def self.resolve_pr(number, shell:, map:, root:)

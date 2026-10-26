@@ -81,9 +81,10 @@ class RenderersTest < Minitest::Test
 
   def test_cli_comment_refused_reports_not_posted
     shell = ShadcnAudit::FakeShell.new
-      .stub(->(a) { a[0, 3] == %w[gh pr view] }, JSON.generate("headRefOid" => "f" * 40))
+      .stub(->(a) { a[0, 3] == %w[gh pr view] }, JSON.generate("headRefOid" => "f" * 40, "state" => "OPEN"))
     result = ShadcnAudit::CLI.comment([FIXTURE, "--post"], out: StringIO.new, shell: shell)
     assert_equal "refused", result["action"]
+    assert_includes result["reason"], "head moved"
     assert_equal false, result["posted"]
     refute shell.argvs.any? { |a| a.include?("-F") }
   end

@@ -139,8 +139,8 @@ class TargetTest < Minitest::Test
     assert_equal %w[alert_dialog], resolve("572")["components"]
   end
 
-  def test_head_sha_for_pr
-    @shell.stub(%w[gh pr view 572 --repo ruby-ui/ruby_ui --json headRefOid], '{"headRefOid":"abc"}')
-    assert_equal "abc", ShadcnAudit::Target.head_sha_for_pr(572, shell: @shell)
+  def test_pr_head
+    @shell.stub(%w[gh pr view 572 --repo ruby-ui/ruby_ui --json headRefOid,state], '{"headRefOid":"abc","state":"MERGED"}')
+    assert_equal({"head_sha" => "abc", "state" => "MERGED"}, ShadcnAudit::Target.pr_head(572, shell: @shell))
   end
 end
