@@ -12,6 +12,12 @@ mise exec -- bundle exec exe/shadcn-audit workspace [--sha SHA]
 
 Tests use `ShadcnAudit::FakeShell` (`test/test_helper.rb`): stub canned stdout by argv or matcher, then assert on recorded calls.
 
+## Prerequisites
+
+Ruby 3.4 (via mise, as below, or an equivalent version manager; without mise, drop `mise exec --`), `gh` authenticated (`gh auth status`), Node and pnpm, and, for the browser steps, the chrome-devtools MCP. The audit runs its two dev servers in Herdr panes when `HERDR_ENV=1`, otherwise as background shell processes; either way it stops them at the end. `preview` boot commands use `mise exec --` only when `mise` is on PATH.
+
+A component added to `component_map.yml` also needs fixtures in `fixtures/<folder>/` (`content.yml`, `shadcn.tsx`, `rubyui.rb`).
+
 ## Without Claude
 
 Any agent or person can run the tooling directly:

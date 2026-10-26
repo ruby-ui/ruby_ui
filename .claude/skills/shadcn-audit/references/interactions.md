@@ -8,7 +8,10 @@ from the `.tsx` or the Ruby source. Run the same set on both URLs:
 
 ## Setup (once per page)
 
-1. `new_page` (one per side), then `resize_page` to **1280×800**.
+1. `new_page` (one per side), then `resize_page` both to the **same viewport**,
+   1280×800 if it gets there. `resize_page` may not reach that size (window
+   chrome, display limits): record the actual `w`×`h` from the probe in step 3
+   and make sure both sides match; a mismatch goes to `environment_diffs`.
 2. `navigate_page` to the URL; `wait_for` the fixture text (e.g. the trigger label).
 3. Environment probe (`evaluate_script`), on both sides:
    ```js
@@ -24,7 +27,10 @@ from the `.tsx` or the Ruby source. Run the same set on both URLs:
    ```
    Any difference goes to `environment_diffs` **before** you grade visuals.
 4. Open the component by clicking `[data-audit-trigger]`: `take_snapshot`, find
-   its uid, `click`. Both fixtures carry exactly one such trigger.
+   its uid, `click`. Both fixtures carry exactly one such trigger. Use the real
+   `click` tool whenever focus matters: a programmatic `.click()` in
+   `evaluate_script` doesn't focus the trigger, so a later focus-return check
+   would have nothing to return to.
 
 Screenshots: `take_screenshot` with `filePath` =
 `<run>/screens/<folder>-<state>-<rubyui|shadcn>-<light|dark>.png`; in
@@ -82,7 +88,8 @@ Run in light, then repeat open + screenshots in dark.
 4. **Tab / Shift+Tab**: `press_key` Tab (N+1 times, N = tabbables in the popup),
    then Shift+Tab as many; focus probe each time. Focus must stay inside (trap)
    on both sides; record the order. Screenshot the keyboard-focus state.
-5. **Esc**: `press_key` Escape. Closed? Focus probe (should return to the trigger).
+5. **Esc**: `press_key` Escape. Closed? Focus probe (should return to the
+   trigger; valid only if it was opened with a real `click`).
    Screenshot "after Esc".
 6. **Outside click**: reopen; `click` a uid outside the content (overlay/backdrop
    from `take_snapshot`). If no uid lands outside, dispatch a
@@ -90,7 +97,9 @@ Run in light, then repeat open + screenshots in dark.
    `evaluate_script` and say in the `note` that the events were synthetic. If
    the sides differ only under synthetic events, mark it ⏸. Expected: Dialog/Sheet/Command
    close, AlertDialog stays open.
-7. **Focus return**: after a close by the Cancel/close button, focus probe → trigger.
+7. **Focus return**: open with a real `click` on the trigger uid, close with a
+   real `click` on the Cancel/close button uid (not `.click()` in
+   `evaluate_script`), then focus probe → trigger.
 8. **Scroll lock**: on a fresh load, make the page scrollable the same way on both
    sides (`document.body.style.minHeight = "300vh"`), scroll to 200, open, then
    `window.scrollBy(0, 400)` and read `scrollY` plus `getComputedStyle(document.documentElement).overflow`
@@ -100,6 +109,7 @@ Run in light, then repeat open + screenshots in dark.
    Cancel button (works on both sides); a synthetic `keydown` Escape doesn't
    close a native `<dialog>`, so don't use it here. Running fade/zoom on the shadcn popup with none on
    RubyUI → ⚠️ Animation. Also note the enter animation (sample right after open).
+   This programmatic close says nothing about focus; don't read focus here.
 
 If clicking the trigger of a non-modal `kind` opens a modal (a `dialog:modal`
 or `aria-modal="true"` appears), run this set too. Command's fixture opens
@@ -120,7 +130,7 @@ Screenshots: closed, open, item focused, after Esc; light and dark.
 Open by click. Check: trigger `aria-expanded` (and `aria-controls`/`aria-haspopup`
 when present on shadcn); popup role; whether focus moves in; Esc closes and
 returns focus; outside click closes; placement vs the trigger (bounding boxes via
-`getBoundingClientRect`, at 1280×800). For listbox-like content (Command):
+`getBoundingClientRect`, in the recorded viewport). For listbox-like content (Command):
 input has `role=combobox`/`aria-controls`/`aria-activedescendant` as shadcn
 does; ArrowDown/ArrowUp move the active option; typing filters; Enter selects;
 empty state renders. Screenshots: closed, open, option active, after Esc;

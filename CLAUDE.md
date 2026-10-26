@@ -4,7 +4,7 @@ Guidance for AI agents working at the root of the `ruby-ui/ruby_ui` monorepo.
 
 ## Layout
 
-Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile`, tests and lockfiles:
+Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile` and tests, plus lockfiles where present (`mcp/` has none):
 
 | Path | What it is |
 | --- | --- |

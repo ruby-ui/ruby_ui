@@ -101,11 +101,11 @@ From `audit/test/fixtures/report_572.json` (pins: head `a9a5d1fa`, base
 
 | Line | Why |
 | --- | --- |
-| Dialog ✅ Look `overlay bg-black/10 + supports-backdrop-filter:backdrop-blur-xs` | Effective vega classes for `dialog-overlay` match the RubyUI overlay's classes in the DOM. `source: style-vega.css:462`. |
-| Dialog ❌ Look `p-6 gap-4 border shadow-lg sm:rounded-lg max-w-lg` vs `p-6 gap-6 ring-1 ring-foreground/10 rounded-xl sm:max-w-md` | Look difference, not registered → ❌. Both values concrete, `source: style-vega.css:467`. |
+| Dialog ✅ Look `overlay bg-black/10 + supports-backdrop-filter:backdrop-blur-xs` | Effective vega classes for `dialog-overlay` match the RubyUI overlay's classes in the DOM. `source: style-vega.css:464`. |
+| Dialog ❌ Look `p-6 gap-4 border shadow-lg sm:rounded-lg max-w-lg` vs `p-6 gap-6 ring-1 ring-foreground/10 rounded-xl sm:max-w-md` | Look difference, not registered → ❌. Both values concrete, `source: style-vega.css:468`. |
 | Dialog ⚠️ Animation "no exit fade" vs `data-closed:fade-out-0 duration-100` | Seen in the browser: shadcn's popup runs an animation on close, RubyUI's disappears at once. Animation → ⚠️, `source: style-vega.css:468`. |
 | Dialog ✅ HTML native `<dialog>` — intentional | `divergences dialog` has the HTML entry → basis `intentional`, `source: audit/divergences.yml`. |
-| Dialog ⚠️ ARIA "no aria-labelledby/aria-describedby" | Base UI wires Title/Description in the sandbox DOM; RubyUI doesn't. ARIA → ⚠️, `source: bases/base/ui/dialog.tsx:60`. (A dialog with no accessible name also breaks WAI-ARIA 1.2 `#dialog` "Accessible Name Required", which is a separate ❌ Spec line, rule 5.) |
+| Dialog ⚠️ ARIA "no aria-labelledby/aria-describedby" | Base UI wires Title/Description in the sandbox DOM; RubyUI doesn't. ARIA → ⚠️, `source: bases/base/ui/dialog.tsx:122-138`. (A dialog with no accessible name also breaks WAI-ARIA 1.2 `#dialog` "Accessible Name Required", which is a separate ❌ Spec line, rule 5.) |
 | Dialog ⏸ Behavior "scroll lock not exercised" | The state wasn't reached. Never ✅ by default. |
 | Dialog ✅ Native `showModal()` — native | Native `<dialog>` gives inert, Esc and focus. `source` = MDN showModal. |
 | AlertDialog ❌ Native `<div role="alertdialog"> + JS` | Hand-rolled modal where `<dialog>` + `showModal()` fits → "candidate for `<dialog>`", `source: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog`. Same for Sheet and CommandDialog. |

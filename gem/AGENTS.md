@@ -25,9 +25,10 @@ RubyUI components mirror shadcn's **Base UI** build with the **vega** style and 
 
 - **Where to read it:** run `cd ../audit && mise exec -- bundle exec exe/shadcn-audit workspace` to get a local clone in `.shadcn-audit/ui` (git-ignored). Without it, use the raw URLs: `https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/<name>.tsx` and `https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/styles/style-vega.css`.
 - **Native HTML first:** if the platform covers a behavior (`<dialog>`, `popover`, `<details>`), use it instead of JS. See [native-html.md](../.claude/skills/shadcn-audit/references/native-html.md).
+- **New component in the audit:** add it to [`audit/component_map.yml`](../audit/component_map.yml) and add fixtures in `audit/fixtures/<folder>/` (`content.yml`, `shadcn.tsx`, `rubyui.rb`, the same strings on both sides and one `data-audit-trigger`); without fixtures the browser checks have nothing to render.
 - **Deliberate differences:** register them in [`audit/divergences.yml`](../audit/divergences.yml) in the same PR, with a reason. Unregistered differences show up as findings.
 - **Licensing:** mirror shadcn's classes, structure and behavior (MIT). Port *behavior* from Base UI and React Aria, never their source. If code is ever ported, its license notice goes in alongside it.
-- **Before opening a component PR:** run the audit. In Claude Code, `/shadcn-audit`; in any other agent, read [`SKILL.md`](../.claude/skills/shadcn-audit/SKILL.md) (and its `references/`) and follow that procedure with the CLI in [`audit/`](../audit/README.md).
+- **Before opening a component PR:** run the audit. In Claude Code, `/shadcn-audit`; in any other agent, read [`SKILL.md`](../.claude/skills/shadcn-audit/SKILL.md) (and its `references/`) and follow that procedure with the CLI in [`audit/`](../audit/README.md). Prerequisites: Ruby 3.4 (via mise or equivalent), `gh` authenticated, Node and pnpm, and the chrome-devtools MCP. Servers run in Herdr panes when `HERDR_ENV=1`, otherwise as background shell processes; stop them at the end.
 
 ## Commands
 

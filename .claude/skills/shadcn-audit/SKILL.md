@@ -28,10 +28,23 @@ judging, and writing `report.json`. Run every CLI call from `audit/`:
 cd audit && mise exec -- bundle exec exe/shadcn-audit <subcommand> …
 ```
 
+(Without mise, drop `mise exec --` and use a Ruby 3.4 on PATH.)
+
 Each subcommand prints one JSON object. On failure it is `{"error": "…"}`
 with exit status 1: read the message, fix the cause, and re-run; never treat
 an error as an empty result. Talk to the user in their language;
 `report.json`, notes and the PR comment are in English.
+
+## Prerequisites
+
+- Ruby 3.4 (via mise, as in `gem/.tool-versions`, or an equivalent version
+  manager) with `cd audit && bundle install` done.
+- `gh` authenticated (`gh auth status`) with read access to
+  `ruby-ui/ruby_ui`; posting the comment needs write access.
+- Node and pnpm (the shadcn sandbox and the docs assets).
+- The chrome-devtools MCP server, for every browser step.
+- Optional: Herdr. When `HERDR_ENV=1` the servers run in Herdr panes;
+  otherwise as background shell processes (step 2.6).
 
 ## Hard rules
 
@@ -89,7 +102,11 @@ it becomes `report.json`'s `target`.
    RubyUI server: the static steps (map, reference, divergences, theme, Look
    from source) still run, and the browser-fed RubyUI lines are ⏸ "fork code
    not run".
-6. Boot both servers, **each in its own Herdr pane** (see the `herdr` skill):
+6. Boot both servers. When `HERDR_ENV=1`, **each in its own Herdr pane**
+   (see the `herdr` skill), as below. Otherwise run each as a background
+   shell process with its output sent to a log in the run folder
+   (`<run>/shadcn.log`, `<run>/rubyui.log`), wait for the same text by
+   polling the log, and keep the process IDs so step 9 can stop them.
    - shadcn: `herdr pane split --current --direction right --cwd <sandbox path>`,
      then `herdr pane run <pane> "pnpm dev --port 5179 --strictPort"`, then
      `herdr pane wait-output --match "Local:" --timeout 120000 <pane>`.
@@ -102,8 +119,8 @@ it becomes `report.json`'s `target`.
      the pane, and the typed command contains the port, so it would match at once.
      Then confirm each URL answers (`curl -sf -o /dev/null <url>`) before
      driving the browser.
-   - Server fails → read the pane (`herdr pane read`), report it; the
-     browser-fed lines become ⏸ "server didn't boot".
+   - Server fails → read the pane (`herdr pane read`) or the log, report it;
+     the browser-fed lines become ⏸ "server didn't boot".
 
 ### 3. Per component: map, reference, divergences
 
@@ -112,8 +129,11 @@ For each folder in `components`:
 - `map <folder>`:
   - `{"missing": true, "suggestion": …}` (every `unmapped` folder) → one
     `inconclusive` line ("not in audit/component_map.yml"), `shadcn_file: null`,
-    and show the user the `suggestion` YAML to paste into the map. Native still
-    applies (step 6).
+    and show the user the `suggestion` YAML to paste into the map. Tell them a
+    newly mapped component also needs fixtures,
+    `audit/fixtures/<folder>/{content.yml,shadcn.tsx,rubyui.rb}` (same strings
+    on both sides, one `data-audit-trigger`), or the browser steps have nothing
+    to render. Native still applies (step 6).
   - Otherwise: `shadcn` (name), `kind`, `parts` (RubyUI class → shadcn
     `data-slot`; `null` = no shadcn part), `props` (shadcn prop → RubyUI kwarg;
     `null` = missing → Props ❌), `rubyui_only` (RubyUI extras → note only).
@@ -156,8 +176,9 @@ body (shadcn `div.px-4` vs `SheetMiddle`), Dialog body (bare `<p>` vs
 ### 5. HTML, ARIA, Behavior, Animation
 
 Run the set for the component's `kind` from `references/interactions.md` on
-both URLs (`url_template`s; `{folder}` = folder, `{light|dark}` = theme), at
-1280×800, with chrome-devtools MCP. Open by clicking `[data-audit-trigger]`.
+both URLs (`url_template`s; `{folder}` = folder, `{light|dark}` = theme), in
+the same viewport on both sides (aim for 1280×800; record the actual size from
+the environment probe), with chrome-devtools MCP. Open by clicking `[data-audit-trigger]`.
 Read the DOM, `document.activeElement`, `inert`/`aria-hidden`, computed styles;
 screenshot every state into `<run>/screens/`. Do the environment probe first:
 any font/plugin/viewport/global-rule difference goes in `environment_diffs`
@@ -198,7 +219,7 @@ Write `<run>/report.json`:
     "shadcn_file": "bases/base/ui/dialog.tsx + style-vega.css",
     "lines": [{"dimension": "Look", "status": "fail", "basis": null,
                "rubyui": "p-6 gap-4 border shadow-lg", "shadcn": "p-6 gap-6 ring-1 rounded-xl",
-               "source": "style-vega.css:467", "note": ""}],
+               "source": "style-vega.css:468", "note": ""}],
     "screenshots": [{"state": "open (light)", "rubyui": "screens/dialog-open-rubyui-light.png",
                      "shadcn": "screens/dialog-open-shadcn-light.png"}]
   }]
@@ -237,8 +258,9 @@ Then:
 
 ### 9. Clean up
 
-Close the browser pages you opened, then `herdr pane close <pane>` for both
-server panes. Tell the user where the run folder is.
+Close the browser pages you opened, then stop both servers: `herdr pane close
+<pane>` for each server pane, or kill the background processes you started.
+Tell the user where the run folder is.
 
 ## References
 
