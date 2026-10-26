@@ -11,7 +11,8 @@ module ShadcnAudit
       "map" => ->(args, out:) { map(args, out: out) },
       "divergences" => ->(args, out:) { divergences(args, out: out) },
       "target" => ->(args, out:) { target(args, out: out) },
-      "reference" => ->(args, out:) { reference(args, out: out) }
+      "reference" => ->(args, out:) { reference(args, out: out) },
+      "theme" => ->(args, out:) { theme(args, out: out) }
     }
 
     def self.start(argv, out: $stdout)
@@ -42,6 +43,15 @@ module ShadcnAudit
       name = args.first or raise ArgumentError, "usage: reference <shadcn_name>"
       registry_dir = ShadcnAudit.workspace_dir.join("ui/apps/v4/registry")
       Reference.new(registry_dir: registry_dir).for(name)
+    end
+
+    def self.theme(args, out:)
+      checkout = ShadcnAudit.root
+      OptionParser.new { |o| o.on("--checkout DIR") { |v| checkout = Pathname.new(v) } }.parse!(args)
+      Theme.compare(
+        themes_ts: ShadcnAudit.workspace_dir.join("ui/apps/v4/registry/themes.ts"),
+        rubyui_css: checkout.join("docs/app/assets/stylesheets/application.tailwind.css")
+      )
     end
 
     def self.workspace(args, out:)
