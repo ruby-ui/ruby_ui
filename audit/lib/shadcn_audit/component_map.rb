@@ -76,9 +76,15 @@ module ShadcnAudit
     def validate!
       @entries.each do |folder, entry|
         kind = entry["kind"]
-        next if kind.nil? || KINDS.include?(kind)
+        unless kind.nil? || KINDS.include?(kind)
+          raise ConfigError, "component_map.yml: #{folder}: unknown kind #{kind.inspect} (expected one of #{KINDS.join(", ")})"
+        end
 
-        raise ConfigError, "component_map.yml: #{folder}: unknown kind #{kind.inspect} (expected one of #{KINDS.join(", ")})"
+        (entry["rubyui_only"] || {}).each do |part, kwargs|
+          next if kwargs.is_a?(Array)
+
+          raise ConfigError, "component_map.yml: #{folder}: rubyui_only.#{part} must be an array of kwargs"
+        end
       end
     end
   end

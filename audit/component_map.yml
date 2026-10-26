@@ -1,6 +1,7 @@
 # RubyUI folder => shadcn counterpart (apps/v4/registry/bases/base/ui/<shadcn>.tsx).
 # parts: RubyUI class => shadcn data-slot (null = no shadcn part).
-# props: RubyUI class => {shadcn prop => RubyUI kwarg (null = none)}.
+# props: RubyUI class => {shadcn prop => RubyUI kwarg (null = none)}; shadcn props only.
+# rubyui_only: RubyUI class => [kwargs with no shadcn counterpart]. className is never listed (all parts take class via attrs).
 dialog:
   shadcn: dialog
   kind: modal
@@ -16,8 +17,10 @@ dialog:
     DialogMiddle: null
   props:
     Dialog: {open: open}
-    DialogContent: {showCloseButton: null, size: size}
+    DialogContent: {showCloseButton: null}
     DialogFooter: {showCloseButton: null}
+  rubyui_only:
+    DialogContent: [size]
 
 alert_dialog:
   shadcn: alert-dialog
@@ -70,5 +73,6 @@ command:
   props:
     CommandInput: {placeholder: placeholder}
     CommandDialog: {title: null, description: null, showCloseButton: null}
-    CommandDialogContent: {className: null, size: size}
-    CommandDialogTrigger: {keybindings: null}
+  rubyui_only:
+    CommandDialogContent: [size]
+    CommandDialogTrigger: [keybindings]

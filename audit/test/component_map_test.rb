@@ -10,7 +10,8 @@ class ComponentMapTest < Minitest::Test
         kind: modal
         docs_view: dialog
         parts: {Dialog: dialog, DialogContent: dialog-content}
-        props: {DialogContent: {showCloseButton: null, size: size}}
+        props: {DialogContent: {showCloseButton: null}}
+        rubyui_only: {DialogContent: [size]}
       sheet:
         shadcn: sheet
         kind: modal
@@ -79,6 +80,18 @@ class ComponentMapTest < Minitest::Test
     error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(@path) }
     assert_includes error.message, "dialog"
     assert_includes error.message, "wizard"
+  end
+
+  def test_rubyui_only_is_exposed_on_entry
+    assert_equal({"DialogContent" => ["size"]}, @map.entry("dialog")["rubyui_only"])
+    assert_equal({"DialogContent" => {"showCloseButton" => nil}}, @map.entry("dialog")["props"])
+  end
+
+  def test_rubyui_only_must_hold_arrays
+    File.write(@path, "dialog:\n  shadcn: dialog\n  kind: modal\n  rubyui_only: {DialogContent: size}\n")
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(@path) }
+    assert_includes error.message, "dialog"
+    assert_includes error.message, "rubyui_only.DialogContent"
   end
 
   def test_seed_files_load
