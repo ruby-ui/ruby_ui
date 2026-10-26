@@ -11,7 +11,7 @@ class RubyuiPreviewTest < Minitest::Test
     @checkout = @dir.join("checkouts", SHA)
     @shell = ShadcnAudit::FakeShell.new
     @shell.stub(->(argv) { argv.first(2) == %w[git rev-parse] }, "#{SHA}\n")
-    @preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, platform: "arm64-darwin-25")
+    @preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, platform: "arm64-darwin-25", mise: true)
   end
 
   def teardown
@@ -102,7 +102,27 @@ class RubyuiPreviewTest < Minitest::Test
   end
 
   def test_boot_locks_the_host_platform_by_default
-    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir)
+    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, mise: true)
     assert_equal "mise exec -- bundle lock --add-platform #{Gem::Platform.local}", preview.boot.first
+  end
+
+  def test_boot_without_mise_uses_plain_commands
+    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, platform: "x86_64-linux", mise: false)
+    assert_equal "bundle lock --add-platform x86_64-linux", preview.boot.first
+    assert_equal "bin/rails server -p 3179", preview.boot.last
+    refute preview.boot.any? { |cmd| cmd.include?("mise") }
+  end
+
+  def test_mise_detection_reads_path
+    Dir.mktmpdir do |bin|
+      original = ENV["PATH"]
+      ENV["PATH"] = bin
+      refute ShadcnAudit::RubyuiPreview.mise_on_path?
+      File.write(File.join(bin, "mise"), "#!/bin/sh\n")
+      File.chmod(0o755, File.join(bin, "mise"))
+      assert ShadcnAudit::RubyuiPreview.mise_on_path?
+    ensure
+      ENV["PATH"] = original
+    end
   end
 end

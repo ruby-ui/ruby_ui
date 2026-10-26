@@ -12,8 +12,14 @@ module ShadcnAudit
     FULL_SHA = /\A[0-9a-f]{40}\z/
     FIXTURES_TARGET = "docs/app/views/shadcn_audit_fixtures"
 
-    def initialize(shell:, dir:, root: ShadcnAudit.root, audit_dir: ShadcnAudit.root.join("audit"), platform: Gem::Platform.local.to_s)
+    def self.mise_on_path?
+      ENV.fetch("PATH", "").split(File::PATH_SEPARATOR).any? { |d| File.executable?(File.join(d, "mise")) }
+    end
+
+    def initialize(shell:, dir:, root: ShadcnAudit.root, audit_dir: ShadcnAudit.root.join("audit"),
+      platform: Gem::Platform.local.to_s, mise: self.class.mise_on_path?)
       @shell = shell
+      @mise = mise
       @dir = Pathname.new(dir)
       @root = Pathname.new(root)
       @audit_dir = Pathname.new(audit_dir)
@@ -23,16 +29,19 @@ module ShadcnAudit
     # Run in <checkout>/docs. The docs lockfile may list only `ruby` and
     # x86_64-linux, which makes Bundler build native gems (nokogiri) from
     # source; adding the host platform picks the precompiled ones. It edits
-    # only the throwaway checkout's lockfile, never gem versions.
+    # only the throwaway checkout's lockfile, never gem versions. Ruby
+    # commands go through `mise exec --` only when mise is installed;
+    # otherwise the Ruby on PATH must already be 3.4.
     def boot
+      ruby = @mise ? "mise exec -- " : ""
       [
-        "mise exec -- bundle lock --add-platform #{@platform}",
-        "mise exec -- bundle install",
+        "#{ruby}bundle lock --add-platform #{@platform}",
+        "#{ruby}bundle install",
         "pnpm install",
         "pnpm build",
         "pnpm build:css",
-        "mise exec -- bin/rails db:prepare",
-        "mise exec -- bin/rails server -p 3179"
+        "#{ruby}bin/rails db:prepare",
+        "#{ruby}bin/rails server -p 3179"
       ]
     end
 

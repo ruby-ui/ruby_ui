@@ -21,7 +21,7 @@ module ShadcnAudit
       def self.body(report)
         out = report.environment_diffs.map { |diff| "⚠️ Environment  #{diff}" }
         out << theme_line(report.theme)
-        report.components.each { |component| out.concat(component_block(component, report.shadcn_sha)) }
+        report.components.each { |component| out.concat(component_block(component, report)) }
         out.join("\n")
       end
 
@@ -36,10 +36,17 @@ module ShadcnAudit
         lines
       end
 
-      def self.component_block(component, shadcn_sha)
-        title = camelize(component["folder"])
-        ref = component["shadcn_file"] ? "  (ref: #{component["shadcn_file"]} @ #{short(shadcn_sha)})" : "  (no shadcn equivalent)"
-        [title + ref] + component["lines"].flat_map { |line| line_rows(line) }
+      def self.component_block(component, report)
+        [camelize(component["folder"]) + "  " + ref_label(component, report)] +
+          component["lines"].flat_map { |line| line_rows(line) }
+      end
+
+      # A folder missing from the map has no reference yet; only a mapped
+      # `shadcn: null` truly has no shadcn equivalent.
+      def self.ref_label(component, report)
+        return "(ref: #{component["shadcn_file"]} @ #{short(report.shadcn_sha)})" if component["shadcn_file"]
+        return "(not in component_map.yml)" if Array(report.target["unmapped"]).include?(component["folder"])
+        "(no shadcn equivalent)"
       end
 
       def self.line_rows(line)
@@ -48,7 +55,8 @@ module ShadcnAudit
         first = [line["rubyui"], basis_suffix(line)].compact.reject { |s| s.to_s.empty? }.join(" ")
         first = line["note"].to_s if first.empty?
         rows = ["#{prefix} #{first}".rstrip]
-        rows << "#{indent}vega: #{line["shadcn"]}" if line["status"] != "pass" && !line["shadcn"].to_s.empty?
+        label = (line["dimension"] == "Look") ? "vega" : "shadcn"
+        rows << "#{indent}#{label}: #{line["shadcn"]}" if line["status"] != "pass" && !line["shadcn"].to_s.empty?
         rows << "#{indent}#{line["note"]}" if !line["note"].to_s.empty? && line["note"] != first
         rows << "#{indent}↳ #{line["source"]}" unless line["source"].to_s.empty?
         rows

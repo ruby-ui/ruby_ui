@@ -39,7 +39,7 @@
     <figure><figcaption>shadcn (Base UI + vega)</figcaption><img src="<%= h.call(shot["shadcn"]) %>" alt="shadcn, <%= h.call(shot["state"]) %>"></figure>
   </div>
   <% end -%>
-  <pre><%= h.call(t.component_block(component, report.shadcn_sha).join("\n")) %></pre>
+  <pre><%= h.call(t.component_block(component, report).join("\n")) %></pre>
 </section>
 <% end -%>
 </body>

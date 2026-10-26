@@ -22,7 +22,7 @@ class ReportTest < Minitest::Test
 
   def test_spec_finding_without_url_rejected
     d = data
-    dialog_lines(d)[1].merge!("dimension" => "Spec", "source" => "style-vega.css:467")
+    dialog_lines(d)[1].merge!("dimension" => "Spec", "source" => "style-vega.css:468")
     error = assert_raises(ShadcnAudit::ReportError) { ShadcnAudit::Report.new(d) }
     assert_match(/http/, error.message)
   end

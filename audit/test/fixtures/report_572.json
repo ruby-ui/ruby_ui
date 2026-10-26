@@ -24,11 +24,11 @@
       "folder": "dialog",
       "shadcn_file": "bases/base/ui/dialog.tsx + style-vega.css",
       "lines": [
-        {"dimension": "Look", "status": "pass", "basis": null, "rubyui": "overlay bg-black/10 + supports-backdrop-filter:backdrop-blur-xs", "shadcn": "same", "source": "style-vega.css:462", "note": ""},
-        {"dimension": "Look", "status": "fail", "basis": null, "rubyui": "p-6 gap-4 border shadow-lg sm:rounded-lg max-w-lg", "shadcn": "p-6 gap-6 ring-1 ring-foreground/10 rounded-xl sm:max-w-md", "source": "style-vega.css:467", "note": ""},
+        {"dimension": "Look", "status": "pass", "basis": null, "rubyui": "overlay bg-black/10 + supports-backdrop-filter:backdrop-blur-xs", "shadcn": "same", "source": "style-vega.css:464", "note": ""},
+        {"dimension": "Look", "status": "fail", "basis": null, "rubyui": "p-6 gap-4 border shadow-lg sm:rounded-lg max-w-lg", "shadcn": "p-6 gap-6 ring-1 ring-foreground/10 rounded-xl sm:max-w-md", "source": "style-vega.css:468", "note": ""},
         {"dimension": "Animation", "status": "warn", "basis": null, "rubyui": "no exit fade", "shadcn": "data-closed:fade-out-0 duration-100", "source": "style-vega.css:468", "note": ""},
         {"dimension": "HTML", "status": "pass", "basis": "intentional", "rubyui": "native <dialog>", "shadcn": "<div role=\"dialog\">", "source": "audit/divergences.yml", "note": "registered divergence"},
-        {"dimension": "ARIA", "status": "warn", "basis": null, "rubyui": "no aria-labelledby/aria-describedby", "shadcn": "Base UI wires Title/Description", "source": "bases/base/ui/dialog.tsx:60", "note": ""},
+        {"dimension": "ARIA", "status": "warn", "basis": null, "rubyui": "no aria-labelledby/aria-describedby", "shadcn": "Base UI wires Title/Description", "source": "bases/base/ui/dialog.tsx:122-138", "note": ""},
         {"dimension": "Behavior", "status": "inconclusive", "basis": null, "rubyui": "", "shadcn": "", "source": "", "note": "scroll lock not exercised: sandbox page has no scrollable body"},
         {"dimension": "Native", "status": "pass", "basis": "native", "rubyui": "showModal(): inert, Esc and focus from the browser", "shadcn": "", "source": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal", "note": ""}
       ],

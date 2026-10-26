@@ -13,6 +13,24 @@ class RenderersTest < Minitest::Test
     end
   end
 
+  def test_non_look_lines_label_the_shadcn_value_shadcn
+    text = ShadcnAudit::Renderers::Terminal.render(report)
+    assert_includes text, "shadcn: data-closed:fade-out-0 duration-100"
+    refute_includes text, "vega: data-closed:fade-out-0"
+  end
+
+  def test_unmapped_folder_is_not_called_no_equivalent
+    d = JSON.parse(File.read(FIXTURE))
+    d["target"]["unmapped"] = ["new_thing"]
+    d["components"] << {"folder" => "new_thing", "shadcn_file" => nil,
+                        "lines" => [{"dimension" => "Look", "status" => "inconclusive", "note" => "not in audit/component_map.yml"}]}
+    d["components"] << {"folder" => "native_only", "shadcn_file" => nil,
+                        "lines" => [{"dimension" => "Look", "status" => "inconclusive", "note" => "no shadcn equivalent"}]}
+    text = ShadcnAudit::Renderers::Terminal.render(ShadcnAudit::Report.new(d))
+    assert_includes text, "NewThing  (not in component_map.yml)"
+    assert_includes text, "NativeOnly  (no shadcn equivalent)"
+  end
+
   def test_environment_and_theme_come_before_components
     text = ShadcnAudit::Renderers::Terminal.render(report)
     env = text.index("⚠️ Environment")
@@ -34,7 +52,7 @@ class RenderersTest < Minitest::Test
     assert_includes md, "❌ Theme"
     assert_includes md, "`a9a5d1fa`"
     assert_includes md, "`ruby-ui/ruby_ui`"
-    assert_includes md, "↳ style-vega.css:462"
+    assert_includes md, "↳ style-vega.css:464"
     assert_equal 2, md.scan(/^```$/).size
   end
 
