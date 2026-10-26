@@ -16,6 +16,7 @@ module ShadcnAudit
 
           | | |
           | --- | --- |
+          | Repo | `#{h["repo"]}` |
           | PR | #{h["pr"] ? "##{h["pr"]}" : "-"} |
           | RubyUI base | `#{Terminal.short(h["base_sha"])}` |
           | RubyUI head | `#{Terminal.short(h["head_sha"])}` |

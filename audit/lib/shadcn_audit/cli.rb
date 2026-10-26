@@ -70,21 +70,17 @@ module ShadcnAudit
     # The terminal text is the payload so the one-JSON-object contract holds.
     def self.render(args, out:)
       html = false
-      out_dir = nil
-      parser = OptionParser.new do |o|
-        o.on("--html") { html = true }
-        o.on("--out DIR") { |v| out_dir = v }
-      end
-      path = parser.parse!(args).first or raise ArgumentError, "usage: render <report.json> [--html] [--out DIR]"
+      parser = OptionParser.new { |o| o.on("--html") { html = true } }
+      path = parser.parse!(args).first or raise ArgumentError, "usage: render <report.json> [--html]"
       report = Report.load(path)
       {
         "text" => Renderers::Terminal.render(report),
-        "html" => html ? Renderers::Html.render(report, out_dir: out_dir || File.dirname(path)) : nil
+        "html" => html ? Renderers::Html.render(report, out_dir: File.dirname(path)) : nil
       }
     end
 
     # Without --post this only returns the body; --post is the one write path.
-    def self.comment(args, out:)
+    def self.comment(args, out:, shell: Shell.new)
       post = false
       parser = OptionParser.new { |o| o.on("--post") { post = true } }
       path = parser.parse!(args).first or raise ArgumentError, "usage: comment <report.json> [--post]"
@@ -93,9 +89,9 @@ module ShadcnAudit
       return {"posted" => false, "body" => body} unless post
 
       pr = report.target["pr"] or raise ArgumentError, "report target is not a PR"
-      PrComment.new(shell: Shell.new)
+      result = PrComment.new(shell: shell)
         .upsert(pr: pr, body: body, expected_head_sha: report.target["head_sha"])
-        .merge("posted" => true)
+      result.merge("posted" => result["action"] != "refused")
     end
 
     def self.workspace(args, out:)

@@ -8,7 +8,7 @@ class RenderersTest < Minitest::Test
   def test_terminal_has_checklist_content
     text = ShadcnAudit::Renderers::Terminal.render(report)
     ["Dialog", "AlertDialog", "❌ Look", "vega: p-6 gap-6 ring-1", "⏸", "a9a5d1fa", "ddcff1c6", "8f041387", "PR #572",
-      "— intentional", "— native", "✅ Look", "⚠️ Animation", "developer.mozilla.org"].each do |needle|
+      "— intentional", "— native", "✅ Look", "⚠️ Animation", "developer.mozilla.org", "↳ audit/divergences.yml"].each do |needle|
       assert_includes text, needle
     end
   end
@@ -33,6 +33,8 @@ class RenderersTest < Minitest::Test
     assert md.start_with?("<!-- shadcn-audit -->\n")
     assert_includes md, "❌ Theme"
     assert_includes md, "`a9a5d1fa`"
+    assert_includes md, "`ruby-ui/ruby_ui`"
+    assert_includes md, "↳ style-vega.css:462"
     assert_equal 2, md.scan(/^```$/).size
   end
 
@@ -75,5 +77,14 @@ class RenderersTest < Minitest::Test
     result = ShadcnAudit::CLI::COMMANDS["comment"].call([FIXTURE], out: StringIO.new)
     assert_equal false, result["posted"]
     assert result["body"].start_with?("<!-- shadcn-audit -->")
+  end
+
+  def test_cli_comment_refused_reports_not_posted
+    shell = ShadcnAudit::FakeShell.new
+      .stub(->(a) { a[0, 3] == %w[gh pr view] }, JSON.generate("headRefOid" => "f" * 40))
+    result = ShadcnAudit::CLI.comment([FIXTURE, "--post"], out: StringIO.new, shell: shell)
+    assert_equal "refused", result["action"]
+    assert_equal false, result["posted"]
+    refute shell.argvs.any? { |a| a.include?("-F") }
   end
 end

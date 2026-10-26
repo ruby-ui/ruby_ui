@@ -50,7 +50,7 @@ module ShadcnAudit
         rows = ["#{prefix} #{first}".rstrip]
         rows << "#{indent}vega: #{line["shadcn"]}" if line["status"] != "pass" && !line["shadcn"].to_s.empty?
         rows << "#{indent}#{line["note"]}" if !line["note"].to_s.empty? && line["note"] != first
-        rows << "#{indent}↳ #{line["source"]}" unless line["status"] == "pass" || line["source"].to_s.empty?
+        rows << "#{indent}↳ #{line["source"]}" unless line["source"].to_s.empty?
         rows
       end
 
