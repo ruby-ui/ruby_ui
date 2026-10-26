@@ -22,13 +22,17 @@ class TargetTest < Minitest::Test
     @map = StubMap.new(%w[alert_dialog dialog sheet])
   end
 
-  def pr_json(paths)
+  URL = "https://github.com/ruby-ui/ruby_ui.git"
+  MAIN_FETCH = ["git", "fetch", URL, "+refs/heads/main:refs/shadcn-audit/main"]
+
+  def pr_json(paths, cross: false, owner: "ruby-ui")
     JSON.generate("headRefOid" => "head1", "baseRefOid" => "base1", "state" => "OPEN",
+      "isCrossRepository" => cross, "headRepositoryOwner" => {"login" => owner},
       "files" => paths.map { |p| {"path" => p, "additions" => 1} })
   end
 
-  def stub_pr(paths)
-    @shell.stub(->(a) { a[0, 3] == %w[gh pr view] && a.include?("headRefOid,baseRefOid,files,state") }, pr_json(paths))
+  def stub_pr(paths, **opts)
+    @shell.stub(->(a) { a[0, 3] == %w[gh pr view] && a.include?("headRefOid,baseRefOid,files,state,isCrossRepository,headRepositoryOwner") }, pr_json(paths, **opts))
   end
 
   def resolve(arg)
@@ -47,13 +51,25 @@ class TargetTest < Minitest::Test
     assert_equal %w[dialog sheet], result["components"]
     assert_equal [], result["unmapped"]
     assert_equal false, result["needs_selection"]
+    assert_equal false, result["cross_repository"]
   end
 
-  def test_pr_fetches_pull_ref_for_fork_heads
+  def test_pr_fetches_pull_ref_and_main_from_upstream_not_origin
     stub_pr([])
     resolve("#572")
-    assert @shell.called?("git", "fetch", "origin", "refs/pull/572/head")
+    assert @shell.called?("git", "fetch", URL, "refs/pull/572/head", "+refs/heads/main:refs/shadcn-audit/main")
     assert_equal ROOT, @shell.calls.find { |c| c.argv.first == "git" }.chdir
+    refute @shell.argvs.flatten.include?("origin")
+  end
+
+  def test_fork_pr_is_cross_repository
+    stub_pr([], cross: true, owner: "someone")
+    assert_equal true, resolve("572")["cross_repository"]
+  end
+
+  def test_pr_from_another_owner_is_cross_repository_even_without_the_flag
+    stub_pr([], cross: false, owner: "someone")
+    assert_equal true, resolve("572")["cross_repository"]
   end
 
   def test_unmapped_touched_component_is_kept_and_listed
@@ -84,15 +100,16 @@ class TargetTest < Minitest::Test
   end
 
   def test_component_name_arg
-    @shell.stub(%w[git rev-parse origin/main], "main1\n")
+    @shell.stub(%w[git rev-parse refs/shadcn-audit/main], "main1\n")
     %w[AlertDialog alert_dialog].each do |arg|
       result = resolve(arg)
       assert_equal "component", result["kind"]
       assert_equal %w[alert_dialog], result["components"]
       assert_equal "main1", result["head_sha"]
       assert_equal "main1", result["base_sha"]
+      assert_equal false, result["cross_repository"]
     end
-    assert @shell.called?("git", "fetch", "origin", "main")
+    assert @shell.called?(*MAIN_FETCH)
   end
 
   def real_map
@@ -101,7 +118,7 @@ class TargetTest < Minitest::Test
 
   def test_branch_wins_over_prefix_component_match
     @shell.stub(%w[git rev-parse --verify --quiet dialog_fix^{commit}], "headx\n")
-    @shell.stub(%w[git merge-base origin/main dialog_fix], "basex\n")
+    @shell.stub(%w[git merge-base refs/shadcn-audit/main dialog_fix], "basex\n")
     @shell.stub(%w[git diff --name-only basex...headx], "gem/lib/ruby_ui/sheet/sheet.rb\n")
     result = ShadcnAudit::Target.resolve("dialog_fix", shell: @shell, map: real_map, root: ROOT)
     assert_equal "branch", result["kind"]
@@ -122,11 +139,12 @@ class TargetTest < Minitest::Test
 
   def test_branch_arg
     @shell.stub(%w[git rev-parse --verify --quiet feature/x^{commit}], "head2\n")
-    @shell.stub(%w[git merge-base origin/main feature/x], "base2\n")
+    @shell.stub(%w[git merge-base refs/shadcn-audit/main feature/x], "base2\n")
     @shell.stub(%w[git diff --name-only base2...head2], "gem/lib/ruby_ui/sheet/sheet.rb\n")
     result = resolve("feature/x")
     assert_equal "branch", result["kind"]
-    assert @shell.called?("git", "fetch", "origin", "main")
+    assert @shell.called?(*MAIN_FETCH)
+    refute @shell.argvs.flatten.include?("origin/main")
     assert_nil result["state"]
     assert_nil result["pr"]
     assert_equal "base2", result["base_sha"]

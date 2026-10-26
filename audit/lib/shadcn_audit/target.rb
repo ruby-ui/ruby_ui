@@ -5,6 +5,11 @@ module ShadcnAudit
   # component folders to audit.
   module Target
     REPO = "ruby-ui/ruby_ui".freeze
+    # Fetched by URL, never through `origin`: in a fork clone `origin` is the
+    # fork, and its main is not upstream's.
+    UPSTREAM_URL = "https://github.com/#{REPO}.git".freeze
+    MAIN_REF = "refs/shadcn-audit/main".freeze
+    MAIN_REFSPEC = "+refs/heads/main:#{MAIN_REF}".freeze
     SHARED_PATHS = [
       "gem/lib/ruby_ui/base.rb",
       "gem/lib/ruby_ui.rb",
@@ -30,16 +35,17 @@ module ShadcnAudit
 
     def self.resolve_pr(number, shell:, map:, root:)
       json = shell.capture("gh", "pr", "view", number.to_s, "--repo", REPO,
-        "--json", "headRefOid,baseRefOid,files,state")
+        "--json", "headRefOid,baseRefOid,files,state,isCrossRepository,headRepositoryOwner")
       data = JSON.parse(json)
-      shell.capture("git", "fetch", "origin", "refs/pull/#{number}/head", chdir: root)
+      shell.capture("git", "fetch", UPSTREAM_URL, "refs/pull/#{number}/head", MAIN_REFSPEC, chdir: root)
       files = data.fetch("files").map { |f| f.fetch("path") }
-      build("pr", number, data.fetch("baseRefOid"), data.fetch("headRefOid"), files, map, state: data["state"])
+      build("pr", number, data.fetch("baseRefOid"), data.fetch("headRefOid"), files, map,
+        state: data["state"], cross_repository: cross_repository?(data))
     end
 
     # A real branch/commit wins over a component name.
     def self.resolve_non_pr(arg, shell:, map:, root:)
-      shell.capture("git", "fetch", "origin", "main", chdir: root)
+      shell.capture("git", "fetch", UPSTREAM_URL, MAIN_REFSPEC, chdir: root)
       head = verified_commit(arg, shell, root)
       return resolve_branch(arg, head, shell: shell, map: map, root: root) if head
 
@@ -57,9 +63,9 @@ module ShadcnAudit
     end
 
     def self.resolve_component(folder, shell:, root:)
-      sha = shell.capture("git", "rev-parse", "origin/main", chdir: root).strip
+      sha = shell.capture("git", "rev-parse", MAIN_REF, chdir: root).strip
       {
-        "kind" => "component", "repo" => REPO, "pr" => nil, "state" => nil,
+        "kind" => "component", "repo" => REPO, "pr" => nil, "state" => nil, "cross_repository" => false,
         "base_sha" => sha, "head_sha" => sha, "changed_files" => [],
         "components" => [folder], "unmapped" => [],
         "needs_selection" => false, "candidates" => []
@@ -67,7 +73,7 @@ module ShadcnAudit
     end
 
     def self.resolve_branch(branch, head, shell:, map:, root:)
-      base = shell.capture("git", "merge-base", "origin/main", branch, chdir: root).strip
+      base = shell.capture("git", "merge-base", MAIN_REF, branch, chdir: root).strip
       files = shell.capture("git", "diff", "--name-only", "#{base}...#{head}", chdir: root).lines.map(&:strip).reject(&:empty?)
       build("branch", nil, base, head, files, map)
     end
@@ -84,12 +90,19 @@ module ShadcnAudit
 
     # Every component folder touched, mapped or not: an unmapped one is
     # audited as inconclusive later, so it must not vanish.
-    def self.build(kind, pr, base, head, files, map, state: nil)
+    # Head pushed from anywhere but ruby-ui/ruby_ui: its code is untrusted
+    # until someone reads what it would execute.
+    def self.cross_repository?(data)
+      owner = data.dig("headRepositoryOwner", "login")
+      data["isCrossRepository"] == true || (!owner.nil? && owner != REPO.split("/").first)
+    end
+
+    def self.build(kind, pr, base, head, files, map, state: nil, cross_repository: false)
       components = files.filter_map { |f| map.component_folder_for_path(f) }.uniq.sort
       unmapped = components - map.all_folders
       needs_selection = components.empty? && files.any? { |f| shared_path?(f) }
       {
-        "kind" => kind, "repo" => REPO, "pr" => pr, "state" => state,
+        "kind" => kind, "repo" => REPO, "pr" => pr, "state" => state, "cross_repository" => cross_repository,
         "base_sha" => base, "head_sha" => head, "changed_files" => files,
         "components" => components, "unmapped" => unmapped,
         "needs_selection" => needs_selection,
@@ -101,6 +114,6 @@ module ShadcnAudit
       SHARED_PATHS.include?(path) || SHARED_PREFIXES.any? { |p| path.start_with?(p) }
     end
 
-    private_class_method :resolve_pr, :resolve_component, :resolve_non_pr, :verified_commit, :resolve_branch, :component_folder, :build, :shared_path?
+    private_class_method :resolve_pr, :resolve_component, :resolve_non_pr, :verified_commit, :resolve_branch, :component_folder, :cross_repository?, :build, :shared_path?
   end
 end

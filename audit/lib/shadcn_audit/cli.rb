@@ -73,7 +73,9 @@ module ShadcnAudit
     end
 
     def self.sandbox(args, out:)
-      Sandbox.new(shell: Shell.new, dir: ShadcnAudit.workspace_dir).prepare
+      shell = Shell.new
+      shadcn_sha = Workspace.new(shell: shell, dir: ShadcnAudit.workspace_dir).current_sha
+      Sandbox.new(shell: shell, dir: ShadcnAudit.workspace_dir, shadcn_sha: shadcn_sha).prepare
     end
 
     def self.preview(args, out:)

@@ -49,6 +49,17 @@ class WorkspaceTest < Minitest::Test
     assert_equal "#{@dir}/ui", @shell.calls[sparse].chdir
   end
 
+  def test_current_sha_reads_the_existing_clone
+    FileUtils.mkdir_p(@dir.join("ui", ".git"))
+    assert_equal SHA, @workspace.current_sha
+    assert_equal "#{@dir}/ui", @shell.calls.last.chdir
+  end
+
+  def test_current_sha_without_a_clone_raises
+    assert_raises(ShadcnAudit::ConfigError) { @workspace.current_sha }
+    assert_empty @shell.calls
+  end
+
   def test_pinned_sha_fetches_that_sha
     @workspace.sync(sha: SHA)
 

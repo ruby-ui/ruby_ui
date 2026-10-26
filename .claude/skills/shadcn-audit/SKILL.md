@@ -53,6 +53,8 @@ an error as an empty result. Talk to the user in their language;
 it becomes `report.json`'s `target`.
 
 - `state` set and ≠ `OPEN` (MERGED/CLOSED) → tell the user before continuing.
+- `cross_repository: true` → the PR head comes from a fork: its code is
+  untrusted (step 2.5).
 - `needs_selection: true` → the PR touches shared code only. List
   `candidates` and ask which to audit; continue with the chosen folders.
 - `components` = every touched component folder, mapped or not. `unmapped`
@@ -65,12 +67,29 @@ it becomes `report.json`'s `target`.
 1. `workspace` → record `shadcn_sha`. (Acceptance re-runs pin it:
    `workspace --sha <sha>`.)
 2. `sandbox` → `path`, `url_template`, `lock` (→ `report.json`'s
-   `sandbox_lock`), `created` (true = it rebuilt the app; tell the user).
+   `sandbox_lock`), `created` (true = it rebuilt the app; tell the user),
+   `refreshed` (true = the workspace SHA moved, so it re-added the mapped
+   components with `--overwrite`; tell the user, `refreshed_from` is the old
+   SHA), `built_from_sha` and `built_at` (the workspace SHA the components were
+   added at, and when). If `built_from_sha` ≠ `shadcn_sha`, add an
+   `environment_diffs` line: "sandbox components from shadcn <built_from_sha>,
+   reference at <shadcn_sha>".
 3. `preview <head_sha>` (full SHA from `target`) → `path`, `url_template`,
-   `boot` (ordered command list), `boot_chdir`.
+   `boot` (ordered command list), `boot_chdir`. This only extracts files;
+   nothing from the PR runs yet.
 4. `theme --checkout <preview path>` → `report.json`'s `theme` as-is. Pass the
    checkout: without it the CLI reads the working tree, not the audited SHA.
-5. Boot both servers, **each in its own Herdr pane** (see the `herdr` skill):
+5. **Untrusted head.** When `target.cross_repository` is true, booting the
+   preview runs the fork's code (Gemfile, gemspec, Rails config, bin
+   scripts, package scripts, the components themselves). Before booting, show
+   the user what changed against the base in the files that execute:
+   `git diff <base_sha> <head_sha> -- 'Gemfile*' 'gem/Gemfile*' 'docs/Gemfile*' 'gem/*.gemspec' docs/package.json docs/config docs/bin`
+   (from the repo root; `target` already fetched both SHAs), and ask whether
+   to boot it, even when that diff is empty. Without a yes, don't boot the
+   RubyUI server: the static steps (map, reference, divergences, theme, Look
+   from source) still run, and the browser-fed RubyUI lines are ⏸ "fork code
+   not run".
+6. Boot both servers, **each in its own Herdr pane** (see the `herdr` skill):
    - shadcn: `herdr pane split --current --direction right --cwd <sandbox path>`,
      then `herdr pane run <pane> "pnpm dev --port 5179 --strictPort"`, then
      `herdr pane wait-output --match "Local:" --timeout 120000 <pane>`.

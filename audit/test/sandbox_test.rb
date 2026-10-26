@@ -36,18 +36,24 @@ class SandboxTest < Minitest::Test
     end
   end
 
+  SHA = "8f04138777c1b6996e709993362a7b0a12888ecf"
+  NEW_SHA = "1" * 40
+  NOW = Time.utc(2026, 10, 26, 12, 0, 0)
+
   def setup
     @tmp = Dir.mktmpdir
     @dir = Pathname.new(@tmp)
     @app = @dir.join("sandbox")
     @shell = ScaffoldingShell.new
-    @sandbox = ShadcnAudit::Sandbox.new(shell: @shell, dir: @dir)
+    @sandbox = sandbox(SHA)
     @pinned = ShadcnAudit::Sandbox.config(AUDIT_DIR)
   end
 
   def teardown
     FileUtils.remove_entry(@tmp)
   end
+
+  def sandbox(sha, now: NOW) = ShadcnAudit::Sandbox.new(shell: @shell, dir: @dir, shadcn_sha: sha, clock: -> { now })
 
   def shadcn_cli = "shadcn@#{@pinned.fetch("shadcn")}"
 
@@ -70,6 +76,29 @@ class SandboxTest < Minitest::Test
     assert_equal @app.to_s, result["path"]
     assert_equal "http://localhost:5179/?c={folder}&theme={light|dark}", result["url_template"]
     assert_equal({"@base-ui/react" => "1.9.0", "shadcn" => "4.22.1"}, result["lock"])
+    assert_equal SHA, result["built_from_sha"]
+    assert_equal "2026-10-26T12:00:00Z", result["built_at"]
+    assert_equal false, result["refreshed"]
+  end
+
+  def test_moved_shadcn_sha_re_adds_components_with_overwrite
+    sandbox(SHA).prepare
+    calls_before = @shell.calls.size
+
+    result = sandbox(NEW_SHA, now: NOW + 3600).prepare
+
+    new_calls = @shell.calls.drop(calls_before)
+    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command"]], new_calls.map(&:argv)
+    assert_equal @app.to_s, new_calls.first.chdir
+    assert_equal false, result["created"]
+    assert_equal true, result["refreshed"]
+    assert_equal SHA, result["refreshed_from"]
+    assert_equal NEW_SHA, result["built_from_sha"]
+    assert_equal "2026-10-26T13:00:00Z", result["built_at"]
+
+    again = sandbox(NEW_SHA).prepare
+    assert_equal false, again["refreshed"]
+    assert_equal calls_before + 1, @shell.calls.size
   end
 
   def test_init_producing_another_style_or_color_raises
@@ -98,7 +127,7 @@ class SandboxTest < Minitest::Test
       audit = Pathname.new(audit)
       %w[sandbox.yml sandbox_template fixtures].each { |name| FileUtils.cp_r(AUDIT_DIR.join(name), audit.join(name)) }
       audit.join("component_map.yml").write(AUDIT_DIR.join("component_map.yml").read + "\nnative_only:\n  shadcn: null\n  kind: static\n")
-      ShadcnAudit::Sandbox.new(shell: @shell, dir: @dir, audit_dir: audit).prepare
+      ShadcnAudit::Sandbox.new(shell: @shell, dir: @dir, shadcn_sha: SHA, audit_dir: audit).prepare
     end
 
     add = @shell.argvs.find { |argv| argv.include?("add") && argv.include?(shadcn_cli) }

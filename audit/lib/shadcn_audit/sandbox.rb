@@ -1,30 +1,45 @@
 require "fileutils"
 require "yaml"
+require "time"
 
 module ShadcnAudit
   # Local Vite app made by the shadcn CLI (Base UI base, vega style, neutral
   # theme) that renders the shadcn side of every fixture in audit/fixtures.
   class Sandbox
     URL_TEMPLATE = "http://localhost:5179/?c={folder}&theme={light|dark}"
-    # Copy of audit/sandbox.yml written after a successful build; a mismatch
-    # means the pins changed and the app is rebuilt.
+    # Written after a successful build: the audit/sandbox.yml pins (a
+    # mismatch rebuilds the app), the workspace shadcn SHA the components were
+    # added at, and when. A different workspace SHA re-adds the components.
     STAMP = ".audit-sandbox.yml"
     TEMPLATE_FILES = %w[src/main.tsx src/parity.css index.html].freeze
 
     def self.config(audit_dir) = YAML.safe_load_file(audit_dir.join("sandbox.yml").to_s)
 
-    def initialize(shell:, dir:, audit_dir: ShadcnAudit.root.join("audit"))
+    def initialize(shell:, dir:, shadcn_sha:, audit_dir: ShadcnAudit.root.join("audit"), clock: -> { Time.now.utc })
       @shell = shell
       @dir = Pathname.new(dir)
+      @shadcn_sha = shadcn_sha
       @audit_dir = Pathname.new(audit_dir)
+      @clock = clock
     end
 
     def prepare
+      @stamp_data = nil
       created = !built?
-      build if created
+      refreshed = !created && stamp_data["shadcn_sha"] != @shadcn_sha
+      refreshed_from = stamp_data["shadcn_sha"] if refreshed
+      if created
+        build
+      elsif refreshed
+        refresh
+      end
       copy_template
       copy_fixtures
-      {"path" => app_dir.to_s, "url_template" => URL_TEMPLATE, "lock" => lock, "created" => created}
+      {
+        "path" => app_dir.to_s, "url_template" => URL_TEMPLATE, "lock" => lock, "created" => created,
+        "refreshed" => refreshed, "refreshed_from" => refreshed_from,
+        "built_from_sha" => stamp_data["shadcn_sha"], "built_at" => stamp_data["built_at"]
+      }
     end
 
     private
@@ -37,8 +52,29 @@ module ShadcnAudit
 
     def shadcn_cli = "shadcn@#{pins.fetch("shadcn")}"
 
-    def built?
-      stamp.exist? && YAML.safe_load(stamp.read) == pins
+    def stamp_data
+      @stamp_data ||= begin
+        data = stamp.exist? ? YAML.safe_load(stamp.read) : nil
+        data.is_a?(Hash) ? data : {}
+      end
+    end
+
+    def built? = stamp_data["pins"] == pins
+
+    def write_stamp
+      @stamp_data = {"pins" => pins, "shadcn_sha" => @shadcn_sha, "built_at" => @clock.call.iso8601}
+      stamp.write(YAML.dump(@stamp_data))
+    end
+
+    def add_components(*flags)
+      @shell.capture("pnpm", "dlx", shadcn_cli, "add", "--yes", *flags, *shadcn_components, chdir: app_dir)
+    end
+
+    # The shadcn workspace moved since the build: re-add the mapped
+    # components over the old ones, keeping the app and its packages.
+    def refresh
+      add_components("--overwrite")
+      write_stamp
     end
 
     def build
@@ -51,9 +87,9 @@ module ShadcnAudit
         chdir: @dir
       )
       verify_components_json
-      @shell.capture("pnpm", "dlx", shadcn_cli, "add", "--yes", *shadcn_components, chdir: app_dir)
+      add_components
       @shell.capture("pnpm", "add", *pins.fetch("packages").map { |name, version| "#{name}@#{version}" }, chdir: app_dir)
-      stamp.write(YAML.dump(pins))
+      write_stamp
     end
 
     def verify_components_json
