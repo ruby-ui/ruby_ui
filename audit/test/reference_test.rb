@@ -112,6 +112,45 @@ class ReferenceTest < Minitest::Test
     end
   end
 
+  def test_use_render_component_slot_and_classes_come_from_state_and_merge_props
+    result = @reference.for("badge")
+    effective = result["parts"]["badge"]["effective"]
+    assert_includes effective, "inline-flex"
+    assert_includes effective, "rounded-4xl"
+    assert_equal [], result["unresolved"]
+    refute_empty result["variants"]["badgeVariants"]["variant"]["default"]
+  end
+
+  def test_arrow_function_components_are_scanned
+    with_registry({"arrow" => <<~TSX}) do |reference|
+      const Toaster = ({ ...props }: ToasterProps) => {
+        return <div data-slot="toaster" className="cn-dialog-header flex" {...props} />
+      }
+    TSX
+      result = reference.for("arrow")
+      assert_equal ["flex"], result["parts"]["toaster"]["effective"]
+      assert_equal ["cn-dialog-header"], result["unresolved"]
+    end
+  end
+
+  def test_file_without_parts_is_never_silently_empty
+    with_registry({"bare" => "const X = () => <div className=\"cn-foo\" />\n"}) do |reference|
+      result = reference.for("bare")
+      assert_equal({}, result["parts"])
+      assert(result["warnings"].any? { |w| w.include?("no data-slot part") })
+      assert(result["warnings"].any? { |w| w.start_with?("cn-foo") })
+    end
+  end
+
+  def test_slot_used_three_times_keeps_every_occurrence
+    tsx = %w[a b c].map { |c| %(function Sidebar#{c}({ className }) {\n  return <div data-slot="sidebar" className={cn("cn-x #{c}", className)} />\n}\n) }.join("\n")
+    with_registry({"sidebar" => tsx}) do |reference|
+      part = reference.for("sidebar")["parts"]["sidebar"]
+      seen = [part["inline"]] + part["also"].map { |a| a["inline"] }
+      assert_equal [["cn-x", "a"], ["cn-x", "b"], ["cn-x", "c"]], seen.sort
+    end
+  end
+
   def test_cli_reference_command_is_registered
     assert ShadcnAudit::CLI::COMMANDS.key?("reference")
   end

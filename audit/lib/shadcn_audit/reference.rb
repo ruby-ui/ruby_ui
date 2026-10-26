@@ -9,9 +9,11 @@ module ShadcnAudit
   class Reference
     CN_TOKEN = /\Acn-[\w-]+\z/
     OPENERS = {"(" => ")", "{" => "}", "[" => "]"}.freeze
-    # cn-* tokens with no rule in any style CSS. shadcn defines them nowhere in
-    # the registry; --font-heading is a theme variable (registry/fonts.ts), so
-    # the token stands for the `font-heading` utility. Inferred, always warned.
+    # cn-* tokens with no rule in any style CSS. shadcn's own CLI rewrites the
+    # marker `cn-font-heading` to the utility `font-heading`
+    # (packages/registry/src/transformers/transform-font.ts). Separately,
+    # transform-cleanup.ts strips cn-* markers that have no style rule, so
+    # `unresolved` entries contribute no classes (informational).
     ALIASES = {"cn-font-heading" => ["font-heading"]}.freeze
     IGNORED_PROPS = %w[className children].freeze
 
@@ -29,16 +31,41 @@ module ShadcnAudit
 
       source = path.read
       warnings = result["warnings"]
+      @attributed_cvas = Set.new
       result["variants"] = scan_variants(source, warnings)
       cva_names = result["variants"].keys.to_set
       scan_parts(source, cva_names, warnings).each do |slot, part|
         result["parts"][slot] = part
       end
+      safety_net(source, result, cva_names)
       resolve!(result)
       result
     end
 
     private
+
+    # File-level check that nothing the file uses was lost: warns when a
+    # file yields no part, or a cn-* token / cva helper never reached a part.
+    def safety_net(source, result, cva_names)
+      warnings = result["warnings"]
+      warnings << "no data-slot part found in this file; nothing extracted" if result["parts"].empty?
+      claimed = []
+      result["parts"].each_value do |part|
+        claimed.concat(part["inline"])
+        Array(part["also"]).each { |extra| claimed.concat(extra["inline"]) }
+      end
+      result["variants"].each_value do |groups|
+        groups.each_value { |names| names.each_value { |set| claimed.concat(set["inline"]) } }
+      end
+      @attributed_cvas.each { |c| claimed.concat(@cva_bases.fetch(c, [])) }
+      (source.scan(/\bcn-[\w-]+/).uniq - claimed).each do |token|
+        next if warnings.any? { |w| w.start_with?("#{token} ") }
+        warnings << "#{token}: used in the file but not attributed to any part"
+      end
+      (cva_names.to_a - @attributed_cvas.to_a).each do |name|
+        warnings << "#{name}: cva helper not attributed to any part"
+      end
+    end
 
     # ---- CSS ------------------------------------------------------------
 
@@ -104,7 +131,7 @@ module ShadcnAudit
       result["unresolved"] = used.reject { |c| rules[:plain].key?(c) || ALIASES.key?(c) }
       used.each do |c|
         if ALIASES.key?(c) && !rules[:plain].key?(c)
-          result["warnings"] << "#{c}: no rule in style CSS; mapped to `#{ALIASES[c].join(" ")}` (inferred from --font-heading theme variable)"
+          result["warnings"] << "#{c}: no rule in style CSS; mapped to `#{ALIASES[c].join(" ")}` as shadcn does in packages/registry/src/transformers/transform-font.ts"
         end
         result["warnings"] << "#{c}: #{rules[:counts][c]} plain rules in style CSS, all concatenated" if rules[:counts][c].to_i > 1
         Array(rules[:other][c]).each do |sel|
@@ -224,12 +251,65 @@ module ShadcnAudit
           part = set.merge("function" => name, "props" => props)
           add_part(parts, slot, part, name)
         end
+        scan_use_render(block, name, props, cva_names, warnings).each do |slot, part|
+          claimed.concat(part["inline"])
+          add_part(parts, slot, part, name)
+        end
         orphans = block.scan(/"([^"]*\bcn-[^"]*)"/).flatten.flat_map(&:split).grep(CN_TOKEN).uniq - claimed
         orphans.each do |c|
           warnings << "#{c} (#{name}): referenced outside any data-slot element, not attributed to a part"
         end
       end
       parts
+    end
+
+    # Base UI `useRender({ props: mergeProps({ className: ... }), state: { slot: "x" } })`:
+    # the slot lives in `state`, the classes in the className of the same call.
+    def scan_use_render(block, function_name, props, cva_names, warnings)
+      found = []
+      block.to_enum(:scan, /useRender\(/).map { Regexp.last_match }.each do |m|
+        close = match_close(block, m.end(0) - 1) or next
+        call = block[m.end(0)...close]
+        slot = call[/\bslot:\s*"([^"]+)"/, 1]
+        unless slot
+          warnings << "#{function_name}: useRender call without a literal slot; not extracted"
+          next
+        end
+        label = "#{slot} (#{function_name})"
+        value = attribute_value(call, "className")
+        set = if value.nil?
+          {"inline" => []}
+        elsif value.start_with?('"')
+          {"inline" => tokens(string_literals(value).first.to_s)}
+        else
+          {"inline" => class_expression_tokens(value, label, cva_names, warnings)}
+        end
+        found << [slot, set.merge("function" => function_name, "props" => props)]
+      end
+      found
+    end
+
+    # Expression after `name:` up to the next top-level comma/closing bracket.
+    def attribute_value(text, name)
+      m = text.match(/\b#{name}:\s*/) or return nil
+      i = m.end(0)
+      start = i
+      depth = 0
+      while i < text.length
+        ch = text[i]
+        if ch == '"' || ch == "'" || ch == "`"
+          i = skip_string(text, i)
+          next
+        end
+        depth += 1 if OPENERS.key?(ch)
+        if OPENERS.value?(ch)
+          break if depth.zero?
+          depth -= 1
+        end
+        break if ch == "," && depth.zero?
+        i += 1
+      end
+      text[start...i].strip
     end
 
     # A slot can appear twice (the real component, plus a usage embedded in
@@ -240,16 +320,15 @@ module ShadcnAudit
       return parts[slot] = part unless existing
       canonical = function_name == slot.split("-").map(&:capitalize).join
       keep, extra = canonical ? [part, existing] : [existing, part]
-      keep = keep.dup
-      keep["also"] = Array(keep["also"]) + [extra.except("also")]
-      parts[slot] = keep
+      also = Array(existing["also"]) + [extra.except("also")]
+      parts[slot] = keep.except("also").merge("also" => also)
     end
 
     def function_blocks(source)
-      starts = source.to_enum(:scan, /^function (\w+)\(/).map { Regexp.last_match }
+      starts = source.to_enum(:scan, /^(?:function (\w+)\(|const (\w+) = (?:async )?\()/).map { Regexp.last_match }
       starts.map do |m|
         close = source.index("\n}\n", m.begin(0)) || source.length
-        [m[1], source[m.begin(0)...close]]
+        [m[1] || m[2], source[m.begin(0)...close]]
       end
     end
 
@@ -363,6 +442,7 @@ module ShadcnAudit
         while (m = skeleton.match(/\b#{Regexp.escape(cva)}\(/))
           close = match_close(skeleton, m.end(0) - 1) or break
           found << cva
+          @attributed_cvas << cva
           skeleton[m.begin(0)..close] = "V"
         end
       end
