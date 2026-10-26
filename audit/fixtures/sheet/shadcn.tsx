@@ -1,3 +1,4 @@
+// Fixture-originated: the body's <div className="px-4"> mirrors RubyUI's SheetMiddle; that wrapper difference is not a component finding.
 import { Button } from "@/components/ui/button"
 import {
   Sheet,

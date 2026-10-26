@@ -1,3 +1,4 @@
+// Fixture-originated: the bare body <p> stands where RubyUI uses DialogMiddle (no shadcn part); that wrapper difference is not a component finding.
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
