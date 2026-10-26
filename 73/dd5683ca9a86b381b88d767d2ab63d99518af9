@@ -1,0 +1,25 @@
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_7483916317bce7 73-74,78,83,92,94
+audit/lib/shadcn_audit/renderers/markdown.rb
+  s_e8f7f6f328faa0::t_0e682559fdca60 19
+audit/lib/shadcn_audit/renderers/terminal.rb
+  s_e8f7f6f328faa0::t_3fd2d887557918 53
+audit/test/renderers_test.rb
+  s_e8f7f6f328faa0::t_a7aeccd0d2577c 11,36-37,81-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "73dd5683ca9a86b381b88d767d2ab63d99518af9",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
