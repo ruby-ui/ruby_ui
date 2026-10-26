@@ -86,6 +86,28 @@ jobs:
       - name: Run tests
         run: bundle exec rake test
 
+  audit:
+    name: Audit (Ruby ${{ matrix.ruby }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: audit
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.3", "3.4"]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+          rubygems: latest
+          working-directory: audit
+      - name: Run tests
+        run: bundle exec rake
+
   mcp-registry-check:
     name: MCP registry up to date
     runs-on: ubuntu-latest

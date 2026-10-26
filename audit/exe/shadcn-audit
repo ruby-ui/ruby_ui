@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+require_relative "../lib/shadcn_audit"
+
+begin
+  ShadcnAudit::CLI.start(ARGV, out: $stdout)
+rescue ShadcnAudit::CLI::UnknownCommand, ShadcnAudit::Shell::Error, OptionParser::ParseError => e
+  $stdout.puts JSON.generate("error" => e.message)
+  exit 1
+end
