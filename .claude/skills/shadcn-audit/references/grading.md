@@ -66,8 +66,7 @@ Behavior or Animation. When unsure, use ⏸ and say what's missing.
   part is ⏸ unless the sandbox DOM shows the final classes. If it does, grade from the DOM
   and cite "sandbox DOM" in `source`.
 - **Theme** is not a component line. It comes from `theme --checkout <preview path>`
-  as-is. Today it reports 10 diffs (chart-1..5, light and dark: RubyUI's coloured
-  charts vs neutral greys). That's a real finding, so leave it in.
+  as-is. Every theme diff is a real finding: report it, never suppress it.
 - **Environment**: if the font, plugins, viewport or global rules differ between
   the two servers, add the difference to `environment_diffs` first, and don't
   blame the component for a visual gap that difference explains (⏸ or a note).
@@ -104,9 +103,9 @@ From `audit/test/fixtures/report_572.json` (pins: head `a9a5d1fa`, base
 | --- | --- |
 | Dialog ✅ Look `overlay bg-black/10 + supports-backdrop-filter:backdrop-blur-xs` | Effective vega classes for `dialog-overlay` match the RubyUI overlay's classes in the DOM. `source: style-vega.css:462`. |
 | Dialog ❌ Look `p-6 gap-4 border shadow-lg sm:rounded-lg max-w-lg` vs `p-6 gap-6 ring-1 ring-foreground/10 rounded-xl sm:max-w-md` | Look difference, not registered → ❌. Both values concrete, `source: style-vega.css:467`. |
-| Dialog ⚠️ Animation "no exit fade" vs `data-closed:fade-out-0 duration-100` | Seen in the browser: shadcn's popup runs an animation on close, RubyUI's disappears at once. Animation → ⚠️. |
+| Dialog ⚠️ Animation "no exit fade" vs `data-closed:fade-out-0 duration-100` | Seen in the browser: shadcn's popup runs an animation on close, RubyUI's disappears at once. Animation → ⚠️, `source: style-vega.css:468`. |
 | Dialog ✅ HTML native `<dialog>` — intentional | `divergences dialog` has the HTML entry → basis `intentional`, `source: audit/divergences.yml`. |
-| Dialog ⚠️ ARIA "no aria-labelledby/aria-describedby" | Base UI wires Title/Description in the sandbox DOM; RubyUI doesn't. ARIA → ⚠️. (A dialog with no accessible name also breaks WAI-ARIA 1.2 `#dialog` "Accessible Name Required", which is a separate ❌ Spec line, rule 5.) |
+| Dialog ⚠️ ARIA "no aria-labelledby/aria-describedby" | Base UI wires Title/Description in the sandbox DOM; RubyUI doesn't. ARIA → ⚠️, `source: bases/base/ui/dialog.tsx:60`. (A dialog with no accessible name also breaks WAI-ARIA 1.2 `#dialog` "Accessible Name Required", which is a separate ❌ Spec line, rule 5.) |
 | Dialog ⏸ Behavior "scroll lock not exercised" | The state wasn't reached. Never ✅ by default. |
 | Dialog ✅ Native `showModal()` — native | Native `<dialog>` gives inert, Esc and focus. `source` = MDN showModal. |
-| AlertDialog ❌ Native `<div role="alertdialog"> + JS` | Hand-rolled modal where `<dialog>` + `showModal()` fits → "candidate for `<dialog>`", MDN `source`. Same for Sheet and CommandDialog. |
+| AlertDialog ❌ Native `<div role="alertdialog"> + JS` | Hand-rolled modal where `<dialog>` + `showModal()` fits → "candidate for `<dialog>`", `source: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog`. Same for Sheet and CommandDialog. |

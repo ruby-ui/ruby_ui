@@ -71,11 +71,16 @@ it becomes `report.json`'s `target`.
 5. Boot both servers, **each in its own Herdr pane** (see the `herdr` skill):
    - shadcn: `herdr pane split --current --direction right --cwd <sandbox path>`,
      then `herdr pane run <pane> "pnpm dev --port 5179 --strictPort"`, then
-     `herdr pane wait-output --match "5179" --timeout 120000 <pane>`.
+     `herdr pane wait-output --match "Local:" --timeout 120000 <pane>`.
    - RubyUI: another split with `--cwd <boot_chdir>`; run the `boot` steps in
      order, joined with `&&` (the first adds the host platform to the throwaway
      lockfile; the last is the server on 3179). Then
-     `herdr pane wait-output --regex "Listening on|3179" --timeout 600000 <pane>`.
+     `herdr pane wait-output --match "Listening on" --timeout 600000 <pane>`.
+   - Wait only on text the server prints (Vite `Local:`, Puma `Listening on`),
+     never on a port number: `wait-output` also searches the output already in
+     the pane, and the typed command contains the port, so it would match at once.
+     Then confirm each URL answers (`curl -sf -o /dev/null <url>`) before
+     driving the browser.
    - Server fails → read the pane (`herdr pane read`), report it; the
      browser-fed lines become ⏸ "server didn't boot".
 
@@ -181,7 +186,9 @@ Write `<run>/report.json`:
   `status` ∈ pass, warn, fail, inconclusive. `basis` ∈ null, intentional,
   native, spec, and only on `pass`.
 - Every `pass` needs a `source`; every Spec `fail`/`warn` needs an `http(s)`
-  source with anchor. Each ❌/⚠️ names concrete values on both sides.
+  source with anchor. Each ❌/⚠️ names concrete values on both sides and a
+  `source` (`style-vega.css:<line>`, `bases/base/ui/<name>.tsx:<line>`, a spec
+  or MDN URL).
 - Screenshot paths are relative to the run folder.
 
 Then:
@@ -191,8 +198,11 @@ Then:
 2. `render <report.json> --html` → `html` is the written path, or `null` when
    no component has screenshots plus a non-pass Look/Behavior/Animation line.
    If there's a path, `open` it.
-3. Only when `target.kind` is `pr`: `comment <report.json>` →
+3. Only when `target.kind` is `pr` **and** `target.state` is `OPEN`:
+   `comment <report.json>` →
    `{"posted": false, "body": …}`. Show the **exact body** and ask for an ok.
+   Branch/component targets, or a PR whose `state` isn't `OPEN`: don't offer
+   posting. Tell the user why (no PR, or the PR is MERGED/CLOSED).
 4. On an explicit "ok"/"pode mandar" for that body:
    `comment <report.json> --post` → `action` `created`/`updated` (give the
    `url`) or `refused`: the PR head moved since the audit pinned it (`reason`).
