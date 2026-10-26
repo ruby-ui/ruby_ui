@@ -9,21 +9,31 @@ module ShadcnAudit
   class RubyuiPreview
     URL_TEMPLATE = "http://localhost:3179/__audit/{folder}?theme={light|dark}"
     SHA = /\A[0-9a-f]{7,40}\z/
+    FULL_SHA = /\A[0-9a-f]{40}\z/
     FIXTURES_TARGET = "docs/app/views/shadcn_audit_fixtures"
-    BOOT = [
-      "mise exec -- bundle install",
-      "pnpm install",
-      "pnpm build",
-      "pnpm build:css",
-      "mise exec -- bin/rails db:prepare",
-      "mise exec -- bin/rails server -p 3179"
-    ].freeze
 
-    def initialize(shell:, dir:, root: ShadcnAudit.root, audit_dir: ShadcnAudit.root.join("audit"))
+    def initialize(shell:, dir:, root: ShadcnAudit.root, audit_dir: ShadcnAudit.root.join("audit"), platform: Gem::Platform.local.to_s)
       @shell = shell
       @dir = Pathname.new(dir)
       @root = Pathname.new(root)
       @audit_dir = Pathname.new(audit_dir)
+      @platform = platform
+    end
+
+    # Run in <checkout>/docs. The docs lockfile may list only `ruby` and
+    # x86_64-linux, which makes Bundler build native gems (nokogiri) from
+    # source; adding the host platform picks the precompiled ones. It edits
+    # only the throwaway checkout's lockfile, never gem versions.
+    def boot
+      [
+        "mise exec -- bundle lock --add-platform #{@platform}",
+        "mise exec -- bundle install",
+        "pnpm install",
+        "pnpm build",
+        "pnpm build:css",
+        "mise exec -- bin/rails db:prepare",
+        "mise exec -- bin/rails server -p 3179"
+      ]
     end
 
     def prepare(sha)
@@ -32,7 +42,7 @@ module ShadcnAudit
       extract(full_sha, path) unless path.directory?
       copy_overlay(path)
       copy_fixtures(path)
-      {"path" => path.to_s, "url_template" => URL_TEMPLATE, "boot" => BOOT.dup, "boot_chdir" => path.join("docs").to_s}
+      {"path" => path.to_s, "url_template" => URL_TEMPLATE, "boot" => boot, "boot_chdir" => path.join("docs").to_s}
     end
 
     private
@@ -41,10 +51,13 @@ module ShadcnAudit
       raise ConfigError, "not a commit SHA: #{sha.inspect} (expected 7-40 lowercase hex chars)" unless SHA.match?(sha.to_s)
       begin
         @shell.capture("git", "cat-file", "-e", "#{sha}^{commit}", chdir: @root)
-      rescue Shell::Error
-        raise ConfigError, "commit #{sha} is not in the local repo; run `target <pr>` first to fetch it"
+      rescue Shell::Error => e
+        raise ConfigError, "commit #{sha} is unknown or ambiguous in the local repo (git: #{e.message.lines.first.to_s.strip}); " \
+          "pass the full SHA, or run `target <pr>` first to fetch it"
       end
-      @shell.capture("git", "rev-parse", "--verify", "#{sha}^{commit}", chdir: @root).strip
+      full_sha = @shell.capture("git", "rev-parse", "--verify", "#{sha}^{commit}", chdir: @root).strip
+      return full_sha if FULL_SHA.match?(full_sha)
+      raise ConfigError, "git rev-parse resolved #{sha} to #{full_sha.inspect}, not a full 40-char SHA"
     end
 
     # Extracts into a sibling staging dir and renames it, so an interrupted

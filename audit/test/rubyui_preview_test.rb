@@ -11,7 +11,7 @@ class RubyuiPreviewTest < Minitest::Test
     @checkout = @dir.join("checkouts", SHA)
     @shell = ShadcnAudit::FakeShell.new
     @shell.stub(->(argv) { argv.first(2) == %w[git rev-parse] }, "#{SHA}\n")
-    @preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir)
+    @preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, platform: "arm64-darwin-25")
   end
 
   def teardown
@@ -40,7 +40,18 @@ class RubyuiPreviewTest < Minitest::Test
 
     error = assert_raises(ShadcnAudit::ConfigError) { @preview.prepare(SHA) }
     assert_match(/run `target/, error.message)
+    assert_match(/unknown or ambiguous/, error.message)
+    assert_match(/Not a valid object name/, error.message)
     assert_nil archive_call
+  end
+
+  def test_rev_parse_must_yield_a_full_sha
+    shell = ShadcnAudit::FakeShell.new.stub(->(argv) { argv.first(2) == %w[git rev-parse] }, "a9a5d1fa\n")
+    preview = ShadcnAudit::RubyuiPreview.new(shell: shell, dir: @dir, platform: "arm64-darwin-25")
+
+    error = assert_raises(ShadcnAudit::ConfigError) { preview.prepare("a9a5d1fa") }
+    assert_match(/not a full 40-char SHA/, error.message)
+    assert_nil shell.calls.find { |call| call.argv.first(2) == %w[git archive] }
   end
 
   def test_rejects_non_sha
@@ -79,6 +90,7 @@ class RubyuiPreviewTest < Minitest::Test
     result = @preview.prepare(SHA)
 
     assert_equal [
+      "mise exec -- bundle lock --add-platform arm64-darwin-25",
       "mise exec -- bundle install",
       "pnpm install",
       "pnpm build",
@@ -87,5 +99,10 @@ class RubyuiPreviewTest < Minitest::Test
       "mise exec -- bin/rails server -p 3179"
     ], result["boot"]
     assert_equal @checkout.join("docs").to_s, result["boot_chdir"]
+  end
+
+  def test_boot_locks_the_host_platform_by_default
+    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir)
+    assert_equal "mise exec -- bundle lock --add-platform #{Gem::Platform.local}", preview.boot.first
   end
 end
