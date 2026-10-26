@@ -1,0 +1,16 @@
+# Pins for the shadcn sandbox (.shadcn-audit/sandbox). Changing any value
+# rebuilds the sandbox on the next `exe/shadcn-audit sandbox`.
+#
+# The app is created by the npm-published shadcn CLI:
+#   pnpm dlx shadcn@<shadcn> init --template vite --base base --preset vega ...
+# The CLI has no base-color flag; neutral is the vega preset's default and is
+# checked against the generated components.json (style base-vega, baseColor neutral).
+shadcn: 4.22.1
+template: vite
+base: base
+preset: vega
+base_color: neutral
+# Docs-parity Tailwind plugins, same versions as docs/package.json.
+packages:
+  "@tailwindcss/forms": 0.5.11
+  "@tailwindcss/typography": 0.5.20

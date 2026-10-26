@@ -12,7 +12,8 @@ module ShadcnAudit
       "divergences" => ->(args, out:) { divergences(args, out: out) },
       "target" => ->(args, out:) { target(args, out: out) },
       "reference" => ->(args, out:) { reference(args, out: out) },
-      "theme" => ->(args, out:) { theme(args, out: out) }
+      "theme" => ->(args, out:) { theme(args, out: out) },
+      "sandbox" => ->(args, out:) { sandbox(args, out: out) }
     }
 
     def self.start(argv, out: $stdout)
@@ -52,6 +53,10 @@ module ShadcnAudit
         themes_ts: ShadcnAudit.workspace_dir.join("ui/apps/v4/registry/themes.ts"),
         rubyui_css: checkout.join("docs/app/assets/stylesheets/application.tailwind.css")
       )
+    end
+
+    def self.sandbox(args, out:)
+      Sandbox.new(shell: Shell.new, dir: ShadcnAudit.workspace_dir).prepare
     end
 
     def self.workspace(args, out:)

@@ -4,7 +4,7 @@ require_relative "../lib/shadcn_audit"
 
 begin
   ShadcnAudit::CLI.start(ARGV, out: $stdout)
-rescue ShadcnAudit::CLI::UnknownCommand, ShadcnAudit::Shell::Error, OptionParser::ParseError => e
+rescue ShadcnAudit::CLI::UnknownCommand, ShadcnAudit::Shell::Error, ShadcnAudit::ConfigError, OptionParser::ParseError => e
   $stdout.puts JSON.generate("error" => e.message)
   exit 1
 end

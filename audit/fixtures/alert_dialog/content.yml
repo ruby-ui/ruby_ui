@@ -1,0 +1,5 @@
+trigger: Delete account
+title: Are you absolutely sure?
+description: This action cannot be undone.
+cancel: Cancel
+action: Continue
