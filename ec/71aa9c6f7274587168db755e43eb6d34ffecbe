@@ -1,0 +1,21 @@
+audit/test/rubyui_preview_test.rb
+  s_e8f7f6f328faa0::t_52b5c4a35696b3 14,43-44,48-56,93,103-107
+audit/lib/shadcn_audit/rubyui_preview.rb
+  s_e8f7f6f328faa0::t_52b5c4a35696b3 12,15,20-36,45,54-56,58-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ec71aa9c6f7274587168db755e43eb6d34ffecbe",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
