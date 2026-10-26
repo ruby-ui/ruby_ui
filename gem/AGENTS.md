@@ -19,6 +19,16 @@ RubyUI is a Ruby gem providing a collection of Phlex-based UI components for Rai
 - **Ruby requirement:** >= 3.2
 - **Docs:** https://rubyui.com/docs/introduction
 
+## shadcn reference
+
+RubyUI components mirror shadcn's **Base UI** build with the **vega** style and the neutral theme. Reference files: `apps/v4/registry/bases/base/ui/<name>.tsx` plus the `cn-*` rules in `styles/style-vega.css`. Do not use `new-york-v4` or ui.shadcn.com; they show other styles and would make wrong classes look right.
+
+- **Where to read it:** run `cd ../audit && mise exec -- bundle exec exe/shadcn-audit workspace` to get a local clone in `.shadcn-audit/ui` (git-ignored). Without it, use the raw URLs: `https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/bases/base/ui/<name>.tsx` and `https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/styles/style-vega.css`.
+- **Native HTML first:** if the platform covers a behavior (`<dialog>`, `popover`, `<details>`), use it instead of JS. See [native-html.md](../.claude/skills/shadcn-audit/references/native-html.md).
+- **Deliberate differences:** register them in [`audit/divergences.yml`](../audit/divergences.yml) in the same PR, with a reason. Unregistered differences show up as findings.
+- **Licensing:** mirror shadcn's classes, structure and behavior (MIT). Port *behavior* from Base UI and React Aria, never their source. If code is ever ported, its license notice goes in alongside it.
+- **Before opening a component PR:** run the audit. In Claude Code, `/shadcn-audit`; in any other agent, follow [`audit/README.md`](../audit/README.md).
+
 ## Commands
 
 ```bash
