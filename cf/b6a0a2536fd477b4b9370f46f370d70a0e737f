@@ -1,0 +1,27 @@
+.claude/skills/shadcn-audit/SKILL.md
+  s_e8f7f6f328faa0::t_dcbd823ce8eea8 189-191
+  s_e8f7f6f328faa0::t_77430347881a7e 204-205
+  s_e8f7f6f328faa0::t_085e6eb802b30a 201-202
+  s_e8f7f6f328faa0::t_c7e77d1b50ed36 74,78-83
+.claude/skills/shadcn-audit/references/grading.md
+  s_e8f7f6f328faa0::t_0bb38fb5d91408 111
+  s_e8f7f6f328faa0::t_2fad53f2ac62d0 69
+  s_e8f7f6f328faa0::t_8be7d84a71d842 108
+  s_e8f7f6f328faa0::t_60e4ae02faedbe 106
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cfb6a0a2536fd477b4b9370f46f370d70a0e737f",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
