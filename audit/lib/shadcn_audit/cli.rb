@@ -10,7 +10,8 @@ module ShadcnAudit
       "workspace" => ->(args, out:) { workspace(args, out: out) },
       "map" => ->(args, out:) { map(args, out: out) },
       "divergences" => ->(args, out:) { divergences(args, out: out) },
-      "target" => ->(args, out:) { target(args, out: out) }
+      "target" => ->(args, out:) { target(args, out: out) },
+      "reference" => ->(args, out:) { reference(args, out: out) }
     }
 
     def self.start(argv, out: $stdout)
@@ -35,6 +36,12 @@ module ShadcnAudit
       arg = args.first or raise ArgumentError, "usage: target <pr-number|branch|component>"
       component_map = ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
       Target.resolve(arg, shell: Shell.new, map: component_map)
+    end
+
+    def self.reference(args, out:)
+      name = args.first or raise ArgumentError, "usage: reference <shadcn_name>"
+      registry_dir = ShadcnAudit.workspace_dir.join("ui/apps/v4/registry")
+      Reference.new(registry_dir: registry_dir).for(name)
     end
 
     def self.workspace(args, out:)
