@@ -2,9 +2,4 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require_relative "../lib/shadcn_audit"
 
-begin
-  ShadcnAudit::CLI.start(ARGV, out: $stdout)
-rescue ShadcnAudit::CLI::UnknownCommand, ShadcnAudit::Shell::Error, ShadcnAudit::ConfigError, OptionParser::ParseError => e
-  $stdout.puts JSON.generate("error" => e.message)
-  exit 1
-end
+exit ShadcnAudit::CLI.run(ARGV, out: $stdout)

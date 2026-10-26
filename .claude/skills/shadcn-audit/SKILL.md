@@ -28,7 +28,9 @@ judging, and writing `report.json`. Run every CLI call from `audit/`:
 cd audit && mise exec -- bundle exec exe/shadcn-audit <subcommand> …
 ```
 
-Each subcommand prints one JSON object. Talk to the user in their language;
+Each subcommand prints one JSON object. On failure it is `{"error": "…"}`
+with exit status 1: read the message, fix the cause, and re-run; never treat
+an error as an empty result. Talk to the user in their language;
 `report.json`, notes and the PR comment are in English.
 
 ## Hard rules
@@ -105,7 +107,9 @@ For each folder in `components`:
   `unresolved` (cn-* markers shadcn strips: note, not missing classes),
   `warnings` (unextractable/conditional classes, parts via `<Button>`/render
   props, unattributed tokens: those Look lines are ⏸ unless the sandbox DOM
-  settles them), `missing: true` (no `.tsx` → no equivalent).
+  settles them), `missing: true` (no `.tsx` → no equivalent). An `error`
+  about the registry or style file means the workspace is incomplete: re-run
+  `workspace`, never grade it as "no equivalent".
   `shadcn_file` in the report: `"<file> + style-vega.css"`.
 - Props inherited from the `@base-ui/react` primitive (not declared in the
   `.tsx`) come from
@@ -193,8 +197,8 @@ Write `<run>/report.json`:
 
 Then:
 
-1. `render <report.json>` (always) → show `text` to the user. A `ReportError`
-   means the JSON breaks the schema: fix it and re-run.
+1. `render <report.json>` (always) → show `text` to the user. An `error`
+   means the JSON breaks the schema (or isn't valid JSON): fix it and re-run.
 2. `render <report.json> --html` → `html` is the written path, or `null` when
    no component has screenshots plus a non-pass Look/Behavior/Animation line.
    If there's a path, `open` it.

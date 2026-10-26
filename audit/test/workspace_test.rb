@@ -37,6 +37,18 @@ class WorkspaceTest < Minitest::Test
     assert @shell.called?("git", "fetch", "--depth", "1", "origin", "main")
   end
 
+  def test_existing_clone_reapplies_sparse_paths_before_fetching
+    FileUtils.mkdir_p(@dir.join("ui", ".git"))
+
+    @workspace.sync
+
+    sparse = @shell.argvs.index(["git", "sparse-checkout", "set", *ShadcnAudit::Workspace::SPARSE_PATHS])
+    fetch = @shell.argvs.index { |argv| argv[1] == "fetch" }
+    assert sparse, "sparse-checkout set not run on an existing clone"
+    assert_operator sparse, :<, fetch
+    assert_equal "#{@dir}/ui", @shell.calls[sparse].chdir
+  end
+
   def test_pinned_sha_fetches_that_sha
     @workspace.sync(sha: SHA)
 

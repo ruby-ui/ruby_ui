@@ -22,7 +22,11 @@ module ShadcnAudit
       @style = style
     end
 
+    # `missing: true` means only "this component has no .tsx". A missing
+    # registry or style file is a broken workspace and raises instead, so it
+    # is never reported as "no shadcn equivalent".
     def for(shadcn_name)
+      check_workspace!
       file = "bases/base/ui/#{shadcn_name}.tsx"
       result = {"file" => file, "style_file" => "styles/style-#{@style}.css",
                 "parts" => {}, "variants" => {}, "unresolved" => [], "warnings" => [], "missing" => false}
@@ -43,6 +47,16 @@ module ShadcnAudit
     end
 
     private
+
+    def style_path = @registry_dir.join("styles/style-#{@style}.css")
+
+    def check_workspace!
+      unless @registry_dir.directory?
+        raise ConfigError, "shadcn registry not found at #{@registry_dir}; run `workspace` first"
+      end
+      return if style_path.file?
+      raise ConfigError, "style file #{style_path} not found; re-run `workspace` (the sparse checkout may be incomplete)"
+    end
 
     # File-level check that nothing the file uses was lost: warns when a
     # file yields no part, or a cn-* token / cva helper never reached a part.
@@ -70,10 +84,7 @@ module ShadcnAudit
     # ---- CSS ------------------------------------------------------------
 
     def css_rules
-      @css_rules ||= begin
-        path = @registry_dir.join("styles/style-#{@style}.css")
-        path.file? ? parse_css(path.read) : {plain: {}, counts: {}, other: {}}
-      end
+      @css_rules ||= parse_css(style_path.read)
     end
 
     # Walks braces keeping a selector stack; collects @apply tokens per cn-*

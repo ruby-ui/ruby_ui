@@ -52,4 +52,19 @@ class ThemeTest < Minitest::Test
   def test_unknown_theme_raises
     assert_raises(ArgumentError) { ShadcnAudit::Theme.compare(themes_ts: THEMES_TS, rubyui_css: CSS, name: "nope") }
   end
+
+  def test_missing_or_empty_mode_block_raises
+    ts = File.read(THEMES_TS)
+    {
+      "dark" => ts.sub(/\bdark:\s*\{/, "night: {"),
+      "light" => ts.sub(/(\blight:\s*\{)[^}]*\}/m, '\1}')
+    }.each do |mode, source|
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "themes.ts")
+        File.write(path, source)
+        error = assert_raises(ArgumentError) { ShadcnAudit::Theme.compare(themes_ts: path, rubyui_css: CSS) }
+        assert_includes error.message, mode
+      end
+    end
+  end
 end

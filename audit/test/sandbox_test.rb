@@ -93,6 +93,18 @@ class SandboxTest < Minitest::Test
     assert @shell.called?("pnpm", "add", *plugins)
   end
 
+  def test_null_shadcn_entries_are_not_added
+    Dir.mktmpdir do |audit|
+      audit = Pathname.new(audit)
+      %w[sandbox.yml sandbox_template fixtures].each { |name| FileUtils.cp_r(AUDIT_DIR.join(name), audit.join(name)) }
+      audit.join("component_map.yml").write(AUDIT_DIR.join("component_map.yml").read + "\nnative_only:\n  shadcn: null\n  kind: static\n")
+      ShadcnAudit::Sandbox.new(shell: @shell, dir: @dir, audit_dir: audit).prepare
+    end
+
+    add = @shell.argvs.find { |argv| argv.include?("add") && argv.include?(shadcn_cli) }
+    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command"], add
+  end
+
   def test_copies_fixtures_and_parity_css
     @sandbox.prepare
 

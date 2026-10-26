@@ -38,7 +38,9 @@ module ShadcnAudit
       MODES.keys.to_h do |mode|
         index = css_vars.index(/\b#{mode}:\s*\{/)
         body = index && block_after(css_vars, index)
-        [mode, body ? ts_pairs(body) : {}]
+        pairs = body ? ts_pairs(body) : {}
+        raise ArgumentError, "theme #{name.inspect}: #{mode} tokens missing or empty in themes.ts" if pairs.empty?
+        [mode, pairs]
       end
     end
 

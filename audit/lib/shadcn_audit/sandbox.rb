@@ -67,7 +67,7 @@ module ShadcnAudit
 
     def shadcn_components
       map = ComponentMap.load(@audit_dir.join("component_map.yml"))
-      map.all_folders.map { |folder| map.entry(folder).fetch("shadcn") }.uniq
+      map.all_folders.map { |folder| map.entry(folder).fetch("shadcn") }.compact.uniq
     end
 
     def copy_template

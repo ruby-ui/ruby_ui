@@ -73,6 +73,21 @@ class ReferenceTest < Minitest::Test
     assert_equal({}, result["parts"])
   end
 
+  def test_missing_registry_dir_raises_instead_of_reporting_missing
+    reference = ShadcnAudit::Reference.new(registry_dir: File.join(FIXTURES, "nope"))
+    error = assert_raises(ShadcnAudit::ConfigError) { reference.for("dialog") }
+    assert_match(/registry not found/, error.message)
+  end
+
+  def test_missing_style_file_raises_instead_of_reporting_missing
+    Dir.mktmpdir do |dir|
+      FileUtils.mkdir_p("#{dir}/bases/base/ui")
+      File.write("#{dir}/bases/base/ui/x.tsx", %(function X() {\n  return <div data-slot="x" />\n}\n))
+      error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Reference.new(registry_dir: dir).for("x") }
+      assert_match(/style-vega\.css not found/, error.message)
+    end
+  end
+
   def test_unresolved_cn_class_is_reported
     with_registry({"ghost" => <<~TSX}) do |reference|
       function DialogGhost({ className, ...props }: React.ComponentProps<"div">) {

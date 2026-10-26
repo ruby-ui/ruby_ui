@@ -19,6 +19,20 @@ module ShadcnAudit
       "comment" => ->(args, out:) { comment(args, out: out) }
     }
 
+    # Failures the CLI reports as {"error": ...} with exit status 1 instead
+    # of a backtrace, so callers always get one JSON object.
+    ERRORS = [UnknownCommand, Shell::Error, ConfigError, ReportError, ArgumentError,
+      Errno::ENOENT, JSON::ParserError, OptionParser::ParseError].freeze
+
+    # Entry point for exe/shadcn-audit; returns the process exit status.
+    def self.run(argv, out: $stdout)
+      start(argv, out: out)
+      0
+    rescue *ERRORS => e
+      out.puts JSON.generate("error" => e.message)
+      1
+    end
+
     def self.start(argv, out: $stdout)
       name, *args = argv
       handler = COMMANDS[name] or raise UnknownCommand, "unknown subcommand: #{name.inspect}"
