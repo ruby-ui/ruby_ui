@@ -7,13 +7,27 @@ module ShadcnAudit
     class UnknownCommand < StandardError; end
 
     COMMANDS = {
-      "workspace" => ->(args, out:) { workspace(args, out: out) }
+      "workspace" => ->(args, out:) { workspace(args, out: out) },
+      "map" => ->(args, out:) { map(args, out: out) },
+      "divergences" => ->(args, out:) { divergences(args, out: out) }
     }
 
     def self.start(argv, out: $stdout)
       name, *args = argv
       handler = COMMANDS[name] or raise UnknownCommand, "unknown subcommand: #{name.inspect}"
       out.puts JSON.generate(handler.call(args, out: out))
+    end
+
+    def self.map(args, out:)
+      folder = args.first or raise ArgumentError, "usage: map <folder>"
+      component_map = ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+      component_map.entry(folder) || {"missing" => true, "suggestion" => component_map.suggest_entry(folder)}
+    end
+
+    def self.divergences(args, out:)
+      folder = args.first or raise ArgumentError, "usage: divergences <folder>"
+      registry = Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
+      {"divergences" => registry.for_component(folder)}
     end
 
     def self.workspace(args, out:)

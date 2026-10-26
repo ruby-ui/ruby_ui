@@ -11,4 +11,6 @@ end
 
 require "shadcn_audit/shell"
 require "shadcn_audit/workspace"
+require "shadcn_audit/component_map"
+require "shadcn_audit/divergences"
 require "shadcn_audit/cli"
