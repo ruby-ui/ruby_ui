@@ -27,7 +27,7 @@ RubyUI components mirror shadcn's **Base UI** build with the **vega** style and 
 - **Native HTML first:** if the platform covers a behavior (`<dialog>`, `popover`, `<details>`), use it instead of JS. See [native-html.md](../.claude/skills/shadcn-audit/references/native-html.md).
 - **Deliberate differences:** register them in [`audit/divergences.yml`](../audit/divergences.yml) in the same PR, with a reason. Unregistered differences show up as findings.
 - **Licensing:** mirror shadcn's classes, structure and behavior (MIT). Port *behavior* from Base UI and React Aria, never their source. If code is ever ported, its license notice goes in alongside it.
-- **Before opening a component PR:** run the audit. In Claude Code, `/shadcn-audit`; in any other agent, follow [`audit/README.md`](../audit/README.md).
+- **Before opening a component PR:** run the audit. In Claude Code, `/shadcn-audit`; in any other agent, read [`SKILL.md`](../.claude/skills/shadcn-audit/SKILL.md) (and its `references/`) and follow that procedure with the CLI in [`audit/`](../audit/README.md).
 
 ## Commands
 

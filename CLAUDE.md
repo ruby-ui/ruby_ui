@@ -4,13 +4,14 @@ Guidance for AI agents working at the root of the `ruby-ui/ruby_ui` monorepo.
 
 ## Layout
 
-Two sibling projects, each independent (own `Gemfile`, `package.json`, tests, lockfiles):
+Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile`, tests and lockfiles:
 
 | Path | What it is |
 | --- | --- |
 | [`gem/`](gem/) | The `ruby_ui` gem — Phlex components, generators, gemspec, Minitest suite. Published to RubyGems from here. |
 | [`docs/`](docs/) | Rails 8 app powering https://rubyui.com. Consumes the local gem via `path: "../gem"`. |
 | [`audit/`](audit/) | shadcn fidelity audit tooling; skill in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/). |
+| [`mcp/`](mcp/) | MCP server for ruby_ui; registry rebuilt in releases. |
 | `.github/workflows/ci.yml` | Unified CI: gem tests (Ruby 3.3 + 3.4), docs Rails tests, docker build for docs devcontainer. |
 
 Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (→ `docs/AGENTS.md`). Read those before editing inside a subdir.
