@@ -9,7 +9,8 @@ module ShadcnAudit
     COMMANDS = {
       "workspace" => ->(args, out:) { workspace(args, out: out) },
       "map" => ->(args, out:) { map(args, out: out) },
-      "divergences" => ->(args, out:) { divergences(args, out: out) }
+      "divergences" => ->(args, out:) { divergences(args, out: out) },
+      "target" => ->(args, out:) { target(args, out: out) }
     }
 
     def self.start(argv, out: $stdout)
@@ -28,6 +29,12 @@ module ShadcnAudit
       folder = args.first or raise ArgumentError, "usage: divergences <folder>"
       registry = Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
       {"divergences" => registry.for_component(folder)}
+    end
+
+    def self.target(args, out:)
+      arg = args.first or raise ArgumentError, "usage: target <pr-number|branch|component>"
+      component_map = ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+      Target.resolve(arg, shell: Shell.new, map: component_map)
     end
 
     def self.workspace(args, out:)
