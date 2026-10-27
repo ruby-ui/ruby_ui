@@ -1,7 +1,7 @@
 # shadcn fidelity audit — design spec
 
 Date: 2026-10-26
-Status: draft, builder-checked (pending Cirdes' review)
+Status: approved
 
 ## Why
 
@@ -59,7 +59,7 @@ Run locally, on demand: `/shadcn-audit <PR number | branch | component name>`.
 
 **Browser runs every time.** Every interactive component that gets audited is driven in the browser on both sides, with a minimum interaction set for its kind (for a modal: open, initial focus, Tab/Shift+Tab, Esc, outside click, focus return, scroll lock, exit animation; light and dark). That's where HTML, ARIA and behavior verdicts come from. Only the screenshot page (B) is conditional on finding a difference. If something couldn't be exercised (sandbox didn't build, state couldn't be reached, no shadcn equivalent), the line is **⏸ inconclusive** with the reason, never ✅.
 
-**A — checklist in the terminal.** One block per component, one line per dimension, ✅ / ⚠️ / ❌, with the concrete RubyUI value vs the shadcn value and a pointer to the source (`style-vega.css:467`, MDN URL). Header records the shadcn commit SHA used. Illustration (PR #572):
+**A — checklist in the terminal.** One block per component, one line per dimension, ✅ / ⚠️ / ❌, with the concrete RubyUI value vs the shadcn value and a pointer to the source (`style-vega.css:468`, MDN URL). Header records the shadcn commit SHA used. Illustration (PR #572):
 
 ```
 Dialog  (ref: bases/base/ui/dialog.tsx + style-vega.css @ 8f04138)
