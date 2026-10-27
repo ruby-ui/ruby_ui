@@ -16,7 +16,7 @@ version first (see `spec-sources.md`).
 | Disclosure/accordion toggled in JS (`aria-expanded` flip + `hidden`) | `<details>` / `<summary>` (`name` for exclusive accordions) | https://developer.mozilla.org/pt-BR/docs/Web/HTML/Reference/Elements/details |
 | `aria-hidden` / `tabindex=-1` sprayed on background content | `inert` attribute | https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert |
 | Validation styling toggled in JS after blur/submit | `:user-invalid` / `:user-valid` | https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:user-invalid |
-| Custom date/time/color/number pickers built in JS | `<input type="date|time|datetime-local|month|week|color|number|range">` | https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/date (and siblings) |
+| Custom date/time/color/number pickers built in JS | `<input type="date">` and siblings (`time`, `datetime-local`, `month`, `week`, `color`, `number`, `range`) | https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/date (and siblings) |
 | Collapsed content hidden with `display:none` that find-in-page can't reach | `hidden="until-found"` + `beforematch` | https://developer.mozilla.org/pt-BR/docs/Web/HTML/Reference/Global_attributes/hidden |
 
 ## When native would lose behavior shadcn provides

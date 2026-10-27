@@ -10,7 +10,7 @@ without an `http` source are both rejected.
 | --- | --- | --- |
 | `pass` | ✅ | RubyUI matches the reference **and you saw the evidence** (resolved classes, the DOM, a browser run). |
 | `warn` | ⚠️ | Behavior, ARIA or Animation differ from shadcn; an APG recommendation is unmet; a judgment call. |
-| `fail` | ❌ | Look, HTML or Props differ and the difference isn't registered; hand-rolled JS where a native feature fits (Native); RubyUI breaks a normative spec (Spec). |
+| `fail` | ❌ | Look, HTML or Props differ and the difference isn't registered; hand-rolled JS where a native feature fits (Native); RubyUI alone breaks a normative spec (Spec). A normative miss that shadcn also has is ⚠️ (rule 1). |
 | `inconclusive` | ⏸ | You couldn't verify it. The `note` gives the reason: sandbox didn't build, state not reachable, no shadcn equivalent, unmapped folder, reference `warnings` the DOM couldn't settle. |
 
 **Nothing unverified is ever `pass`.** No browser run, no ✅ on HTML, ARIA,
@@ -21,10 +21,14 @@ Behavior or Animation. When unsure, use ⏸ and say what's missing.
 | `basis` | Shows as | Rule |
 | --- | --- | --- |
 | `intentional` | ✅ … — intentional | The difference matches an entry from `divergences <folder>` (same `dimension`). `source` = `audit/divergences.yml`, `note` = its `reason`. |
-| `native` | ✅ … — native | RubyUI swaps shadcn's JS for a native feature **and keeps** what shadcn delivers: focus in and back, Esc, labelling, dismiss, inertness of the page behind. Tag differences go in `note`. No registration needed. |
+| `native` | ✅ … — native | RubyUI swaps shadcn's JS for a native feature **and keeps** what shadcn delivers: focus in and back, Esc, dismiss, inertness of the page behind. Labelling is markup, graded on the ARIA line, not here. Tag differences go in `note`. No registration needed. |
 | `spec` | ✅ … — follows spec | shadcn breaks a spec (stage 2) and RubyUI follows it. `source` = the spec URL#anchor. No registration needed. |
 
 `basis` stays `null` on every other line.
+
+A registered divergence covers only the difference its `rubyui`/`shadcn`
+fields describe. Any other difference in the same component and dimension is
+still graded on its own and is still a finding.
 
 ## Order of precedence
 
@@ -107,5 +111,5 @@ From `audit/test/fixtures/report_572.json` (pins: head `a9a5d1fa`, base
 | Dialog ✅ HTML native `<dialog>` — intentional | `divergences dialog` has the HTML entry → basis `intentional`, `source: audit/divergences.yml`. |
 | Dialog ⚠️ ARIA "no aria-labelledby/aria-describedby" | Base UI wires Title/Description in the sandbox DOM; RubyUI doesn't. ARIA → ⚠️, `source: bases/base/ui/dialog.tsx:122-138`. (A dialog with no accessible name also breaks WAI-ARIA 1.2 `#dialog` "Accessible Name Required", which is a separate ❌ Spec line, rule 5.) |
 | Dialog ⏸ Behavior "scroll lock not exercised" | The state wasn't reached. Never ✅ by default. |
-| Dialog ✅ Native `showModal()` — native | Native `<dialog>` gives inert, Esc and focus. `source` = MDN showModal. |
+| Dialog ✅ Native `showModal()` — native | Native `<dialog>` gives inert, Esc and focus. Scroll lock is kept on both sides (RubyUI's controller adds `overflow-hidden` to `body`; Base UI locks it too), so nothing shadcn delivers is lost. `source` = MDN showModal. |
 | AlertDialog ❌ Native `<div role="alertdialog"> + JS` | Hand-rolled modal where `<dialog>` + `showModal()` fits → "candidate for `<dialog>`", `source: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog`. Same for Sheet and CommandDialog. |

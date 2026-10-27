@@ -12,7 +12,7 @@ Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile` and
 | [`docs/`](docs/) | Rails 8 app powering https://rubyui.com. Consumes the local gem via `path: "../gem"`. |
 | [`audit/`](audit/) | shadcn fidelity audit tooling; skill in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/). |
 | [`mcp/`](mcp/) | MCP server for ruby_ui; registry rebuilt in releases. |
-| `.github/workflows/ci.yml` | Unified CI: gem tests (Ruby 3.3 + 3.4), docs Rails tests, docker build for docs devcontainer. |
+| `.github/workflows/ci.yml` | Unified CI: `gem` tests (Ruby 3.3 + 3.4), `docs` Rails tests, `mcp` tests + registry check, `audit` (shadcn-audit CLI) tests, docker build for the docs devcontainer. |
 
 Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (→ `docs/AGENTS.md`). Read those before editing inside a subdir.
 

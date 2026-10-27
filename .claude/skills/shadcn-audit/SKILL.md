@@ -94,14 +94,16 @@ it becomes `report.json`'s `target`.
    checkout: without it the CLI reads the working tree, not the audited SHA.
 5. **Untrusted head.** When `target.cross_repository` is true, booting the
    preview runs the fork's code (Gemfile, gemspec, Rails config, bin
-   scripts, package scripts, the components themselves). Before booting, show
-   the user what changed against the base in the files that execute:
-   `git diff <base_sha> <head_sha> -- 'Gemfile*' 'gem/Gemfile*' 'docs/Gemfile*' 'gem/*.gemspec' docs/package.json docs/config docs/bin`
-   (from the repo root; `target` already fetched both SHAs), and ask whether
-   to boot it, even when that diff is empty. Without a yes, don't boot the
+   scripts, package scripts, the components themselves, and anything they
+   load). Before booting, show the user the **whole** PR diff against the
+   base, not a subset of files: from the repo root (`target` already fetched
+   both SHAs), `git diff --stat <base_sha>...<head_sha>` for the file list,
+   then `git diff <base_sha>...<head_sha>` for the full diff of every changed
+   file. Ask whether to boot it. Without an explicit yes, don't boot the
    RubyUI server: the static steps (map, reference, divergences, theme, Look
    from source) still run, and the browser-fed RubyUI lines are ⏸ "fork code
-   not run".
+   not run". Same-repository heads come from collaborators with write access
+   and skip this step.
 6. Boot both servers. When `HERDR_ENV=1`, **each in its own Herdr pane**
    (see the `herdr` skill), as below. Otherwise run each as a background
    shell process with its output sent to a log in the run folder
