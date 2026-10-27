@@ -82,6 +82,11 @@ class DivergencesTest < Minitest::Test
     end
   end
 
+  def test_top_level_must_be_a_list
+    assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.new("oops") }
+    assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.new({"component" => "dialog"}) }
+  end
+
   def test_todo_reason_rejected
     error = assert_raises(ShadcnAudit::ConfigError) { write(valid_yaml.sub('reason: "Native modal dialog."', "reason: TODO")) }
     assert_includes error.message, "TODO"

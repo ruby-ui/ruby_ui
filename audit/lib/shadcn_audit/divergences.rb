@@ -12,6 +12,7 @@ module ShadcnAudit
     end
 
     def initialize(entries)
+      raise ConfigError, "divergences.yml must be a list of entries" unless entries.is_a?(Array)
       @entries = entries
       validate!
     end

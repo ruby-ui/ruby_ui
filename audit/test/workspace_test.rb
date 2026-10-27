@@ -66,17 +66,26 @@ class WorkspaceTest < Minitest::Test
     assert @shell.called?("git", "fetch", "--depth", "1", "origin", SHA)
   end
 
-  def test_pinned_sync_checks_out_fetch_head_and_returns_rev_parse_output
-    short = SHA[0, 8]
-    result = @workspace.sync(sha: short)
+  def test_short_sha_is_rejected_before_any_git_call
+    error = assert_raises(ShadcnAudit::ConfigError) { @workspace.sync(sha: SHA[0, 8]) }
+    assert_match(/full 40-character/, error.message)
+    assert_empty @shell.calls
+  end
 
-    fetch = @shell.argvs.index(["git", "fetch", "--depth", "1", "origin", short])
+  def test_pinned_sync_checks_out_fetch_head_and_returns_rev_parse_output
+    head = "a" * 40
+    @shell = ShadcnAudit::FakeShell.new
+    @shell.stub(%w[git rev-parse HEAD], "#{head}\n")
+    @workspace = ShadcnAudit::Workspace.new(shell: @shell, dir: @dir)
+    result = @workspace.sync(sha: SHA)
+
+    fetch = @shell.argvs.index(["git", "fetch", "--depth", "1", "origin", SHA])
     checkout = @shell.argvs.index(["git", "checkout", "--detach", "FETCH_HEAD"])
     rev_parse = @shell.argvs.index(["git", "rev-parse", "HEAD"])
     assert checkout, "pinned sync must check out FETCH_HEAD detached"
     assert_operator fetch, :<, checkout
     assert_operator checkout, :<, rev_parse
-    assert_equal SHA, result["shadcn_sha"], "the returned SHA is rev-parse HEAD's output, not the pin"
+    assert_equal head, result["shadcn_sha"], "the returned SHA is rev-parse HEAD's output, not the pin"
   end
 end
 

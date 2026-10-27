@@ -15,6 +15,8 @@ module ShadcnAudit
     # (interrupted, or an older path list) would otherwise lack registry
     # files, and a missing file reads as "no shadcn equivalent".
     def sync(sha: nil)
+      # git fetch can't resolve abbreviated object names against the remote.
+      raise ConfigError, "--sha needs the full 40-character commit SHA, got #{sha.inspect}" if sha && !sha.match?(/\A[0-9a-f]{40}\z/)
       clone_repo unless clone_dir.join(".git").exist?
       @shell.capture("git", "sparse-checkout", "set", *SPARSE_PATHS, chdir: clone_dir)
       @shell.capture("git", "fetch", "--depth", "1", "origin", sha || "main", chdir: clone_dir)

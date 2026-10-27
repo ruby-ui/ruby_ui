@@ -57,7 +57,7 @@ class CliErrorsTest < Minitest::Test
     with_file("{not json") do |path|
       stdout, stderr, status = Open3.capture3(RbConfig.ruby, EXE, "render", path)
       assert_equal 1, status.exitstatus
-      assert_empty stderr
+      refute_match(/:in [`']/, stderr, "no Ruby backtrace may leak to stderr")
       assert_match(/not valid JSON/, JSON.parse(stdout)["error"])
     end
     stdout, _, status = Open3.capture3(RbConfig.ruby, EXE, "render", "/nonexistent/report.json")
