@@ -1,0 +1,30 @@
+audit/lib/shadcn_audit/workspace.rb
+  s_e8f7f6f328faa0::t_ff6136ef52f0ea 18-19
+audit/lib/shadcn_audit/divergences.rb
+  s_e8f7f6f328faa0::t_ff6136ef52f0ea 15
+audit/test/cli_errors_test.rb
+  s_e8f7f6f328faa0::t_7686334a75a6b1 60
+audit/test/shell_test.rb
+  s_e8f7f6f328faa0::t_ff6136ef52f0ea 13-14
+  s_e8f7f6f328faa0::t_bc119a15e747d4 7-12,16,21,27
+audit/test/divergences_test.rb
+  s_e8f7f6f328faa0::t_ff6136ef52f0ea 85-89
+audit/test/workspace_test.rb
+  s_e8f7f6f328faa0::t_ff6136ef52f0ea 69-74,76-80,82,88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ec535064ebe861dcde9eb8c0f61420edc47babb6",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
