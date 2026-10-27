@@ -89,7 +89,7 @@ https://stackoverflow.com/questions/70548841/how-to-add-custom-js-file-to-new-ra
 
 ## License 📜
 
-Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
+Licensed under the MIT license (see [LICENSE.txt](LICENSE.txt)). Component design derived from [shadcn/ui](https://github.com/shadcn-ui/ui), MIT — notice included in LICENSE.txt.
 
 ---
 
