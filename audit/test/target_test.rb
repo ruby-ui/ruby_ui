@@ -1,25 +1,15 @@
 require "test_helper"
 
 class TargetTest < Minitest::Test
-  StubMap = Struct.new(:all_folders) do
-    def component_folder_for_path(path)
-      ShadcnAudit::ComponentMap::PATH_PATTERNS.each { |p| (m = p.match(path)) && (return m[1]) }
-      nil
-    end
-
-    def entry(_folder) = nil
-
-    def folder_for_name(name)
-      snake = name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
-      snake if all_folders.include?(snake)
-    end
-  end
-
   ROOT = "/repo"
 
   def setup
     @shell = ShadcnAudit::FakeShell.new
-    @map = StubMap.new(%w[alert_dialog dialog sheet])
+    @map = ShadcnAudit::ComponentMap.new(
+      "alert_dialog" => {"shadcn" => "alert-dialog", "kind" => "modal"},
+      "dialog" => {"shadcn" => "dialog", "kind" => "modal", "parts" => {"DialogContent" => "dialog-content"}},
+      "sheet" => {"shadcn" => "sheet", "kind" => "modal"}
+    )
   end
 
   URL = "https://github.com/ruby-ui/ruby_ui.git"
@@ -112,28 +102,24 @@ class TargetTest < Minitest::Test
     assert @shell.called?(*MAIN_FETCH)
   end
 
-  def real_map
-    ShadcnAudit::ComponentMap.new("dialog" => {"parts" => {"DialogContent" => {}}}, "sheet" => {})
-  end
-
   def test_branch_wins_over_prefix_component_match
     @shell.stub(%w[git rev-parse --verify --quiet dialog_fix^{commit}], "headx\n")
     @shell.stub(%w[git merge-base refs/shadcn-audit/main dialog_fix], "basex\n")
     @shell.stub(%w[git diff --name-only basex...headx], "gem/lib/ruby_ui/sheet/sheet.rb\n")
-    result = ShadcnAudit::Target.resolve("dialog_fix", shell: @shell, map: real_map, root: ROOT)
+    result = ShadcnAudit::Target.resolve("dialog_fix", shell: @shell, map: @map, root: ROOT)
     assert_equal "branch", result["kind"]
     assert_equal %w[sheet], result["components"]
   end
 
   def test_part_name_without_branch_is_component
-    result = ShadcnAudit::Target.resolve("DialogContent", shell: @shell, map: real_map, root: ROOT)
+    result = ShadcnAudit::Target.resolve("DialogContent", shell: @shell, map: @map, root: ROOT)
     assert_equal "component", result["kind"]
     assert_equal %w[dialog], result["components"]
   end
 
   def test_unknown_arg_raises
     assert_raises(ArgumentError) do
-      ShadcnAudit::Target.resolve("dialog_fix", shell: @shell, map: real_map, root: ROOT)
+      ShadcnAudit::Target.resolve("dialog_fix", shell: @shell, map: @map, root: ROOT)
     end
   end
 

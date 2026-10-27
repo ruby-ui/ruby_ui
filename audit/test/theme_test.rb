@@ -12,7 +12,10 @@ class ThemeTest < Minitest::Test
   def with_css(edit)
     Dir.mktmpdir do |dir|
       path = File.join(dir, "app.css")
-      File.write(path, edit.call(File.read(CSS)))
+      original = File.read(CSS)
+      edited = edit.call(original)
+      raise "with_css: the edit left the CSS unchanged" if edited == original
+      File.write(path, edited)
       yield path
     end
   end

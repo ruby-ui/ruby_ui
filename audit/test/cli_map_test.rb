@@ -20,6 +20,6 @@ class CliMapTest < Minitest::Test
   def test_divergences_lists_for_folder
     result = run_cli("divergences", "dialog")
     assert_equal "HTML", result["divergences"].first["dimension"]
-    assert_empty run_cli("divergences", "sheet")["divergences"]
+    assert_empty run_cli("divergences", "not_a_component")["divergences"]
   end
 end

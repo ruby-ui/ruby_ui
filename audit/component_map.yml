@@ -72,7 +72,10 @@ command:
     CommandDialogContent: dialog-content
   props:
     CommandInput: {placeholder: placeholder}
+    CommandGroup: {heading: title}
+    CommandItem: {value: value}
     CommandDialog: {title: null, description: null, showCloseButton: null}
   rubyui_only:
+    CommandItem: [text, href]
     CommandDialogContent: [size]
     CommandDialogTrigger: [keybindings]

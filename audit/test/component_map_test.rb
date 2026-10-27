@@ -94,18 +94,25 @@ class ComponentMapTest < Minitest::Test
     assert_includes error.message, "rubyui_only.DialogContent"
   end
 
+  def seed_map = ShadcnAudit::ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+
   def test_seed_files_load
-    map = ShadcnAudit::ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+    map = seed_map
     assert_includes map.all_folders, "dialog"
-    ui_dir = ShadcnAudit.workspace_dir.join("ui")
 
     map.all_folders.each do |folder|
       shadcn = map.entry(folder)["shadcn"]
       next if shadcn.nil?
 
       assert_match(/\A[a-z]+(-[a-z]+)*\z/, shadcn, folder)
-      next unless ui_dir.exist?
+    end
+  end
 
+  def test_seed_shadcn_names_exist_in_the_workspace_clone
+    ui_dir = ShadcnAudit.workspace_dir.join("ui")
+    skip "no shadcn workspace at #{ui_dir}; run `exe/shadcn-audit workspace` to check the names" unless ui_dir.exist?
+
+    seed_map.all_folders.filter_map { |folder| [folder, seed_map.entry(folder)["shadcn"]] if seed_map.entry(folder)["shadcn"] }.each do |folder, shadcn|
       assert ui_dir.join("apps/v4/registry/bases/base/ui/#{shadcn}.tsx").exist?, "#{folder}: missing #{shadcn}.tsx"
     end
   end
