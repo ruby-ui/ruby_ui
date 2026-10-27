@@ -1,0 +1,30 @@
+audit/lib/shadcn_audit/renderers/markdown.rb
+  s_e8f7f6f328faa0::t_1145ecb15e49f1 5-6,22-24
+audit/test/report_test.rb
+  s_e8f7f6f328faa0::t_818fc7de5629cd 52-109
+audit/test/renderers_test.rb
+  s_e8f7f6f328faa0::t_818fc7de5629cd 53-55,61-77
+  s_e8f7f6f328faa0::t_bf53fe63d08ab9 78
+.claude/skills/shadcn-audit/references/grading.md
+  s_e8f7f6f328faa0::t_a8fd01940312f4 4-6
+.claude/skills/shadcn-audit/SKILL.md
+  s_e8f7f6f328faa0::t_a8fd01940312f4 214,234-238
+audit/lib/shadcn_audit/report.rb
+  s_e8f7f6f328faa0::t_1145ecb15e49f1 12-13,54-56,59,65-66,84-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "932eb23a75085caf5b33814043b9c2d77788d1dc",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
