@@ -49,4 +49,62 @@ class ReportTest < Minitest::Test
     end
     assert_raises(ShadcnAudit::ReportError) { ShadcnAudit::Report.new({"target" => {}}) }
   end
+
+  def test_fail_and_warn_without_source_rejected_inconclusive_allowed
+    %w[fail warn].each do |status|
+      d = data
+      dialog_lines(d)[1].merge!("status" => status, "source" => " ")
+      error = assert_raises(ShadcnAudit::ReportError, status) { ShadcnAudit::Report.new(d) }
+      assert_includes error.message, "#{status} line needs a source"
+    end
+    d = data
+    dialog_lines(d)[1].merge!("status" => "inconclusive", "source" => "")
+    ShadcnAudit::Report.new(d)
+  end
+
+  def test_spec_basis_pass_needs_http_source
+    d = data
+    dialog_lines(d)[0].merge!("basis" => "spec", "source" => "style-vega.css:464")
+    error = assert_raises(ShadcnAudit::ReportError) { ShadcnAudit::Report.new(d) }
+    assert_includes error.message, "basis spec needs an http source"
+
+    dialog_lines(d)[0]["source"] = "https://www.w3.org/TR/wai-aria-1.2/#dialog"
+    ShadcnAudit::Report.new(d)
+  end
+
+  def test_sandbox_lock_required_as_object
+    d = data
+    d.delete("sandbox_lock")
+    assert_raises(ShadcnAudit::ReportError) { ShadcnAudit::Report.new(d) }
+    d["sandbox_lock"] = ["react@19"]
+    error = assert_raises(ShadcnAudit::ReportError) { ShadcnAudit::Report.new(d) }
+    assert_includes error.message, "sandbox_lock"
+  end
+
+  def test_target_needs_repo_and_both_shas
+    %w[repo base_sha head_sha].each do |key|
+      [nil, "", 1].each do |value|
+        d = data
+        d["target"][key] = value
+        error = assert_raises(ShadcnAudit::ReportError, "#{key}=#{value.inspect}") { ShadcnAudit::Report.new(d) }
+        assert_includes error.message, key
+      end
+    end
+  end
+
+  def test_theme_diff_entries_must_be_objects
+    d = data
+    d["theme"]["diffs"] << "chart-1 differs"
+    error = assert_raises(ShadcnAudit::ReportError) { ShadcnAudit::Report.new(d) }
+    assert_includes error.message, "theme diffs"
+  end
+
+  def test_component_folder_must_be_non_empty_string
+    [nil, "", "  ", 42].each do |folder|
+      d = data
+      d["components"].first["folder"] = folder
+      error = assert_raises(ShadcnAudit::ReportError, folder.inspect) { ShadcnAudit::Report.new(d) }
+      assert_includes error.message, "folder"
+    end
+  end
 end

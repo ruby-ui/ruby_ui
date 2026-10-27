@@ -50,10 +50,30 @@ class RenderersTest < Minitest::Test
     md = ShadcnAudit::Renderers::Markdown.render(report)
     assert md.start_with?("<!-- shadcn-audit -->\n")
     assert_includes md, "❌ Theme"
-    assert_includes md, "`a9a5d1fa`"
+    assert_includes md, "| RubyUI head | `a9a5d1faee2257e8e83c144a5be88c378347640d` |"
+    assert_includes md, "| RubyUI base | `ddcff1c6e26825512006d732bbe408c48065c5d1` |"
+    assert_includes md, "| shadcn | `8f04138777c1b6996e709993362a7b0a12888ecf` |"
     assert_includes md, "`ruby-ui/ruby_ui`"
     assert_includes md, "↳ style-vega.css:464"
     assert_equal 2, md.scan(/^```$/).size
+  end
+
+  def test_terminal_keeps_short_shas
+    text = ShadcnAudit::Renderers::Terminal.render(report)
+    assert_includes text, "head a9a5d1fa  "
+    refute_includes text, "a9a5d1faee"
+  end
+
+  def test_markdown_fence_outgrows_backticks_in_the_body
+    d = JSON.parse(File.read(FIXTURE))
+    d["components"].first["lines"][1]["rubyui"] = "uses ``` in a class string"
+    md = ShadcnAudit::Renderers::Markdown.render(ShadcnAudit::Report.new(d))
+    fences = md.lines.map(&:chomp).select { |line| line.match?(/\A`{3,}\z/) }
+    assert_equal ["````", "````"], fences
+    open_at = md.index("````\n")
+    close_at = md.rindex("\n````")
+    assert_operator open_at, :<, md.index("uses ``` in a class string")
+    assert_operator md.index("uses ``` in a class string"), :<, close_at
   end
 
   def test_html_lists_dialog_only_and_escapes

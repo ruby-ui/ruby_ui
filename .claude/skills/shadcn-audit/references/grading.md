@@ -1,8 +1,9 @@
 # Grading
 
 How each `report.json` line gets its `status` and `basis`. `ShadcnAudit::Report`
-validates the shape: a `pass` with no `source` and a `fail`/`warn` Spec line
-without an `http` source are both rejected.
+validates the shape: a `pass`, `warn` or `fail` with no `source`, a
+`fail`/`warn` Spec line without an `http` source, and a `pass` with basis
+`spec` without an `http` source are all rejected.
 
 ## Statuses
 

@@ -211,7 +211,7 @@ Write `<run>/report.json`:
 
 ```json
 {
-  "target": {"…": "the target JSON from step 1"},
+  "target": {"repo": "ruby-ui/ruby_ui", "base_sha": "…", "head_sha": "…", "…": "the rest of the target JSON from step 1"},
   "shadcn_sha": "…",
   "sandbox_lock": {"@base-ui/react": "…"},
   "environment_diffs": ["…"],
@@ -231,8 +231,11 @@ Write `<run>/report.json`:
 - `dimension` ∈ Look, HTML, Props, ARIA, Behavior, Animation, Native, Spec.
   `status` ∈ pass, warn, fail, inconclusive. `basis` ∈ null, intentional,
   native, spec, and only on `pass`.
-- Every `pass` needs a `source`; every Spec `fail`/`warn` needs an `http(s)`
-  source with anchor. Each ❌/⚠️ names concrete values on both sides and a
+- `target` keeps `repo`, `base_sha` and `head_sha`; `sandbox_lock` is
+  required (an object, `{}` only if the sandbox never built).
+- Every `pass`, `warn` and `fail` needs a `source` (`inconclusive` may leave
+  it empty); every Spec `fail`/`warn` and every `pass` with basis `spec` needs
+  an `http(s)` source with anchor. Each ❌/⚠️ names concrete values on both sides and a
   `source` (`style-vega.css:<line>`, `bases/base/ui/<name>.tsx:<line>`, a spec
   or MDN URL).
 - Screenshot paths are relative to the run folder.

@@ -9,7 +9,8 @@ module ShadcnAudit
     STATUSES = %w[pass warn fail inconclusive].freeze
     DIMENSIONS = %w[Look HTML Props ARIA Behavior Animation Native Spec].freeze
     BASES = %w[intentional native spec].freeze
-    TOP_KEYS = %w[target shadcn_sha environment_diffs theme components].freeze
+    TOP_KEYS = %w[target shadcn_sha sandbox_lock environment_diffs theme components].freeze
+    TARGET_KEYS = %w[repo base_sha head_sha].freeze
     LINE_KEYS = %w[dimension status].freeze
 
     attr_reader :data
@@ -50,14 +51,19 @@ module ShadcnAudit
       missing = TOP_KEYS - data.keys
       raise ReportError, "report is missing: #{missing.join(", ")}" unless missing.empty?
       raise ReportError, "target must be an object" unless target.is_a?(Hash)
+      blank = TARGET_KEYS.reject { |key| target[key].is_a?(String) && !target[key].strip.empty? }
+      raise ReportError, "target is missing: #{blank.join(", ")}" unless blank.empty?
+      raise ReportError, "sandbox_lock must be an object" unless data["sandbox_lock"].is_a?(Hash)
       raise ReportError, "environment_diffs must be an array" unless environment_diffs.is_a?(Array)
       raise ReportError, "theme must be an object with diffs" unless theme.is_a?(Hash) && theme["diffs"].is_a?(Array)
+      raise ReportError, "theme diffs must be objects" unless theme["diffs"].all?(Hash)
       raise ReportError, "components must be an array" unless components.is_a?(Array)
       components.each { |component| validate_component!(component) }
     end
 
     def validate_component!(component)
-      folder = component.is_a?(Hash) && component["folder"] or raise ReportError, "component without folder"
+      folder = component["folder"] if component.is_a?(Hash)
+      raise ReportError, "component folder must be a non-empty string" unless folder.is_a?(String) && !folder.strip.empty?
       raise ReportError, "#{folder}: lines must be an array" unless component["lines"].is_a?(Array)
       component["lines"].each { |line| validate_line!(folder, line) }
       Array(component["screenshots"]).each do |shot|
@@ -75,9 +81,12 @@ module ShadcnAudit
       raise ReportError, "#{where}: unknown basis #{basis.inspect}" unless basis.nil? || BASES.include?(basis)
       raise ReportError, "#{where}: basis only allowed on a pass line" if basis && line["status"] != "pass"
       source = line["source"].to_s.strip
-      raise ReportError, "#{where}: pass line needs a source" if line["status"] == "pass" && source.empty?
-      spec_finding = line["dimension"] == "Spec" && %w[fail warn].include?(line["status"])
-      raise ReportError, "#{where}: spec finding needs an http source" if spec_finding && !source.match?(%r{\Ahttps?://})
+      status = line["status"]
+      raise ReportError, "#{where}: #{status} line needs a source" if status != "inconclusive" && source.empty?
+      http = source.match?(%r{\Ahttps?://})
+      spec_finding = line["dimension"] == "Spec" && %w[fail warn].include?(status)
+      raise ReportError, "#{where}: spec finding needs an http source" if spec_finding && !http
+      raise ReportError, "#{where}: pass with basis spec needs an http source" if basis == "spec" && !http
     end
   end
 end
