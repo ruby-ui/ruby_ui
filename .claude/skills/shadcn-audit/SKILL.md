@@ -81,12 +81,12 @@ it becomes `report.json`'s `target`.
    `workspace --sha <sha>`.)
 2. `sandbox` → `path`, `url_template`, `lock` (→ `report.json`'s
    `sandbox_lock`), `created` (true = it rebuilt the app; tell the user),
-   `refreshed` (true = the workspace SHA moved, so it re-added the mapped
-   components with `--overwrite`; tell the user, `refreshed_from` is the old
-   SHA), `built_from_sha` and `built_at` (the workspace SHA the components were
-   added at, and when). If `built_from_sha` ≠ `shadcn_sha`, add an
-   `environment_diffs` line: "sandbox components from shadcn <built_from_sha>,
-   reference at <shadcn_sha>".
+   `refreshed` (true = the workspace moved since the last pull, so it re-added
+   the mapped components with `--overwrite`; tell the user), `registry` and
+   `built_at`. `registry: "live"` means the components come from the
+   published shadcn registry as of `built_at`, not from the workspace clone:
+   the sandbox tracks `main` loosely, and `shadcn_sha` pins only the files the
+   CLI reads (reference, theme).
 3. `preview <head_sha>` (full SHA from `target`) → `path`, `url_template`,
    `boot` (ordered command list), `boot_chdir`. This only extracts files;
    nothing from the PR runs yet.

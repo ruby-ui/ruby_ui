@@ -1,4 +1,4 @@
-import { StrictMode, type ComponentType } from "react"
+import type { ComponentType } from "react"
 import { createRoot } from "react-dom/client"
 
 import "./parity.css"
@@ -16,9 +16,7 @@ const Fixture = fixtures[`./fixtures/${folder}.tsx`]?.default
 const available = Object.keys(fixtures).map((path) => path.replace(/^\.\/fixtures\/|\.tsx$/g, ""))
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <div data-audit-fixture={folder}>
-      {Fixture ? <Fixture /> : <p data-audit-missing>Unknown fixture "{folder}". Available: {available.join(", ")}</p>}
-    </div>
-  </StrictMode>
+  <div data-audit-fixture={folder}>
+    {Fixture ? <Fixture /> : <p data-audit-missing>Unknown fixture "{folder}". Available: {available.join(", ")}</p>}
+  </div>
 )

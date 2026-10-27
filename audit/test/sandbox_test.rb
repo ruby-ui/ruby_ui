@@ -76,12 +76,13 @@ class SandboxTest < Minitest::Test
     assert_equal @app.to_s, result["path"]
     assert_equal "http://localhost:5179/?c={folder}&theme={light|dark}", result["url_template"]
     assert_equal({"@base-ui/react" => "1.9.0", "shadcn" => "4.22.1"}, result["lock"])
-    assert_equal SHA, result["built_from_sha"]
+    assert_equal "live", result["registry"]
     assert_equal "2026-10-26T12:00:00Z", result["built_at"]
     assert_equal false, result["refreshed"]
+    refute result.key?("built_from_sha"), "the workspace SHA is not the components' source"
   end
 
-  def test_moved_shadcn_sha_re_adds_components_with_overwrite
+  def test_moved_workspace_re_pulls_components_with_overwrite
     sandbox(SHA).prepare
     calls_before = @shell.calls.size
 
@@ -92,8 +93,8 @@ class SandboxTest < Minitest::Test
     assert_equal @app.to_s, new_calls.first.chdir
     assert_equal false, result["created"]
     assert_equal true, result["refreshed"]
-    assert_equal SHA, result["refreshed_from"]
-    assert_equal NEW_SHA, result["built_from_sha"]
+    assert_equal "live", result["registry"]
+    refute result.key?("refreshed_from")
     assert_equal "2026-10-26T13:00:00Z", result["built_at"]
 
     again = sandbox(NEW_SHA).prepare
@@ -120,6 +121,7 @@ class SandboxTest < Minitest::Test
     assert_equal @app.to_s, add.chdir
     plugins = @pinned.fetch("packages").map { |name, version| "#{name}@#{version}" }
     assert @shell.called?("pnpm", "add", *plugins)
+    assert_includes plugins, "tw-animate-css@1.4.0"
   end
 
   def test_null_shadcn_entries_are_not_added

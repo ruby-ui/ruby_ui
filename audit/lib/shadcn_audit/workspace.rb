@@ -23,7 +23,7 @@ module ShadcnAudit
       {"shadcn_sha" => head, "path" => clone_dir.to_s}
     end
 
-    # SHA checked out in the existing clone; the sandbox stamps it.
+    # SHA checked out in the existing clone; the sandbox uses it as a refresh trigger.
     def current_sha
       raise ConfigError, "no shadcn workspace at #{clone_dir}; run `workspace` first" unless clone_dir.join(".git").exist?
       @shell.capture("git", "rev-parse", "HEAD", chdir: clone_dir).strip

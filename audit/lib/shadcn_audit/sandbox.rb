@@ -7,9 +7,15 @@ module ShadcnAudit
   # theme) that renders the shadcn side of every fixture in audit/fixtures.
   class Sandbox
     URL_TEMPLATE = "http://localhost:5179/?c={folder}&theme={light|dark}"
+    # The components are whatever the published shadcn registry serves when
+    # `shadcn add` runs (the CLI fetches them over the network); they are not
+    # built from the workspace clone, so the sandbox loosely tracks main.
+    REGISTRY = "live"
     # Written after a successful build: the audit/sandbox.yml pins (a
-    # mismatch rebuilds the app), the workspace shadcn SHA the components were
-    # added at, and when. A different workspace SHA re-adds the components.
+    # mismatch rebuilds the app), when the components were last pulled from
+    # the registry, and the workspace SHA at that time. That SHA is only a
+    # refresh trigger: when the workspace moves, the components are pulled
+    # again so the sandbox doesn't fall far behind the reference.
     STAMP = ".audit-sandbox.yml"
     TEMPLATE_FILES = %w[src/main.tsx src/parity.css index.html].freeze
 
@@ -27,7 +33,6 @@ module ShadcnAudit
       @stamp_data = nil
       created = !built?
       refreshed = !created && stamp_data["shadcn_sha"] != @shadcn_sha
-      refreshed_from = stamp_data["shadcn_sha"] if refreshed
       if created
         build
       elsif refreshed
@@ -37,8 +42,7 @@ module ShadcnAudit
       copy_fixtures
       {
         "path" => app_dir.to_s, "url_template" => URL_TEMPLATE, "lock" => lock, "created" => created,
-        "refreshed" => refreshed, "refreshed_from" => refreshed_from,
-        "built_from_sha" => stamp_data["shadcn_sha"], "built_at" => stamp_data["built_at"]
+        "refreshed" => refreshed, "registry" => REGISTRY, "built_at" => stamp_data["built_at"]
       }
     end
 
@@ -70,8 +74,8 @@ module ShadcnAudit
       @shell.capture("pnpm", "dlx", shadcn_cli, "add", "--yes", *flags, *shadcn_components, chdir: app_dir)
     end
 
-    # The shadcn workspace moved since the build: re-add the mapped
-    # components over the old ones, keeping the app and its packages.
+    # The workspace moved since the last pull: re-add the mapped components
+    # from the live registry over the old ones, keeping the app and packages.
     def refresh
       add_components("--overwrite")
       write_stamp
