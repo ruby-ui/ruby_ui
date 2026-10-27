@@ -15,7 +15,7 @@ module ShadcnAudit
     # (interrupted, or an older path list) would otherwise lack registry
     # files, and a missing file reads as "no shadcn equivalent".
     def sync(sha: nil)
-      clone unless clone_dir.join(".git").exist?
+      clone_repo unless clone_dir.join(".git").exist?
       @shell.capture("git", "sparse-checkout", "set", *SPARSE_PATHS, chdir: clone_dir)
       @shell.capture("git", "fetch", "--depth", "1", "origin", sha || "main", chdir: clone_dir)
       @shell.capture("git", "checkout", "--detach", "FETCH_HEAD", chdir: clone_dir)
@@ -33,7 +33,7 @@ module ShadcnAudit
 
     def clone_dir = @dir.join("ui")
 
-    def clone
+    def clone_repo
       FileUtils.mkdir_p(@dir)
       @shell.capture("git", "clone", "--filter=blob:none", "--sparse", REPO_URL, clone_dir.to_s)
     end

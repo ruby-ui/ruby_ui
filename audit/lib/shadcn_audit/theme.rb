@@ -34,7 +34,8 @@ module ShadcnAudit
 
     def self.shadcn_vars(source, name)
       entry_start = source.index(/name:\s*"#{Regexp.escape(name)}"/) or raise ArgumentError, "theme #{name.inspect} not found"
-      css_vars = block_after(source, source.index("cssVars", entry_start)) or raise ArgumentError, "cssVars not found for #{name.inspect}"
+      vars_start = source.index("cssVars", entry_start) or raise ArgumentError, "cssVars not found for #{name.inspect}"
+      css_vars = block_after(source, vars_start) or raise ArgumentError, "cssVars block not closed for #{name.inspect}"
       MODES.keys.to_h do |mode|
         index = css_vars.index(/\b#{mode}:\s*\{/)
         body = index && block_after(css_vars, index)

@@ -67,4 +67,13 @@ class ThemeTest < Minitest::Test
       end
     end
   end
+
+  def test_theme_without_css_vars_raises_argument_error
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "themes.ts")
+      File.write(path, %(export const THEMES = [{ name: "neutral", title: "Neutral" }]\n))
+      error = assert_raises(ArgumentError) { ShadcnAudit::Theme.compare(themes_ts: path, rubyui_css: CSS) }
+      assert_equal %(cssVars not found for "neutral"), error.message
+    end
+  end
 end

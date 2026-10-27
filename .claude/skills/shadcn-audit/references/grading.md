@@ -97,7 +97,8 @@ before blaming the component.
 - The audit never edits PR code, `divergences.yml` or `component_map.yml`.
   When a difference looks deliberate, show a ready-to-paste divergences entry
   (fields: `component`, `dimension`, `rubyui`, `shadcn`, `reason`, `since`)
-  for the PR author to add by hand.
+  for the PR author to add by hand. `component`, `rubyui`, `shadcn` and
+  `reason` must be non-empty, and a `reason` left as `TODO` fails to load.
 
 ## Worked examples: PR #572
 

@@ -6,9 +6,6 @@ Rake::TestTask.new(:test) do |t|
   t.warning = false
 end
 
-begin
-  require "standard/rake"
-  task default: %i[test standard]
-rescue LoadError
-  task default: :test
-end
+require "standard/rake"
+
+task default: %i[test standard]

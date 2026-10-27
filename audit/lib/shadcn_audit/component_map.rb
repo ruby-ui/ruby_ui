@@ -75,6 +75,8 @@ module ShadcnAudit
 
     def validate!
       @entries.each do |folder, entry|
+        raise ConfigError, "component_map.yml: #{folder}: entry must be a mapping" unless entry.is_a?(Hash)
+
         kind = entry["kind"]
         unless kind.nil? || KINDS.include?(kind)
           raise ConfigError, "component_map.yml: #{folder}: unknown kind #{kind.inspect} (expected one of #{KINDS.join(", ")})"

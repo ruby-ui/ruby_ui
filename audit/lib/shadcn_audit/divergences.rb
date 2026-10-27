@@ -4,6 +4,7 @@ module ShadcnAudit
   # Registry of intentional RubyUI-vs-shadcn differences.
   class Divergences
     DIMENSIONS = %w[Look HTML Props ARIA Behavior Animation Native].freeze
+    REQUIRED = %w[component rubyui shadcn reason].freeze
 
     def self.load(path)
       entries = File.exist?(path.to_s) ? YAML.safe_load_file(path.to_s) : nil
@@ -39,8 +40,13 @@ module ShadcnAudit
 
     def validate!
       @entries.each_with_index do |entry, i|
+        raise ConfigError, "divergences.yml: entry ##{i + 1} must be a mapping" unless entry.is_a?(Hash)
+
         label = "divergences.yml: #{entry["component"] || "entry ##{i + 1}"} / #{entry["dimension"].inspect}"
-        raise ConfigError, "#{label}: missing reason" if entry["reason"].to_s.strip.empty?
+        REQUIRED.each do |key|
+          raise ConfigError, "#{label}: missing #{key}" if entry[key].to_s.strip.empty?
+        end
+        raise ConfigError, "#{label}: reason is still TODO" if entry["reason"].to_s.strip.casecmp?("TODO")
         raise ConfigError, "#{label}: unknown dimension (expected one of #{DIMENSIONS.join(" ")})" unless DIMENSIONS.include?(entry["dimension"])
       end
     end

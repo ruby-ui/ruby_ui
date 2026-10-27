@@ -73,4 +73,17 @@ class DivergencesTest < Minitest::Test
     divergences = ShadcnAudit::Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
     assert divergences.find(component: "dialog", dimension: "HTML")
   end
+
+  def test_required_fields_must_be_non_empty
+    %w[component rubyui shadcn reason].each do |key|
+      yaml = valid_yaml.sub(/^(  |- )#{key}: .*$/) { "#{$1}#{key}: \"\"" }
+      error = assert_raises(ShadcnAudit::ConfigError, key) { write(yaml) }
+      assert_includes error.message, "missing #{key}"
+    end
+  end
+
+  def test_todo_reason_rejected
+    error = assert_raises(ShadcnAudit::ConfigError) { write(valid_yaml.sub('reason: "Native modal dialog."', "reason: TODO")) }
+    assert_includes error.message, "TODO"
+  end
 end

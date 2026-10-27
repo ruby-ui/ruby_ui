@@ -126,4 +126,15 @@ class RenderersTest < Minitest::Test
     assert_equal false, result["posted"]
     refute shell.argvs.any? { |a| a.include?("-F") }
   end
+
+  def test_html_reads_template_as_utf8_whatever_the_default
+    previous = Encoding.default_external
+    Encoding.default_external = Encoding::US_ASCII
+    Dir.mktmpdir do |dir|
+      path = ShadcnAudit::Renderers::Html.render(report, out_dir: File.join(dir, "nested", "run"))
+      assert_includes File.read(path, encoding: "UTF-8"), "Dialog"
+    end
+  ensure
+    Encoding.default_external = previous
+  end
 end

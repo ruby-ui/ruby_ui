@@ -465,7 +465,10 @@ module ShadcnAudit
       if skeleton.include?("${")
         warnings << "#{label}: template literal with interpolation in className; dynamic part not extracted"
       end
-      literals = string_literals(skeleton).flat_map(&:split)
+      # Interpolated template literals were warned about above; their
+      # fragments (`gap-${open}`) are not real classes, so they are dropped.
+      static = skeleton.gsub(/`(?:[^`\\]|\\.)*`/m) { |literal| literal.include?("${") ? "``" : literal }
+      literals = string_literals(static).flat_map(&:split)
       cva_tokens = found.flat_map { |f| @cva_bases.fetch(f, []) }
       literals + cva_tokens
     end

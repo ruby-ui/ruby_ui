@@ -115,6 +115,7 @@ class ReferenceTest < Minitest::Test
       result = reference.for("cond")
       assert_includes result["parts"]["cond"]["effective"], "flex"
       assert_equal 2, result["warnings"].count { |w| w.start_with?("cond (Cond)") }
+      refute result["parts"]["cond"]["effective"].any? { |token| token.include?("${") }, "interpolated template fragment kept"
     end
   end
 

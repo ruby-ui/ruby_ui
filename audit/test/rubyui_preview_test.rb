@@ -125,4 +125,15 @@ class RubyuiPreviewTest < Minitest::Test
       ENV["PATH"] = original
     end
   end
+
+  def test_fixtures_copied_when_audit_dir_has_glob_characters
+    audit = @dir.join("audit[1]")
+    FileUtils.mkdir_p(audit)
+    %w[preview_overlay fixtures].each { |name| FileUtils.cp_r(AUDIT_DIR.join(name), audit.join(name)) }
+    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir.join("work"), audit_dir: audit, platform: "arm64-darwin-25", mise: true)
+    preview.prepare(SHA)
+
+    copied = @dir.join("work", "checkouts", SHA, "docs/app/views/shadcn_audit_fixtures")
+    assert_equal FOLDERS.sort, Dir.children(copied).map { |f| File.basename(f, ".rb") }.sort
+  end
 end

@@ -99,8 +99,8 @@ module ShadcnAudit
       target = path.join(FIXTURES_TARGET)
       FileUtils.rm_rf(target)
       FileUtils.mkdir_p(target)
-      Dir[@audit_dir.join("fixtures/*/rubyui.rb").to_s].each do |source|
-        FileUtils.cp(source, target.join("#{File.basename(File.dirname(source))}.rb"))
+      Dir.glob("fixtures/*/rubyui.rb", base: @audit_dir.to_s).each do |relative|
+        FileUtils.cp(@audit_dir.join(relative), target.join("#{File.basename(File.dirname(relative))}.rb"))
       end
     end
   end

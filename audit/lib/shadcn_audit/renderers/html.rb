@@ -1,4 +1,5 @@
 require "erb"
+require "fileutils"
 require "shadcn_audit/renderers/terminal"
 
 module ShadcnAudit
@@ -16,7 +17,7 @@ module ShadcnAudit
 
         FileUtils.mkdir_p(out_dir)
         path = File.join(out_dir.to_s, "report.html")
-        File.write(path, ERB.new(File.read(TEMPLATE), trim_mode: "-").result_with_hash(
+        File.write(path, ERB.new(File.read(TEMPLATE, encoding: "UTF-8"), trim_mode: "-").result_with_hash(
           report: report, components: components, t: Terminal, h: ERB::Util.method(:h)
         ))
         path

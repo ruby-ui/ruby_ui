@@ -22,7 +22,7 @@ module ShadcnAudit
     # Failures the CLI reports as {"error": ...} with exit status 1 instead
     # of a backtrace, so callers always get one JSON object.
     ERRORS = [UnknownCommand, Shell::Error, ConfigError, ReportError, ArgumentError,
-      Errno::ENOENT, JSON::ParserError, OptionParser::ParseError].freeze
+      Errno::ENOENT, JSON::ParserError, Psych::SyntaxError, OptionParser::ParseError].freeze
 
     # Entry point for exe/shadcn-audit; returns the process exit status.
     def self.run(argv, out: $stdout)

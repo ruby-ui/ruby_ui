@@ -7,8 +7,10 @@ module ShadcnAudit
     def capture(*argv, chdir: nil)
       opts = chdir ? {chdir: chdir.to_s} : {}
       stdout, stderr, status = Open3.capture3(*argv, **opts)
-      raise Error, stderr unless status.success?
-      stdout
+      return stdout if status.success?
+
+      detail = stderr.strip.empty? ? "exit #{status.exitstatus}" : stderr.strip
+      raise Error, "#{argv.join(" ")} failed: #{detail}"
     end
   end
 end

@@ -109,4 +109,10 @@ class ComponentMapTest < Minitest::Test
       assert ui_dir.join("apps/v4/registry/bases/base/ui/#{shadcn}.tsx").exist?, "#{folder}: missing #{shadcn}.tsx"
     end
   end
+
+  def test_non_mapping_entry_raises
+    File.write(@path, "dialog: dialog\n")
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(@path) }
+    assert_equal "component_map.yml: dialog: entry must be a mapping", error.message
+  end
 end

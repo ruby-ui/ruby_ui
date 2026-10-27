@@ -64,4 +64,15 @@ class CliErrorsTest < Minitest::Test
     assert_equal 1, status.exitstatus
     assert JSON.parse(stdout).key?("error")
   end
+
+  def test_malformed_yaml_is_one_error_object
+    with_file("dialog:\n  shadcn: [unclosed\n") do |path|
+      ShadcnAudit::CLI::COMMANDS["load_map"] = ->(args, out:) { ShadcnAudit::ComponentMap.load(args.first) }
+      status, result = run_cli("load_map", path)
+      assert_equal 1, status
+      assert_includes result["error"], path
+    ensure
+      ShadcnAudit::CLI::COMMANDS.delete("load_map")
+    end
+  end
 end
