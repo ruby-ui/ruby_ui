@@ -12,11 +12,10 @@ module RubyUI
     end
 
     def view_template
-      form_attrs = {action: @path, method: "get"}
-      form_attrs[:data] = {turbo_frame: @frame_id} if @frame_id
+      form_attrs = {action: @path, method: "get", data: form_data}
 
-      form(**attrs.merge(form_attrs)) do
-        render RubyUI::NativeSelect.new(name: @name, onchange: safe("this.form.requestSubmit()")) do
+      form(**mix(attrs, form_attrs)) do
+        render RubyUI::NativeSelect.new(name: @name, data: {action: "change->ruby-ui--data-table-per-page-select#submit"}) do
           @options.each do |opt|
             option_attrs = {value: opt.to_s}
             option_attrs[:selected] = true if opt.to_s == @value.to_s
@@ -27,6 +26,12 @@ module RubyUI
     end
 
     private
+
+    def form_data
+      base = {controller: "ruby-ui--data-table-per-page-select"}
+      base[:turbo_frame] = @frame_id if @frame_id
+      base
+    end
 
     def default_attrs
       {}

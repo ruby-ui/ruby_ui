@@ -58,6 +58,9 @@ application.register("ruby-ui--data-table-column-visibility", RubyUi__DataTableC
 import RubyUi__DataTableController from "./ruby_ui/data_table_controller"
 application.register("ruby-ui--data-table", RubyUi__DataTableController)
 
+import RubyUi__DataTablePerPageSelectController from "./ruby_ui/data_table_per_page_select_controller"
+application.register("ruby-ui--data-table-per-page-select", RubyUi__DataTablePerPageSelectController)
+
 import RubyUi__DataTableSearchController from "./ruby_ui/data_table_search_controller"
 application.register("ruby-ui--data-table-search", RubyUi__DataTableSearchController)
 
