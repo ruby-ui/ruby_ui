@@ -1,0 +1,81 @@
+# RubyUI folder => shadcn counterpart (apps/v4/registry/bases/base/ui/<shadcn>.tsx).
+# parts: RubyUI class => shadcn data-slot (null = no shadcn part).
+# props: RubyUI class => {shadcn prop => RubyUI kwarg (null = none)}; shadcn props only.
+# rubyui_only: RubyUI class => [kwargs with no shadcn counterpart]. className is never listed (all parts take class via attrs).
+dialog:
+  shadcn: dialog
+  kind: modal
+  docs_view: dialog
+  parts:
+    Dialog: dialog
+    DialogTrigger: dialog-trigger
+    DialogContent: dialog-content
+    DialogHeader: dialog-header
+    DialogFooter: dialog-footer
+    DialogTitle: dialog-title
+    DialogDescription: dialog-description
+    DialogMiddle: null
+  props:
+    Dialog: {open: open}
+    DialogContent: {showCloseButton: null}
+    DialogFooter: {showCloseButton: null}
+  rubyui_only:
+    DialogContent: [size]
+
+alert_dialog:
+  shadcn: alert-dialog
+  kind: modal
+  docs_view: alert_dialog
+  parts:
+    AlertDialog: alert-dialog
+    AlertDialogTrigger: alert-dialog-trigger
+    AlertDialogContent: alert-dialog-content
+    AlertDialogHeader: alert-dialog-header
+    AlertDialogFooter: alert-dialog-footer
+    AlertDialogTitle: alert-dialog-title
+    AlertDialogDescription: alert-dialog-description
+    AlertDialogAction: alert-dialog-action
+    AlertDialogCancel: alert-dialog-cancel
+  props:
+    AlertDialogContent: {size: null}
+    AlertDialogCancel: {variant: variant, size: size}
+
+sheet:
+  shadcn: sheet
+  kind: modal
+  docs_view: sheet
+  parts:
+    Sheet: sheet
+    SheetTrigger: sheet-trigger
+    SheetContent: sheet-content
+    SheetHeader: sheet-header
+    SheetFooter: sheet-footer
+    SheetTitle: sheet-title
+    SheetDescription: sheet-description
+    SheetMiddle: null
+  props:
+    SheetContent: {side: side, showCloseButton: null}
+
+command:
+  shadcn: command
+  kind: popover
+  docs_view: command
+  parts:
+    Command: command
+    CommandInput: command-input
+    CommandList: command-list
+    CommandEmpty: command-empty
+    CommandGroup: command-group
+    CommandItem: command-item
+    CommandDialog: dialog
+    CommandDialogTrigger: null
+    CommandDialogContent: dialog-content
+  props:
+    CommandInput: {placeholder: placeholder}
+    CommandGroup: {heading: title}
+    CommandItem: {value: value}
+    CommandDialog: {title: null, description: null, showCloseButton: null}
+  rubyui_only:
+    CommandItem: [text, href]
+    CommandDialogContent: [size]
+    CommandDialogTrigger: [keybindings]

@@ -1,0 +1,19 @@
+/*
+ * Docs parity for the shadcn sandbox. Mirrors the global setup of
+ * docs/app/assets/stylesheets/application.tailwind.css (plugins, tw-animate-css,
+ * body base rule) on top of the shadcn-generated index.css, which keeps
+ * shadcn's own neutral theme tokens and loads Inter (@fontsource-variable/inter).
+ * RubyUI's theme tokens are deliberately not copied: the theme diff is a
+ * separate audit line.
+ */
+@import "./index.css";
+@import "tw-animate-css";
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}

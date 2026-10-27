@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>shadcn audit <%= h.call(report.header["pr"] ? "##{report.header["pr"]}" : "") %></title>
+<style>
+  :root { --bg: #fff; --fg: #171717; --muted: #6b6b6b; --border: #d4d4d4; --card: #fafafa; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0a0a0a; --fg: #ededed; --muted: #a3a3a3; --border: #333; --card: #141414; }
+  }
+  body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; margin: 0 auto; max-width: 1200px; padding: 24px 16px; }
+  h1, h2 { margin: 0 0 8px; }
+  .meta, .env { color: var(--muted); }
+  .env { margin: 4px 0; }
+  section { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 16px; margin: 24px 0; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  figure { margin: 0; }
+  figcaption { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
+  img { max-width: 100%; border: 1px solid var(--border); border-radius: 4px; background: #fff; }
+  .state { font-weight: 600; margin: 0 0 4px; }
+  pre { white-space: pre-wrap; overflow-x: auto; margin: 0; }
+  @media (max-width: 640px) { .pair { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<h1>shadcn audit <%= h.call(report.header["pr"] ? "##{report.header["pr"]}" : "") %></h1>
+<p class="meta"><%= h.call(t.header(report)) %></p>
+<% report.environment_diffs.each do |diff| -%>
+<p class="env">⚠️ Environment: <%= h.call(diff) %></p>
+<% end -%>
+<% components.each do |component| -%>
+<section>
+  <h2><%= h.call(t.camelize(component["folder"])) %></h2>
+  <% component["screenshots"].each do |shot| -%>
+  <p class="state"><%= h.call(shot["state"]) %></p>
+  <div class="pair">
+    <figure><figcaption>RubyUI</figcaption><img src="<%= h.call(shot["rubyui"]) %>" alt="RubyUI, <%= h.call(shot["state"]) %>"></figure>
+    <figure><figcaption>shadcn (Base UI + vega)</figcaption><img src="<%= h.call(shot["shadcn"]) %>" alt="shadcn, <%= h.call(shot["state"]) %>"></figure>
+  </div>
+  <% end -%>
+  <pre><%= h.call(t.component_block(component, report).join("\n")) %></pre>
+</section>
+<% end -%>
+</body>
+</html>

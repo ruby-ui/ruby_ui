@@ -4,13 +4,15 @@ Guidance for AI agents working at the root of the `ruby-ui/ruby_ui` monorepo.
 
 ## Layout
 
-Two sibling projects, each independent (own `Gemfile`, `package.json`, tests, lockfiles):
+Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile` and tests, plus lockfiles where present (`mcp/` has none):
 
 | Path | What it is |
 | --- | --- |
 | [`gem/`](gem/) | The `ruby_ui` gem — Phlex components, generators, gemspec, Minitest suite. Published to RubyGems from here. |
 | [`docs/`](docs/) | Rails 8 app powering https://rubyui.com. Consumes the local gem via `path: "../gem"`. |
-| `.github/workflows/ci.yml` | Unified CI: gem tests (Ruby 3.3 + 3.4), docs Rails tests, docker build for docs devcontainer. |
+| [`audit/`](audit/) | shadcn fidelity audit tooling; skill in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/). |
+| [`mcp/`](mcp/) | MCP server for ruby_ui; registry rebuilt in releases. |
+| `.github/workflows/ci.yml` | Unified CI: `gem` tests (Ruby 3.3 + 3.4), `docs` Rails tests, `mcp` tests + registry check, `audit` (shadcn-audit CLI) tests, docker build for the docs devcontainer. |
 
 Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (→ `docs/AGENTS.md`). Read those before editing inside a subdir.
 
@@ -19,6 +21,7 @@ Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (�
 - Component code → `gem/lib/ruby_ui/<component>/`. Tests → `gem/test/ruby_ui/<component>_test.rb`.
 - Component docs view → `docs/app/views/docs/<component>.rb`. Update in same PR as the component.
 - Generator/installer logic → `gem/lib/generators/ruby_ui/`. Dependency map → `gem/lib/generators/ruby_ui/dependencies.yml`.
+- Shadcn fidelity audit tooling and deliberate divergences → `audit/` (`audit/divergences.yml`).
 - Site chrome, routes, marketing pages → `docs/app/`.
 - A component's Stimulus controller lives only in `gem/lib/ruby_ui/<component>/<component>_controller.js`. `docs/app/javascript/controllers/ruby_ui/<component>_controller.js` is a symlink to it, not a copy — editing the gem file is enough for existing components. A brand-new component's controller needs `docs`' `rake ruby_ui:sync_controller_symlinks` to create the symlink, plus `bin/rails stimulus:manifest:update` to register it.
 
@@ -44,6 +47,7 @@ bundle exec standardrb
 
 ## Conventions
 
+- Components mirror shadcn Base UI + vega; see [`gem/AGENTS.md#shadcn-reference`](gem/AGENTS.md#shadcn-reference).
 - Ruby 3.2+, 2-space indent, `snake_case` files/methods, `CamelCase` classes. StandardRB enforced.
 - Components extend `RubyUI::Base < Phlex::HTML`; classes merged via `tailwind_merge`. Invoke as `RubyUI.<Name>()` (Phlex::Kit).
 - Stimulus controllers colocated with components: `<component>_controller.js`. JS deps declared in `gem/package.json` and per-component in `dependencies.yml`.
@@ -94,4 +98,5 @@ Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new bac
 - Don't edit a component without updating its `docs/app/views/docs/<component>.rb` counterpart.
 - Don't bump the gem version from `docs/`; `RubyUI::VERSION` lives in `gem/lib/ruby_ui.rb` and the gem is published from `gem/`. (The release PR also reflects the version into `docs/` and `mcp/` — see [Releasing](#releasing).)
 - Don't call a release done after only publishing the gem — tag `vX.Y.Z` and reflect the version on the website too.
+- Don't use ui.shadcn.com or `new-york-v4` as the reference.
 - Don't commit secrets; each app uses local env config.

@@ -1,0 +1,139 @@
+require "test_helper"
+
+class RubyuiPreviewTest < Minitest::Test
+  AUDIT_DIR = ShadcnAudit.root.join("audit")
+  SHA = "a9a5d1faee2257e8e83c144a5be88c378347640d"
+  FOLDERS = %w[dialog alert_dialog sheet command].freeze
+
+  def setup
+    @tmp = Dir.mktmpdir
+    @dir = Pathname.new(@tmp)
+    @checkout = @dir.join("checkouts", SHA)
+    @shell = ShadcnAudit::FakeShell.new
+    @shell.stub(->(argv) { argv.first(2) == %w[git rev-parse] }, "#{SHA}\n")
+    @preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, platform: "arm64-darwin-25", mise: true)
+  end
+
+  def teardown
+    FileUtils.remove_entry(@tmp)
+  end
+
+  def archive_call = @shell.calls.find { |call| call.argv.first(2) == %w[git archive] }
+
+  def test_archives_exact_sha
+    result = @preview.prepare("a9a5d1fa")
+
+    assert @shell.called?("git", "cat-file", "-e", "a9a5d1fa^{commit}")
+    archive = archive_call
+    assert_equal SHA, archive.argv.last
+    assert_equal ShadcnAudit.root.to_s, archive.chdir
+    tarball = archive.argv[archive.argv.index("-o") + 1]
+    tar = @shell.calls.find { |call| call.argv.first == "tar" }
+    assert_equal ["tar", "-x", "-f", tarball, "-C"], tar.argv.first(5)
+    assert_equal @checkout.to_s, result["path"]
+    assert_equal "http://localhost:3179/__audit/{folder}?theme={light|dark}", result["url_template"]
+    refute_includes @shell.argvs.flatten, "worktree"
+  end
+
+  def test_missing_commit_says_to_run_target
+    @shell.stub_error(->(argv) { argv.first(2) == %w[git cat-file] }, "fatal: Not a valid object name")
+
+    error = assert_raises(ShadcnAudit::ConfigError) { @preview.prepare(SHA) }
+    assert_match(/run `target/, error.message)
+    assert_match(/unknown or ambiguous/, error.message)
+    assert_match(/Not a valid object name/, error.message)
+    assert_nil archive_call
+  end
+
+  def test_rev_parse_must_yield_a_full_sha
+    shell = ShadcnAudit::FakeShell.new.stub(->(argv) { argv.first(2) == %w[git rev-parse] }, "a9a5d1fa\n")
+    preview = ShadcnAudit::RubyuiPreview.new(shell: shell, dir: @dir, platform: "arm64-darwin-25")
+
+    error = assert_raises(ShadcnAudit::ConfigError) { preview.prepare("a9a5d1fa") }
+    assert_match(/not a full 40-char SHA/, error.message)
+    assert_nil shell.calls.find { |call| call.argv.first(2) == %w[git archive] }
+  end
+
+  def test_rejects_non_sha
+    assert_raises(ShadcnAudit::ConfigError) { @preview.prepare("main") }
+    assert_raises(ShadcnAudit::ConfigError) { @preview.prepare("A9A5D1FA") }
+    assert_empty @shell.calls
+  end
+
+  def test_overlay_and_fixtures_copied
+    @preview.prepare(SHA)
+
+    overlay = AUDIT_DIR.join("preview_overlay")
+    files = Dir.glob("**/*", base: overlay.to_s).select { |path| overlay.join(path).file? }
+    refute_empty files
+    files.each do |path|
+      assert_equal overlay.join(path).read, @checkout.join(path).read, path
+    end
+    FOLDERS.each do |folder|
+      assert_equal AUDIT_DIR.join("fixtures", folder, "rubyui.rb").read,
+        @checkout.join("docs/app/views/shadcn_audit_fixtures/#{folder}.rb").read
+    end
+  end
+
+  def test_existing_checkout_is_reused
+    @preview.prepare(SHA)
+    fixture = @checkout.join("docs/app/views/shadcn_audit_fixtures/dialog.rb")
+    fixture.write("stale")
+
+    @preview.prepare(SHA)
+
+    assert_equal 1, @shell.argvs.count { |argv| argv.first(2) == %w[git archive] }
+    assert_equal AUDIT_DIR.join("fixtures/dialog/rubyui.rb").read, fixture.read
+  end
+
+  def test_boot_commands_in_order
+    result = @preview.prepare(SHA)
+
+    assert_equal [
+      "mise exec -- bundle lock --add-platform arm64-darwin-25",
+      "mise exec -- bundle install",
+      "pnpm install",
+      "pnpm build",
+      "pnpm build:css",
+      "mise exec -- bin/rails db:prepare",
+      "mise exec -- bin/rails server -p 3179"
+    ], result["boot"]
+    assert_equal @checkout.join("docs").to_s, result["boot_chdir"]
+  end
+
+  def test_boot_locks_the_host_platform_by_default
+    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, mise: true)
+    assert_equal "mise exec -- bundle lock --add-platform #{Gem::Platform.local}", preview.boot.first
+  end
+
+  def test_boot_without_mise_uses_plain_commands
+    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir, platform: "x86_64-linux", mise: false)
+    assert_equal "bundle lock --add-platform x86_64-linux", preview.boot.first
+    assert_equal "bin/rails server -p 3179", preview.boot.last
+    refute preview.boot.any? { |cmd| cmd.include?("mise") }
+  end
+
+  def test_mise_detection_reads_path
+    Dir.mktmpdir do |bin|
+      original = ENV["PATH"]
+      ENV["PATH"] = bin
+      refute ShadcnAudit::RubyuiPreview.mise_on_path?
+      File.write(File.join(bin, "mise"), "#!/bin/sh\n")
+      File.chmod(0o755, File.join(bin, "mise"))
+      assert ShadcnAudit::RubyuiPreview.mise_on_path?
+    ensure
+      ENV["PATH"] = original
+    end
+  end
+
+  def test_fixtures_copied_when_audit_dir_has_glob_characters
+    audit = @dir.join("audit[1]")
+    FileUtils.mkdir_p(audit)
+    %w[preview_overlay fixtures].each { |name| FileUtils.cp_r(AUDIT_DIR.join(name), audit.join(name)) }
+    preview = ShadcnAudit::RubyuiPreview.new(shell: @shell, dir: @dir.join("work"), audit_dir: audit, platform: "arm64-darwin-25", mise: true)
+    preview.prepare(SHA)
+
+    copied = @dir.join("work", "checkouts", SHA, "docs/app/views/shadcn_audit_fixtures")
+    assert_equal FOLDERS.sort, Dir.children(copied).map { |f| File.basename(f, ".rb") }.sort
+  end
+end

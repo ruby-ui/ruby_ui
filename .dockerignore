@@ -54,6 +54,9 @@
 /gem/.devcontainer
 /docs/.devcontainer
 
+# Ignore the shadcn audit workspace (clones, sandbox, checkouts, runs).
+/.shadcn-audit/
+
 # Ignore Docker-related files.
 /.dockerignore
 /docs/.dockerignore

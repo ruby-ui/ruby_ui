@@ -1,0 +1,11 @@
+# shadcn's CommandDialog title/description (sr-only defaults) have no RubyUI
+# counterpart (component_map.yml: CommandDialog title/description => null),
+# so they are left at shadcn's defaults and not part of the shared content.
+trigger: Search commands
+placeholder: Type a command or search...
+empty: No results found.
+group: Suggestions
+items:
+  - Calendar
+  - Calculator
+  - Settings

@@ -1,0 +1,6 @@
+trigger: Open dialog
+title: Edit profile
+description: Make changes to your profile here.
+body: Your name and email are shown on your public profile.
+cancel: Cancel
+action: Save changes
