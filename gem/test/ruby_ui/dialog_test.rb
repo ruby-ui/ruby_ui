@@ -74,7 +74,19 @@ class RubyUI::DialogTest < ComponentTest
       end
     end
 
-    assert_match(/data-action="click->ruby-ui--dialog#backdropClick"/, output)
+    assert_match(/data-action="[^"]*click->ruby-ui--dialog#backdropClick/, output)
+  end
+
+  # Regression test for #570: the press must be tracked from pointerdown so clicks
+  # on the panel's padding (or drags that end outside) don't dismiss the dialog.
+  def test_dialog_content_tracks_backdrop_pointerdown
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/data-action="[^"]*pointerdown->ruby-ui--dialog#backdropPointerdown/, output)
   end
 
   # Regression test: a closed native <dialog> must stay hidden. The bare `flex`
