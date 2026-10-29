@@ -1,8 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Prefix for generated ids, unique per page (ruby-ui-dialog-1-title, …).
+let dialogCount = 0
+
 // Connects to data-controller="ruby-ui--dialog"
 export default class extends Controller {
-  static targets = ["dialog"]
+  static targets = ["dialog", "title", "description", "trigger"]
   static values = {
     open: {
       type: Boolean,
@@ -14,6 +17,7 @@ export default class extends Controller {
     this.closing = false
     this.dialogTarget.addEventListener("close", this.handleClose)
     this.dialogTarget.addEventListener("cancel", this.handleCancel)
+    this.wireAria()
     if (this.openValue) {
       this.open()
     }
@@ -31,6 +35,7 @@ export default class extends Controller {
     this.dialogTarget.dataset.state = "open"
     this.dialogTarget.showModal()
     document.body.classList.add("overflow-hidden")
+    this.setTriggersExpanded(true)
   }
 
   dismiss() {
@@ -87,5 +92,59 @@ export default class extends Controller {
     this.closing = false
     delete this.dialogTarget.dataset.state
     document.body.classList.remove("overflow-hidden")
+    this.setTriggersExpanded(false)
+  }
+
+  // Names the dialog after its title/description and ties each trigger to it.
+  // Never overwrites ids or ARIA the author already set.
+  wireAria() {
+    const dialog = this.dialogTarget
+    const prefix = `ruby-ui-dialog-${++dialogCount}`
+    const dialogId = this.ensureId(dialog, `${prefix}-content`)
+
+    const title = this.ownTarget(this.titleTargets)
+    if (title) {
+      const titleId = this.ensureId(title, `${prefix}-title`)
+      if (!dialog.hasAttribute("aria-labelledby") && !dialog.hasAttribute("aria-label")) {
+        dialog.setAttribute("aria-labelledby", titleId)
+      }
+    }
+
+    const description = this.ownTarget(this.descriptionTargets)
+    if (description) {
+      const descriptionId = this.ensureId(description, `${prefix}-description`)
+      if (!dialog.hasAttribute("aria-describedby")) {
+        dialog.setAttribute("aria-describedby", descriptionId)
+      }
+    }
+
+    this.triggerControls().forEach((control) => {
+      control.setAttribute("aria-haspopup", "dialog")
+      control.setAttribute("aria-controls", dialogId)
+      control.setAttribute("aria-expanded", String(dialog.open))
+    })
+  }
+
+  // First target that lives inside this controller's own <dialog>.
+  ownTarget(targets) {
+    return targets.find((target) => this.dialogTarget.contains(target))
+  }
+
+  ensureId(element, id) {
+    if (!element.id) element.id = id
+    return element.id
+  }
+
+  // The element that carries the trigger's role: a button/link inside the
+  // trigger wrapper, or the menuitem/button that wraps it. A role-less wrapper
+  // gets no ARIA.
+  triggerControls() {
+    return this.triggerTargets
+      .map((trigger) => trigger.querySelector("button, a[href], [role=button]") || trigger.closest("[role=menuitem], [role=button]"))
+      .filter(Boolean)
+  }
+
+  setTriggersExpanded(expanded) {
+    this.triggerControls().forEach((control) => control.setAttribute("aria-expanded", String(expanded)))
   }
 }

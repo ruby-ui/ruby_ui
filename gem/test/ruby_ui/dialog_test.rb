@@ -278,6 +278,19 @@ class RubyUI::DialogTest < ComponentTest
     assert_match(/data-action="click->ruby-ui--dialog#open"/, output)
   end
 
+  def test_trigger_has_trigger_target
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogTrigger do
+          RubyUI.Button { "Open" }
+        end
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/<div [^<]*data-ruby-ui--dialog-target="trigger"[^<]*><button/, output)
+  end
+
   private
 
   def render_dialog_part(&block)
