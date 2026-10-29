@@ -48,7 +48,7 @@ export default class extends Controller {
 
     if (['pie', 'doughnut', 'polarArea'].includes(type)) {
       return {
-        backgroundColor: (dataset.data || []).map((_, i) => this.getChartColor(i)),
+        backgroundColor: Object.values(dataset.data || {}).map((_, i) => this.getChartColor(i)),
         borderColor: this.getThemeColor('background'),
         borderWidth: 1,
       }
