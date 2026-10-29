@@ -168,6 +168,17 @@ class RubyUI::DialogTest < ComponentTest
     assert_includes classes, "sm:max-w-md"
   end
 
+  def test_dialog_content_unknown_size_falls_back_to_default_width
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(size: :bogus) { "Content" }
+      end
+    end
+    classes = output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
+
+    assert_includes classes, "sm:max-w-md"
+  end
+
   def test_dialog_title_is_h2_with_vega_classes
     output = render_dialog_part { RubyUI.DialogTitle { "Title" } }
 
@@ -249,7 +260,7 @@ class RubyUI::DialogTest < ComponentTest
   def test_content_close_button_vega_classes
     output = render_dialog_part { RubyUI.DialogContent { "Content" } }
 
-    assert_includes output, "absolute top-4 right-4 size-8"
+    assert_includes output, "absolute top-4 end-4 size-8"
     assert_includes output, "hover:bg-muted"
     refute_includes output, "opacity-70"
   end

@@ -32,6 +32,8 @@ export default class extends Controller {
 
   open(e) {
     e?.preventDefault()
+    // Reopening during the exit animation must not be closed by the stale animation promise.
+    this.closing = false
     this.dialogTarget.dataset.state = "open"
     this.dialogTarget.showModal()
     document.body.classList.add("overflow-hidden")
@@ -119,8 +121,8 @@ export default class extends Controller {
     }
 
     this.triggerControls().forEach((control) => {
-      control.setAttribute("aria-haspopup", "dialog")
-      control.setAttribute("aria-controls", dialogId)
+      if (!control.hasAttribute("aria-haspopup")) control.setAttribute("aria-haspopup", "dialog")
+      if (!control.hasAttribute("aria-controls")) control.setAttribute("aria-controls", dialogId)
       control.setAttribute("aria-expanded", String(dialog.open))
     })
   }
@@ -137,7 +139,9 @@ export default class extends Controller {
 
   // The element that carries the trigger's role: a button/link inside the
   // trigger wrapper, or the menuitem/button that wraps it. A role-less wrapper
-  // gets no ARIA.
+  // gets no ARIA. The `closest` lookup intentionally climbs above the Dialog root
+  // for the dropdown pattern (DropdownMenuItem wraps the Dialog, see
+  // docs/app/views/docs/dropdown_menu.rb).
   triggerControls() {
     return this.triggerTargets
       .map((trigger) => trigger.querySelector("button, a[href], [role=button]") || trigger.closest("[role=menuitem], [role=button]"))
