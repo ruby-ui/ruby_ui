@@ -37,11 +37,28 @@ export default class extends Controller {
     return getComputedStyle(document.documentElement).getPropertyValue(`--${name}`).trim()
   }
 
-  defaultThemeColor() {
+  // Cycles through the --chart-1..5 theme tokens, like shadcn's chart examples
+  getChartColor(index) {
+    return this.getThemeColor(`chart-${(index % 5) + 1}`)
+  }
+
+  // Pie-like charts color each slice; the others color each dataset
+  defaultThemeColor(dataset, index) {
+    const type = dataset.type || this.optionsValue.type
+
+    if (['pie', 'doughnut', 'polarArea'].includes(type)) {
+      return {
+        backgroundColor: (dataset.data || []).map((_, i) => this.getChartColor(i)),
+        borderColor: this.getThemeColor('background'),
+        borderWidth: 1,
+      }
+    }
+
+    const color = this.getChartColor(index)
     return {
-      backgroundColor: this.getThemeColor('background'),
-      hoverBackgroundColor: this.getThemeColor('accent'),
-      borderColor: this.getThemeColor('primary'),
+      backgroundColor: color,
+      hoverBackgroundColor: color,
+      borderColor: color,
       borderWidth: 1,
     }
   }
@@ -90,9 +107,9 @@ export default class extends Controller {
       ...this.optionsValue,
       data: {
         ...this.optionsValue.data,
-        datasets: this.optionsValue.data.datasets.map((dataset) => {
+        datasets: this.optionsValue.data.datasets.map((dataset, index) => {
           return {
-            ...this.defaultThemeColor(),
+            ...this.defaultThemeColor(dataset, index),
             ...dataset,
           }
         })

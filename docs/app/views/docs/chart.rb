@@ -17,6 +17,14 @@ class Views::Docs::Chart < Views::Base
 
       Heading(level: 2) { "Usage" }
 
+      Text do
+        plain "Datasets are colored with the "
+        InlineCode { "--chart-1" }
+        plain " to "
+        InlineCode { "--chart-5" }
+        plain " theme variables, in order. Pie, doughnut and polar area charts color each slice instead. Colors set on a dataset take precedence."
+      end
+
       render Docs::VisualCodeExample.new(title: "Bar Chart", context: self) do
         <<~RUBY
           options = {
@@ -35,6 +43,23 @@ class Views::Docs::Chart < Views::Base
                   beginAtZero: true
                 }
               },
+            },
+          }
+
+          Chart(options: options)
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Multiple datasets", context: self) do
+        <<~RUBY
+          options = {
+            type: 'bar',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+              datasets: [
+                { label: 'Desktop', data: [186, 305, 237, 73, 209, 214] },
+                { label: 'Mobile', data: [80, 200, 120, 190, 130, 140] }
+              ]
             },
           }
 
