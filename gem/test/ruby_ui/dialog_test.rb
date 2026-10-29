@@ -212,6 +212,35 @@ class RubyUI::DialogTest < ComponentTest
     assert_match(/data-action="click->ruby-ui--dialog#dismiss"/, output)
   end
 
+  def test_content_hides_close_button
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(show_close_button: false) { "Content" }
+      end
+    end
+
+    refute_includes output, 'sr-only">Close'
+  end
+
+  def test_content_close_button_vega_classes
+    output = render_dialog_part { RubyUI.DialogContent { "Content" } }
+
+    assert_includes output, "absolute top-4 right-4 size-8"
+    assert_includes output, "hover:bg-muted"
+    refute_includes output, "opacity-70"
+  end
+
+  def test_footer_close_button
+    default = render_footer { RubyUI.DialogFooter { "Footer" } }
+    refute_includes default, "dismiss"
+
+    output = render_footer { RubyUI.DialogFooter(show_close_button: true) { "Footer" } }
+
+    assert_includes output, "ruby-ui--dialog#dismiss"
+    assert_match(/>Close<\/button>/, output)
+    assert_operator output.index("Footer"), :<, output.index("Close")
+  end
+
   def test_trigger_has_open_action
     output = phlex do
       RubyUI.Dialog do
@@ -231,6 +260,14 @@ class RubyUI::DialogTest < ComponentTest
     phlex do
       RubyUI.Dialog do
         RubyUI.DialogContent(&block)
+      end
+    end
+  end
+
+  def render_footer(&block)
+    phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(show_close_button: false, &block)
       end
     end
   end
