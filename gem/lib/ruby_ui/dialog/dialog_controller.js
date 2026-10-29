@@ -76,7 +76,9 @@ export default class extends Controller {
   }
 
   // Esc fires `cancel`; hold the native close so the exit animation can play.
+  // A dismissed <input type="file"> picker also fires a bubbling `cancel`; ignore it.
   handleCancel = (e) => {
+    if (e.target !== this.dialogTarget) return
     e.preventDefault()
     this.animateClose()
   }

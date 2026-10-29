@@ -146,6 +146,7 @@ class RubyUI::DialogTest < ComponentTest
       duration-100
       data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0
       data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0
+      data-[state=closed]:fill-mode-forwards data-[state=closed]:backdrop:fill-mode-forwards
       backdrop:duration-100
     ].each do |klass|
       assert_includes classes, klass

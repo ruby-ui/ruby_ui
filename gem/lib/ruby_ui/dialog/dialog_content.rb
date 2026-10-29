@@ -34,8 +34,8 @@ module RubyUI
         data_action: "pointerdown->ruby-ui--dialog#backdropPointerdown click->ruby-ui--dialog#backdropClick",
         class: [
           "fixed open:grid top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground outline-none ring-1 ring-foreground/10 backdrop:bg-black/10 supports-backdrop-filter:backdrop:backdrop-blur-xs",
-          "duration-100 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 motion-reduce:animate-none!",
-          "backdrop:duration-100 data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0 data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 motion-reduce:backdrop:animate-none!",
+          "duration-100 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:fill-mode-forwards motion-reduce:animate-none!",
+          "backdrop:duration-100 data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0 data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 data-[state=closed]:backdrop:fill-mode-forwards motion-reduce:backdrop:animate-none!",
           @size ? SIZES[@size] : DEFAULT_WIDTH
         ]
       }
