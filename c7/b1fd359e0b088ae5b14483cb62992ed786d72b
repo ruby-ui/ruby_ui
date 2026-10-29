@@ -1,0 +1,25 @@
+gem/lib/ruby_ui/dialog/dialog_content.rb
+  s_d1f1a6030f7bd1::t_68eff28fde1065 39,47
+gem/lib/ruby_ui/dialog/dialog_controller.js
+  s_d1f1a6030f7bd1::t_2e86ff2cd8a1c6 35-36,124-125,142-144
+gem/test/ruby_ui/dialog_test.rb
+  s_d1f1a6030f7bd1::t_38ebcc77f304dd 171-181,263
+mcp/data/registry.json
+  s_d1f1a6030f7bd1::t_e8be67604b5a9b 1332,1336
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c7b1fd359e0b088ae5b14483cb62992ed786d72b",
+  "prompts": {},
+  "sessions": {
+    "s_d1f1a6030f7bd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d474aa83-6993-475d-9549-623ab78426e9",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
