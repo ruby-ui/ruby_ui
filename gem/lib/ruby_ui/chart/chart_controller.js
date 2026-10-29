@@ -32,10 +32,9 @@ export default class extends Controller {
     this.setDefaultColorsForChart()
   }
 
+  // Theme tokens hold complete CSS colors (e.g. oklch(...)), which the canvas accepts as-is
   getThemeColor(name) {
-    const color = getComputedStyle(document.documentElement).getPropertyValue(`--${name}`)
-    const [hue, saturation, lightness] = color.split(' ')
-    return `hsl(${hue}, ${saturation}, ${lightness})`
+    return getComputedStyle(document.documentElement).getPropertyValue(`--${name}`).trim()
   }
 
   defaultThemeColor() {
@@ -66,7 +65,7 @@ export default class extends Controller {
     Chart.defaults.plugins.legend.labels.boxHeight = 12
     Chart.defaults.plugins.legend.labels.borderWidth = 0
     Chart.defaults.plugins.legend.labels.useBorderRadius = true
-    Chart.defaults.plugins.legend.labels.borderRadius = this.getThemeColor('radius')
+    Chart.defaults.plugins.legend.labels.borderRadius = 2 // px, matches shadcn's rounded-[2px] legend indicator
   }
 
   // Function to refresh the chart
