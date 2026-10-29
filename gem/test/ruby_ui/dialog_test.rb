@@ -265,6 +265,16 @@ class RubyUI::DialogTest < ComponentTest
     refute_includes output, "opacity-70"
   end
 
+  def test_content_close_button_interaction_states
+    output = render_dialog_part { RubyUI.DialogContent { "Content" } }
+
+    %w[
+      border-transparent bg-clip-padding select-none focus-visible:border-ring
+      active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50
+      aria-expanded:bg-muted
+    ].each { |token| assert_includes output, token }
+  end
+
   def test_footer_close_button
     default = render_footer { RubyUI.DialogFooter { "Footer" } }
     refute_includes default, "dismiss"

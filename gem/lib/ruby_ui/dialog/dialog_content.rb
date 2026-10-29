@@ -44,7 +44,7 @@ module RubyUI
     def close_button
       button(
         type: "button",
-        class: "absolute top-4 end-4 size-8 rounded-[min(var(--radius-md),10px)] inline-flex items-center justify-center outline-none transition-all hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-4",
+        class: "absolute top-4 end-4 size-8 shrink-0 rounded-[min(var(--radius-md),10px)] inline-flex items-center justify-center border border-transparent bg-clip-padding whitespace-nowrap outline-none select-none transition-all hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:size-4",
         data_action: "click->ruby-ui--dialog#dismiss"
       ) do
         svg(
