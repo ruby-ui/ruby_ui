@@ -137,6 +137,29 @@ class RubyUI::DialogTest < ComponentTest
     refute_includes classes, "backdrop:bg-background/80"
   end
 
+  def test_dialog_content_animation_classes
+    classes = dialog_content_classes
+
+    %w[
+      data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+      data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+      duration-100
+      data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0
+      data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0
+      backdrop:duration-100
+    ].each do |klass|
+      assert_includes classes, klass
+    end
+    # `!` is required: the data-[state=…] animation rules carry an attribute selector,
+    # so a plain `motion-reduce:animate-none` (one class) would lose on specificity.
+    %w[motion-reduce:animate-none! motion-reduce:backdrop:animate-none!].each do |klass|
+      assert_includes classes, klass
+    end
+    %w[open:animate-in duration-200].each do |klass|
+      refute_includes classes, klass
+    end
+  end
+
   def test_dialog_content_default_width
     classes = dialog_content_classes
 
