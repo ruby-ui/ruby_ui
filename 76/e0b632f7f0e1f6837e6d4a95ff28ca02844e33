@@ -1,0 +1,27 @@
+audit/component_map.yml
+  s_d1f1a6030f7bd1::t_2cd81013520f1e 20-21
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_d1f1a6030f7bd1::t_1a4be13b51574c 61-64
+gem/lib/ruby_ui/dialog/dialog_content.rb
+  s_d1f1a6030f7bd1::t_b42bb1b75334b9 16,18,25,45,50-55,57-58
+gem/lib/ruby_ui/dialog/dialog_footer.rb
+  s_d1f1a6030f7bd1::t_abcd338c21fbfd 5-14,24-27
+gem/test/ruby_ui/dialog_test.rb
+  s_d1f1a6030f7bd1::t_4d193a5c127c66 215-243,267-274
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "76e0b632f7f0e1f6837e6d4a95ff28ca02844e33",
+  "prompts": {},
+  "sessions": {
+    "s_d1f1a6030f7bd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d474aa83-6993-475d-9549-623ab78426e9",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
