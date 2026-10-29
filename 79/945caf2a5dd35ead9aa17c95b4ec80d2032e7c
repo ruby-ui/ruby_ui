@@ -1,0 +1,19 @@
+audit/divergences.yml
+  s_d1f1a6030f7bd1::t_c0b28a9de48025 9-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "79945caf2a5dd35ead9aa17c95b4ec80d2032e7c",
+  "prompts": {},
+  "sessions": {
+    "s_d1f1a6030f7bd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d474aa83-6993-475d-9549-623ab78426e9",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
