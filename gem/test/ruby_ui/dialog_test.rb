@@ -91,7 +91,7 @@ class RubyUI::DialogTest < ComponentTest
 
   # Regression test: a closed native <dialog> must stay hidden. The bare `flex`
   # utility (author CSS) overrides the UA `dialog:not([open]) { display: none }`,
-  # making the dialog always visible. Display must be gated on the open: variant.
+  # making the dialog always visible. Display must be gated on the open: variant (open:grid).
   def test_dialog_content_does_not_force_display_when_closed
     output = phlex do
       RubyUI.Dialog do
@@ -144,6 +144,54 @@ class RubyUI::DialogTest < ComponentTest
     assert_includes classes, "sm:max-w-md"
   end
 
+  def test_dialog_title_is_h2_with_vega_classes
+    output = render_dialog_part { RubyUI.DialogTitle { "Title" } }
+
+    assert_match(/<h2[\s>]/, output)
+    refute_match(/<h3[\s>]/, output)
+    assert_match(/data-ruby-ui--dialog-target="title"/, output)
+    classes = part_classes(output, "h2")
+    %w[font-heading leading-none font-medium].each { |klass| assert_includes classes, klass }
+    %w[text-lg font-semibold tracking-tight].each { |klass| refute_includes classes, klass }
+  end
+
+  def test_dialog_title_keeps_custom_data_attributes
+    output = render_dialog_part { RubyUI.DialogTitle(data: {foo: "bar"}) { "Title" } }
+
+    assert_match(/data-foo="bar"/, output)
+    assert_match(/data-ruby-ui--dialog-target="title"/, output)
+  end
+
+  def test_dialog_description_link_classes
+    output = render_dialog_part { RubyUI.DialogDescription { "Description" } }
+
+    assert_match(/<p[\s>]/, output)
+    assert_match(/data-ruby-ui--dialog-target="description"/, output)
+    classes = part_classes(output, "p")
+    %w[text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground].each do |klass|
+      assert_includes classes, klass
+    end
+  end
+
+  def test_dialog_description_keeps_custom_data_attributes
+    output = render_dialog_part { RubyUI.DialogDescription(data: {foo: "bar"}) { "Description" } }
+
+    assert_match(/data-foo="bar"/, output)
+    assert_match(/data-ruby-ui--dialog-target="description"/, output)
+  end
+
+  def test_dialog_header_classes
+    output = render_dialog_part { RubyUI.DialogHeader { "Header" } }
+
+    assert_equal %w[flex flex-col gap-2], part_classes(output, "div")
+  end
+
+  def test_dialog_footer_classes
+    output = render_dialog_part { RubyUI.DialogFooter { "Footer" } }
+
+    assert_equal %w[flex flex-col-reverse gap-2 sm:flex-row sm:justify-end], part_classes(output, "div")
+  end
+
   def test_dialog_open_value_is_set_on_wrapper
     output = phlex do
       RubyUI.Dialog(open: true) do
@@ -178,6 +226,18 @@ class RubyUI::DialogTest < ComponentTest
   end
 
   private
+
+  def render_dialog_part(&block)
+    phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(&block)
+      end
+    end
+  end
+
+  def part_classes(output, tag)
+    output[/<#{tag}\b[^>]*\sclass="([^"]*)"/, 1].to_s.split
+  end
 
   def dialog_content_classes
     output = phlex do
