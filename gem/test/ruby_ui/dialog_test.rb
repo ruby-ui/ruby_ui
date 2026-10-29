@@ -100,8 +100,9 @@ class RubyUI::DialogTest < ComponentTest
     end
 
     classes = output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
-    refute_includes classes, "flex", "Bare `flex` forces a closed <dialog> to display; use `open:flex`"
-    assert_includes classes, "open:flex", "Dialog must apply flex only when open (open:flex)"
+    refute_includes classes, "grid", "Bare `grid` forces a closed <dialog> to display; use `open:grid`"
+    refute_includes classes, "flex", "Bare `flex` forces a closed <dialog> to display; use `open:grid`"
+    assert_includes classes, "open:grid", "Dialog must apply grid only when open (open:grid)"
   end
 
   def test_dialog_content_sizes
@@ -113,7 +114,34 @@ class RubyUI::DialogTest < ComponentTest
       end
 
       assert_match(/#{Regexp.escape(expected_class)}/, output, "Size #{size} should apply class #{expected_class}")
+      refute_includes output, "max-w-[calc(100%-2rem)]", "Explicit size #{size} replaces the default width"
     end
+  end
+
+  def test_dialog_content_vega_classes
+    classes = dialog_content_classes
+
+    %w[open:grid gap-6 rounded-xl p-6 text-sm ring-1 ring-foreground/10 bg-popover text-popover-foreground outline-none].each do |klass|
+      assert_includes classes, klass
+    end
+    %w[border shadow-lg gap-4 sm:rounded-lg bg-background].each do |klass|
+      refute_includes classes, klass
+    end
+  end
+
+  def test_dialog_content_overlay_classes
+    classes = dialog_content_classes
+
+    assert_includes classes, "backdrop:bg-black/10"
+    assert_includes classes, "supports-backdrop-filter:backdrop:backdrop-blur-xs"
+    refute_includes classes, "backdrop:bg-background/80"
+  end
+
+  def test_dialog_content_default_width
+    classes = dialog_content_classes
+
+    assert_includes classes, "max-w-[calc(100%-2rem)]"
+    assert_includes classes, "sm:max-w-md"
   end
 
   def test_dialog_open_value_is_set_on_wrapper
@@ -147,5 +175,17 @@ class RubyUI::DialogTest < ComponentTest
     end
 
     assert_match(/data-action="click->ruby-ui--dialog#open"/, output)
+  end
+
+  private
+
+  def dialog_content_classes
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
   end
 end

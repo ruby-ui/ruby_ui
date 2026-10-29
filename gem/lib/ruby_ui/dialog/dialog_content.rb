@@ -11,7 +11,9 @@ module RubyUI
       full: "max-w-full"
     }
 
-    def initialize(size: :md, **attrs)
+    DEFAULT_WIDTH = "max-w-[calc(100%-2rem)] sm:max-w-md"
+
+    def initialize(size: nil, **attrs)
       @size = size
       super(**attrs)
     end
@@ -30,8 +32,8 @@ module RubyUI
         data_ruby_ui__dialog_target: "dialog",
         data_action: "pointerdown->ruby-ui--dialog#backdropPointerdown click->ruby-ui--dialog#backdropClick",
         class: [
-          "fixed open:flex flex-col pointer-events-auto left-[50%] top-[50%] z-50 w-full max-h-screen overflow-y-auto translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 backdrop:bg-background/80 backdrop:backdrop-blur-sm open:animate-in open:fade-in-0 open:zoom-in-95 sm:rounded-lg md:w-full",
-          SIZES[@size]
+          "fixed open:grid top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground outline-none ring-1 ring-foreground/10 duration-200 backdrop:bg-black/10 supports-backdrop-filter:backdrop:backdrop-blur-xs open:animate-in open:fade-in-0 open:zoom-in-95",
+          @size ? SIZES[@size] : DEFAULT_WIDTH
         ]
       }
     end
