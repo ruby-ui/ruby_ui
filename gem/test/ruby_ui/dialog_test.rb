@@ -258,7 +258,11 @@ class RubyUI::DialogTest < ComponentTest
   end
 
   def test_content_close_button_vega_classes
-    output = render_dialog_part { RubyUI.DialogContent { "Content" } }
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
 
     assert_includes output, "absolute top-4 end-4 size-8"
     assert_includes output, "hover:bg-muted"
@@ -266,7 +270,11 @@ class RubyUI::DialogTest < ComponentTest
   end
 
   def test_content_close_button_interaction_states
-    output = render_dialog_part { RubyUI.DialogContent { "Content" } }
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
 
     %w[
       border-transparent bg-clip-padding select-none focus-visible:border-ring

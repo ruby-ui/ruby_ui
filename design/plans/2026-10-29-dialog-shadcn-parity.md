@@ -8,13 +8,13 @@
 
 **Tech Stack:** Ruby 3.3+/Phlex, Tailwind v4 + tw-animate-css, Stimulus, Minitest.
 
-**Spec:** the audit run `/Users/cirdes/Workspaces/ruby_ui/.shadcn-audit/runs/20261029-094032-pr580/report.json` (Dialog lines), reference `apps/v4/registry/bases/base/ui/dialog.tsx` + `styles/style-vega.css:463-490` at shadcn `96da9cc7`.
+**Spec:** the `/shadcn-audit` run on #580 (Dialog lines), reference `apps/v4/registry/bases/base/ui/dialog.tsx` + `styles/style-vega.css:463-490` at shadcn `96da9cc7`.
 
 ## Global Constraints
 
 - Reference is Base UI + vega + neutral (`gem/AGENTS.md#shadcn-reference`); never new-york-v4.
 - Theme tokens (`--chart-*`) are already fixed on their own branch; out of scope here.
-- Branch: `fix/dialog-shadcn-parity` (Herdr worktree `/Users/cirdes/.herdr/worktrees/ruby_ui/fix-dialog-shadcn-parity`), stacked on `fix/dialog-backdrop-click-570` (#580, still open); the PR targets that branch until #580 merges.
+- Branch: `fix/dialog-shadcn-parity`, stacked on `fix/dialog-backdrop-click-570` (#580, still open); the PR targets that branch until #580 merges.
 - `docs/app/views/docs/dialog.rb` and `gem/lib/ruby_ui/dialog/dialog_docs.rb` are identical copies today; keep them identical.
 - The controller lives only in `gem/lib/ruby_ui/dialog/dialog_controller.js` (docs has a symlink).
 - Out of scope: AlertDialog, Sheet, CommandDialog (same drift, separate PRs); `closedby="any"` (Safari ships it only in preview, MDN BCD); the env font diff.
@@ -27,7 +27,7 @@
 3. **Title becomes `<h2>`** (Base UI Title). Visible change for anyone styling `h3`.
 4. **ARIA wiring is done by the controller at `connect()`**: ids are generated only when the element has none; `aria-labelledby` is added only when the dialog has neither `aria-labelledby` nor `aria-label`; `aria-describedby` only when absent.
 5. **Exit animation**: controller sets `data-state` on the `<dialog>`; close waits only for the dialog's own animations and its `::backdrop` (`document.getAnimations().filter(a => a.effect?.target === dialog)`, never descendants), with `Promise.allSettled` so a cancelled animation still closes; none running → close immediately.
-6. **Reduced motion**: add `motion-reduce:animate-none` (panel) and `motion-reduce:backdrop:animate-none`. Base UI doesn't do this, so it's an extra token: suggest a divergences entry (Task 6).
+6. **Reduced motion**: add `motion-reduce:animate-none!` (panel) and `motion-reduce:backdrop:animate-none!`. The `!` is required: the `data-[state=…]` animation rules carry an attribute selector, so the plain utility loses on specificity. Base UI doesn't do this, so it's an extra token: suggest a divergences entry (Task 6).
 
 ## Review Focus
 
@@ -90,10 +90,10 @@
 
 - [ ] **Step 1: Write failing tests**
   - `test_content_hides_close_button`: `show_close_button: false` → no `sr-only">Close`.
-  - `test_content_close_button_vega_classes`: `absolute top-4 right-4 size-8` and `hover:bg-muted`; no `opacity-70`.
+  - `test_content_close_button_vega_classes`: `absolute top-4 end-4 size-8` and `hover:bg-muted`; no `opacity-70`.
   - `test_footer_close_button`: default renders no dismiss button; `show_close_button: true` renders a button with text `Close` and the dismiss action, after the children.
 - [ ] **Step 2:** Run → FAIL.
-- [ ] **Step 3:** Content close button classes from the sandbox DOM (`dialog-close:Close` in the run): ghost `icon-sm` → `size-8 rounded-[min(var(--radius-md),10px)] inline-flex items-center justify-center outline-none transition-all hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-4 absolute top-4 right-4`. Swap the radix icon for the lucide X to match `XIcon`: `viewBox="0 0 24 24"`, `fill="none"`, `stroke="currentColor"`, `stroke-width="2"`, `stroke-linecap="round"`, `stroke-linejoin="round"`, two `path`s `M18 6 6 18` and `m6 6 12 12`.
+- [ ] **Step 3:** Content close button classes from the sandbox DOM (`dialog-close:Close` in the run): ghost `icon-sm` → `size-8 rounded-[min(var(--radius-md),10px)] inline-flex items-center justify-center outline-none transition-all hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 [&_svg]:size-4 absolute top-4 end-4`. Swap the radix icon for the lucide X to match `XIcon`: `viewBox="0 0 24 24"`, `fill="none"`, `stroke="currentColor"`, `stroke-width="2"`, `stroke-linecap="round"`, `stroke-linejoin="round"`, two `path`s `M18 6 6 18` and `m6 6 12 12`.
 - [ ] **Step 4:** Run → PASS; standardrb; `cd gem && bundle exec rake test TEST=test/generators/component_generator_test.rb` stays green with the new dependency. `cd audit && mise exec -- bundle exec rake test` (map loads).
 - [ ] **Step 5:** Commit `[Feature] Dialog: show_close_button on content and footer`.
 
@@ -106,7 +106,7 @@
 **Interfaces:**
 - Produces in the controller: `open(e)` sets `data-state="open"` before `showModal()`; `dismiss()` → `animateClose()`; `async animateClose(): void` returns if `this.closing`, sets `closing = true` and `data-state="closed"`, awaits `Promise.allSettled(this.ownAnimations().map(a => a.finished))` (empty → immediate), then `dialog.close()`; `ownAnimations()` = `document.getAnimations().filter(a => a.effect?.target === this.dialogTarget)` (panel + `::backdrop`, no descendants). A `cancel` listener calls `e.preventDefault()` + `animateClose()`. `handleClose` (existing) resets `closing = false`, removes `data-state`, sets trigger `aria-expanded="false"` (Task 5); `disconnect()` also resets `closing` and removes the `cancel` listener.
 
-- [ ] **Step 1: Write failing test** `test_dialog_content_animation_classes`: includes `data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 duration-100 motion-reduce:animate-none` and backdrop `data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0 data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 backdrop:duration-100 motion-reduce:backdrop:animate-none`; refutes `open:animate-in` and `duration-200`.
+- [ ] **Step 1: Write failing test** `test_dialog_content_animation_classes`: includes `data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 duration-100 motion-reduce:animate-none!` and backdrop `data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0 data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 backdrop:duration-100 motion-reduce:backdrop:animate-none!`; refutes `open:animate-in` and `duration-200`.
 - [ ] **Step 2:** Run → FAIL.
 - [ ] **Step 3:** Add classes; implement the controller methods above. `backdropClick` keeps calling `dismiss()`.
 - [ ] **Step 4:** Run → PASS; standardrb. In the docs app (`cd docs && bin/dev`), with the browser: computed `animation-duration` is `0.1s` on the `<dialog>` and its `::backdrop`; open/close via Cancel, X, Esc, backdrop; with DevTools "prefers-reduced-motion: reduce" no animation runs and close is immediate; Esc twice fast; a temporary `animate-spin` child inside the dialog doesn't block close. Each ends closed, body unlocked, panel doesn't flash back before close.
@@ -146,7 +146,7 @@
     since: "2026-10-29"
   - component: dialog
     dimension: Animation
-    rubyui: "motion-reduce:animate-none on the panel and ::backdrop"
+    rubyui: "motion-reduce:animate-none! on the panel and ::backdrop"
     shadcn: "animations run regardless of prefers-reduced-motion"
     reason: "Respect prefers-reduced-motion; the controller closes at once when no animation runs."
     since: "2026-10-29"
