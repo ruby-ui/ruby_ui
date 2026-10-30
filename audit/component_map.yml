@@ -17,8 +17,8 @@ dialog:
     DialogMiddle: null
   props:
     Dialog: {open: open}
-    DialogContent: {showCloseButton: null}
-    DialogFooter: {showCloseButton: null}
+    DialogContent: {showCloseButton: show_close_button}
+    DialogFooter: {showCloseButton: show_close_button}
   rubyui_only:
     DialogContent: [size]
 

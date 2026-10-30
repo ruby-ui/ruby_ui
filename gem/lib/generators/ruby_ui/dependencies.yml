@@ -58,6 +58,10 @@ data_table:
     - "Pagination"
     - "Table"
 
+dialog:
+  components:
+    - "Button"
+
 dropdown_menu:
   js_packages:
     - "@floating-ui/dom"

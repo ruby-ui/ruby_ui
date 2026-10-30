@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "text-sm text-muted-foreground"
+        class: "text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
+        data_ruby_ui__dialog_target: "description"
       }
     end
   end

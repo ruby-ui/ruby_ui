@@ -6,3 +6,9 @@
   shadcn: "<div role=\"dialog\">"
   reason: "Native modal dialog: the browser provides inert, Esc and focus handling."
   since: "2026-10-26"
+- component: dialog
+  dimension: HTML
+  rubyui: "DialogTrigger <div> wrapping its child; ARIA set on the first interactive descendant"
+  shadcn: "trigger is the <button> itself (render prop)"
+  reason: "Phlex has no render prop and callers pass non-button children; the wrapper only carries the Stimulus action."
+  since: "2026-10-29"
