@@ -12,21 +12,28 @@ class RubyUI::DataTablePerPageSelectTest < ComponentTest
 
   def test_submits_on_change_through_stimulus_without_inline_handler
     output = phlex { RubyUI.DataTablePerPageSelect(path: "/x") }
-    assert_match(/<form[^>]*data-controller="ruby-ui--data-table-per-page-select"/, output)
-    assert_match(/<select[^>]*data-action="[^"]*change->ruby-ui--data-table-per-page-select#submit"/, output)
+    select_tag = output[/<select(?:\s[^=\s]+="[^"]*")*/]
+    assert_includes select_tag, 'data-controller="ruby-ui--data-table-per-page-select"'
+    assert_match(/data-action="[^"]*change->ruby-ui--data-table-per-page-select#submit"/, select_tag)
     refute_match(/onchange/, output)
   end
 
-  def test_keeps_controller_alongside_turbo_frame
+  def test_targets_turbo_frame_from_the_form
     output = phlex { RubyUI.DataTablePerPageSelect(path: "/x", frame_id: "employees") }
-    assert_match(/data-turbo-frame="employees"/, output)
-    assert_match(/data-controller="ruby-ui--data-table-per-page-select"/, output)
+    assert_match(/<form[^>]*data-turbo-frame="employees"/, output)
   end
 
-  def test_keeps_controller_alongside_caller_data
+  def test_keeps_caller_nested_data_on_the_form
     output = phlex { RubyUI.DataTablePerPageSelect(path: "/x", data: {controller: "filters", turbo_action: "advance"}) }
-    assert_match(/data-controller="filters ruby-ui--data-table-per-page-select"/, output)
-    assert_match(/data-turbo-action="advance"/, output)
+    form_tag = output[/<form[^>]*>/]
+    assert_equal ['data-controller="filters"'], form_tag.scan(/data-controller="[^"]*"/)
+    assert_match(/data-turbo-action="advance"/, form_tag)
+  end
+
+  def test_keeps_caller_flat_data_attributes_on_the_form
+    output = phlex { RubyUI.DataTablePerPageSelect(path: "/x", data_controller: "filters") }
+    form_tag = output[/<form[^>]*>/]
+    assert_equal ['data-controller="filters"'], form_tag.scan(/data-controller="[^"]*"/)
   end
 
   def test_renames_param_via_name
