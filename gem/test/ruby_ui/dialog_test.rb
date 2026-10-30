@@ -91,7 +91,7 @@ class RubyUI::DialogTest < ComponentTest
 
   # Regression test: a closed native <dialog> must stay hidden. The bare `flex`
   # utility (author CSS) overrides the UA `dialog:not([open]) { display: none }`,
-  # making the dialog always visible. Display must be gated on the open: variant.
+  # making the dialog always visible. Display must be gated on the open: variant (open:grid).
   def test_dialog_content_does_not_force_display_when_closed
     output = phlex do
       RubyUI.Dialog do
@@ -100,8 +100,9 @@ class RubyUI::DialogTest < ComponentTest
     end
 
     classes = output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
-    refute_includes classes, "flex", "Bare `flex` forces a closed <dialog> to display; use `open:flex`"
-    assert_includes classes, "open:flex", "Dialog must apply flex only when open (open:flex)"
+    refute_includes classes, "grid", "Bare `grid` forces a closed <dialog> to display; use `open:grid`"
+    refute_includes classes, "flex", "Bare `flex` forces a closed <dialog> to display; use `open:grid`"
+    assert_includes classes, "open:grid", "Dialog must apply grid only when open (open:grid)"
   end
 
   def test_dialog_content_sizes
@@ -113,7 +114,117 @@ class RubyUI::DialogTest < ComponentTest
       end
 
       assert_match(/#{Regexp.escape(expected_class)}/, output, "Size #{size} should apply class #{expected_class}")
+      refute_includes output, "max-w-[calc(100%-2rem)]", "Explicit size #{size} replaces the default width"
     end
+  end
+
+  def test_dialog_content_vega_classes
+    classes = dialog_content_classes
+
+    %w[open:grid gap-6 rounded-xl p-6 text-sm ring-1 ring-foreground/10 bg-popover text-popover-foreground outline-none].each do |klass|
+      assert_includes classes, klass
+    end
+    %w[border shadow-lg gap-4 sm:rounded-lg bg-background].each do |klass|
+      refute_includes classes, klass
+    end
+  end
+
+  def test_dialog_content_overlay_classes
+    classes = dialog_content_classes
+
+    assert_includes classes, "backdrop:bg-black/10"
+    assert_includes classes, "supports-backdrop-filter:backdrop:backdrop-blur-xs"
+    refute_includes classes, "backdrop:bg-background/80"
+  end
+
+  def test_dialog_content_animation_classes
+    classes = dialog_content_classes
+
+    %w[
+      data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+      data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+      duration-100
+      data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0
+      data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0
+      data-[state=closed]:fill-mode-forwards data-[state=closed]:backdrop:fill-mode-forwards
+      backdrop:duration-100
+    ].each do |klass|
+      assert_includes classes, klass
+    end
+    # `!` is required: the data-[state=…] animation rules carry an attribute selector,
+    # so a plain `motion-reduce:animate-none` (one class) would lose on specificity.
+    %w[motion-reduce:animate-none! motion-reduce:backdrop:animate-none!].each do |klass|
+      assert_includes classes, klass
+    end
+    %w[open:animate-in duration-200].each do |klass|
+      refute_includes classes, klass
+    end
+  end
+
+  def test_dialog_content_default_width
+    classes = dialog_content_classes
+
+    assert_includes classes, "max-w-[calc(100%-2rem)]"
+    assert_includes classes, "sm:max-w-md"
+  end
+
+  def test_dialog_content_unknown_size_falls_back_to_default_width
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(size: :bogus) { "Content" }
+      end
+    end
+    classes = output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
+
+    assert_includes classes, "sm:max-w-md"
+  end
+
+  def test_dialog_title_is_h2_with_vega_classes
+    output = render_dialog_part { RubyUI.DialogTitle { "Title" } }
+
+    assert_match(/<h2[\s>]/, output)
+    refute_match(/<h3[\s>]/, output)
+    assert_match(/data-ruby-ui--dialog-target="title"/, output)
+    classes = part_classes(output, "h2")
+    %w[font-heading leading-none font-medium].each { |klass| assert_includes classes, klass }
+    %w[text-lg font-semibold tracking-tight].each { |klass| refute_includes classes, klass }
+  end
+
+  def test_dialog_title_keeps_custom_data_attributes
+    output = render_dialog_part { RubyUI.DialogTitle(data: {foo: "bar"}) { "Title" } }
+
+    assert_match(/data-foo="bar"/, output)
+    assert_match(/data-ruby-ui--dialog-target="title"/, output)
+  end
+
+  def test_dialog_description_link_classes
+    output = render_dialog_part { RubyUI.DialogDescription { "Description" } }
+
+    assert_match(/<p[\s>]/, output)
+    assert_match(/data-ruby-ui--dialog-target="description"/, output)
+    classes = part_classes(output, "p")
+    %w[text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground].each do |klass|
+      assert_includes classes, klass
+    end
+  end
+
+  def test_dialog_description_keeps_custom_data_attributes
+    output = render_dialog_part { RubyUI.DialogDescription(data: {foo: "bar"}) { "Description" } }
+
+    assert_match(/data-foo="bar"/, output)
+    assert_match(/data-ruby-ui--dialog-target="description"/, output)
+  end
+
+  def test_dialog_header_classes
+    output = render_dialog_part { RubyUI.DialogHeader { "Header" } }
+
+    assert_equal %w[flex flex-col gap-2], part_classes(output, "div")
+  end
+
+  def test_dialog_footer_classes
+    output = render_dialog_part { RubyUI.DialogFooter { "Footer" } }
+
+    assert_equal %w[flex flex-col-reverse gap-2 sm:flex-row sm:justify-end], part_classes(output, "div")
   end
 
   def test_dialog_open_value_is_set_on_wrapper
@@ -136,6 +247,53 @@ class RubyUI::DialogTest < ComponentTest
     assert_match(/data-action="click->ruby-ui--dialog#dismiss"/, output)
   end
 
+  def test_content_hides_close_button
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(show_close_button: false) { "Content" }
+      end
+    end
+
+    refute_includes output, 'sr-only">Close'
+  end
+
+  def test_content_close_button_vega_classes
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_includes output, "absolute top-4 end-4 size-8"
+    assert_includes output, "hover:bg-muted"
+    refute_includes output, "opacity-70"
+  end
+
+  def test_content_close_button_interaction_states
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    %w[
+      border-transparent bg-clip-padding select-none focus-visible:border-ring
+      active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50
+      aria-expanded:bg-muted
+    ].each { |token| assert_includes output, token }
+  end
+
+  def test_footer_close_button
+    default = render_footer { RubyUI.DialogFooter { "Footer" } }
+    refute_includes default, "dismiss"
+
+    output = render_footer { RubyUI.DialogFooter(show_close_button: true) { "Footer" } }
+
+    assert_includes output, "ruby-ui--dialog#dismiss"
+    assert_match(/>Close<\/button>/, output)
+    assert_operator output.index("Footer"), :<, output.index("Close")
+  end
+
   def test_trigger_has_open_action
     output = phlex do
       RubyUI.Dialog do
@@ -147,5 +305,50 @@ class RubyUI::DialogTest < ComponentTest
     end
 
     assert_match(/data-action="click->ruby-ui--dialog#open"/, output)
+  end
+
+  def test_trigger_has_trigger_target
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogTrigger do
+          RubyUI.Button { "Open" }
+        end
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/<div [^<]*data-ruby-ui--dialog-target="trigger"[^<]*><button/, output)
+  end
+
+  private
+
+  def render_dialog_part(&block)
+    phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(&block)
+      end
+    end
+  end
+
+  def render_footer(&block)
+    phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent(show_close_button: false, &block)
+      end
+    end
+  end
+
+  def part_classes(output, tag)
+    output[/<#{tag}\b[^>]*\sclass="([^"]*)"/, 1].to_s.split
+  end
+
+  def dialog_content_classes
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    output[/<dialog\b.*?\sclass="([^"]*)"/m, 1].to_s.split
   end
 end

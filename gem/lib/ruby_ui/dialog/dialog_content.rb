@@ -11,15 +11,18 @@ module RubyUI
       full: "max-w-full"
     }
 
-    def initialize(size: :md, **attrs)
+    DEFAULT_WIDTH = "max-w-[calc(100%-2rem)] sm:max-w-md"
+
+    def initialize(size: nil, show_close_button: true, **attrs)
       @size = size
+      @show_close_button = show_close_button
       super(**attrs)
     end
 
     def view_template
       dialog(**attrs) do
         yield
-        close_button
+        close_button if @show_close_button
       end
     end
 
@@ -30,8 +33,10 @@ module RubyUI
         data_ruby_ui__dialog_target: "dialog",
         data_action: "pointerdown->ruby-ui--dialog#backdropPointerdown click->ruby-ui--dialog#backdropClick",
         class: [
-          "fixed open:flex flex-col pointer-events-auto left-[50%] top-[50%] z-50 w-full max-h-screen overflow-y-auto translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 backdrop:bg-background/80 backdrop:backdrop-blur-sm open:animate-in open:fade-in-0 open:zoom-in-95 sm:rounded-lg md:w-full",
-          SIZES[@size]
+          "fixed open:grid top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground outline-none ring-1 ring-foreground/10 backdrop:bg-black/10 supports-backdrop-filter:backdrop:backdrop-blur-xs",
+          "duration-100 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:fill-mode-forwards motion-reduce:animate-none!",
+          "backdrop:duration-100 data-[state=open]:backdrop:animate-in data-[state=open]:backdrop:fade-in-0 data-[state=closed]:backdrop:animate-out data-[state=closed]:backdrop:fade-out-0 data-[state=closed]:backdrop:fill-mode-forwards motion-reduce:backdrop:animate-none!",
+          SIZES.fetch(@size, DEFAULT_WIDTH)
         ]
       }
     end
@@ -39,24 +44,20 @@ module RubyUI
     def close_button
       button(
         type: "button",
-        class: "absolute end-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none",
+        class: "absolute top-4 end-4 size-8 shrink-0 rounded-[min(var(--radius-md),10px)] inline-flex items-center justify-center border border-transparent bg-clip-padding whitespace-nowrap outline-none select-none transition-all hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:size-4",
         data_action: "click->ruby-ui--dialog#dismiss"
       ) do
         svg(
-          width: "15",
-          height: "15",
-          viewbox: "0 0 15 15",
-          fill: "none",
           xmlns: "http://www.w3.org/2000/svg",
-          class: "h-4 w-4"
+          viewbox: "0 0 24 24",
+          fill: "none",
+          stroke: "currentColor",
+          stroke_width: "2",
+          stroke_linecap: "round",
+          stroke_linejoin: "round"
         ) do |s|
-          s.path(
-            d:
-                  "M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z",
-            fill: "currentColor",
-            fill_rule: "evenodd",
-            clip_rule: "evenodd"
-          )
+          s.path(d: "M18 6 6 18")
+          s.path(d: "m6 6 12 12")
         end
         span(class: "sr-only") { "Close" }
       end
