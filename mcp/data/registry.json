@@ -1227,7 +1227,11 @@
         },
         {
           "path": "data_table_per_page_select.rb",
-          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class DataTablePerPageSelect < Base\n    def initialize(path:, name: \"per_page\", value: nil, frame_id: nil, options: [5, 10, 25, 50], **attrs)\n      @path = path\n      @name = name\n      @value = value\n      @frame_id = frame_id\n      @options = options\n      super(**attrs)\n    end\n\n    def view_template\n      form_attrs = {action: @path, method: \"get\"}\n      form_attrs[:data] = {turbo_frame: @frame_id} if @frame_id\n\n      form(**attrs.merge(form_attrs)) do\n        render RubyUI::NativeSelect.new(name: @name, onchange: safe(\"this.form.requestSubmit()\")) do\n          @options.each do |opt|\n            option_attrs = {value: opt.to_s}\n            option_attrs[:selected] = true if opt.to_s == @value.to_s\n            option(**option_attrs) { plain opt.to_s }\n          end\n        end\n      end\n    end\n\n    private\n\n    def default_attrs\n      {}\n    end\n  end\nend\n"
+          "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class DataTablePerPageSelect < Base\n    def initialize(path:, name: \"per_page\", value: nil, frame_id: nil, options: [5, 10, 25, 50], **attrs)\n      @path = path\n      @name = name\n      @value = value\n      @frame_id = frame_id\n      @options = options\n      super(**attrs)\n    end\n\n    def view_template\n      form_attrs = {action: @path, method: \"get\"}\n      form_attrs[:data] = {turbo_frame: @frame_id} if @frame_id\n\n      form(**mix(attrs, form_attrs)) do\n        render RubyUI::NativeSelect.new(name: @name, data: select_data) do\n          @options.each do |opt|\n            option_attrs = {value: opt.to_s}\n            option_attrs[:selected] = true if opt.to_s == @value.to_s\n            option(**option_attrs) { plain opt.to_s }\n          end\n        end\n      end\n    end\n\n    private\n\n    def select_data\n      {\n        controller: \"ruby-ui--data-table-per-page-select\",\n        action: \"change->ruby-ui--data-table-per-page-select#submit\"\n      }\n    end\n\n    def default_attrs\n      {}\n    end\n  end\nend\n"
+        },
+        {
+          "path": "data_table_per_page_select_controller.js",
+          "content": "import { Controller } from \"@hotwired/stimulus\";\n\nexport default class extends Controller {\n  submit() {\n    this.element.form.requestSubmit();\n  }\n}\n"
         },
         {
           "path": "data_table_row_checkbox.rb",
