@@ -12,3 +12,9 @@
   shadcn: "trigger is the <button> itself (render prop)"
   reason: "Phlex has no render prop and callers pass non-button children; the wrapper only carries the Stimulus action."
   since: "2026-10-29"
+- component: dialog
+  dimension: Animation
+  rubyui: "motion-reduce:animate-none! on the panel and ::backdrop"
+  shadcn: "animations run regardless of prefers-reduced-motion"
+  reason: "Respect prefers-reduced-motion; the controller closes at once when no animation runs."
+  since: "2026-10-30"
