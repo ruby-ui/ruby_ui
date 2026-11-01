@@ -45,7 +45,7 @@ module ShadcnAudit
       # `shadcn: null` truly has no shadcn equivalent.
       def self.ref_label(component, report)
         return "(ref: #{component["shadcn_file"]} @ #{short(report.shadcn_sha)})" if component["shadcn_file"]
-        return "(not in component_map.yml)" if Array(report.target["unmapped"]).include?(component["folder"])
+        return "(not in the component map)" if Array(report.target["unmapped"]).include?(component["folder"])
         "(no shadcn equivalent)"
       end
 

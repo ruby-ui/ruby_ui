@@ -14,7 +14,8 @@ class CliMapTest < Minitest::Test
   def test_map_unmapped_prints_suggestion
     result = run_cli("map", "button")
     assert_equal true, result["missing"]
-    assert_includes result["suggestion"], "button:"
+    assert_equal "audit/component_map/button.yml", result["path"]
+    assert_equal "button", YAML.safe_load(result["suggestion"])["shadcn"]
   end
 
   def test_divergences_lists_for_folder

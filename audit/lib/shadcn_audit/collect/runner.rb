@@ -25,7 +25,7 @@ module ShadcnAudit
         map_source, map, divergences = load_config
         entry = map.entry(@folder)
         selectors = map.selectors(@folder)
-        raise ArgumentError, "#{@folder} has no selectors in audit/component_map.yml" if entry.nil? || selectors.compact.empty?
+        raise ArgumentError, "#{@folder} has no selectors in #{ComponentMap.path_for(@folder)}" if entry.nil? || selectors.compact.empty?
 
         slots = (entry["parts"] || {}).compact
         compared = slots.keys.select { |part| selectors.key?(part) }
@@ -58,12 +58,12 @@ module ShadcnAudit
       # The audited head's map wins when it already has selectors for the folder.
       def load_config
         if @preview
-          preview_map = ComponentMap.load(@preview.join("audit/component_map.yml"))
+          preview_map = ComponentMap.for_audit(@preview.join("audit"))
           unless preview_map.selectors(@folder).empty?
             return ["preview", preview_map, Divergences.load(@preview.join("audit/divergences.yml"))]
           end
         end
-        ["working tree", ComponentMap.load(@root.join("audit/component_map.yml")), Divergences.load(@root.join("audit/divergences.yml"))]
+        ["working tree", ComponentMap.for_audit(@root.join("audit")), Divergences.load(@root.join("audit/divergences.yml"))]
       end
 
       def theme
@@ -138,7 +138,7 @@ module ShadcnAudit
 
       def missing_selector_line(part)
         {"dimension" => "Look", "status" => "inconclusive", "basis" => nil, "rubyui" => "", "shadcn" => "",
-         "source" => "", "note" => "#{part}: no selector in component_map.yml"}
+         "source" => "", "note" => "#{part}: no selector in the component map"}
       end
     end
   end

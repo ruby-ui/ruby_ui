@@ -71,8 +71,9 @@ class ComponentMapTest < Minitest::Test
     stub = @map.suggest_entry("alert_dialog")
     parsed = YAML.safe_load(stub)
 
-    assert_equal "alert-dialog", parsed["alert_dialog"]["shadcn"]
-    assert_equal "alert_dialog", parsed["alert_dialog"]["docs_view"]
+    assert_equal "alert-dialog", parsed["shadcn"]
+    assert_equal "alert_dialog", parsed["docs_view"]
+    assert_equal "audit/component_map/alert_dialog.yml", ShadcnAudit::ComponentMap.path_for("alert_dialog")
   end
 
   def test_unknown_kind_raises
@@ -113,7 +114,7 @@ class ComponentMapTest < Minitest::Test
     assert_equal %w[button input checkbox], seed_map.entry("form")["fixture_shadcn"]
   end
 
-  def seed_map = ShadcnAudit::ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+  def seed_map = ShadcnAudit::ComponentMap.for_audit(ShadcnAudit.root.join("audit"))
 
   def test_seed_files_load
     map = seed_map
@@ -134,6 +135,43 @@ class ComponentMapTest < Minitest::Test
     seed_map.all_folders.filter_map { |folder| [folder, seed_map.entry(folder)["shadcn"]] if seed_map.entry(folder)["shadcn"] }.each do |folder, shadcn|
       assert ui_dir.join("apps/v4/registry/bases/base/ui/#{shadcn}.tsx").exist?, "#{folder}: missing #{shadcn}.tsx"
     end
+  end
+
+  def test_split_directory_loads_one_file_per_folder
+    dir = File.join(@tmp, "audit", "component_map")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "sheet.yml"), "shadcn: sheet\nkind: modal\n")
+    File.write(File.join(dir, "dialog.yml"), "shadcn: dialog\nkind: modal\n")
+    File.write(File.join(dir, "README.md"), "not an entry")
+
+    map = ShadcnAudit::ComponentMap.for_audit(File.join(@tmp, "audit"))
+
+    assert_equal %w[dialog sheet], map.all_folders
+    assert_equal "sheet", map.entry("sheet")["shadcn"]
+  end
+
+  def test_split_directory_errors_name_the_file
+    dir = File.join(@tmp, "component_map")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "dialog.yml"), "shadcn: dialog\nkind: wizard\n")
+
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(dir) }
+    assert_match(/\Acomponent_map\/dialog\.yml: unknown kind/, error.message)
+  end
+
+  def test_audit_dir_without_split_falls_back_to_the_single_file
+    # Preview checkouts of SHAs from before the split still have audit/component_map.yml.
+    audit = File.join(@tmp, "old_audit")
+    FileUtils.mkdir_p(audit)
+    File.write(File.join(audit, "component_map.yml"), "dialog:\n  shadcn: dialog\n  kind: modal\n")
+
+    assert_equal %w[dialog], ShadcnAudit::ComponentMap.for_audit(audit).all_folders
+  end
+
+  def test_every_fixture_has_a_map_file_and_every_compared_entry_has_fixtures
+    audit = ShadcnAudit.root.join("audit")
+    compared = seed_map.all_folders.reject { |folder| seed_map.selectors(folder).compact.empty? }
+    assert_equal compared.sort, Dir.children(audit.join("fixtures")).sort
   end
 
   def test_non_mapping_entry_raises

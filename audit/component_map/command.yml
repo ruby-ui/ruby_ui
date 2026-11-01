@@ -1,0 +1,31 @@
+shadcn: command
+kind: popover
+docs_view: command
+parts:
+  Command: command
+  CommandInput: command-input
+  CommandList: command-list
+  CommandEmpty: command-empty
+  CommandGroup: command-group
+  CommandItem: command-item
+  CommandDialog: dialog
+  CommandDialogTrigger: null
+  CommandDialogContent: dialog-content
+selectors:
+  Command: '[data-ruby-ui--command-target="panel"] > div'
+  CommandInput: 'input[data-ruby-ui--command-target="input"]'
+  CommandList: '[data-ruby-ui--command-target="panel"] > div > div:has([data-ruby-ui--command-target="group"])'
+  CommandEmpty: '[data-ruby-ui--command-target="empty"]'
+  CommandGroup: '[data-ruby-ui--command-target="group"]'
+  CommandItem: '[data-ruby-ui--command-target="item"]'
+  CommandDialog: null
+  CommandDialogContent: '[data-ruby-ui--command-target="panel"]'
+props:
+  CommandInput: {placeholder: placeholder}
+  CommandGroup: {heading: title}
+  CommandItem: {value: value}
+  CommandDialog: {title: null, description: null, showCloseButton: null}
+rubyui_only:
+  CommandItem: [text, href]
+  CommandDialogContent: [size]
+  CommandDialogTrigger: [keybindings]

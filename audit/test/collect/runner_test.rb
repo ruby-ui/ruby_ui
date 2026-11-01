@@ -73,7 +73,7 @@ class CollectRunnerTest < Minitest::Test
 
   def test_missing_selector_part_is_inconclusive
     line = run_collect["lines"].find { |l| l["note"].include?("no selector") }
-    assert_equal ["Look", "inconclusive", "Dialog: no selector in component_map.yml"], line.values_at("dimension", "status", "note")
+    assert_equal ["Look", "inconclusive", "Dialog: no selector in the component map"], line.values_at("dimension", "status", "note")
   end
 
   def test_null_selector_part_is_skipped_silently
@@ -100,7 +100,7 @@ class CollectRunnerTest < Minitest::Test
   def test_folder_without_selectors_is_an_error
     write_map(@root, "kind: modal\n  parts: {DialogContent: dialog-content}")
     error = assert_raises(ArgumentError) { run_collect }
-    assert_equal "dialog has no selectors in audit/component_map.yml", error.message
+    assert_equal "dialog has no selectors in audit/component_map/dialog.yml", error.message
   end
 
   def test_unreadable_screenshot_only_fails_its_own_diff

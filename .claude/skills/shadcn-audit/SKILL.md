@@ -53,7 +53,7 @@ an error as an empty result. Talk to the user in their language;
 
 ## Hard rules
 
-- **Never edit PR code**, `audit/divergences.yml` or `audit/component_map.yml`,
+- **Never edit PR code**, `audit/divergences.yml` or `audit/component_map/`,
   and never push. Suggest entries; the author adds them.
 - **Nothing unverified is `pass`.** HTML/ARIA/Behavior/Animation come only from
   DOM rendered in the sandbox/preview and driven in the browser. Can't verify →
@@ -76,7 +76,7 @@ it becomes `report.json`'s `target`.
 - `needs_selection: true` → the PR touches shared code only. List
   `candidates` and ask which to audit; continue with the chosen folders.
 - `components` = every touched component folder, mapped or not. `unmapped`
-  lists the folders missing from `component_map.yml` (handled in step 3).
+  lists the folders missing from `audit/component_map/` (handled in step 3).
 - Create the run folder `.shadcn-audit/runs/<YYYYMMDD-HHMMSS>-<pr|branch|component>/`
   with a `screens/` subfolder. `.shadcn-audit/` is git-ignored and lives in
   this checkout: removing the worktree deletes the runs, the sandbox and the
@@ -89,7 +89,7 @@ it becomes `report.json`'s `target`.
    `workspace --sha <sha>`.)
 2. `sandbox` → `path`, `url_template`, `lock` (→ `report.json`'s
    `sandbox_lock`), `created` (true = it rebuilt the app; tell the user),
-   `refreshed` (true = the workspace moved, or `component_map.yml` now needs
+   `refreshed` (true = the workspace moved, or the component map now needs
    other shadcn components (`shadcn` plus `fixture_shadcn`) than the last pull
    installed, so it re-added them all with `--overwrite`; tell the user), `registry` and
    `built_at`. `registry: "live"` means the components come from the
@@ -142,9 +142,9 @@ it becomes `report.json`'s `target`.
 For each folder in `components`:
 
 - `map <folder>`:
-  - `{"missing": true, "suggestion": …}` (every `unmapped` folder) → one
-    `inconclusive` line ("not in audit/component_map.yml"), `shadcn_file: null`,
-    and show the user the `suggestion` YAML to paste into the map. Tell them a
+  - `{"missing": true, "path": …, "suggestion": …}` (every `unmapped` folder) → one
+    `inconclusive` line ("not in the component map"), `shadcn_file: null`,
+    and show the user the `suggestion` YAML to save as `path` (one file per component). Tell them a
     newly mapped component also needs fixtures,
     `audit/fixtures/<folder>/{content.yml,shadcn.tsx,rubyui.rb}` (same strings
     on both sides, one `data-audit-trigger`), or the browser steps have nothing
@@ -190,7 +190,7 @@ For each folder in `components`:
   copy its `environment_diffs` into the report. Running it twice on the same
   SHAs gives the same `collect.json`.
   - `{"error": "… has no selectors …"}` → the component has no `selectors`
-    in `component_map.yml`: tell the user to add them (RubyUI part → CSS
+    in `audit/component_map/<folder>.yml`: tell the user to add them (RubyUI part → CSS
     selector in the rendered fixture; `null` = shadcn renders no element for
     that part). Until they exist, collect that component by hand with the
     chrome-devtools MCP: for each mapped part, the shadcn classes from

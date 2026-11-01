@@ -1,0 +1,12 @@
+shadcn: badge
+kind: static
+docs_view: badge
+parts:
+  Badge: badge
+selectors:
+  Badge: '[data-slot="badge"]'
+props:
+  # render: RubyUI covers its one badge use, <a>, with href: (see divergences.yml).
+  Badge: {variant: variant, render: href}
+rubyui_only:
+  Badge: [size]
