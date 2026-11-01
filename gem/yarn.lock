@@ -37,59 +37,6 @@
   resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
   integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
 
-"@motionone/animation@^10.18.0":
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/@motionone/animation/-/animation-10.18.0.tgz#868d00b447191816d5d5cf24b1cafa144017922b"
-  integrity sha512-9z2p5GFGCm0gBsZbi8rVMOAJCtw1WqBTIPw3ozk06gDvZInBPIsQcHgYogEJ4yuHJ+akuW8g1SEIOpTOvYs8hw==
-  dependencies:
-    "@motionone/easing" "^10.18.0"
-    "@motionone/types" "^10.17.1"
-    "@motionone/utils" "^10.18.0"
-    tslib "^2.3.1"
-
-"@motionone/dom@^10.18.0":
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/@motionone/dom/-/dom-10.18.0.tgz#7fd25dac04cab72def6d2b92b8e0cdc091576527"
-  integrity sha512-bKLP7E0eyO4B2UaHBBN55tnppwRnaE3KFfh3Ps9HhnAkar3Cb69kUCJY9as8LrccVYKgHA+JY5dOQqJLOPhF5A==
-  dependencies:
-    "@motionone/animation" "^10.18.0"
-    "@motionone/generators" "^10.18.0"
-    "@motionone/types" "^10.17.1"
-    "@motionone/utils" "^10.18.0"
-    hey-listen "^1.0.8"
-    tslib "^2.3.1"
-
-"@motionone/easing@^10.18.0":
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/@motionone/easing/-/easing-10.18.0.tgz#7b82f6010dfee3a1bb0ee83abfbaff6edae0c708"
-  integrity sha512-VcjByo7XpdLS4o9T8t99JtgxkdMcNWD3yHU/n6CLEz3bkmKDRZyYQ/wmSf6daum8ZXqfUAgFeCZSpJZIMxaCzg==
-  dependencies:
-    "@motionone/utils" "^10.18.0"
-    tslib "^2.3.1"
-
-"@motionone/generators@^10.18.0":
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/@motionone/generators/-/generators-10.18.0.tgz#fe09ab5cfa0fb9a8884097feb7eb60abeb600762"
-  integrity sha512-+qfkC2DtkDj4tHPu+AFKVfR/C30O1vYdvsGYaR13W/1cczPrrcjdvYCj0VLFuRMN+lP1xvpNZHCRNM4fBzn1jg==
-  dependencies:
-    "@motionone/types" "^10.17.1"
-    "@motionone/utils" "^10.18.0"
-    tslib "^2.3.1"
-
-"@motionone/types@^10.17.1":
-  version "10.17.1"
-  resolved "https://registry.yarnpkg.com/@motionone/types/-/types-10.17.1.tgz#cf487badbbdc9da0c2cb86ffc1e5d11147c6e6fb"
-  integrity sha512-KaC4kgiODDz8hswCrS0btrVrzyU2CSQKO7Ps90ibBVSQmjkrt2teqta6/sOG59v7+dPnKMAg13jyqtMKV2yJ7A==
-
-"@motionone/utils@^10.18.0":
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/@motionone/utils/-/utils-10.18.0.tgz#a59ff8932ed9009624bca07c56b28ef2bb2f885e"
-  integrity sha512-3XVF7sgyTSI2KWvTf6uLlBJ5iAgRgmvp3bpuOiQJvInd4nZ19ET8lX5unn30SlmRH7hXbBbH+Gxd0m0klJ3Xtw==
-  dependencies:
-    "@motionone/types" "^10.17.1"
-    hey-listen "^1.0.8"
-    tslib "^2.3.1"
-
 chart.js@^4.4.1:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.4.3.tgz#3b2e11e7010fefa99b07d0349236f5098e5226ad"
@@ -119,32 +66,12 @@ globals@^15.8.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-15.9.0.tgz#e9de01771091ffbc37db5714dab484f9f69ff399"
   integrity sha512-SmSKyLLKFbSr6rptvP8izbyxJL4ILwqO9Jg23UA0sDlGlu58V59D1//I3vlc0KJphVdUR7vMjHIplYnzBxorQA==
 
-hey-listen@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/hey-listen/-/hey-listen-1.0.8.tgz#8e59561ff724908de1aa924ed6ecc84a56a9aa68"
-  integrity sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==
-
 maska@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/maska/-/maska-3.0.3.tgz#36e3c2c77bf35db09842f318315c590e2855a9ce"
   integrity sha512-ItFbuqVeBKk1JmC4QCRxKeNaX+Ym/oMUYZVXwvAPKAwMeO4bYZpIGjNWOcZy+L8YXQaPvCZ68+5eYpGRdyaA8w==
 
-motion@^10.16.4:
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/motion/-/motion-10.18.0.tgz#8fd035cc3a668800fe7e2479568eeb98af484ab3"
-  integrity sha512-MVAZZmwM/cp77BrNe1TxTMldxRPjwBNHheU5aPToqT4rJdZxLiADk58H+a0al5jKLxkB0OdgNq6DiVn11cjvIQ==
-  dependencies:
-    "@motionone/animation" "^10.18.0"
-    "@motionone/dom" "^10.18.0"
-    "@motionone/types" "^10.17.1"
-    "@motionone/utils" "^10.18.0"
-
 mustache@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.2.0.tgz#e5892324d60a12ec9c2a73359edca52972bf6f64"
   integrity sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==
-
-tslib@^2.3.1:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.3.tgz#0438f810ad7a9edcde7a241c3d80db693c8cbfe0"
-  integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==

@@ -26,3 +26,28 @@
   shadcn: "FieldError returns null when it has no children and no errors"
   reason: "The FormField Stimulus controller writes client-side validation messages into that div, so it must exist before the first error."
   since: "2026-11-01"
+- component: accordion
+  dimension: HTML
+  rubyui: "<details name> > <summary> > <h3> + chevrons; panel is the rest of the <details>"
+  shadcn: "div > h3 > button[aria-expanded] + div[role=region] (Base UI Accordion)"
+  reason: "Native disclosure: the browser handles open/close, the single-open group (name), keyboard and find-in-page. A heading inside <summary> is the allowed way to keep the heading outline."
+  since: "2026-11-01"
+- component: accordion
+  dimension: ARIA
+  rubyui: "panel without role=region / aria-labelledby; expanded state and the summary-to-content relation come from <details>"
+  shadcn: "panel role=region aria-labelledby=trigger; trigger aria-expanded + aria-controls (only while open)"
+  reason: "APG makes the region optional and advises against it when many panels can be open; <details> exposes the expanded state natively."
+  since: "2026-11-01"
+- component: accordion
+  dimension: Props
+  rubyui: "AccordionItem open: (initial state per item); no orientation, no value"
+  shadcn: "Accordion.Root defaultValue / orientation, Accordion.Item value"
+  reason: "Server-rendered Phlex has no controlled state, so open state lives on each item; orientation only drives arrow-key navigation, which Base UI 1.9 Accordion doesn't implement."
+  since: "2026-11-01"
+- component: accordion
+  dimension: Look
+  rubyui: "trigger cursor-pointer"
+  shadcn: "trigger cursor: default"
+  reason: "A <summary> without its disclosure marker gives no other hint that it's clickable."
+  since: "2026-11-01"
+  match: {part: AccordionTrigger, property: cursor, rubyui: pointer, shadcn: default}

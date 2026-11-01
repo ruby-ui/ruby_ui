@@ -1,37 +1,40 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Chevron down while closed, chevron up while open (lucide icons, swapped
+  # with CSS on the parent <details open>). Pass a block to render your own.
   class AccordionIcon < Base
+    CHEVRONS = {down: "m6 9 6 6 6-6", up: "m18 15-6-6-6 6"}.freeze
+
     def view_template(&block)
-      span(**attrs) do
-        if block
-          block.call
-        else
-          icon
-        end
+      if block
+        span(**attrs, &block)
+      else
+        chevron(:down, "group-open/accordion-item:hidden")
+        chevron(:up, "hidden group-open/accordion-item:inline")
       end
     end
 
-    def icon
+    private
+
+    def chevron(direction, visibility)
       svg(
+        **mix(attrs, class: visibility),
         xmlns: "http://www.w3.org/2000/svg",
-        viewbox: "0 0 20 20",
-        fill: "currentColor",
-        class: "w-4 h-4"
-      ) do |s|
-        s.path(
-          fill_rule: "evenodd",
-          d:
-            "M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z",
-          clip_rule: "evenodd"
-        )
-      end
+        viewbox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        stroke_width: "2",
+        stroke_linecap: "round",
+        stroke_linejoin: "round"
+      ) { |s| s.path(d: CHEVRONS[direction]) }
     end
 
     def default_attrs
       {
-        class: "opacity-50",
-        data: {ruby_ui__accordion_target: "icon"}
+        aria: {hidden: "true"},
+        data: {slot: "accordion-trigger-icon"},
+        class: "pointer-events-none ml-auto size-4 shrink-0 text-muted-foreground"
       }
     end
   end
