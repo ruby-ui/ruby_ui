@@ -61,7 +61,10 @@ class RubyUI::AccordionTest < ComponentTest
       RubyUI.AccordionItem { RubyUI.AccordionTrigger { "Outside" } }
     end
 
-    assert_equal 1, output.scan(/<details[^>]*\sname=/).size
+    details = output.scan(%r{<details[^>]*>.*?</details>}m)
+    assert_equal 2, details.size
+    assert_match(/\A<details[^>]*\sname="[^"]+"/, details.first)
+    refute_match(/\A<details[^>]*\sname=/, details.last)
   end
 
   def test_open_item_renders_open_attribute
@@ -77,6 +80,7 @@ class RubyUI::AccordionTest < ComponentTest
 
     assert_match(%r{<h2>Question</h2>}, output)
     assert_raises(ArgumentError) { RubyUI::AccordionTrigger.new(level: 7) }
+    assert_raises(ArgumentError) { RubyUI::AccordionTrigger.new(level: 3.0) }
   end
 
   def test_trigger_renders_both_chevrons_hidden_from_assistive_tech

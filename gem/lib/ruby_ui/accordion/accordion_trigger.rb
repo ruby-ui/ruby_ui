@@ -7,7 +7,7 @@ module RubyUI
     LEVELS = (1..6)
 
     def initialize(level: 3, icon: true, **attrs)
-      raise ArgumentError, "level must be 1..6, got #{level.inspect}" unless LEVELS.cover?(level)
+      raise ArgumentError, "level must be 1..6, got #{level.inspect}" unless level.is_a?(Integer) && LEVELS.cover?(level)
 
       @level = level
       @icon = icon

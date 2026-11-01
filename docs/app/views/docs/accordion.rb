@@ -47,7 +47,7 @@ class Views::Docs::Accordion < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Disabled", description: "A disabled item can't be opened and leaves the tab order. Pass disabled: true to the Accordion to disable every item.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Disabled", description: "A disabled item can't be clicked and leaves the tab order. Pass disabled: true to the Accordion to disable every item. Without JavaScript, a screen reader can still open it.", context: self) do
         <<~RUBY
           Accordion(class: "max-w-lg") do
             AccordionItem do

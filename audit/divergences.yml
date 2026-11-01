@@ -50,4 +50,3 @@
   shadcn: "trigger cursor: default"
   reason: "A <summary> without its disclosure marker gives no other hint that it's clickable."
   since: "2026-11-01"
-  match: {part: AccordionTrigger, property: cursor, rubyui: pointer, shadcn: default}
