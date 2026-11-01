@@ -91,4 +91,51 @@ class DivergencesTest < Minitest::Test
     error = assert_raises(ShadcnAudit::ConfigError) { write(valid_yaml.sub('reason: "Native modal dialog."', "reason: TODO")) }
     assert_includes error.message, "TODO"
   end
+
+  def match_entry(match)
+    [{"component" => "dialog", "dimension" => "Look", "rubyui" => "border 1px", "shadcn" => "ring 1px",
+      "reason" => "Kept the border.", "since" => "2026-11-01", "match" => match}]
+  end
+
+  def look_match = {"part" => "DialogContent", "property" => "border-top-width", "rubyui" => "1px", "shadcn" => "0px"}
+
+  def lookup(divergences, rubyui: "1px")
+    divergences.match(component: "dialog", dimension: "Look", part: "DialogContent",
+      key: "border-top-width", rubyui: rubyui, shadcn: "0px")
+  end
+
+  def test_match_finds_structured_entry
+    divergences = ShadcnAudit::Divergences.new(match_entry(look_match))
+    assert_equal "Kept the border.", lookup(divergences)["reason"]
+  end
+
+  def test_match_ignores_prose_only_entries
+    entries = match_entry(look_match).map { |e| e.except("match") }
+    assert_nil lookup(ShadcnAudit::Divergences.new(entries))
+  end
+
+  def test_match_requires_exact_values
+    assert_nil lookup(ShadcnAudit::Divergences.new(match_entry(look_match)), rubyui: "2px")
+  end
+
+  def test_match_only_for_look_or_aria
+    entries = match_entry(look_match).map { |e| e.merge("dimension" => "HTML") }
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.new(entries) }
+    assert_match(/match is only for Look or ARIA/, error.message)
+  end
+
+  def test_look_match_needs_property
+    match = look_match.except("property").merge("attribute" => "aria-expanded")
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.new(match_entry(match)) }
+    assert_match(/Look match needs property/, error.message)
+  end
+
+  def test_match_needs_all_keys
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.new(match_entry(look_match.except("rubyui"))) }
+    assert_match(/match needs part, property\|attribute, rubyui and shadcn/, error.message)
+  end
+
+  def test_existing_registry_still_loads
+    ShadcnAudit::Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
+  end
 end

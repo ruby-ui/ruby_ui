@@ -1,5 +1,7 @@
 # Intentional RubyUI-vs-shadcn differences. A divergence listed here makes the
 # matching finding a `pass` with basis `intentional`.
+# Optional `match: {part, property (Look) | attribute (ARIA, or `snapshot`), rubyui, shadcn}` lets `collect` apply it
+# automatically; entries without it are applied by the agent.
 - component: dialog
   dimension: HTML
   rubyui: "<dialog> + showModal()"
