@@ -52,7 +52,7 @@ module ShadcnAudit
 
     MATCH_KEYS = {"Look" => "property", "ARIA" => "attribute"}.freeze
 
-    def same?(expected, actual) = expected.to_s.strip == actual.to_s.strip
+    def same?(expected, actual) = Collect::Normalize.value(expected) == Collect::Normalize.value(actual)
 
     def validate_match!(label, entry)
       m = entry["match"]
