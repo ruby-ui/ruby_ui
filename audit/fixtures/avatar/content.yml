@@ -1,0 +1,21 @@
+# Six avatars and one AvatarGroup, all fictional data (no network):
+#  1. image (inline SVG data URI) + fallback "CN": the image loads, the fallback hides.
+#  2. fallback only "JD".
+#  3. broken image (undecodable data URI) + fallback "ER": the fallback shows.
+#  4. size sm, fallback "SM".  5. size lg, fallback "LG".
+#  6. fallback "BG" with an AvatarBadge.
+#  7. AvatarGroup of two fallbacks ("AB", "CD") and an AvatarGroupCount "+2".
+# Static kind: only the closed state is collected; data-audit-trigger sits on the wrapper only to satisfy the fixture contract.
+image_src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' fill='%233b82f6'/%3E%3C/svg%3E"
+image_alt: "@shadcn"
+broken_src: "data:image/png;base64,AAAA"
+broken_alt: "@broken"
+fallback_1: CN
+fallback_2: JD
+fallback_3: ER
+fallback_sm: SM
+fallback_lg: LG
+fallback_badge: BG
+group_1: AB
+group_2: CD
+group_count: "+2"

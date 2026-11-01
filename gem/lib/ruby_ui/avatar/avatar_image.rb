@@ -22,10 +22,11 @@ module RubyUI
         # `load` event never fires and the image stays hidden forever (#415). shadcn/radix
         # do not lazy-load the avatar image either.
         data: {
+          slot: "avatar-image",
           ruby_ui__avatar_target: "image",
           action: "load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback"
         },
-        class: "aspect-square h-full w-full",
+        class: "aspect-square size-full rounded-full object-cover",
         alt: @alt,
         src: @src
       }

@@ -68,7 +68,10 @@ class Views::Docs::GettingStarted::Introduction < Views::Base
         Heading(level: 1) { "Notes from the original author" }
 
         div(class: "flex items-center gap-3") do
-          Avatar(size: :md, class: "border") { img(src: "https://i.pravatar.cc/150?u=george", alt: "George Kettle") }
+          Avatar do
+            AvatarImage(src: "https://i.pravatar.cc/150?u=george", alt: "George Kettle")
+            AvatarFallback { "GK" }
+          end
           div do
             p(class: "text-sm font-medium leading-none") { "George Kettle" }
             p(class: "text-sm text-muted-foreground") { "Original author of RubyUI" }

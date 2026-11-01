@@ -8,7 +8,7 @@ class Views::Docs::Avatar < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Image & fallback", context: self) do
+      render Docs::VisualCodeExample.new(title: "Image & fallback", description: "The fallback shows while the image loads, and stays if it fails.", context: self) do
         <<~RUBY
           Avatar do
             AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
@@ -25,61 +25,64 @@ class Views::Docs::Avatar < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Sizes", context: self) do
+      render Docs::VisualCodeExample.new(title: "Sizes", description: "sm, default and lg match shadcn; xs and xl are RubyUI extras. :md still works as an alias of :default.", context: self) do
         <<~RUBY
-          div(class: 'flex items-center space-x-2') do
-            # size: :xs
-            Avatar(size: :xs) do
-              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              AvatarFallback { "JD" }
-            end
-            # size: :sm
-            Avatar(size: :sm) do
-              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              AvatarFallback { "JD" }
-            end
-            # size: :md
-            Avatar(size: :md) do
-              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              AvatarFallback { "JD" }
-            end
-            # size: :lg
-            Avatar(size: :lg) do
-              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              AvatarFallback { "JD" }
-            end
-            # size: :xl
-            Avatar(size: :xl) do
-              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
-              AvatarFallback { "JD" }
+          div(class: "flex items-center gap-4") do
+            [:xs, :sm, :default, :lg, :xl].each do |size|
+              Avatar(size: size) do
+                AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+                AvatarFallback { "JD" }
+              end
             end
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Sizes (only fallback)", context: self) do
-        @@code = <<~RUBY
-          div(class: 'flex items-center space-x-2') do
-            # size: :xs
-            Avatar(size: :xs) do
+        <<~RUBY
+          div(class: "flex items-center gap-4") do
+            [:xs, :sm, :default, :lg, :xl].each do |size|
+              Avatar(size: size) do
+                AvatarFallback { "JD" }
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Badge", description: "AvatarBadge sits on the bottom-right corner, e.g. an online status.", context: self) do
+        <<~RUBY
+          Avatar do
+            AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+            AvatarFallback { "JD" }
+            AvatarBadge(class: "bg-green-600 dark:bg-green-800")
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Group", description: "AvatarGroup overlaps the avatars; AvatarGroupCount shows how many are left.", context: self) do
+        <<~RUBY
+          AvatarGroup do
+            Avatar do
+              AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
               AvatarFallback { "JD" }
             end
-            # size: :sm
-            Avatar(size: :sm) do
-              AvatarFallback { "JD" }
+            Avatar do
+              AvatarFallback { "CN" }
             end
-            # size: :md
-            Avatar(size: :md) do
-              AvatarFallback { "JD" }
+            Avatar do
+              AvatarFallback { "RU" }
             end
-            # size: :lg
-            Avatar(size: :lg) do
-              AvatarFallback { "JD" }
-            end
-            # size: :xl
-            Avatar(size: :xl) do
-              AvatarFallback { "JD" }
-            end
+            AvatarGroupCount { "+3" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Fallback delay", description: "delay: (ms) waits before showing the fallback, so a fast image doesn't flash the initials first. The avatar dispatches ruby-ui--avatar:status with detail.status (loading, loaded or error) on every change. The delay needs JavaScript: without it, a delayed fallback stays hidden.", context: self) do
+        <<~RUBY
+          Avatar do
+            AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
+            AvatarFallback(delay: 600) { "JD" }
           end
         RUBY
       end
