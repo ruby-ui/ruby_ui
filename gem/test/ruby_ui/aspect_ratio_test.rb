@@ -81,7 +81,7 @@ class RubyUI::AspectRatioTest < ComponentTest
   end
 
   def test_rejects_invalid_ratios
-    ["16:9", "abc", "16/0", "0/9", 0, -1, []].each do |value|
+    ["16:9", "abc", "16/0", "0/9", 0, -1, [], false, Complex(1, 1)].each do |value|
       assert_raises(ArgumentError) { RubyUI::AspectRatio.new(ratio: value) }
     end
   end

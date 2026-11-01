@@ -9,7 +9,8 @@ module RubyUI
         Warning.warn("RubyUI::AspectRatio: `aspect_ratio:` is deprecated, use `ratio:`\n", category: :deprecated)
       end
 
-      @ratio = parse_ratio(ratio || aspect_ratio || "16/9")
+      ratio = aspect_ratio if ratio.nil?
+      @ratio = parse_ratio(ratio.nil? ? "16/9" : ratio)
       user_style = attrs.delete(:style)
       super(**attrs)
       @attrs[:style] = ratio_style(user_style)
@@ -24,7 +25,7 @@ module RubyUI
     def parse_ratio(value)
       ratio =
         case value
-        when Numeric then value.to_f
+        when Numeric then value.to_f if value.real?
         when String
           width, height = value.split("/", 2)
           height ? Float(width) / Float(height) : Float(width)

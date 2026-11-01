@@ -60,11 +60,11 @@ class Views::Docs::AspectRatio < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Content taller than the ratio", description: "The box grows when its content is taller than the ratio allows. Add overflow-hidden to keep the ratio and clip the content.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Content taller than the ratio", description: "The box grows when its content is taller than the ratio allows. With overflow-hidden it keeps its 4/1 ratio and clips the lines that don't fit. Remove overflow-hidden and the box grows to show all eight.", context: self) do
         <<~RUBY
-          AspectRatio(ratio: "8/1", class: "overflow-hidden rounded-lg bg-muted p-4") do
-            p(class: "text-sm text-muted-foreground") do
-              "With overflow-hidden the box keeps its 8/1 ratio and clips what doesn't fit, so this paragraph is cut off after a couple of lines. Remove overflow-hidden and the box grows taller than 8/1 to show every line."
+          AspectRatio(ratio: "4/1", class: "overflow-hidden rounded-lg bg-muted p-3 text-sm text-muted-foreground") do
+            %w[One Two Three Four Five Six Seven Eight].each do |line|
+              div { line }
             end
           end
         RUBY
