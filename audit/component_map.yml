@@ -193,3 +193,25 @@ alert:
     AlertAction: '[data-slot="alert-action"]'
   props:
     Alert: {variant: variant}
+
+avatar:
+  shadcn: avatar
+  kind: static
+  docs_view: avatar
+  parts:
+    Avatar: avatar
+    AvatarImage: avatar-image
+    AvatarFallback: avatar-fallback
+    AvatarBadge: avatar-badge
+    AvatarGroup: avatar-group
+    AvatarGroupCount: avatar-group-count
+  selectors:
+    Avatar: '[data-slot="avatar"]'
+    AvatarImage: '[data-slot="avatar-image"]'
+    AvatarFallback: '[data-slot="avatar-fallback"]'
+    AvatarBadge: '[data-slot="avatar-badge"]'
+    AvatarGroup: '[data-slot="avatar-group"]'
+    AvatarGroupCount: '[data-slot="avatar-group-count"]'
+  props:
+    Avatar: {size: size}
+    AvatarFallback: {delay: delay}
