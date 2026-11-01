@@ -13,13 +13,15 @@ module RubyUI
 
     private
 
+    # `contents` keeps the Stimulus wrapper out of layout, like shadcn's
+    # element-less Root.
     def default_attrs
       {
         data: {
           controller: "ruby-ui--alert-dialog",
           ruby_ui__alert_dialog_open_value: @open.to_s
         },
-        class: "inline-block"
+        class: "contents"
       }
     end
   end
