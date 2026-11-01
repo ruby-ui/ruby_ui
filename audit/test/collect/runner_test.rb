@@ -41,10 +41,18 @@ class CollectRunnerTest < Minitest::Test
     File.write(File.join(root, "audit/divergences.yml"), "[]\n")
   end
 
-  def run_collect(preview: nil, driver: @driver)
+  def run_collect(preview: nil, driver: @driver, **urls)
     factory = ->(audit_dir:, &block) { block.call(driver) }
     Runner.new(folder: "dialog", run_dir: @run, preview: preview, root: Pathname.new(@root),
-      theme: {"diffs" => []}, driver_factory: factory).call
+      theme: {"diffs" => []}, driver_factory: factory, **urls).call
+  end
+
+  def test_url_templates_can_point_at_other_ports
+    run_collect(shadcn_url: "http://localhost:5180/?c={folder}&theme={light|dark}",
+      rubyui_url: "http://localhost:3180/__audit/{folder}?theme={light|dark}")
+    urls = @driver.observed.map(&:first).uniq
+    assert_includes urls, "http://localhost:5180/?c=dialog&theme=light"
+    assert_includes urls, "http://localhost:3180/__audit/dialog?theme=dark"
   end
 
   def test_writes_collect_json_and_returns_same_object

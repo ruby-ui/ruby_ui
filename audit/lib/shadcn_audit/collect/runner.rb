@@ -11,13 +11,14 @@ module ShadcnAudit
       FONT_KEYS = %w[font fonts].freeze
 
       def initialize(folder:, run_dir:, preview: nil, root: ShadcnAudit.root, theme: nil,
-        driver_factory: Driver.method(:open))
+        driver_factory: Driver.method(:open), shadcn_url: Sandbox::URL_TEMPLATE, rubyui_url: RubyuiPreview::URL_TEMPLATE)
         @folder = folder.to_s
         @run_dir = Pathname.new(run_dir)
         @preview = preview && Pathname.new(preview)
         @root = root
         @theme = theme
         @driver_factory = driver_factory
+        @templates = {"shadcn" => shadcn_url, "rubyui" => rubyui_url}
       end
 
       def call
@@ -72,8 +73,7 @@ module ShadcnAudit
       end
 
       def url(side, theme)
-        template = (side == "rubyui") ? RubyuiPreview::URL_TEMPLATE : Sandbox::URL_TEMPLATE
-        template.sub("{folder}", @folder).sub("{light|dark}", theme)
+        @templates.fetch(side).sub("{folder}", @folder).sub("{light|dark}", theme)
       end
 
       def observe_all(driver, states, selectors, slots)
