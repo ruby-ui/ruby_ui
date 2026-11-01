@@ -320,7 +320,8 @@ Then:
    whether to go ahead. Once the user agrees, write each decision into the
    `note` of its lines in `report.json` (e.g. "Requested: use ring-1 instead
    of border", "Kept as is: …", "Suggested divergence: …"), leaving `status`
-   and `basis` untouched, and re-run `render` so the PR comment carries them.
+   and `basis` untouched, re-run `render` so the PR comment carries them, and
+   re-run `render <report.json> --html` if `report.html` was already written.
    The hard rules still hold: on someone else's PR, "fix"
    becomes a request in the PR comment and divergence entries stay
    suggestions for the author; on the user's own branch, fixes follow
