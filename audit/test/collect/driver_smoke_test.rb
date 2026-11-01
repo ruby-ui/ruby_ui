@@ -83,4 +83,14 @@ class CollectDriverSmokeTest < Minitest::Test
       assert env["error"], env.inspect
     end
   end
+
+  def test_waits_for_client_mounted_fixture_and_resolves_id_refs
+    with_driver do |driver|
+      open = driver.observe(url: url("e.html"), state: "open", selectors: {"Trigger" => "[data-audit-trigger]"},
+        screenshot_path: File.join(@tmp, "e.png"))
+      assert open["reached"], open["reason"]
+      attrs = open["parts"]["Trigger"][0]["attrs"]
+      assert_equal({"aria-controls" => "resolves", "aria-describedby" => "dangling"}, attrs.slice("aria-controls", "aria-describedby"))
+    end
+  end
 end

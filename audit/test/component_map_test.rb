@@ -167,4 +167,15 @@ class ComponentMapTest < Minitest::Test
     error = assert_raises(ShadcnAudit::ConfigError) { selector_map("DialogContent" => " ") }
     assert_match(/selectors.DialogContent must be a non-empty CSS selector/, error.message)
   end
+
+  def test_selectors_must_be_a_mapping
+    error = assert_raises(ShadcnAudit::ConfigError) { selector_map(["dialog > div"]) }
+    assert_match(/selectors must be a mapping/, error.message)
+  end
+
+  def test_selector_on_part_without_shadcn_slot_is_rejected
+    map = {"dialog" => {"parts" => {"DialogMiddle" => nil}, "selectors" => {"DialogMiddle" => "div"}}}
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.new(map) }
+    assert_match(/selectors.DialogMiddle is not a mapped part/, error.message)
+  end
 end

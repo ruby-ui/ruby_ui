@@ -15,4 +15,8 @@ class CollectNormalizeTest < Minitest::Test
   def test_integers_unchanged
     assert_equal "10px", norm("10px")
   end
+
+  def test_negative_zero_is_zero
+    assert_equal "0px", norm("-0.001px")
+  end
 end

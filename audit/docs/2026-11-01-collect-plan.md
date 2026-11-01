@@ -134,10 +134,10 @@ Output per part (in `parts` order), at most one line per non-empty bucket, in th
 - Test: `audit/test/collect/grader_test.rb`
 
 **Interfaces:**
-- Produces: `Grader#lines` also emits ARIA lines and unreachable lines. `Grader::ARIA_ATTRS = %w[aria-expanded aria-controls aria-haspopup aria-describedby]` (the driver fills `attrs` with exactly these keys; `aria-controls` is reported as `"resolves"`/`"dangling"`/nil, `aria-describedby` as the referenced text or nil).
+- Produces: `Grader#lines` also emits ARIA lines and unreachable lines. `Grader::ARIA_ATTRS = %w[aria-expanded aria-controls aria-haspopup aria-describedby modal]` (`modal` added in review: computed `:modal` or `aria-modal="true"`; `aria-labelledby` is covered by the name in the snapshot; the driver fills `attrs` with exactly these keys; `aria-controls` is reported as `"resolves"`/`"dangling"`/nil, `aria-describedby` as the referenced text or nil).
 
 ARIA rules, per part, same count/skip logic as Look:
-- `aria` (Playwright aria snapshot of the element) differs after `Normalize.value` → diff with key `snapshot`.
+- `aria` (Playwright aria snapshot of the element) differs, compared exactly (hierarchy, case and numbers kept; `Normalize.value` is for Look only) → diff with key `snapshot`.
 - Each `ARIA_ATTRS` value differs (incl. present vs nil) → diff with key = attribute.
 - `divergences.match(dimension: "ARIA", part:, key:, …)` → `intentional`; theme/environment never apply to ARIA.
 - Output like Look but `diff` bucket → `warn`; `rubyui`/`shadcn` = `"<key>: <value or (none)>"`, snapshots trimmed to 200 chars; grouped `pass` line `"<parts>: accessibility tree matches"`, source `ARIA_SOURCE`.

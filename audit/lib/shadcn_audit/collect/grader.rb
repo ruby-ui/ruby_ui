@@ -165,13 +165,16 @@ module ShadcnAudit
       # Snapshot lines found on one side only, so the difference is visible
       # instead of buried in a truncated tree.
       def snapshot_delta(rv, sv)
-        r = rv.lines.map(&:strip).reject(&:empty?)
-        s = sv.lines.map(&:strip).reject(&:empty?)
+        r = rv.lines.map(&:rstrip).reject(&:empty?)
+        s = sv.lines.map(&:rstrip).reject(&:empty?)
         [only_here(r, s), only_here(s, r)]
       end
 
+      # Multiset difference: a node repeated more often on one side still shows,
+      # and indentation stays, so a nesting change isn't hidden.
       def only_here(lines, other)
-        extra = lines - other
+        remaining = other.tally
+        extra = lines.reject { |line| remaining[line].to_i.positive? && (remaining[line] -= 1) }
         return "only here: #{extra.join(" | ")}" unless extra.empty?
 
         lines.empty? ? "" : "same lines, different order"

@@ -65,7 +65,9 @@ module ShadcnAudit
       raise ConfigError, "#{label}: match is only for Look or ARIA" unless MATCH_KEYS.key?(entry["dimension"])
 
       key = MATCH_KEYS[entry["dimension"]]
-      raise ConfigError, "#{label}: #{entry["dimension"]} match needs #{key}" if m.is_a?(Hash) && !m.key?(key) && m.key?((MATCH_KEYS.values - [key]).first)
+      other = (MATCH_KEYS.values - [key]).first
+      raise ConfigError, "#{label}: #{entry["dimension"]} match needs #{key}" if m.is_a?(Hash) && !m.key?(key) && m.key?(other)
+      raise ConfigError, "#{label}: #{entry["dimension"]} match must use #{key} only" if m.is_a?(Hash) && m.key?(other)
       complete = m.is_a?(Hash) && %w[part rubyui shadcn].all? { |k| m.key?(k) && !m[k].nil? } && !m[key].to_s.strip.empty?
       raise ConfigError, "#{label}: match needs part, property|attribute, rubyui and shadcn" unless complete
     end

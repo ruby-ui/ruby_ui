@@ -32,13 +32,14 @@ module ShadcnAudit
         compared.select! { |part| selectors[part] }
         unselected = slots.keys - selectors.keys
         FileUtils.mkdir_p(@run_dir.join("screens"))
+        theme_diffs = theme["diffs"] # before the browser: a broken theme source fails fast
 
         observations, environment = @driver_factory.call(audit_dir: @root.join("audit")) do |driver|
           [observe_all(driver, STATES_BY_KIND[entry["kind"]], selectors.slice(*compared), slots), probe_environment(driver)]
         end
         environment_diffs, diff_keys = environment_diffs(environment)
         grader = Grader.new(folder: @folder, parts: compared, divergences: divergences,
-          theme_diffs: theme["diffs"], environment_diff_keys: diff_keys)
+          theme_diffs: theme_diffs, environment_diff_keys: diff_keys)
         lines = unselected.map { |part| missing_selector_line(part) } + grader.lines(observations)
 
         result = {

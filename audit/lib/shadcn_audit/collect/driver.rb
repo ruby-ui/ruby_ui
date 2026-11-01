@@ -8,6 +8,7 @@ module ShadcnAudit
       STATES = %w[closed open focus after-esc].freeze
       VIEWPORT = {width: 1280, height: 800}.freeze
       TIMEOUT_MS = 15_000
+      FIXTURE = "[data-audit-fixture]"
       MAX_TABS = 20
       INSTALL_HINT = "run `pnpm install && pnpm exec playwright install chromium` in audit/"
       SIDES = %w[top right bottom left].freeze
@@ -82,6 +83,13 @@ module ShadcnAudit
         page.on("pageerror", ->(error) { errors << error.message })
         page.goto(url, waitUntil: "load", timeout: TIMEOUT_MS)
         return page_error(errors) unless errors.empty?
+
+        # Client-rendered fixtures (the React sandbox) can mount after load.
+        begin
+          page.wait_for_selector(FIXTURE, timeout: TIMEOUT_MS)
+        rescue Playwright::TimeoutError
+          return unreached("fixture never rendered (no #{FIXTURE})")
+        end
 
         yield page, errors
       ensure

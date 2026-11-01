@@ -113,7 +113,7 @@ module ShadcnAudit
     end
 
     # Drives both fixtures in Chromium and grades the objective lines.
-    def self.collect(args, out:, driver_factory: Collect::Driver.method(:open), root: ShadcnAudit.root)
+    def self.collect(args, out:, driver_factory: Collect::Driver.method(:open), root: ShadcnAudit.root, theme: nil)
       run_dir = preview = nil
       urls = {}
       parser = OptionParser.new do |o|
@@ -126,7 +126,7 @@ module ShadcnAudit
       raise ArgumentError, "usage: collect <folder> --run <dir> [--preview <path>] [--shadcn-url T] [--rubyui-url T]" unless folder && run_dir
 
       Collect::Runner.new(folder: folder, run_dir: run_dir, preview: preview, root: root,
-        driver_factory: driver_factory, **urls).call
+        theme: theme, driver_factory: driver_factory, **urls).call
     end
 
     def self.workspace(args, out:)

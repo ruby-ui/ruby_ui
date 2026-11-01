@@ -123,10 +123,13 @@ judgment, so:
   rule 4, so the old flow's verdicts are preserved. The comparison is on the
   computed accessibility tree (`ariaSnapshot`: role, name, states), so a native
   `<dialog>` vs `div[role=dialog]` is not a difference. On top of that, an
-  attribute probe checks the APG attributes the old flow read
-  (`aria-expanded`, `aria-controls`, `aria-haspopup`, `aria-modal`,
-  `aria-labelledby`/`aria-describedby` resolved to their text). ID-valued
-  attributes are compared by what they resolve to, never by the raw ID.
+  attribute probe checks `aria-expanded`, `aria-controls` (resolves or
+  dangling), `aria-haspopup`, `aria-describedby` (resolved text) and a
+  computed `modal` fact (`:modal` or `aria-modal="true"`, so a native
+  `<dialog>` counts). `aria-labelledby` isn't read raw: the accessible name it
+  produces is already in the snapshot. ID-valued attributes are compared by
+  what they resolve to, never by the raw ID. Snapshots compare exactly
+  (hierarchy, case, numbers); only Look values are normalized.
 - **Line granularity follows `grading.md`.** One Look line per differing
   part, with all matching parts grouped into a single `pass` line; same for
   ARIA. State and theme where the difference shows up go into `note`
@@ -141,9 +144,11 @@ judgment, so:
 - **Selectors come from the audited head.** `collect` loads
   `component_map.yml` from the `preview` checkout (the audited SHA), falling
   back to the working tree only when the head has no selectors yet, and says
-  which one it used. Each selector must match exactly the expected number of
-  elements (one, or N for repeated parts such as accordion items); otherwise
-  that part is `inconclusive` ("selector matched 0/3 elements"). A PR that
+  which one it used. The expected count is the shadcn side's: the RubyUI
+  selector must match as many visible elements as `[data-slot=<slot>]` does
+  in the same state (one, or N for repeated parts such as accordion items);
+  otherwise that part is `inconclusive` ("selector matched 0/3 visible
+  elements"). A part never visible on either side is `inconclusive` too. A PR that
   changes a part's markup updates its selector in the same PR.
 
 ## Shape of the output (guidance, not a contract)

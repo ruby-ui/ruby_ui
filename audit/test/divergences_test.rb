@@ -147,4 +147,10 @@ class DivergencesTest < Minitest::Test
     refute_nil found.call(%(- button "Two"))
     assert_nil found.call(%(- button "two"))
   end
+
+  def test_match_with_both_keys_is_rejected
+    match = look_match.merge("attribute" => "aria-expanded")
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.new(match_entry(match)) }
+    assert_match(/Look match must use property only/, error.message)
+  end
 end

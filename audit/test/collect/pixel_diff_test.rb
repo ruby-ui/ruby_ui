@@ -42,4 +42,15 @@ class CollectPixelDiffTest < Minitest::Test
     assert_equal({"error" => "size 4x4 vs 4x3"}, compare(png("a.png"), png("b.png", 4, 3)))
     refute File.exist?(diff)
   end
+
+  def test_tolerance_boundary
+    at16 = compare(png("a.png"), png("b.png", 4, 4, [0, 0] => ChunkyPNG::Color.rgba(116, 100, 100, 255)))
+    at17 = compare(png("c.png"), png("d.png", 4, 4, [0, 0] => ChunkyPNG::Color.rgba(117, 100, 100, 255)))
+    assert_equal [0, 1], [at16["pixels"], at17["pixels"]]
+  end
+
+  def test_alpha_only_difference_counts
+    result = compare(png("a.png"), png("b.png", 4, 4, [0, 0] => ChunkyPNG::Color.rgba(100, 100, 100, 200)))
+    assert_equal 1, result["pixels"]
+  end
 end

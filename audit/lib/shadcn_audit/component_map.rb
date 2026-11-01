@@ -81,7 +81,7 @@ module ShadcnAudit
 
       parts = entry["parts"] || {}
       selectors.each do |part, css|
-        raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} is not a mapped part" unless parts.key?(part)
+        raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} is not a mapped part" unless parts[part]
         next if css.nil? || (css.is_a?(String) && !css.strip.empty?)
 
         raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} must be a non-empty CSS selector"

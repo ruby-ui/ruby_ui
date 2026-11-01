@@ -149,8 +149,8 @@ class CollectGraderTest < Minitest::Test
     r = side("DialogContent" => [el({}, "#{common}:\n    - img\n    - text: Close")])
     s = side("DialogContent" => [el({}, common)])
     line = aria(grader(parts: %w[DialogContent]).lines([obs("open", "light", r, s)])).first
-    assert_equal %(snapshot: only here: - button "Close": | - img | - text: Close), line["rubyui"]
-    assert_equal %(snapshot: only here: - button "Close"), line["shadcn"]
+    assert_equal %(snapshot: only here:   - button "Close": |     - img |     - text: Close), line["rubyui"]
+    assert_equal %(snapshot: only here:   - button "Close"), line["shadcn"]
   end
 
   def test_theme_explained_note_names_the_part
@@ -196,5 +196,20 @@ class CollectGraderTest < Minitest::Test
     s = side("Content" => [el({}, "- dialog", {"modal" => nil})])
     line = aria(grader(parts: %w[Content]).lines([obs("open", "light", r, s)])).first
     assert_equal ["warn", "modal: true", "modal: (none)"], line.values_at("status", "rubyui", "shadcn")
+  end
+
+  def test_snapshot_delta_keeps_repeated_nodes
+    r = side("List" => [el({}, "- listitem: A\n- listitem: A\n- listitem: A")])
+    s = side("List" => [el({}, "- listitem: A\n- listitem: A")])
+    line = aria(grader(parts: %w[List]).lines([obs("open", "light", r, s)])).first
+    assert_equal "snapshot: only here: - listitem: A", line["rubyui"]
+  end
+
+  def test_snapshot_delta_shows_nesting
+    r = side("List" => [el({}, %(- list:\n  - button "Two"))])
+    s = side("List" => [el({}, %(- list:\n- button "Two"))])
+    line = aria(grader(parts: %w[List]).lines([obs("open", "light", r, s)])).first
+    assert_equal %(snapshot: only here:   - button "Two"), line["rubyui"]
+    assert_equal %(snapshot: only here: - button "Two"), line["shadcn"]
   end
 end

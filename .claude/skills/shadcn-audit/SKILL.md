@@ -42,8 +42,10 @@ an error as an empty result. Talk to the user in their language;
 - `gh` authenticated (`gh auth status`) with read access to
   `ruby-ui/ruby_ui`; posting the comment needs write access.
 - Node and pnpm (the shadcn sandbox and the docs assets).
-- Playwright's Chromium for `collect`: `cd audit && pnpm install && pnpm exec
-  playwright install chromium` (once per machine).
+- Playwright for `collect`: `cd audit && pnpm install` in every checkout or
+  worktree (it installs `audit/node_modules`), then `pnpm exec playwright
+  install chromium` (the browser download is shared by every checkout on the
+  machine).
 - The chrome-devtools MCP server, for the browser steps `collect` doesn't
   cover (the kind-specific behavior sequences, animation, exploration).
 - Optional: Herdr. When `HERDR_ENV=1` the servers run in Herdr panes;
@@ -184,13 +186,20 @@ For each folder in `components`:
   (✅ intentional), differences explained by a theme token or an environment
   diff (⏸), unreachable states and selector count mismatches (⏸). It writes
   `<run>/collect.json` and `<run>/screens/`, with a pixel diff per state as
-  evidence only. Append its `lines` and `screenshots` to the component and
+  evidence only, and only for states reached on both sides. Append its `lines` and `screenshots` to the component and
   copy its `environment_diffs` into the report. Running it twice on the same
   SHAs gives the same `collect.json`.
   - `{"error": "… has no selectors …"}` → the component has no `selectors`
     in `component_map.yml`: tell the user to add them (RubyUI part → CSS
     selector in the rendered fixture; `null` = shadcn renders no element for
-    that part) and fall back to the manual steps 4–5 for it.
+    that part). Until they exist, collect that component by hand with the
+    chrome-devtools MCP: for each mapped part, the shadcn classes from
+    `[data-slot=<slot>]` against `effective`, the RubyUI element found from
+    its Ruby source at `<preview path>/gem/lib/ruby_ui/<folder>/` (tag,
+    Stimulus target, class string), look-alikes settled with
+    `getComputedStyle`; then the whole set for its `kind` in
+    `references/interactions.md`, including the Setup, the states and the
+    screenshots.
   - `{"error": "playwright not found …"}` / `"chromium failed to launch"` →
     install as in Prerequisites and re-run.
 
@@ -203,9 +212,11 @@ settle the ⏸ it left (count mismatches, theme/environment explanations,
 reference `warnings`) when the DOM lets you. Variant props (size, side) are
 compared against `variants`.
 
-**Overrides.** You may change a `collect` grade only with a reason written in
-that line's `note` (e.g. `text-align: left` vs `start` in LTR computes the same
-→ ✅ with the note). Never drop a `collect` line.
+**Overrides.** Change a `collect` grade only with a verified reason that the
+rules in `references/grading.md` allow, written in that line's `note` (e.g.
+`text-align: left` vs `start` in LTR renders the same → ✅ with the note). A ✅
+with a basis still needs its usual route: a registered divergence, a native
+replacement or the spec. Never drop a `collect` line.
 
 Fixture-originated wrappers aren't findings (`references/grading.md`): Sheet
 body (shadcn `div.px-4` vs `SheetMiddle`), Dialog body (bare `<p>` vs

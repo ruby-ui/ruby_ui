@@ -6,7 +6,7 @@ module ShadcnAudit
 
       def self.value(value)
         value.to_s.strip.downcase.gsub(/\s+/, " ")
-          .gsub(DECIMAL) { |n| format("%.2f", n.to_f).sub(/\.?0+\z/, "") }
+          .gsub(DECIMAL) { |n| format("%.2f", n.to_f).sub(/\.?0+\z/, "").sub(/\A-0\z/, "0") }
       end
     end
   end

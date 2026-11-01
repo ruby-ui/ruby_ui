@@ -2,7 +2,7 @@
 // entry is a function expression; the driver picks one by name.
 ({
   // Same facts on both sides (interactions.md "Environment probe").
-  environment: () => ({
+  environment: async () => (await document.fonts.ready, {
     w: innerWidth, h: innerHeight, dpr: devicePixelRatio,
     font: getComputedStyle(document.body).fontFamily,
     fonts: [...new Set([...document.fonts].filter(f => f.status === "loaded").map(f => f.family))].sort(),
@@ -23,6 +23,7 @@
 
   // Waits for running animations (capped) and two frames.
   settle: async () => {
+    await document.fonts.ready
     const done = Promise.all(document.getAnimations().map(a => a.finished.catch(() => null)))
     await Promise.race([done, new Promise(r => setTimeout(r, 2000))])
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
@@ -47,8 +48,8 @@
           const v = e.getAttribute(name)
           if (name === "modal") a[name] = (e.matches(":modal") || v === "true" || e.getAttribute("aria-modal") === "true") ? "true" : null
           else if (v === null) a[name] = null
-          else if (name === "aria-controls") a[name] = v.split(/\s+/).every(id => document.getElementById(id)) ? "resolves" : "dangling"
-          else if (name === "aria-describedby") a[name] = v.split(/\s+/).map(text).join(" ")
+          else if (name === "aria-controls") a[name] = v.trim().split(/\s+/).every(id => document.getElementById(id)) ? "resolves" : "dangling"
+          else if (name === "aria-describedby") a[name] = v.trim().split(/\s+/).map(id => text(id) ?? "dangling").join(" ")
           else a[name] = v
         }
         return { index, styles: Object.fromEntries(props.map(p => [p, s.getPropertyValue(p)])), attrs: a }

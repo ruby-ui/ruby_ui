@@ -127,4 +127,11 @@ class CollectRunnerTest < Minitest::Test
     assert_includes result["environment_diffs"], "environment probe failed on rubyui (light): net::ERR_CONNECTION_REFUSED"
     assert File.exist?(File.join(@run, "collect.json"))
   end
+
+  def test_theme_failure_happens_before_the_browser
+    factory = ->(audit_dir:, &block) { flunk "browser opened before theme was computed" }
+    runner = Runner.new(folder: "dialog", run_dir: @run, root: Pathname.new(@root), driver_factory: factory)
+    def runner.theme = raise(Errno::ENOENT, "themes.ts")
+    assert_raises(Errno::ENOENT) { runner.call }
+  end
 end

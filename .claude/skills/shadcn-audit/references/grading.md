@@ -57,7 +57,10 @@ still graded on its own and is still a finding.
 `collect` grades Look (computed styles: ❌ / ✅) and ARIA (snapshot + attributes:
 ⚠️ / ✅) per part, by the same rules as below. Its ⏸ lines say why (state not
 reached, selector count mismatch, theme token, environment diff). Keep every
-`collect` line; to change a grade, write the reason in its `note`.
+`collect` line. Change a grade only with a verified reason that the rules
+below allow (e.g. values that render the same), written in its `note`; a ✅
+with a basis still needs its usual route (registered divergence, native, spec).
+Otherwise keep the grade.
 
 ## Per-dimension notes
 

@@ -19,7 +19,8 @@ class CliCollectTest < Minitest::Test
       FileUtils.mkdir_p(File.join(dir, "audit"))
       File.write(File.join(dir, "audit/component_map.yml"),
         "dialog:\n  kind: modal\n  parts: {DialogContent: dialog-content}\n  selectors: {DialogContent: div}\n")
-      status, result = run_cli(["collect", "dialog", "--run", File.join(dir, "run")], driver_factory: factory, root: Pathname.new(dir))
+      status, result = run_cli(["collect", "dialog", "--run", File.join(dir, "run")], driver_factory: factory, root: Pathname.new(dir),
+        theme: {"diffs" => []})
       assert_equal 1, status
       assert_includes result["error"], "pnpm exec playwright install chromium"
     end
