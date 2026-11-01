@@ -12,8 +12,8 @@ class Views::Docs::Form < Views::Base
         <<~RUBY
           Form(class: "w-2/3 space-y-6") do
             FormField do
-              FormFieldLabel { "Default error" }
-              Input(placeholder: "Joel Drapper", required: true, minlength: "3") { "Joel Drapper" }
+              FormFieldLabel(for: "default_error") { "Default error" }
+              Input(id: "default_error", placeholder: "Joel Drapper", required: true, minlength: "3") { "Joel Drapper" }
               FormFieldHint()
               FormFieldError()
             end
@@ -24,18 +24,18 @@ class Views::Docs::Form < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
         <<~RUBY
-          FormField do
-            FormFieldLabel { "Disabled" }
-            Input(disabled: true, placeholder: "Joel Drapper", required: true, minlength: "3") { "Joel Drapper" }
+          FormField(data: {disabled: "true"}) do
+            FormFieldLabel(for: "disabled") { "Disabled" }
+            Input(id: "disabled", disabled: true, placeholder: "Joel Drapper", required: true, minlength: "3") { "Joel Drapper" }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
         <<~RUBY
-          FormField do
-            FormFieldLabel { "Aria Disabled" }
-            Input(aria: {disabled: "true"}, placeholder: "Joel Drapper", required: true, minlength: "3") { "Joel Drapper" }
+          FormField(data: {disabled: "true"}) do
+            FormFieldLabel(for: "aria_disabled") { "Aria Disabled" }
+            Input(id: "aria_disabled", aria: {disabled: "true"}, placeholder: "Joel Drapper", required: true, minlength: "3") { "Joel Drapper" }
           end
         RUBY
       end
@@ -44,8 +44,8 @@ class Views::Docs::Form < Views::Base
         <<~RUBY
           Form(class: "w-2/3 space-y-6") do
             FormField do
-              FormFieldLabel { "Custom error message" }
-              Input(placeholder: "joel@drapper.me", required: true, data_value_missing: "Custom error message")
+              FormFieldLabel(for: "custom_error_message") { "Custom error message" }
+              Input(id: "custom_error_message", placeholder: "joel@drapper.me", required: true, data_value_missing: "Custom error message")
               FormFieldError()
             end
             Button(type: "submit") { "Save" }
@@ -57,8 +57,8 @@ class Views::Docs::Form < Views::Base
         <<~RUBY
           Form(class: "w-2/3 space-y-6") do
             FormField do
-              FormFieldLabel { "Backend error" }
-              Input(placeholder: "Joel Drapper", required: true)
+              FormFieldLabel(for: "backend_error") { "Backend error" }
+              Input(id: "backend_error", placeholder: "Joel Drapper", required: true)
               FormFieldError { "Error from backend" }
             end
             Button(type: "submit") { "Save" }
@@ -66,18 +66,124 @@ class Views::Docs::Form < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Checkbox", context: self) do
+      render Docs::VisualCodeExample.new(title: "Multiple errors", context: self) do
         <<~RUBY
           Form(class: "w-2/3 space-y-6") do
             FormField do
-              Checkbox(required: true)
-                label(
-                  class:
-                    "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                ) { " Accept terms and conditions " }
-              FormFieldError()
+              FormFieldLabel(for: "multiple_errors") { "Username" }
+              Input(id: "multiple_errors", value: "j!", required: true)
+              # e.g. FormFieldError(errors: user.errors[:username])
+              FormFieldError(errors: ["is too short (minimum is 3 characters)", "only allows letters and numbers"])
             end
             Button(type: "submit") { "Save" }
+          end
+        RUBY
+      end
+
+      Text do
+        plain "Without a "
+        InlineCode { "FormFieldError" }
+        plain ", a "
+        InlineCode { "FormField" }
+        plain " leaves the message to the browser, which shows its native bubble next to the control. If a form mixes fields with and without "
+        InlineCode { "FormFieldError" }
+        plain ", focus goes to the first field with a bubble, which can come after the first invalid field."
+      end
+
+      render Docs::VisualCodeExample.new(title: "Checkbox", context: self) do
+        <<~RUBY
+          Form(class: "w-2/3 space-y-6") do
+            FormField(orientation: :horizontal) do
+              Checkbox(id: "accept_terms", required: true)
+              FormFieldLabel(for: "accept_terms") { "Accept terms and conditions" }
+            end
+            Button(type: "submit") { "Save" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Fieldset", context: self) do
+        <<~RUBY
+          FormFieldSet(class: "w-2/3") do
+            FormFieldLegend { "Address information" }
+            FormFieldHint { "We need your address to deliver your order." }
+            FormFieldGroup do
+              FormField do
+                FormFieldLabel(for: "fieldset_street") { "Street address" }
+                Input(id: "fieldset_street", placeholder: "123 Main St")
+              end
+              FormField do
+                FormFieldLabel(for: "fieldset_city") { "City" }
+                Input(id: "fieldset_city", placeholder: "New York")
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Horizontal with description", context: self) do
+        <<~RUBY
+          FormField(orientation: :horizontal, class: "w-2/3") do
+            Checkbox(id: "horizontal_newsletter")
+            FormFieldContent do
+              FormFieldLabel(for: "horizontal_newsletter") { "Subscribe to the newsletter" }
+              FormFieldHint { "One email a month, no spam." }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Responsive", context: self) do
+        <<~RUBY
+          FormFieldGroup do
+            FormField(orientation: :responsive) do
+              FormFieldContent do
+                FormFieldLabel(for: "responsive_name") { "Name" }
+                FormFieldHint { "Side by side on wide containers, stacked on narrow ones." }
+              end
+              Input(id: "responsive_name", placeholder: "Joel Drapper")
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Choice card", context: self) do
+        <<~RUBY
+          FormFieldGroup(class: "w-2/3") do
+            FormFieldLabel(for: "plan_starter") do
+              FormField(orientation: :horizontal) do
+                FormFieldContent do
+                  FormFieldTitle { "Starter" }
+                  FormFieldHint { "For small teams getting started." }
+                end
+                RadioButton(id: "plan_starter", name: "plan", value: "starter", checked: true)
+              end
+            end
+            FormFieldLabel(for: "plan_pro") do
+              FormField(orientation: :horizontal) do
+                FormFieldContent do
+                  FormFieldTitle { "Pro" }
+                  FormFieldHint { "For growing teams that need more." }
+                end
+                RadioButton(id: "plan_pro", name: "plan", value: "pro")
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Separator", context: self) do
+        <<~RUBY
+          FormFieldGroup(class: "w-2/3") do
+            FormField do
+              FormFieldLabel(for: "separator_email") { "Email" }
+              Input(id: "separator_email", type: "email", placeholder: "joel@example.com")
+            end
+            FormFieldSeparator { "Or" }
+            FormField do
+              FormFieldLabel(for: "separator_phone") { "Phone" }
+              Input(id: "separator_phone", type: "tel", placeholder: "+1 555 0100")
+            end
           end
         RUBY
       end
@@ -248,11 +354,9 @@ class Views::Docs::Form < Views::Base
             FormFieldError()
           end
 
-          FormField do
-            div(class: "flex items-center gap-2") do
-              Checkbox(id: "session_remember_me", name: "session[remember_me]", value: "1")
-              FormFieldLabel(for: "session_remember_me") { "Remember me" }
-            end
+          FormField(orientation: :horizontal) do
+            Checkbox(id: "session_remember_me", name: "session[remember_me]", value: "1")
+            FormFieldLabel(for: "session_remember_me") { "Remember me" }
           end
 
           Button(type: "submit", class: "w-full") { "Sign in" }

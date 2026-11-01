@@ -67,6 +67,9 @@ application.register("ruby-ui--dialog", RubyUi__DialogController)
 import RubyUi__DropdownMenuController from "./ruby_ui/dropdown_menu_controller"
 application.register("ruby-ui--dropdown-menu", RubyUi__DropdownMenuController)
 
+import RubyUi__FormController from "./ruby_ui/form_controller"
+application.register("ruby-ui--form", RubyUi__FormController)
+
 import RubyUi__FormFieldController from "./ruby_ui/form_field_controller"
 application.register("ruby-ui--form-field", RubyUi__FormFieldController)
 

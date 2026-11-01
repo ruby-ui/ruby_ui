@@ -13,9 +13,10 @@ module ShadcnAudit
     REGISTRY = "live"
     # Written after a successful build: the audit/sandbox.yml pins (a
     # mismatch rebuilds the app), when the components were last pulled from
-    # the registry, and the workspace SHA at that time. That SHA is only a
-    # refresh trigger: when the workspace moves, the components are pulled
-    # again so the sandbox doesn't fall far behind the reference.
+    # the registry, the workspace SHA at that time and the shadcn components
+    # installed (`shadcn` plus `fixture_shadcn` from component_map.yml). The
+    # SHA and the component list are refresh triggers: when the workspace
+    # moves or the map needs other components, they are pulled again.
     STAMP = ".audit-sandbox.yml"
     TEMPLATE_FILES = %w[src/main.tsx src/parity.css index.html].freeze
 
@@ -32,7 +33,7 @@ module ShadcnAudit
     def prepare
       @stamp_data = nil
       created = !built?
-      refreshed = !created && stamp_data["shadcn_sha"] != @shadcn_sha
+      refreshed = !created && (stamp_data["shadcn_sha"] != @shadcn_sha || Array(stamp_data["components"]).sort != shadcn_components.sort)
       if created
         build
       elsif refreshed
@@ -66,7 +67,7 @@ module ShadcnAudit
     def built? = stamp_data["pins"] == pins
 
     def write_stamp
-      @stamp_data = {"pins" => pins, "shadcn_sha" => @shadcn_sha, "built_at" => @clock.call.iso8601}
+      @stamp_data = {"pins" => pins, "shadcn_sha" => @shadcn_sha, "components" => shadcn_components, "built_at" => @clock.call.iso8601}
       stamp.write(YAML.dump(@stamp_data))
     end
 
@@ -74,8 +75,9 @@ module ShadcnAudit
       @shell.capture("pnpm", "dlx", shadcn_cli, "add", "--yes", *flags, *shadcn_components, chdir: app_dir)
     end
 
-    # The workspace moved since the last pull: re-add the mapped components
-    # from the live registry over the old ones, keeping the app and packages.
+    # The workspace moved, or the map now needs other components than the
+    # last pull installed: re-add them all from the live registry over the old
+    # ones, keeping the app and packages.
     def refresh
       add_components("--overwrite")
       write_stamp
@@ -106,8 +108,13 @@ module ShadcnAudit
     end
 
     def shadcn_components
-      map = ComponentMap.load(@audit_dir.join("component_map.yml"))
-      map.all_folders.map { |folder| map.entry(folder).fetch("shadcn") }.compact.uniq
+      @shadcn_components ||= begin
+        map = ComponentMap.load(@audit_dir.join("component_map.yml"))
+        map.all_folders.flat_map { |folder|
+          entry = map.entry(folder)
+          [entry.fetch("shadcn"), *entry["fixture_shadcn"]]
+        }.compact.uniq
+      end
     end
 
     def copy_template

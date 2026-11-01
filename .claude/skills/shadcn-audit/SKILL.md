@@ -81,8 +81,9 @@ it becomes `report.json`'s `target`.
    `workspace --sha <sha>`.)
 2. `sandbox` → `path`, `url_template`, `lock` (→ `report.json`'s
    `sandbox_lock`), `created` (true = it rebuilt the app; tell the user),
-   `refreshed` (true = the workspace moved since the last pull, so it re-added
-   the mapped components with `--overwrite`; tell the user), `registry` and
+   `refreshed` (true = the workspace moved, or `component_map.yml` now needs
+   other shadcn components (`shadcn` plus `fixture_shadcn`) than the last pull
+   installed, so it re-added them all with `--overwrite`; tell the user), `registry` and
    `built_at`. `registry: "live"` means the components come from the
    published shadcn registry as of `built_at`, not from the workspace clone:
    the sandbox tracks `main` loosely, and `shadcn_sha` pins only the files the
