@@ -11,9 +11,10 @@ class RubyUI::CardTest < ComponentTest
           RubyUI.CardDescription { "@joeldrapper" }
         end
         RubyUI.CardContent do
-          RubyUI.AspectRatio(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border") do |aspect_ratio|
+          RubyUI.AspectRatio(ratio: "16/9", class: "rounded-md overflow-hidden border") do |aspect_ratio|
             aspect_ratio.img(
               alt: "Placeholder",
+              class: "absolute inset-0 size-full object-cover",
               loading: "lazy",
               src: "https://avatars.githubusercontent.com/u/246692?v=4"
             )

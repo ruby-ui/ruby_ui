@@ -229,3 +229,14 @@ avatar:
   props:
     Avatar: {size: size}
     AvatarFallback: {delay: delay}
+
+aspect_ratio:
+  shadcn: aspect-ratio
+  kind: static
+  docs_view: aspect_ratio
+  parts:
+    AspectRatio: aspect-ratio
+  selectors:
+    AspectRatio: '[data-slot="aspect-ratio"]'
+  props:
+    AspectRatio: {ratio: ratio}

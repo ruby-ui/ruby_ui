@@ -1,0 +1,9 @@
+# One 16:9 AspectRatio (ratio={16 / 9} in shadcn, ratio: 16.0 / 9 in RubyUI) with an image, as in shadcn's aspect-ratio-example (16:9).
+# The image is an inline SVG data URI (no network, same pixels on both sides).
+# shadcn's example uses next/image with `fill`, which renders the inline style
+# position:absolute; height:100%; width:100%; inset:0; color:transparent; the shadcn fixture writes that style by hand.
+# Static kind: only the closed state is collected, data-audit-trigger sits on the image only because every fixture needs one.
+class: rounded-lg bg-muted
+image_alt: Photo
+image_class: h-full w-full rounded-lg object-cover
+image_src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360' viewBox='0 0 640 360'%3E%3Crect width='640' height='360' fill='%23737373'/%3E%3Ccircle cx='320' cy='180' r='120' fill='%23d4d4d4'/%3E%3C/svg%3E"

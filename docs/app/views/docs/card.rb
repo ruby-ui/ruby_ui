@@ -16,9 +16,10 @@ class Views::Docs::Card < Views::Base
               CardDescription { "@joeldrapper" }
             end
             CardContent do
-              AspectRatio(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border") do
+              AspectRatio(ratio: "16/9", class: "rounded-md overflow-hidden border") do
                 img(
                   alt: "Placeholder",
+                  class: "absolute inset-0 size-full object-cover",
                   loading: "lazy",
                   src: image_url('pattern.jpg')
                 )
@@ -35,9 +36,10 @@ class Views::Docs::Card < Views::Base
       render Docs::VisualCodeExample.new(title: "Card with full-width image", context: self) do
         <<~RUBY
           Card(class: 'w-96 overflow-hidden') do
-            AspectRatio(aspect_ratio: "16/9", class: "border-b") do
+            AspectRatio(ratio: "16/9", class: "border-b") do
               img(
                 alt: "Placeholder",
+                class: "absolute inset-0 size-full object-cover",
                 loading: "lazy",
                 src: image_url('pattern.jpg')
               )
