@@ -171,6 +171,22 @@ class RubyUI::AlertDialogTest < ComponentTest
     assert_match(/aria-describedby="confirm-description"/, output)
   end
 
+  def test_only_the_first_title_and_description_get_generated_ids
+    output = phlex do
+      RubyUI.AlertDialogContent(id: "d") do
+        RubyUI.AlertDialogTitle { "One" }
+        RubyUI.AlertDialogTitle { "Two" }
+        RubyUI.AlertDialogDescription { "One" }
+        RubyUI.AlertDialogDescription { "Two" }
+      end
+    end
+
+    assert_equal 1, output.scan('id="d-title"').size
+    assert_equal 1, output.scan('id="d-description"').size
+    assert_match(/<dialog\b[^>]*aria-labelledby="d-title"/, output)
+    assert_match(/<dialog\b[^>]*aria-describedby="d-description"/, output)
+  end
+
   def test_title_outside_content_renders_without_id
     refute_match(/\sid=/, phlex { RubyUI.AlertDialogTitle { "x" } })
   end

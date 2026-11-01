@@ -5,7 +5,8 @@ module RubyUI
     # Inside AlertDialogContent the description describes the dialog (aria-describedby).
     def view_template(&)
       names = context[:ruby_ui_alert_dialog]
-      return p(**attrs, &) unless names
+      # Only the first one gets the generated id, so ids stay unique.
+      return p(**attrs, &) if names.nil? || (!attrs[:id] && names[:describedby])
 
       id = attrs[:id] || "#{names[:id]}-description"
       names[:describedby] ||= id

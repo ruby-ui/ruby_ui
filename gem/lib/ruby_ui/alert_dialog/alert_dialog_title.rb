@@ -5,7 +5,8 @@ module RubyUI
     # Inside AlertDialogContent the title names the dialog (aria-labelledby).
     def view_template(&)
       names = context[:ruby_ui_alert_dialog]
-      return h2(**attrs, &) unless names
+      # Only the first one gets the generated id, so ids stay unique.
+      return h2(**attrs, &) if names.nil? || (!attrs[:id] && names[:labelledby])
 
       id = attrs[:id] || "#{names[:id]}-title"
       names[:labelledby] ||= id

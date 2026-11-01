@@ -107,8 +107,10 @@ export default class extends Controller {
     const button = this.triggerButton(trigger)
     if (!button || !this.hasDialogTarget) return
 
-    button.setAttribute("aria-haspopup", "dialog")
-    button.setAttribute("aria-controls", this.dialogTarget.id)
+    // Keep the author's ARIA; repoint aria-controls only when it's missing or stale.
+    if (!button.hasAttribute("aria-haspopup")) button.setAttribute("aria-haspopup", "dialog")
+    const controls = button.getAttribute("aria-controls")
+    if (!controls || !document.getElementById(controls)) button.setAttribute("aria-controls", this.dialogTarget.id)
     button.setAttribute("aria-expanded", String(this.dialogTarget.open))
   }
 
