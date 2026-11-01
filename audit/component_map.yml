@@ -2,6 +2,8 @@
 # parts: RubyUI class => shadcn data-slot (null = no shadcn part).
 # props: RubyUI class => {shadcn prop => RubyUI kwarg (null = none)}; shadcn props only.
 # rubyui_only: RubyUI class => [kwargs with no shadcn counterpart]. className is never listed (all parts take class via attrs).
+# selectors: RubyUI class => CSS selector of that part in the rendered fixture (fixed, so collect is deterministic);
+#   null = not compared (shadcn renders no element for it, e.g. a Base UI root).
 # fixture_shadcn: other shadcn components the fixture renders (added to the sandbox, not audited here).
 dialog:
   shadcn: dialog
@@ -16,6 +18,14 @@ dialog:
     DialogTitle: dialog-title
     DialogDescription: dialog-description
     DialogMiddle: null
+  selectors:
+    Dialog: null
+    DialogTrigger: '[data-ruby-ui--dialog-target="trigger"] > button'
+    DialogContent: 'dialog[data-ruby-ui--dialog-target="dialog"]'
+    DialogHeader: 'dialog[data-ruby-ui--dialog-target="dialog"] > div:first-child'
+    DialogFooter: 'dialog[data-ruby-ui--dialog-target="dialog"] > div:last-of-type'
+    DialogTitle: '[data-ruby-ui--dialog-target="title"]'
+    DialogDescription: '[data-ruby-ui--dialog-target="description"]'
   props:
     Dialog: {open: open}
     DialogContent: {showCloseButton: show_close_button}
@@ -37,6 +47,16 @@ alert_dialog:
     AlertDialogDescription: alert-dialog-description
     AlertDialogAction: alert-dialog-action
     AlertDialogCancel: alert-dialog-cancel
+  selectors:
+    AlertDialog: null
+    AlertDialogTrigger: '[data-controller="ruby-ui--alert-dialog"] > [data-action] > button'
+    AlertDialogContent: '[role="alertdialog"]'
+    AlertDialogHeader: '[role="alertdialog"] > div:first-child'
+    AlertDialogFooter: '[role="alertdialog"] > div:last-child'
+    AlertDialogTitle: '[role="alertdialog"] > div:first-child > h2'
+    AlertDialogDescription: '[role="alertdialog"] > div:first-child > p'
+    AlertDialogAction: '[role="alertdialog"] > div:last-child > button:last-child'
+    AlertDialogCancel: '[role="alertdialog"] > div:last-child > button:first-child'
   props:
     AlertDialogContent: {size: null}
     AlertDialogCancel: {variant: variant, size: size}
@@ -54,6 +74,14 @@ sheet:
     SheetTitle: sheet-title
     SheetDescription: sheet-description
     SheetMiddle: null
+  selectors:
+    Sheet: null
+    SheetTrigger: '[data-controller="ruby-ui--sheet"] > [data-action] > button'
+    SheetContent: '[data-ruby-ui--sheet-content-target="panel"]'
+    SheetHeader: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child'
+    SheetFooter: '[data-ruby-ui--sheet-content-target="panel"] > div:last-of-type'
+    SheetTitle: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child > h3'
+    SheetDescription: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child > p'
   props:
     SheetContent: {side: side, showCloseButton: null}
 
@@ -71,6 +99,15 @@ command:
     CommandDialog: dialog
     CommandDialogTrigger: null
     CommandDialogContent: dialog-content
+  selectors:
+    Command: '[data-ruby-ui--command-target="panel"] > div'
+    CommandInput: 'input[data-ruby-ui--command-target="input"]'
+    CommandList: '[data-ruby-ui--command-target="panel"] > div > div:has([data-ruby-ui--command-target="group"])'
+    CommandEmpty: '[data-ruby-ui--command-target="empty"]'
+    CommandGroup: '[data-ruby-ui--command-target="group"]'
+    CommandItem: '[data-ruby-ui--command-target="item"]'
+    CommandDialog: null
+    CommandDialogContent: '[data-ruby-ui--command-target="panel"]'
   props:
     CommandInput: {placeholder: placeholder}
     CommandGroup: {heading: title}
@@ -97,6 +134,17 @@ form:
     FormFieldContent: field-content
     FormFieldTitle: field-label
     FormFieldSeparator: field-separator
+  selectors:
+    FormField: '[data-slot="field"]'
+    FormFieldLabel: '[data-slot="field-label"]'
+    FormFieldHint: '[data-slot="field-description"]'
+    FormFieldError: '[data-slot="field-error"]'
+    FormFieldSet: '[data-slot="field-set"]'
+    FormFieldLegend: '[data-slot="field-legend"]'
+    FormFieldGroup: '[data-slot="field-group"]'
+    FormFieldContent: '[data-slot="field-content"]'
+    FormFieldTitle: null
+    FormFieldSeparator: '[data-slot="field-separator"]'
   props:
     FormField: {orientation: orientation}
     FormFieldLegend: {variant: variant}

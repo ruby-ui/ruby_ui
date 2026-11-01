@@ -26,6 +26,10 @@ module ShadcnAudit
 
     def all_folders = @entries.keys
 
+    # RubyUI part => CSS selector in the rendered fixture ({} when unset).
+    # A null selector means "not compared" (e.g. a Base UI root with no DOM).
+    def selectors(folder) = (entry(folder) || {})["selectors"] || {}
+
     # Folder for a component path, only when it is in the map.
     def folder_for_path(path)
       folder = component_folder_for_path(path)
@@ -70,6 +74,20 @@ module ShadcnAudit
 
     private
 
+    def validate_selectors!(folder, entry)
+      selectors = entry["selectors"]
+      return if selectors.nil?
+      raise ConfigError, "component_map.yml: #{folder}: selectors must be a mapping" unless selectors.is_a?(Hash)
+
+      parts = entry["parts"] || {}
+      selectors.each do |part, css|
+        raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} is not a mapped part" unless parts[part]
+        next if css.nil? || (css.is_a?(String) && !css.strip.empty?)
+
+        raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} must be a non-empty CSS selector"
+      end
+    end
+
     def snake_case(name)
       name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
     end
@@ -88,6 +106,8 @@ module ShadcnAudit
 
           raise ConfigError, "component_map.yml: #{folder}: rubyui_only.#{part} must be an array of kwargs"
         end
+
+        validate_selectors!(folder, entry)
 
         extra = entry["fixture_shadcn"]
         if !extra.nil? && !(extra.is_a?(Array) && extra.all? { |name| name.is_a?(String) && name.match?(COMPONENT_NAME) })

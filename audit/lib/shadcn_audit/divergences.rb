@@ -21,6 +21,17 @@ module ShadcnAudit
       @entries.find { |e| e["component"] == component.to_s && e["dimension"] == dimension.to_s }
     end
 
+    # Entry whose structured `match` describes exactly this difference.
+    # Prose-only entries never match: reading them is the agent's call.
+    def match(component:, dimension:, part:, key:, rubyui:, shadcn:)
+      @entries.find do |e|
+        m = e["match"]
+        next false unless m && e["component"] == component.to_s && e["dimension"] == dimension.to_s
+        m["part"] == part.to_s && (m["property"] || m["attribute"]) == key.to_s &&
+          same?(dimension, m["rubyui"], rubyui) && same?(dimension, m["shadcn"], shadcn)
+      end
+    end
+
     def for_component(component)
       @entries.select { |e| e["component"] == component.to_s }
     end
@@ -39,6 +50,28 @@ module ShadcnAudit
 
     private
 
+    MATCH_KEYS = {"Look" => "property", "ARIA" => "attribute"}.freeze
+
+    # Look values are normalized CSS; ARIA values (snapshots, attributes) are exact.
+    def same?(dimension, expected, actual)
+      return expected.to_s == actual.to_s unless dimension.to_s == "Look"
+
+      Collect::Normalize.value(expected) == Collect::Normalize.value(actual)
+    end
+
+    def validate_match!(label, entry)
+      m = entry["match"]
+      return if m.nil?
+      raise ConfigError, "#{label}: match is only for Look or ARIA" unless MATCH_KEYS.key?(entry["dimension"])
+
+      key = MATCH_KEYS[entry["dimension"]]
+      other = (MATCH_KEYS.values - [key]).first
+      raise ConfigError, "#{label}: #{entry["dimension"]} match needs #{key}" if m.is_a?(Hash) && !m.key?(key) && m.key?(other)
+      raise ConfigError, "#{label}: #{entry["dimension"]} match must use #{key} only" if m.is_a?(Hash) && m.key?(other)
+      complete = m.is_a?(Hash) && %w[part rubyui shadcn].all? { |k| m.key?(k) && !m[k].nil? } && !m[key].to_s.strip.empty?
+      raise ConfigError, "#{label}: match needs part, property|attribute, rubyui and shadcn" unless complete
+    end
+
     def validate!
       @entries.each_with_index do |entry, i|
         raise ConfigError, "divergences.yml: entry ##{i + 1} must be a mapping" unless entry.is_a?(Hash)
@@ -49,6 +82,7 @@ module ShadcnAudit
         end
         raise ConfigError, "#{label}: reason is still TODO" if entry["reason"].to_s.strip.casecmp?("TODO")
         raise ConfigError, "#{label}: unknown dimension (expected one of #{DIMENSIONS.join(" ")})" unless DIMENSIONS.include?(entry["dimension"])
+        validate_match!(label, entry)
       end
     end
   end

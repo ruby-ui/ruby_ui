@@ -16,27 +16,29 @@ module ShadcnAudit
       "sandbox" => ->(args, out:) { sandbox(args, out: out) },
       "preview" => ->(args, out:) { preview(args, out: out) },
       "render" => ->(args, out:) { render(args, out: out) },
-      "comment" => ->(args, out:) { comment(args, out: out) }
+      "comment" => ->(args, out:) { comment(args, out: out) },
+      "collect" => ->(args, out:, **deps) { collect(args, out: out, **deps) }
     }
 
     # Failures the CLI reports as {"error": ...} with exit status 1 instead
     # of a backtrace, so callers always get one JSON object.
-    ERRORS = [UnknownCommand, Shell::Error, ConfigError, ReportError, ArgumentError,
+    ERRORS = [UnknownCommand, Collect::BrowserError, Shell::Error, ConfigError, ReportError, ArgumentError,
       Errno::ENOENT, JSON::ParserError, Psych::SyntaxError, OptionParser::ParseError].freeze
 
     # Entry point for exe/shadcn-audit; returns the process exit status.
-    def self.run(argv, out: $stdout)
-      start(argv, out: out)
+    # `deps` injects collaborators in tests (e.g. collect's driver_factory).
+    def self.run(argv, out: $stdout, **deps)
+      start(argv, out: out, **deps)
       0
     rescue *ERRORS => e
       out.puts JSON.generate("error" => e.message)
       1
     end
 
-    def self.start(argv, out: $stdout)
+    def self.start(argv, out: $stdout, **deps)
       name, *args = argv
       handler = COMMANDS[name] or raise UnknownCommand, "unknown subcommand: #{name.inspect}"
-      out.puts JSON.generate(handler.call(args, out: out))
+      out.puts JSON.generate(handler.call(args, out: out, **deps))
     end
 
     def self.map(args, out:)
@@ -108,6 +110,23 @@ module ShadcnAudit
       result = PrComment.new(shell: shell)
         .upsert(pr: pr, body: body, expected_head_sha: report.target["head_sha"])
       result.merge("posted" => result["action"] != "refused")
+    end
+
+    # Drives both fixtures in Chromium and grades the objective lines.
+    def self.collect(args, out:, driver_factory: Collect::Driver.method(:open), root: ShadcnAudit.root, theme: nil)
+      run_dir = preview = nil
+      urls = {}
+      parser = OptionParser.new do |o|
+        o.on("--run DIR") { |v| run_dir = v }
+        o.on("--preview DIR") { |v| preview = v }
+        o.on("--shadcn-url TEMPLATE") { |v| urls[:shadcn_url] = v }
+        o.on("--rubyui-url TEMPLATE") { |v| urls[:rubyui_url] = v }
+      end
+      folder = parser.parse!(args).first
+      raise ArgumentError, "usage: collect <folder> --run <dir> [--preview <path>] [--shadcn-url T] [--rubyui-url T]" unless folder && run_dir
+
+      Collect::Runner.new(folder: folder, run_dir: run_dir, preview: preview, root: root,
+        theme: theme, driver_factory: driver_factory, **urls).call
     end
 
     def self.workspace(args, out:)

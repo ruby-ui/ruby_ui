@@ -21,7 +21,7 @@ Behavior or Animation. When unsure, use ⏸ and say what's missing.
 
 | `basis` | Shows as | Rule |
 | --- | --- | --- |
-| `intentional` | ✅ … — intentional | The difference matches an entry from `divergences <folder>` (same `dimension`). `source` = `audit/divergences.yml`, `note` = its `reason`. |
+| `intentional` | ✅ … — intentional | The difference matches an entry from `divergences <folder>` (same `dimension`). `source` = `audit/divergences.yml`, `note` = its `reason`. Entries with a structured `match` are applied by `collect` automatically; prose-only entries by hand. |
 | `native` | ✅ … — native | RubyUI swaps shadcn's JS for a native feature **and keeps** what shadcn delivers: focus in and back, Esc, dismiss, inertness of the page behind. Labelling is markup, graded on the ARIA line, not here. Tag differences go in `note`. No registration needed. |
 | `spec` | ✅ … — follows spec | shadcn breaks a spec (stage 2) and RubyUI follows it. `source` = the spec URL#anchor. No registration needed. |
 
@@ -51,6 +51,16 @@ still graded on its own and is still a finding.
 6. **Native dimension**: RubyUI hand-rolls (JS) what a native feature in
    `native-html.md` does → ❌ "candidate for <feature>", citing MDN. Native
    already used and nothing lost → ✅ basis `native`.
+
+## Lines from `collect`
+
+`collect` grades Look (computed styles: ❌ / ✅) and ARIA (snapshot + attributes:
+⚠️ / ✅) per part, by the same rules as below. Its ⏸ lines say why (state not
+reached, selector count mismatch, theme token, environment diff). Keep every
+`collect` line. Change a grade only with a verified reason that the rules
+below allow (e.g. values that render the same), written in its `note`; a ✅
+with a basis still needs its usual route (registered divergence, native, spec).
+Otherwise keep the grade.
 
 ## Per-dimension notes
 

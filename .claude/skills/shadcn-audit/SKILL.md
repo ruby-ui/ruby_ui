@@ -42,7 +42,12 @@ an error as an empty result. Talk to the user in their language;
 - `gh` authenticated (`gh auth status`) with read access to
   `ruby-ui/ruby_ui`; posting the comment needs write access.
 - Node and pnpm (the shadcn sandbox and the docs assets).
-- The chrome-devtools MCP server, for every browser step.
+- Playwright for `collect`: `cd audit && pnpm install` in every checkout or
+  worktree (it installs `audit/node_modules`), then `pnpm exec playwright
+  install chromium` (the browser download is shared by every checkout on the
+  machine).
+- The chrome-devtools MCP server, for the browser steps `collect` doesn't
+  cover (the kind-specific behavior sequences, animation, exploration).
 - Optional: Herdr. When `HERDR_ENV=1` the servers run in Herdr panes;
   otherwise as background shell processes (step 2.6).
 
@@ -168,16 +173,50 @@ For each folder in `components`:
   list is ⏸ "map gap".
 - `divergences <folder>` → registered differences (`dimension`, `rubyui`,
   `shadcn`, `reason`). A matching difference is ✅ basis `intentional`.
+  Entries with a structured `match` are applied by `collect` on its own;
+  prose-only entries you apply by hand.
+- `collect <folder> --run <run> --preview <preview path>` (add
+  `--shadcn-url`/`--rubyui-url` with the `url_template`s when step 2.6 picked
+  other ports). It drives both fixtures in headless Chromium at 1280×800,
+  light and dark, through the states the `kind` has (closed, open, focus,
+  after-esc; `form_control`: closed, focus; `static`: closed), and grades the
+  objective lines: computed styles per part (Look ❌ / ✅ grouped), the
+  accessibility snapshot plus `aria-expanded`/`aria-controls`/`aria-haspopup`/
+  `aria-describedby` per part (ARIA ⚠️ / ✅ grouped), structured divergences
+  (✅ intentional), differences explained by a theme token or an environment
+  diff (⏸), unreachable states and selector count mismatches (⏸). It writes
+  `<run>/collect.json` and `<run>/screens/`, with a pixel diff per state as
+  evidence only, and only for states reached on both sides. Append its `lines` and `screenshots` to the component and
+  copy its `environment_diffs` into the report. Running it twice on the same
+  SHAs gives the same `collect.json`.
+  - `{"error": "… has no selectors …"}` → the component has no `selectors`
+    in `component_map.yml`: tell the user to add them (RubyUI part → CSS
+    selector in the rendered fixture; `null` = shadcn renders no element for
+    that part). Until they exist, collect that component by hand with the
+    chrome-devtools MCP: for each mapped part, the shadcn classes from
+    `[data-slot=<slot>]` against `effective`, the RubyUI element found from
+    its Ruby source at `<preview path>/gem/lib/ruby_ui/<folder>/` (tag,
+    Stimulus target, class string), look-alikes settled with
+    `getComputedStyle`; then the whole set for its `kind` in
+    `references/interactions.md`, including the Setup, the states and the
+    screenshots.
+  - `{"error": "playwright not found …"}` / `"chromium failed to launch"` →
+    install as in Prerequisites and re-run.
 
 ### 4. Look
 
-Light and dark. For each mapped part: shadcn classes from the DOM
-(`[data-slot=<slot>]`) checked against `effective`; RubyUI classes from the
-preview DOM via `evaluate_script`. RubyUI parts have no `data-slot`: find the
-element from the part's Ruby source at `<preview path>/gem/lib/ruby_ui/<folder>/`
-(tag, Stimulus target, class string). List the tokens missing and extra on each
-side; settle look-alikes with computed styles. Variant props (size, side) are
+`collect` already graded Look from computed styles. Review its lines instead
+of re-collecting: explain each ❌ with the class tokens behind it (shadcn
+`effective` from `reference` vs the RubyUI class string) in the `note`, and
+settle the ⏸ it left (count mismatches, theme/environment explanations,
+reference `warnings`) when the DOM lets you. Variant props (size, side) are
 compared against `variants`.
+
+**Overrides.** Change a `collect` grade only with a verified reason that the
+rules in `references/grading.md` allow, written in that line's `note` (e.g.
+`text-align: left` vs `start` in LTR renders the same → ✅ with the note). A ✅
+with a basis still needs its usual route: a registered divergence, a native
+replacement or the spec. Never drop a `collect` line.
 
 Fixture-originated wrappers aren't findings (`references/grading.md`): Sheet
 body (shadcn `div.px-4` vs `SheetMiddle`), Dialog body (bare `<p>` vs
@@ -185,7 +224,11 @@ body (shadcn `div.px-4` vs `SheetMiddle`), Dialog body (bare `<p>` vs
 
 ### 5. HTML, ARIA, Behavior, Animation
 
-Run the set for the component's `kind` from `references/interactions.md` on
+`collect` already covered the setup, the environment probe, the states
+closed/open/focus/after-esc, the ARIA snapshot and attributes per part, and
+the screenshots. Run the rest of the `kind`'s set from
+`references/interactions.md` (focus trap order, Esc and focus return, outside
+click, scroll lock, arrow keys, typeahead, Enter/Space, animation) on
 both URLs (`url_template`s; `{folder}` = folder, `{light|dark}` = theme), in
 the same viewport on both sides (aim for 1280×800; record the actual size from
 the environment probe), with chrome-devtools MCP. Open by clicking `[data-audit-trigger]`.

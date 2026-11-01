@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    @keyframes pulse { from { opacity: 1 } to { opacity: 0.2 } }
+    .pulse { animation: pulse 0.7s linear infinite }
+    @keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
+    .slow { animation: fadein 5s linear }
+  </style>
+</head>
+<body data-audit-fixture="d">
+  <button data-audit-trigger onclick="document.querySelector('dialog').showModal()">Open</button>
+  <dialog><p>Modal</p></dialog>
+  <div class="ghost" style="visibility:hidden">hidden by visibility</div>
+  <div class="ghost" style="opacity:0">hidden by opacity</div>
+  <div class="pulse">pulsing</div>
+  <div class="slow">slow finite fade-in</div>
+</body>
+</html>
