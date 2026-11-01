@@ -1,0 +1,10 @@
+# One badge per shadcn variant (default, secondary, destructive, outline, ghost, link),
+# then a default badge rendered as a link (shadcn render={<a />}, RubyUI href:).
+# The link badge carries data-audit-trigger (static kind: only the closed state is collected).
+badge_1: Badge
+badge_2: Secondary
+badge_3: Destructive
+badge_4: Outline
+badge_5: Ghost
+badge_6: Link
+badge_7: Open Link
