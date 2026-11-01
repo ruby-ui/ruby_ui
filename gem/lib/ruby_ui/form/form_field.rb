@@ -18,7 +18,7 @@ module RubyUI
     }.freeze
 
     def initialize(orientation: :vertical, **user_attrs)
-      @orientation = orientation.to_sym
+      @orientation = orientation&.to_sym
       raise ArgumentError, "orientation must be one of #{ORIENTATIONS.keys.join(", ")}" unless ORIENTATIONS.key?(@orientation)
 
       super(**user_attrs)

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input"
 
 export default function FormFixture() {
   return (
-    <form className="flex w-96 flex-col gap-6" noValidate>
+    <form className="flex w-96 flex-col gap-6" noValidate onSubmit={(event) => event.preventDefault()}>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="username">Username</FieldLabel>

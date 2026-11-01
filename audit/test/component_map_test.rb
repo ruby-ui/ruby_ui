@@ -101,8 +101,16 @@ class ComponentMapTest < Minitest::Test
     assert_includes error.message, "fixture_shadcn"
   end
 
-  def test_form_fixture_needs_input_and_checkbox
-    assert_equal %w[input checkbox], seed_map.entry("form")["fixture_shadcn"]
+  def test_fixture_shadcn_rejects_malformed_names
+    ["", "Input", "input group", "../input"].each do |name|
+      File.write(@path, "form:\n  shadcn: field\n  kind: form_control\n  fixture_shadcn: [#{name.inspect}]\n")
+      error = assert_raises(ShadcnAudit::ConfigError, name) { ShadcnAudit::ComponentMap.load(@path) }
+      assert_includes error.message, "fixture_shadcn"
+    end
+  end
+
+  def test_form_fixture_declares_its_extra_components
+    assert_equal %w[button input checkbox], seed_map.entry("form")["fixture_shadcn"]
   end
 
   def seed_map = ShadcnAudit::ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))

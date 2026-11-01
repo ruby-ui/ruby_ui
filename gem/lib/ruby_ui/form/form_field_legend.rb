@@ -5,7 +5,7 @@ module RubyUI
     VARIANTS = %i[legend label].freeze
 
     def initialize(variant: :legend, **user_attrs)
-      @variant = variant.to_sym
+      @variant = variant&.to_sym
       raise ArgumentError, "variant must be one of #{VARIANTS.join(", ")}" unless VARIANTS.include?(@variant)
 
       super(**user_attrs)

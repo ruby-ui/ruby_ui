@@ -6,6 +6,7 @@ module ShadcnAudit
   # Maps RubyUI component folders to their shadcn counterparts.
   class ComponentMap
     KINDS = %w[modal menu popover disclosure form_control static].freeze
+    COMPONENT_NAME = /\A[a-z0-9]+(-[a-z0-9]+)*\z/
     PATH_PATTERNS = [
       %r{\Agem/lib/ruby_ui/([^/]+)/},
       %r{\Agem/test/ruby_ui/([^/]+)_test\.rb\z},
@@ -89,7 +90,7 @@ module ShadcnAudit
         end
 
         extra = entry["fixture_shadcn"]
-        if !extra.nil? && !(extra.is_a?(Array) && extra.all?(String))
+        if !extra.nil? && !(extra.is_a?(Array) && extra.all? { |name| name.is_a?(String) && name.match?(COMPONENT_NAME) })
           raise ConfigError, "component_map.yml: #{folder}: fixture_shadcn must be an array of shadcn component names"
         end
       end

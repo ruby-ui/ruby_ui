@@ -14,7 +14,7 @@ export default class extends Controller {
     if (this.hasErrorTarget) {
       if (this.errorTarget.textContent.trim()) {
         this.shouldValidateValue = true;
-        this.#setInvalid(true);
+        this.#setInvalid(this.inputTargets);
       } else {
         this.errorTarget.textContent = "";
       }
@@ -40,24 +40,28 @@ export default class extends Controller {
   #setErrorMessage() {
     if (!this.shouldValidateValue) return;
 
-    const valid = this.inputTarget.validity.valid;
+    // A field with several controls (e.g. required checkboxes) is invalid
+    // when any of them is; the message comes from the first invalid one.
+    const invalidInputs = this.inputTargets.filter((input) => !input.validity.valid);
     if (this.hasErrorTarget) {
-      this.errorTarget.textContent = valid ? "" : this.#getValidationMessage();
+      this.errorTarget.textContent = invalidInputs.length
+        ? this.#getValidationMessage(invalidInputs[0])
+        : "";
     }
-    this.#setInvalid(!valid);
+    this.#setInvalid(invalidInputs);
   }
 
   // Mirrors shadcn's Field pattern: data-invalid on the field (label turns
-  // destructive) and aria-invalid on the control.
-  #setInvalid(invalid) {
-    if (invalid) {
+  // destructive) and aria-invalid on the invalid controls.
+  #setInvalid(invalidInputs) {
+    if (invalidInputs.length) {
       this.element.dataset.invalid = "true";
     } else {
       delete this.element.dataset.invalid;
     }
 
     this.inputTargets.forEach((input) => {
-      if (invalid) {
+      if (invalidInputs.includes(input)) {
         input.setAttribute("aria-invalid", "true");
       } else {
         input.removeAttribute("aria-invalid");
@@ -90,10 +94,10 @@ export default class extends Controller {
     return element.id;
   }
 
-  #getValidationMessage() {
+  #getValidationMessage(input) {
     let errorMessage;
 
-    const { validity, dataset, validationMessage } = this.inputTarget;
+    const { validity, dataset, validationMessage } = input;
 
     if (validity.tooLong) errorMessage = dataset.tooLong;
     if (validity.tooShort) errorMessage = dataset.tooShort;

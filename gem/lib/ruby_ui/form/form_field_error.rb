@@ -8,7 +8,7 @@ module RubyUI
     # writes client-side errors into it, and `empty:hidden` hides it meanwhile.
     def initialize(errors: nil, **user_attrs)
       @messages = Array(errors).map { |error| error.respond_to?(:message) ? error.message : error.to_s }
-        .reject(&:empty?)
+        .reject { |message| message.strip.empty? }
         .uniq
 
       super(**user_attrs)

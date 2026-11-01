@@ -70,6 +70,7 @@ class RubyUI::FormTest < ComponentTest
 
   def test_form_field_rejects_unknown_orientation
     assert_raises(ArgumentError) { RubyUI::FormField.new(orientation: :diagonal) }
+    assert_raises(ArgumentError) { RubyUI::FormField.new(orientation: nil) }
   end
 
   def test_form_parts_carry_shadcn_data_slots
@@ -107,6 +108,7 @@ class RubyUI::FormTest < ComponentTest
     assert_match(/<legend data-slot="field-legend" data-variant="legend"/, phlex { RubyUI.FormFieldLegend { "L" } })
     assert_match(/data-variant="label"/, phlex { RubyUI.FormFieldLegend(variant: :label) { "L" } })
     assert_raises(ArgumentError) { RubyUI::FormFieldLegend.new(variant: :title) }
+    assert_raises(ArgumentError) { RubyUI::FormFieldLegend.new(variant: nil) }
   end
 
   def test_form_field_group_is_the_container_for_responsive_fields
@@ -155,6 +157,12 @@ class RubyUI::FormTest < ComponentTest
     assert_match(/<ul class="ml-4 flex list-disc flex-col gap-1">/, output)
     assert_equal 2, output.scan("<li>").size
     assert_match(%r{<li>is invalid</li>}, output)
+  end
+
+  def test_form_field_error_drops_blank_messages
+    output = phlex { RubyUI.FormFieldError(errors: ["  ", "", "is invalid"]) }
+
+    assert_match(%r{<div role="alert"[^>]*>is invalid</div>}, output)
   end
 
   def test_form_field_error_block_wins_over_errors

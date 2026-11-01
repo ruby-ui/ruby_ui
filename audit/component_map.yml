@@ -101,4 +101,4 @@ form:
     FormField: {orientation: orientation}
     FormFieldLegend: {variant: variant}
     FormFieldError: {errors: errors}
-  fixture_shadcn: [input, checkbox]
+  fixture_shadcn: [button, input, checkbox]

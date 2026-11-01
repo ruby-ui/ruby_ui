@@ -89,7 +89,7 @@ class SandboxTest < Minitest::Test
     result = sandbox(NEW_SHA, now: NOW + 3600).prepare
 
     new_calls = @shell.calls.drop(calls_before)
-    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"]], new_calls.map(&:argv)
+    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox"]], new_calls.map(&:argv)
     assert_equal @app.to_s, new_calls.first.chdir
     assert_equal false, result["created"]
     assert_equal true, result["refreshed"]
@@ -114,7 +114,17 @@ class SandboxTest < Minitest::Test
 
     assert_equal true, result["refreshed"]
     new_calls = @shell.calls.drop(calls_before).map(&:argv)
-    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"]], new_calls
+    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox"]], new_calls
+    assert_equal false, sandbox(SHA).prepare["refreshed"]
+  end
+
+  def test_reordered_components_do_not_refresh
+    @sandbox.prepare
+    stamp = @app.join(ShadcnAudit::Sandbox::STAMP)
+    data = YAML.safe_load(stamp.read)
+    data["components"] = data["components"].reverse
+    stamp.write(YAML.dump(data))
+
     assert_equal false, sandbox(SHA).prepare["refreshed"]
   end
 
@@ -144,7 +154,7 @@ class SandboxTest < Minitest::Test
     @sandbox.prepare
 
     add = @shell.calls.find { |call| call.argv.include?("add") && call.argv.include?(shadcn_cli) }
-    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"], add.argv
+    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox"], add.argv
     assert_equal @app.to_s, add.chdir
     plugins = @pinned.fetch("packages").map { |name, version| "#{name}@#{version}" }
     assert @shell.called?("pnpm", "add", *plugins)
@@ -160,7 +170,7 @@ class SandboxTest < Minitest::Test
     end
 
     add = @shell.argvs.find { |argv| argv.include?("add") && argv.include?(shadcn_cli) }
-    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"], add
+    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox"], add
   end
 
   def test_copies_fixtures_and_parity_css

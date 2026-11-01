@@ -13,9 +13,10 @@ module ShadcnAudit
     REGISTRY = "live"
     # Written after a successful build: the audit/sandbox.yml pins (a
     # mismatch rebuilds the app), when the components were last pulled from
-    # the registry, and the workspace SHA at that time. That SHA is only a
-    # refresh trigger: when the workspace moves, the components are pulled
-    # again so the sandbox doesn't fall far behind the reference.
+    # the registry, the workspace SHA at that time and the shadcn components
+    # installed (`shadcn` plus `fixture_shadcn` from component_map.yml). The
+    # SHA and the component list are refresh triggers: when the workspace
+    # moves or the map needs other components, they are pulled again.
     STAMP = ".audit-sandbox.yml"
     TEMPLATE_FILES = %w[src/main.tsx src/parity.css index.html].freeze
 
@@ -32,7 +33,7 @@ module ShadcnAudit
     def prepare
       @stamp_data = nil
       created = !built?
-      refreshed = !created && (stamp_data["shadcn_sha"] != @shadcn_sha || stamp_data["components"] != shadcn_components)
+      refreshed = !created && (stamp_data["shadcn_sha"] != @shadcn_sha || Array(stamp_data["components"]).sort != shadcn_components.sort)
       if created
         build
       elsif refreshed
