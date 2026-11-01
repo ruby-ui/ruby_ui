@@ -159,6 +159,10 @@ class ComponentMapTest < Minitest::Test
     assert_match(/selectors.Nope is not a mapped part/, error.message)
   end
 
+  def test_null_selector_means_not_compared
+    assert_equal({"DialogContent" => nil}, selector_map("DialogContent" => nil).selectors("dialog"))
+  end
+
   def test_blank_selector_is_rejected
     error = assert_raises(ShadcnAudit::ConfigError) { selector_map("DialogContent" => " ") }
     assert_match(/selectors.DialogContent must be a non-empty CSS selector/, error.message)

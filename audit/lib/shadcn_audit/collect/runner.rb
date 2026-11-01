@@ -24,11 +24,12 @@ module ShadcnAudit
         map_source, map, divergences = load_config
         entry = map.entry(@folder)
         selectors = map.selectors(@folder)
-        raise ArgumentError, "#{@folder} has no selectors in audit/component_map.yml" if entry.nil? || selectors.empty?
+        raise ArgumentError, "#{@folder} has no selectors in audit/component_map.yml" if entry.nil? || selectors.compact.empty?
 
         slots = (entry["parts"] || {}).compact
         compared = slots.keys.select { |part| selectors.key?(part) }
-        unselected = slots.keys - compared
+        compared.select! { |part| selectors[part] }
+        unselected = slots.keys - selectors.keys
         FileUtils.mkdir_p(@run_dir.join("screens"))
 
         observations, environment = @driver_factory.call(audit_dir: @root.join("audit")) do |driver|

@@ -68,6 +68,13 @@ class CollectRunnerTest < Minitest::Test
     assert_equal ["Look", "inconclusive", "Dialog: no selector in component_map.yml"], line.values_at("dimension", "status", "note")
   end
 
+  def test_null_selector_part_is_skipped_silently
+    write_map(@root, "kind: modal\n  parts: {Dialog: dialog, DialogContent: dialog-content}\n  selectors: {Dialog: null, DialogContent: \"dialog > div\"}")
+    result = run_collect
+    refute(result["lines"].any? { |l| l["note"].include?("no selector") })
+    refute(@driver.observed.any? { |_, _, selectors| selectors.key?("Dialog") })
+  end
+
   def test_preview_map_wins_when_it_has_selectors
     preview = File.join(@tmp, "preview")
     write_map(preview, "kind: static\n  parts: {DialogContent: dialog-content}\n  selectors: {DialogContent: \"section\"}")

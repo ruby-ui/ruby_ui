@@ -51,15 +51,26 @@ module ShadcnAudit
         return [] if observations.empty?
 
         matching = []
+        environment = {}
         lines = @parts.flat_map do |part|
-          part_lines = compare_part(dimension, part, observations)
-          matching << part if part_lines.empty?
+          part_lines, env_keys = compare_part(dimension, part, observations)
+          environment[part] = env_keys unless env_keys.empty?
+          matching << part if part_lines.empty? && env_keys.empty?
           part_lines
         end
+        lines << environment_line(dimension, environment) unless environment.empty?
         return lines if matching.empty?
 
         config = DIMENSIONS[dimension]
         lines << line(dimension, "pass", "#{matching.join(", ")}: #{config[:match_text]}", "same", config[:source])
+      end
+
+      # One line for every difference the environment explains, whatever the
+      # part: the cause is shared and already in environment_diffs.
+      def environment_line(dimension, environment)
+        keys = environment.values.flatten.uniq.sort
+        line(dimension, "inconclusive", "properties: #{keys.join(", ")}", "", "",
+          "#{environment.keys.join(", ")} — explained by environment diff: font")
       end
 
       def compare_part(dimension, part, observations)
@@ -79,11 +90,13 @@ module ShadcnAudit
               sv = sf[key].to_s
               next if Normalize.value(rv) == Normalize.value(sv)
 
-              buckets[classify(dimension, part, key, rv, sv, o["theme"])] << {key: key, rubyui: rv, shadcn: sv, at: at}
+              shown = (key == "snapshot") ? snapshot_delta(rv, sv) : [rv, sv]
+              buckets[classify(dimension, part, key, rv, sv, o["theme"])] << {key: key, rubyui: shown[0], shadcn: shown[1], at: at}
             end
           end
         end
-        part_lines(dimension, part, buckets, mismatches)
+        env_keys = buckets.select { |(kind, _), _| kind == :environment }.values.flatten.map { |f| f[:key] }.uniq
+        [part_lines(dimension, part, buckets.reject { |(kind, _), _| kind == :environment }, mismatches), env_keys]
       end
 
       def facts(dimension, element)
@@ -121,10 +134,10 @@ module ShadcnAudit
         buckets.select { |(kind, _), _| kind == :intentional }.sort.each do |(_, reason), found|
           lines << values_line(dimension, part, "pass", found, basis: "intentional", source: "audit/divergences.yml", note: reason)
         end
-        explained = buckets.select { |(kind, _), _| %i[theme environment].include?(kind) }
+        explained = buckets.select { |(kind, _), _| kind == :theme }
         unless explained.empty?
-          causes = explained.keys.sort.map { |kind, what| (kind == :theme) ? "theme token #{what}" : "environment diff: #{what}" }.uniq
-          lines << values_line(dimension, part, "inconclusive", explained.values.flatten, source: "", note: "explained by #{causes.join(", ")}")
+          tokens = explained.keys.map(&:last).uniq.sort
+          lines << values_line(dimension, part, "inconclusive", explained.values.flatten, source: "", note: "explained by theme token #{tokens.join(", ")}")
         end
         lines
       end
@@ -132,7 +145,22 @@ module ShadcnAudit
       def values_line(dimension, part, status, found, source:, basis: nil, note: nil)
         side = ->(which) { found.map { |f| "#{f[:key]}: #{display(f[which])}" }.uniq.sort.join("; ") }
         at = found.map { |f| f[:at] }.uniq
-        line(dimension, status, side.call(:rubyui), side.call(:shadcn), source, note || "#{part} — #{at.join(", ")}", basis: basis)
+        line(dimension, status, side.call(:rubyui), side.call(:shadcn), source, "#{part} — #{note || at.join(", ")}", basis: basis)
+      end
+
+      # Snapshot lines found on one side only, so the difference is visible
+      # instead of buried in a truncated tree.
+      def snapshot_delta(rv, sv)
+        r = rv.lines.map(&:strip).reject(&:empty?)
+        s = sv.lines.map(&:strip).reject(&:empty?)
+        [only_here(r, s), only_here(s, r)]
+      end
+
+      def only_here(lines, other)
+        extra = lines - other
+        return "only here: #{extra.join(" | ")}" unless extra.empty?
+
+        lines.empty? ? "" : "same lines, different order"
       end
 
       def display(value)

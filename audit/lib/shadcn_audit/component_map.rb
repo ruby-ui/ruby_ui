@@ -27,6 +27,7 @@ module ShadcnAudit
     def all_folders = @entries.keys
 
     # RubyUI part => CSS selector in the rendered fixture ({} when unset).
+    # A null selector means "not compared" (e.g. a Base UI root with no DOM).
     def selectors(folder) = (entry(folder) || {})["selectors"] || {}
 
     # Folder for a component path, only when it is in the map.
@@ -81,7 +82,7 @@ module ShadcnAudit
       parts = entry["parts"] || {}
       selectors.each do |part, css|
         raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} is not a mapped part" unless parts.key?(part)
-        next if css.is_a?(String) && !css.strip.empty?
+        next if css.nil? || (css.is_a?(String) && !css.strip.empty?)
 
         raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} must be a non-empty CSS selector"
       end

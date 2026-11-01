@@ -109,7 +109,7 @@ class CollectGraderTest < Minitest::Test
     s = side("Trigger" => [el({}, %(- button "Open"))])
     lines = aria(grader(parts: %w[Trigger]).lines([obs("open", "light", r, s)]))
     assert_equal ["warn"], lines.map { |l| l["status"] }
-    assert lines[0]["rubyui"].start_with?("snapshot: - button")
+    assert_equal %(snapshot: only here: - button "Open" [expanded]), lines[0]["rubyui"]
     assert_equal Grader::ARIA_SOURCE, lines[0]["source"]
   end
 
@@ -142,5 +142,31 @@ class CollectGraderTest < Minitest::Test
     lines = grader(parts: %w[DialogContent]).lines(observations)
     assert_equal [%w[Look inconclusive], %w[ARIA inconclusive]], lines.map { |l| [l["dimension"], l["status"]] }
     assert_equal "open/light, open/dark not reached on rubyui: no [data-audit-trigger]", lines[0]["note"]
+  end
+
+  def test_snapshot_difference_shows_only_differing_lines
+    common = %(- dialog "Edit":\n  - heading "Edit" [level=2]\n  - button "Close")
+    r = side("DialogContent" => [el({}, "#{common}:\n    - img\n    - text: Close")])
+    s = side("DialogContent" => [el({}, common)])
+    line = aria(grader(parts: %w[DialogContent]).lines([obs("open", "light", r, s)])).first
+    assert_equal %(snapshot: only here: - button "Close": | - img | - text: Close), line["rubyui"]
+    assert_equal %(snapshot: only here: - button "Close"), line["shadcn"]
+  end
+
+  def test_theme_explained_note_names_the_part
+    diff = {"mode" => "light", "token" => "chart-1", "rubyui" => "red", "shadcn" => "blue"}
+    r = side("DialogContent" => [el("color" => "red")])
+    s = side("DialogContent" => [el("color" => "blue")])
+    line = look(grader(parts: %w[DialogContent], theme_diffs: [diff]).lines([obs("open", "light", r, s)])).first
+    assert_equal "DialogContent — explained by theme token chart-1", line["note"]
+  end
+
+  def test_environment_explained_parts_share_one_line
+    r = side("DialogContent" => [el("font-size" => "14px")], "DialogTitle" => [el("width" => "10px")])
+    s = side("DialogContent" => [el("font-size" => "16px")], "DialogTitle" => [el("width" => "12px")])
+    lines = look(grader(env: ["font"]).lines([obs("open", "light", r, s)]))
+    assert_equal 1, lines.size
+    assert_equal ["inconclusive", "properties: font-size, width", "DialogContent, DialogTitle — explained by environment diff: font"],
+      lines[0].values_at("status", "rubyui", "note")
   end
 end
