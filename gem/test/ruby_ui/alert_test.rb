@@ -57,8 +57,8 @@ class RubyUI::AlertTest < ComponentTest
   end
 
   def test_icon_gets_its_own_grid_column
-    output = phlex { RubyUI.Alert { "Hi" } }
+    output = phlex { RubyUI.Alert { |alert| alert.svg } }
 
-    assert_match(/has-\[>svg\]:grid-cols-\[auto_1fr\]/, output)
+    assert_match(/<div data-slot="alert"[^>]*class="[^"]*has-\[>svg\]:grid-cols-\[auto_1fr\][^"]*"><svg/, output)
   end
 end
