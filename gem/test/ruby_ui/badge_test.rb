@@ -94,13 +94,25 @@ class RubyUI::BadgeTest < ComponentTest
     assert_match(/\A<a /, output)
     assert_includes output, 'href="/docs"'
     assert_includes output, 'data-slot="badge"'
+    assert_includes output, "[a]:hover:bg-primary/80"
+    assert_includes output, "focus-visible:ring-[3px]"
+  end
+
+  def test_outline_link_keeps_anchor_hover
+    output = phlex { RubyUI.Badge(variant: :outline, href: "/docs") { "Docs" } }
+
+    assert_match(/\A<a /, output)
+    assert_includes output, "[a]:hover:bg-muted"
+    assert_includes output, "[a]:hover:text-muted-foreground"
   end
 
   def test_user_class_and_data_merge
     output = phlex { RubyUI.Badge(class: "ml-2", data: {test: "x"}) { "x" } }
 
     assert_includes output, "ml-2"
+    assert_includes output, "bg-primary text-primary-foreground"
     assert_includes output, 'data-test="x"'
     assert_includes output, 'data-slot="badge"'
+    assert_includes output, 'data-variant="default"'
   end
 end
