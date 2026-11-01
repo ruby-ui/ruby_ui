@@ -138,4 +138,13 @@ class DivergencesTest < Minitest::Test
   def test_existing_registry_still_loads
     ShadcnAudit::Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
   end
+
+  def test_aria_match_is_exact
+    entry = match_entry({"part" => "Item", "attribute" => "snapshot", "rubyui" => %(- button "Two"), "shadcn" => "- button"})
+      .map { |e| e.merge("dimension" => "ARIA") }
+    divergences = ShadcnAudit::Divergences.new(entry)
+    found = ->(rubyui) { divergences.match(component: "dialog", dimension: "ARIA", part: "Item", key: "snapshot", rubyui: rubyui, shadcn: "- button") }
+    refute_nil found.call(%(- button "Two"))
+    assert_nil found.call(%(- button "two"))
+  end
 end

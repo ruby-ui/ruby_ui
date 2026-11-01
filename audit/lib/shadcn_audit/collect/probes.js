@@ -12,6 +12,15 @@
     dark: document.documentElement.classList.contains("dark"),
   }),
 
+  // Fixes what is still running after settle, so the styles read next don't
+  // depend on the instant they're read: finite animations/transitions jump to
+  // their end, infinite ones pause at their start.
+  freeze: () => {
+    document.getAnimations().filter(a => a.playState === "running").forEach(a => {
+      if (a.effect?.getComputedTiming().iterations === Infinity) { a.pause(); a.currentTime = 0 } else a.finish()
+    })
+  },
+
   // Waits for running animations (capped) and two frames.
   settle: async () => {
     const done = Promise.all(document.getAnimations().map(a => a.finished.catch(() => null)))
@@ -30,13 +39,14 @@
   part: ({ selector, props, attrs }) => {
     const text = (id) => { const n = id && document.getElementById(id); return n ? n.textContent.trim().replace(/\s+/g, " ") : null }
     return [...document.querySelectorAll(selector)].map((e, index) => ({ e, index }))
-      .filter(({ e }) => e.checkVisibility())
+      .filter(({ e }) => e.checkVisibility({ visibilityProperty: true, opacityProperty: true }))
       .map(({ e, index }) => {
         const s = getComputedStyle(e)
         const a = {}
         for (const name of attrs) {
           const v = e.getAttribute(name)
-          if (v === null) a[name] = null
+          if (name === "modal") a[name] = (e.matches(":modal") || v === "true" || e.getAttribute("aria-modal") === "true") ? "true" : null
+          else if (v === null) a[name] = null
           else if (name === "aria-controls") a[name] = v.split(/\s+/).every(id => document.getElementById(id)) ? "resolves" : "dangling"
           else if (name === "aria-describedby") a[name] = v.split(/\s+/).map(text).join(" ")
           else a[name] = v

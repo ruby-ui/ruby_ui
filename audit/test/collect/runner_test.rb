@@ -119,4 +119,12 @@ class CollectRunnerTest < Minitest::Test
     notes = result["lines"].select { |l| l["status"] == "inconclusive" }.map { |l| l["note"] }
     assert_includes notes, "open/light, open/dark not reached on rubyui: boom"
   end
+
+  def test_failed_environment_probe_is_recorded_not_raised
+    driver = FakeDriver.new
+    def driver.environment(url) = url.include?("3179") ? {"error" => "net::ERR_CONNECTION_REFUSED"} : super
+    result = run_collect(driver: driver)
+    assert_includes result["environment_diffs"], "environment probe failed on rubyui (light): net::ERR_CONNECTION_REFUSED"
+    assert File.exist?(File.join(@run, "collect.json"))
+  end
 end

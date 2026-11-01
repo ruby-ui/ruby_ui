@@ -5,7 +5,9 @@ module ShadcnAudit
     class Grader
       LOOK_SOURCE = "computed styles (shadcn-audit collect)"
       ARIA_SOURCE = "accessibility tree (shadcn-audit collect)"
-      ARIA_ATTRS = %w[aria-expanded aria-controls aria-haspopup aria-describedby].freeze
+      # `modal` is computed (`:modal` or aria-modal="true"): the snapshot doesn't
+      # show modality, and a native <dialog> is modal without the attribute.
+      ARIA_ATTRS = %w[aria-expanded aria-controls aria-haspopup aria-describedby modal].freeze
       STATE_ORDER = %w[closed open focus after-esc].freeze
       THEME_ORDER = %w[light dark].freeze
       FONT_PROPS = %w[font-family font-size font-weight line-height letter-spacing width height].freeze
@@ -76,27 +78,39 @@ module ShadcnAudit
       def compare_part(dimension, part, observations)
         buckets = Hash.new { |h, k| h[k] = [] }
         mismatches = []
+        compared = 0
         observations.each do |o|
           at = "#{o["state"]}/#{o["theme"]}"
           r = Array(o["rubyui"]["parts"][part])
           s = Array(o["shadcn"]["parts"][part])
           next mismatches << "#{r.size}/#{s.size} visible elements in #{at}" if r.size != s.size
 
+          compared += r.size
           r.zip(s).each do |re, se|
             rf = facts(dimension, re)
             sf = facts(dimension, se)
             (rf.keys | sf.keys).sort.each do |key|
               rv = rf[key].to_s
               sv = sf[key].to_s
-              next if Normalize.value(rv) == Normalize.value(sv)
+              next if same?(dimension, rv, sv)
 
               shown = (key == "snapshot") ? snapshot_delta(rv, sv) : [rv, sv]
               buckets[classify(dimension, part, key, rv, sv, o["theme"])] << {key: key, rubyui: shown[0], shadcn: shown[1], at: at}
             end
           end
         end
+        if compared.zero? && mismatches.empty?
+          return [[line(dimension, "inconclusive", "", "", "", "#{part}: no visible element in any reached state")], []]
+        end
+
         env_keys = buckets.select { |(kind, _), _| kind == :environment }.values.flatten.map { |f| f[:key] }.uniq
         [part_lines(dimension, part, buckets.reject { |(kind, _), _| kind == :environment }, mismatches), env_keys]
+      end
+
+      # Look values are CSS: formatting noise isn't a difference. ARIA
+      # snapshots keep hierarchy, case and numbers, so they compare exactly.
+      def same?(dimension, rv, sv)
+        (dimension == "Look") ? Normalize.value(rv) == Normalize.value(sv) : rv == sv
       end
 
       def facts(dimension, element)

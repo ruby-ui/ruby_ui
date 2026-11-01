@@ -59,4 +59,28 @@ class CollectDriverSmokeTest < Minitest::Test
       assert_equal [1280, 800, 1], env.values_at("w", "h", "dpr")
     end
   end
+
+  def test_errors_visibility_modality_and_infinite_animations
+    selectors = {"Dialog" => "dialog", "Ghost" => ".ghost", "Pulse" => ".pulse", "Slow" => ".slow"}
+    with_driver do |driver|
+      run = ->(name, state) { driver.observe(url: url(name), state: state, selectors: selectors, screenshot_path: File.join(@tmp, "#{name}-#{state}.png")) }
+
+      thrown = run.call("c.html", "open")
+      refute thrown["reached"]
+      assert_includes thrown["reason"], "boom on click"
+
+      open = run.call("d.html", "open")
+      assert open["reached"], open["reason"]
+      assert_equal "true", open["parts"]["Dialog"][0]["attrs"]["modal"]
+      assert_equal [], open["parts"]["Ghost"]
+
+      closed = 2.times.map { run.call("d.html", "closed")["parts"] }
+      assert_equal ["1", "1"], closed.map { |parts| parts["Pulse"][0]["styles"]["opacity"] }
+      # A finite animation longer than the settle cap ends at its final frame, not its first.
+      assert_equal ["1", "1"], closed.map { |parts| parts["Slow"].dig(0, "styles", "opacity") }
+
+      env = driver.environment(url("nope.html"))
+      assert env["error"], env.inspect
+    end
+  end
 end

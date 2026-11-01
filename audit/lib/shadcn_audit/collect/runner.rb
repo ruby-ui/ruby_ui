@@ -103,6 +103,9 @@ module ShadcnAudit
         diffs = THEMES.flat_map do |theme|
           r = environment["rubyui"][theme]
           s = environment["shadcn"][theme]
+          failed = {"rubyui" => r, "shadcn" => s}.select { |_, probe| probe.key?("error") }
+          next failed.map { |side, probe| "environment probe failed on #{side} (#{theme}): #{probe["error"]}" } unless failed.empty?
+
           (r.keys | s.keys).reject { |key| r[key] == s[key] }.map do |key|
             keys << (FONT_KEYS.include?(key) ? "font" : key)
             "#{key}: #{r[key]} vs #{s[key]} (#{theme})"

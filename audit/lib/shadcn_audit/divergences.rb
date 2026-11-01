@@ -28,7 +28,7 @@ module ShadcnAudit
         m = e["match"]
         next false unless m && e["component"] == component.to_s && e["dimension"] == dimension.to_s
         m["part"] == part.to_s && (m["property"] || m["attribute"]) == key.to_s &&
-          same?(m["rubyui"], rubyui) && same?(m["shadcn"], shadcn)
+          same?(dimension, m["rubyui"], rubyui) && same?(dimension, m["shadcn"], shadcn)
       end
     end
 
@@ -52,7 +52,12 @@ module ShadcnAudit
 
     MATCH_KEYS = {"Look" => "property", "ARIA" => "attribute"}.freeze
 
-    def same?(expected, actual) = Collect::Normalize.value(expected) == Collect::Normalize.value(actual)
+    # Look values are normalized CSS; ARIA values (snapshots, attributes) are exact.
+    def same?(dimension, expected, actual)
+      return expected.to_s == actual.to_s unless dimension.to_s == "Look"
+
+      Collect::Normalize.value(expected) == Collect::Normalize.value(actual)
+    end
 
     def validate_match!(label, entry)
       m = entry["match"]

@@ -45,21 +45,28 @@ module ShadcnAudit
         @browser = browser
       end
 
+      # The probe hash, or {"error" => reason} when the page can't be read.
       def environment(url)
-        with_page(url) { |page| probe(page, "environment") }
+        result = with_page(url) { |page, _errors| probe(page, "environment") }
+        result.key?("reached") ? {"error" => result["reason"]} : result
+      rescue Playwright::Error => e
+        {"error" => e.message.lines.first.to_s.strip}
       end
 
       # SideFacts: {"reached", "reason", "screenshot", "parts" => {part => [element]}}.
       def observe(url:, state:, selectors:, screenshot_path:)
         raise ArgumentError, "unknown state #{state.inspect}" unless STATES.include?(state)
 
-        with_page(url) do |page|
+        with_page(url) do |page, errors|
           reason = reach(page, state)
           next unreached(reason) if reason
 
           probe(page, "settle")
-          page.screenshot(path: screenshot_path.to_s, animations: "disabled", caret: "hide")
+          probe(page, "freeze")
           parts = selectors.sort.to_h { |part, css| [part, elements(page, css)] }
+          page.screenshot(path: screenshot_path.to_s, animations: "disabled", caret: "hide")
+          next page_error(errors) unless errors.empty?
+
           {"reached" => true, "reason" => nil, "screenshot" => screenshot_path.to_s, "parts" => parts}
         end
       rescue Playwright::Error => e
@@ -74,9 +81,9 @@ module ShadcnAudit
         errors = []
         page.on("pageerror", ->(error) { errors << error.message })
         page.goto(url, waitUntil: "load", timeout: TIMEOUT_MS)
-        return unreached("page error: #{errors.first.lines.first.strip}") unless errors.empty?
+        return page_error(errors) unless errors.empty?
 
-        yield page
+        yield page, errors
       ensure
         context&.close
       end
@@ -115,6 +122,9 @@ module ShadcnAudit
       def probe(page, name, arg = nil)
         page.evaluate("(arg) => (#{PROBES})[#{name.to_json}](arg)", arg: arg)
       end
+
+      # A JS error at any point (load, click, Escape, collection) voids the observation.
+      def page_error(errors) = unreached("page error: #{errors.first.lines.first.to_s.strip}")
 
       def unreached(reason)
         {"reached" => false, "reason" => reason, "screenshot" => nil, "parts" => {}}

@@ -169,4 +169,32 @@ class CollectGraderTest < Minitest::Test
     assert_equal ["inconclusive", "properties: font-size, width", "DialogContent, DialogTitle — explained by environment diff: font"],
       lines[0].values_at("status", "rubyui", "note")
   end
+
+  def test_part_never_visible_is_inconclusive_not_pass
+    empty = side("DialogContent" => [], "DialogTitle" => [el])
+    lines = grader.lines([obs("closed", "light", empty, empty)])
+    notes = lines.map { |l| [l["dimension"], l["status"], l["note"]] }
+    assert_includes notes, ["Look", "inconclusive", "DialogContent: no visible element in any reached state"]
+    assert_includes notes, ["ARIA", "inconclusive", "DialogContent: no visible element in any reached state"]
+    refute(lines.any? { |l| l["status"] == "pass" && l["rubyui"].include?("DialogContent") })
+  end
+
+  def test_aria_snapshot_keeps_hierarchy
+    r = side("List" => [el({}, %(- list:\n  - button "Two"))])
+    s = side("List" => [el({}, %(- list:\n- button "Two"))])
+    assert_equal ["warn"], aria(grader(parts: %w[List]).lines([obs("open", "light", r, s)])).map { |l| l["status"] }
+  end
+
+  def test_aria_snapshot_keeps_case_and_numbers
+    r = side("Item" => [el({}, %(- button "Page 1.50"))])
+    s = side("Item" => [el({}, %(- button "page 1.5"))])
+    assert_equal ["warn"], aria(grader(parts: %w[Item]).lines([obs("open", "light", r, s)])).map { |l| l["status"] }
+  end
+
+  def test_modal_fact_difference_is_warn
+    r = side("Content" => [el({}, "- dialog", {"modal" => "true"})])
+    s = side("Content" => [el({}, "- dialog", {"modal" => nil})])
+    line = aria(grader(parts: %w[Content]).lines([obs("open", "light", r, s)])).first
+    assert_equal ["warn", "modal: true", "modal: (none)"], line.values_at("status", "rubyui", "shadcn")
+  end
 end
