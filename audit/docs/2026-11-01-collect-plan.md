@@ -134,7 +134,7 @@ Output per part (in `parts` order), at most one line per non-empty bucket, in th
 - Test: `audit/test/collect/grader_test.rb`
 
 **Interfaces:**
-- Produces: `Grader#lines` also emits ARIA lines and unreachable lines. `Grader::ARIA_ATTRS = %w[aria-expanded aria-controls aria-haspopup aria-describedby modal]` (`modal` added in review: computed `:modal` or `aria-modal="true"`; `aria-labelledby` is covered by the name in the snapshot; the driver fills `attrs` with exactly these keys; `aria-controls` is reported as `"resolves"`/`"dangling"`/nil, `aria-describedby` as the referenced text or nil).
+- Produces: `Grader#lines` also emits ARIA lines and unreachable lines. `Grader::ARIA_ATTRS = %w[aria-expanded aria-controls aria-haspopup aria-describedby modal]` (`modal` added in review: computed `:modal` or `aria-modal="true"`; `aria-labelledby` is covered by the name in the snapshot; the driver fills `attrs` with exactly these keys; `aria-controls` is reported as `"resolves"`/`"dangling"`/nil, `aria-describedby` as the referenced text, `"dangling"` for a missing target, or nil).
 
 ARIA rules, per part, same count/skip logic as Look:
 - `aria` (Playwright aria snapshot of the element) differs, compared exactly (hierarchy, case and numbers kept; `Normalize.value` is for Look only) → diff with key `snapshot`.

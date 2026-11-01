@@ -88,6 +88,8 @@ module ShadcnAudit
         begin
           page.wait_for_selector(FIXTURE, timeout: TIMEOUT_MS)
         rescue Playwright::TimeoutError
+          return page_error(errors) unless errors.empty?
+
           return unreached("fixture never rendered (no #{FIXTURE})")
         end
 

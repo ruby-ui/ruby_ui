@@ -93,4 +93,12 @@ class CollectDriverSmokeTest < Minitest::Test
       assert_equal({"aria-controls" => "resolves", "aria-describedby" => "dangling"}, attrs.slice("aria-controls", "aria-describedby"))
     end
   end
+
+  def test_mount_error_is_reported_instead_of_missing_fixture
+    with_driver do |driver|
+      facts = driver.observe(url: url("f.html"), state: "closed", selectors: {}, screenshot_path: File.join(@tmp, "f.png"))
+      refute facts["reached"]
+      assert_includes facts["reason"], "mount failed"
+    end
+  end
 end

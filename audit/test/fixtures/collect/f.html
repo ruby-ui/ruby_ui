@@ -1,0 +1,8 @@
+<!doctype html>
+<html><body>
+  <div id="root"></div>
+  <script>
+    // A mount that throws after load, before the fixture renders.
+    window.addEventListener("load", () => setTimeout(() => { throw new Error("mount failed") }, 100))
+  </script>
+</body></html>
