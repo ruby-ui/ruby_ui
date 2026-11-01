@@ -43,22 +43,25 @@ alert_dialog:
     AlertDialogContent: alert-dialog-content
     AlertDialogHeader: alert-dialog-header
     AlertDialogFooter: alert-dialog-footer
+    AlertDialogMedia: alert-dialog-media
     AlertDialogTitle: alert-dialog-title
     AlertDialogDescription: alert-dialog-description
     AlertDialogAction: alert-dialog-action
     AlertDialogCancel: alert-dialog-cancel
   selectors:
     AlertDialog: null
-    AlertDialogTrigger: '[data-controller="ruby-ui--alert-dialog"] > [data-action] > button'
-    AlertDialogContent: '[role="alertdialog"]'
-    AlertDialogHeader: '[role="alertdialog"] > div:first-child'
-    AlertDialogFooter: '[role="alertdialog"] > div:last-child'
-    AlertDialogTitle: '[role="alertdialog"] > div:first-child > h2'
-    AlertDialogDescription: '[role="alertdialog"] > div:first-child > p'
-    AlertDialogAction: '[role="alertdialog"] > div:last-child > button:last-child'
-    AlertDialogCancel: '[role="alertdialog"] > div:last-child > button:first-child'
+    AlertDialogTrigger: '[data-ruby-ui--alert-dialog-target="trigger"] > button'
+    AlertDialogContent: 'dialog[data-ruby-ui--alert-dialog-target="dialog"]'
+    AlertDialogHeader: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:first-child'
+    AlertDialogFooter: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:last-of-type'
+    AlertDialogMedia: '[data-slot="alert-dialog-media"]'
+    AlertDialogTitle: '[data-ruby-ui--alert-dialog-target="title"]'
+    AlertDialogDescription: '[data-ruby-ui--alert-dialog-target="description"]'
+    AlertDialogAction: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:last-of-type > button:last-child'
+    AlertDialogCancel: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:last-of-type > button:first-child'
   props:
-    AlertDialogContent: {size: null}
+    AlertDialog: {open: open}
+    AlertDialogContent: {size: size}
     AlertDialogCancel: {variant: variant, size: size}
 
 sheet:

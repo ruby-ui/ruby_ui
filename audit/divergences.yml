@@ -14,6 +14,36 @@
   shadcn: "trigger is the <button> itself (render prop)"
   reason: "Phlex has no render prop and callers pass non-button children; the wrapper only carries the Stimulus action."
   since: "2026-10-29"
+- component: alert_dialog
+  dimension: HTML
+  rubyui: "<dialog role=\"alertdialog\"> + showModal(); overlay is its ::backdrop"
+  shadcn: "<div role=\"alertdialog\"> + separate overlay <div> in a portal"
+  reason: "Native modal dialog: the browser provides inert, Esc, focus trap and focus return. Same approach as Dialog."
+  since: "2026-11-01"
+- component: alert_dialog
+  dimension: HTML
+  rubyui: "AlertDialogTrigger <div> wrapping its child; ARIA set on the first interactive descendant"
+  shadcn: "trigger is the <button> itself (render prop)"
+  reason: "Same as Dialog: Phlex has no render prop and callers pass non-button children; the wrapper only carries the Stimulus action."
+  since: "2026-11-01"
+- component: alert_dialog
+  dimension: HTML
+  rubyui: "AlertDialog root <div class=\"contents\"> carrying the Stimulus controller"
+  shadcn: "Root renders no element"
+  reason: "Stimulus needs an element that scopes the trigger and the dialog; display: contents keeps it out of layout."
+  since: "2026-11-01"
+- component: alert_dialog
+  dimension: ARIA
+  rubyui: "trigger aria-controls points at the <dialog> while closed too"
+  shadcn: "trigger aria-controls only while open (the popup is unmounted when closed)"
+  reason: "The <dialog> stays in the DOM when closed, so the id always resolves; same as Dialog."
+  since: "2026-11-01"
+- component: alert_dialog
+  dimension: ARIA
+  rubyui: "popup exposed as modal (showModal(); page behind is inert)"
+  shadcn: "no aria-modal; Base UI sets aria-hidden on the page behind"
+  reason: "showModal() makes the dialog modal natively; Chrome's accessibility tree shows the same nodes on both sides while open."
+  since: "2026-11-01"
 - component: form
   dimension: Behavior
   rubyui: "FormField controller validates on the client: shows the browser validationMessage (or data-* custom messages) in FormFieldError on submit and updates it as the user types"
