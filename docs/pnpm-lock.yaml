@@ -27,8 +27,8 @@ importers:
         specifier: 10.6.2
         version: 10.6.2(postcss@8.5.3)
       chart.js:
-        specifier: 4.5.1
-        version: 4.5.1
+        specifier: 4.6.1
+        version: 4.6.1
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -273,8 +273,8 @@ packages:
   caniuse-lite@1.0.30001820:
     resolution: {integrity: sha512-gfWD6MxqVCqAOwmODfZf7DchWvlrA+SRdNX7ceLfg3xRqe5ssjjpF7EgslC/0tiLiNTajdaNN/q8c/5u/7Gz8w==}
 
-  chart.js@4.5.1:
-    resolution: {integrity: sha512-GIjfiT9dbmHRiYi6Nl2yFCq7kkwdkp1W/lp2J99rX0yo9tgJGn3lKQATztIjb5tVtevcBtIdICNWqlq5+E8/Pw==}
+  chart.js@4.6.1:
+    resolution: {integrity: sha512-hJyniucsFmq//EvXYvJ6c6mahPoI3kaxdjVH8awTaJ/fDNWeSqqqArixMJWkWNN6fcYvPU3HneSANFNYtRi61g==}
     engines: {pnpm: '>=8'}
 
   class-variance-authority@0.7.1:
@@ -530,7 +530,7 @@ snapshots:
 
   caniuse-lite@1.0.30001820: {}
 
-  chart.js@4.5.1:
+  chart.js@4.6.1:
     dependencies:
       '@kurkle/color': 0.3.4
 
