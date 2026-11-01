@@ -10,8 +10,6 @@ application.register("iframe-theme", IframeThemeController)
 import MessageScrollerChatController from "./message_scroller_chat_controller"
 application.register("message-scroller-chat", MessageScrollerChatController)
 
-import RubyUi__AccordionController from "./ruby_ui/accordion_controller"
-application.register("ruby-ui--accordion", RubyUi__AccordionController)
 
 import RubyUi__AlertDialogController from "./ruby_ui/alert_dialog_controller"
 application.register("ruby-ui--alert-dialog", RubyUi__AlertDialogController)

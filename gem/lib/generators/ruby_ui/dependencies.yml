@@ -1,7 +1,3 @@
-accordion:
-  js_packages:
-    - "motion"
-
 alert_dialog:
   components:
     - "Button"
