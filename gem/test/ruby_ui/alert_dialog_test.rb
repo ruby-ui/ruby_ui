@@ -109,22 +109,70 @@ class RubyUI::AlertDialogTest < ComponentTest
     %w[flex space-y-2].each { |klass| refute_includes classes, klass }
   end
 
-  def test_title_vega_classes_and_target
+  def test_title_vega_classes
     output = phlex { RubyUI.AlertDialogTitle { "x" } }
 
-    assert_match(/<h2[^>]*data-ruby-ui--alert-dialog-target="title"/, output)
     assert_includes classes_of(output, "h2"), "font-medium"
     assert_includes classes_of(output, "h2"), "font-heading"
     refute_includes classes_of(output, "h2"), "font-semibold"
   end
 
-  def test_description_vega_classes_and_target
+  def test_description_vega_classes
     output = phlex { RubyUI.AlertDialogDescription { "x" } }
 
-    assert_match(/<p[^>]*data-ruby-ui--alert-dialog-target="description"/, output)
     %w[text-sm text-muted-foreground text-balance md:text-pretty *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground].each do |klass|
       assert_includes classes_of(output, "p"), klass
     end
+  end
+
+  def test_title_and_description_name_the_dialog
+    output = phlex do
+      RubyUI.AlertDialogContent do
+        RubyUI.AlertDialogTitle { "Sure?" }
+        RubyUI.AlertDialogDescription { "No undo." }
+      end
+    end
+
+    dialog_id = output[/<dialog\b[^>]*\sid="([^"]+)"/, 1]
+    title_id = output[/<h2\b[^>]*\sid="([^"]+)"/, 1]
+    description_id = output[/<p\b[^>]*\sid="([^"]+)"/, 1]
+    refute_nil dialog_id
+    assert_equal "#{dialog_id}-title", title_id
+    assert_equal "#{dialog_id}-description", description_id
+    assert_match(/<dialog\b[^>]*aria-labelledby="#{title_id}"/, output)
+    assert_match(/<dialog\b[^>]*aria-describedby="#{description_id}"/, output)
+  end
+
+  def test_dialog_ids_are_unique_per_render
+    ids = 2.times.map { phlex { RubyUI.AlertDialogContent { RubyUI.AlertDialogTitle { "x" } } }[/<dialog\b[^>]*\sid="([^"]+)"/, 1] }
+
+    refute_equal ids.first, ids.last
+  end
+
+  def test_dialog_without_title_or_description_has_no_dangling_aria
+    output = content_output
+
+    refute_match(/aria-labelledby/, output)
+    refute_match(/aria-describedby/, output)
+  end
+
+  def test_author_ids_and_aria_win
+    output = phlex do
+      RubyUI.AlertDialogContent(id: "confirm", aria: {label: "Confirm deletion"}) do
+        RubyUI.AlertDialogTitle(id: "my-title") { "Sure?" }
+        RubyUI.AlertDialogDescription { "No undo." }
+      end
+    end
+
+    assert_match(/<dialog\b[^>]*\sid="confirm"/, output)
+    assert_match(/<h2\b[^>]*\sid="my-title"/, output)
+    assert_match(/aria-label="Confirm deletion"/, output)
+    refute_match(/aria-labelledby/, output, "an author aria-label replaces the generated labelledby")
+    assert_match(/aria-describedby="confirm-description"/, output)
+  end
+
+  def test_title_outside_content_renders_without_id
+    refute_match(/\sid=/, phlex { RubyUI.AlertDialogTitle { "x" } })
   end
 
   def test_footer_vega_classes

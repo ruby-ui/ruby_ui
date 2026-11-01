@@ -1,45 +1,39 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Prefix for generated ids, unique per page (ruby-ui-alert-dialog-1-title, …).
-let alertDialogCount = 0
-
 // Connects to data-controller="ruby-ui--alert-dialog"
 //
-// Native <dialog role="alertdialog"> opened with showModal(): the browser makes
-// the page inert, moves focus in, traps Tab and returns focus on close. Unlike
-// Dialog, a backdrop click doesn't close it; only Cancel (dismiss) or Esc do.
+// <dialog role="alertdialog"> opened with showModal(): the browser makes the
+// page inert, moves focus in, traps Tab and returns focus on close. Title and
+// Description are wired in Ruby. This controller adds what the browser lacks:
+// the exit animation, the page scroll lock and the trigger's ARIA.
+// Unlike Dialog, a backdrop click doesn't close it; only Cancel or Esc do.
 export default class extends Controller {
-  static targets = ["dialog", "title", "description", "trigger"]
-  static values = {
-    open: {
-      type: Boolean,
-      default: false
-    },
-  }
+  static targets = ["dialog", "trigger"]
+  static values = { open: Boolean }
 
-  // Stimulus runs the target callbacks before connect() and after disconnect(),
-  // and again when only the <dialog> is replaced (e.g. by a Turbo Stream).
+  // Target callbacks also run when Turbo replaces only part of the component.
   dialogTargetConnected(dialog) {
-    // A Turbo cache snapshot keeps the `open` attribute but not modality:
-    // a restored dialog would show without backdrop, inert page or Esc.
+    // A Turbo cache snapshot keeps `open` but not modality; don't restore it half-open.
     if (dialog.open && !dialog.matches(":modal")) dialog.close()
-    dialog.addEventListener("close", this.handleClose)
     dialog.addEventListener("cancel", this.handleCancel)
-    this.wireAria(dialog)
+    dialog.addEventListener("close", this.handleClose)
+    this.triggerTargets.forEach((trigger) => this.wireTrigger(trigger))
   }
 
   dialogTargetDisconnected(dialog) {
-    dialog.removeEventListener("close", this.handleClose)
     dialog.removeEventListener("cancel", this.handleCancel)
+    dialog.removeEventListener("close", this.handleClose)
     this.closeToken = null
     this.releaseScroll()
   }
 
+  triggerTargetConnected(trigger) {
+    this.wireTrigger(trigger)
+  }
+
   connect() {
     document.addEventListener("turbo:before-cache", this.handleBeforeCache)
-    if (this.openValue) {
-      this.open()
-    }
+    if (this.openValue) this.open()
   }
 
   disconnect() {
@@ -52,55 +46,44 @@ export default class extends Controller {
     e?.preventDefault()
     if (!this.hasDialogTarget) return
 
-    // Reopening during the exit animation cancels that close.
-    this.closeToken = null
+    this.closeToken = null // reopening cancels a close still animating
     this.dialogTarget.dataset.state = "open"
     if (!this.dialogTarget.open) this.dialogTarget.showModal()
     this.scrollLocked = true
     document.body.classList.add("overflow-hidden")
-    this.setTriggersExpanded(true)
+    this.setExpanded(true)
   }
 
-  dismiss() {
-    this.animateClose()
-  }
-
-  // Plays the exit animation on the panel and its ::backdrop, then closes.
-  // Each close gets its own token: a reopen, a later close or a disconnect
-  // invalidates it, so a stale animation promise never closes the dialog.
-  async animateClose() {
-    if (!this.hasDialogTarget || this.closeToken || !this.dialogTarget.open) return
+  // Plays the exit animation (panel + ::backdrop), then closes. The token lets
+  // a reopen or a later close invalidate this one.
+  async dismiss() {
+    if (!this.hasDialogTarget || !this.dialogTarget.open || this.closeToken) return
 
     const dialog = this.dialogTarget
     const token = (this.closeToken = Symbol("close"))
     dialog.dataset.state = "closed"
-    await Promise.allSettled(this.ownAnimations(dialog).map((animation) => animation.finished))
+    const animations = document.getAnimations().filter((animation) => animation.effect?.target === dialog)
+    await Promise.allSettled(animations.map((animation) => animation.finished))
     if (this.closeToken === token) dialog.close()
   }
 
-  // Only the dialog's own animations (panel + ::backdrop), never its descendants'.
-  ownAnimations(dialog) {
-    return document.getAnimations().filter((animation) => animation.effect?.target === dialog)
-  }
-
-  // Esc fires `cancel`; hold the native close so the exit animation can play.
-  // A dismissed <input type="file"> picker also fires a bubbling `cancel`; ignore it.
+  // Esc: hold the native close so the exit animation plays. A dismissed
+  // <input type="file"> picker also fires a bubbling `cancel`; ignore it.
   handleCancel = (e) => {
     if (e.target !== e.currentTarget) return
     e.preventDefault()
-    this.animateClose()
+    this.dismiss()
   }
 
   handleClose = (e) => {
     this.closeToken = null
     delete e.currentTarget.dataset.state
     this.releaseScroll()
-    this.setTriggersExpanded(false)
+    this.setExpanded(false)
   }
 
-  // Turbo snapshots the page before leaving it: close without animation so
-  // the cached copy never holds an open dialog or a locked <body>. The `close`
-  // event fires after the snapshot, so clean up synchronously here.
+  // Turbo snapshots the page right after this event and `close` fires later,
+  // so clean up synchronously: the cache never keeps an open dialog or a locked body.
   handleBeforeCache = () => {
     if (!this.hasDialogTarget || !this.dialogTarget.open) return
 
@@ -108,11 +91,10 @@ export default class extends Controller {
     this.dialogTarget.close()
     delete this.dialogTarget.dataset.state
     this.releaseScroll()
-    this.setTriggersExpanded(false)
+    this.setExpanded(false)
   }
 
-  // Unlock page scroll only if this dialog took the lock and no other modal
-  // dialog still needs it.
+  // Only release a lock this dialog took, and keep it while another modal is open.
   releaseScroll() {
     if (!this.scrollLocked) return
 
@@ -120,52 +102,22 @@ export default class extends Controller {
     if (!document.querySelector("dialog:modal")) document.body.classList.remove("overflow-hidden")
   }
 
-  // Names the dialog after its title/description and ties each trigger to it.
-  // Never overwrites ids or ARIA the author already set.
-  wireAria(dialog) {
-    const prefix = `ruby-ui-alert-dialog-${++alertDialogCount}`
-    const dialogId = this.ensureId(dialog, `${prefix}-content`)
+  // The trigger wraps the author's button: the ARIA goes on that button.
+  wireTrigger(trigger) {
+    const button = this.triggerButton(trigger)
+    if (!button || !this.hasDialogTarget) return
 
-    const title = this.titleTargets.find((target) => dialog.contains(target))
-    if (title) {
-      const titleId = this.ensureId(title, `${prefix}-title`)
-      if (!dialog.hasAttribute("aria-labelledby") && !dialog.hasAttribute("aria-label")) {
-        dialog.setAttribute("aria-labelledby", titleId)
-      }
-    }
-
-    const description = this.descriptionTargets.find((target) => dialog.contains(target))
-    if (description) {
-      const descriptionId = this.ensureId(description, `${prefix}-description`)
-      if (!dialog.hasAttribute("aria-describedby")) {
-        dialog.setAttribute("aria-describedby", descriptionId)
-      }
-    }
-
-    this.triggerControls().forEach((control) => {
-      if (!control.hasAttribute("aria-haspopup")) control.setAttribute("aria-haspopup", "dialog")
-      // Repoint a stale reference too: a replaced dialog may have a new id.
-      const controls = control.getAttribute("aria-controls")
-      if (!controls || !document.getElementById(controls)) control.setAttribute("aria-controls", dialogId)
-      control.setAttribute("aria-expanded", String(dialog.open))
-    })
+    button.setAttribute("aria-haspopup", "dialog")
+    button.setAttribute("aria-controls", this.dialogTarget.id)
+    button.setAttribute("aria-expanded", String(this.dialogTarget.open))
   }
 
-  ensureId(element, id) {
-    if (!element.id) element.id = id
-    return element.id
+  setExpanded(expanded) {
+    this.triggerTargets.forEach((trigger) => this.triggerButton(trigger)?.setAttribute("aria-expanded", String(expanded)))
   }
 
-  // The element that carries the trigger's role: a button/link inside the
-  // trigger wrapper, or the menuitem/button that wraps it. A role-less wrapper
-  // gets no ARIA.
-  triggerControls() {
-    return this.triggerTargets
-      .map((trigger) => trigger.querySelector("button, a[href], [role=button]") || trigger.closest("[role=menuitem], [role=button]"))
-      .filter(Boolean)
-  }
-
-  setTriggersExpanded(expanded) {
-    this.triggerControls().forEach((control) => control.setAttribute("aria-expanded", String(expanded)))
+  // A button/link inside the trigger, or the menuitem/button that wraps it.
+  triggerButton(trigger) {
+    return trigger.querySelector("button, a[href], [role=button]") || trigger.closest("[role=menuitem], [role=button]")
   }
 }

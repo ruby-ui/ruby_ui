@@ -75,10 +75,7 @@ class Views::Docs::AlertDialog < Views::Base
       end
 
       Heading(level: 2) { "Inside a form" }
-      Alert(variant: :warning) do
-        AlertTitle { "Keep AlertDialog outside <form>" }
-        AlertDescription { "The dialog renders in place, and HTML does not allow nested forms. A button_to inside AlertDialogAction loses its own form and submits the outer one instead. Render the AlertDialog after the form, or give the action button a form attribute that points to a form elsewhere on the page." }
-      end
+      p { "The dialog renders in place, and HTML does not allow nested forms: a button_to inside AlertDialogAction loses its own form and submits the outer one instead. Render the AlertDialog after the form, or give the action button a form attribute that points to a form elsewhere on the page." }
 
       render Components::ComponentSetup::Tabs.new(component_name: component)
 

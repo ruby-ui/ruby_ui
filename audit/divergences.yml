@@ -42,7 +42,7 @@
   dimension: ARIA
   rubyui: "popup exposed as modal (showModal(); page behind is inert)"
   shadcn: "no aria-modal; Base UI sets aria-hidden on the page behind"
-  reason: "showModal() makes the dialog modal natively; Chrome's accessibility tree shows the same nodes on both sides while open."
+  reason: "showModal() makes the dialog modal natively and inerts the page behind it, which hides that content from the accessibility tree the same way shadcn's aria-hidden does."
   since: "2026-11-01"
 - component: form
   dimension: Behavior

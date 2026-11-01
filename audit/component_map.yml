@@ -55,8 +55,8 @@ alert_dialog:
     AlertDialogHeader: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:first-child'
     AlertDialogFooter: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:last-of-type'
     AlertDialogMedia: '[data-slot="alert-dialog-media"]'
-    AlertDialogTitle: '[data-ruby-ui--alert-dialog-target="title"]'
-    AlertDialogDescription: '[data-ruby-ui--alert-dialog-target="description"]'
+    AlertDialogTitle: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:first-child > h2'
+    AlertDialogDescription: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:first-child > p'
     AlertDialogAction: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:last-of-type > button:last-child'
     AlertDialogCancel: 'dialog[data-ruby-ui--alert-dialog-target="dialog"] > div:last-of-type > button:first-child'
   props:

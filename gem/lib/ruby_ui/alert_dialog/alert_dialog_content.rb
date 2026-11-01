@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "securerandom"
+
 module RubyUI
   class AlertDialogContent < Base
     SIZES = %i[default sm].freeze
@@ -11,11 +13,30 @@ module RubyUI
       super(**attrs)
     end
 
-    def view_template(&)
-      dialog(**attrs, &)
+    # Title and Description take their ids from the context; the children are
+    # captured first so the <dialog> only references the ones that rendered.
+    def view_template(&block)
+      previous = context[:ruby_ui_alert_dialog]
+      id = attrs[:id] || "ruby-ui-alert-dialog-#{SecureRandom.hex(4)}"
+      names = context[:ruby_ui_alert_dialog] = {id: id}
+      body = block ? capture(&block) : ""
+      dialog(**dialog_attrs(id, names)) { raw(safe(body)) }
+    ensure
+      context[:ruby_ui_alert_dialog] = previous
     end
 
     private
+
+    def dialog_attrs(id, names)
+      aria = {}
+      aria[:labelledby] = names[:labelledby] if names[:labelledby] && !author_aria?(:label, :labelledby)
+      aria[:describedby] = names[:describedby] if names[:describedby] && !author_aria?(:describedby)
+      (aria.empty? ? attrs : mix({aria: aria}, attrs)).merge(id: id)
+    end
+
+    def author_aria?(*keys)
+      keys.any? { |key| attrs[:"aria_#{key}"] || attrs.dig(:aria, key) }
+    end
 
     # No backdrop click action: an alert dialog only closes through its
     # buttons or Esc (APG alertdialog).
