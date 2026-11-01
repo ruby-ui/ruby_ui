@@ -5,6 +5,7 @@ description: >-
   base + vega style + neutral theme): Look, HTML, Props, ARIA, Behavior and
   Animation side by side in the browser, shadcn checked against the HTML/ARIA
   specs, JS that native HTML could replace, a checklist plus a screenshot page,
+  a finding-by-finding walkthrough with a recommendation and a question each,
   and the checklist posted on the PR after an explicit ok. Triggers on
   /shadcn-audit, "audita o PR 572 contra o shadcn", "compara com o shadcn",
   "audita esse PR", "isso bate com o shadcn?", "o Dialog está fiel ao shadcn?".
@@ -256,7 +257,7 @@ when Base UI looks wrong; the normative spec settles disagreements. Then grade
 every line per `references/grading.md`: spec beats shadcn, native replacements
 pass when behavior/ARIA are kept, registered divergences pass as intentional.
 
-### 8. Report, render, comment
+### 8. Report, render, walk through, comment
 
 Write `<run>/report.json`:
 
@@ -298,12 +299,36 @@ Then:
 2. `render <report.json> --html` → `html` is the written path, or `null` when
    no component has screenshots plus a non-pass Look/Behavior/Animation line.
    If there's a path, `open` it.
-3. Only when `target.kind` is `pr` **and** `target.state` is `OPEN`:
+3. **Walk through the findings, one item at a time.** Cover every `fail`,
+   `warn` and `inconclusive` line, in report order (component, then
+   dimension); `pass` lines aren't discussed. Lines with one root cause (e.g.
+   several Look lines one class token explains) form a single item. For each
+   item, in the user's language:
+   - **What it is**: dimension, the concrete values on both sides and the
+     source, in plain words, plus what someone using the component would
+     notice.
+   - **Recommendation**: one action and why: fix it in RubyUI (what and
+     where), suggest a divergence entry (show the YAML), fix the map or
+     fixtures, settle it by hand (inconclusive), or leave it. Say so when the
+     spec beats shadcn.
+   - **Ask** with AskUserQuestion: the recommended option first, labeled
+     "(Recommended)", then the realistic alternatives. Wait for the answer
+     before the next item.
+
+   Keep a list of the decisions (item, choice, user's note) and act on none
+   of them during the walk. After the last item, show the list and ask
+   whether to go ahead. The hard rules still hold: on someone else's PR, "fix"
+   becomes a request in the PR comment and divergence entries stay
+   suggestions for the author; on the user's own branch, fixes follow
+   "Before/after images for a fix PR". A decision never changes a grade by
+   itself: grades change only through an override (see "4. Look") or a registered
+   divergence, followed by a new `render`.
+4. Only when `target.kind` is `pr` **and** `target.state` is `OPEN`:
    `comment <report.json>` →
    `{"posted": false, "body": …}`. Show the **exact body** and ask for an ok.
    Branch/component targets, or a PR whose `state` isn't `OPEN`: don't offer
    posting. Tell the user why (no PR, or the PR is MERGED/CLOSED).
-4. On an explicit "ok"/"pode mandar" for that body:
+5. On an explicit "ok"/"pode mandar" for that body:
    `comment <report.json> --post` → `action` `created`/`updated` (give the
    `url`) or `refused` (`reason`): the PR head moved since the audit pinned it
    (offer a re-run), or the PR is no longer `OPEN`. `posted: false` means
