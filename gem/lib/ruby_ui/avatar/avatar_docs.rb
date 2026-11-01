@@ -78,7 +78,7 @@ class Views::Docs::Avatar < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Fallback delay", description: "delay: (ms) waits before showing the fallback, so a fast image doesn't flash the initials first. The avatar dispatches ruby-ui--avatar:status with detail.status (loading, loaded or error) on every change.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Fallback delay", description: "delay: (ms) waits before showing the fallback, so a fast image doesn't flash the initials first. The avatar dispatches ruby-ui--avatar:status with detail.status (loading, loaded or error) on every change. The delay needs JavaScript: without it, a delayed fallback stays hidden.", context: self) do
         <<~RUBY
           Avatar do
             AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")

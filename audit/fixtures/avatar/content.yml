@@ -1,4 +1,4 @@
-# Five avatars in a row, all fictional data (no network):
+# Six avatars and one AvatarGroup, all fictional data (no network):
 #  1. image (inline SVG data URI) + fallback "CN": the image loads, the fallback hides.
 #  2. fallback only "JD".
 #  3. broken image (undecodable data URI) + fallback "ER": the fallback shows.
