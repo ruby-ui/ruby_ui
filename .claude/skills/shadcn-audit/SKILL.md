@@ -282,13 +282,15 @@ shows the fix side by side with `main` and shadcn. The hard rules above still
 hold for auditing someone else's PR; this section is for the user's own fix.
 
 1. **Keep the "before".** Before fixing anything, copy `report.json` to
-   `report-main.json` and run `render report-main.json --html` while it still
-   has failing lines: once everything passes, `--html` returns `null`.
+   `report-main.json` and run `render report-main.json --html` while a Look,
+   Behavior or Animation line with screenshots still fails: `--html` returns
+   `null` otherwise.
 2. **Shoot the "after"** of the same states, same clips and themes, into
    `screens/` with a `-now` suffix, plus the fixture on both sides.
 3. **Compose one image per state**: three columns, `RubyUI · main`,
    `RubyUI · this PR`, `shadcn · Base UI + vega`. A small HTML page with the
-   three screenshots, captured with the browser, is enough.
+   three screenshots, captured with the browser, is enough. Save them to
+   `<run>/pr-assets/`.
 4. **Publish to `pr-assets`** (only after the user's ok for the PR). GitHub
    has no API to attach files to a PR, so images go to the orphan branch
    `pr-assets`, one folder per PR, committed with plumbing so the working
