@@ -1,12 +1,20 @@
 module ShadcnAudit
   module Collect
-    # Grades the objective Look lines from what the driver observed on both
-    # sides. Pure: same observations in any order give the same lines.
+    # Grades the objective Look and ARIA lines from what the driver observed
+    # on both sides. Pure: same observations in any order give the same lines.
     class Grader
       LOOK_SOURCE = "computed styles (shadcn-audit collect)"
+      ARIA_SOURCE = "accessibility tree (shadcn-audit collect)"
+      ARIA_ATTRS = %w[aria-expanded aria-controls aria-haspopup aria-describedby].freeze
       STATE_ORDER = %w[closed open focus after-esc].freeze
       THEME_ORDER = %w[light dark].freeze
       FONT_PROPS = %w[font-family font-size font-weight line-height letter-spacing width height].freeze
+      SNAPSHOT_LIMIT = 200
+
+      DIMENSIONS = {
+        "Look" => {diff: "fail", source: LOOK_SOURCE, match_text: "computed styles match"},
+        "ARIA" => {diff: "warn", source: ARIA_SOURCE, match_text: "accessibility tree matches"}
+      }.freeze
 
       def initialize(folder:, parts:, divergences:, theme_diffs:, environment_diff_keys:)
         @folder = folder
@@ -18,24 +26,43 @@ module ShadcnAudit
 
       def lines(observations)
         observations = observations.sort_by { |o| [THEME_ORDER.index(o["theme"]) || 9, STATE_ORDER.index(o["state"]) || 9, o["state"]] }
-        look_lines(observations.select { |o| o["rubyui"]["reached"] && o["shadcn"]["reached"] })
+        reached = observations.select { |o| o["rubyui"]["reached"] && o["shadcn"]["reached"] }
+        unreached = unreached_notes(observations)
+        DIMENSIONS.keys.flat_map do |dimension|
+          unreached.map { |note| line(dimension, "inconclusive", "", "", "", note) } +
+            dimension_lines(dimension, reached)
+        end
       end
 
       private
 
-      def look_lines(observations)
+      def unreached_notes(observations)
+        groups = Hash.new { |h, k| h[k] = [] }
+        observations.each do |o|
+          %w[rubyui shadcn].each do |side|
+            next if o[side]["reached"]
+            groups[[side, o[side]["reason"].to_s]] << "#{o["state"]}/#{o["theme"]}"
+          end
+        end
+        groups.map { |(side, reason), at| "#{at.join(", ")} not reached on #{side}: #{reason}" }
+      end
+
+      def dimension_lines(dimension, observations)
+        return [] if observations.empty?
+
         matching = []
         lines = @parts.flat_map do |part|
-          part_lines = look_part(part, observations)
+          part_lines = compare_part(dimension, part, observations)
           matching << part if part_lines.empty?
           part_lines
         end
         return lines if matching.empty?
 
-        lines << line("Look", "pass", "#{matching.join(", ")}: computed styles match", "same", LOOK_SOURCE)
+        config = DIMENSIONS[dimension]
+        lines << line(dimension, "pass", "#{matching.join(", ")}: #{config[:match_text]}", "same", config[:source])
       end
 
-      def look_part(part, observations)
+      def compare_part(dimension, part, observations)
         buckets = Hash.new { |h, k| h[k] = [] }
         mismatches = []
         observations.each do |o|
@@ -45,24 +72,35 @@ module ShadcnAudit
           next mismatches << "#{r.size}/#{s.size} visible elements in #{at}" if r.size != s.size
 
           r.zip(s).each do |re, se|
-            (re["styles"].keys | se["styles"].keys).sort.each do |prop|
-              rv = re["styles"][prop].to_s
-              sv = se["styles"][prop].to_s
+            rf = facts(dimension, re)
+            sf = facts(dimension, se)
+            (rf.keys | sf.keys).sort.each do |key|
+              rv = rf[key].to_s
+              sv = sf[key].to_s
               next if Normalize.value(rv) == Normalize.value(sv)
 
-              buckets[classify(part, prop, rv, sv, o["theme"])] << {prop: prop, rubyui: rv, shadcn: sv, at: at}
+              buckets[classify(dimension, part, key, rv, sv, o["theme"])] << {key: key, rubyui: rv, shadcn: sv, at: at}
             end
           end
         end
-        part_lines(part, buckets, mismatches)
+        part_lines(dimension, part, buckets, mismatches)
       end
 
-      def classify(part, prop, rv, sv, theme)
-        token = theme_token(rv, sv, theme)
-        return [:theme, token] if token
-        return [:environment, "font"] if @environment_diff_keys.include?("font") && FONT_PROPS.include?(prop)
+      def facts(dimension, element)
+        return element["styles"] || {} if dimension == "Look"
 
-        entry = @divergences.match(component: @folder, dimension: "Look", part: part, key: prop, rubyui: rv, shadcn: sv)
+        attrs = element["attrs"] || {}
+        {"snapshot" => element["aria"]}.merge(ARIA_ATTRS.to_h { |name| [name, attrs[name]] })
+      end
+
+      def classify(dimension, part, key, rv, sv, theme)
+        if dimension == "Look"
+          token = theme_token(rv, sv, theme)
+          return [:theme, token] if token
+          return [:environment, "font"] if @environment_diff_keys.include?("font") && FONT_PROPS.include?(key)
+        end
+
+        entry = @divergences.match(component: @folder, dimension: dimension, part: part, key: key, rubyui: rv, shadcn: sv)
         entry ? [:intentional, entry["reason"]] : [:diff, nil]
       end
 
@@ -72,28 +110,34 @@ module ShadcnAudit
         end&.fetch("token")
       end
 
-      def part_lines(part, buckets, mismatches)
+      def part_lines(dimension, part, buckets, mismatches)
+        config = DIMENSIONS[dimension]
         lines = []
         unless mismatches.empty?
-          lines << line("Look", "inconclusive", "", "", "", "#{part}: selector matched #{mismatches.join("; ")}")
+          lines << line(dimension, "inconclusive", "", "", "", "#{part}: selector matched #{mismatches.join("; ")}")
         end
         diffs = buckets.select { |(kind, _), _| kind == :diff }.values.flatten
-        lines << values_line(part, "fail", diffs) unless diffs.empty?
+        lines << values_line(dimension, part, config[:diff], diffs, source: config[:source]) unless diffs.empty?
         buckets.select { |(kind, _), _| kind == :intentional }.sort.each do |(_, reason), found|
-          lines << values_line(part, "pass", found, basis: "intentional", source: "audit/divergences.yml", note: reason)
+          lines << values_line(dimension, part, "pass", found, basis: "intentional", source: "audit/divergences.yml", note: reason)
         end
         explained = buckets.select { |(kind, _), _| %i[theme environment].include?(kind) }
         unless explained.empty?
           causes = explained.keys.sort.map { |kind, what| (kind == :theme) ? "theme token #{what}" : "environment diff: #{what}" }.uniq
-          lines << values_line(part, "inconclusive", explained.values.flatten, source: "", note: "explained by #{causes.join(", ")}")
+          lines << values_line(dimension, part, "inconclusive", explained.values.flatten, source: "", note: "explained by #{causes.join(", ")}")
         end
         lines
       end
 
-      def values_line(part, status, found, basis: nil, source: LOOK_SOURCE, note: nil)
-        side = ->(key) { found.map { |f| "#{f[:prop]}: #{f[key]}" }.uniq.sort.join("; ") }
+      def values_line(dimension, part, status, found, source:, basis: nil, note: nil)
+        side = ->(which) { found.map { |f| "#{f[:key]}: #{display(f[which])}" }.uniq.sort.join("; ") }
         at = found.map { |f| f[:at] }.uniq
-        line("Look", status, side.call(:rubyui), side.call(:shadcn), source, note || "#{part} — #{at.join(", ")}", basis: basis)
+        line(dimension, status, side.call(:rubyui), side.call(:shadcn), source, note || "#{part} — #{at.join(", ")}", basis: basis)
+      end
+
+      def display(value)
+        return "(none)" if value.empty?
+        (value.length > SNAPSHOT_LIMIT) ? "#{value[0, SNAPSHOT_LIMIT]}…" : value
       end
 
       def line(dimension, status, rubyui, shadcn, source, note = "", basis: nil)

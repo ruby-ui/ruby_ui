@@ -101,4 +101,46 @@ class CollectGraderTest < Minitest::Test
     lines = look(grader(parts: %w[DialogContent]).lines([obs("open", "light", r, s)]))
     refute(lines.any? { |l| l["status"] == "fail" })
   end
+
+  def aria(lines) = lines.select { |l| l["dimension"] == "ARIA" }
+
+  def test_aria_snapshot_difference_is_warn
+    r = side("Trigger" => [el({}, %(- button "Open" [expanded]))])
+    s = side("Trigger" => [el({}, %(- button "Open"))])
+    lines = aria(grader(parts: %w[Trigger]).lines([obs("open", "light", r, s)]))
+    assert_equal ["warn"], lines.map { |l| l["status"] }
+    assert lines[0]["rubyui"].start_with?("snapshot: - button")
+    assert_equal Grader::ARIA_SOURCE, lines[0]["source"]
+  end
+
+  def test_missing_attribute_is_warn
+    r = side("Trigger" => [el({}, "- button", {"aria-controls" => "resolves"})])
+    s = side("Trigger" => [el({}, "- button", {"aria-controls" => nil})])
+    lines = aria(grader(parts: %w[Trigger]).lines([obs("open", "light", r, s)]))
+    assert_equal ["warn"], lines.map { |l| l["status"] }
+    assert_equal "aria-controls: (none)", lines[0]["shadcn"]
+    assert_equal "aria-controls: resolves", lines[0]["rubyui"]
+  end
+
+  def test_matching_aria_groups_into_pass
+    lines = aria(grader.lines([obs("open", "light", same_parts, same_parts)]))
+    assert_equal [["pass", "DialogContent, DialogTitle: accessibility tree matches"]], lines.map { |l| [l["status"], l["rubyui"]] }
+  end
+
+  def test_aria_divergence_by_attribute_is_intentional
+    entry = {"component" => "dialog", "dimension" => "ARIA", "rubyui" => "x", "shadcn" => "y", "reason" => "Native details.",
+             "match" => {"part" => "Trigger", "attribute" => "aria-expanded", "rubyui" => "", "shadcn" => "true"}}
+    r = side("Trigger" => [el({}, "- button", {"aria-expanded" => nil})])
+    s = side("Trigger" => [el({}, "- button", {"aria-expanded" => "true"})])
+    lines = aria(grader(parts: %w[Trigger], divergences: [entry]).lines([obs("open", "light", r, s)]))
+    assert_equal [["pass", "intentional"]], lines.map { |l| [l["status"], l["basis"]] }
+  end
+
+  def test_unreached_state_yields_inconclusive_look_and_aria
+    s = side("DialogContent" => [el])
+    observations = [obs("open", "light", unreached("no [data-audit-trigger]"), s), obs("open", "dark", unreached("no [data-audit-trigger]"), s)]
+    lines = grader(parts: %w[DialogContent]).lines(observations)
+    assert_equal [%w[Look inconclusive], %w[ARIA inconclusive]], lines.map { |l| [l["dimension"], l["status"]] }
+    assert_equal "open/light, open/dark not reached on rubyui: no [data-audit-trigger]", lines[0]["note"]
+  end
 end
