@@ -8,12 +8,12 @@ class Views::Docs::Alert < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", description: "An icon placed first gets its own column next to the title and description.", context: self) do
         <<~RUBY
           Alert do
-            rocket_icon
-            AlertTitle { "Pro tip" }
-            AlertDescription { "With RubyUI you'll ship faster." }
+            info_icon
+            AlertTitle { "Heads up!" }
+            AlertDescription { "You can add components to your app using the CLI." }
           end
         RUBY
       end
@@ -27,22 +27,22 @@ class Views::Docs::Alert < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Warning", context: self) do
+      render Docs::VisualCodeExample.new(title: "Destructive", context: self) do
         <<~RUBY
-          Alert(variant: :warning) do
-            info_icon
-            AlertTitle { "Ship often" }
-            AlertDescription { "Shipping is good, your users will thank you for it." }
+          Alert(variant: :destructive) do
+            circle_alert_icon
+            AlertTitle { "Something went wrong" }
+            AlertDescription { "Your session has expired. Please log in again." }
           end
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Destructive", context: self) do
+      render Docs::VisualCodeExample.new(title: "Warning", description: "Warning and success are RubyUI extras, styled like destructive.", context: self) do
         <<~RUBY
-          Alert(variant: :destructive) do
-            alert_icon
-            AlertTitle { "Oopsie daisy!" }
-            AlertDescription { "Your design system is non-existent." }
+          Alert(variant: :warning) do
+            triangle_alert_icon
+            AlertTitle { "Ship often" }
+            AlertDescription { "Shipping is good, your users will thank you for it." }
           end
         RUBY
       end
@@ -50,9 +50,40 @@ class Views::Docs::Alert < Views::Base
       render Docs::VisualCodeExample.new(title: "Success", context: self) do
         <<~RUBY
           Alert(variant: :success) do
-            check_icon
+            circle_check_icon
             AlertTitle { "Installation successful" }
             AlertDescription { "You're all set to start using RubyUI in your application." }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "With Action", description: "AlertAction pins a control to the top-right corner.", context: self) do
+        <<~RUBY
+          Alert do
+            info_icon
+            AlertTitle { "Dark mode is now available" }
+            AlertDescription { "Enable it under your profile settings." }
+            AlertAction do
+              Button(variant: :outline, size: :sm) { "Enable" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Static callout", description: "Alert has role=\"alert\": screen readers announce it right away, interrupting the user. Pass role: \"status\" to announce it without interrupting, or role: nil for a message that is part of the page.", context: self) do
+        <<~RUBY
+          Alert(role: nil) do
+            AlertTitle { "Pro tip" }
+            AlertDescription { "With RubyUI you'll ship faster." }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Title as a heading", description: "AlertTitle is a plain div. To list the alert in the page's headings, put a heading of the right level inside it.", context: self) do
+        <<~RUBY
+          Alert(role: nil) do
+            AlertTitle { h3 { "Billing" } }
+            AlertDescription { "Your plan renews on the first day of each month." }
           end
         RUBY
       end
@@ -65,71 +96,52 @@ class Views::Docs::Alert < Views::Base
 
   private
 
-  def rocket_icon
+  # lucide icons, as lucide-react renders them (24x24, aria-hidden, no size class):
+  # the Alert sizes them to 16px.
+  def lucide_icon(&)
     svg(
       xmlns: "http://www.w3.org/2000/svg",
+      width: "24",
+      height: "24",
       viewbox: "0 0 24 24",
-      fill: "currentColor",
-      class: "w-5 h-5"
-    ) do |s|
-      s.path(
-        fill_rule: "evenodd",
-        d:
-          "M9.315 7.584C12.195 3.883 16.695 1.5 21.75 1.5a.75.75 0 01.75.75c0 5.056-2.383 9.555-6.084 12.436A6.75 6.75 0 019.75 22.5a.75.75 0 01-.75-.75v-4.131A15.838 15.838 0 016.382 15H2.25a.75.75 0 01-.75-.75 6.75 6.75 0 017.815-6.666zM15 6.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z",
-        clip_rule: "evenodd"
-      )
-      s.path(
-        d:
-          "M5.26 17.242a.75.75 0 10-.897-1.203 5.243 5.243 0 00-2.05 5.022.75.75 0 00.625.627 5.243 5.243 0 005.022-2.051.75.75 0 10-1.202-.897 3.744 3.744 0 01-3.008 1.51c0-1.23.592-2.323 1.51-3.008z"
-      )
-    end
-  end
-
-  def alert_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      viewbox: "0 0 24 24",
-      fill: "currentColor",
-      class: "w-5 h-5"
-    ) do |s|
-      s.path(
-        fill_rule: "evenodd",
-        d:
-          "M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z",
-        clip_rule: "evenodd"
-      )
-    end
+      fill: "none",
+      stroke: "currentColor",
+      stroke_width: "2",
+      stroke_linecap: "round",
+      stroke_linejoin: "round",
+      aria_hidden: "true",
+      &
+    )
   end
 
   def info_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      viewbox: "0 0 24 24",
-      fill: "currentColor",
-      class: "w-5 h-5"
-    ) do |s|
-      s.path(
-        fill_rule: "evenodd",
-        d:
-          "M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z",
-        clip_rule: "evenodd"
-      )
+    lucide_icon do |s|
+      s.circle(cx: "12", cy: "12", r: "10")
+      s.path(d: "M12 16v-4")
+      s.path(d: "M12 8h.01")
     end
   end
 
-  def check_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      viewbox: "0 0 24 24",
-      fill: "currentColor",
-      class: "w-5 h-5"
-    ) do |s|
-      s.path(
-        fill_rule: "evenodd",
-        d:
-          "M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z",
-        clip_rule: "evenodd"
-      )
+  def circle_alert_icon
+    lucide_icon do |s|
+      s.circle(cx: "12", cy: "12", r: "10")
+      s.line(x1: "12", x2: "12", y1: "8", y2: "12")
+      s.line(x1: "12", x2: "12.01", y1: "16", y2: "16")
+    end
+  end
+
+  def triangle_alert_icon
+    lucide_icon do |s|
+      s.path(d: "m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3")
+      s.path(d: "M12 9v4")
+      s.path(d: "M12 17h.01")
+    end
+  end
+
+  def circle_check_icon
+    lucide_icon do |s|
+      s.circle(cx: "12", cy: "12", r: "10")
+      s.path(d: "m16 9-5.5 5.5L8 12")
     end
   end
 end

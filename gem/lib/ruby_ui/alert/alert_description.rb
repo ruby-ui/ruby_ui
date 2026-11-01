@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "text-sm [&_p]:leading-relaxed"
+        data: {slot: "alert-description"},
+        class: "text-muted-foreground text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground"
       }
     end
   end

@@ -3,14 +3,15 @@
 module RubyUI
   class AlertTitle < Base
     def view_template(&)
-      h5(**attrs, &)
+      div(**attrs, &)
     end
 
     private
 
     def default_attrs
       {
-        class: "mb-1 font-medium leading-none tracking-tight"
+        data: {slot: "alert-title"},
+        class: "font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground"
       }
     end
   end

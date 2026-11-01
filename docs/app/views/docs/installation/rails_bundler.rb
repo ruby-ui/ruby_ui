@@ -5,7 +5,7 @@ class Views::Docs::Installation::RailsBundler < Views::Base
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Rails - JS Bundler", description: "How to install RubyUI within a Rails app that employs JS bundling.")
 
-      Alert(variant: :info) do
+      Alert do
         AlertTitle { "RubyUI" }
         AlertDescription { "To take full advantage of RubyUI, the application is expected to be using TailwindCSS 4 and Stimulus" }
       end
