@@ -65,6 +65,12 @@ Building or changing a Stimulus-backed component:
   before exposing UI that depends on them.
 - **No fixed timeouts as a proxy for completion.** Drive UI off real signals
   (value-changed callbacks, native/Turbo events), not a guessed `setTimeout`.
+  One exception: to treat a burst of browser events as one round (e.g. the
+  `invalid` events a submit fires for every failing control), release a lock
+  with `setTimeout(fn)` (no delay), which runs on the next task, after the
+  whole burst. `queueMicrotask` doesn't work there: on a real click the
+  microtask queue drains between listener calls, so the lock is gone before
+  the second event. `form_controller.js` is the example.
 - **Always namespace `ruby-ui--`.** Controller identifiers, target/value/outlet
   keys all carry the `ruby-ui--<component>` prefix. Never register a bare
   identifier — it would collide with a consumer app's own controllers.
