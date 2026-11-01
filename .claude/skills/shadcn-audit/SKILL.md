@@ -73,7 +73,10 @@ it becomes `report.json`'s `target`.
 - `components` = every touched component folder, mapped or not. `unmapped`
   lists the folders missing from `component_map.yml` (handled in step 3).
 - Create the run folder `.shadcn-audit/runs/<YYYYMMDD-HHMMSS>-<pr|branch|component>/`
-  with a `screens/` subfolder.
+  with a `screens/` subfolder. `.shadcn-audit/` is git-ignored and lives in
+  this checkout: removing the worktree deletes the runs, the sandbox and the
+  shadcn clone. Copy the run folder elsewhere first if it must outlive the
+  worktree.
 
 ### 2. Workspace, sandbox, preview, servers
 
@@ -105,7 +108,11 @@ it becomes `report.json`'s `target`.
    from source) still run, and the browser-fed RubyUI lines are ⏸ "fork code
    not run". Same-repository heads come from collaborators with write access
    and skip this step.
-6. Boot both servers. When `HERDR_ENV=1`, **each in its own Herdr pane**
+6. **Ports.** The defaults are 5179 (shadcn) and 3179 (RubyUI). Another
+   audit running in parallel (another worktree) already holds them: check
+   with `lsof -nP -iTCP:<port> -sTCP:LISTEN` and pick a free pair (5180/3180,
+   5181/3181…). Use it in the commands below and in both `url_template`s.
+   Boot both servers. When `HERDR_ENV=1`, **each in its own Herdr pane**
    (see the `herdr` skill), as below. Otherwise run each as a background
    shell process with its output sent to a log in the run folder
    (`<run>/shadcn.log`, `<run>/rubyui.log`), wait for the same text by
@@ -267,6 +274,50 @@ Then:
 Close the browser pages you opened, then stop both servers: `herdr pane close
 <pane>` for each server pane, or kill the background processes you started.
 Tell the user where the run folder is.
+
+## Before/after images for a fix PR
+
+When the user asks you to fix what the audit found and open a PR, the PR
+shows the fix side by side with `main` and shadcn. The hard rules above still
+hold for auditing someone else's PR; this section is for the user's own fix.
+
+1. **Keep the "before".** Before fixing anything, copy `report.json` to
+   `report-main.json` and run `render report-main.json --html` while it still
+   has failing lines: once everything passes, `--html` returns `null`.
+2. **Shoot the "after"** of the same states, same clips and themes, into
+   `screens/` with a `-now` suffix, plus the fixture on both sides.
+3. **Compose one image per state**: three columns, `RubyUI · main`,
+   `RubyUI · this PR`, `shadcn · Base UI + vega`. A small HTML page with the
+   three screenshots, captured with the browser, is enough.
+4. **Publish to `pr-assets`** (only after the user's ok for the PR). GitHub
+   has no API to attach files to a PR, so images go to the orphan branch
+   `pr-assets`, one folder per PR, committed with plumbing so the working
+   tree and index stay untouched:
+
+   ```bash
+   git fetch origin pr-assets 2>/dev/null || true       # absent on the first PR
+   export GIT_INDEX_FILE=$(mktemp -u)
+   git read-tree origin/pr-assets 2>/dev/null || true   # keep earlier PRs' folders
+   for f in <run>/pr-assets/*.png; do
+     git update-index --add --cacheinfo 100644,$(git hash-object -w "$f"),<pr-folder>/$(basename "$f")
+   done
+   tree=$(git write-tree)
+   if parent=$(git rev-parse -q --verify origin/pr-assets); then
+     sha=$(git commit-tree "$tree" -p "$parent" -m "Add images for <pr-folder>")
+   else
+     sha=$(git commit-tree "$tree" -m "Add images for <pr-folder>")
+   fi
+   rm -f "$GIT_INDEX_FILE"; unset GIT_INDEX_FILE
+   git push origin "$sha:refs/heads/pr-assets"
+   ```
+
+   Link each image by commit SHA so the link never moves:
+   `![State](https://github.com/ruby-ui/ruby_ui/blob/<sha>/<pr-folder>/<file>.png?raw=true)`.
+   Check one URL answers `200 image/png` before opening the PR. Never delete
+   the branch: old PRs lose their images.
+5. **Description**: the images, then both checklists (`render` text of
+   `report-main.json` and of the fixed `report.json`) inside `<details>`
+   blocks, and test steps. Show it to the user before opening the PR.
 
 ## References
 

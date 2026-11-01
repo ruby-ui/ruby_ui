@@ -11,7 +11,7 @@ Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile` and
 | [`gem/`](gem/) | The `ruby_ui` gem — Phlex components, generators, gemspec, Minitest suite. Published to RubyGems from here. |
 | [`docs/`](docs/) | Rails 8 app powering https://rubyui.com. Consumes the local gem via `path: "../gem"`. |
 | [`audit/`](audit/) | shadcn fidelity audit tooling; skill in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/). |
-| [`mcp/`](mcp/) | MCP server for ruby_ui; registry rebuilt in releases. |
+| [`mcp/`](mcp/) | MCP server for ruby_ui; `mcp/data/registry.json` holds a copy of every gem component file. |
 | `.github/workflows/ci.yml` | Unified CI: `gem` tests (Ruby 3.3 + 3.4), `docs` Rails tests, `mcp` tests + registry check, `audit` (shadcn-audit CLI) tests, docker build for the docs devcontainer. |
 
 Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (→ `docs/AGENTS.md`). Read those before editing inside a subdir.
@@ -21,6 +21,7 @@ Subproject-specific instructions live in `gem/AGENTS.md` and `docs/CLAUDE.md` (�
 - Component code → `gem/lib/ruby_ui/<component>/`. Tests → `gem/test/ruby_ui/<component>_test.rb`.
 - Component docs view → `docs/app/views/docs/<component>.rb`. Update in same PR as the component.
 - Generator/installer logic → `gem/lib/generators/ruby_ui/`. Dependency map → `gem/lib/generators/ruby_ui/dependencies.yml`.
+- Any change under `gem/lib/ruby_ui/` → also rebuild the MCP registry (`cd mcp && bundle exec exe/ruby-ui-mcp-build`) and commit `mcp/data/registry.json` in the same PR. CI's "MCP registry up to date" check fails otherwise.
 - Shadcn fidelity audit tooling and deliberate divergences → `audit/` (`audit/divergences.yml`).
 - Site chrome, routes, marketing pages → `docs/app/`.
 - A component's Stimulus controller lives only in `gem/lib/ruby_ui/<component>/<component>_controller.js`. `docs/app/javascript/controllers/ruby_ui/<component>_controller.js` is a symlink to it, not a copy — editing the gem file is enough for existing components. A brand-new component's controller needs `docs`' `rake ruby_ui:sync_controller_symlinks` to create the symlink, plus `bin/rails stimulus:manifest:update` to register it.
@@ -91,6 +92,7 @@ Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new bac
 - Bracketed prefixes (`[Feature]`, `[Bug Fix]`, `[Documentation]`) or scoped conventional (`feat(scope): ...`).
 - Imperative, focused commits. Reference issues/PRs as `(#123)`.
 - PRs: linked issue, concise description, before/after screenshots for UI changes, explicit test steps.
+- PR images: GitHub has no API to attach files, so they live on the orphan branch `pr-assets` (one folder per PR, linked by commit SHA). Recipe in the shadcn-audit skill, "Before/after images for a fix PR". Never delete `pr-assets`: old PRs lose their images.
 
 ## Don'ts
 
@@ -98,5 +100,6 @@ Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new bac
 - Don't edit a component without updating its `docs/app/views/docs/<component>.rb` counterpart.
 - Don't bump the gem version from `docs/`; `RubyUI::VERSION` lives in `gem/lib/ruby_ui.rb` and the gem is published from `gem/`. (The release PR also reflects the version into `docs/` and `mcp/` — see [Releasing](#releasing).)
 - Don't call a release done after only publishing the gem — tag `vX.Y.Z` and reflect the version on the website too.
+- Don't push a change under `gem/lib/ruby_ui/` without the rebuilt `mcp/data/registry.json`.
 - Don't use ui.shadcn.com or `new-york-v4` as the reference.
 - Don't commit secrets; each app uses local env config.
