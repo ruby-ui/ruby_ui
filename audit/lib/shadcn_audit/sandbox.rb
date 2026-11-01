@@ -14,7 +14,7 @@ module ShadcnAudit
     # Written after a successful build: the audit/sandbox.yml pins (a
     # mismatch rebuilds the app), when the components were last pulled from
     # the registry, the workspace SHA at that time and the shadcn components
-    # installed (`shadcn` plus `fixture_shadcn` from component_map.yml). The
+    # installed (`shadcn` plus `fixture_shadcn` from the component map). The
     # SHA and the component list are refresh triggers: when the workspace
     # moves or the map needs other components, they are pulled again.
     STAMP = ".audit-sandbox.yml"
@@ -109,7 +109,7 @@ module ShadcnAudit
 
     def shadcn_components
       @shadcn_components ||= begin
-        map = ComponentMap.load(@audit_dir.join("component_map.yml"))
+        map = ComponentMap.for_audit(@audit_dir)
         map.all_folders.flat_map { |folder|
           entry = map.entry(folder)
           [entry.fetch("shadcn"), *entry["fixture_shadcn"]]

@@ -13,12 +13,37 @@ module ShadcnAudit
       %r{\Adocs/app/views/docs/([^/]+)\.rb\z}
     ].freeze
 
-    def self.load(path)
-      new(YAML.safe_load_file(path.to_s) || {})
+    DIR = "component_map"
+    LEGACY_FILE = "component_map.yml"
+
+    # The map of an audit/ folder: one file per component in
+    # audit/component_map/<folder>.yml. Checkouts from before the split still
+    # have the single audit/component_map.yml, so that is the fallback.
+    def self.for_audit(audit_dir)
+      audit_dir = Pathname.new(audit_dir)
+      dir = audit_dir.join(DIR)
+      dir.directory? ? load(dir) : load(audit_dir.join(LEGACY_FILE))
     end
 
-    def initialize(entries)
+    # Where a component's entry lives, relative to the repo root.
+    def self.path_for(folder) = "audit/#{DIR}/#{folder}.yml"
+
+    # A directory of <folder>.yml files, or a single YAML keyed by folder.
+    def self.load(path)
+      path = Pathname.new(path)
+      return new(YAML.safe_load_file(path.to_s) || {}) unless path.directory?
+
+      files = path.glob("*.yml").sort
+      folders = files.map { |file| file.basename(".yml").to_s }
+      new(
+        folders.zip(files.map { |file| YAML.safe_load_file(file.to_s) }).to_h,
+        folders.to_h { |folder| [folder, "#{DIR}/#{folder}.yml"] }
+      )
+    end
+
+    def initialize(entries, sources = nil)
       @entries = entries
+      @sources = sources
       validate!
     end
 
@@ -59,15 +84,14 @@ module ShadcnAudit
       all_folders.select { |f| snake.start_with?("#{f}_") }.max_by(&:length)
     end
 
+    # Contents for audit/component_map/<folder>.yml.
     def suggest_entry(folder)
       stub = {
-        folder => {
-          "shadcn" => folder.tr("_", "-"),
-          "kind" => "TODO",
-          "docs_view" => folder,
-          "parts" => {},
-          "props" => {}
-        }
+        "shadcn" => folder.tr("_", "-"),
+        "kind" => "TODO",
+        "docs_view" => folder,
+        "parts" => {},
+        "props" => {}
       }
       YAML.dump(stub).delete_prefix("---\n")
     end
@@ -77,16 +101,19 @@ module ShadcnAudit
     def validate_selectors!(folder, entry)
       selectors = entry["selectors"]
       return if selectors.nil?
-      raise ConfigError, "component_map.yml: #{folder}: selectors must be a mapping" unless selectors.is_a?(Hash)
+      raise ConfigError, "#{where(folder)}: selectors must be a mapping" unless selectors.is_a?(Hash)
 
       parts = entry["parts"] || {}
       selectors.each do |part, css|
-        raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} is not a mapped part" unless parts[part]
+        raise ConfigError, "#{where(folder)}: selectors.#{part} is not a mapped part" unless parts[part]
         next if css.nil? || (css.is_a?(String) && !css.strip.empty?)
 
-        raise ConfigError, "component_map.yml: #{folder}: selectors.#{part} must be a non-empty CSS selector"
+        raise ConfigError, "#{where(folder)}: selectors.#{part} must be a non-empty CSS selector"
       end
     end
+
+    # "component_map/dialog.yml" for a split map, "component_map.yml: dialog" for a single file.
+    def where(folder) = @sources ? @sources.fetch(folder) : "#{LEGACY_FILE}: #{folder}"
 
     def snake_case(name)
       name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
@@ -94,24 +121,24 @@ module ShadcnAudit
 
     def validate!
       @entries.each do |folder, entry|
-        raise ConfigError, "component_map.yml: #{folder}: entry must be a mapping" unless entry.is_a?(Hash)
+        raise ConfigError, "#{where(folder)}: entry must be a mapping" unless entry.is_a?(Hash)
 
         kind = entry["kind"]
         unless kind.nil? || KINDS.include?(kind)
-          raise ConfigError, "component_map.yml: #{folder}: unknown kind #{kind.inspect} (expected one of #{KINDS.join(", ")})"
+          raise ConfigError, "#{where(folder)}: unknown kind #{kind.inspect} (expected one of #{KINDS.join(", ")})"
         end
 
         (entry["rubyui_only"] || {}).each do |part, kwargs|
           next if kwargs.is_a?(Array)
 
-          raise ConfigError, "component_map.yml: #{folder}: rubyui_only.#{part} must be an array of kwargs"
+          raise ConfigError, "#{where(folder)}: rubyui_only.#{part} must be an array of kwargs"
         end
 
         validate_selectors!(folder, entry)
 
         extra = entry["fixture_shadcn"]
         if !extra.nil? && !(extra.is_a?(Array) && extra.all? { |name| name.is_a?(String) && name.match?(COMPONENT_NAME) })
-          raise ConfigError, "component_map.yml: #{folder}: fixture_shadcn must be an array of shadcn component names"
+          raise ConfigError, "#{where(folder)}: fixture_shadcn must be an array of shadcn component names"
         end
       end
     end

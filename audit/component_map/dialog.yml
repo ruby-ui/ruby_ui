@@ -1,0 +1,26 @@
+shadcn: dialog
+kind: modal
+docs_view: dialog
+parts:
+  Dialog: dialog
+  DialogTrigger: dialog-trigger
+  DialogContent: dialog-content
+  DialogHeader: dialog-header
+  DialogFooter: dialog-footer
+  DialogTitle: dialog-title
+  DialogDescription: dialog-description
+  DialogMiddle: null
+selectors:
+  Dialog: null
+  DialogTrigger: '[data-ruby-ui--dialog-target="trigger"] > button'
+  DialogContent: 'dialog[data-ruby-ui--dialog-target="dialog"]'
+  DialogHeader: 'dialog[data-ruby-ui--dialog-target="dialog"] > div:first-child'
+  DialogFooter: 'dialog[data-ruby-ui--dialog-target="dialog"] > div:last-of-type'
+  DialogTitle: '[data-ruby-ui--dialog-target="title"]'
+  DialogDescription: '[data-ruby-ui--dialog-target="description"]'
+props:
+  Dialog: {open: open}
+  DialogContent: {showCloseButton: show_close_button}
+  DialogFooter: {showCloseButton: show_close_button}
+rubyui_only:
+  DialogContent: [size]

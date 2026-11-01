@@ -3,7 +3,7 @@ require "test_helper"
 class RubyuiPreviewTest < Minitest::Test
   AUDIT_DIR = ShadcnAudit.root.join("audit")
   SHA = "a9a5d1faee2257e8e83c144a5be88c378347640d"
-  FOLDERS = %w[dialog alert_dialog sheet command form accordion alert badge avatar aspect_ratio].freeze
+  FOLDERS = Dir.children(AUDIT_DIR.join("fixtures")).sort.freeze
 
   def setup
     @tmp = Dir.mktmpdir

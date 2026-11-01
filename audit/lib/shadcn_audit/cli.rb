@@ -43,8 +43,8 @@ module ShadcnAudit
 
     def self.map(args, out:)
       folder = args.first or raise ArgumentError, "usage: map <folder>"
-      component_map = ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
-      component_map.entry(folder) || {"missing" => true, "suggestion" => component_map.suggest_entry(folder)}
+      component_map = ComponentMap.for_audit(ShadcnAudit.root.join("audit"))
+      component_map.entry(folder) || {"missing" => true, "path" => ComponentMap.path_for(folder), "suggestion" => component_map.suggest_entry(folder)}
     end
 
     def self.divergences(args, out:)
@@ -55,7 +55,7 @@ module ShadcnAudit
 
     def self.target(args, out:)
       arg = args.first or raise ArgumentError, "usage: target <pr-number|branch|component>"
-      component_map = ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+      component_map = ComponentMap.for_audit(ShadcnAudit.root.join("audit"))
       Target.resolve(arg, shell: Shell.new, map: component_map)
     end
 

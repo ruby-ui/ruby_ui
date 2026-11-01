@@ -1,0 +1,31 @@
+shadcn: field
+kind: form_control
+docs_view: form
+parts:
+  Form: null
+  FormField: field
+  FormFieldLabel: field-label
+  FormFieldHint: field-description
+  FormFieldError: field-error
+  FormFieldSet: field-set
+  FormFieldLegend: field-legend
+  FormFieldGroup: field-group
+  FormFieldContent: field-content
+  FormFieldTitle: field-label
+  FormFieldSeparator: field-separator
+selectors:
+  FormField: '[data-slot="field"]'
+  FormFieldLabel: '[data-slot="field-label"]'
+  FormFieldHint: '[data-slot="field-description"]'
+  FormFieldError: '[data-slot="field-error"]'
+  FormFieldSet: '[data-slot="field-set"]'
+  FormFieldLegend: '[data-slot="field-legend"]'
+  FormFieldGroup: '[data-slot="field-group"]'
+  FormFieldContent: '[data-slot="field-content"]'
+  FormFieldTitle: null
+  FormFieldSeparator: '[data-slot="field-separator"]'
+props:
+  FormField: {orientation: orientation}
+  FormFieldLegend: {variant: variant}
+  FormFieldError: {errors: errors}
+fixture_shadcn: [button, input, checkbox]

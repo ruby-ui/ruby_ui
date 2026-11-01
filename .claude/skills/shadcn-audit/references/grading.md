@@ -72,7 +72,7 @@ Otherwise keep the grade.
   `showCloseButton`"). `rubyui_only` kwargs → a `note` on the Props line,
   never a failure. A prop the `.tsx` declares (reference `parts.<slot>.props`)
   that the map lacks → ⏸ "map gap", and tell the user to add it to
-  `audit/component_map.yml`.
+  `audit/component_map/<folder>.yml`.
 - **Reference `unresolved`** (cn-* markers with no vega rule): shadcn's CLI
   strips them, so they add no classes. Mention in a `note`, never as a missing
   class.
@@ -104,7 +104,7 @@ before blaming the component.
 
 - Pre-existing drift is reported **mixed with** drift the PR introduced. No
   "old debt" section, no filtering by changed lines.
-- The audit never edits PR code, `divergences.yml` or `component_map.yml`.
+- The audit never edits PR code, `divergences.yml` or `audit/component_map/`.
   When a difference looks deliberate, show a ready-to-paste divergences entry
   (fields: `component`, `dimension`, `rubyui`, `shadcn`, `reason`, `since`)
   for the PR author to add by hand. `component`, `rubyui`, `shadcn` and

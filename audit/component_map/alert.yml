@@ -1,0 +1,15 @@
+shadcn: alert
+kind: static
+docs_view: alert
+parts:
+  Alert: alert
+  AlertTitle: alert-title
+  AlertDescription: alert-description
+  AlertAction: alert-action
+selectors:
+  Alert: '[data-slot="alert"]'
+  AlertTitle: '[data-slot="alert-title"]'
+  AlertDescription: '[data-slot="alert-description"]'
+  AlertAction: '[data-slot="alert-action"]'
+props:
+  Alert: {variant: variant}

@@ -2,7 +2,12 @@ require "test_helper"
 
 class SandboxTest < Minitest::Test
   AUDIT_DIR = ShadcnAudit.root.join("audit")
-  FOLDERS = %w[dialog alert_dialog sheet command form accordion alert badge avatar aspect_ratio].freeze
+  # Read from the repo, so adding a component doesn't touch this file.
+  FOLDERS = Dir.children(AUDIT_DIR.join("fixtures")).sort.freeze
+  MAP = ShadcnAudit::ComponentMap.for_audit(AUDIT_DIR)
+  # shadcn components the sandbox adds: each entry's `shadcn` plus its
+  # `fixture_shadcn`, in map order, without nulls or repeats.
+  COMPONENTS = MAP.all_folders.flat_map { |folder| [MAP.entry(folder)["shadcn"], *MAP.entry(folder)["fixture_shadcn"]] }.compact.uniq.freeze
 
   # Stands in for the shadcn CLI: `init` writes the files a real init leaves
   # behind (components.json, package.json, pnpm-lock.yaml).
@@ -89,7 +94,7 @@ class SandboxTest < Minitest::Test
     result = sandbox(NEW_SHA, now: NOW + 3600).prepare
 
     new_calls = @shell.calls.drop(calls_before)
-    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox", "accordion", "alert", "badge", "avatar", "aspect-ratio"]], new_calls.map(&:argv)
+    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", *COMPONENTS]], new_calls.map(&:argv)
     assert_equal @app.to_s, new_calls.first.chdir
     assert_equal false, result["created"]
     assert_equal true, result["refreshed"]
@@ -114,7 +119,7 @@ class SandboxTest < Minitest::Test
 
     assert_equal true, result["refreshed"]
     new_calls = @shell.calls.drop(calls_before).map(&:argv)
-    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox", "accordion", "alert", "badge", "avatar", "aspect-ratio"]], new_calls
+    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", *COMPONENTS]], new_calls
     assert_equal false, sandbox(SHA).prepare["refreshed"]
   end
 
@@ -154,7 +159,7 @@ class SandboxTest < Minitest::Test
     @sandbox.prepare
 
     add = @shell.calls.find { |call| call.argv.include?("add") && call.argv.include?(shadcn_cli) }
-    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox", "accordion", "alert", "badge", "avatar", "aspect-ratio"], add.argv
+    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", *COMPONENTS], add.argv
     assert_equal @app.to_s, add.chdir
     plugins = @pinned.fetch("packages").map { |name, version| "#{name}@#{version}" }
     assert @shell.called?("pnpm", "add", *plugins)
@@ -165,12 +170,13 @@ class SandboxTest < Minitest::Test
     Dir.mktmpdir do |audit|
       audit = Pathname.new(audit)
       %w[sandbox.yml sandbox_template fixtures].each { |name| FileUtils.cp_r(AUDIT_DIR.join(name), audit.join(name)) }
-      audit.join("component_map.yml").write(AUDIT_DIR.join("component_map.yml").read + "\nnative_only:\n  shadcn: null\n  kind: static\n")
+      FileUtils.cp_r(AUDIT_DIR.join("component_map"), audit.join("component_map"))
+      audit.join("component_map/native_only.yml").write("shadcn: null\nkind: static\n")
       ShadcnAudit::Sandbox.new(shell: @shell, dir: @dir, shadcn_sha: SHA, audit_dir: audit).prepare
     end
 
     add = @shell.argvs.find { |argv| argv.include?("add") && argv.include?(shadcn_cli) }
-    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "button", "input", "checkbox", "accordion", "alert", "badge", "avatar", "aspect-ratio"], add
+    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", *COMPONENTS], add
   end
 
   def test_copies_fixtures_and_parity_css
@@ -214,8 +220,7 @@ class SandboxTest < Minitest::Test
   end
 
   def test_fixture_strings_match
-    folders = Dir.children(AUDIT_DIR.join("fixtures")).sort
-    assert_equal FOLDERS.sort, folders
+    folders = FOLDERS
     folders.each do |folder|
       dir = AUDIT_DIR.join("fixtures", folder)
       content = YAML.safe_load_file(dir.join("content.yml").to_s)
