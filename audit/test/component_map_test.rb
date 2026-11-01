@@ -172,6 +172,9 @@ class ComponentMapTest < Minitest::Test
     audit = ShadcnAudit.root.join("audit")
     compared = seed_map.all_folders.reject { |folder| seed_map.selectors(folder).compact.empty? }
     assert_equal compared.sort, Dir.children(audit.join("fixtures")).sort
+    Dir.children(audit.join("fixtures")).each do |folder|
+      assert File.file?(audit.join("component_map", "#{folder}.yml")), "#{folder}: missing map file"
+    end
   end
 
   def test_non_mapping_entry_raises
