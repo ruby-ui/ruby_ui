@@ -2,6 +2,7 @@
 # parts: RubyUI class => shadcn data-slot (null = no shadcn part).
 # props: RubyUI class => {shadcn prop => RubyUI kwarg (null = none)}; shadcn props only.
 # rubyui_only: RubyUI class => [kwargs with no shadcn counterpart]. className is never listed (all parts take class via attrs).
+# fixture_shadcn: other shadcn components the fixture renders (added to the sandbox, not audited here).
 dialog:
   shadcn: dialog
   kind: modal
@@ -79,3 +80,25 @@ command:
     CommandItem: [text, href]
     CommandDialogContent: [size]
     CommandDialogTrigger: [keybindings]
+
+form:
+  shadcn: field
+  kind: form_control
+  docs_view: form
+  parts:
+    Form: null
+    FormField: field
+    FormFieldLabel: field-label
+    FormFieldHint: field-description
+    FormFieldError: field-error
+    FormFieldSet: field-set
+    FormFieldLegend: field-legend
+    FormFieldGroup: field-group
+    FormFieldContent: field-content
+    FormFieldTitle: field-label
+    FormFieldSeparator: field-separator
+  props:
+    FormField: {orientation: orientation}
+    FormFieldLegend: {variant: variant}
+    FormFieldError: {errors: errors}
+  fixture_shadcn: [input, checkbox]

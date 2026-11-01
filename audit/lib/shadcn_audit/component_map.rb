@@ -87,6 +87,11 @@ module ShadcnAudit
 
           raise ConfigError, "component_map.yml: #{folder}: rubyui_only.#{part} must be an array of kwargs"
         end
+
+        extra = entry["fixture_shadcn"]
+        if !extra.nil? && !(extra.is_a?(Array) && extra.all?(String))
+          raise ConfigError, "component_map.yml: #{folder}: fixture_shadcn must be an array of shadcn component names"
+        end
       end
     end
   end

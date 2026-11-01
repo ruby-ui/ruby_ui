@@ -2,7 +2,7 @@ require "test_helper"
 
 class SandboxTest < Minitest::Test
   AUDIT_DIR = ShadcnAudit.root.join("audit")
-  FOLDERS = %w[dialog alert_dialog sheet command].freeze
+  FOLDERS = %w[dialog alert_dialog sheet command form].freeze
 
   # Stands in for the shadcn CLI: `init` writes the files a real init leaves
   # behind (components.json, package.json, pnpm-lock.yaml).
@@ -89,7 +89,7 @@ class SandboxTest < Minitest::Test
     result = sandbox(NEW_SHA, now: NOW + 3600).prepare
 
     new_calls = @shell.calls.drop(calls_before)
-    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command"]], new_calls.map(&:argv)
+    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"]], new_calls.map(&:argv)
     assert_equal @app.to_s, new_calls.first.chdir
     assert_equal false, result["created"]
     assert_equal true, result["refreshed"]
@@ -100,6 +100,33 @@ class SandboxTest < Minitest::Test
     again = sandbox(NEW_SHA).prepare
     assert_equal false, again["refreshed"]
     assert_equal calls_before + 1, @shell.calls.size
+  end
+
+  def test_new_map_components_trigger_a_refresh_at_the_same_sha
+    @sandbox.prepare
+    stamp = @app.join(ShadcnAudit::Sandbox::STAMP)
+    data = YAML.safe_load(stamp.read)
+    data["components"] = %w[dialog alert-dialog sheet command]
+    stamp.write(YAML.dump(data))
+    calls_before = @shell.calls.size
+
+    result = sandbox(SHA).prepare
+
+    assert_equal true, result["refreshed"]
+    new_calls = @shell.calls.drop(calls_before).map(&:argv)
+    assert_equal [["pnpm", "dlx", shadcn_cli, "add", "--yes", "--overwrite", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"]], new_calls
+    assert_equal false, sandbox(SHA).prepare["refreshed"]
+  end
+
+  def test_stamp_without_components_refreshes_once
+    @sandbox.prepare
+    stamp = @app.join(ShadcnAudit::Sandbox::STAMP)
+    data = YAML.safe_load(stamp.read)
+    data.delete("components")
+    stamp.write(YAML.dump(data))
+
+    assert_equal true, sandbox(SHA).prepare["refreshed"]
+    assert_equal false, sandbox(SHA).prepare["refreshed"]
   end
 
   def test_init_producing_another_style_or_color_raises
@@ -117,7 +144,7 @@ class SandboxTest < Minitest::Test
     @sandbox.prepare
 
     add = @shell.calls.find { |call| call.argv.include?("add") && call.argv.include?(shadcn_cli) }
-    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command"], add.argv
+    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"], add.argv
     assert_equal @app.to_s, add.chdir
     plugins = @pinned.fetch("packages").map { |name, version| "#{name}@#{version}" }
     assert @shell.called?("pnpm", "add", *plugins)
@@ -133,7 +160,7 @@ class SandboxTest < Minitest::Test
     end
 
     add = @shell.argvs.find { |argv| argv.include?("add") && argv.include?(shadcn_cli) }
-    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command"], add
+    assert_equal ["pnpm", "dlx", shadcn_cli, "add", "--yes", "dialog", "alert-dialog", "sheet", "command", "field", "input", "checkbox"], add
   end
 
   def test_copies_fixtures_and_parity_css

@@ -32,7 +32,7 @@ module ShadcnAudit
     def prepare
       @stamp_data = nil
       created = !built?
-      refreshed = !created && stamp_data["shadcn_sha"] != @shadcn_sha
+      refreshed = !created && (stamp_data["shadcn_sha"] != @shadcn_sha || stamp_data["components"] != shadcn_components)
       if created
         build
       elsif refreshed
@@ -66,7 +66,7 @@ module ShadcnAudit
     def built? = stamp_data["pins"] == pins
 
     def write_stamp
-      @stamp_data = {"pins" => pins, "shadcn_sha" => @shadcn_sha, "built_at" => @clock.call.iso8601}
+      @stamp_data = {"pins" => pins, "shadcn_sha" => @shadcn_sha, "components" => shadcn_components, "built_at" => @clock.call.iso8601}
       stamp.write(YAML.dump(@stamp_data))
     end
 
@@ -74,8 +74,9 @@ module ShadcnAudit
       @shell.capture("pnpm", "dlx", shadcn_cli, "add", "--yes", *flags, *shadcn_components, chdir: app_dir)
     end
 
-    # The workspace moved since the last pull: re-add the mapped components
-    # from the live registry over the old ones, keeping the app and packages.
+    # The workspace moved, or the map now needs other components than the
+    # last pull installed: re-add them all from the live registry over the old
+    # ones, keeping the app and packages.
     def refresh
       add_components("--overwrite")
       write_stamp
@@ -106,8 +107,13 @@ module ShadcnAudit
     end
 
     def shadcn_components
-      map = ComponentMap.load(@audit_dir.join("component_map.yml"))
-      map.all_folders.map { |folder| map.entry(folder).fetch("shadcn") }.compact.uniq
+      @shadcn_components ||= begin
+        map = ComponentMap.load(@audit_dir.join("component_map.yml"))
+        map.all_folders.flat_map { |folder|
+          entry = map.entry(folder)
+          [entry.fetch("shadcn"), *entry["fixture_shadcn"]]
+        }.compact.uniq
+      end
     end
 
     def copy_template

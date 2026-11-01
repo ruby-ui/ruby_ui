@@ -94,6 +94,17 @@ class ComponentMapTest < Minitest::Test
     assert_includes error.message, "rubyui_only.DialogContent"
   end
 
+  def test_fixture_shadcn_must_be_a_list_of_names
+    File.write(@path, "form:\n  shadcn: field\n  kind: form_control\n  fixture_shadcn: input\n")
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(@path) }
+    assert_includes error.message, "form"
+    assert_includes error.message, "fixture_shadcn"
+  end
+
+  def test_form_fixture_needs_input_and_checkbox
+    assert_equal %w[input checkbox], seed_map.entry("form")["fixture_shadcn"]
+  end
+
   def seed_map = ShadcnAudit::ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
 
   def test_seed_files_load

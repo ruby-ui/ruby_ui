@@ -66,6 +66,10 @@ dropdown_menu:
   js_packages:
     - "@floating-ui/dom"
 
+form:
+  components:
+    - "Separator"
+
 hover_card:
   js_packages:
     - "@floating-ui/dom"

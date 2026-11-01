@@ -9,7 +9,12 @@ module RubyUI
     private
 
     def default_attrs
-      {}
+      {
+        data: {
+          controller: "ruby-ui--form",
+          action: "invalid->ruby-ui--form#focusFirstInvalid:capture"
+        }
+      }
     end
   end
 end
