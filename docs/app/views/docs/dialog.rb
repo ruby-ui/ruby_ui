@@ -21,9 +21,10 @@ class Views::Docs::Dialog < Views::Base
                 DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
               end
               DialogMiddle do
-                AspectRatio(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                AspectRatio(ratio: "16/9", class: 'rounded-md overflow-hidden border') do
                   img(
                     alt: "Placeholder",
+                    class: "absolute inset-0 size-full object-cover",
                     loading: "lazy",
                     src: image_path("pattern.jpg")
                   )
@@ -51,9 +52,10 @@ class Views::Docs::Dialog < Views::Base
                   DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
                 end
                 DialogMiddle do
-                  AspectRatio(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                  AspectRatio(ratio: "16/9", class: 'rounded-md overflow-hidden border') do
                     img(
                       alt: "Placeholder",
+                      class: "absolute inset-0 size-full object-cover",
                       loading: "lazy",
                       src: image_path("pattern.jpg")
                     )
@@ -76,9 +78,10 @@ class Views::Docs::Dialog < Views::Base
                   DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
                 end
                 DialogMiddle do
-                  AspectRatio(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                  AspectRatio(ratio: "16/9", class: 'rounded-md overflow-hidden border') do
                     img(
                       alt: "Placeholder",
+                      class: "absolute inset-0 size-full object-cover",
                       loading: "lazy",
                       src: image_path("pattern.jpg")
                     )

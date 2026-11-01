@@ -15,9 +15,10 @@ class RubyUI::DialogTest < ComponentTest
             RubyUI.DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
           end
           RubyUI.DialogMiddle do
-            RubyUI.AspectRatio(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border") do |aspect|
+            RubyUI.AspectRatio(ratio: "16/9", class: "rounded-md overflow-hidden border") do |aspect|
               aspect.img(
                 alt: "Placeholder",
+                class: "absolute inset-0 size-full object-cover",
                 loading: "lazy",
                 src: "https://avatars.githubusercontent.com/u/246692?v=4"
               )

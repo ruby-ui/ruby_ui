@@ -8,11 +8,12 @@ class Views::Docs::AspectRatio < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "16/9", context: self) do
+      render Docs::VisualCodeExample.new(title: "16/9", description: "ratio: takes a \"W/H\" String or a Numeric (16.0 / 9). The image is positioned by its own classes; AspectRatio only sizes the box.", context: self) do
         <<~RUBY
-          AspectRatio(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(ratio: "16/9", class: "rounded-lg bg-muted") do
             img(
               alt: "Placeholder",
+              class: "absolute inset-0 size-full rounded-lg object-cover",
               loading: "lazy",
               src: image_path('pattern.jpg')
             )
@@ -22,9 +23,10 @@ class Views::Docs::AspectRatio < Views::Base
 
       render Docs::VisualCodeExample.new(title: "4/3", context: self) do
         <<~RUBY
-          AspectRatio(aspect_ratio: "4/3", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(ratio: "4/3", class: "rounded-lg bg-muted") do
             img(
               alt: "Placeholder",
+              class: "absolute inset-0 size-full rounded-lg object-cover",
               loading: "lazy",
               src: image_path('pattern.jpg')
             )
@@ -34,9 +36,10 @@ class Views::Docs::AspectRatio < Views::Base
 
       render Docs::VisualCodeExample.new(title: "1/1", context: self) do
         <<~RUBY
-          AspectRatio(aspect_ratio: "1/1", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(ratio: "1/1", class: "rounded-lg bg-muted") do
             img(
               alt: "Placeholder",
+              class: "absolute inset-0 size-full rounded-lg object-cover",
               loading: "lazy",
               src: image_path('pattern.jpg')
             )
@@ -46,12 +49,23 @@ class Views::Docs::AspectRatio < Views::Base
 
       render Docs::VisualCodeExample.new(title: "21/9", context: self) do
         <<~RUBY
-          AspectRatio(aspect_ratio: "21/9", class: "rounded-md overflow-hidden border shadow-sm") do
+          AspectRatio(ratio: "21/9", class: "rounded-lg bg-muted") do
             img(
               alt: "Placeholder",
+              class: "absolute inset-0 size-full rounded-lg object-cover",
               loading: "lazy",
               src: image_path('pattern.jpg')
             )
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Content taller than the ratio", description: "The box grows when its content is taller than the ratio allows. Add overflow-hidden to keep the ratio and clip the content.", context: self) do
+        <<~RUBY
+          AspectRatio(ratio: "8/1", class: "overflow-hidden rounded-lg bg-muted p-4") do
+            p(class: "text-sm text-muted-foreground") do
+              "With overflow-hidden the box keeps its 8/1 ratio and clips what doesn't fit, so this paragraph is cut off after a couple of lines. Remove overflow-hidden and the box grows taller than 8/1 to show every line."
+            end
           end
         RUBY
       end

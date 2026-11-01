@@ -9,9 +9,10 @@ module Components
               CardDescription { "@joeldrapper" }
             end
             CardContent do
-              AspectRatio(aspect_ratio: "16/9", class: "rounded-md overflow-hidden border") do
+              AspectRatio(ratio: "16/9", class: "rounded-md overflow-hidden border") do
                 img(
                   alt: "Placeholder",
+                  class: "absolute inset-0 size-full object-cover",
                   loading: "lazy",
                   src: image_url("pattern.jpg")
                 )
