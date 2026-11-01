@@ -2,6 +2,7 @@
 # parts: RubyUI class => shadcn data-slot (null = no shadcn part).
 # props: RubyUI class => {shadcn prop => RubyUI kwarg (null = none)}; shadcn props only.
 # rubyui_only: RubyUI class => [kwargs with no shadcn counterpart]. className is never listed (all parts take class via attrs).
+# selectors: RubyUI class => CSS selector of that part in the rendered fixture (fixed, so collect is deterministic).
 # fixture_shadcn: other shadcn components the fixture renders (added to the sandbox, not audited here).
 dialog:
   shadcn: dialog

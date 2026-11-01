@@ -2,10 +2,18 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.3)
+    base64 (0.3.0)
+    chunky_png (1.4.0)
+    concurrent-ruby (1.3.8)
     drb (2.2.3)
     json (3.1.0)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
+    logger (1.7.0)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2026.1027)
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
@@ -13,6 +21,10 @@ GEM
     parser (3.3.13.0)
       ast (~> 2.4.1)
       racc
+    playwright-ruby-client (1.64.0)
+      base64
+      concurrent-ruby (>= 1.1.6)
+      mime-types (>= 3.0)
     prism (1.9.0)
     racc (1.8.1)
     rainbow (3.1.1)
@@ -58,7 +70,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  chunky_png (= 1.4.0)
   minitest
+  playwright-ruby-client (= 1.64.0)
   rake
   standard
 

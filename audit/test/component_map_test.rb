@@ -141,4 +141,26 @@ class ComponentMapTest < Minitest::Test
     error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(@path) }
     assert_equal "component_map.yml: dialog: entry must be a mapping", error.message
   end
+
+  def selector_map(selectors)
+    ShadcnAudit::ComponentMap.new("dialog" => {"parts" => {"DialogContent" => "dialog-content"}, "selectors" => selectors})
+  end
+
+  def test_selectors_are_returned
+    assert_equal({"DialogContent" => "dialog > div"}, selector_map("DialogContent" => "dialog > div").selectors("dialog"))
+  end
+
+  def test_selectors_default_to_empty
+    assert_equal({}, @map.selectors("dialog"))
+  end
+
+  def test_selector_for_unknown_part_is_rejected
+    error = assert_raises(ShadcnAudit::ConfigError) { selector_map("Nope" => "div") }
+    assert_match(/selectors.Nope is not a mapped part/, error.message)
+  end
+
+  def test_blank_selector_is_rejected
+    error = assert_raises(ShadcnAudit::ConfigError) { selector_map("DialogContent" => " ") }
+    assert_match(/selectors.DialogContent must be a non-empty CSS selector/, error.message)
+  end
 end
