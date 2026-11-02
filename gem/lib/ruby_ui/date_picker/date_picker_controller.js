@@ -93,12 +93,23 @@ export default class extends Controller {
     const date = this.parseFormatted(value, calendar.formatValue);
     if (!date || calendar.formatDate(date) !== value || calendar.isDateDisabled(date)) return;
 
-    const iso = calendar.toISODate(date);
-    if (iso === calendar.selectedDateValue) return;
-
-    // A day focused earlier must not win the Tab stop over the new selection.
+    // A day focused earlier must not win the Tab stop over the typed date.
     calendar.focusedDate = null;
-    calendar.selectedDateValue = iso;
+
+    const iso = calendar.toISODate(date);
+    if (iso !== calendar.selectedDateValue) {
+      calendar.selectedDateValue = iso; // also moves the calendar to its month
+      return;
+    }
+
+    // Same date as selected: the calendar may show another month (navigated
+    // while open), so bring it back.
+    const view = calendar.toISODate(new Date(date.getFullYear(), date.getMonth(), 2));
+    if (view === calendar.viewDateValue) {
+      calendar.updateCalendar();
+    } else {
+      calendar.viewDateValue = view;
+    }
   }
 
   // Reads value in the calendar's date_format (the tokens formatDate writes).

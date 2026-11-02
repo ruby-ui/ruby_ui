@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "date"
 require "securerandom"
 
 module RubyUI
@@ -50,10 +51,12 @@ module RubyUI
       @id = id || "date-picker-#{SecureRandom.hex(4)}"
       @name = name
       @label = label
-      @value = value || selected_date&.to_s
+      @date_format = date_format
+      # value: is used as given; a selected_date is written in date_format,
+      # as the calendar writes a picked day.
+      @value = value || format_date(selected_date)
       @placeholder = placeholder
       @selected_date = selected_date
-      @date_format = date_format
       @popover_options = {trigger: "click", placement: "bottom-end"}.merge(popover_options)
       @input_attrs = input_attrs
       @calendar_attrs = calendar_attrs
@@ -82,6 +85,37 @@ module RubyUI
     end
 
     private
+
+    # The tokens the calendar controller's formatDate writes (longest first).
+    # Like the controller, the time is always midnight: it keeps only the day.
+    def format_date(value)
+      return nil if value.nil? || value.to_s.empty?
+
+      date = value.respond_to?(:year) ? value.to_date : parse_iso_date(value.to_s)
+      return value.to_s unless date
+
+      ordinal = "#{date.day}#{day_suffix(date.day)}"
+      tokens = {
+        "yyyy" => date.year.to_s, "MMMM" => Date::MONTHNAMES[date.month], "EEEE" => Date::DAYNAMES[date.wday],
+        "PPPP" => "#{Date::DAYNAMES[date.wday]}, #{Date::MONTHNAMES[date.month]} #{ordinal}, #{date.year}",
+        "MM" => date.month.to_s.rjust(2, "0"), "dd" => date.day.to_s.rjust(2, "0"), "do" => ordinal,
+        "HH" => "00", "mm" => "00", "ss" => "00"
+      }
+      @date_format.gsub(/yyyy|MMMM|EEEE|PPPP|MM|dd|do|HH|mm|ss/) { |token| tokens[token] }
+    end
+
+    def parse_iso_date(text)
+      match = text.match(/\A(\d{4})-(\d{2})-(\d{2})/)
+      match && Date.new(match[1].to_i, match[2].to_i, match[3].to_i)
+    rescue Date::Error
+      nil
+    end
+
+    def day_suffix(day)
+      return "th" if day.between?(4, 20)
+
+      {1 => "st", 2 => "nd", 3 => "rd"}.fetch(day % 10, "th")
+    end
 
     def popover_id = "#{@id}-popover"
 

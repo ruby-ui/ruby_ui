@@ -28,8 +28,10 @@ selectors:
   Calendar: '[data-controller="ruby-ui--calendar"]'
 # id/value/placeholder are InputGroupInput (native input) props; selected is
 # Calendar's; side/align/offsets are PopoverContent's (Base UI Positioner).
+# RubyUI has no side:/align: kwargs: both go in popover_options[:placement]
+# (e.g. "bottom-end"), a RubyUI-only hash that also holds the trigger mode.
 props:
-  DatePicker: {id: id, value: value, placeholder: placeholder, selected: selected_date, side: popover_options, align: null, sideOffset: null, alignOffset: null}
+  DatePicker: {id: id, value: value, placeholder: placeholder, selected: selected_date, side: null, align: null, sideOffset: null, alignOffset: null}
 rubyui_only:
-  DatePicker: [name, label, date_format, input_attrs, calendar_attrs, trigger_attrs, content_attrs]
+  DatePicker: [name, label, date_format, popover_options, input_attrs, calendar_attrs, trigger_attrs, content_attrs]
 fixture_shadcn: [calendar, field, input-group, button]

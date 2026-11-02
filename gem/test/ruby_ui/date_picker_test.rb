@@ -90,6 +90,27 @@ class RubyUI::DatePickerTest < ComponentTest
     assert_includes tag(output, 'data-ruby-ui--popover-target="content"')["class"].split, "w-72"
   end
 
+  def test_selected_date_is_written_in_date_format
+    {
+      "yyyy-MM-dd" => "2026-03-12",
+      "dd/MM/yyyy" => "12/03/2026",
+      "PPPP" => "Thursday, March 12th, 2026",
+      "MMMM do, yyyy" => "March 12th, 2026"
+    }.each do |format, expected|
+      [Date.new(2026, 3, 12), "2026-03-12"].each do |selected|
+        output = phlex { RubyUI.DatePicker(id: "d", selected_date: selected, date_format: format) }
+
+        assert_equal expected, tag(output, 'id="d"', name: "input")["value"], "#{format} / #{selected.inspect}"
+      end
+    end
+  end
+
+  def test_explicit_value_is_kept_as_given
+    output = phlex { RubyUI.DatePicker(id: "d", value: "2026-03-12", date_format: "PPPP") }
+
+    assert_equal "2026-03-12", tag(output, 'id="d"', name: "input")["value"]
+  end
+
   def test_calendar_outlet_follows_a_custom_calendar_id
     output = phlex { RubyUI.DatePicker(id: "event-date", calendar_attrs: {id: "event-calendar"}) }
 
