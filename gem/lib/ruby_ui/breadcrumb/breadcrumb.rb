@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        aria: {label: "breadcrumb"}
+        aria: {label: "breadcrumb"},
+        data: {slot: "breadcrumb"}
       }
     end
   end

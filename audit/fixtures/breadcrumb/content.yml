@@ -1,0 +1,8 @@
+# One breadcrumb as in the shadcn "Collapsed" example:
+#   Home (link) > ellipsis > Components (link) > Breadcrumb (current page),
+# with the default chevron separator. All hrefs are "#".
+# Static kind: only the closed state is collected; the Home link carries
+# data-audit-trigger to satisfy the fixture contract.
+link_1: Home
+link_2: Components
+page: Breadcrumb
