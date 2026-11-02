@@ -72,6 +72,18 @@ class Views::Docs::Bubble < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Inside an end-aligned Message", context: self) do
+        <<~RUBY
+          Message(align: :end) do
+            div(class: "flex w-full flex-col") do
+              Bubble do
+                BubbleContent { "Follows the message to the end." }
+              end
+            end
+          end
+        RUBY
+      end
+
       Heading(level: 2) { "Reactions" }
 
       render Docs::VisualCodeExample.new(title: "Reactions", context: self) do
