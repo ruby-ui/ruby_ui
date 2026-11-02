@@ -1,186 +1,267 @@
 import { Controller } from "@hotwired/stimulus";
 import Fuse from "fuse.js";
 
+// Prefix for generated ids, unique per page (ruby-ui-command-1-list, …).
+let commandCount = 0;
+
 // Connects to data-controller="ruby-ui--command"
+//
+// Follows the APG combobox pattern with a listbox popup: focus stays in the
+// input, the active option is announced through aria-activedescendant and
+// marked aria-selected="true" + data-selected. The first visible option is
+// active on connect and after every search; ArrowUp/ArrowDown move it (wrapping
+// only with loop: true), Home/End jump to the ends, the pointer moves it too,
+// and Enter or a click selects it.
 export default class extends Controller {
-  static targets = ["input", "group", "item", "empty", "backdrop", "panel"];
+  static targets = ["input", "list", "item", "group", "heading", "separator", "empty"];
+  static values = { loop: { type: Boolean, default: false } };
 
   connect() {
-    this.selectedIndex = -1;
-
-    if (!this.hasInputTarget) {
-      return;
-    }
-
-    this.inputTarget.focus();
-    this.searchIndex = this.buildSearchIndex();
-    this.toggleVisibility(this.emptyTargets, false);
+    this.active = null;
+    this.wireAria();
+    this.dialog = this.element.closest("dialog");
+    this.dialog?.addEventListener("close", this.reset);
+    // Reconnected (Turbo cache, morph): drop the active marks left in the DOM
+    // and filter by what the input still holds.
+    this.itemTargets.forEach((item) => this.markActive(item, false));
+    this.applyQuery(this.currentQuery(), { scroll: false });
+    this.ready = true;
   }
 
   disconnect() {
-    // Torn down mid-open (Turbo nav/morph) never runs afterExit, the only place the
-    // <body> scroll lock is released. Release it here for that path only; on a normal
-    // close afterExit already handled it.
-    if (this.hasPanelTarget && this.panelTarget.dataset.state !== "closed") {
-      document.body.classList.remove("overflow-hidden");
-    }
-    // Nothing is left to wait for the exit animation, so apply the pending removal now.
-    if (this.hasPanelTarget) this.settleExit(this.panelTarget);
+    this.ready = false;
+    this.dialog?.removeEventListener("close", this.reset);
+    this.dialog = null;
+    this.active = null;
   }
 
-  dismiss() {
-    this.backdropTarget.dataset.state = "closed";
-    this.panelTarget.dataset.state = "closed";
-    this.hideAfterExitAnimation(this.panelTarget);
+  // Items added or removed later (e.g. a Turbo Stream) get an id and go through
+  // the current search, once per batch of changes.
+  itemTargetConnected(item) {
+    this.ensureId(item, this.nextOptionId());
+    this.scheduleRefresh();
   }
 
-  // Opened again while dismissing: bring this instance back instead of stacking a new one.
-  show() {
-    this.backdropTarget.dataset.state = "open";
-    this.panelTarget.dataset.state = "open";
-    document.body.classList.add("overflow-hidden");
-    this.focusInput();
+  itemTargetDisconnected(item) {
+    if (item === this.active) this.active = null;
+    this.scheduleRefresh();
   }
 
-  afterExit() {
-    document.body.classList.remove("overflow-hidden");
-    this.element.remove();
-  }
-
-  // Overlay exit — the same block in every overlay controller, so keep them in sync.
-  exitAnimationNames = new WeakMap();
-
-  hideAfterExitAnimation(animated) {
-    const exitAnimations = animated
-      .getAnimations()
-      .filter((animation) => animation instanceof CSSAnimation);
-
-    // No exit animation, or no box to run it in: animationend would never fire.
-    if (exitAnimations.length === 0) {
-      this.settleExit(animated);
-      return;
-    }
-
-    this.exitAnimationNames.set(animated, exitAnimations.map((animation) => animation.animationName));
-    animated.addEventListener("animationend", this.handleExitAnimationEnd);
-    animated.addEventListener("animationcancel", this.handleExitAnimationEnd);
-  }
-
-  handleExitAnimationEnd = (event) => {
-    // animationend bubbles — an animated child must not hide its container.
-    if (event.target !== event.currentTarget) return;
-    // Closing mid-open cancels the enter animation; only the exit run settles this.
-    if (!this.exitAnimationNames.get(event.currentTarget)?.includes(event.animationName)) return;
-
-    this.settleExit(event.currentTarget);
-  };
-
-  settleExit(animated) {
-    animated.removeEventListener("animationend", this.handleExitAnimationEnd);
-    animated.removeEventListener("animationcancel", this.handleExitAnimationEnd);
-    // Reopened mid-exit: it is on its way back in, leave it visible.
-    if (animated.dataset.state !== "closed") return;
-
-    this.afterExit(animated);
-  }
-
-  focusInput() {
-    this.inputTarget?.focus();
-  }
-
-  filter(e) {
-    // Deselect any previously selected item
-    this.deselectAll();
-
-    const query = e.target.value.toLowerCase();
-    if (query.length === 0) {
-      this.resetVisibility();
-      return;
-    }
-
-    this.toggleVisibility(this.itemTargets, false);
-
-    const results = this.searchIndex.search(query);
-    results.forEach((result) =>
-      this.toggleVisibility([result.item.element], true),
-    );
-
-    this.toggleVisibility(this.emptyTargets, results.length === 0);
-    this.updateGroupVisibility();
-  }
-
-  toggleVisibility(elements, isVisible) {
-    elements.forEach((el) => el.classList.toggle("hidden", !isVisible));
-  }
-
-  updateGroupVisibility() {
-    this.groupTargets.forEach((group) => {
-      const hasVisibleItems =
-        group.querySelectorAll(
-          "[data-ruby-ui--command-target='item']:not(.hidden)",
-        ).length > 0;
-      this.toggleVisibility([group], hasVisibleItems);
+  scheduleRefresh() {
+    if (!this.ready || this.refreshQueued) return;
+    this.refreshQueued = true;
+    queueMicrotask(() => {
+      this.refreshQueued = false;
+      if (this.ready) this.applyQuery(this.currentQuery(), { scroll: false, keepActive: true });
     });
   }
 
-  resetVisibility() {
-    this.toggleVisibility(this.itemTargets, true);
-    this.toggleVisibility(this.groupTargets, true);
-    this.toggleVisibility(this.emptyTargets, false);
+  // A closed dialog opens again with an empty search and the first item active.
+  reset = () => {
+    if (!this.hasInputTarget) return;
+    this.inputTarget.value = "";
+    this.applyQuery("", { scroll: false });
+    if (this.hasListTarget) this.listTarget.scrollTop = 0;
+  };
+
+  currentQuery() {
+    return this.hasInputTarget ? this.inputTarget.value.trim() : "";
   }
 
-  buildSearchIndex() {
-    const options = {
-      keys: ["value"],
-      threshold: 0.2,
-      includeMatches: true,
-    };
-    const items = this.itemTargets.map((el) => ({
-      value: el.dataset.value,
-      element: el,
+  focusInput() {
+    if (this.hasInputTarget) this.inputTarget.focus();
+  }
+
+  filter() {
+    this.applyQuery(this.currentQuery());
+  }
+
+  // Shows the items matching query and makes the first selectable one active
+  // (or keeps the active one when keepActive and it is still shown). Scrolls
+  // the list to it only for user actions: scrolling on connect could move the
+  // whole page to a Command below the fold.
+  applyQuery(query, { scroll = true, keepActive = false } = {}) {
+    if (query.length === 0) {
+      this.itemTargets.forEach((item) => (item.hidden = false));
+    } else {
+      const matches = new Set(this.index().search(query).map((result) => result.item.element));
+      this.itemTargets.forEach((item) => (item.hidden = !matches.has(item)));
+    }
+
+    this.groupTargets.forEach((group) => {
+      group.hidden = !this.itemTargets.some((item) => !item.hidden && group.contains(item));
+    });
+    // Separators only make sense between full groups.
+    this.separatorTargets.forEach((separator) => (separator.hidden = query.length > 0));
+    const visible = this.visibleItems();
+    this.emptyTargets.forEach((empty) => (empty.hidden = visible.length > 0));
+
+    const selectable = visible.filter((item) => !this.isDisabled(item));
+    const next = keepActive && selectable.includes(this.active) ? this.active : selectable[0] || null;
+    this.activate(next, { scroll });
+  }
+
+  // Built on every search: a morph or the app can change an item's text,
+  // data-value or data-keywords without reconnecting it, and command menus
+  // are small enough that rebuilding costs nothing noticeable.
+  index() {
+    const entries = this.itemTargets.map((element) => ({
+      value: this.valueOf(element),
+      keywords: element.dataset.keywords || "",
+      element,
     }));
-    return new Fuse(items, options);
+    return new Fuse(entries, { keys: ["value", "keywords"], threshold: 0.2, ignoreLocation: true });
   }
 
-  handleKeydown(e) {
-    const visibleItems = this.itemTargets.filter(
-      (item) => !item.classList.contains("hidden"),
-    );
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      this.updateSelectedItem(visibleItems, 1);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      this.updateSelectedItem(visibleItems, -1);
-    } else if (e.key === "Enter" && this.selectedIndex !== -1) {
-      e.preventDefault();
-      visibleItems[this.selectedIndex].click();
+  inputKeydown(event) {
+    if (event.isComposing) return;
+
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault();
+        this.move(1);
+        break;
+      case "ArrowUp":
+        event.preventDefault();
+        this.move(-1);
+        break;
+      case "Home":
+      case "End": {
+        const items = this.selectableItems();
+        // Nothing to jump to: leave Home/End to the text caret.
+        if (items.length === 0) break;
+        event.preventDefault();
+        this.activate(event.key === "Home" ? items[0] : items[items.length - 1]);
+        break;
+      }
+      case "Enter":
+        if (!this.active) return;
+        event.preventDefault();
+        this.select(this.active, event);
+        break;
     }
   }
 
-  updateSelectedItem(visibleItems, direction) {
-    if (this.selectedIndex >= 0) {
-      this.toggleAriaSelected(visibleItems[this.selectedIndex], false);
+  move(step) {
+    const items = this.selectableItems();
+    if (items.length === 0) return;
+
+    const index = items.indexOf(this.active);
+    let next = index === -1 ? (step > 0 ? 0 : items.length - 1) : index + step;
+    if (next < 0 || next >= items.length) {
+      if (!this.loopValue) return;
+      next = (next + items.length) % items.length;
     }
-
-    this.selectedIndex += direction;
-
-    // Ensure the selected index is within the bounds of the visible items
-    if (this.selectedIndex < 0) {
-      this.selectedIndex = visibleItems.length - 1;
-    } else if (this.selectedIndex >= visibleItems.length) {
-      this.selectedIndex = 0;
-    }
-
-    this.toggleAriaSelected(visibleItems[this.selectedIndex], true);
+    this.activate(items[next]);
   }
 
-  toggleAriaSelected(element, isSelected) {
-    element.setAttribute("aria-selected", isSelected.toString());
+  itemPointermove(event) {
+    const item = event.currentTarget;
+    if (item !== this.active && !this.isDisabled(item)) this.activate(item, { scroll: false });
   }
 
-  deselectAll() {
-    this.itemTargets.forEach((item) => this.toggleAriaSelected(item, false));
-    this.selectedIndex = -1;
+  itemClick(event) {
+    const item = event.currentTarget;
+    if (this.isDisabled(item)) return;
+    // The click moved focus to the list (tabindex=-1); the keyboard handlers
+    // live on the input, so bring it back.
+    this.focusInput();
+    this.activate(item, { scroll: false });
+    this.select(item, event);
+  }
+
+  // Dispatches ruby-ui--command:select (cancelable) and, unless prevented,
+  // follows the item's href. ⌘/Ctrl opens the href in a new tab.
+  select(item, event) {
+    // The item may have been disabled after it became active.
+    if (this.isDisabled(item)) return;
+    const value = this.valueOf(item);
+    const href = item.dataset.href;
+    const selectEvent = this.dispatch("select", { detail: { value, href, item }, cancelable: true });
+    if (selectEvent.defaultPrevented || !href) return;
+
+    if (event?.metaKey || event?.ctrlKey) {
+      window.open(href, "_blank", "noopener");
+    } else if (window.Turbo?.visit) {
+      window.Turbo.visit(href);
+    } else {
+      window.location.assign(href);
+    }
+  }
+
+  activate(item, { scroll = true } = {}) {
+    if (this.active && this.active !== item) this.markActive(this.active, false);
+    this.active = item;
+
+    if (!item) {
+      if (this.hasInputTarget) this.inputTarget.removeAttribute("aria-activedescendant");
+      return;
+    }
+
+    this.markActive(item, true);
+    if (this.hasInputTarget) this.inputTarget.setAttribute("aria-activedescendant", item.id);
+    if (scroll) item.scrollIntoView({ block: "nearest" });
+  }
+
+  markActive(item, active) {
+    item.setAttribute("aria-selected", String(active));
+    if (active) item.setAttribute("data-selected", "true");
+    else item.removeAttribute("data-selected");
+  }
+
+  visibleItems() {
+    return this.itemTargets.filter((item) => !item.hidden);
+  }
+
+  selectableItems() {
+    return this.visibleItems().filter((item) => !this.isDisabled(item));
+  }
+
+  isDisabled(item) {
+    return item.dataset.disabled === "true";
+  }
+
+  valueOf(item) {
+    return item.dataset.value || item.textContent.trim();
+  }
+
+  // Ties the input to the listbox, names each group after its heading and
+  // gives every option an id for aria-activedescendant. Never overwrites ids or
+  // ARIA the author already set.
+  wireAria() {
+    const prefix = this.idPrefix();
+
+    if (this.hasListTarget) {
+      const listId = this.ensureId(this.listTarget, `${prefix}-list`);
+      if (this.hasInputTarget && !this.inputTarget.hasAttribute("aria-controls")) {
+        this.inputTarget.setAttribute("aria-controls", listId);
+      }
+      if (!this.listTarget.hasAttribute("aria-label") && !this.listTarget.hasAttribute("aria-labelledby")) {
+        this.listTarget.setAttribute("aria-label", "Suggestions");
+      }
+    }
+
+    this.headingTargets.forEach((heading, index) => {
+      const headingId = this.ensureId(heading, `${prefix}-group-${index}-heading`);
+      const items = heading.parentElement?.querySelector(":scope > [role=group]");
+      if (items && !items.hasAttribute("aria-labelledby")) items.setAttribute("aria-labelledby", headingId);
+    });
+
+    this.itemTargets.forEach((item) => this.ensureId(item, this.nextOptionId()));
+  }
+
+  idPrefix() {
+    this.prefix ||= `ruby-ui-command-${++commandCount}`;
+    return this.prefix;
+  }
+
+  nextOptionId() {
+    this.optionCount = (this.optionCount || 0) + 1;
+    return `${this.idPrefix()}-option-${this.optionCount - 1}`;
+  }
+
+  ensureId(element, id) {
+    if (!element.id) element.id = id;
+    return element.id;
   }
 }

@@ -23,8 +23,8 @@ module Components
             CommandDialogContent do
               Command do
                 CommandInput(placeholder: "Type a command or search...")
-                CommandEmpty { "No results found." }
                 CommandList do
+                  CommandEmpty { "No results found." }
                   CommandGroup(title: "Components") do
                     components_list.each do |component|
                       CommandItem(value: component[:name], href: component[:path]) do
@@ -35,7 +35,7 @@ module Components
                   end
                   CommandGroup(title: "Settings") do
                     settings_list.each do |setting|
-                      CommandItem(value: setting[:name], href: setting[:path]) do
+                      CommandItem(value: setting[:name]) do
                         default_icon
                         plain setting[:name]
                       end

@@ -13,12 +13,12 @@ module ShadcnAuditFixtures
         CommandDialogContent do
           Command do
             CommandInput(placeholder: "Type a command or search...")
-            CommandEmpty { "No results found." }
             CommandList do
+              CommandEmpty { "No results found." }
               CommandGroup(title: "Suggestions") do
-                CommandItem(value: "Calendar") { "Calendar" }
-                CommandItem(value: "Calculator") { "Calculator" }
-                CommandItem(value: "Settings") { "Settings" }
+                CommandItem { "Calendar" }
+                CommandItem { "Calculator" }
+                CommandItem { "Settings" }
               end
             end
           end

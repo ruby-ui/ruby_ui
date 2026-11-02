@@ -1,6 +1,9 @@
 shadcn: command
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
 kind: popover
 docs_view: command
+# The fixture opens CommandDialog (shadcn's "Basic" example): the modal set
+# runs first, then the listbox checks inside it.
 parts:
   Command: command
   CommandInput: command-input
@@ -8,24 +11,32 @@ parts:
   CommandEmpty: command-empty
   CommandGroup: command-group
   CommandItem: command-item
-  CommandDialog: dialog
+  CommandSeparator: command-separator
+  CommandShortcut: command-shortcut
+  CommandDialog: null
   CommandDialogTrigger: null
   CommandDialogContent: dialog-content
 selectors:
-  Command: '[data-ruby-ui--command-target="panel"] > div'
-  CommandInput: 'input[data-ruby-ui--command-target="input"]'
-  CommandList: '[data-ruby-ui--command-target="panel"] > div > div:has([data-ruby-ui--command-target="group"])'
-  CommandEmpty: '[data-ruby-ui--command-target="empty"]'
-  CommandGroup: '[data-ruby-ui--command-target="group"]'
-  CommandItem: '[data-ruby-ui--command-target="item"]'
-  CommandDialog: null
-  CommandDialogContent: '[data-ruby-ui--command-target="panel"]'
+  Command: '[data-slot="command"]'
+  CommandInput: '[data-slot="command-input"]'
+  CommandList: '[data-slot="command-list"]'
+  CommandEmpty: '[data-slot="command-empty"]'
+  CommandGroup: '[data-slot="command-group"]'
+  CommandItem: '[data-slot="command-item"]'
+  CommandSeparator: null
+  CommandShortcut: null
+  CommandDialogContent: 'dialog[data-ruby-ui--dialog-target="dialog"]'
+# Command, CommandInput, CommandGroup and CommandItem props other than the
+# CommandDialog ones come from cmdk (spread through the .tsx). React-only
+# callbacks (onValueChange, onSelect) map to null: RubyUI dispatches the
+# ruby-ui--command:select event instead.
 props:
+  Command: {loop: loop, value: null, onValueChange: null, filter: null, shouldFilter: null}
   CommandInput: {placeholder: placeholder}
   CommandGroup: {heading: title}
-  CommandItem: {value: value}
-  CommandDialog: {title: null, description: null, showCloseButton: null}
+  CommandItem: {value: value, keywords: keywords, disabled: disabled, onSelect: null}
+  CommandDialog: {title: title, description: description, showCloseButton: show_close_button}
 rubyui_only:
-  CommandItem: [text, href]
-  CommandDialogContent: [size]
+  CommandItem: [href]
   CommandDialogTrigger: [keybindings]
+fixture_shadcn: [button]

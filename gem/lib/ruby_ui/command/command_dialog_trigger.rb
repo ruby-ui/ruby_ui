@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Opens the CommandDialog on click and on its keybindings (⌘K / Ctrl+K by
+  # default; Stimulus key filters, e.g. "keydown.meta+j@window").
   class CommandDialogTrigger < Base
     DEFAULT_KEYBINDINGS = [
       "keydown.ctrl+k@window",
@@ -8,22 +10,18 @@ module RubyUI
     ].freeze
 
     def initialize(keybindings: DEFAULT_KEYBINDINGS, **attrs)
-      @keybindings = keybindings.map { |kb| "#{kb}->ruby-ui--command-dialog#open" }
+      @keybindings = keybindings.map { |kb| "#{kb}->ruby-ui--dialog#open" }
       super(**attrs)
     end
 
     def view_template(&)
-      div(**attrs, &)
+      render DialogTrigger.new(**attrs, &)
     end
 
     private
 
     def default_attrs
-      {
-        data: {
-          action: ["click->ruby-ui--command-dialog#open", @keybindings.join(" ")]
-        }
-      }
+      {data: {action: @keybindings.join(" ")}}
     end
   end
 end
