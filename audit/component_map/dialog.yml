@@ -1,4 +1,5 @@
 shadcn: dialog
+shadcn_sha: b8d7baa15b1dca5716f13153e63795fc3d741f6b
 kind: modal
 docs_view: dialog
 parts:
