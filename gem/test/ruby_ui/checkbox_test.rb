@@ -59,6 +59,13 @@ class RubyUI::CheckboxTest < ComponentTest
     assert_match(/<input type="hidden"[^>]*disabled/, output)
   end
 
+  def test_unchecked_value_false_is_rendered
+    output = phlex { RubyUI.Checkbox(name: "a", unchecked_value: false) }
+
+    assert_match(/<input type="hidden" name="a" value="false"/, output)
+    assert_raises(ArgumentError) { RubyUI::Checkbox.new(unchecked_value: false) }
+  end
+
   def test_unchecked_value_requires_name
     assert_raises(ArgumentError) { RubyUI::Checkbox.new(unchecked_value: "0") }
   end

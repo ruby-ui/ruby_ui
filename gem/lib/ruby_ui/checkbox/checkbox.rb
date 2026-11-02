@@ -45,12 +45,12 @@ module RubyUI
       @readonly = readonly
       @unchecked_value = unchecked_value
       super(**attrs)
-      raise ArgumentError, "unchecked_value: needs name:" if @unchecked_value && !attrs[:name]
+      raise ArgumentError, "unchecked_value: needs name:" if !@unchecked_value.nil? && !attrs[:name]
     end
 
     def view_template
-      if @unchecked_value
-        input(type: "hidden", name: attrs[:name], value: @unchecked_value, disabled: attrs[:disabled], form: attrs[:form], autocomplete: "off")
+      unless @unchecked_value.nil?
+        input(type: "hidden", name: attrs[:name], value: @unchecked_value.to_s, disabled: attrs[:disabled], form: attrs[:form], autocomplete: "off")
       end
       input(**attrs)
     end

@@ -59,7 +59,7 @@ class Views::Docs::Checkbox < Views::Base
       render Docs::VisualCodeExample.new(title: "Read only", description: "Keeps its value and is submitted with the form, but can't be toggled.", context: self) do
         <<~RUBY
           div(class: "flex items-center gap-3") do
-            Checkbox(id: "terms_readonly", checked: true, readonly: true)
+            Checkbox(id: "terms_readonly", name: "terms_accepted", value: "1", checked: true, readonly: true)
             FormFieldLabel(for: "terms_readonly") { "Accepted on sign up" }
           end
         RUBY
