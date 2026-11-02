@@ -99,3 +99,27 @@
   shadcn: "Base UI render prop, e.g. render={<a href=\"…\" />}"
   reason: "Phlex has no render prop; a link is the only other element a button needs, and href: matches Badge, Link and PaginationItem."
   since: "2026-11-01"
+- component: calendar
+  dimension: HTML
+  rubyui: "div > CalendarHeader (nav + title) + table[role=grid]; day rows rendered by Stimulus from <template>s"
+  shadcn: "div > div.rdp-months > nav + div.rdp-month > div.rdp-month_caption + table[role=grid]"
+  reason: "Server-rendered Phlex parts plus client-side templates; the landmarks, grid, cells and labels match react-day-picker, only the wrapper divs differ."
+  since: "2026-11-02"
+- component: calendar
+  dimension: Behavior
+  rubyui: "clicking the selected day keeps it selected"
+  shadcn: "clicking the selected day clears it (mode single, not required)"
+  reason: "The calendar fills a linked input (input_id); clearing on a second click would empty it by accident."
+  since: "2026-11-02"
+- component: calendar
+  dimension: Native
+  rubyui: "inline month grid in Stimulus"
+  shadcn: "react-day-picker"
+  reason: "<input type=\"date\"> only offers a browser popup picker; there is no native inline month grid, styling or custom disabled days."
+  since: "2026-11-02"
+- component: calendar
+  dimension: Props
+  rubyui: "no formatters, components, classNames"
+  shadcn: "React render overrides passed to DayPicker"
+  reason: "React-only customization hooks; RubyUI parts are customized through Phlex and class."
+  since: "2026-11-02"
