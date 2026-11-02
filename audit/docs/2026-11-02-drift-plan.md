@@ -19,7 +19,7 @@
 - `source_diff` truncated at 200 lines.
 - Base UI package key: `@base-ui/react`.
 - JSON, code and docs in English; only the skill's Slack message is pt-BR.
-- Never edit `audit/divergences/`; `drift` never writes anything except snapshot cache.
+- Never edit `audit/divergences/`; `drift` writes no repository file, only the workspace clone (`Workspace#sync`) and the snapshot cache.
 - Run everything from `audit/`: `mise exec -- bundle exec rake` must be green after each task.
 
 ## Review Focus
@@ -83,7 +83,7 @@ def test_materialize_fetches_archives_and_extracts
   assert @shell.called?("git", "fetch", "--depth", "1", "origin", SHA)
   archive = @shell.argvs.find { |a| a[0, 2] == %w[git archive] }
   assert_equal ["--format=tar", "--output=#{@dir.join("snapshots", "#{SHA}.tar")}", SHA, *ShadcnAudit::Snapshot::PATHS], archive[2..]
-  assert @shell.called?("tar", "-xf", @dir.join("snapshots", "#{SHA}.tar").to_s, "-C", root.to_s)
+  assert @shell.called?("tar", "-xf", @dir.join("snapshots", "#{SHA}.tar").to_s, "-C", @dir.join("snapshots", "#{SHA}.tmp").to_s)
 end
 
 def test_materialize_reuses_an_existing_snapshot
@@ -206,3 +206,19 @@ shadcn-audit wrap-up addition: "If the audited PR fixes the component, tell the 
 - [ ] **Step 1:** Write the files.
 - [ ] **Step 2:** Dry run: invoke `/shadcn-drift` in a session; check the message follows the shape and lists `command`/`sheet` as sem baseline.
 - [ ] **Step 3: Commit** — `[Feature] shadcn-drift skill for the weekly upstream watch`
+
+---
+
+## As built (after review)
+
+The Claude, Codex and Cubic reviews changed the Runner contract beyond Task 4 above. The design doc is current; in short:
+
+- Per component, `dependencies`: the `Reference` diff of each shadcn component a part is rendered through (`<Button>`), resolved in head or baseline, changed ones only. A non-empty `dependencies` marks the component `changed`.
+- `Diff` compares a slot's `also` classes with its own.
+- `related_divergences` returns every entry of the component when the `.tsx`, a dependency, a variant or the scanner warnings changed.
+- `missing_upstream` still carries `source_diff` and `commits`; `commits_truncated` flags a full page of 30.
+- Any unexpected error inside one component yields `inconclusive` with `"<Class>: <message>"`.
+- `base_ui.baselines` keeps unreadable baselines as `null`.
+- `Snapshot#diff`/`#commit_date` refetch a commit missing from the clone.
+- `baseline` requires a mapped folder name (`/\A[a-z0-9_]+\z/` with a map entry) and keeps trailing comments.
+

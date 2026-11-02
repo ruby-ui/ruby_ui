@@ -156,7 +156,8 @@ module ShadcnAudit
       folder, sha = args
       raise ArgumentError, "usage: baseline <folder> <sha>" unless folder && sha
       path = root.join(ComponentMap.path_for(folder))
-      raise ArgumentError, "#{folder} is not mapped (no #{ComponentMap.path_for(folder)})" unless path.file?
+      mapped = folder.match?(/\A[a-z0-9_]+\z/) && path.file? && ComponentMap.for_audit(root.join("audit")).entry(folder)
+      raise ArgumentError, "#{folder} is not mapped (no #{ComponentMap.path_for(folder)})" unless mapped
 
       Baseline.write(path: path, sha: sha)
     end

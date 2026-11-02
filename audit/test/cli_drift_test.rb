@@ -59,4 +59,15 @@ class CliDriftTest < Minitest::Test
     assert_equal 1, status
     assert_match(/40-character/, result["error"])
   end
+
+  def test_baseline_rejects_a_folder_outside_the_map
+    target = ShadcnAudit.root.join("audit/divergences/badge.yml")
+    before = target.read
+
+    status, result = run_cli("baseline", "../divergences/badge", HEAD)
+
+    assert_equal 1, status
+    assert_match(/not mapped/, result["error"])
+    assert_equal before, target.read
+  end
 end

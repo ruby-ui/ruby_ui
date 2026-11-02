@@ -2,6 +2,7 @@ module ShadcnAudit
   # Writes `shadcn_sha:` into one component map file as a text edit, so the
   # file's comments and layout survive (a YAML round-trip would drop them).
   module Baseline
+    SHADCN_LINE = /^shadcn:[^\n]*(?:\n|\z)/
     LINE = /^shadcn_sha:[ \t]*(?<value>[^\s#]*)(?<rest>[^\n]*)$/
 
     def self.write(path:, sha:)
@@ -15,8 +16,8 @@ module ShadcnAudit
         if found
           source.sub(LINE) { "shadcn_sha: #{sha}#{found[:rest]}" }
         else
-          source.match?(/^shadcn:[^\n]*\n/) or raise ConfigError, "#{path}: no `shadcn:` line to put shadcn_sha after"
-          source.sub(/^shadcn:[^\n]*\n/) { |line| "#{line}shadcn_sha: #{sha}\n" }
+          source.match?(SHADCN_LINE) or raise ConfigError, "#{path}: no `shadcn:` line to put shadcn_sha after"
+          source.sub(SHADCN_LINE) { |line| "#{line.chomp}\nshadcn_sha: #{sha}\n" }
         end
       path.write(updated)
       {"path" => path.to_s, "shadcn_sha" => sha, "previous" => previous}

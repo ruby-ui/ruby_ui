@@ -64,4 +64,23 @@ class SnapshotTest < Minitest::Test
     assert_equal "+new\n", @snapshot.diff(SHA, "b" * 40, "apps/x.tsx")
     assert(@shell.calls.all? { |c| c.chdir == "#{@dir}/ui" })
   end
+
+  def test_diff_refetches_a_commit_missing_from_the_clone
+    @shell.stub(["git", "cat-file", "-e", "#{SHA}^{commit}"], ShadcnAudit::Shell::Error.new("missing"))
+
+    @snapshot.diff(SHA, "b" * 40, "apps/x.tsx")
+
+    fetch = @shell.argvs.index(["git", "fetch", "--depth", "1", "origin", SHA])
+    diff = @shell.argvs.index(["git", "diff", SHA, "b" * 40, "--", "apps/x.tsx"])
+    assert fetch && diff && fetch < diff
+    refute @shell.called?("git", "fetch", "--depth", "1", "origin", "b" * 40)
+  end
+
+  def test_commit_date_refetches_a_commit_missing_from_the_clone
+    @shell.stub(["git", "cat-file", "-e", "#{SHA}^{commit}"], ShadcnAudit::Shell::Error.new("missing"))
+
+    @snapshot.commit_date(SHA)
+
+    assert @shell.called?("git", "fetch", "--depth", "1", "origin", SHA)
+  end
 end

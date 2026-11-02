@@ -195,7 +195,7 @@ class DriftRunnerTest < Minitest::Test
     result = run_drift(components: ["badge"])
 
     assert_equal HEAD, result["head_sha"]
-    assert_includes %w[pass fail], result["theme"]["status"]
+    assert_equal "pass", result["theme"]["status"]
     assert_equal({"head" => "1.6.0", "baselines" => {BASE => "1.5.0"}}, result["base_ui"])
   end
 
@@ -261,5 +261,61 @@ class DriftRunnerTest < Minitest::Test
     reasons = run_drift(components: ["badge"])["components"]["badge"]["related_divergences"].map { |d| d["reason"] }
 
     assert_equal ["why", "prose", "other part"], reasons
+  end
+
+  def test_missing_upstream_keeps_source_diff_and_commits
+    @head.join(BADGE).delete
+    @snapshot.source_diff = "-old badge\n"
+    gh_commits(JSON.generate([{"sha" => HEAD, "title" => "rename badge", "url" => "u"}]))
+
+    badge = run_drift(components: ["badge"])["components"]["badge"]
+
+    assert_equal "missing_upstream", badge["status"]
+    assert_equal "-old badge\n", badge["source_diff"]["diff"]
+    assert_equal ["rename badge"], badge["commits"].map { |c| c["title"] }
+  end
+
+  def test_variant_only_change_relates_every_divergence
+    css = @head.join("apps/v4/registry/styles/style-vega.css")
+    css.write(css.read.sub(".cn-badge-variant-default {", ".cn-badge-variant-default {\n    @apply shadow-xs;"))
+    gh_commits("[]")
+
+    badge = run_drift(components: ["badge"])["components"]["badge"]
+
+    assert_empty badge["reference"]["classes"]
+    refute_empty badge["reference"]["variants"]
+    assert_equal ["why", "prose", "other part"], badge["related_divergences"].map { |d| d["reason"] }
+  end
+
+  def test_wrapped_component_deleted_at_head_is_a_dependency
+    @head.join("apps/v4/registry/bases/base/ui/button.tsx").delete
+    gh_commits("[]")
+
+    dialog = run_drift(map: dialog_map)["components"]["dialog"]
+
+    assert_equal "changed", dialog["status"]
+    refute_empty dialog["dependencies"]["button"]["parts_removed"]
+  end
+
+  def test_a_full_page_of_commits_is_flagged_truncated
+    edit_head_badge { |path, src| path.write(src.sub("w-fit", "w-full")) }
+    gh_commits(JSON.generate((1..30).map { |i| {"sha" => format("%040x", i), "title" => "c#{i}", "url" => "u"} }))
+
+    badge = run_drift(components: ["badge"])["components"]["badge"]
+
+    assert badge["commits_truncated"]
+  end
+
+  def test_short_commit_list_is_not_truncated
+    edit_head_badge { |path, src| path.write(src.sub("w-fit", "w-full")) }
+    gh_commits("[]")
+
+    assert_equal false, run_drift(components: ["badge"])["components"]["badge"]["commits_truncated"]
+  end
+
+  def test_unfetchable_baseline_keeps_a_null_base_ui_version
+    map = ShadcnAudit::ComponentMap.new({"badge" => {"shadcn" => "badge", "shadcn_sha" => "c" * 40, "parts" => {"Badge" => "badge"}}})
+
+    assert_equal({"c" * 40 => nil}, run_drift(map: map)["base_ui"]["baselines"])
   end
 end

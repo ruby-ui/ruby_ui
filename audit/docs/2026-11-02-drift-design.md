@@ -35,7 +35,8 @@ subcommand and a skill. The agent itself is out of scope.
 1. `exe/shadcn-audit drift [--components a,b] [--head SHA]` prints one JSON
    object (same contract as every subcommand). Per mapped component:
    - `status`: `unchanged`, `changed`, `no_baseline`, `no_counterpart`,
-     `missing_upstream` (the `.tsx` is gone at head), or `inconclusive`
+     `missing_upstream` (the `.tsx` is gone at head; `source_diff` and
+     `commits` are still filled so the deletion or rename shows), or `inconclusive`
      (with `reason`, e.g. the baseline SHA can't be fetched).
    - `reference`: `parts_added`, `parts_removed` (data-slots), `classes`
      (per slot: `added`/`removed` effective classes), `variants` (per cva
@@ -45,17 +46,21 @@ subcommand and a skill. The agent itself is out of scope.
      between baseline and head (ARIA, props, parts, Base UI usage, which
      `Reference` doesn't see), truncated at 200 lines with `truncated: true`.
    - `commits`: shadcn commits touching that `.tsx` since the baseline
-     (`sha`, `title`, `url`), via `gh api`. A `gh` failure fills
+     (`sha`, `title`, `url`), via `gh api`, latest 30 only:
+     `commits_truncated: true` when the page is full (the baseline moves
+     weekly, so pagination isn't worth it). A `gh` failure fills
      `commits_error` and the run goes on.
    - `related_divergences`: entries from `divergences/<folder>.yml` the
      agent must weigh: those whose `match.part` is a RubyUI part mapped to a
      changed slot, plus every entry without `match` (prose, agent-judged).
-     When the `.tsx` or a wrapped component changed, every entry of the
-     component (the change can't be pinned to a slot).
+     When the `.tsx`, a wrapped component, a variant, or the scanner
+     warnings changed, every entry of the component (the change can't be
+     pinned to a slot).
    Global keys: `head_sha`, `theme` (`Theme.compare` of the neutral theme at
    head against RubyUI's CSS: absolute, needs no baseline), and `base_ui`
    (`@base-ui/react` version in `apps/v4/package.json` at head and at each
-   distinct baseline: a bump changes behavior without any shadcn diff).
+   distinct baseline: a bump changes behavior without any shadcn diff;
+   `null` when a baseline couldn't be read).
 2. `exe/shadcn-audit baseline <folder> <sha>` writes or replaces
    `shadcn_sha:` in that map file (text edit, keeps comments).
 3. Skill `.claude/skills/shadcn-drift/`: runs `drift`, triages each changed

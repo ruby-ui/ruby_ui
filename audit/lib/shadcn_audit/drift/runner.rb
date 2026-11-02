@@ -7,6 +7,7 @@ module ShadcnAudit
       SOURCE_DIFF_LINES = 200
       BASE_UI = "@base-ui/react"
       REPO = "shadcn-ui/ui"
+      COMMITS_PER_PAGE = 30
 
       def initialize(map:, divergences:, snapshot:, shell:, head_sha:, rubyui_css:, components: nil)
         @map = map
@@ -49,7 +50,10 @@ module ShadcnAudit
 
         base = {"shadcn" => shadcn, "baseline_sha" => baseline}
         after = reference(head_root, shadcn)
-        return base.merge("status" => "missing_upstream") if after["missing"]
+        if after["missing"]
+          return base.merge("status" => "missing_upstream", "source_diff" => source_diff(baseline, shadcn))
+              .merge(commits(baseline, shadcn))
+        end
 
         base_root = @snapshot.materialize(baseline)
         before = reference(base_root, shadcn)
@@ -58,10 +62,11 @@ module ShadcnAudit
         deps = dependencies(shadcn, before, after, base_root, head_root)
         changed = !Diff.empty?(diff) || !source["diff"].empty? || !deps.empty?
         result = base.merge("status" => changed ? "changed" : "unchanged", "reference" => diff, "dependencies" => deps,
-          "source_diff" => source, "commits" => [], "commits_error" => nil, "related_divergences" => [])
+          "source_diff" => source, "commits" => [], "commits_error" => nil, "commits_truncated" => false,
+          "related_divergences" => [])
         return result unless changed
 
-        whole = !source["diff"].empty? || !deps.empty?
+        whole = !source["diff"].empty? || !deps.empty? || !diff["variants"].empty? || !diff["warnings_added"].empty?
         result.merge(commits(baseline, shadcn)).merge("related_divergences" => related(folder, diff, whole: whole))
       # Unattended weekly runs degrade per component: any failure here (git,
       # a Reference parser gap on new TSX, a missing binary) costs one entry,
@@ -84,11 +89,13 @@ module ShadcnAudit
       def commits(baseline, shadcn)
         json = @shell.capture("gh", "api", "-X", "GET", "repos/#{REPO}/commits",
           "-f", "path=#{tsx_path(shadcn)}", "-f", "sha=#{@head_sha}",
-          "-f", "since=#{@snapshot.commit_date(baseline)}", "-f", "per_page=30",
+          "-f", "since=#{@snapshot.commit_date(baseline)}", "-f", "per_page=#{COMMITS_PER_PAGE}",
           "--jq", '[.[] | {sha, title: (.commit.message | split("\n")[0]), url: .html_url}]')
-        {"commits" => JSON.parse(json).reject { |c| c["sha"] == baseline }, "commits_error" => nil}
+        page = JSON.parse(json)
+        {"commits" => page.reject { |c| c["sha"] == baseline }, "commits_error" => nil,
+         "commits_truncated" => page.size >= COMMITS_PER_PAGE}
       rescue Shell::Error, SystemCallError, JSON::ParserError => e
-        {"commits" => [], "commits_error" => e.message}
+        {"commits" => [], "commits_error" => e.message, "commits_truncated" => false}
       end
 
       # Parts rendered through another shadcn component (<Button>) get that
@@ -98,10 +105,11 @@ module ShadcnAudit
 
       def dependencies(shadcn, before, after, base_root, head_root)
         names = (Array(before["warnings"]) + Array(after["warnings"])).filter_map { |w| w[WRAPPED, 1] }.uniq
-        names.filter_map { |name| shadcn_file(name, head_root) }.uniq.reject { |dep| dep == shadcn }.sort
+        names.filter_map { |name| shadcn_file(name, head_root) || shadcn_file(name, base_root) }.uniq.reject { |dep| dep == shadcn }.sort
           .each_with_object({}) do |dep, out|
             dep_before = reference(base_root, dep)
-            diff = Diff.compare(dep_before["missing"] ? {} : dep_before, reference(head_root, dep))
+            dep_after = reference(head_root, dep)
+            diff = Diff.compare(dep_before["missing"] ? {} : dep_before, dep_after["missing"] ? {} : dep_after)
             out[dep] = diff unless Diff.empty?(diff)
           end
       end
@@ -116,7 +124,8 @@ module ShadcnAudit
 
       # Entries tied to a changed slot through `match.part`, plus every
       # prose entry (no `match`), which only the agent can weigh. A change
-      # that can't be pinned to a slot (the .tsx, a wrapped component)
+      # that can't be pinned to a slot (the .tsx, a wrapped component, a
+      # variant, a new scanner warning)
       # relates every entry of the component.
       def related(folder, diff, whole: false)
         return @divergences.for_component(folder) if whole
@@ -140,7 +149,7 @@ module ShadcnAudit
         versions = baselines.each_with_object({}) do |sha, out|
           out[sha] = base_ui_version(@snapshot.materialize(sha))
         rescue Shell::Error, ConfigError
-          next
+          out[sha] = nil # unknown: the baseline couldn't be read
         end
         {"head" => base_ui_version(head_root), "baselines" => versions}
       end

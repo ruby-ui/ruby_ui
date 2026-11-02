@@ -55,4 +55,12 @@ class BaselineTest < Minitest::Test
     assert_equal "shadcn: badge\nshadcn_sha: #{NEW} # audited in #600\n", @path.read
     assert_equal OLD, result["previous"]
   end
+
+  def test_baseline_inserts_when_shadcn_is_the_last_line_without_newline
+    @path.write("kind: static\nshadcn: badge")
+
+    ShadcnAudit::Baseline.write(path: @path, sha: NEW)
+
+    assert_equal "kind: static\nshadcn: badge\nshadcn_sha: #{NEW}\n", @path.read
+  end
 end

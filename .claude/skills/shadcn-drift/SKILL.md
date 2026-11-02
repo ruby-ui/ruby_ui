@@ -38,7 +38,9 @@ Node.
 
 ## Hard rules
 
-- **Never post** to Slack, GitHub or anywhere else. Return the message.
+- **Never post the message** to Slack, GitHub or anywhere else. Return it.
+  The only external action this skill takes is the baselines PR in
+  "Advancing baselines", and only after an explicit ok.
 - **Never edit `audit/divergences/`.** Suggest entries in the message.
 - **Full audit only after a yes**, per component, through the
   `shadcn-audit` skill (target = component name).
@@ -75,7 +77,8 @@ Class churn with no visual effect (a token renamed with the same output,
 reordering) is coberta-free noise: call it "sem impacto visual" and say why.
 `warnings_added` not empty → say the class scanner may have missed
 something for that component. `commits_error` → link the `.tsx` history
-instead of commits.
+instead of commits. `commits_truncated` → only the latest 30 commits are
+listed; say so and link the `.tsx` history for the rest.
 
 Look at the RubyUI side when it helps decide:
 `gem/lib/ruby_ui/<folder>/` and the map's `parts`.
@@ -86,7 +89,9 @@ Look at the RubyUI side when it helps decide:
   Always reported, with the tokens. `theme.status == "inconclusive"`: report
   its `reason` (the theme couldn't be read, so it is not "clean").
 - `base_ui.head` differs from any `base_ui.baselines` value: `@base-ui/react`
-  was bumped. Always reported: behavior can change with no shadcn diff.
+  was bumped. Always reported: behavior can change with no shadcn diff. A
+  `null` value means that baseline couldn't be read (version unknown), not
+  "no bump".
 
 ### 4. Message (pt-BR, Slack mrkdwn)
 
@@ -114,8 +119,8 @@ Quer que eu rode o audit completo em: <componentes com drift novo, obsoleta, rem
 
 Omit empty sections. `no_counterpart` components (no shadcn equivalent)
 never appear. `missing_upstream` is the biggest event `drift` can report:
-the component's file is gone (often a rename); find where it went in
-`commits` or the shadcn history before writing the line. When every
+the component's file is gone (often a rename); its `source_diff` and
+`commits` show the deletion, so find where it went before writing the line. When every
 component is `unchanged`, `no_counterpart` or `no_baseline`, and the global
 checks are clean (`theme.status == "pass"`, no Base UI bump), the message
 is one line:

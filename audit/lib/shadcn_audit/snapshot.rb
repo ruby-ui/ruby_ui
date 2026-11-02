@@ -44,11 +44,18 @@ module ShadcnAudit
       root
     end
 
-    # Committer date (ISO 8601) of a commit already fetched.
-    def commit_date(sha) = git("show", "-s", "--format=%cI", sha).strip
+    # Committer date (ISO 8601) of a commit.
+    def commit_date(sha)
+      ensure_commit(sha)
+      git("show", "-s", "--format=%cI", sha).strip
+    end
 
-    # Unified diff of one path between two fetched commits ("" when equal).
-    def diff(from, to, path) = git("diff", from, to, "--", path)
+    # Unified diff of one path between two commits ("" when equal).
+    def diff(from, to, path)
+      ensure_commit(from)
+      ensure_commit(to)
+      git("diff", from, to, "--", path)
+    end
 
     private
 
@@ -57,6 +64,14 @@ module ShadcnAudit
     def clone_dir = @dir.join("ui")
 
     def git(*args) = @shell.capture("git", *args, chdir: clone_dir)
+
+    # A cached snapshot skips the fetch, and a later fetch or gc can drop
+    # its commit from the shallow clone; fetch it again before using it.
+    def ensure_commit(sha)
+      git("cat-file", "-e", "#{sha}^{commit}")
+    rescue Shell::Error
+      git("fetch", "--depth", "1", "origin", sha)
+    end
 
     def check_clone!
       return if clone_dir.join(".git").exist?
