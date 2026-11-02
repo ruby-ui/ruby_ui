@@ -89,9 +89,14 @@ class RubyUI::BubbleTest < ComponentTest
     assert_match(%r{focus-visible\]:ring-ring/50}, output)
   end
 
-  def test_bubble_follows_message_alignment
-    output = phlex { RubyUI.Bubble { RubyUI.BubbleContent { "Hi" } } }
+  def test_bubble_inside_end_aligned_message_carries_the_message_alignment_rule
+    output = phlex do
+      RubyUI.Message(align: :end) do
+        RubyUI.Bubble { RubyUI.BubbleContent { "Hi" } }
+      end
+    end
 
-    assert_match(%r{group-data-\[align=end\]/message:self-end}, output)
+    assert_match(%r{<div[^>]*data-slot="message"[^>]*data-align="end"[^>]*class="[^"]*group/message}, output)
+    assert_match(%r{data-slot="bubble"[^>]*class="[^"]*group-data-\[align=end\]/message:self-end}, output)
   end
 end
