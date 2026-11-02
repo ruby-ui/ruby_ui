@@ -1,0 +1,6 @@
+- component: data_table
+  dimension: HTML
+  rubyui: "DataTablePagination: nav[aria-label=pagination] with first/previous/next/last as links (Button href:, role=button); disabled ends have aria-disabled and no href"
+  shadcn: "dashboard-01 block: div with four <button>s calling TanStack Table's page setters; disabled ends use the disabled attribute"
+  reason: "RubyUI's DataTable is server-driven: paging is a GET answered with HTML and swapped by a Turbo Frame, so links work without JS and can be opened in a new tab. Look and accessible names match the block."
+  since: "2026-11-02"

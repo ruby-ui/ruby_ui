@@ -13,22 +13,9 @@ module RubyUI
         render RubyUI::DropdownMenu.new do
           render RubyUI::DropdownMenuTrigger.new do
             render RubyUI::Button.new(variant: :outline, size: :sm) do
+              columns_icon
               plain @label
-              # inline chevron-down SVG (lucide 24px, 1px stroke)
-              svg(
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "16",
-                height: "16",
-                viewBox: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                stroke_width: "2",
-                stroke_linecap: "round",
-                stroke_linejoin: "round",
-                class: "w-4 h-4 ml-1"
-              ) do |s|
-                s.polyline(points: "6 9 12 15 18 9")
-              end
+              chevron_down_icon
             end
           end
           render RubyUI::DropdownMenuContent.new do
@@ -55,6 +42,26 @@ module RubyUI
     end
 
     private
+
+    # lucide columns-3, as shadcn's trigger (data-icon tightens the button's padding)
+    def columns_icon
+      svg(xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor",
+        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round", aria_hidden: "true",
+        data: {icon: "inline-start"}) do |s|
+        s.rect(width: "18", height: "18", x: "3", y: "3", rx: "2")
+        s.path(d: "M9 3v18")
+        s.path(d: "M15 3v18")
+      end
+    end
+
+    # lucide chevron-down
+    def chevron_down_icon
+      svg(xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor",
+        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round", aria_hidden: "true",
+        data: {icon: "inline-end"}) do |s|
+        s.path(d: "m6 9 6 6 6-6")
+      end
+    end
 
     def default_attrs
       {

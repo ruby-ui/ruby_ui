@@ -36,4 +36,24 @@ class RubyUI::DataTableSortHeadTest < ComponentTest
     refute_match(/[?&]p=/, output)
     assert_match(/search=bob/, output)
   end
+
+  def test_aria_sort_only_on_the_sorted_column
+    asc = phlex { RubyUI.DataTableSortHead(column_key: :name, label: "Name", sort: "name", direction: "asc", path: "/x") }
+    desc = phlex { RubyUI.DataTableSortHead(column_key: :name, label: "Name", sort: "name", direction: "desc", path: "/x") }
+    other = phlex { RubyUI.DataTableSortHead(column_key: :email, label: "Email", sort: "name", direction: "asc", path: "/x") }
+    assert_match(/aria-sort="ascending"/, asc)
+    assert_match(/aria-sort="descending"/, desc)
+    refute_match(/aria-sort/, other)
+  end
+
+  def test_caller_aria_keeps_aria_sort
+    output = phlex { RubyUI.DataTableSortHead(column_key: :name, label: "Name", sort: "name", direction: "asc", path: "/x", aria: {label: "Nome"}) }
+    assert_match(/aria-sort="ascending"/, output)
+    assert_match(/aria-label="Nome"/, output)
+  end
+
+  def test_aria_nil_keeps_aria_sort
+    output = phlex { RubyUI.DataTableSortHead(column_key: :name, label: "Name", sort: "name", direction: "desc", path: "/x", aria: nil) }
+    assert_match(/aria-sort="descending"/, output)
+  end
 end

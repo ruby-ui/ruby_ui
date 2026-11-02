@@ -7,25 +7,35 @@ require_relative "data_table_kaminari_adapter"
 
 module RubyUI
   class DataTablePagination < Base
-    def initialize(with: nil, pagy: nil, kaminari: nil, page: nil, per_page: nil, total_count: nil, page_param: "page", path: "", query: {}, window: 1, prev_label: "<", next_label: ">", **attrs)
+    # Mirrors the footer of shadcn's data table block (dashboard-01): "Page X of Y"
+    # plus first/previous/next/last icon buttons. They are links (Button href:),
+    # so paging stays a plain GET that works without JS and inside Turbo Frames.
+    LABELS = {
+      first: "Go to first page",
+      previous: "Go to previous page",
+      next: "Go to next page",
+      last: "Go to last page"
+    }.freeze
+
+    def initialize(with: nil, pagy: nil, kaminari: nil, page: nil, per_page: nil, total_count: nil, page_param: "page", path: "", query: {}, labels: {}, **attrs)
       @adapter = resolve_adapter(with:, pagy:, kaminari:, page:, per_page:, total_count:)
       @page_param = page_param
       @path = path
       @query = query.to_h.transform_keys(&:to_s)
-      @window = window
-      @prev_label = prev_label
-      @next_label = next_label
+      @labels = LABELS.merge(labels)
       super(**attrs)
     end
 
     def view_template
       return if total <= 1
 
-      render RubyUI::Pagination.new(class: "mx-0 w-auto justify-end", **attrs) do
-        render RubyUI::PaginationContent.new do
-          prev_item
-          number_items
-          next_item
+      nav(**attrs) do
+        div(class: "flex w-fit items-center justify-center text-sm font-medium") { plain "Page #{current} of #{total}" }
+        div(class: "ml-auto flex items-center gap-2 lg:ml-0") do
+          page_button(1, :first, disabled: current <= 1, class: "hidden lg:flex")
+          page_button(current - 1, :previous, disabled: current <= 1)
+          page_button(current + 1, :next, disabled: current >= total)
+          page_button(total, :last, disabled: current >= total, class: "hidden lg:flex")
         end
       end
     end
@@ -57,44 +67,36 @@ module RubyUI
       }.join("&")
     end
 
-    def prev_item
-      if current <= 1
-        li do
-          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { @prev_label }
-        end
-      else
-        render RubyUI::PaginationItem.new(href: page_href(current - 1)) { @prev_label }
+    def page_button(page, kind, disabled:, **extra)
+      render RubyUI::Button.new(
+        href: page_href(page), variant: :outline, size: :sm, icon: true, disabled: disabled,
+        class: ["aria-disabled:pointer-events-none aria-disabled:opacity-50", extra[:class]]
+      ) do
+        span(class: "sr-only") { plain @labels.fetch(kind) }
+        chevron_icon(kind)
       end
     end
 
-    def next_item
-      if current >= total
-        li do
-          span(class: "opacity-50 pointer-events-none px-3 h-9 inline-flex items-center text-sm") { @next_label }
-        end
-      else
-        render RubyUI::PaginationItem.new(href: page_href(current + 1)) { @next_label }
+    # lucide chevrons-left, chevron-left, chevron-right, chevrons-right
+    ICON_PATHS = {
+      first: ["m11 17-5-5 5-5", "m18 17-5-5 5-5"],
+      previous: ["m15 18-6-6 6-6"],
+      next: ["m9 18 6-6-6-6"],
+      last: ["m6 17 5-5-5-5", "m13 17 5-5-5-5"]
+    }.freeze
+
+    def chevron_icon(kind)
+      svg(xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor",
+        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round", aria_hidden: "true") do |s|
+        ICON_PATHS.fetch(kind).each { |d| s.path(d: d) }
       end
     end
 
-    def number_items
-      windowed_pages.each do |p|
-        if p == :gap
-          render RubyUI::PaginationEllipsis.new
-        else
-          render RubyUI::PaginationItem.new(href: page_href(p), active: p == current) { plain p.to_s }
-        end
-      end
-    end
-
-    def windowed_pages
-      return (1..total).to_a if total <= 7
-      pages = [1]
-      pages << :gap if current - @window > 2
-      ((current - @window)..(current + @window)).each { |p| pages << p if p > 1 && p < total }
-      pages << :gap if current + @window < total - 1
-      pages << total
-      pages
+    def default_attrs
+      {
+        aria: {label: "pagination"},
+        class: "flex w-full items-center gap-8 lg:w-fit"
+      }
     end
   end
 end

@@ -30,10 +30,37 @@ class RubyUI::DataTablePaginationTest < ComponentTest
     assert_raises(ArgumentError) { RubyUI::DataTablePagination.new(path: "/x", query: {}) }
   end
 
-  def test_window_kwarg_widens_numbered_page_range
-    out_narrow = phlex { RubyUI.DataTablePagination(page: 10, per_page: 1, total_count: 20, path: "/x", query: {}, window: 1) }
-    out_wide = phlex { RubyUI.DataTablePagination(page: 10, per_page: 1, total_count: 20, path: "/x", query: {}, window: 2) }
-    refute_match(/page=8/, out_narrow)
-    assert_match(/page=8/, out_wide)
+  def test_renders_page_x_of_y_and_named_first_previous_next_last_links
+    output = phlex { RubyUI.DataTablePagination(page: 2, per_page: 10, total_count: 30, path: "/x", query: {}) }
+    assert_match(/Page 2 of 3/, output)
+    assert_match(/href="\/x\?page=1"[^>]*>.*Go to first page/m, output)
+    assert_match(/Go to previous page/, output)
+    assert_match(/href="\/x\?page=3"[^>]*>.*Go to next page/m, output)
+    assert_match(/Go to last page/, output)
+    refute_match(/aria-disabled="true"/, output)
+  end
+
+  def test_disables_first_and_previous_on_the_first_page
+    output = phlex { RubyUI.DataTablePagination(page: 1, per_page: 10, total_count: 30, path: "/x", query: {}) }
+    links = output.scan(/<a\b[^>]*>.*?<\/a>/m).to_h { |a| [a[/sr-only">([^<]+)</, 1], a] }
+    ["Go to first page", "Go to previous page"].each do |name|
+      assert_match(/aria-disabled="true"/, links.fetch(name), name)
+      refute_match(/href=/, links.fetch(name), name)
+    end
+    {"Go to next page" => "page=2", "Go to last page" => "page=3"}.each do |name, page|
+      refute_match(/aria-disabled="true"/, links.fetch(name), name)
+      assert_match(/href="\/x\?#{page}"/, links.fetch(name), name)
+    end
+  end
+
+  def test_custom_labels
+    output = phlex { RubyUI.DataTablePagination(page: 1, per_page: 10, total_count: 30, path: "/x", query: {}, labels: {next: "Próxima página"}) }
+    assert_match(/Próxima página/, output)
+    assert_match(/Go to last page/, output)
+  end
+
+  def test_renders_nothing_for_a_single_page
+    output = phlex { RubyUI.DataTablePagination(page: 1, per_page: 10, total_count: 5, path: "/x", query: {}) }
+    assert_equal "", output.strip
   end
 end
