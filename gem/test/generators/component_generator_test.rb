@@ -73,7 +73,7 @@ class ComponentGeneratorTest < Minitest::Test
     dependencies_path = File.expand_path("../../lib/generators/ruby_ui/dependencies.yml", __dir__)
     dependencies = YAML.load_file(dependencies_path)
 
-    assert_equal ["Input", "Popover", "Calendar"], dependencies.fetch("date_picker").fetch("components")
+    assert_equal ["Button", "Form", "Input", "Popover", "Calendar"], dependencies.fetch("date_picker").fetch("components")
   end
 
   def test_tooltip_installs_typography_for_text_component

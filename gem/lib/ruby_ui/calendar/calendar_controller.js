@@ -390,8 +390,9 @@ export default class extends Controller {
       PPPP: `${dayOfWeek}, ${monthName} ${day}${daySuffix}, ${year}`,
     };
 
+    // Longer tokens first: with MM before MMMM, "MMMM" came out as "0303".
     const formattedDate = format.replace(
-      /yyyy|MM|dd|HH|mm|ss|EEEE|MMMM|do|PPPP/g,
+      /yyyy|MMMM|EEEE|PPPP|MM|dd|do|HH|mm|ss/g,
       (matched) => map[matched],
     );
     return formattedDate;

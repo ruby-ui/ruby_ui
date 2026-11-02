@@ -103,6 +103,8 @@ export default class extends Controller {
     this.contentTarget.dataset.state = "open";
     document.addEventListener("keydown", this.handleKeydown);
     this.updatePosition();
+    // Lets a composite (DatePicker) follow the state: aria-expanded, focus.
+    this.dispatch("show");
   }
 
   // Same rule as disconnect(): release what is held outside the element first, so a
@@ -111,6 +113,7 @@ export default class extends Controller {
     this.openValue = false;
     document.removeEventListener("keydown", this.handleKeydown);
     this.stopAutoUpdate();
+    this.dispatch("hide");
 
     if (!this.hasContentTarget) return;
 

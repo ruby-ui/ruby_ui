@@ -10,7 +10,6 @@ application.register("iframe-theme", IframeThemeController)
 import MessageScrollerChatController from "./message_scroller_chat_controller"
 application.register("message-scroller-chat", MessageScrollerChatController)
 
-
 import RubyUi__AlertDialogController from "./ruby_ui/alert_dialog_controller"
 application.register("ruby-ui--alert-dialog", RubyUi__AlertDialogController)
 
@@ -67,6 +66,9 @@ application.register("ruby-ui--data-table", RubyUi__DataTableController)
 
 import RubyUi__DataTableSearchController from "./ruby_ui/data_table_search_controller"
 application.register("ruby-ui--data-table-search", RubyUi__DataTableSearchController)
+
+import RubyUi__DatePickerController from "./ruby_ui/date_picker_controller"
+application.register("ruby-ui--date-picker", RubyUi__DatePickerController)
 
 import RubyUi__DialogController from "./ruby_ui/dialog_controller"
 application.register("ruby-ui--dialog", RubyUi__DialogController)
