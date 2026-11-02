@@ -45,7 +45,7 @@ class RubyUI::CardTest < ComponentTest
       output = phlex { render klass.new { "x" } }
 
       assert_match(/px-\(--card-spacing\)/, output, slot)
-      refute_match(/\bp-6\b|\bpt-0\b/, output, slot)
+      refute_match(/(?:^|[\s"])p(?:y|t|b)?-/, output, slot)
     end
   end
 
@@ -101,6 +101,7 @@ class RubyUI::CardTest < ComponentTest
     output = phlex { RubyUI.Card(class: "p-8 gap-6") { "Hi" } }
 
     assert_match(/\bp-8\b/, output)
+    assert_match(/\bgap-6\b/, output)
     refute_match(/py-\(--card-spacing\)|gap-\(--card-spacing\)/, output)
   end
 end
