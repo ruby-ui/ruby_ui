@@ -9,27 +9,9 @@ class Views::Docs::Button < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      render Docs::VisualCodeExample.new(title: "Default", context: self) do
         <<~RUBY
           Button { "Button" }
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Primary", context: self) do
-        <<~RUBY
-          Button(variant: :primary) { "Primary" }
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Secondary", context: self) do
-        <<~RUBY
-          Button(variant: :secondary) { "Secondary" }
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Destructive", context: self) do
-        <<~RUBY
-          Button(variant: :destructive) { "Destructive" }
         RUBY
       end
 
@@ -39,9 +21,21 @@ class Views::Docs::Button < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Secondary", context: self) do
+        <<~RUBY
+          Button(variant: :secondary) { "Secondary" }
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Ghost", context: self) do
         <<~RUBY
           Button(variant: :ghost) { "Ghost" }
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Destructive", context: self) do
+        <<~RUBY
+          Button(variant: :destructive) { "Destructive" }
         RUBY
       end
 
@@ -51,87 +45,100 @@ class Views::Docs::Button < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Sizes", description: "size: :xs, :sm, :md (the default), :lg and :xl.", context: self) do
+        <<~RUBY
+          div(class: "flex flex-wrap items-center gap-2 justify-center") do
+            Button(variant: :outline, size: :xs) { "Extra Small" }
+            Button(variant: :outline, size: :sm) { "Small" }
+            Button(variant: :outline) { "Default" }
+            Button(variant: :outline, size: :lg) { "Large" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Icon", description: "icon: true makes a square button of the given size. Give it an aria-label.", context: self) do
+        <<~RUBY
+          div(class: "flex flex-wrap items-center gap-2 justify-center") do
+            [:xs, :sm, :md, :lg].each do |size|
+              Button(variant: :outline, size: size, icon: true, aria: {label: "Next"}) do
+                svg(xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewbox: "0 0 24 24", fill: "none",
+                  stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
+                  aria_hidden: "true") do |s|
+                  s.path(d: "m9 18 6-6-6-6")
+                end
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "With Icon", description: "Mark the icon with data-icon=\"inline-start\" or \"inline-end\" so the button tightens the padding on that side. Icons are sized to 16px unless they carry a size-* class.", context: self) do
+        <<~RUBY
+          div(class: "flex flex-wrap items-center gap-2 justify-center") do
+            Button(variant: :outline) do
+              svg(xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewbox: "0 0 24 24", fill: "none",
+                stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
+                aria_hidden: "true", data: {icon: "inline-start"}) do |s|
+                s.path(d: "M6 3v12")
+                s.circle(cx: "18", cy: "6", r: "3")
+                s.circle(cx: "6", cy: "18", r: "3")
+                s.path(d: "M18 9a9 9 0 0 1-9 9")
+              end
+              plain "New Branch"
+            end
+            Button do
+              plain "Send"
+              svg(xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewbox: "0 0 24 24", fill: "none",
+                stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
+                aria_hidden: "true", data: {icon: "inline-end"}) do |s|
+                s.path(d: "m22 2-7 20-4-9-9-4Z")
+                s.path(d: "M22 2 11 13")
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Loading", context: self) do
+        <<~RUBY
+          Button(variant: :outline, disabled: true) do
+            svg(xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewbox: "0 0 24 24", fill: "none",
+              stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
+              aria_hidden: "true", class: "animate-spin", data: {icon: "inline-start"}) do |s|
+              s.path(d: "M21 12a9 9 0 1 1-6.219-8.56")
+            end
+            plain "Please wait"
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "As Link", description: "Pass href: to render an <a> that looks like a button.", context: self) do
+        <<~RUBY
+          Button(href: "#") { "Login" }
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
         <<~RUBY
           Button(disabled: true) { "Disabled" }
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+      render Docs::VisualCodeExample.new(title: "Focusable When Disabled", description: "focusable_when_disabled: true keeps a disabled button in the tab order (aria-disabled instead of disabled), for example so a tooltip can explain why. Clicks and keyboard activation are blocked.", context: self) do
         <<~RUBY
-          Button(aria: {disabled: "true"}) { "Aria Disabled" }
+          Button(disabled: true, focusable_when_disabled: true) { "Focusable" }
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Icon", context: self) do
+      render Docs::VisualCodeExample.new(title: "Invalid", description: "aria-invalid paints the border and focus ring in the destructive color.", context: self) do
         <<~RUBY
-          Button(variant: :outline, icon: true) do
-            svg(
-              xmlns: "http://www.w3.org/2000/svg",
-              viewbox: "0 0 20 20",
-              fill: "currentColor",
-              class: "w-5 h-5"
-            ) do |s|
-              s.path(
-                fill_rule: "evenodd",
-                d:
-                  "M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z",
-                clip_rule: "evenodd"
-              )
-            end
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "With Icon", context: self) do
-        <<~RUBY
-          Button(variant: :primary) do
-            svg(
-              xmlns: "http://www.w3.org/2000/svg",
-              fill: "none",
-              viewbox: "0 0 24 24",
-              stroke_width: "1.5",
-              stroke: "currentColor",
-              class: "w-4 h-4 mr-2"
-            ) do |s|
-              s.path(
-                stroke_linecap: "round",
-                stroke_linejoin: "round",
-                d:
-                  "M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-              )
-            end
-            span { "Login with Email" }
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "With Icon", context: self) do
-        <<~RUBY
-          Button(variant: :primary, disabled: true) do
-            svg(
-              xmlns: "http://www.w3.org/2000/svg",
-              viewbox: "0 0 20 20",
-              fill: "currentColor",
-              class: "w-4 h-4 mr-2 animate-spin"
-            ) do |s|
-              s.path(
-                fill_rule: "evenodd",
-                d:
-                  "M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z",
-                clip_rule: "evenodd"
-              )
-            end
-            span { "Please wait" }
-          end
+          Button(variant: :outline, aria: {invalid: "true"}) { "Pick a date" }
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Submit", context: self) do
         <<~RUBY
-          Button(variant: :primary, type: :submit) do
-            span { "Submit application" }
-          end
+          Button(type: :submit) { "Submit application" }
         RUBY
       end
 
