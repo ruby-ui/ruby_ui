@@ -142,8 +142,8 @@ module RubyUI
             end
 
             # P { "X" }, p { "X" } or Text { "X" } (standalone paragraph)
-            if (m = line.match(/\b(?:P|p|Text)\s*\{\s*"([^"]+)"\s*\}/))
-              markdown << "#{m[1]}\n\n"
+            if (m = line.match(/\b(?:P|p|Text)\s*\{\s*"((?:[^"\\]|\\.)+)"\s*\}/))
+              markdown << "#{m[1].gsub(/\\(["\\])/, '\\1')}\n\n"
               i += 1
               next
             end

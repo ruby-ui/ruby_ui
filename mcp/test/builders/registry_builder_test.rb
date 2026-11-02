@@ -35,6 +35,7 @@ class RegistryBuilderTest < Minitest::Test
     assert_match(/# Button/, md)
     assert_match(/A clickable button\./, md)
     assert_match(/## Usage\n\nUse it for actions\.\n\n/, md)
+    assert_includes md, %(Pass variant: "primary" for the main one.\n\n)
     assert_match(/### Example/, md)
     assert_match(/```ruby/, md)
   end

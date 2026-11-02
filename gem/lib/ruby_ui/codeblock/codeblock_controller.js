@@ -25,6 +25,12 @@ export default class extends Controller {
     const button = event.currentTarget;
     const value = button.dataset.value ?? this.code();
 
+    // No Clipboard API outside a secure context (plain http): report it as a failure.
+    if (!navigator.clipboard?.writeText) {
+      this.show(button, button.dataset.errorLabel, false);
+      return;
+    }
+
     navigator.clipboard
       .writeText(value)
       .then(() => this.show(button, button.dataset.copiedLabel, true))
@@ -37,7 +43,11 @@ export default class extends Controller {
 
   show(button, label, copied) {
     clearTimeout(this.timers.get(button));
-    if (copied) button.dataset.copied = "true";
+    if (copied) {
+      button.dataset.copied = "true";
+    } else {
+      delete button.dataset.copied;
+    }
     button.setAttribute("aria-label", label);
     this.status(button, label);
 

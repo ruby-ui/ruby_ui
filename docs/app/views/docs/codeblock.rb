@@ -8,7 +8,7 @@ class Views::Docs::Codeblock < Views::Base
 
       Heading(level: 2) { "Setup" }
 
-      Text { "Syntax colors come from CodeblockTheme, Rouge's GitHub theme in light and dark. Render it once in your layout's <head>: render RubyUI::CodeblockTheme.new" }
+      Text { "Syntax colors come from CodeblockTheme, Rouge's GitHub theme in light and dark. Render it once in the head of your layout: render RubyUI::CodeblockTheme.new" }
 
       Heading(level: 2) { "Usage" }
 
@@ -66,9 +66,16 @@ class Views::Docs::Codeblock < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Diff", description: "Mark lines with variant: :added, :removed or :highlighted.", context: self) do
         <<~RUBY
+          gemfile = <<~GEMFILE
+            source "https://rubygems.org"
+
+            gem "ruby_ui", "~> 1.6"
+            gem "rouge"
+          GEMFILE
+
           Codeblock do
             CodeblockActions do
-              CodeblockCopyButton(value: %(gem 'ruby_ui', '~> 1.6'))
+              CodeblockCopyButton(value: gemfile)
             end
             CodeblockContent do
               CodeblockLine { "source 'https://rubygems.org'" }
