@@ -84,7 +84,7 @@ class Views::Docs::Card < Views::Base
             end
             CardContent do
               div(class: "grid gap-2") do
-                Label(for: "card-email") { "Email" }
+                FormFieldLabel(for: "card-email") { "Email" }
                 Input(id: "card-email", type: "email", placeholder: "m@example.com")
               end
             end
