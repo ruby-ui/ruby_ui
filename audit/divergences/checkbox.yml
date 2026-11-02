@@ -10,3 +10,10 @@
   shadcn: "Validation is left to the app's form library"
   reason: "With shadcn's composition (one Field orientation=horizontal per checkbox) only the clicked checkbox's field would see the change, leaving its siblings marked invalid."
   since: "2026-11-02"
+- component: checkbox
+  dimension: Look
+  match: {part: Checkbox, property: opacity, rubyui: "0.5", shadcn: "1"}
+  rubyui: "disabled checkbox at opacity-50"
+  shadcn: "disabled checkbox at full opacity outside a Field"
+  reason: "shadcn's disabled:opacity-50 never applies: the Base UI root is a <span> with data-disabled, and :disabled doesn't match a span (it only dims inside a Field, via group-has-disabled/field). RubyUI's native input matches :disabled, so it gets the dimming the class asks for."
+  since: "2026-11-02"

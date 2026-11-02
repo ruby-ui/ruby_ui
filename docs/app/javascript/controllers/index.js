@@ -32,6 +32,9 @@ application.register("ruby-ui--carousel", RubyUi__CarouselController)
 import RubyUi__ChartController from "./ruby_ui/chart_controller"
 application.register("ruby-ui--chart", RubyUi__ChartController)
 
+import RubyUi__CheckboxController from "./ruby_ui/checkbox_controller"
+application.register("ruby-ui--checkbox", RubyUi__CheckboxController)
+
 import RubyUi__CheckboxGroupController from "./ruby_ui/checkbox_group_controller"
 application.register("ruby-ui--checkbox-group", RubyUi__CheckboxGroupController)
 
