@@ -12,6 +12,10 @@ mise exec -- bundle exec exe/shadcn-audit workspace [--sha SHA]
 
 `collect <folder> --run <dir> [--preview <path>] [--shadcn-url T] [--rubyui-url T]` drives both fixtures in headless Chromium (playwright-ruby-client) with the sandbox and preview servers running, and writes `<dir>/collect.json`: computed styles, accessibility snapshots, screenshots and pixel diffs per state, plus the objectively graded Look/ARIA lines. It needs `pnpm install && pnpm exec playwright install chromium` here once. Part selectors come from `selectors` in `component_map/<folder>.yml`; a `match` key in `divergences/<folder>.yml` lets `collect` apply that divergence on its own.
 
+`drift [--components a,b] [--head SHA]` reports what changed in shadcn under each mapped component since its baseline (`shadcn_sha` in `component_map/<folder>.yml`): the `Reference` class diff per part, the `.tsx` diff, the commits, and the related entries of `divergences/<folder>.yml`, plus the neutral theme check and the `@base-ui/react` version. Old shadcn trees are exported with `git archive` into `.shadcn-audit/snapshots/<sha>/`. It needs `gh` authenticated for the commit list; no browser. The weekly routine around it is the [`shadcn-drift`](../.claude/skills/shadcn-drift/SKILL.md) skill.
+
+`baseline <folder> <sha>` writes or replaces `shadcn_sha:` in that map file, keeping its comments. Run it in a component's "match shadcn" PR with the audit's shadcn SHA.
+
 Tests use `ShadcnAudit::FakeShell` (`test/test_helper.rb`): stub canned stdout by argv or matcher, then assert on recorded calls.
 
 ## Prerequisites

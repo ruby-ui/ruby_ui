@@ -17,7 +17,9 @@ module ShadcnAudit
       "preview" => ->(args, out:) { preview(args, out: out) },
       "render" => ->(args, out:) { render(args, out: out) },
       "comment" => ->(args, out:) { comment(args, out: out) },
-      "collect" => ->(args, out:, **deps) { collect(args, out: out, **deps) }
+      "collect" => ->(args, out:, **deps) { collect(args, out: out, **deps) },
+      "drift" => ->(args, out:, **deps) { drift(args, out: out, **deps) },
+      "baseline" => ->(args, out:, **deps) { baseline(args, out: out, **deps) }
     }
 
     # Failures the CLI reports as {"error": ...} with exit status 1 instead
@@ -127,6 +129,36 @@ module ShadcnAudit
 
       Collect::Runner.new(folder: folder, run_dir: run_dir, preview: preview, root: root,
         theme: theme, driver_factory: driver_factory, **urls).call
+    end
+
+    # What changed in shadcn under each mapped component since its baseline.
+    def self.drift(args, out:, shell: Shell.new, workspace_dir: ShadcnAudit.workspace_dir,
+      runner_factory: Drift::Runner.method(:new), root: ShadcnAudit.root)
+      head = components = nil
+      OptionParser.new do |o|
+        o.on("--head SHA") { |v| head = v }
+        o.on("--components LIST") { |v| components = v.split(",").map(&:strip).reject(&:empty?) }
+      end.parse!(args)
+      head_sha = Workspace.new(shell: shell, dir: workspace_dir).sync(sha: head)["shadcn_sha"]
+      audit_dir = root.join("audit")
+      runner_factory.call(
+        map: ComponentMap.for_audit(audit_dir),
+        divergences: Divergences.for_audit(audit_dir),
+        snapshot: Snapshot.new(shell: shell, dir: workspace_dir),
+        shell: shell,
+        head_sha: head_sha,
+        rubyui_css: root.join("docs/app/assets/stylesheets/application.tailwind.css"),
+        components: components
+      ).call
+    end
+
+    def self.baseline(args, out:, root: ShadcnAudit.root)
+      folder, sha = args
+      raise ArgumentError, "usage: baseline <folder> <sha>" unless folder && sha
+      path = root.join(ComponentMap.path_for(folder))
+      raise ArgumentError, "#{folder} is not mapped (no #{ComponentMap.path_for(folder)})" unless path.file?
+
+      Baseline.write(path: path, sha: sha)
     end
 
     def self.workspace(args, out:)
