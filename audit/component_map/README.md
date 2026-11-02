@@ -14,4 +14,6 @@ Keys in each file:
 - `rubyui_only`: RubyUI class => [kwargs with no shadcn counterpart]. `className` is never listed (all parts take class via attrs).
 - `selectors`: RubyUI class => CSS selector of that part in the rendered fixture (fixed, so collect is deterministic);
   `null` = not compared (shadcn renders no element for it, e.g. a Base UI root).
+- `shadcn_sha` (optional): shadcn commit the component was last matched against; `drift` diffs from here.
+  Set with `exe/shadcn-audit baseline <folder> <sha>`.
 - `fixture_shadcn`: other shadcn components the fixture renders (added to the sandbox, not audited here).

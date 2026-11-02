@@ -7,6 +7,7 @@ module ShadcnAudit
   class ComponentMap
     KINDS = %w[modal menu popover disclosure form_control static].freeze
     COMPONENT_NAME = /\A[a-z0-9]+(-[a-z0-9]+)*\z/
+    SHA = /\A[0-9a-f]{40}\z/
     PATH_PATTERNS = [
       %r{\Agem/lib/ruby_ui/([^/]+)/},
       %r{\Agem/test/ruby_ui/([^/]+)_test\.rb\z},
@@ -50,6 +51,9 @@ module ShadcnAudit
     def entry(folder) = @entries[folder.to_s]
 
     def all_folders = @entries.keys
+
+    # shadcn commit the component was last matched against (nil = no baseline).
+    def shadcn_sha(folder) = (entry(folder) || {})["shadcn_sha"]
 
     # RubyUI part => CSS selector in the rendered fixture ({} when unset).
     # A null selector means "not compared" (e.g. a Base UI root with no DOM).
@@ -135,6 +139,11 @@ module ShadcnAudit
         end
 
         validate_selectors!(folder, entry)
+
+        sha = entry["shadcn_sha"]
+        if !sha.nil? && !(sha.is_a?(String) && sha.match?(SHA))
+          raise ConfigError, "#{where(folder)}: shadcn_sha must be a full 40-character commit SHA"
+        end
 
         extra = entry["fixture_shadcn"]
         if !extra.nil? && !(extra.is_a?(Array) && extra.all? { |name| name.is_a?(String) && name.match?(COMPONENT_NAME) })

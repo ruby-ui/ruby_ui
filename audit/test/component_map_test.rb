@@ -219,4 +219,17 @@ class ComponentMapTest < Minitest::Test
     error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.new(map) }
     assert_match(/selectors.DialogMiddle is not a mapped part/, error.message)
   end
+
+  def test_shadcn_sha_reads_the_baseline
+    map = ShadcnAudit::ComponentMap.new({"badge" => {"shadcn" => "badge", "shadcn_sha" => "a" * 40}})
+    assert_equal "a" * 40, map.shadcn_sha("badge")
+    assert_nil map.shadcn_sha("missing")
+  end
+
+  def test_rejects_a_short_shadcn_sha
+    error = assert_raises(ShadcnAudit::ConfigError) do
+      ShadcnAudit::ComponentMap.new({"badge" => {"shadcn" => "badge", "shadcn_sha" => "abc123"}})
+    end
+    assert_match(/shadcn_sha must be a full 40-character commit SHA/, error.message)
+  end
 end
