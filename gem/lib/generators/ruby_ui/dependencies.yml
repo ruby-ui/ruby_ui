@@ -47,6 +47,8 @@ context_menu:
 
 date_picker:
   components:
+    - "Button"
+    - "Form"
     - "Input"
     - "Popover"
     - "Calendar"

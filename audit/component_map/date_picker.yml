@@ -1,0 +1,37 @@
+shadcn: popover
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: popover
+docs_view: date_picker
+# shadcn has no date-picker.tsx in bases/base/ui: its Date Picker is a
+# composition (content/docs/components/base/date-picker.mdx). The reference is
+# examples/base/date-picker-input.tsx, the closest to RubyUI's label + input:
+# Field > FieldLabel + InputGroup(InputGroupInput + InputGroupAddon >
+# PopoverTrigger rendered as an icon InputGroupButton) > PopoverContent
+# (w-auto p-0, align end) > Calendar.
+# DatePickerLabel is DatePicker's FormFieldLabel; DatePickerInputGroup is the
+# input group div DatePicker renders (no RubyUI class of its own).
+parts:
+  DatePicker: field
+  DatePickerLabel: field-label
+  DatePickerInputGroup: input-group
+  PopoverTrigger: popover-trigger
+  Input: input-group-control
+  PopoverContent: popover-content
+  Calendar: calendar
+selectors:
+  DatePicker: '[data-audit-fixture] > div > div'
+  DatePickerLabel: 'label[for="date"]'
+  DatePickerInputGroup: '[data-slot="input-group"]'
+  PopoverTrigger: '[data-ruby-ui--date-picker-target="trigger"]'
+  Input: 'input#date'
+  PopoverContent: '[data-ruby-ui--popover-target="content"]'
+  Calendar: '[data-controller="ruby-ui--calendar"]'
+# id/value/placeholder are InputGroupInput (native input) props; selected is
+# Calendar's; side/align/offsets are PopoverContent's (Base UI Positioner).
+# RubyUI has no side:/align: kwargs: both go in popover_options[:placement]
+# (e.g. "bottom-end"), a RubyUI-only hash that also holds the trigger mode.
+props:
+  DatePicker: {id: id, value: value, placeholder: placeholder, selected: selected_date, side: null, align: null, sideOffset: null, alignOffset: null}
+rubyui_only:
+  DatePicker: [name, label, date_format, popover_options, input_attrs, calendar_attrs, trigger_attrs, content_attrs]
+fixture_shadcn: [calendar, field, input-group, button]
