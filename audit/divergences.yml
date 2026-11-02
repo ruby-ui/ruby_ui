@@ -99,6 +99,12 @@
   shadcn: "Base UI render prop, e.g. render={<a href=\"…\" />}"
   reason: "Phlex has no render prop; a link is the only other element a button needs, and href: matches Badge, Link and PaginationItem."
   since: "2026-11-01"
+- component: card
+  dimension: Look
+  rubyui: "Card without overflow-hidden"
+  shadcn: "Card overflow-hidden"
+  reason: "RubyUI popups (Select, Popover, ContextMenu, DropdownMenu in absolute mode) render inside the card instead of a portal, so clipping would hide them. Images still get rounded corners from the *:[img:first-child]/*:[img:last-child] rules."
+  since: "2026-11-01"
 - component: calendar
   dimension: HTML
   rubyui: "div > CalendarHeader (nav + title) + table[role=grid]; day rows rendered by Stimulus from <template>s"

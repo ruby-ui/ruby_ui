@@ -5,7 +5,7 @@ module Components
     module Grid
       class Signin < Components::Base
         def view_template
-          RubyUI::Card(class: "p-8 space-y-4") do
+          RubyUI::Card(class: "p-8 gap-4") do
             div do
               Text(size: "4", weight: "semibold") { "Create an account" }
               Text(size: "2", class: "text-muted-foreground") { "Enter your email below to create your account" }
