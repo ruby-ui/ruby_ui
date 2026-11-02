@@ -44,22 +44,32 @@ class RubyUI::BreadcrumbTest < ComponentTest
   def test_hidden_parts_use_explicit_true
     output = render_breadcrumb
 
-    assert_match(/<li aria-hidden="true" data-slot="breadcrumb-separator"/, output)
-    assert_match(/<span aria-hidden="true" data-slot="breadcrumb-ellipsis"/, output)
-    assert_match(/aria-disabled="true"/, output)
+    assert_includes opening_tag(output, "breadcrumb-separator"), 'aria-hidden="true"'
+    assert_includes opening_tag(output, "breadcrumb-ellipsis"), 'aria-hidden="true"'
+    assert_includes opening_tag(output, "breadcrumb-page"), 'aria-disabled="true"'
     refute_match(/aria-(hidden|disabled)(?!=)/, output)
   end
 
   def test_separator_has_no_role
-    output = phlex { RubyUI.BreadcrumbSeparator() }
-
-    refute_match(/role=/, output)
+    refute_match(/role=/, opening_tag(phlex { RubyUI.BreadcrumbSeparator() }, "breadcrumb-separator"))
   end
 
-  def test_ellipsis_matches_vega_size
-    output = phlex { RubyUI.BreadcrumbEllipsis() }
+  # The svgs carry no size of their own: the parent sizes them, as in vega.
+  def test_sizes_match_vega
+    separator = opening_tag(phlex { RubyUI.BreadcrumbSeparator() }, "breadcrumb-separator")
+    ellipsis = opening_tag(phlex { RubyUI.BreadcrumbEllipsis() }, "breadcrumb-ellipsis")
 
-    assert_match(/size-5/, output)
-    refute_match(/h-9|w-9/, output)
+    assert_includes separator, "[&>svg]:size-3.5"
+    assert_includes ellipsis, "size-5"
+    assert_includes ellipsis, "[&>svg]:size-4"
+    refute_match(/\bh-9\b|\bw-9\b/, ellipsis)
+  end
+
+  private
+
+  # The opening tag of the part with this data-slot, whatever the attribute
+  # order (quoted values may contain ">", e.g. [&>svg]:size-4).
+  def opening_tag(output, slot)
+    output[/<[a-z]+\b(?:[^>"]|"[^"]*")*data-slot="#{slot}"(?:[^>"]|"[^"]*")*>/] || flunk("no #{slot} in #{output}")
   end
 end
