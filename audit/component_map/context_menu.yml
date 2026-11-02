@@ -1,0 +1,44 @@
+shadcn: context-menu
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: menu
+docs_view: context_menu
+# The fixture follows the docs example: two groups (the second labelled),
+# items with shortcuts, one disabled. Both triggers turn a left click into a
+# contextmenu event at the same point, so collect's click opens the menu.
+parts:
+  ContextMenu: context-menu
+  ContextMenuTrigger: context-menu-trigger
+  ContextMenuContent: context-menu-content
+  ContextMenuGroup: context-menu-group
+  ContextMenuItem: context-menu-item
+  ContextMenuShortcut: context-menu-shortcut
+  ContextMenuLabel: context-menu-label
+  ContextMenuSeparator: context-menu-separator
+  ContextMenuCheckboxItem: context-menu-checkbox-item
+  ContextMenuRadioGroup: context-menu-radio-group
+  ContextMenuRadioItem: context-menu-radio-item
+  ContextMenuItemIndicator: null
+selectors:
+  ContextMenu: null
+  ContextMenuTrigger: '[data-slot="context-menu-trigger"]'
+  ContextMenuContent: '[data-slot="context-menu-content"]'
+  ContextMenuGroup: '[data-slot="context-menu-group"]'
+  ContextMenuItem: '[data-slot="context-menu-item"]'
+  ContextMenuShortcut: '[data-slot="context-menu-shortcut"]'
+  ContextMenuLabel: '[data-slot="context-menu-label"]'
+  ContextMenuSeparator: '[data-slot="context-menu-separator"]'
+  ContextMenuCheckboxItem: null
+  ContextMenuRadioGroup: null
+  ContextMenuRadioItem: null
+# Item/Label/CheckboxItem/RadioItem props come from the .tsx (inset, variant,
+# checked) and the Base UI primitives (disabled, value). Content placement
+# props from the .tsx.
+props:
+  ContextMenuContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset}
+  ContextMenuItem: {inset: inset, variant: variant, disabled: disabled}
+  ContextMenuLabel: {inset: inset}
+  ContextMenuCheckboxItem: {checked: checked, inset: inset, disabled: disabled}
+  ContextMenuRadioItem: {value: value, inset: inset, disabled: disabled}
+rubyui_only:
+  ContextMenuItem: [href, shortcut, checked]
+  ContextMenuCheckboxItem: [shortcut]

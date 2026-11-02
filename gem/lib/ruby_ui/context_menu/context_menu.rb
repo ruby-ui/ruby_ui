@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # The root. Placement lives on ContextMenuContent (side:, align:, offsets).
   class ContextMenu < Base
-    def initialize(options: {}, **attrs)
-      @options = options
-      @options[:trigger] ||= "manual"
-      super(**attrs)
-    end
-
     def view_template(&)
       div(**attrs, &)
     end
@@ -17,8 +12,8 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--context-menu",
-          ruby_ui__context_menu_options_value: @options.to_json
+          slot: "context-menu",
+          controller: "ruby-ui--context-menu"
         }
       }
     end
