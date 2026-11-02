@@ -1,50 +1,24 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # The modal panel of a CommandDialog: a Dialog content pinned at a third of
+  # the viewport, with the dialog's sr-only title and description.
   class CommandDialogContent < Base
-    SIZES = {
-      xs: "max-w-sm",
-      sm: "max-w-md",
-      md: "max-w-lg",
-      lg: "max-w-2xl",
-      xl: "max-w-4xl",
-      full: "max-w-full"
-    }
-
-    def initialize(size: :md, **attrs)
-      @size = size
-      super(**attrs)
-    end
-
     def view_template(&block)
-      template(data: {ruby_ui__command_dialog_target: "content"}) do
-        div(data: {controller: "ruby-ui--command", ruby_ui__command_dialog_instance: true}) do
-          backdrop
-          div(**attrs, &block)
+      settings = context[:ruby_ui_command_dialog] || {}
+      render DialogContent.new(show_close_button: settings.fetch(:show_close_button, false), **attrs) do
+        div(class: "sr-only") do
+          render DialogTitle.new { settings.fetch(:title, "Command Palette") }
+          render DialogDescription.new { settings.fetch(:description, "Search for a command to run...") }
         end
+        yield if block
       end
     end
 
     private
 
     def default_attrs
-      {
-        data_state: "open",
-        data_ruby_ui__command_target: "panel",
-        class: [
-          "fixed pointer-events-auto left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fill-mode-forwards data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full",
-          SIZES[@size]
-        ]
-      }
-    end
-
-    def backdrop
-      div(
-        data_state: "open",
-        data_action: "click->ruby-ui--command#dismiss esc->ruby-ui--command#dismiss",
-        data_ruby_ui__command_target: "backdrop",
-        class: "fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:fill-mode-forwards"
-      )
+      {class: "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0"}
     end
   end
 end

@@ -62,8 +62,8 @@ module Components
       end
 
       def search_button
-        CommandDialog do
-          CommandDialogTrigger(keybindings: ["keydown.ctrl+k@window", "keydown.meta+k@window"]) do
+        CommandDialog(title: "Search documentation", description: "Find a component or a docs page") do
+          CommandDialogTrigger(class: "block") do
             Button(variant: :outline, class: "relative h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64") do
               svg(xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewbox: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round", class: "mr-2") { |s|
                 s.circle(cx: "11", cy: "11", r: "8")
@@ -77,22 +77,20 @@ module Components
               end
             end
           end
-          CommandDialogContent(class: "overflow-hidden p-0 shadow-2xl") do
-            Command(class: "flex h-full w-full flex-col overflow-hidden") do
-              CommandInput(placeholder: "Search documentation...", class: "border-none focus:ring-0")
-              CommandEmpty { "No results found." }
-              CommandList(class: "max-h-[min(450px,80vh)] overflow-y-auto p-2") do
+          CommandDialogContent do
+            Command do
+              CommandInput(placeholder: "Search documentation...")
+              CommandList do
+                CommandEmpty { "No results found." }
                 CommandGroup(title: "Components") do
                   components.each do |component|
-                    CommandItem(value: component[:name], href: component[:path], class: "px-2 py-1.5") do
-                      plain component[:name]
-                    end
+                    CommandItem(value: component[:name], href: component[:path]) { component[:name] }
                   end
                 end
                 CommandGroup(title: "Links") do
-                  CommandItem(value: "Introduction", href: docs_introduction_path, class: "px-2 py-1.5") { "Introduction" }
-                  CommandItem(value: "Installation", href: docs_installation_path, class: "px-2 py-1.5") { "Installation" }
-                  CommandItem(value: "Theming", href: docs_theming_path, class: "px-2 py-1.5") { "Theming" }
+                  CommandItem(value: "Introduction", href: docs_introduction_path) { "Introduction" }
+                  CommandItem(value: "Installation", href: docs_installation_path) { "Installation" }
+                  CommandItem(value: "Theming", href: docs_theming_path) { "Theming" }
                 end
               end
             end

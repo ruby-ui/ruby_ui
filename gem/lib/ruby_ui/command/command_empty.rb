@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Shown only while a search matches no item. Put it inside CommandList.
   class CommandEmpty < Base
     def view_template(&)
       div(**attrs, &)
@@ -10,9 +11,10 @@ module RubyUI
 
     def default_attrs
       {
-        class: "py-6 text-center text-sm",
         role: "presentation",
-        data: {ruby_ui__command_target: "empty"}
+        hidden: true,
+        class: "py-6 text-center text-sm",
+        data: {slot: "command-empty", ruby_ui__command_target: "empty"}
       }
     end
   end

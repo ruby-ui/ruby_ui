@@ -36,6 +36,8 @@ combobox:
     - "@floating-ui/dom"
 
 command:
+  components:
+    - "Dialog"
   js_packages:
     - "fuse.js"
 
