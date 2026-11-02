@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "items-center p-6 pt-0"
+        data: {slot: "card-footer"},
+        class: "flex items-center rounded-b-xl px-(--card-spacing) [.border-t]:pt-(--card-spacing)"
       }
     end
   end

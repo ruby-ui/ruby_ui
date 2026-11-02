@@ -15,7 +15,7 @@ class Views::Docs::Carousel < Views::Base
               5.times do |index|
                 CarouselItem do
                   div(class: "p-1") do
-                    Card do
+                    Card(class: "py-0") do
                       CardContent(class: "flex aspect-square items-center justify-center p-6") do
                         span(class: "text-4xl font-semibold") { index + 1 }
                       end
@@ -37,7 +37,7 @@ class Views::Docs::Carousel < Views::Base
               5.times do |index|
                 CarouselItem(class: "md:basis-1/2 lg:basis-1/3") do
                   div(class: "p-1") do
-                    Card do
+                    Card(class: "py-0") do
                       CardContent(class: "flex aspect-square items-center justify-center p-6") do
                         span(class: "text-3xl font-semibold") { index + 1 }
                       end
@@ -59,7 +59,7 @@ class Views::Docs::Carousel < Views::Base
               5.times do |index|
                 CarouselItem(class: "pl-1 md:basis-1/2 lg:basis-1/3") do
                   div(class: "p-1") do
-                    Card do
+                    Card(class: "py-0") do
                       CardContent(class: "flex aspect-square items-center justify-center p-6") do
                         span(class: "text-2xl font-semibold") { index + 1 }
                       end
@@ -81,7 +81,7 @@ class Views::Docs::Carousel < Views::Base
               5.times do |index|
                 CarouselItem(class: "pt-1 md:basis-1/2") do
                   div(class: "p-1") do
-                    Card do
+                    Card(class: "py-0") do
                       CardContent(class: "flex items-center justify-center p-6") do
                         span(class: "text-3xl font-semibold") { index + 1 }
                       end

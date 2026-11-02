@@ -39,7 +39,7 @@ class Views::Pages::Home < Views::Base
         div(class: "space-y-6") do
           # PAYMENT CARD
           Card do
-            CardHeader(class: "space-y-1") do
+            CardHeader do
               CardTitle { "Payment Method" }
               CardDescription { "All transactions are secure and encrypted." }
             end
@@ -91,7 +91,7 @@ class Views::Pages::Home < Views::Base
 
           # ACTIVITY FEED
           Card do
-            CardHeader(class: "pb-3") do
+            CardHeader do
               CardTitle { "Activity Feed" }
             end
             CardContent(class: "flex flex-wrap gap-2") do
@@ -158,7 +158,7 @@ class Views::Pages::Home < Views::Base
         div(class: "space-y-6") do
           # PROGRESS / QUOTA
           Card do
-            CardHeader(class: "pb-4") do
+            CardHeader do
               div(class: "flex items-center justify-between") do
                 CardTitle { "Storage Usage" }
                 span(class: "text-xs text-muted-foreground") { "12.4GB / 20GB" }
@@ -198,7 +198,7 @@ class Views::Pages::Home < Views::Base
 
           # AI AGENT CHAT
           Card do
-            CardHeader(class: "pb-2") do
+            CardHeader do
               div(class: "flex items-center justify-between") do
                 CardTitle { "AI Assistant" }
                 Badge(variant: :secondary, size: :sm) { "v4.0" }

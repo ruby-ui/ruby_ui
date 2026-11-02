@@ -12,7 +12,7 @@ module Components
         ]
 
         def view_template
-          RubyUI::Card(class: "p-8 space-y-6") do
+          RubyUI::Card(class: "p-8 gap-6") do
             header
             messages(MESSAGES)
             message_form
