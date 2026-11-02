@@ -1,7 +1,7 @@
 // examples/base/date-picker-input.tsx with a fixed date (2026-03-12, local
 // midnight) and the value written as yyyy-MM-dd, RubyUI's default format.
 // The Field keeps the example's w-48; mx-auto is dropped so both sides sit at
-// the same origin. data-audit-trigger is on the icon button that opens the popover.
+// the same origin. The audit trigger is the icon button that opens the popover.
 import * as React from "react"
 import { CalendarIcon } from "lucide-react"
 
