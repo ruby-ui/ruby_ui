@@ -21,7 +21,6 @@ clipboard:
 codeblock:
   components:
     - "Button"
-    - "Clipboard"
 
   gems:
     - "rouge"

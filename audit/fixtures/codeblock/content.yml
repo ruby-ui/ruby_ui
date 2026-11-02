@@ -1,0 +1,9 @@
+# One code block with a copy button, as shadcn's code-block example without
+# header/footer. Plain text on both sides (shadcn's base has no highlighter;
+# RubyUI uses Rouge's plaintext lexer) so syntax colors stay out of Look.
+code: |
+  $ pnpm add ai zod
+  dependencies:
+  + ai 6.0.12
+  + zod 4.1.12
+  Done in 2.8s
