@@ -35,8 +35,9 @@ module RubyUI
           registry[:components].each do |slug, component|
             File.write(File.join(components_dir, "#{slug}.json"), JSON.pretty_generate(component) + "\n")
           end
-          stale = Dir.glob(File.join(components_dir, "*.json")) - registry[:components].keys.map { |slug| File.join(components_dir, "#{slug}.json") }
-          FileUtils.rm_f(stale)
+          current = registry[:components].keys.map { |slug| "#{slug}.json" }
+          stale = Dir.children(components_dir).grep(/\.json\z/) - current
+          FileUtils.rm_f(stale.map { |file| File.join(components_dir, file) })
         end
 
         private

@@ -146,7 +146,7 @@ module ShadcnAudit
         diffs = buckets.select { |(kind, _), _| kind == :diff }.values.flatten
         lines << values_line(dimension, part, config[:diff], diffs, source: config[:source]) unless diffs.empty?
         buckets.select { |(kind, _), _| kind == :intentional }.sort.each do |(_, reason), found|
-          lines << values_line(dimension, part, "pass", found, basis: "intentional", source: Divergences.path_for(@folder), note: reason)
+          lines << values_line(dimension, part, "pass", found, basis: "intentional", source: @divergences.source(@folder), note: reason)
         end
         explained = buckets.select { |(kind, _), _| kind == :theme }
         unless explained.empty?

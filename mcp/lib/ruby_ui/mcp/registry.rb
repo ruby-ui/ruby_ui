@@ -22,8 +22,9 @@ module RubyUI
         return new(JSON.parse(File.read(path), symbolize_names: true)) unless File.directory?(path)
 
         index = JSON.parse(File.read(File.join(path, "index.json")), symbolize_names: true)
-        components = Dir.glob(File.join(path, "components", "*.json")).sort.to_h do |file|
-          [File.basename(file, ".json").to_sym, JSON.parse(File.read(file), symbolize_names: true)]
+        components_dir = File.join(path, "components")
+        components = Dir.children(components_dir).grep(/\.json\z/).sort.to_h do |file|
+          [File.basename(file, ".json").to_sym, JSON.parse(File.read(File.join(components_dir, file)), symbolize_names: true)]
         end
         new(index.merge(components: components))
       end

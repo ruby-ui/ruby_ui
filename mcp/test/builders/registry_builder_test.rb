@@ -46,9 +46,11 @@ class RegistryBuilderTest < Minitest::Test
 
       assert_equal({"version" => "9.9.9"}, JSON.parse(File.read(File.join(dir, "index.json"))))
       refute File.exist?(File.join(dir, "components", "removed.json"))
+      expected = JSON.parse(JSON.generate(RubyUI::MCP::Builders::RegistryBuilder.new(gem_path: fixture).build), symbolize_names: true)
       registry = RubyUI::MCP::Registry.load(dir)
-      assert_equal "9.9.9", registry.version
-      assert_equal "Button", registry.find("button")[:name]
+      assert_equal expected[:version], registry.version
+      expected[:components].each { |slug, component| assert_equal component, registry.find(slug) }
+      assert_equal expected[:components].size, registry.list.size
     end
   end
 end
