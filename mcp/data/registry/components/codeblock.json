@@ -1,0 +1,39 @@
+{
+  "name": "Codeblock",
+  "description": "A component for displaying highlighted code.",
+  "files": [
+    {
+      "path": "codeblock.rb",
+      "content": "# frozen_string_literal: true\n\nrequire \"rouge\"\n\nmodule RubyUI\n  class Codeblock < Base\n    FORMATTER = ::Rouge::Formatters::HTML.new\n    ROUGE_CSS = Rouge::Themes::Github.mode(:dark).render(scope: \".highlight\") # See themes here: https://rouge-ruby.github.io/docs/Rouge/CSSTheme.html\n\n    def initialize(code, syntax:, clipboard: true, clipboard_success: \"Copied!\", clipboard_error: \"Copy failed!\", **attrs)\n      @code = code\n      @syntax = syntax.to_sym\n      @clipboard = clipboard\n      @clipboard_success = clipboard_success\n      @clipboard_error = clipboard_error\n\n      if @syntax == :ruby || @syntax == :html\n        @code = @code.gsub(/(?:^|\\G) {2}/m, \"\t\")\n      end\n\n      super(**attrs)\n    end\n\n    def view_template\n      style { ROUGE_CSS } # For faster load times, move this to the head of your document. (Also move ROUGE_CSS value to head of document)\n      if @clipboard\n        with_clipboard\n      else\n        codeblock\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        style: {tab_size: 2},\n        class: \"highlight text-sm max-h-[350px] after:content-none flex font-mono overflow-auto overflow-x rounded-md border !bg-stone-900 [&_pre]:p-4\"\n      }\n    end\n\n    def with_clipboard\n      RubyUI.Clipboard(success: @clipboard_success, error: @clipboard_error, class: \"relative\") do\n        RubyUI.ClipboardSource do\n          codeblock\n        end\n        div(class: \"absolute top-2 right-2\") do\n          RubyUI.ClipboardTrigger do\n            RubyUI.Button(variant: :ghost, size: :xs, icon: true, class: \"text-white hover:text-white hover:bg-white/20\") { clipboard_icon }\n          end\n        end\n      end\n    end\n\n    def codeblock\n      div(**attrs) do\n        div(class: \"after:content-none\") do\n          pre { raw(safe(FORMATTER.format(lexer.lex(@code)))) }\n        end\n      end\n    end\n\n    def lexer\n      Rouge::Lexer.find(@syntax)\n    end\n\n    def clipboard_icon\n      svg(\n        xmlns: \"http://www.w3.org/2000/svg\",\n        fill: \"none\",\n        viewbox: \"0 0 24 24\",\n        stroke_width: \"1.5\",\n        stroke: \"currentColor\",\n        class: \"size-4\"\n      ) do |s|\n        s.path(\n          stroke_linecap: \"round\",\n          stroke_linejoin: \"round\",\n          d:\n            \"M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6\"\n        )\n      end\n    end\n\n    def check_icon\n      svg(\n        xmlns: \"http://www.w3.org/2000/svg\",\n        fill: \"none\",\n        viewbox: \"0 0 24 24\",\n        stroke_width: \"1.5\",\n        stroke: \"currentColor\",\n        class: \"w-4 h-4\"\n      ) do |s|\n        s.path(\n          stroke_linecap: \"round\",\n          stroke_linejoin: \"round\",\n          d: \"M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z\"\n        )\n      end\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [
+      "Button",
+      "Clipboard"
+    ],
+    "js_packages": [],
+    "gems": [
+      "rouge"
+    ]
+  },
+  "install_command": "rails g ruby_ui:component Codeblock",
+  "docs_markdown": "# Codeblock\n\nA component for displaying highlighted code.\n\n## Usage\n\n### With clipboard\n\n```ruby\ncode = <<~CODE\n    def hello_world\n      puts \"Hello, world!\"\n    end\n  CODE\ndiv(class: 'w-full') do\n  Codeblock(code, syntax: :ruby)\nend\n```\n\n### Without clipboard\n\n```ruby\ncode = <<~CODE\n    def hello_world\n      puts \"Hello, world!\"\n    end\n  CODE\ndiv(class: 'w-full') do\n  Codeblock(code, syntax: :ruby, clipboard: false)\nend\n```\n\n### Custom message\n\n```ruby\ncode = <<~CODE\n    def hello_world\n      puts \"Hello, world!\"\n    end\n  CODE\ndiv(class: 'w-full') do\n  Codeblock(code, syntax: :ruby, clipboard_success: \"Nice one!\")\nend\n```",
+  "examples": [
+    {
+      "title": "With clipboard",
+      "code": "code = <<~CODE\n    def hello_world\n      puts \"Hello, world!\"\n    end\n  CODE\ndiv(class: 'w-full') do\n  Codeblock(code, syntax: :ruby)\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Without clipboard",
+      "code": "code = <<~CODE\n    def hello_world\n      puts \"Hello, world!\"\n    end\n  CODE\ndiv(class: 'w-full') do\n  Codeblock(code, syntax: :ruby, clipboard: false)\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Custom message",
+      "code": "code = <<~CODE\n    def hello_world\n      puts \"Hello, world!\"\n    end\n  CODE\ndiv(class: 'w-full') do\n  Codeblock(code, syntax: :ruby, clipboard_success: \"Nice one!\")\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

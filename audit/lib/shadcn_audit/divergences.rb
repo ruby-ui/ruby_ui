@@ -6,9 +6,39 @@ module ShadcnAudit
     DIMENSIONS = %w[Look HTML Props ARIA Behavior Animation Native].freeze
     REQUIRED = %w[component rubyui shadcn reason].freeze
 
+    DIR = "divergences"
+    LEGACY_FILE = "divergences.yml"
+
+    # The registry of an audit/ folder: one file per component in
+    # audit/divergences/<folder>.yml. Checkouts from before the split still
+    # have the single audit/divergences.yml, so that is the fallback.
+    def self.for_audit(audit_dir)
+      audit_dir = Pathname.new(audit_dir)
+      dir = audit_dir.join(DIR)
+      dir.directory? ? load(dir) : load(audit_dir.join(LEGACY_FILE))
+    end
+
+    # Where a component's entries live, relative to the repo root.
+    def self.path_for(folder) = "audit/#{DIR}/#{folder}.yml"
+
+    # A directory of <folder>.yml files, or a single YAML list.
     def self.load(path)
-      entries = File.exist?(path.to_s) ? YAML.safe_load_file(path.to_s) : nil
-      new(entries || [])
+      path = Pathname.new(path)
+      return new(path.exist? ? YAML.safe_load_file(path.to_s) || [] : []) unless path.directory?
+
+      entries = path.glob("*.yml").sort.flat_map do |file|
+        list = YAML.safe_load_file(file.to_s) || []
+        raise ConfigError, "#{DIR}/#{file.basename}: must be a list of entries" unless list.is_a?(Array)
+
+        folder = file.basename(".yml").to_s
+        list.each do |entry|
+          next unless entry.is_a?(Hash) && entry["component"] != folder
+
+          raise ConfigError, "#{DIR}/#{file.basename}: entry for #{entry["component"].inspect} belongs in #{DIR}/#{entry["component"]}.yml"
+        end
+        list
+      end
+      new(entries)
     end
 
     def initialize(entries)

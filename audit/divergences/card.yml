@@ -1,0 +1,6 @@
+- component: card
+  dimension: Look
+  rubyui: "Card without overflow-hidden"
+  shadcn: "Card overflow-hidden"
+  reason: "RubyUI popups (Select, Popover, ContextMenu, DropdownMenu in absolute mode) render inside the card instead of a portal, so clipping would hide them. Images still get rounded corners from the *:[img:first-child]/*:[img:last-child] rules."
+  since: "2026-11-01"

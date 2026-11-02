@@ -1,0 +1,78 @@
+{
+  "name": "Avatar",
+  "description": "An image element with a fallback for representing the user.",
+  "files": [
+    {
+      "path": "avatar.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A round image with a text fallback, like shadcn's Avatar. The size is\n  # exposed as data-size so the parts (fallback text, badge) follow it.\n  class Avatar < Base\n    SIZES = {\n      xs: \"size-4\",\n      sm: \"size-6\",\n      default: \"size-8\",\n      lg: \"size-10\",\n      xl: \"size-20\"\n    }.freeze\n    # :md was the default before RubyUI matched shadcn's size names.\n    ALIASES = {md: :default}.freeze\n\n    def initialize(size: :default, **attrs)\n      @size = size.to_s.to_sym\n      @size = ALIASES.fetch(@size, @size)\n      @size = :default unless SIZES.key?(@size) # nil or unknown: default size\n      super(**attrs)\n    end\n\n    def view_template(&)\n      span(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          slot: \"avatar\",\n          size: @size,\n          controller: \"ruby-ui--avatar\"\n        },\n        class: [\n          \"group/avatar relative flex shrink-0 select-none rounded-full\",\n          \"after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken dark:after:mix-blend-lighten\",\n          # The root doesn't clip (the badge sits on its edge), so a plain <img>\n          # child (instead of AvatarImage) is sized and rounded here.\n          \"*:[img]:size-full *:[img]:rounded-full *:[img]:object-cover\",\n          SIZES.fetch(@size)\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "avatar_badge.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A dot (or a small icon) on the avatar's bottom-right corner, e.g. an\n  # online status. Its size follows the avatar's size; on :xs and :sm the\n  # icon is hidden and only the dot shows.\n  class AvatarBadge < Base\n    def view_template(&)\n      span(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"avatar-badge\"},\n        class: [\n          \"absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-blend-color ring-2 select-none\",\n          \"bg-primary text-primary-foreground ring-background\",\n          \"group-data-[size=xs]/avatar:size-1.5 group-data-[size=xs]/avatar:[&>svg]:hidden\",\n          \"group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden\",\n          \"group-data-[size=default]/avatar:size-2.5 group-data-[size=default]/avatar:[&>svg]:size-2\",\n          \"group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2\",\n          \"group-data-[size=xl]/avatar:size-5 group-data-[size=xl]/avatar:[&>svg]:size-3\"\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "avatar_controller.js",
+      "content": "import { Controller } from \"@hotwired/stimulus\";\n\n// Tracks the image's loading status like Base UI's Avatar: the image shows\n// once it has loaded, the fallback shows otherwise (no image, still loading,\n// or failed), after the fallback's optional data-delay (ms).\n//\n// Every status change dispatches `ruby-ui--avatar:status` with\n// `detail: { status }`, where status is \"loading\", \"loaded\" or \"error\"\n// (Base UI's onLoadingStatusChange).\nexport default class extends Controller {\n  static targets = [\"image\", \"fallback\"];\n\n  connect() {\n    this.status = null;\n    this.fallbackReady = false;\n    // A delayed fallback is rendered with the hidden attribute; from here on\n    // the controller drives its visibility with the hidden class.\n    this.fallbackTargets.forEach((fallback) => (fallback.hidden = false));\n    this.startFallbackDelay();\n\n    if (!this.hasImageTarget) {\n      this.render();\n      return;\n    }\n\n    const image = this.imageTarget;\n    if (image.complete) {\n      this.setStatus(image.naturalWidth > 0 ? \"loaded\" : \"error\");\n    } else {\n      this.setStatus(\"loading\");\n    }\n  }\n\n  disconnect() {\n    clearTimeout(this.delayTimer);\n    this.delayTimer = null;\n  }\n\n  // load->ruby-ui--avatar#showImage\n  showImage() {\n    this.setStatus(\"loaded\");\n  }\n\n  // error->ruby-ui--avatar#showFallback\n  showFallback() {\n    this.setStatus(\"error\");\n  }\n\n  setStatus(status) {\n    if (status !== this.status) {\n      this.status = status;\n      this.dispatch(\"status\", { detail: { status } });\n    }\n    this.render();\n  }\n\n  startFallbackDelay() {\n    clearTimeout(this.delayTimer);\n    const delay = this.hasFallbackTarget\n      ? Number(this.fallbackTarget.dataset.delay) || 0\n      : 0;\n\n    if (delay <= 0) {\n      this.fallbackReady = true;\n      return;\n    }\n\n    this.delayTimer = setTimeout(() => {\n      this.delayTimer = null;\n      this.fallbackReady = true;\n      this.render();\n    }, delay);\n  }\n\n  render() {\n    const loaded = this.status === \"loaded\";\n    this.imageTargets.forEach((image) =>\n      image.classList.toggle(\"hidden\", !loaded),\n    );\n    this.fallbackTargets.forEach((fallback) =>\n      fallback.classList.toggle(\"hidden\", loaded || !this.fallbackReady),\n    );\n  }\n}\n"
+    },
+    {
+      "path": "avatar_fallback.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Shown while the image loads, when it fails, or when there is no image.\n  # delay: (ms) waits before showing it, so a fast image doesn't flash the\n  # initials first (Base UI's Avatar.Fallback delay).\n  class AvatarFallback < Base\n    def initialize(delay: nil, **attrs)\n      @delay = delay\n      super(**attrs)\n    end\n\n    def view_template(&)\n      span(**attrs, &)\n    end\n\n    private\n\n    def delay? = @delay.to_i.positive?\n\n    def default_attrs\n      {\n        data: {\n          slot: \"avatar-fallback\",\n          ruby_ui__avatar_target: \"fallback\",\n          delay: @delay\n        },\n        # With a delay, start hidden so it can't paint before the controller\n        # connects (the controller removes the attribute and runs the timer).\n        hidden: delay?,\n        class: [\n          \"flex size-full items-center justify-center rounded-full bg-muted text-sm text-muted-foreground\",\n          \"group-data-[size=xs]/avatar:text-[0.5rem] group-data-[size=sm]/avatar:text-xs group-data-[size=xl]/avatar:text-base\",\n          # Before the controller connects (or without JS) an image that is\n          # still visible wins: the fallback stays out of the way.\n          \"group-has-[[data-slot=avatar-image]:not(.hidden)]/avatar:hidden\"\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "avatar_group.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Overlapping avatars, each ringed in the background color. End it with an\n  # AvatarGroupCount for the \"+N\" bubble.\n  class AvatarGroup < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"avatar-group\"},\n        class: \"group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "avatar_group_count.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # The \"+N\" bubble at the end of an AvatarGroup. It takes the size of the\n  # group's avatars.\n  class AvatarGroupCount < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"avatar-group-count\"},\n        class: [\n          \"relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm text-muted-foreground ring-2 ring-background [&>svg]:size-4\",\n          \"group-has-data-[size=xs]/avatar-group:size-4 group-has-data-[size=xs]/avatar-group:text-[0.5rem] group-has-data-[size=xs]/avatar-group:[&>svg]:size-2\",\n          \"group-has-data-[size=sm]/avatar-group:size-6 group-has-data-[size=sm]/avatar-group:text-xs group-has-data-[size=sm]/avatar-group:[&>svg]:size-3\",\n          \"group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5\",\n          \"group-has-data-[size=xl]/avatar-group:size-20 group-has-data-[size=xl]/avatar-group:text-base group-has-data-[size=xl]/avatar-group:[&>svg]:size-8\"\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "avatar_image.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class AvatarImage < Base\n    def initialize(src:, alt: \"\", **attrs)\n      @src = src\n      @alt = alt\n      super(**attrs)\n    end\n\n    def view_template\n      img(**attrs)\n    end\n\n    private\n\n    def default_attrs\n      {\n        # NB: do not set loading: \"lazy\" here. avatar_controller hides a not-yet-loaded\n        # image with `display:none` (the `hidden` class) so the fallback shows. The\n        # browser never fetches a `loading=\"lazy\"` image that generates no box, so its\n        # `load` event never fires and the image stays hidden forever (#415). shadcn/radix\n        # do not lazy-load the avatar image either.\n        data: {\n          slot: \"avatar-image\",\n          ruby_ui__avatar_target: \"image\",\n          action: \"load->ruby-ui--avatar#showImage error->ruby-ui--avatar#showFallback\"\n        },\n        class: \"aspect-square size-full rounded-full object-cover\",\n        alt: @alt,\n        src: @src\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Avatar",
+  "docs_markdown": "# Avatar\n\nAn image element with a fallback for representing the user.\n\n## Usage\n\n### Image & fallback\n\n```ruby\nAvatar do\n  AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n  AvatarFallback { \"JD\" }\nend\n```\n\n### Only fallback\n\n```ruby\nAvatar do\n  AvatarFallback { \"JD\" }\nend\n```\n\n### Sizes\n\n```ruby\ndiv(class: \"flex items-center gap-4\") do\n  [:xs, :sm, :default, :lg, :xl].each do |size|\n    Avatar(size: size) do\n      AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n      AvatarFallback { \"JD\" }\n    end\n  end\nend\n```\n\n### Sizes (only fallback)\n\n```ruby\ndiv(class: \"flex items-center gap-4\") do\n  [:xs, :sm, :default, :lg, :xl].each do |size|\n    Avatar(size: size) do\n      AvatarFallback { \"JD\" }\n    end\n  end\nend\n```\n\n### Badge\n\n```ruby\nAvatar do\n  AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n  AvatarFallback { \"JD\" }\n  AvatarBadge(class: \"bg-green-600 dark:bg-green-800\")\nend\n```\n\n### Group\n\n```ruby\nAvatarGroup do\n  Avatar do\n    AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n    AvatarFallback { \"JD\" }\n  end\n  Avatar do\n    AvatarFallback { \"CN\" }\n  end\n  Avatar do\n    AvatarFallback { \"RU\" }\n  end\n  AvatarGroupCount { \"+3\" }\nend\n```\n\n### Fallback delay\n\n```ruby\nAvatar do\n  AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n  AvatarFallback(delay: 600) { \"JD\" }\nend\n```",
+  "examples": [
+    {
+      "title": "Image & fallback",
+      "code": "Avatar do\n  AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n  AvatarFallback { \"JD\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Only fallback",
+      "code": "Avatar do\n  AvatarFallback { \"JD\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Sizes",
+      "code": "div(class: \"flex items-center gap-4\") do\n  [:xs, :sm, :default, :lg, :xl].each do |size|\n    Avatar(size: size) do\n      AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n      AvatarFallback { \"JD\" }\n    end\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Sizes (only fallback)",
+      "code": "div(class: \"flex items-center gap-4\") do\n  [:xs, :sm, :default, :lg, :xl].each do |size|\n    Avatar(size: size) do\n      AvatarFallback { \"JD\" }\n    end\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Badge",
+      "code": "Avatar do\n  AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n  AvatarFallback { \"JD\" }\n  AvatarBadge(class: \"bg-green-600 dark:bg-green-800\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Group",
+      "code": "AvatarGroup do\n  Avatar do\n    AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n    AvatarFallback { \"JD\" }\n  end\n  Avatar do\n    AvatarFallback { \"CN\" }\n  end\n  Avatar do\n    AvatarFallback { \"RU\" }\n  end\n  AvatarGroupCount { \"+3\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Fallback delay",
+      "code": "Avatar do\n  AvatarImage(src: \"https://avatars.githubusercontent.com/u/246692?v=4\", alt: \"joeldrapper\")\n  AvatarFallback(delay: 600) { \"JD\" }\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

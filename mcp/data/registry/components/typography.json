@@ -1,0 +1,100 @@
+{
+  "name": "Typography",
+  "description": "Sensible defaults to use for text.",
+  "files": [
+    {
+      "path": "heading.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Heading < Base\n    def initialize(level: nil, as: nil, size: nil, **attrs)\n      @level = level\n      @as = as\n      @size = size\n      super(**attrs)\n    end\n\n    def view_template(&)\n      tag = determine_tag\n      public_send(tag, **attrs, &)\n    end\n\n    private\n\n    def determine_tag\n      return @as if @as\n      return \"h#{@level}\" if @level\n      \"h1\"\n    end\n\n    def default_attrs\n      {\n        class: class_names\n      }\n    end\n\n    def class_names\n      base_classes = \"scroll-m-20 font-bold tracking-tight\"\n      size_class = size_to_class[(@size || level_to_size[@level&.to_s] || \"6\").to_s]\n      \"#{base_classes} #{size_class}\"\n    end\n\n    def size_to_class\n      {\n        \"1\" => \"text-xs\",\n        \"2\" => \"text-sm\",\n        \"3\" => \"text-base\",\n        \"4\" => \"text-lg\",\n        \"5\" => \"text-xl\",\n        \"6\" => \"text-2xl\",\n        \"7\" => \"text-3xl lg:text-4xl\",\n        \"8\" => \"text-4xl\",\n        \"9\" => \"text-5xl\"\n      }\n    end\n\n    def level_to_size\n      {\n        \"1\" => \"7\",\n        \"2\" => \"6\",\n        \"3\" => \"5\",\n        \"4\" => \"4\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "inline_code.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class InlineCode < Base\n    def view_template(&)\n      code(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "inline_link.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class InlineLink < Base\n    def initialize(href:, **attrs)\n      super(**attrs)\n      @href = href\n    end\n\n    def view_template(&)\n      a(href: @href, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"text-primary font-medium hover:underline underline-offset-4 cursor-pointer\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "text.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Text < Base\n    def initialize(as: \"p\", size: \"3\", weight: \"regular\", **attrs)\n      @as = as\n      @size = size\n      @weight = weight\n      super(**attrs)\n    end\n\n    def view_template(&)\n      public_send(@as, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: class_names\n      }\n    end\n\n    def class_names\n      \"#{size_to_class[@size]} #{weight_to_class[@weight]}\"\n    end\n\n    def size_to_class\n      {\n        \"1\" => \"text-xs\", \"xs\" => \"text-xs\",\n        \"2\" => \"text-sm\", \"sm\" => \"text-sm\",\n        \"3\" => \"text-base\", \"base\" => \"text-base\",\n        \"4\" => \"text-lg\", \"lg\" => \"text-lg\",\n        \"5\" => \"text-xl\", \"xl\" => \"text-xl\",\n        \"6\" => \"text-2xl\", \"2xl\" => \"text-2xl\",\n        \"7\" => \"text-3xl\", \"3xl\" => \"text-3xl\",\n        \"8\" => \"text-4xl\", \"4xl\" => \"text-4xl\",\n        \"9\" => \"text-5xl\", \"5xl\" => \"text-5xl\"\n      }\n    end\n\n    def weight_to_class\n      {\n        \"muted\" => \"text-muted-foreground\",\n        \"light\" => \"font-light\",\n        \"regular\" => \"font-normal\",\n        \"medium\" => \"font-medium\",\n        \"semibold\" => \"font-semibold\",\n        \"bold\" => \"font-bold\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "typography_blockquote.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TypographyBlockquote < Base\n    def view_template(&)\n      blockquote(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"mt-6 border-l-2 pl-6 italic\"\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Typography",
+  "docs_markdown": "# Typography\n\nSensible defaults to use for text.\n\n## Usage\n\n### h1\n\n```ruby\nHeading(level: 1) { \"This is an H1 title\" }\n```\n\n### h2\n\n```ruby\nHeading(level: 2) { \"This is an H2 title\" }\n```\n\n### h3\n\n```ruby\nHeading(level: 3) { \"This is an H3 title\" }\n```\n\n### h4\n\n```ruby\nHeading(level: 4) { \"This is an H4 title\" }\n```\n\n### p\n\n```ruby\nText { \"This is an P tag\" }\n```\n\n### Inline Link\n\n```ruby\nText(class: 'text-center') do\n  plain \"Checkout our \"\n  InlineLink(href: docs_installation_path) { \"installation instructions\" }\n  plain \" to get started.\"\nend\n```\n\n### List\n\n```ruby\nComponents.TypographyList(items: [\n    'Phlex is fast',\n    'Phlex is easy to use',\n    'Phlex is awesome',\n  ])\n```\n\n### Numbered List\n\n```ruby\nComponents.TypographyList(items: [\n    'Copy',\n    'Paste',\n    'Customize',\n  ], numbered: true)\n```\n\n### Inline Code\n\n```ruby\nInlineCode { \"This is an inline code block\" }\n```\n\n### Lead\n\n```ruby\nText(as: \"p\", size: \"5\", weight: \"muted\") { \"A modal dialog that interrupts the user with important content and expects a response.\" }\n```\n\n### Large\n\n```ruby\nText(size: \"4\", weight: \"semibold\") { \"Are you sure absolutely sure?\" }\n```\n\n### Small\n\n```ruby\nText(size: \"sm\") { \"Email address\" }\n```\n\n### Muted\n\n```ruby\nText(size: \"2\", class: \"text-muted-foreground\") { \"Enter your email address.\" }\n```",
+  "examples": [
+    {
+      "title": "h1",
+      "code": "Heading(level: 1) { \"This is an H1 title\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "h2",
+      "code": "Heading(level: 2) { \"This is an H2 title\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "h3",
+      "code": "Heading(level: 3) { \"This is an H3 title\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "h4",
+      "code": "Heading(level: 4) { \"This is an H4 title\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "p",
+      "code": "Text { \"This is an P tag\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Inline Link",
+      "code": "Text(class: 'text-center') do\n  plain \"Checkout our \"\n  InlineLink(href: docs_installation_path) { \"installation instructions\" }\n  plain \" to get started.\"\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "List",
+      "code": "Components.TypographyList(items: [\n    'Phlex is fast',\n    'Phlex is easy to use',\n    'Phlex is awesome',\n  ])\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Numbered List",
+      "code": "Components.TypographyList(items: [\n    'Copy',\n    'Paste',\n    'Customize',\n  ], numbered: true)\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Inline Code",
+      "code": "InlineCode { \"This is an inline code block\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Lead",
+      "code": "Text(as: \"p\", size: \"5\", weight: \"muted\") { \"A modal dialog that interrupts the user with important content and expects a response.\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Large",
+      "code": "Text(size: \"4\", weight: \"semibold\") { \"Are you sure absolutely sure?\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Small",
+      "code": "Text(size: \"sm\") { \"Email address\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Muted",
+      "code": "Text(size: \"2\", class: \"text-muted-foreground\") { \"Enter your email address.\" }\n",
+      "language": "ruby"
+    }
+  ]
+}

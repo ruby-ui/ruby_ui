@@ -1,0 +1,12 @@
+- component: form
+  dimension: Behavior
+  rubyui: "FormField controller validates on the client: shows the browser validationMessage (or data-* custom messages) in FormFieldError on submit and updates it as the user types"
+  shadcn: "No validation in Field; FieldError renders whatever the app passes (react-hook-form / TanStack Form)"
+  reason: "Rails apps have no client form library; native Constraint Validation keeps parity without one."
+  since: "2026-10-31"
+- component: form
+  dimension: HTML
+  rubyui: "FormFieldError always renders its div role=alert, empty and hidden by empty:hidden when there is no error"
+  shadcn: "FieldError returns null when it has no children and no errors"
+  reason: "The FormField Stimulus controller writes client-side validation messages into that div, so it must exist before the first error."
+  since: "2026-11-01"

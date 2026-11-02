@@ -1,0 +1,49 @@
+{
+  "name": "Input",
+  "description": "Displays a form input field or a component that looks like an input field.",
+  "files": [
+    {
+      "path": "input.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Input < Base\n    def initialize(type: :string, **attrs)\n      @type = type.to_sym\n      super(**attrs)\n    end\n\n    def view_template\n      input(type: @type, **attrs)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          ruby_ui__form_field_target: \"input\",\n          action: \"input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid\"\n        },\n        class: [\n          \"flex h-9 w-full rounded-md border bg-background px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] border-border ring-0 ring-ring/0\",\n          \"placeholder:text-muted-foreground\",\n          \"disabled:cursor-not-allowed disabled:opacity-50\",\n          \"file:border-0 file:bg-transparent file:text-sm file:font-medium\",\n          \"aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none\",\n          \"focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:border-ring focus-visible:shadow-sm\",\n          (@type.to_s == \"file\") ? \"pt-[7px]\" : \"\"\n        ]\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Input",
+  "docs_markdown": "# Input\n\nDisplays a form input field or a component that looks like an input field.\n\n## Usage\n\n### Email\n\n```ruby\ndiv(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  Input(type: \"email\", placeholder: \"Email\")\nend\n```\n\n### File\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  label(for: \"picture\") { \"Picture\" }\n  Input(type: \"file\", id: \"picture\")\nend\n```\n\n### Disabled\n\n```ruby\ndiv(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  Input(disabled: true, type: \"email\", placeholder: \"Email\")\nend\n```\n\n### Aria Disabled\n\n```ruby\ndiv(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  Input(aria: {disabled: \"true\"}, type: \"email\", placeholder: \"Email\")\nend\n```\n\n### With label\n\n```ruby\ndiv(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  label(for: \"email1\") { \"Email\" }\n  Input(type: \"email\", placeholder: \"Email\", id: \"email1\")\nend\n```\n\n### With button\n\n```ruby\ndiv(class: 'flex w-full max-w-sm items-center space-x-2') do\n  Input(type: \"email\", placeholder: \"Email\")\n  Button { \"Subscribe\" }\nend\n```",
+  "examples": [
+    {
+      "title": "Email",
+      "code": "div(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  Input(type: \"email\", placeholder: \"Email\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "File",
+      "code": "div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  label(for: \"picture\") { \"Picture\" }\n  Input(type: \"file\", id: \"picture\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Disabled",
+      "code": "div(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  Input(disabled: true, type: \"email\", placeholder: \"Email\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Aria Disabled",
+      "code": "div(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  Input(aria: {disabled: \"true\"}, type: \"email\", placeholder: \"Email\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With label",
+      "code": "div(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  label(for: \"email1\") { \"Email\" }\n  Input(type: \"email\", placeholder: \"Email\", id: \"email1\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With button",
+      "code": "div(class: 'flex w-full max-w-sm items-center space-x-2') do\n  Input(type: \"email\", placeholder: \"Email\")\n  Button { \"Subscribe\" }\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

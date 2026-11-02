@@ -1,5 +1,6 @@
 require "test_helper"
 require "ruby_ui/mcp/builders/registry_builder"
+require "tmpdir"
 
 class RegistryBuilderTest < Minitest::Test
   def test_builds_registry_from_fake_gem
@@ -35,5 +36,19 @@ class RegistryBuilderTest < Minitest::Test
     assert_match(/A clickable button\./, md)
     assert_match(/### Example/, md)
     assert_match(/```ruby/, md)
+  end
+
+  def test_write_splits_one_file_per_component_and_round_trips
+    fixture = File.expand_path("../fixtures/fake_gem", __dir__)
+    Dir.mktmpdir do |dir|
+      File.write(File.join(FileUtils.mkdir_p(File.join(dir, "components")).first, "removed.json"), "{}")
+      RubyUI::MCP::Builders::RegistryBuilder.new(gem_path: fixture).write(dir)
+
+      assert_equal({"version" => "9.9.9"}, JSON.parse(File.read(File.join(dir, "index.json"))))
+      refute File.exist?(File.join(dir, "components", "removed.json"))
+      registry = RubyUI::MCP::Registry.load(dir)
+      assert_equal "9.9.9", registry.version
+      assert_equal "Button", registry.find("button")[:name]
+    end
   end
 end

@@ -1,0 +1,28 @@
+{
+  "name": "DatePicker",
+  "description": "A date picker component with input.",
+  "files": [
+    {
+      "path": "date_picker.rb",
+      "content": "# frozen_string_literal: true\n\nrequire \"securerandom\"\n\nmodule RubyUI\n  class DatePicker < Base\n    def initialize(\n      id: nil,\n      name: nil,\n      label: \"Select a date\",\n      value: nil,\n      placeholder: \"Select a date\",\n      selected_date: value,\n      date_format: \"yyyy-MM-dd\",\n      popover_options: {},\n      input_attrs: {},\n      calendar_attrs: {},\n      trigger_attrs: {},\n      content_attrs: {},\n      **attrs\n    )\n      @id = id || \"date-picker-#{SecureRandom.hex(4)}\"\n      @name = name\n      @label = label\n      @value = value || selected_date&.to_s\n      @placeholder = placeholder\n      @selected_date = selected_date\n      @date_format = date_format\n      @popover_options = {trigger: \"click\"}.merge(popover_options)\n      @input_attrs = input_attrs\n      @calendar_attrs = calendar_attrs\n      @trigger_attrs = trigger_attrs\n      @content_attrs = content_attrs\n      super(**attrs)\n    end\n\n    def view_template\n      div(**attrs) do\n        RubyUI.Popover(options: @popover_options) do\n          RubyUI.PopoverTrigger(**trigger_attrs) do\n            div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n              label(for: @id) { @label } if @label\n              RubyUI.Input(**input_attrs)\n            end\n          end\n          RubyUI.PopoverContent(**content_attrs) do\n            RubyUI.Calendar(input_id: \"##{@id}\", selected_date: @selected_date, date_format: @date_format, **calendar_attrs)\n          end\n        end\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"space-y-4 w-[260px]\"\n      }\n    end\n\n    def trigger_attrs\n      mix({class: \"w-full\"}, @trigger_attrs)\n    end\n\n    def input_attrs\n      mix({\n        type: \"string\",\n        placeholder: @placeholder,\n        id: @id,\n        name: @name,\n        value: @value,\n        data_controller: \"ruby-ui--calendar-input\",\n        class: \"rounded-md border shadow\"\n      }.compact, @input_attrs)\n    end\n\n    def calendar_attrs\n      mix({}, @calendar_attrs)\n    end\n\n    def content_attrs\n      mix({}, @content_attrs)\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [
+      "Input",
+      "Popover",
+      "Calendar"
+    ],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component DatePicker",
+  "docs_markdown": "# Date Picker\n\nA date picker component with input.\n\n## Usage\n\n### Single Date\n\n```ruby\nDatePicker(id: \"date\")\n```",
+  "examples": [
+    {
+      "title": "Single Date",
+      "code": "DatePicker(id: \"date\")\n",
+      "language": "ruby"
+    }
+  ]
+}

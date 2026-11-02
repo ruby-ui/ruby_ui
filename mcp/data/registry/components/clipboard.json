@@ -1,0 +1,42 @@
+{
+  "name": "Clipboard",
+  "description": "A control to allow you to copy content to the clipboard.",
+  "files": [
+    {
+      "path": "clipboard.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Clipboard < Base\n    def initialize(options: {}, success: \"Copied!\", error: \"Copy Failed!\", **attrs)\n      @options = options\n      @success = success\n      @error = error\n      super(**attrs)\n    end\n\n    def view_template(&block)\n      div(**attrs) do\n        div(&block)\n        success_popover\n        error_popover\n      end\n    end\n\n    private\n\n    def success_popover\n      ClipboardPopover(type: :success) { @success }\n    end\n\n    def error_popover\n      ClipboardPopover(type: :error) { @error }\n    end\n\n    def default_attrs\n      {\n        data: {\n          controller: \"ruby-ui--clipboard\",\n          action: \"click@window->ruby-ui--clipboard#onClickOutside\",\n          ruby_ui__clipboard_success_value: @success,\n          ruby_ui__clipboard_error_value: @error,\n          ruby_ui__clipboard_options_value: @options.to_json\n        }\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "clipboard_controller.js",
+      "content": "import { Controller } from \"@hotwired/stimulus\"\nimport { computePosition, flip, shift } from \"@floating-ui/dom\";\n\n// Connects to data-controller=\"accordion\"\nexport default class extends Controller {\n  static targets = ['trigger', 'source', 'successPopover', 'successPanel', 'errorPopover', 'errorPanel']\n  static values = {\n    options: {\n      type: Object,\n      default: {},\n    },\n  }\n\n  disconnect() {\n    // Nothing is left to wait for the exit animation, so apply the pending hide now.\n    if (this.hasSuccessPanelTarget) this.settleExit(this.successPanelTarget);\n    if (this.hasErrorPanelTarget) this.settleExit(this.errorPanelTarget);\n  }\n\n  copy() {\n    let sourceElement = this.sourceTarget.children[0];\n    if (!sourceElement) {\n      this.#showErrorPopover();\n      return;\n    }\n    let textToCopy = sourceElement.tagName === 'INPUT' ? sourceElement.value : sourceElement.innerText;\n    navigator.clipboard.writeText(textToCopy).then(() => {\n      this.#showSuccessPopover();\n    }).catch(() => {\n      this.#showErrorPopover();\n    })\n  }\n\n  onClickOutside() {\n    this.#hidePopover(this.successPopoverTarget, this.successPanelTarget);\n    this.#hidePopover(this.errorPopoverTarget, this.errorPanelTarget);\n  }\n\n  #computeTooltip(popoverElement) {\n    computePosition(this.triggerTarget, popoverElement, {\n      placement: this.optionsValue.placement || \"top\",\n      middleware: [flip(), shift()],\n    }).then(({ x, y }) => {\n      Object.assign(popoverElement.style, {\n        left: `${x}px`,\n        top: `${y}px`,\n      });\n    });\n  }\n\n  #showSuccessPopover() {\n    this.#showPopover(this.successPopoverTarget, this.successPanelTarget);\n  }\n\n  #showErrorPopover() {\n    this.#showPopover(this.errorPopoverTarget, this.errorPanelTarget);\n  }\n\n  #showPopover(popover, panel) {\n    this.#computeTooltip(popover);\n    popover.classList.remove(\"hidden\");\n    panel.dataset.state = \"open\";\n  }\n\n  #hidePopover(popover, panel) {\n    if (popover.classList.contains(\"hidden\")) return;\n\n    panel.dataset.state = \"closed\";\n    this.hideAfterExitAnimation(panel);\n  }\n\n  afterExit(panel) {\n    const popover = panel === this.successPanelTarget ? this.successPopoverTarget : this.errorPopoverTarget;\n    popover.classList.add(\"hidden\");\n  }\n\n  // Overlay exit — the same block in every overlay controller, so keep them in sync.\n  exitAnimationNames = new WeakMap();\n\n  hideAfterExitAnimation(animated) {\n    const exitAnimations = animated\n      .getAnimations()\n      .filter((animation) => animation instanceof CSSAnimation);\n\n    // No exit animation, or no box to run it in: animationend would never fire.\n    if (exitAnimations.length === 0) {\n      this.settleExit(animated);\n      return;\n    }\n\n    this.exitAnimationNames.set(animated, exitAnimations.map((animation) => animation.animationName));\n    animated.addEventListener(\"animationend\", this.handleExitAnimationEnd);\n    animated.addEventListener(\"animationcancel\", this.handleExitAnimationEnd);\n  }\n\n  handleExitAnimationEnd = (event) => {\n    // animationend bubbles — an animated child must not hide its container.\n    if (event.target !== event.currentTarget) return;\n    // Closing mid-open cancels the enter animation; only the exit run settles this.\n    if (!this.exitAnimationNames.get(event.currentTarget)?.includes(event.animationName)) return;\n\n    this.settleExit(event.currentTarget);\n  };\n\n  settleExit(animated) {\n    animated.removeEventListener(\"animationend\", this.handleExitAnimationEnd);\n    animated.removeEventListener(\"animationcancel\", this.handleExitAnimationEnd);\n    // Reopened mid-exit: it is on its way back in, leave it visible.\n    if (animated.dataset.state !== \"closed\") return;\n\n    this.afterExit(animated);\n  }\n}\n"
+    },
+    {
+      "path": "clipboard_popover.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class ClipboardPopover < Base\n    def initialize(type:, **attrs)\n      @type = type\n      super(**attrs)\n    end\n\n    def view_template(&block)\n      div(\n        class: \"hidden\",\n        style: \"width: max-content; position: absolute; top: 0; left: 0;\",\n        data: {ruby_ui__clipboard_target: clipboard_target}\n      ) do\n        div(**attrs, &block)\n      end\n    end\n\n    private\n\n    def clipboard_target\n      case @type\n      when :success\n        \"successPopover\"\n      when :error\n        \"errorPopover\"\n      end\n    end\n\n    def panel_target\n      case @type\n      when :success\n        \"successPanel\"\n      when :error\n        \"errorPanel\"\n      end\n    end\n\n    def default_attrs\n      {\n        data: {\n          state: :open,\n          ruby_ui__clipboard_target: panel_target\n        },\n        class: \"z-50 rounded-md text-sm border bg-background px-2 py-0.5 text-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fill-mode-forwards data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "clipboard_source.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class ClipboardSource < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          ruby_ui__clipboard_target: \"source\"\n        }\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "clipboard_trigger.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class ClipboardTrigger < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          ruby_ui__clipboard_target: \"trigger\",\n          action: \"click->ruby-ui--clipboard#copy\"\n        }\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [
+      "@floating-ui/dom"
+    ],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Clipboard",
+  "docs_markdown": "# Clipboard\n\nA control to allow you to copy content to the clipboard.\n\n## Usage\n\n### Example\n\n```ruby\nClipboard(success: \"Copied!\", error: \"Copy failed!\", class: \"relative\", options: {placement: \"top\"}) do\n  ClipboardSource(class: \"hidden\") { span { \"Born rich!!!\" } }\n\n  ClipboardTrigger do\n    Link(href: \"#\", class: \"gap-1\") do\n      Text(size: :small, class: \"text-primary\") { \"Copy the secret of success!!!\" }\n    end\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Clipboard(success: \"Copied!\", error: \"Copy failed!\", class: \"relative\", options: {placement: \"top\"}) do\n  ClipboardSource(class: \"hidden\") { span { \"Born rich!!!\" } }\n\n  ClipboardTrigger do\n    Link(href: \"#\", class: \"gap-1\") do\n      Text(size: :small, class: \"text-primary\") { \"Copy the secret of success!!!\" }\n    end\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Collapsible",
+  "description": "An interactive component which expands/collapses a panel.",
+  "files": [
+    {
+      "path": "collapsible.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Collapsible < Base\n    def initialize(open: false, **attrs)\n      @open = open\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          controller: \"ruby-ui--collapsible\",\n          ruby_ui__collapsible_open_value: @open\n        }\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "collapsible_content.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class CollapsibleContent < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {ruby_ui__collapsible_target: \"content\"},\n        class: \"overflow-y-hidden\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "collapsible_controller.js",
+      "content": "import { Controller } from \"@hotwired/stimulus\"\n\n// Connects to data-controller=\"accordion\"\nexport default class extends Controller {\n  static targets = ['content']\n  static values = {\n    open: {\n      type: Boolean,\n      default: false,\n    },\n  }\n\n  connect() {\n    // Set the initial state of the accordion\n    this.openValue ? this.open() : this.close()\n  }\n\n  // Toggle the 'open' value\n  toggle() {\n    this.openValue = !this.openValue\n  }\n\n  // Handle changes in the 'open' value\n  openValueChanged(isOpen, wasOpen) {\n    if (isOpen) {\n      this.open()\n    } else {\n      this.close()\n    }\n  }\n\n  // Open the accordion content\n  open() {\n    if (this.hasContentTarget) {\n      this.contentTarget.classList.remove('hidden')\n      this.openValue = true\n    }\n  }\n\n  // Close the accordion content\n  close() {\n    if (this.hasContentTarget) {\n      this.contentTarget.classList.add('hidden')\n      this.openValue = false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "collapsible_trigger.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class CollapsibleTrigger < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          action: \"click->ruby-ui--collapsible#toggle\"\n        }\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Collapsible",
+  "docs_markdown": "# Collapsible\n\nAn interactive component which expands/collapses a panel.\n\n## Usage\n\n### Example\n\n```ruby\nCollapsible do\n  div(class: \"flex items-center justify-between space-x-4 px-4 py-2\") do\n    h4(class: \"text-sm font-semibold\") { \" @joeldrapper starred 3 repositories\" }\n    CollapsibleTrigger do\n      Button(variant: :ghost, icon: true) do\n        chevron_icon\n        span(class: \"sr-only\") { \"Toggle\" }\n      end\n    end\n  end\n\n  div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n    \"phlex-ruby/phlex\"\n  end\n\n  CollapsibleContent do\n    div(class: 'space-y-2 mt-2') do\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"phlex-ruby/phlex-rails\"\n      end\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"ruby-ui/ruby_ui\"\n      end\n    end\n  end\nend\n```\n\n### Open\n\n```ruby\nCollapsible(open: true) do\n  div(class: \"flex items-center justify-between space-x-4 px-4 py-2\") do\n    h4(class: \"text-sm font-semibold\") { \" @joeldrapper starred 3 repositories\" }\n    CollapsibleTrigger do\n      Button(variant: :ghost, icon: true) do\n        chevron_icon\n        span(class: \"sr-only\") { \"Toggle\" }\n      end\n    end\n  end\n\n  div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n    \"phlex-ruby/phlex\"\n  end\n\n  CollapsibleContent do\n    div(class: 'space-y-2 mt-2') do\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"phlex-ruby/phlex-rails\"\n      end\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"ruby-ui/ruby_ui\"\n      end\n    end\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Collapsible do\n  div(class: \"flex items-center justify-between space-x-4 px-4 py-2\") do\n    h4(class: \"text-sm font-semibold\") { \" @joeldrapper starred 3 repositories\" }\n    CollapsibleTrigger do\n      Button(variant: :ghost, icon: true) do\n        chevron_icon\n        span(class: \"sr-only\") { \"Toggle\" }\n      end\n    end\n  end\n\n  div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n    \"phlex-ruby/phlex\"\n  end\n\n  CollapsibleContent do\n    div(class: 'space-y-2 mt-2') do\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"phlex-ruby/phlex-rails\"\n      end\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"ruby-ui/ruby_ui\"\n      end\n    end\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Open",
+      "code": "Collapsible(open: true) do\n  div(class: \"flex items-center justify-between space-x-4 px-4 py-2\") do\n    h4(class: \"text-sm font-semibold\") { \" @joeldrapper starred 3 repositories\" }\n    CollapsibleTrigger do\n      Button(variant: :ghost, icon: true) do\n        chevron_icon\n        span(class: \"sr-only\") { \"Toggle\" }\n      end\n    end\n  end\n\n  div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n    \"phlex-ruby/phlex\"\n  end\n\n  CollapsibleContent do\n    div(class: 'space-y-2 mt-2') do\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"phlex-ruby/phlex-rails\"\n      end\n      div(class: \"rounded-md border px-4 py-2 font-mono text-sm shadow-sm\") do\n        \"ruby-ui/ruby_ui\"\n      end\n    end\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

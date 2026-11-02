@@ -1,0 +1,55 @@
+{
+  "name": "Accordion",
+  "description": "A vertically stacked set of interactive headings that each reveal a section of content.",
+  "files": [
+    {
+      "path": "accordion.rb",
+      "content": "# frozen_string_literal: true\n\nrequire \"securerandom\"\n\nmodule RubyUI\n  # Groups AccordionItems. Single-open by default: every item shares the same\n  # <details name>, so the browser closes the others when one opens.\n  class Accordion < Base\n    def initialize(multiple: false, disabled: false, **attrs)\n      @multiple = multiple\n      @disabled = disabled\n      super(**attrs)\n    end\n\n    def view_template(&)\n      previous = context[:ruby_ui_accordion]\n      context[:ruby_ui_accordion] = {\n        name: (@multiple ? nil : \"ruby-ui-accordion-#{SecureRandom.hex(4)}\"),\n        disabled: @disabled\n      }\n      div(**attrs, &)\n    ensure\n      context[:ruby_ui_accordion] = previous\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"accordion\"},\n        class: \"flex w-full flex-col\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "accordion_content.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # The panel of an AccordionItem. Attributes and classes go to the inner\n  # element, like shadcn's AccordionContent.\n  class AccordionContent < Base\n    def view_template(&)\n      div(data: {slot: \"accordion-content\"}, class: \"text-sm\") do\n        div(**attrs, &)\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"pt-0 pb-4 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "accordion_icon.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Chevron down while closed, chevron up while open (lucide icons, swapped\n  # with CSS on the parent <details open>). Pass a block to render your own.\n  class AccordionIcon < Base\n    CHEVRONS = {down: \"m6 9 6 6 6-6\", up: \"m18 15-6-6-6 6\"}.freeze\n\n    def view_template(&block)\n      if block\n        span(**attrs, &block)\n      else\n        chevron(:down, \"group-open/accordion-item:hidden\")\n        chevron(:up, \"hidden group-open/accordion-item:inline\")\n      end\n    end\n\n    private\n\n    def chevron(direction, visibility)\n      svg(\n        **mix(attrs, class: visibility),\n        xmlns: \"http://www.w3.org/2000/svg\",\n        viewbox: \"0 0 24 24\",\n        fill: \"none\",\n        stroke: \"currentColor\",\n        stroke_width: \"2\",\n        stroke_linecap: \"round\",\n        stroke_linejoin: \"round\"\n      ) { |s| s.path(d: CHEVRONS[direction]) }\n    end\n\n    def default_attrs\n      {\n        aria: {hidden: \"true\"},\n        data: {slot: \"accordion-trigger-icon\"},\n        class: \"pointer-events-none ml-auto size-4 shrink-0 text-muted-foreground\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "accordion_item.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A native <details>. Open/close, the single-open group (name) and\n  # find-in-page come from the browser; the height animates on\n  # ::details-content where supported.\n  class AccordionItem < Base\n    def initialize(open: false, disabled: nil, **attrs)\n      @open = open\n      @disabled = disabled\n      super(**attrs)\n    end\n\n    def view_template(&)\n      group = context[:ruby_ui_accordion] || {}\n      disabled = @disabled.nil? ? group[:disabled] : @disabled\n      previous = context[:ruby_ui_accordion_item]\n      context[:ruby_ui_accordion_item] = {disabled: disabled}\n\n      item_attrs = attrs.dup\n      item_attrs[:name] ||= group[:name] if group[:name]\n      item_attrs[:open] = true if @open\n      details(**item_attrs, &)\n    ensure\n      context[:ruby_ui_accordion_item] = previous\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"accordion-item\"},\n        class: [\n          \"group/accordion-item not-last:border-b [interpolate-size:allow-keywords]\",\n          \"details-content:h-0 details-content:overflow-hidden open:details-content:h-auto\",\n          \"details-content:transition-[height,content-visibility] details-content:transition-discrete\",\n          \"details-content:duration-200 details-content:ease-out\"\n        ].join(\" \")\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "accordion_trigger.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # The <summary> of an AccordionItem. Wraps its content in a heading\n  # (h3 by default) and appends the chevron (icon: false to render your own).\n  class AccordionTrigger < Base\n    LEVELS = (1..6)\n\n    def initialize(level: 3, icon: true, **attrs)\n      raise ArgumentError, \"level must be 1..6, got #{level.inspect}\" unless level.is_a?(Integer) && LEVELS.cover?(level)\n\n      @level = level\n      @icon = icon\n      super(**attrs)\n    end\n\n    def view_template(&block)\n      item = context[:ruby_ui_accordion_item] || {}\n      trigger_attrs = item[:disabled] ? mix(attrs, aria: {disabled: \"true\"}, tabindex: \"-1\") : attrs\n\n      summary(**trigger_attrs) do\n        send(:\"h#{@level}\", &block)\n        render AccordionIcon.new if @icon\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"accordion-trigger\"},\n        class: [\n          \"group/accordion-trigger relative flex flex-1 cursor-pointer list-none items-start justify-between\",\n          \"rounded-md border border-transparent py-4 text-left text-sm font-medium transition-all outline-none\",\n          \"hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50\",\n          \"aria-disabled:pointer-events-none aria-disabled:opacity-50 [&::-webkit-details-marker]:hidden\"\n        ].join(\" \")\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Accordion",
+  "docs_markdown": "## Usage\n\n### Example\n\n```ruby\nAccordion(class: \"max-w-lg\") do\n  AccordionItem do\n    AccordionTrigger { \"What is RubyUI?\" }\n    AccordionContent { \"RubyUI is a UI component library for Ruby devs who want to build better, faster.\" }\n  end\n  AccordionItem do\n    AccordionTrigger { \"Can I use it with Rails?\" }\n    AccordionContent { \"Yes. RubyUI is pure Ruby and works great with Rails. It's a Ruby gem that you can install into your Rails app.\" }\n  end\n  AccordionItem do\n    AccordionTrigger { \"Does it need JavaScript?\" }\n    AccordionContent { \"No. The browser opens and closes each item, and find-in-page reveals a closed item that holds the match.\" }\n  end\nend\n```\n\n### Multiple\n\n```ruby\nAccordion(multiple: true, class: \"max-w-lg\") do\n  AccordionItem(open: true) do\n    AccordionTrigger { \"Notifications\" }\n    AccordionContent { \"Choose how you want to be notified about updates.\" }\n  end\n  AccordionItem(open: true) do\n    AccordionTrigger { \"Privacy\" }\n    AccordionContent { \"Control who can see your profile and activity.\" }\n  end\n  AccordionItem do\n    AccordionTrigger { \"Billing\" }\n    AccordionContent { \"Manage your plan and payment methods.\" }\n  end\nend\n```\n\n### Disabled\n\n```ruby\nAccordion(class: \"max-w-lg\") do\n  AccordionItem do\n    AccordionTrigger { \"Available\" }\n    AccordionContent { \"This item opens as usual.\" }\n  end\n  AccordionItem(disabled: true) do\n    AccordionTrigger { \"Unavailable\" }\n    AccordionContent { \"This item is disabled.\" }\n  end\nend\n```\n\n### Heading level\n\n```ruby\nAccordion(class: \"max-w-lg\") do\n  AccordionItem do\n    AccordionTrigger(level: 2) { \"Shipping\" }\n    AccordionContent { \"Orders ship within two business days.\" }\n  end\n  AccordionItem do\n    AccordionTrigger(level: 2) { \"Returns\" }\n    AccordionContent { \"Returns are accepted within 30 days.\" }\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Accordion(class: \"max-w-lg\") do\n  AccordionItem do\n    AccordionTrigger { \"What is RubyUI?\" }\n    AccordionContent { \"RubyUI is a UI component library for Ruby devs who want to build better, faster.\" }\n  end\n  AccordionItem do\n    AccordionTrigger { \"Can I use it with Rails?\" }\n    AccordionContent { \"Yes. RubyUI is pure Ruby and works great with Rails. It's a Ruby gem that you can install into your Rails app.\" }\n  end\n  AccordionItem do\n    AccordionTrigger { \"Does it need JavaScript?\" }\n    AccordionContent { \"No. The browser opens and closes each item, and find-in-page reveals a closed item that holds the match.\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Multiple",
+      "code": "Accordion(multiple: true, class: \"max-w-lg\") do\n  AccordionItem(open: true) do\n    AccordionTrigger { \"Notifications\" }\n    AccordionContent { \"Choose how you want to be notified about updates.\" }\n  end\n  AccordionItem(open: true) do\n    AccordionTrigger { \"Privacy\" }\n    AccordionContent { \"Control who can see your profile and activity.\" }\n  end\n  AccordionItem do\n    AccordionTrigger { \"Billing\" }\n    AccordionContent { \"Manage your plan and payment methods.\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Disabled",
+      "code": "Accordion(class: \"max-w-lg\") do\n  AccordionItem do\n    AccordionTrigger { \"Available\" }\n    AccordionContent { \"This item opens as usual.\" }\n  end\n  AccordionItem(disabled: true) do\n    AccordionTrigger { \"Unavailable\" }\n    AccordionContent { \"This item is disabled.\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Heading level",
+      "code": "Accordion(class: \"max-w-lg\") do\n  AccordionItem do\n    AccordionTrigger(level: 2) { \"Shipping\" }\n    AccordionContent { \"Orders ship within two business days.\" }\n  end\n  AccordionItem do\n    AccordionTrigger(level: 2) { \"Returns\" }\n    AccordionContent { \"Returns are accepted within 30 days.\" }\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

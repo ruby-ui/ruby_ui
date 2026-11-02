@@ -38,4 +38,12 @@ class RegistryTest < Minitest::Test
     assert_equal ["Button"], known
     assert_equal ["Bogus"], unknown
   end
+
+  def test_default_registry_loads_the_committed_directory
+    registry = RubyUI::MCP::Registry.load_default
+    version = File.read(File.expand_path("../../gem/lib/ruby_ui.rb", __dir__))[/VERSION\s*=\s*"([^"]+)"/, 1]
+
+    assert_equal version, registry.version
+    assert_equal "Button", registry.find("button")[:name]
+  end
 end
