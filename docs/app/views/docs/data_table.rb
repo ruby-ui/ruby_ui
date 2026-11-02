@@ -66,7 +66,7 @@ class Views::Docs::DataTable < Views::Base
             DataTablePaginationBar do
               DataTableSelectionSummary(total_on_page: @employees.size)
               div(class: "flex w-full items-center gap-8 lg:w-fit") do
-                DataTablePerPageSelect(path: docs_data_table_demo_path, value: @per_page, preserved_params: {search: @search, sort: @sort, direction: @direction})
+                DataTablePerPageSelect(path: docs_data_table_demo_path, frame_id: "employees_list", value: @per_page, preserved_params: {search: @search, sort: @sort, direction: @direction})
                 DataTablePagination(page: @page, per_page: @per_page, total_count: @total_count, path: docs_data_table_demo_path)
               end
             end
