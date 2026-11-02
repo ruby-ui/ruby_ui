@@ -17,6 +17,9 @@ application.register("ruby-ui--alert-dialog", RubyUi__AlertDialogController)
 import RubyUi__AvatarController from "./ruby_ui/avatar_controller"
 application.register("ruby-ui--avatar", RubyUi__AvatarController)
 
+import RubyUi__ButtonController from "./ruby_ui/button_controller"
+application.register("ruby-ui--button", RubyUi__ButtonController)
+
 import RubyUi__CalendarController from "./ruby_ui/calendar_controller"
 application.register("ruby-ui--calendar", RubyUi__CalendarController)
 

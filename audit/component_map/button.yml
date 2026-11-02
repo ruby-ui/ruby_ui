@@ -1,0 +1,17 @@
+shadcn: button
+kind: form_control
+docs_view: button
+parts:
+  Button: button
+selectors:
+  Button: '[data-audit-fixture] [data-slot="button"]'
+props:
+  # shadcn default variant = RubyUI :primary; size default = RubyUI :md;
+  # size icon/icon-xs/icon-sm/icon-lg = RubyUI icon: true with size :md/:xs/:sm/:lg
+  # (size: :icon, :icon_sm… work too). render: RubyUI covers its one button use,
+  # <a>, with href: (see divergences.yml).
+  Button: {variant: variant, size: size, render: href, focusableWhenDisabled: focusable_when_disabled}
+# icon is the counterpart of shadcn's icon* sizes (see props); size :xl is a
+# RubyUI extra value of size.
+rubyui_only:
+  Button: [type]

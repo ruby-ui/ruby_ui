@@ -46,7 +46,7 @@ module RubyUI
         end
         div(class: "absolute top-2 right-2") do
           RubyUI.ClipboardTrigger do
-            RubyUI.Button(variant: :ghost, size: :sm, icon: true, class: "text-white hover:text-white hover:bg-white/20") { clipboard_icon }
+            RubyUI.Button(variant: :ghost, size: :xs, icon: true, class: "text-white hover:text-white hover:bg-white/20") { clipboard_icon }
           end
         end
       end
@@ -71,7 +71,7 @@ module RubyUI
         viewbox: "0 0 24 24",
         stroke_width: "1.5",
         stroke: "currentColor",
-        class: "w-4 h-4"
+        class: "size-4"
       ) do |s|
         s.path(
           stroke_linecap: "round",

@@ -1,113 +1,141 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # A button, styled after shadcn's Button (Base UI + vega). Renders a
+  # <button>, or an <a role="button"> when given href: (shadcn's
+  # render={<a />}).
+  #
+  # icon: true makes a square icon button of the given size (shadcn's
+  # size="icon", "icon-sm"…); size: :icon, :icon_sm… work too. An icon marked
+  # data-icon="inline-start" or "inline-end" gets tighter padding on its side.
+  #
+  # focusable_when_disabled: true (with disabled: true) keeps the button in the
+  # tab order: it renders aria-disabled instead of disabled and blocks clicks.
+  # As in shadcn, only the disabled attribute dims the button, so it keeps its
+  # enabled look.
   class Button < Base
-    BASE_CLASSES = [
-      "whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors",
+    BASE = [
+      "group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap",
+      "rounded-md border border-transparent bg-clip-padding text-sm font-medium",
+      "transition-all outline-none select-none active:not-aria-[haspopup]:translate-y-px",
+      "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+      "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
+      "dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
       "disabled:pointer-events-none disabled:opacity-50",
-      "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-      "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+      "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
     ].freeze
 
-    def initialize(type: :button, variant: :primary, size: :md, icon: false, **attrs)
+    # :primary is shadcn's default variant.
+    VARIANTS = {
+      primary: "bg-primary text-primary-foreground hover:bg-primary/80",
+      outline: "border-border bg-background shadow-xs hover:bg-muted hover:text-foreground " \
+        "aria-expanded:bg-muted aria-expanded:text-foreground " \
+        "dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+      secondary: "bg-secondary text-secondary-foreground " \
+        "hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] " \
+        "aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+      ghost: "hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 " \
+        "aria-expanded:bg-muted aria-expanded:text-foreground",
+      destructive: "bg-destructive/10 text-destructive hover:bg-destructive/20 " \
+        "focus-visible:border-destructive/40 focus-visible:ring-destructive/20 " \
+        "dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+      link: "text-primary underline-offset-4 hover:underline"
+    }.freeze
+
+    # :md is shadcn's default size; :xl is a RubyUI extra.
+    SIZES = {
+      xs: "h-6 gap-1 rounded-[min(var(--radius-md),8px)] px-2 text-xs in-data-[slot=button-group]:rounded-md " \
+        "has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+      sm: "h-8 gap-1 rounded-[min(var(--radius-md),10px)] px-2.5 in-data-[slot=button-group]:rounded-md " \
+        "has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5",
+      md: "h-9 gap-1.5 px-2.5 in-data-[slot=button-group]:rounded-md " \
+        "has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+      lg: "h-10 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+      xl: "h-12 gap-2 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3"
+    }.freeze
+
+    # Square icon buttons. h-/w- instead of size-* so callers can still
+    # override one side with h-8 or w-8.
+    ICON_SIZES = {
+      xs: "h-6 w-6 rounded-[min(var(--radius-md),8px)] in-data-[slot=button-group]:rounded-md " \
+        "[&_svg:not([class*='size-'])]:size-3",
+      sm: "h-8 w-8 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md",
+      md: "h-9 w-9",
+      lg: "h-10 w-10",
+      xl: "h-12 w-12"
+    }.freeze
+
+    VARIANT_ALIASES = {default: :primary}.freeze
+    # shadcn's size names: default, icon, icon-xs, icon-sm, icon-lg.
+    SIZE_ALIASES = {default: :md, icon: :md, icon_xs: :xs, icon_sm: :sm, icon_md: :md, icon_lg: :lg, icon_xl: :xl}.freeze
+
+    def initialize(type: :button, variant: :primary, size: :md, icon: false, href: nil,
+      disabled: false, focusable_when_disabled: false, **attrs)
       @type = type
-      @variant = variant.to_sym
-      @size = size.to_sym
-      @icon = icon
+      @variant = variant.to_s.to_sym
+      @variant = VARIANT_ALIASES.fetch(@variant, @variant)
+      @variant = :primary unless VARIANTS.key?(@variant)
+      size = size.to_s.tr("-", "_").to_sym
+      @icon = icon || size.start_with?("icon")
+      @size = SIZE_ALIASES.fetch(size, size)
+      @size = :md unless SIZES.key?(@size)
+      @href = href
+      @disabled = disabled
+      @focusable_when_disabled = focusable_when_disabled
       super(**attrs)
+      # mix concatenates strings, so a caller's own aria: {disabled: "true"}
+      # would turn ours into "true true", which the controller doesn't read as
+      # disabled.
+      @attrs[:aria][:disabled] = "true" if aria_disabled?
     end
 
     def view_template(&)
-      button(**attrs, &)
+      if @href
+        a(**attrs, &)
+      else
+        button(**attrs, &)
+      end
     end
 
     private
 
-    def size_classes
-      if @icon
-        case @size
-        when :sm then "h-6 w-6"
-        when :md then "h-9 w-9"
-        when :lg then "h-10 w-10"
-        when :xl then "h-12 w-12"
-        end
-      else
-        case @size
-        when :sm then "px-3 py-1.5 h-8 text-xs"
-        when :md then "px-4 py-2 h-9 text-sm"
-        when :lg then "px-4 py-2 h-10 text-base"
-        when :xl then "px-6 py-3 h-12 text-base"
-        end
-      end
-    end
-
-    def primary_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "bg-primary text-primary-foreground shadow",
-        "hover:bg-primary/90"
-      ]
-    end
-
-    def link_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "text-primary underline-offset-4",
-        "hover:underline"
-      ]
-    end
-
-    def secondary_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "bg-secondary text-secondary-foreground",
-        "hover:bg-opacity-80"
-      ]
-    end
-
-    def destructive_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "bg-destructive text-white shadow-sm",
-        "[a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20",
-        "dark:focus-visible:ring-destructive/40 dark:bg-destructive/60"
-      ]
-    end
-
-    def outline_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "border border-input bg-background shadow-sm",
-        "hover:bg-accent hover:text-accent-foreground"
-      ]
-    end
-
-    def ghost_classes
-      [
-        BASE_CLASSES,
-        size_classes,
-        "hover:bg-accent hover:text-accent-foreground"
-      ]
-    end
-
-    def default_classes
-      case @variant
-      when :primary then primary_classes
-      when :link then link_classes
-      when :secondary then secondary_classes
-      when :destructive then destructive_classes
-      when :outline then outline_classes
-      when :ghost then ghost_classes
-      end
-    end
-
     def default_attrs
-      {type: @type, class: default_classes}
+      data = {slot: "button"}
+      attrs = {class: [BASE, (@icon ? ICON_SIZES : SIZES).fetch(@size), VARIANTS.fetch(@variant)], data: data}
+
+      if @href
+        # Like Base UI's render={<a />}: the link is a button to assistive
+        # tech, and the controller makes Space activate it. A disabled link
+        # has no href, so it can't be followed.
+        attrs[:role] = "button"
+        attrs[:href] = @href unless @disabled
+        attrs[:tabindex] = 0 if focusable?
+        data[:controller] = "ruby-ui--button"
+      else
+        attrs[:type] = @type
+      end
+
+      if @disabled
+        data[:disabled] = true
+        if aria_disabled?
+          attrs[:aria] = {disabled: "true"}
+          data[:controller] = "ruby-ui--button"
+        else
+          attrs[:disabled] = true
+        end
+      end
+
+      attrs
+    end
+
+    def focusable?
+      !@disabled || @focusable_when_disabled
+    end
+
+    # Disabled through aria-disabled instead of the disabled attribute: links
+    # have no disabled attribute, and focusable_when_disabled must keep focus.
+    def aria_disabled?
+      @disabled && (@href || @focusable_when_disabled)
     end
   end
 end
