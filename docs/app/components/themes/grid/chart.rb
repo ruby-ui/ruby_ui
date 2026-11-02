@@ -5,7 +5,7 @@ module Components
     module Grid
       class Chart < Components::Base
         def view_template
-          RubyUI::Card(class: "p-8 space-y-6") do
+          RubyUI::Card(class: "p-8 gap-6") do
             div do
               Text(size: "4", weight: "semibold") { "Phlex Speed Tests" }
               Text(size: "2", class: "text-muted-foreground") { "Render time for a simple page" }

@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "p-6 pt-0"
+        data: {slot: "card-content"},
+        class: "px-(--card-spacing)"
       }
     end
   end

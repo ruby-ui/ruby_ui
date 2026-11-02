@@ -25,7 +25,7 @@ class Views::Docs::Card < Views::Base
                 )
               end
             end
-            CardFooter(class: 'flex justify-end gap-x-2') do
+            CardFooter(class: 'justify-end gap-2') do
               Button(variant: :outline) { "See more" }
               Button(variant: :primary) { "Buy now" }
             end
@@ -35,20 +35,18 @@ class Views::Docs::Card < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Card with full-width image", context: self) do
         <<~RUBY
-          Card(class: 'w-96 overflow-hidden') do
-            AspectRatio(ratio: "16/9", class: "border-b") do
-              img(
-                alt: "Placeholder",
-                class: "absolute inset-0 size-full object-cover",
-                loading: "lazy",
-                src: image_url('pattern.jpg')
-              )
-            end
+          Card(class: 'w-96') do
+            img(
+              alt: "Placeholder",
+              class: "aspect-video w-full object-cover",
+              loading: "lazy",
+              src: image_url('pattern.jpg')
+            )
             CardHeader do
               CardTitle { 'Introducing RubyUI' }
               CardDescription { "Kickstart your project today!" }
             end
-            CardFooter(class: 'flex justify-end') do
+            CardFooter(class: 'justify-end') do
               Button(variant: :outline) { "Get started" }
             end
           end
@@ -57,7 +55,7 @@ class Views::Docs::Card < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Account balance", context: self) do
         <<~RUBY
-          Card(class: 'w-96 overflow-hidden') do
+          Card(class: 'w-96') do
             CardHeader do
               div(class: 'w-10 h-10 rounded-xl flex items-center justify-center bg-violet-100 text-violet-700 -rotate-6') do
                 cash_icon
@@ -69,6 +67,46 @@ class Views::Docs::Card < Views::Base
             end
             CardFooter do
               Text(size: "2", class: "text-muted-foreground") { "**** 4620" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "With action", context: self) do
+        <<~RUBY
+          Card(class: 'w-96') do
+            CardHeader do
+              CardTitle { "Login to your account" }
+              CardDescription { "Enter your email below to login to your account" }
+              CardAction do
+                Button(variant: :link) { "Sign up" }
+              end
+            end
+            CardContent do
+              div(class: "grid gap-2") do
+                Label(for: "card-email") { "Email" }
+                Input(id: "card-email", type: "email", placeholder: "m@example.com")
+              end
+            end
+            CardFooter do
+              Button(class: "w-full") { "Login" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Small", context: self) do
+        <<~RUBY
+          Card(size: :sm, class: 'w-80') do
+            CardHeader do
+              CardTitle { "Small card" }
+              CardDescription { "size: :sm tightens the spacing and the title." }
+            end
+            CardContent do
+              plain "Use it in dense layouts such as sidebars and grids."
+            end
+            CardFooter do
+              Button(variant: :outline, size: :sm, class: "w-full") { "Action" }
             end
           end
         RUBY
