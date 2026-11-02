@@ -18,7 +18,8 @@ module RubyUI
     end
 
     def view_template
-      render RubyUI::TableHead.new(class: "text-foreground whitespace-nowrap", **attrs) do
+      # Merge, not replace: a caller's aria: (e.g. label) must keep aria-sort.
+      render RubyUI::TableHead.new(class: "text-foreground whitespace-nowrap", **attrs, aria: {**attrs.fetch(:aria, {}), sort: aria_sort}) do
         a(href: sort_href, class: "inline-flex items-center gap-1 text-inherit no-underline hover:text-foreground transition-colors") do
           plain @label
           sort_icon
@@ -27,6 +28,11 @@ module RubyUI
     end
 
     private
+
+    # aria-sort on the sorted column only (APG table pattern); nil drops the attribute.
+    def aria_sort
+      {"asc" => "ascending", "desc" => "descending"}[current_direction]
+    end
 
     def current_direction
       (@sort.to_s == @column_key.to_s) ? @direction : nil

@@ -1,0 +1,35 @@
+shadcn: null
+kind: menu
+docs_view: data_table
+# shadcn Base UI has no data-table component (bases/base/ui/data-table.tsx
+# doesn't exist): Data Table is a recipe on TanStack Table. The reference is
+# the Base UI block bases/base/blocks/dashboard-01/components/data-table.tsx
+# (+ style-vega.css through the ui/ parts it renders), minus drag-and-drop,
+# tabs and the drawer. The block has no search, no sortable header and no
+# bulk actions. The audit trigger is the "Columns" dropdown.
+parts:
+  DataTable: null
+  DataTableToolbar: null
+  DataTableSearch: null
+  DataTableColumnToggle: dropdown-menu-trigger
+  # Rendered by DataTableColumnToggle (RubyUI::DropdownMenuContent).
+  DropdownMenuContent: dropdown-menu-content
+  DataTablePerPageSelect: select-trigger
+  DataTableBulkActions: null
+  DataTableForm: null
+  DataTableSortHead: null
+  DataTableSelectAllCheckbox: checkbox
+  DataTableRowCheckbox: checkbox
+  DataTableSelectionSummary: null
+  DataTablePaginationBar: null
+  DataTablePagination: null
+  DataTableExpandToggle: null
+selectors:
+  DataTableColumnToggle: '[data-controller~="ruby-ui--data-table-column-visibility"] button'
+  DropdownMenuContent: '[data-ruby-ui--dropdown-menu-target="panel"]'
+  DataTablePerPageSelect: 'select[name="per_page"]'
+  # Same slot as the row checkboxes: compared together under DataTableRowCheckbox.
+  DataTableSelectAllCheckbox: null
+  DataTableRowCheckbox: '[data-slot="checkbox"]'
+props: {}
+fixture_shadcn: [table, checkbox, dropdown-menu, select, button, badge, label]

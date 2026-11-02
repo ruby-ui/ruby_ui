@@ -37,4 +37,10 @@ class RubyUI::DataTableColumnToggleTest < ComponentTest
     # only the visible column renders the `checked` boolean attribute on its checkbox
     assert_equal 1, output.scan(/\bchecked(?:\s|>)/).length
   end
+
+  def test_trigger_icons_carry_data_icon
+    output = phlex { RubyUI.DataTableColumnToggle(columns: [{key: :email, label: "Email"}]) }
+    assert_match(/<svg[^>]*data-icon="inline-start"/, output)
+    assert_match(/<svg[^>]*data-icon="inline-end"/, output)
+  end
 end

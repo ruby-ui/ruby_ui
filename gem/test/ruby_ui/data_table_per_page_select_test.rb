@@ -22,4 +22,23 @@ class RubyUI::DataTablePerPageSelectTest < ComponentTest
     assert_match(/<option[^>]*value="10"/, output)
     assert_match(/<option[^>]*value="25"/, output)
   end
+
+  def test_labels_the_select
+    output = phlex { RubyUI.DataTablePerPageSelect(path: "/x") }
+    id = output[/<select [^<]*id="([^"]+)"/, 1]
+    refute_nil id
+    assert_match(/<label for="#{id}"[^>]*>Rows per page<\/label>/, output)
+  end
+
+  def test_default_ids_are_unique_per_instance
+    first = phlex { RubyUI.DataTablePerPageSelect(path: "/a") }[/<select [^<]*id="([^"]+)"/, 1]
+    second = phlex { RubyUI.DataTablePerPageSelect(path: "/b") }[/<select [^<]*id="([^"]+)"/, 1]
+    refute_equal first, second
+  end
+
+  def test_custom_label_and_id
+    output = phlex { RubyUI.DataTablePerPageSelect(path: "/x", label: "Por página", id: "pp") }
+    assert_match(/<label for="pp"[^>]*>Por página<\/label>/, output)
+    assert_match(/<select [^<]*id="pp"/, output)
+  end
 end

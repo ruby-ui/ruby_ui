@@ -24,12 +24,11 @@ class Views::Docs::DataTable < Views::Base
           DataTable(id: "employees") do
             DataTableToolbar do
               DataTableSearch(path: employees_path, value: @search)
-              DataTablePerPageSelect(path: employees_path, value: @per_page)
             end
 
-            div(class: "rounded-md border") do
+            div(class: "overflow-hidden rounded-lg border") do
               Table do
-                TableHeader do
+                TableHeader(class: "bg-muted") do
                   TableRow do
                     TableHead { "Name" }
                     DataTableSortHead(column_key: :email, label: "Email",
@@ -52,8 +51,11 @@ class Views::Docs::DataTable < Views::Base
 
             DataTablePaginationBar do
               DataTableSelectionSummary(total_on_page: @rows.size)
-              DataTablePagination(page: @page, per_page: @per_page,
-                                  total_count: @total_count, path: employees_path)
+              div(class: "flex w-full items-center gap-8 lg:w-fit") do
+                DataTablePerPageSelect(path: employees_path, value: @per_page)
+                DataTablePagination(page: @page, per_page: @per_page,
+                                    total_count: @total_count, path: employees_path)
+              end
             end
           end
         RUBY
@@ -75,11 +77,11 @@ class Views::Docs::DataTable < Views::Base
             end
 
             DataTableForm(id: FORM_ID, action: "") do
-              div(class: "rounded-md border") do
+              div(class: "overflow-hidden rounded-lg border") do
                 Table do
-                  TableHeader do
+                  TableHeader(class: "bg-muted") do
                     TableRow do
-                      TableHead(class: "w-10") { DataTableSelectAllCheckbox() }
+                      TableHead(class: "w-8") { div(class: "flex items-center justify-center") { DataTableSelectAllCheckbox() } }
                       TableHead { "Name" }
                       TableHead { "Email" }
                     end
@@ -87,7 +89,7 @@ class Views::Docs::DataTable < Views::Base
                   TableBody do
                     @rows.each do |r|
                       TableRow do
-                        TableCell { DataTableRowCheckbox(value: r.id) }
+                        TableCell { div(class: "flex items-center justify-center") { DataTableRowCheckbox(value: r.id) } }
                         TableCell { r.name }
                         TableCell { r.email }
                       end
@@ -117,7 +119,7 @@ class Views::Docs::DataTable < Views::Base
             end
 
             Table do
-              TableHeader do
+              TableHeader(class: "bg-muted") do
                 TableRow do
                   TableHead { "Name" }
                   TableHead(data: {column: "email"}) { "Email" }
@@ -142,7 +144,7 @@ class Views::Docs::DataTable < Views::Base
         @@code = <<~RUBY
           DataTable(id: "employees_expand") do
             Table do
-              TableHeader do
+              TableHeader(class: "bg-muted") do
                 TableRow do
                   TableHead(class: "w-10") { }
                   TableHead { "Name" }
