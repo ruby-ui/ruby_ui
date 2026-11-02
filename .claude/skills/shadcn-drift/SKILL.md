@@ -88,10 +88,10 @@ Look at the RubyUI side when it helps decide:
 - `theme.status == "fail"`: neutral theme tokens differ from RubyUI's CSS.
   Always reported, with the tokens. `theme.status == "inconclusive"`: report
   its `reason` (the theme couldn't be read, so it is not "clean").
-- `base_ui.head` differs from any `base_ui.baselines` value: `@base-ui/react`
-  was bumped. Always reported: behavior can change with no shadcn diff. A
-  `null` value means that baseline couldn't be read (version unknown), not
-  "no bump".
+- `base_ui`: a bump of `@base-ui/react` counts only when a baseline value is
+  non-null and differs from `base_ui.head`. Always reported: behavior can
+  change with no shadcn diff. A `null` baseline means its version is
+  unknown: report it under "Inconclusivo", never as a bump.
 
 ### 4. Message (pt-BR, Slack mrkdwn)
 
