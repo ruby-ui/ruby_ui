@@ -15,6 +15,7 @@ module RubyUI
 
     def default_attrs
       {
+        data: {slot: "breadcrumb-link"},
         class: "transition-colors hover:text-foreground"
       }
     end

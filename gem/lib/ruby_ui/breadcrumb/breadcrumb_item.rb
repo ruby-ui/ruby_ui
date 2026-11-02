@@ -10,6 +10,7 @@ module RubyUI
 
     def default_attrs
       {
+        data: {slot: "breadcrumb-item"},
         class: "inline-flex items-center gap-1.5"
       }
     end

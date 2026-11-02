@@ -86,6 +86,12 @@
   shadcn: "render prop (useRender), e.g. render={<a href=\"…\" />}"
   reason: "Phlex has no render prop; a link is the only other element a badge needs, and href: matches Link and PaginationItem."
   since: "2026-11-01"
+- component: breadcrumb
+  dimension: Props
+  rubyui: "BreadcrumbLink href: renders <a href>"
+  shadcn: "render prop (useRender), e.g. a router Link"
+  reason: "Phlex has no render prop; in Rails a plain <a href> is what link_to renders and Turbo already intercepts, so href: covers the router-link case."
+  since: "2026-11-01"
 
 - component: button
   dimension: Props
