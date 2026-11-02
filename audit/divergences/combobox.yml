@@ -1,0 +1,24 @@
+- component: combobox
+  dimension: HTML
+  rubyui: "Each ComboboxItem holds a visually hidden native radio (checkbox when multiple:) named after the root's name:"
+  shadcn: "Base UI keeps the value in state and renders one hidden input on the root"
+  reason: "Server-rendered component: the checked inputs are the selection, so the form submits it, required: and FormField validation work natively, and Turbo morphs keep it. The inputs are aria-hidden and out of the tab order; the option carries aria-selected."
+  since: "2026-11-02"
+- component: combobox
+  dimension: Props
+  rubyui: "show_remove: on ComboboxChips; no anchor: on ComboboxContent"
+  shadcn: "showRemove on each ComboboxChip; anchor on ComboboxContent (from useComboboxAnchor)"
+  reason: "The controller builds the chips from the checked items with a template, so the option lives on the container. With ComboboxChips present the popup anchors to it automatically, which is what useComboboxAnchor is used for."
+  since: "2026-11-02"
+- component: combobox
+  dimension: Props
+  rubyui: "ComboboxToggleAll and Combobox(term:)"
+  shadcn: "no counterpart"
+  reason: "RubyUI extras kept from the previous API: Select all for multiple: comboboxes, and term: to show \"<count> <term>\" in ComboboxValue instead of every name."
+  since: "2026-11-02"
+- component: combobox
+  dimension: Props
+  rubyui: "ComboboxChips(max:): past the cap the chips collapse into one \"<count> <term>\" chip that clears the selection"
+  shadcn: "no counterpart (chips come from a ComboboxValue render function; Base UI's limit caps list items, not chips)"
+  reason: "RubyUI extra for large selections (e.g. Select all over 100 items), where one chip per item would fill the page."
+  since: "2026-11-02"

@@ -221,49 +221,30 @@ class Views::Docs::Form < Views::Base
             FormField do
               FormFieldLabel { "Combobox" }
 
-              Combobox do
-                ComboboxTrigger placeholder: "Pick value"
+              Combobox(name: "food", required: true) do
+                ComboboxTrigger { ComboboxValue(placeholder: "Pick value") }
 
-                ComboboxPopover do
-                  ComboboxSearchInput(placeholder: "Pick value or type anything")
+                ComboboxContent do
+                  ComboboxInput(placeholder: "Search", show_trigger: false)
+                  ComboboxEmpty { "No result" }
 
                   ComboboxList do
-                    ComboboxEmptyState { "No result" }
-
-                    ComboboxListGroup label: "Fruits" do
-                      ComboboxItem do
-                        ComboboxRadio(name: "food", value: "apple", required: true)
-                        span { "Apple" }
-                      end
-
-                      ComboboxItem do
-                        ComboboxRadio(name: "food", value: "banana", required: true)
-                        span { "Banana" }
-                      end
+                    ComboboxGroup do
+                      ComboboxLabel { "Fruits" }
+                      ComboboxItem(value: "apple") { "Apple" }
+                      ComboboxItem(value: "banana") { "Banana" }
                     end
-
-                    ComboboxListGroup label: "Vegetable" do
-                      ComboboxItem do
-                        ComboboxRadio(name: "food", value: "brocoli", required: true)
-                        span { "Broccoli" }
-                      end
-
-                      ComboboxItem do
-                        ComboboxRadio(name: "food", value: "carrot", required: true)
-                        span { "Carrot" }
-                      end
+                    ComboboxSeparator()
+                    ComboboxGroup do
+                      ComboboxLabel { "Vegetable" }
+                      ComboboxItem(value: "brocoli") { "Broccoli" }
+                      ComboboxItem(value: "carrot") { "Carrot" }
                     end
-
-                    ComboboxListGroup label: "Others" do
-                      ComboboxItem do
-                        ComboboxRadio(name: "food", value: "chocolate", required: true)
-                        span { "Chocolate" }
-                      end
-
-                      ComboboxItem do
-                        ComboboxRadio(name: "food", value: "milk", required: true)
-                        span { "Milk" }
-                      end
+                    ComboboxSeparator()
+                    ComboboxGroup do
+                      ComboboxLabel { "Others" }
+                      ComboboxItem(value: "chocolate") { "Chocolate" }
+                      ComboboxItem(value: "milk") { "Milk" }
                     end
                   end
                 end

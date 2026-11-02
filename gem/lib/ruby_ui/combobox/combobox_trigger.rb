@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # The button that opens the popup, for the "Combobox in Popup" pattern: put a
+  # ComboboxValue inside it and a ComboboxInput inside ComboboxContent. It is a
+  # RubyUI Button (variant: :outline) with role=combobox, like Base UI's
+  # Combobox.Trigger rendered through shadcn's Button.
   class ComboboxTrigger < Base
-    def initialize(placeholder: "", **)
-      @placeholder = placeholder
-      super(**)
-    end
+    include ComboboxContext
 
-    def view_template
-      button(**attrs) do
-        span(class: "truncate", data: {ruby_ui__combobox_target: "triggerContent"}) do
-          @placeholder
-        end
-        icon
+    def view_template(&block)
+      # The popup holds the search input, so it is a dialog (Base UI's role).
+      combobox[:popup] = :dialog
+      # aria-controls is set by the controller while the popup is open.
+      render Button.new(variant: :outline, disabled: !!combobox[:disabled], **attrs) do
+        yield if block
+        chevron
       end
     end
 
@@ -20,41 +22,28 @@ module RubyUI
 
     def default_attrs
       {
-        type: "button",
-        class: [
-          "flex h-full w-full items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors border border-input bg-background h-9 px-4 py-2 justify-between",
-          "hover:bg-accent hover:text-accent-foreground",
-          "disabled:pointer-events-none disabled:opacity-50",
-          "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        ],
+        role: "combobox",
+        class: "w-full justify-between font-normal",
+        aria: {haspopup: "dialog", expanded: "false"},
         data: {
-          placeholder: @placeholder,
           ruby_ui__combobox_target: "trigger",
-          action: "ruby-ui--combobox#togglePopover"
-        },
-        aria: {
-          haspopup: "listbox",
-          expanded: "false"
+          action: "click->ruby-ui--combobox#toggle keydown->ruby-ui--combobox#triggerKeydown"
         }
       }
     end
 
-    def icon
+    def chevron
       svg(
         xmlns: "http://www.w3.org/2000/svg",
         viewbox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
-        class: "ml-2 h-4 w-4 shrink-0 opacity-50",
         stroke_width: "2",
         stroke_linecap: "round",
-        stroke_linejoin: "round"
-      ) do |s|
-        s.path(
-          d: "m6 9 6 6 6-6"
-        )
-      end
+        stroke_linejoin: "round",
+        aria_hidden: "true",
+        class: "pointer-events-none size-4 text-muted-foreground"
+      ) { |s| s.path(d: "m6 9 6 6 6-6") }
     end
   end
 end
