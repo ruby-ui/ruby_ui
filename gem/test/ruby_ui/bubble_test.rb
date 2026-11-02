@@ -80,4 +80,18 @@ class RubyUI::BubbleTest < ComponentTest
 
     assert_match(/data-slot="bubble-group"/, output)
   end
+
+  def test_content_matches_vega_shape_and_focus_ring
+    output = phlex { RubyUI.BubbleContent { "Hi" } }
+
+    assert_match(/rounded-xl/, output)
+    assert_match(/py-2 /, output)
+    assert_match(%r{focus-visible\]:ring-ring/50}, output)
+  end
+
+  def test_bubble_follows_message_alignment
+    output = phlex { RubyUI.Bubble { RubyUI.BubbleContent { "Hi" } } }
+
+    assert_match(%r{group-data-\[align=end\]/message:self-end}, output)
+  end
 end

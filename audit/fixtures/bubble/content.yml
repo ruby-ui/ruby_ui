@@ -1,0 +1,23 @@
+# One BubbleGroup with one Bubble per shadcn variant (default, secondary, muted,
+# tinted, outline, ghost, destructive), an end-aligned bubble with bottom reactions,
+# a start-aligned bubble with top/start reactions, and a bubble whose content is a
+# <button> (shadcn render={<button />}, RubyUI as: :button), then a default-aligned
+# bubble inside Message(align: end) > MessageContent, and one inside
+# Message(align: end) > plain flex column (only Bubble's own message rule moves it
+# to the end). All text is fictional.
+# Static kind: only the closed state is collected; the button carries data-audit-trigger.
+bubble_1: Hi! Are we still on for Friday?
+bubble_2: Secondary bubble
+bubble_3: Muted bubble
+bubble_4: Tinted bubble
+bubble_5: Outline bubble
+bubble_6: Ghost bubble
+bubble_7: Message failed to send
+bubble_8: Yes, see you at 3pm.
+reaction_1: "👍"
+reaction_2: "2"
+bubble_9: Sounds good.
+reaction_3: "❤️"
+bubble_10: Tap to retry
+bubble_11: Sent from inside a message.
+bubble_12: Aligned by the bubble itself.
