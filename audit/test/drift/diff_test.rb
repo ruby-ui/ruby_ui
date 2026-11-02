@@ -45,4 +45,11 @@ class DriftDiffTest < Minitest::Test
     assert_equal ["x"], diff["warnings_added"]
     refute Diff.empty?(diff)
   end
+
+  def test_changes_in_also_classes_are_reported
+    before = {"parts" => {"dialog-close" => {"effective" => %w[a], "also" => [{"effective" => %w[top-4]}]}}}
+    after = {"parts" => {"dialog-close" => {"effective" => %w[a], "also" => [{"effective" => %w[top-8]}]}}}
+
+    assert_equal({"dialog-close" => {"added" => ["top-8"], "removed" => ["top-4"]}}, Diff.compare(before, after)["classes"])
+  end
 end

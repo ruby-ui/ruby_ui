@@ -230,4 +230,36 @@ class DriftRunnerTest < Minitest::Test
     assert_equal "NoMethodError: boom", result["badge"]["reason"]
     assert_equal "unchanged", result["button"]["status"]
   end
+
+  def dialog_map
+    parts = {"Dialog" => "dialog", "DialogClose" => "dialog-close"}
+    ShadcnAudit::ComponentMap.new({"dialog" => {"shadcn" => "dialog", "shadcn_sha" => BASE, "parts" => parts}})
+  end
+
+  def test_change_in_a_wrapped_component_marks_the_consumer_changed
+    css = @head.join("apps/v4/registry/styles/style-vega.css")
+    css.write(css.read.sub(".cn-button {", ".cn-button {\n    @apply opacity-50;"))
+    gh_commits("[]")
+
+    dialog = run_drift(map: dialog_map)["components"]["dialog"]
+
+    assert_equal "changed", dialog["status"]
+    assert_includes dialog["dependencies"]["button"]["classes"].values.flat_map { |c| c["added"] }, "opacity-50"
+  end
+
+  def test_unchanged_wrapped_component_adds_no_dependency
+    dialog = run_drift(map: dialog_map)["components"]["dialog"]
+
+    assert_equal "unchanged", dialog["status"]
+    assert_equal({}, dialog["dependencies"])
+  end
+
+  def test_source_only_change_relates_every_divergence
+    @snapshot.source_diff = "-  <span\n+  <button\n"
+    gh_commits("[]")
+
+    reasons = run_drift(components: ["badge"])["components"]["badge"]["related_divergences"].map { |d| d["reason"] }
+
+    assert_equal ["why", "prose", "other part"], reasons
+  end
 end

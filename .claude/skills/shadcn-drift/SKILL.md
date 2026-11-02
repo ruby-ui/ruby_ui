@@ -55,7 +55,9 @@ Keep the JSON; `head_sha` is the shadcn commit you're reporting against.
 ### 2. Judge each `changed` component
 
 Read `reference` (class changes per `data-slot` part, parts added/removed,
-variant changes), `source_diff` (the component's own `.tsx`: ARIA, props,
+variant changes), `dependencies` (the same diff for shadcn components a part
+is rendered through, e.g. carousel's buttons through `button`: a change there
+reaches this component at runtime), `source_diff` (the component's own `.tsx`: ARIA, props,
 parts, Base UI usage, which `reference` doesn't capture), `commits`, and
 `related_divergences`. For each change decide one of:
 
@@ -115,10 +117,11 @@ never appear. `missing_upstream` is the biggest event `drift` can report:
 the component's file is gone (often a rename); find where it went in
 `commits` or the shadcn history before writing the line. When every
 component is `unchanged`, `no_counterpart` or `no_baseline`, and the global
-checks are clean (`theme.status == "pass"`, no Base UI bump), the whole
-message is one line:
+checks are clean (`theme.status == "pass"`, no Base UI bump), the message
+is one line:
 `*shadcn drift — semana de <dd/mm>*: nada mudou no shadcn que afete a RubyUI (shadcn <sha7>).`
-plus the "Sem baseline" line if there is one.
+If any component is `no_baseline`, add the "Sem baseline" line and the final
+question for those components: they still need their first audit.
 
 Write it like a teammate, not a report: plain sentences, no filler.
 

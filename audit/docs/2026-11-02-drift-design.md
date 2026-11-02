@@ -50,6 +50,8 @@ subcommand and a skill. The agent itself is out of scope.
    - `related_divergences`: entries from `divergences/<folder>.yml` the
      agent must weigh: those whose `match.part` is a RubyUI part mapped to a
      changed slot, plus every entry without `match` (prose, agent-judged).
+     When the `.tsx` or a wrapped component changed, every entry of the
+     component (the change can't be pinned to a slot).
    Global keys: `head_sha`, `theme` (`Theme.compare` of the neutral theme at
    head against RubyUI's CSS: absolute, needs no baseline), and `base_ui`
    (`@base-ui/react` version in `apps/v4/package.json` at head and at each
@@ -88,8 +90,12 @@ subcommand and a skill. The agent itself is out of scope.
   `.shadcn-audit/snapshots/<sha>/`, cached. Spiked on 2026-11-02: about 2.5s
   per SHA, 75 files.
 - `Reference.new(registry_dir: <snapshot>/apps/v4/registry)` runs unchanged
-  at both SHAs. Parts rendered through other components (e.g. carousel's
-  Button) are covered because `Reference` already resolves them.
+  at both SHAs. `Reference` does not include the classes of a component a
+  part is rendered through (e.g. carousel's `<Button>`); it only warns. So
+  `drift` reads those warnings, diffs each wrapped component too, and
+  reports the changed ones under `dependencies` (a change there marks the
+  consumer `changed`). Classes of extra elements sharing a slot (`also`)
+  are compared with the slot's own.
 - No browser, no LLM, no write to GitHub: runs on lknos with git, Ruby 3.4
   and an authenticated `gh` (read).
 

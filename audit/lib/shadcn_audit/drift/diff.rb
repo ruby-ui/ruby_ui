@@ -20,7 +20,13 @@ module ShadcnAudit
         %w[parts_added parts_removed classes variants warnings_added].all? { |key| diff[key].empty? }
       end
 
-      def self.effective(part) = Array(part && part["effective"])
+      # A slot's own classes plus those of its extra elements ("also": the
+      # same data-slot rendered again elsewhere in the file).
+      def self.effective(part)
+        return [] unless part
+
+        (Array(part["effective"]) + Array(part["also"]).flat_map { |extra| Array(extra["effective"]) }).uniq
+      end
 
       # {key => [old_classes, new_classes]} -> only the keys whose sets differ.
       def self.changes(pairs)

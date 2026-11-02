@@ -51,15 +51,18 @@ module ShadcnAudit
         after = reference(head_root, shadcn)
         return base.merge("status" => "missing_upstream") if after["missing"]
 
-        before = reference(@snapshot.materialize(baseline), shadcn)
+        base_root = @snapshot.materialize(baseline)
+        before = reference(base_root, shadcn)
         diff = Diff.compare(before["missing"] ? {} : before, after)
         source = source_diff(baseline, shadcn)
-        changed = !Diff.empty?(diff) || !source["diff"].empty?
-        result = base.merge("status" => changed ? "changed" : "unchanged", "reference" => diff, "source_diff" => source,
-          "commits" => [], "commits_error" => nil, "related_divergences" => [])
+        deps = dependencies(shadcn, before, after, base_root, head_root)
+        changed = !Diff.empty?(diff) || !source["diff"].empty? || !deps.empty?
+        result = base.merge("status" => changed ? "changed" : "unchanged", "reference" => diff, "dependencies" => deps,
+          "source_diff" => source, "commits" => [], "commits_error" => nil, "related_divergences" => [])
         return result unless changed
 
-        result.merge(commits(baseline, shadcn)).merge("related_divergences" => related(folder, diff))
+        whole = !source["diff"].empty? || !deps.empty?
+        result.merge(commits(baseline, shadcn)).merge("related_divergences" => related(folder, diff, whole: whole))
       # Unattended weekly runs degrade per component: any failure here (git,
       # a Reference parser gap on new TSX, a missing binary) costs one entry,
       # never the whole report.
@@ -88,9 +91,36 @@ module ShadcnAudit
         {"commits" => [], "commits_error" => e.message}
       end
 
+      # Parts rendered through another shadcn component (<Button>) get that
+      # component's classes at runtime, which Reference leaves out and only
+      # warns about. Diff each wrapped component too; keep the changed ones.
+      WRAPPED = /rendered through <([A-Z]\w*)>/
+
+      def dependencies(shadcn, before, after, base_root, head_root)
+        names = (Array(before["warnings"]) + Array(after["warnings"])).filter_map { |w| w[WRAPPED, 1] }.uniq
+        names.filter_map { |name| shadcn_file(name, head_root) }.uniq.reject { |dep| dep == shadcn }.sort
+          .each_with_object({}) do |dep, out|
+            dep_before = reference(base_root, dep)
+            diff = Diff.compare(dep_before["missing"] ? {} : dep_before, reference(head_root, dep))
+            out[dep] = diff unless Diff.empty?(diff)
+          end
+      end
+
+      # <DropdownMenuItem> lives in dropdown-menu.tsx: drop trailing words
+      # until a file exists.
+      def shadcn_file(component, root)
+        words = component.gsub(/([a-z\d])([A-Z])/, '\1-\2').downcase.split("-")
+        words.size.downto(1).map { |n| words.first(n).join("-") }
+          .find { |name| root.join("apps/v4/registry", "bases/base/ui/#{name}.tsx").file? }
+      end
+
       # Entries tied to a changed slot through `match.part`, plus every
-      # prose entry (no `match`), which only the agent can weigh.
-      def related(folder, diff)
+      # prose entry (no `match`), which only the agent can weigh. A change
+      # that can't be pinned to a slot (the .tsx, a wrapped component)
+      # relates every entry of the component.
+      def related(folder, diff, whole: false)
+        return @divergences.for_component(folder) if whole
+
         slots = diff["classes"].keys | diff["parts_added"] | diff["parts_removed"]
         parts = @map.entry(folder)["parts"] || {}
         @divergences.for_component(folder).select do |entry|

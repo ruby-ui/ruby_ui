@@ -46,4 +46,13 @@ class BaselineTest < Minitest::Test
 
     assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Baseline.write(path: @path, sha: NEW) }
   end
+
+  def test_baseline_keeps_a_trailing_comment
+    @path.write("shadcn: badge\nshadcn_sha: #{OLD} # audited in #600\n")
+
+    result = ShadcnAudit::Baseline.write(path: @path, sha: NEW)
+
+    assert_equal "shadcn: badge\nshadcn_sha: #{NEW} # audited in #600\n", @path.read
+    assert_equal OLD, result["previous"]
+  end
 end
