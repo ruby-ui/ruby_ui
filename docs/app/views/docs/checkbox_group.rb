@@ -5,68 +5,93 @@ class Views::Docs::CheckboxGroup < Views::Base
     component = "Checkbox"
 
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Checkbox Group", description: "A control that allows the user to toggle between checked and not checked.")
+      render Docs::Header.new(title: "Checkbox Group", description: "A set of checkboxes that can require at least one to be checked.")
 
       Heading(level: 2) { "Usage" }
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          CheckboxGroup(data_required: true) do
-            div(class: "flex flex-col gap-2") do
-              div(class: "flex flex-row items-center gap-2") do
-                Checkbox(value: "FOO", id: "EXAMPLE_FOO")
-                FormFieldLabel(for: "EXAMPLE_FOO") { "FOO" }
+          FormFieldSet do
+            FormFieldLegend(variant: :label) { "Show these items on the desktop:" }
+
+            CheckboxGroup do
+              FormField(orientation: :horizontal) do
+                Checkbox(id: "hard_disks", checked: true)
+                FormFieldLabel(for: "hard_disks", class: "font-normal") { "Hard disks" }
               end
 
-              div(class: "flex flex-row items-center gap-2") do
-                Checkbox(value: "BAR", id: "EXAMPLE_BAR")
-                FormFieldLabel(for: "EXAMPLE_BAR") { "BAR" }
+              FormField(orientation: :horizontal) do
+                Checkbox(id: "external_disks")
+                FormFieldLabel(for: "external_disks", class: "font-normal") { "External disks" }
+              end
+
+              FormField(orientation: :horizontal) do
+                Checkbox(id: "connected_servers")
+                FormFieldLabel(for: "connected_servers", class: "font-normal") { "Connected servers" }
               end
             end
           end
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "With Form", context: self) do
+      render Docs::VisualCodeExample.new(title: "Required", context: self) do
         <<~RUBY
-          form(class: "flex flex-col gap-2") do
+          form(class: "flex flex-col gap-6") do
+            FormFieldSet do
+              FormFieldLegend(variant: :label) { "Notifications" }
+              FormFieldHint { "Pick at least one channel." }
+
+              CheckboxGroup(required: true) do
+                FormField(orientation: :horizontal) do
+                  Checkbox(id: "notify_email", name: "notify[]", value: "email")
+                  FormFieldLabel(for: "notify_email", class: "font-normal") { "Email" }
+                end
+
+                FormField(orientation: :horizontal) do
+                  Checkbox(id: "notify_sms", name: "notify[]", value: "sms")
+                  FormFieldLabel(for: "notify_sms", class: "font-normal") { "SMS" }
+                end
+              end
+            end
+
+            Button(type: "submit", class: "w-fit") { "Save" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "With error message", context: self) do
+        <<~RUBY
+          form(class: "flex flex-col gap-6") do
             FormField do
-              FormFieldLabel { "CHECKBOX_GROUP" }
+              FormFieldLabel { "Topics" }
+              FormFieldHint { "Pick at least one topic." }
 
-              FormFieldHint { "HINT_FOR_CHECKBOX_GROUP" }
+              CheckboxGroup(required: true) do
+                div(class: "flex items-center gap-3") do
+                  Checkbox(
+                    id: "topic_rails",
+                    name: "topics[]",
+                    value: "rails",
+                    data: {value_missing: "Pick at least one topic."}
+                  )
+                  FormFieldLabel(for: "topic_rails", class: "font-normal") { "Rails" }
+                end
 
-              CheckboxGroup(data_required: true) do
-                div(class: "flex flex-col gap-2") do
-                  div(class: "flex flex-row items-center gap-2") do
-                    Checkbox(
-                      id: "FORM_FOO",
-                      value: "FOO",
-                      checked: false,
-                      name: "CHECKBOX_GROUP[]",
-                      data: {value_missing: "CUSTOM_MESSAGE"}
-                    )
-
-                    FormFieldLabel(for: "FORM_FOO") { "FOO" }
-                  end
-
-                  div(class: "flex flex-row items-center gap-2") do
-                    Checkbox(
-                      id: "FORM_BAR",
-                      value: "BAR",
-                      checked: true,
-                      name: "CHECKBOX_GROUP[]",
-                      data: {value_missing: "CUSTOM_MESSAGE"}
-                    )
-
-                    FormFieldLabel(for: "FORM_BAR") { "BAR" }
-                  end
+                div(class: "flex items-center gap-3") do
+                  Checkbox(
+                    id: "topic_hotwire",
+                    name: "topics[]",
+                    value: "hotwire",
+                    data: {value_missing: "Pick at least one topic."}
+                  )
+                  FormFieldLabel(for: "topic_hotwire", class: "font-normal") { "Hotwire" }
                 end
               end
 
               FormFieldError()
             end
 
-            Button(type: "submit") { "SUBMIT_BUTTON" }
+            Button(type: "submit", class: "w-fit") { "Save" }
           end
         RUBY
       end

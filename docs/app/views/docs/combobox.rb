@@ -138,7 +138,7 @@ class Views::Docs::Combobox < Views::Base
                   ComboboxList do
                     ComboboxEmptyState { "No result" }
 
-                    CheckboxGroup(data_required: true) do
+                    CheckboxGroup(required: true, class: "gap-1") do
                       ComboboxItem do
                         ComboboxCheckbox(name: "food[]", value: "apple", data: {value_missing: "Pick at least one option"})
                         span { "Apple" }
