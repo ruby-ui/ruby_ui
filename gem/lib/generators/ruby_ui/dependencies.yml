@@ -26,6 +26,10 @@ codeblock:
   gems:
     - "rouge"
 
+collapsible:
+  components:
+    - "Button"
+
 combobox:
   js_packages:
     - "@floating-ui/dom"
