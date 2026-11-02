@@ -4,6 +4,10 @@ class Views::Docs::Button
 
     Heading(level: 2) { "Usage" }
 
+    Text { "Use it for actions." }
+
+    Text { "Pass variant: \"primary\" for the main one." }
+
     render Docs::VisualCodeExample.new(title: "Example", context: self) do
       <<~RUBY
         Button { "Button" }

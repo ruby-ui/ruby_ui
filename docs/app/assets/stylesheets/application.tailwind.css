@@ -164,3 +164,10 @@
     @apply tracking-tight;
   }
 }
+
+/* The docs cap code blocks at 350px (they scroll inside); pass max-h-none to lift it. */
+@layer components {
+  [data-slot="code-block"] {
+    max-height: 350px;
+  }
+}

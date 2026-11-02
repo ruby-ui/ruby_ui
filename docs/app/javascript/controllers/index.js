@@ -41,6 +41,9 @@ application.register("ruby-ui--checkbox-group", RubyUi__CheckboxGroupController)
 import RubyUi__ClipboardController from "./ruby_ui/clipboard_controller"
 application.register("ruby-ui--clipboard", RubyUi__ClipboardController)
 
+import RubyUi__CodeblockController from "./ruby_ui/codeblock_controller"
+application.register("ruby-ui--codeblock", RubyUi__CodeblockController)
+
 import RubyUi__CollapsibleController from "./ruby_ui/collapsible_controller"
 application.register("ruby-ui--collapsible", RubyUi__CollapsibleController)
 
