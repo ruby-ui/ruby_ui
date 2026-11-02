@@ -102,4 +102,31 @@ class RubyUI::CollapsibleTest < ComponentTest
     assert_match(/<button[^<]* disabled[ >]/, styled)
     refute_match(/data-slot="collapsible"[^>]*data-disabled/, plain)
   end
+
+  def test_nil_open_and_disabled_render_false
+    output = render_collapsible(open: nil, disabled: nil)
+
+    assert_match(/data-ruby-ui--collapsible-open-value="false"/, output)
+    assert_match(/data-ruby-ui--collapsible-disabled-value="false"/, output)
+  end
+
+  def test_trigger_disabled_false_does_not_override_the_collapsible
+    output = render_collapsible(disabled: true, trigger: {variant: :outline, disabled: false})
+
+    assert_match(/<button[^<]* disabled[ >]/, output)
+    refute_match(/own-disabled/, output)
+  end
+
+  def test_trigger_own_disabled_is_marked
+    output = render_collapsible(trigger: {disabled: true})
+
+    assert_match(/data-ruby-ui--collapsible-own-disabled/, output)
+  end
+
+  def test_trigger_never_renders_a_link
+    output = render_collapsible(trigger: {variant: :link, href: "/somewhere"})
+
+    assert_match(/<button[^<]*data-slot="collapsible-trigger"/, output)
+    refute_match(/href=/, output)
+  end
 end

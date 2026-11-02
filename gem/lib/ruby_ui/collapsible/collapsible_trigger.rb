@@ -18,9 +18,16 @@ module RubyUI
     def view_template(&)
       state = context[:ruby_ui_collapsible] || {}
       trigger_attrs = mix(attrs, state_attrs(state))
-      disabled = state[:disabled] || trigger_attrs.delete(:disabled) || false
+      # Always take disabled out of the attrs, so it can't override the
+      # collapsible's own disabled state. The marker tells the controller this
+      # trigger is disabled on its own, not because of the collapsible.
+      own_disabled = trigger_attrs.delete(:disabled) ? true : false
+      disabled = state[:disabled] || own_disabled
+      trigger_attrs[:data][:ruby_ui__collapsible_own_disabled] = true if own_disabled
 
       if @variant || @size || @icon
+        # The trigger is always a <button>: no Button links.
+        trigger_attrs.delete(:href)
         button = RubyUI::Button.new(variant: @variant || :ghost, size: @size || :md, icon: @icon,
           disabled: disabled, **trigger_attrs)
         # Button sets its own data-slot; mix would join the two.

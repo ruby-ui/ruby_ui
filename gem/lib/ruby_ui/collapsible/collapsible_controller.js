@@ -15,6 +15,7 @@ export default class extends Controller {
 
   initialize() {
     this.ownDisabled = new WeakMap()
+    this.focusableWhenDisabled = new WeakMap()
   }
 
   connect() {
@@ -30,8 +31,12 @@ export default class extends Controller {
   // Target callbacks run before connect() and again whenever Turbo or other
   // code swaps a trigger or the content inside a connected collapsible.
   triggerTargetConnected(trigger) {
-    // A trigger rendered with its own disabled: keeps it.
-    this.ownDisabled.set(trigger, trigger.disabled && !this.disabledValue)
+    // A trigger rendered with its own disabled: keeps it. The server marks it,
+    // since a disabled collapsible disables every trigger too.
+    const own = trigger.hasAttribute("data-ruby-ui--collapsible-own-disabled") || (trigger.disabled && !this.disabledValue)
+    this.ownDisabled.set(trigger, own)
+    // Button's focusable_when_disabled: disabled through aria-disabled.
+    this.focusableWhenDisabled.set(trigger, trigger.hasAttribute("aria-disabled"))
     if (this.ready) this.syncAttributes()
   }
 
@@ -42,6 +47,7 @@ export default class extends Controller {
 
   contentTargetDisconnected(content) {
     content.removeEventListener("beforematch", this.handleBeforeMatch)
+    if (this.ready) this.syncAttributes()
   }
 
   toggle() {
@@ -105,9 +111,13 @@ export default class extends Controller {
     this.triggerTargets.forEach((trigger) => {
       trigger.setAttribute("aria-expanded", String(open))
       if (controls) trigger.setAttribute("aria-controls", controls)
+      else trigger.removeAttribute("aria-controls")
       this.toggleAttribute(trigger, "data-panel-open", open)
       this.toggleAttribute(trigger, "data-disabled", this.disabledValue)
-      if (trigger.tagName === "BUTTON") trigger.disabled = this.disabledValue || this.ownDisabled.get(trigger) === true
+
+      const disabled = this.disabledValue || this.ownDisabled.get(trigger) === true
+      if (this.focusableWhenDisabled.get(trigger)) trigger.setAttribute("aria-disabled", String(disabled))
+      else if (trigger.tagName === "BUTTON") trigger.disabled = disabled
     })
 
     this.contentTargets.forEach((content) => {

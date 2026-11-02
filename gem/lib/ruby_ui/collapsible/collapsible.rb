@@ -37,8 +37,8 @@ module RubyUI
         data: {
           slot: "collapsible",
           controller: "ruby-ui--collapsible",
-          ruby_ui__collapsible_open_value: @open.to_s,
-          ruby_ui__collapsible_disabled_value: @disabled.to_s,
+          ruby_ui__collapsible_open_value: @open ? "true" : "false",
+          ruby_ui__collapsible_disabled_value: @disabled ? "true" : "false",
           open: @open || nil,
           closed: !@open || nil,
           disabled: @disabled || nil
