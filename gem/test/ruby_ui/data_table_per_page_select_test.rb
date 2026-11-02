@@ -41,4 +41,12 @@ class RubyUI::DataTablePerPageSelectTest < ComponentTest
     assert_match(/<label for="pp"[^>]*>Por página<\/label>/, output)
     assert_match(/<select [^<]*id="pp"/, output)
   end
+
+  def test_preserved_params_emit_hidden_inputs_skipping_blank_and_own_name
+    output = phlex { RubyUI.DataTablePerPageSelect(path: "/x", preserved_params: {search: "ali", sort: "name", direction: "", per_page: "25"}) }
+    assert_match(/<input type="hidden" name="search" value="ali"/, output)
+    assert_match(/<input type="hidden" name="sort" value="name"/, output)
+    refute_match(/name="direction"/, output)
+    refute_match(/<input type="hidden" name="per_page"/, output)
+  end
 end

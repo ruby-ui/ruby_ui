@@ -42,8 +42,15 @@ class RubyUI::DataTablePaginationTest < ComponentTest
 
   def test_disables_first_and_previous_on_the_first_page
     output = phlex { RubyUI.DataTablePagination(page: 1, per_page: 10, total_count: 30, path: "/x", query: {}) }
-    assert_equal 2, output.scan('aria-disabled="true"').length
-    refute_match(/href="\/x\?page=0"/, output)
+    links = output.scan(/<a\b[^>]*>.*?<\/a>/m).to_h { |a| [a[/sr-only">([^<]+)</, 1], a] }
+    ["Go to first page", "Go to previous page"].each do |name|
+      assert_match(/aria-disabled="true"/, links.fetch(name), name)
+      refute_match(/href=/, links.fetch(name), name)
+    end
+    {"Go to next page" => "page=2", "Go to last page" => "page=3"}.each do |name, page|
+      refute_match(/aria-disabled="true"/, links.fetch(name), name)
+      assert_match(/href="\/x\?#{page}"/, links.fetch(name), name)
+    end
   end
 
   def test_custom_labels

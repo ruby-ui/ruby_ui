@@ -51,4 +51,9 @@ class RubyUI::DataTableSortHeadTest < ComponentTest
     assert_match(/aria-sort="ascending"/, output)
     assert_match(/aria-label="Nome"/, output)
   end
+
+  def test_aria_nil_keeps_aria_sort
+    output = phlex { RubyUI.DataTableSortHead(column_key: :name, label: "Name", sort: "name", direction: "desc", path: "/x", aria: nil) }
+    assert_match(/aria-sort="descending"/, output)
+  end
 end

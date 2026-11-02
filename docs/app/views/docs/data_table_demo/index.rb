@@ -99,6 +99,7 @@ class Views::Docs::DataTableDemo::Index < Views::Base
             path: docs_data_table_demo_path,
             frame_id: FRAME_ID,
             value: @per_page,
+            preserved_params: preserved_query,
             class: "hidden lg:flex"
           )
           DataTablePagination(

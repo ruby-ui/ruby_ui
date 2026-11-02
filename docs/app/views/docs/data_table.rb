@@ -19,7 +19,7 @@ class Views::Docs::DataTable < Views::Base
       )
 
       Heading(level: 2) { "Complete demo" }
-      p(class: "-mt-6") { "Full feature set — search, sort, numbered pagination, per-page, select-all, row checkboxes, bulk actions, row actions dropdown, column visibility, badge cells." }
+      p(class: "-mt-6") { "Full feature set — search, sort, first/previous/next/last pagination, per-page, select-all, row checkboxes, bulk actions, row actions dropdown, column visibility, badge cells." }
 
       render Docs::VisualCodeExample.new(title: "Complete demo", src: "/docs/data_table_demo", context: self) do
         <<~RUBY
@@ -66,7 +66,7 @@ class Views::Docs::DataTable < Views::Base
             DataTablePaginationBar do
               DataTableSelectionSummary(total_on_page: @employees.size)
               div(class: "flex w-full items-center gap-8 lg:w-fit") do
-                DataTablePerPageSelect(path: docs_data_table_demo_path, value: @per_page)
+                DataTablePerPageSelect(path: docs_data_table_demo_path, value: @per_page, preserved_params: {search: @search, sort: @sort, direction: @direction})
                 DataTablePagination(page: @page, per_page: @per_page, total_count: @total_count, path: docs_data_table_demo_path)
               end
             end
