@@ -49,7 +49,7 @@ module ShadcnAudit
 
     def self.divergences(args, out:)
       folder = args.first or raise ArgumentError, "usage: divergences <folder>"
-      registry = Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
+      registry = Divergences.for_audit(ShadcnAudit.root.join("audit"))
       {"divergences" => registry.for_component(folder)}
     end
 

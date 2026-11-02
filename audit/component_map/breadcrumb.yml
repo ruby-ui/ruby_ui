@@ -18,5 +18,5 @@ selectors:
   BreadcrumbSeparator: '[data-slot="breadcrumb-separator"]'
   BreadcrumbEllipsis: '[data-slot="breadcrumb-ellipsis"]'
 props:
-  # render: RubyUI covers the link case with href: (see divergences.yml).
+  # render: RubyUI covers the link case with href: (see divergences/breadcrumb.yml).
   BreadcrumbLink: {render: href}

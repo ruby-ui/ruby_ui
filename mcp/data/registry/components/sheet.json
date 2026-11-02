@@ -1,0 +1,65 @@
+{
+  "name": "Sheet",
+  "description": "Extends the Sheet component to display content that complements the main content of the screen.",
+  "files": [
+    {
+      "path": "sheet.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Sheet < Base\n    def initialize(open: false, **attrs)\n      @open = open\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          controller: \"ruby-ui--sheet\",\n          ruby_ui__sheet_open_value: @open.to_s\n        }\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "sheet_content.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class SheetContent < Base\n    SIDE_CLASS = {\n      top: \"inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top\",\n      right: \"inset-y-0 right-0 h-full border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right\",\n      bottom: \"inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom\",\n      left: \"inset-y-0 left-0 h-full border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left\"\n    }\n\n    def initialize(side: :right, **attrs)\n      @side = side\n      @side_classes = SIDE_CLASS[side]\n      super(**attrs)\n    end\n\n    def view_template(&block)\n      template(data: {ruby_ui__sheet_target: \"content\"}) do\n        div(data: {controller: \"ruby-ui--sheet-content\"}) do\n          backdrop\n          div(**attrs) do\n            block&.call\n            close_button\n          end\n        end\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        data_state: \"open\", # For animate in\n        data_ruby_ui__sheet_content_target: \"panel\",\n        class: [\n          \"fixed pointer-events-auto z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards data-[state=closed]:duration-300 data-[state=open]:duration-500 overflow-scroll\",\n          @side_classes\n        ]\n      }\n    end\n\n    def close_button\n      button(\n        type: \"button\",\n        class: \"absolute end-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground\",\n        data_action: \"click->ruby-ui--sheet-content#close\"\n      ) do\n        svg(\n          width: \"15\",\n          height: \"15\",\n          viewbox: \"0 0 15 15\",\n          fill: \"none\",\n          xmlns: \"http://www.w3.org/2000/svg\",\n          class: \"h-4 w-4\"\n        ) do |s|\n          s.path(\n            d:\n                  \"M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z\",\n            fill: \"currentColor\",\n            fill_rule: \"evenodd\",\n            clip_rule: \"evenodd\"\n          )\n        end\n        span(class: \"sr-only\") { \"Close\" }\n      end\n    end\n\n    def backdrop\n      div(\n        data_state: \"open\",\n        data_action: \"click->ruby-ui--sheet-content#close\",\n        data_ruby_ui__sheet_content_target: \"backdrop\",\n        class:\n              \"fixed pointer-events-auto inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:fill-mode-forwards\"\n      )\n    end\n  end\nend\n"
+    },
+    {
+      "path": "sheet_content_controller.js",
+      "content": "import { Controller } from \"@hotwired/stimulus\";\n\nexport default class extends Controller {\n  static targets = [\"backdrop\", \"panel\"];\n\n  disconnect() {\n    // Nothing is left to wait for the exit animation, so apply the pending removal now.\n    if (this.hasPanelTarget) this.settleExit(this.panelTarget);\n  }\n\n  close() {\n    this.backdropTarget.dataset.state = \"closed\";\n    this.panelTarget.dataset.state = \"closed\";\n    // The panel carries the longer exit, so the backdrop has finished by the time it settles.\n    this.hideAfterExitAnimation(this.panelTarget);\n  }\n\n  afterExit() {\n    this.element.remove();\n  }\n\n  // Overlay exit — the same block in every overlay controller, so keep them in sync.\n  exitAnimationNames = new WeakMap();\n\n  hideAfterExitAnimation(animated) {\n    const exitAnimations = animated\n      .getAnimations()\n      .filter((animation) => animation instanceof CSSAnimation);\n\n    // No exit animation, or no box to run it in: animationend would never fire.\n    if (exitAnimations.length === 0) {\n      this.settleExit(animated);\n      return;\n    }\n\n    this.exitAnimationNames.set(animated, exitAnimations.map((animation) => animation.animationName));\n    animated.addEventListener(\"animationend\", this.handleExitAnimationEnd);\n    animated.addEventListener(\"animationcancel\", this.handleExitAnimationEnd);\n  }\n\n  handleExitAnimationEnd = (event) => {\n    // animationend bubbles — an animated child must not hide its container.\n    if (event.target !== event.currentTarget) return;\n    // Closing mid-open cancels the enter animation; only the exit run settles this.\n    if (!this.exitAnimationNames.get(event.currentTarget)?.includes(event.animationName)) return;\n\n    this.settleExit(event.currentTarget);\n  };\n\n  settleExit(animated) {\n    animated.removeEventListener(\"animationend\", this.handleExitAnimationEnd);\n    animated.removeEventListener(\"animationcancel\", this.handleExitAnimationEnd);\n    // Reopened mid-exit: it is on its way back in, leave it visible.\n    if (animated.dataset.state !== \"closed\") return;\n\n    this.afterExit(animated);\n  }\n}\n"
+    },
+    {
+      "path": "sheet_controller.js",
+      "content": "import { Controller } from \"@hotwired/stimulus\"\n\nexport default class extends Controller {\n  static targets = [\"content\"]\n\n  static values = { open: false }\n\n  connect() {\n    if (this.openValue) this.open()\n  }\n\n  open() {\n    document.body.insertAdjacentHTML(\"beforeend\", this.contentTarget.innerHTML)\n  }\n}\n"
+    },
+    {
+      "path": "sheet_description.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class SheetDescription < Base\n    def view_template(&)\n      p(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"text-sm text-muted-foreground\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "sheet_footer.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class SheetFooter < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 gap-y-2 sm:gap-y-0\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "sheet_header.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class SheetHeader < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"flex flex-col space-y-1.5 text-center sm:text-left\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "sheet_middle.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class SheetMiddle < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"py-4\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "sheet_title.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class SheetTitle < Base\n    def view_template(&)\n      h3(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"text-lg font-semibold leading-none tracking-tight\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "sheet_trigger.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class SheetTrigger < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {action: \"click->ruby-ui--sheet#open\"}\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Sheet",
+  "docs_markdown": "# Sheet\n\nExtends the Sheet component to display content that complements the main content of the screen.\n\n## Usage\n\n### Example\n\n```ruby\nSheet do\n  SheetTrigger do\n    Button(variant: :outline) { \"Open Sheet\" }\n  end\n  SheetContent(class: 'sm:max-w-sm') do\n    SheetHeader do\n      SheetTitle { \"Edit profile\" }\n      SheetDescription { \"Make changes to your profile here. Click save when you're done.\" }\n    end\n\n    SheetMiddle do\n      label { \"Name\" }\n      Input(placeholder: \"Joel Drapper\") { \"Joel Drapper\" }\n      label { \"Email\" }\n      Input(placeholder: \"joel@drapper.me\")\n    end\n    SheetFooter do\n      Button(variant: :outline, data: { action: 'click->ruby-ui--sheet-content#close' }) { \"Cancel\" }\n      Button(type: \"submit\") { \"Save\" }\n    end\n  end\nend\n```\n\n### Side\n\n```ruby\ndiv(class: 'grid grid-cols-2 gap-4') do\n  # -- TOP --\n  Sheet do\n    SheetTrigger do\n      Button(variant: :outline, class: 'w-full justify-center') { :top }\n    end\n    SheetContent(side: :top, class: (\"sm:max-w-sm\" if [:left, :right].include?(:top))) do\n      SheetHeader do\n        SheetTitle { \"Edit profile\" }\n        SheetDescription { \"Make changes to your profile here. Click save when you're done.\" }\n      end\n      Form do\n        SheetMiddle do\n          label { \"Name\" }\n          Input(placeholder: \"Joel Drapper\") { \"Joel Drapper\" }\n\n          label { \"Email\" }\n          Input(placeholder: \"joel@drapper.me\")\n        end\n        SheetFooter do\n          Button(variant: :outline, data: { action: 'click->ruby-ui--sheet-content#close' }) { \"Cancel\" }\n          Button(type: \"submit\") { \"Save\" }\n        end\n      end\n    end\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Sheet do\n  SheetTrigger do\n    Button(variant: :outline) { \"Open Sheet\" }\n  end\n  SheetContent(class: 'sm:max-w-sm') do\n    SheetHeader do\n      SheetTitle { \"Edit profile\" }\n      SheetDescription { \"Make changes to your profile here. Click save when you're done.\" }\n    end\n\n    SheetMiddle do\n      label { \"Name\" }\n      Input(placeholder: \"Joel Drapper\") { \"Joel Drapper\" }\n      label { \"Email\" }\n      Input(placeholder: \"joel@drapper.me\")\n    end\n    SheetFooter do\n      Button(variant: :outline, data: { action: 'click->ruby-ui--sheet-content#close' }) { \"Cancel\" }\n      Button(type: \"submit\") { \"Save\" }\n    end\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Side",
+      "code": "div(class: 'grid grid-cols-2 gap-4') do\n  # -- TOP --\n  Sheet do\n    SheetTrigger do\n      Button(variant: :outline, class: 'w-full justify-center') { :top }\n    end\n    SheetContent(side: :top, class: (\"sm:max-w-sm\" if [:left, :right].include?(:top))) do\n      SheetHeader do\n        SheetTitle { \"Edit profile\" }\n        SheetDescription { \"Make changes to your profile here. Click save when you're done.\" }\n      end\n      Form do\n        SheetMiddle do\n          label { \"Name\" }\n          Input(placeholder: \"Joel Drapper\") { \"Joel Drapper\" }\n\n          label { \"Email\" }\n          Input(placeholder: \"joel@drapper.me\")\n        end\n        SheetFooter do\n          Button(variant: :outline, data: { action: 'click->ruby-ui--sheet-content#close' }) { \"Cancel\" }\n          Button(type: \"submit\") { \"Save\" }\n        end\n      end\n    end\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

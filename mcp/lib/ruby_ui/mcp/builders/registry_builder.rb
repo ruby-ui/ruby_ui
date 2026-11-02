@@ -23,9 +23,21 @@ module RubyUI
           }
         end
 
-        def write(path)
-          FileUtils.mkdir_p(File.dirname(path))
-          File.write(path, JSON.pretty_generate(build) + "\n")
+        # Writes one JSON per component under <dir>/components/ plus
+        # <dir>/index.json with the version, so PRs that touch different
+        # components never edit the same file. Removes components the gem
+        # no longer has.
+        def write(dir)
+          registry = build
+          components_dir = File.join(dir, "components")
+          FileUtils.mkdir_p(components_dir)
+          File.write(File.join(dir, "index.json"), JSON.pretty_generate(version: registry[:version]) + "\n")
+          registry[:components].each do |slug, component|
+            File.write(File.join(components_dir, "#{slug}.json"), JSON.pretty_generate(component) + "\n")
+          end
+          current = registry[:components].keys.map { |slug| "#{slug}.json" }
+          stale = Dir.children(components_dir).grep(/\.json\z/) - current
+          FileUtils.rm_f(stale.map { |file| File.join(components_dir, file) })
         end
 
         private

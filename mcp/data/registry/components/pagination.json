@@ -1,0 +1,38 @@
+{
+  "name": "Pagination",
+  "description": "Pagination with page navigation, next and previous links.",
+  "files": [
+    {
+      "path": "pagination.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Pagination < Base\n    def view_template(&)\n      nav(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        aria: {label: \"pagination\"},\n        class: \"mx-auto flex w-full justify-center\",\n        role: \"navigation\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "pagination_content.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class PaginationContent < Base\n    def view_template(&)\n      ul(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"flex flex-row items-center gap-1\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "pagination_ellipsis.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class PaginationEllipsis < Base\n    def view_template(&block)\n      li do\n        span(**attrs) do\n          icon\n          span(class: \"sr-only\") { \"More pages\" }\n        end\n      end\n    end\n\n    private\n\n    def icon\n      svg(\n        xmlns: \"http://www.w3.org/2000/svg\",\n        width: \"24\",\n        height: \"24\",\n        viewbox: \"0 0 24 24\",\n        fill: \"none\",\n        stroke: \"currentColor\",\n        stroke_width: \"2\",\n        stroke_linecap: \"round\",\n        stroke_linejoin: \"round\",\n        class: \"h-4 w-4\"\n      ) do |s|\n        s.circle(cx: \"12\", cy: \"12\", r: \"1\")\n        s.circle(cx: \"19\", cy: \"12\", r: \"1\")\n        s.circle(cx: \"5\", cy: \"12\", r: \"1\")\n      end\n    end\n\n    def default_attrs\n      {\n        aria: {hidden: true},\n        class: \"flex h-9 w-9 items-center justify-center\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "pagination_item.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class PaginationItem < Base\n    def initialize(href: \"#\", active: false, **attrs)\n      @href = href\n      @active = active\n      super(**attrs)\n    end\n\n    def view_template(&block)\n      li do\n        a(href: @href, **attrs, &block)\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        aria: {current: @active ? \"page\" : nil},\n        class: [\n          RubyUI::Button.new(variant: @active ? :outline : :ghost).attrs[:class]\n        ]\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [
+      "Button"
+    ],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Pagination",
+  "docs_markdown": "# Pagination\n\nPagination with page navigation, next and previous links.\n\n## Usage\n\n### Example\n\n```ruby\nPagination do\n  PaginationContent do\n    PaginationItem(href: \"#\") do\n      chevrons_left_icon\n      plain \"First\"\n    end\n    PaginationItem(href: \"#\") do\n      chevron_left_icon\n      plain \"Prev\"\n    end\n\n    PaginationEllipsis\n\n    PaginationItem(href: \"#\") { \"4\" }\n    PaginationItem(href: \"#\", active: true) { \"5\" }\n    PaginationItem(href: \"#\") { \"6\" }\n\n    PaginationEllipsis\n\n    PaginationItem(href: \"#\") do\n      plain \"Next\"\n      chevron_right_icon\n    end\n    PaginationItem(href: \"#\") do\n      plain \"Last\"\n      chevrons_right_icon\n    end\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Pagination do\n  PaginationContent do\n    PaginationItem(href: \"#\") do\n      chevrons_left_icon\n      plain \"First\"\n    end\n    PaginationItem(href: \"#\") do\n      chevron_left_icon\n      plain \"Prev\"\n    end\n\n    PaginationEllipsis\n\n    PaginationItem(href: \"#\") { \"4\" }\n    PaginationItem(href: \"#\", active: true) { \"5\" }\n    PaginationItem(href: \"#\") { \"6\" }\n\n    PaginationEllipsis\n\n    PaginationItem(href: \"#\") do\n      plain \"Next\"\n      chevron_right_icon\n    end\n    PaginationItem(href: \"#\") do\n      plain \"Last\"\n      chevrons_right_icon\n    end\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

@@ -60,10 +60,10 @@ module ShadcnAudit
         if @preview
           preview_map = ComponentMap.for_audit(@preview.join("audit"))
           unless preview_map.selectors(@folder).empty?
-            return ["preview", preview_map, Divergences.load(@preview.join("audit/divergences.yml"))]
+            return ["preview", preview_map, Divergences.for_audit(@preview.join("audit"))]
           end
         end
-        ["working tree", ComponentMap.for_audit(@root.join("audit")), Divergences.load(@root.join("audit/divergences.yml"))]
+        ["working tree", ComponentMap.for_audit(@root.join("audit")), Divergences.for_audit(@root.join("audit"))]
       end
 
       def theme

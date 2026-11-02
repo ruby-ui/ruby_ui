@@ -6,15 +6,67 @@ module ShadcnAudit
     DIMENSIONS = %w[Look HTML Props ARIA Behavior Animation Native].freeze
     REQUIRED = %w[component rubyui shadcn reason].freeze
 
-    def self.load(path)
-      entries = File.exist?(path.to_s) ? YAML.safe_load_file(path.to_s) : nil
-      new(entries || [])
+    DIR = "divergences"
+    LEGACY_FILE = "divergences.yml"
+
+    # The registry of an audit/ folder: one file per component in
+    # audit/divergences/<folder>.yml. Checkouts from before the split still
+    # have the single audit/divergences.yml, so that is the fallback. Both at
+    # once means a rebase left the old file behind: its entries would be lost.
+    def self.for_audit(audit_dir)
+      audit_dir = Pathname.new(audit_dir)
+      dir = audit_dir.join(DIR)
+      legacy = audit_dir.join(LEGACY_FILE)
+      raise ConfigError, "#{LEGACY_FILE} must move into #{DIR}/<folder>.yml (both exist)" if dir.directory? && legacy.exist?
+
+      dir.directory? ? load(dir) : load(legacy)
     end
 
-    def initialize(entries)
-      raise ConfigError, "divergences.yml must be a list of entries" unless entries.is_a?(Array)
+    # Where a component's entries live, relative to the repo root.
+    def self.path_for(folder) = "audit/#{DIR}/#{folder}.yml"
+
+    # A directory of <folder>.yml files, or a single YAML list.
+    def self.load(path)
+      path = Pathname.new(path)
+      unless path.directory?
+        entries = path.exist? ? YAML.safe_load_file(path.to_s) || [] : []
+        return new(entries, origin: "audit/#{LEGACY_FILE}")
+      end
+
+      entries = []
+      origins = []
+      stray = path.children.reject { |file| file.extname == ".yml" || file.basename.to_s == "README.md" }
+      raise ConfigError, "#{DIR}/: only <folder>.yml files belong here (found #{stray.map { |f| f.basename.to_s }.sort.join(", ")})" unless stray.empty?
+
+      path.children.select { |file| file.extname == ".yml" }.sort.each do |file|
+        list = YAML.safe_load_file(file.to_s) || []
+        raise ConfigError, "#{DIR}/#{file.basename}: must be a list of entries" unless list.is_a?(Array)
+
+        folder = file.basename(".yml").to_s
+        list.each do |entry|
+          next unless entry.is_a?(Hash) && entry["component"] && entry["component"] != folder
+
+          raise ConfigError, "#{DIR}/#{file.basename}: entry for #{entry["component"].inspect} belongs in #{DIR}/#{entry["component"]}.yml"
+        end
+        entries.concat(list)
+        origins.concat([path_for(folder)] * list.size)
+      end
+      new(entries, origins: origins)
+    end
+
+    # `origin` names the single file every entry came from; `origins` gives
+    # one file per entry. Without either, entries cite path_for(component).
+    def initialize(entries, origin: nil, origins: nil)
+      raise ConfigError, "#{origin || "divergences"} must be a list of entries" unless entries.is_a?(Array)
       @entries = entries
+      @origins = origins || ([origin] * entries.size if origin)
       validate!
+    end
+
+    # The file that holds a component's entries (what a report cites).
+    def source(component)
+      index = @entries.index { |e| e.is_a?(Hash) && e["component"] == component.to_s }
+      (index && @origins && @origins[index]) || self.class.path_for(component)
     end
 
     def find(component:, dimension:)
@@ -74,9 +126,10 @@ module ShadcnAudit
 
     def validate!
       @entries.each_with_index do |entry, i|
-        raise ConfigError, "divergences.yml: entry ##{i + 1} must be a mapping" unless entry.is_a?(Hash)
+        file = (@origins && @origins[i]) || "divergences"
+        raise ConfigError, "#{file}: entry ##{i + 1} must be a mapping" unless entry.is_a?(Hash)
 
-        label = "divergences.yml: #{entry["component"] || "entry ##{i + 1}"} / #{entry["dimension"].inspect}"
+        label = "#{file}: #{entry["component"] || "entry ##{i + 1}"} / #{entry["dimension"].inspect}"
         REQUIRED.each do |key|
           raise ConfigError, "#{label}: missing #{key}" if entry[key].to_s.strip.empty?
         end

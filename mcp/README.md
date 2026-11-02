@@ -19,7 +19,7 @@ Hosted endpoint: **https://www.rubyui.com/mcp**
 ## Architecture
 
 - Rails engine gem, sibling of `gem/` and `docs/` in the monorepo.
-- Static `data/registry.json` built from `../gem/` by `exe/ruby-ui-mcp-build`, committed to the repo.
+- Static `data/registry/` (`index.json` with the version, `components/<slug>.json` per component) built from `../gem/` by `exe/ruby-ui-mcp-build`, committed to the repo.
 - Mounted inside the `docs/` Rails app at `/mcp` via `RubyUI::MCP::Engine`.
 - HTTP transport via `mcp` ruby-sdk (`StreamableHTTPTransport`).
 - Read-only; component installs happen client-side via the Ruby UI generator.
@@ -38,7 +38,7 @@ Rebuild the registry from the sibling gem:
 bundle exec exe/ruby-ui-mcp-build
 ```
 
-CI verifies the committed `data/registry.json` matches a fresh build (`mcp-registry-check` job).
+CI verifies the committed `data/registry/` matches a fresh build (`mcp-registry-check` job).
 
 ## Client setup
 

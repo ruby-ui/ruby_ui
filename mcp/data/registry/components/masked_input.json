@@ -1,0 +1,42 @@
+{
+  "name": "MaskedInput",
+  "description": "Displays a form input field with applied mask.",
+  "files": [
+    {
+      "path": "masked_input.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class MaskedInput < Base\n    def view_template\n      Input(type: \"text\", **attrs)\n    end\n\n    private\n\n    def default_attrs\n      {data: {controller: \"ruby-ui--masked-input\"}}\n    end\n  end\nend\n"
+    },
+    {
+      "path": "masked_input_controller.js",
+      "content": "import { Controller } from \"@hotwired/stimulus\";\nimport { MaskInput } from \"maska\";\n\n// Connects to data-controller=\"ruby-ui--masked-input\"\nexport default class extends Controller {\n  connect() {\n    new MaskInput(this.element)\n  }\n}\n"
+    }
+  ],
+  "dependencies": {
+    "components": [
+      "Input"
+    ],
+    "js_packages": [
+      "maska"
+    ],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component MaskedInput",
+  "docs_markdown": "# MaskedInput\n\nDisplays a form input field with applied mask.\n\n## Usage\n\n### Phone number\n\n```ruby\ndiv(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  MaskedInput(data: {maska: \"(##) #####-####\"})\nend\n```\n\n### Hex color code\n\n```ruby\ndiv(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  MaskedInput(data: {maska: \"!#HHHHHH\", maska_tokens: \"H:[0-9a-fA-F]\"})\nend\n```\n\n### CPF / CNPJ\n\n```ruby\ndiv(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  MaskedInput(data: {maska: \"['###.###.###-##', '##.###.###/####-##']\"})\nend\n```",
+  "examples": [
+    {
+      "title": "Phone number",
+      "code": "div(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  MaskedInput(data: {maska: \"(##) #####-####\"})\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Hex color code",
+      "code": "div(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  MaskedInput(data: {maska: \"!#HHHHHH\", maska_tokens: \"H:[0-9a-fA-F]\"})\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "CPF / CNPJ",
+      "code": "div(class: 'grid w-full max-w-sm items-center gap-1.5') do\n  MaskedInput(data: {maska: \"['###.###.###-##', '##.###.###/####-##']\"})\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

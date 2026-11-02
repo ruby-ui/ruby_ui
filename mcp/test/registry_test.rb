@@ -1,4 +1,5 @@
 require "test_helper"
+require "tmpdir"
 
 class RegistryTest < Minitest::Test
   def setup
@@ -37,5 +38,20 @@ class RegistryTest < Minitest::Test
     known, unknown = @registry.partition_names(["Button", "Bogus"])
     assert_equal ["Button"], known
     assert_equal ["Bogus"], unknown
+  end
+
+  def test_default_registry_loads_the_committed_directory
+    registry = RubyUI::MCP::Registry.load(RubyUI::MCP::Registry.default_path)
+    version = File.read(File.expand_path("../../gem/lib/ruby_ui.rb", __dir__))[/VERSION\s*=\s*"([^"]+)"/, 1]
+
+    assert_equal version, registry.version
+    assert_equal "Button", registry.find("button")[:name]
+  end
+
+  def test_directory_without_components_raises
+    Dir.mktmpdir do |dir|
+      File.write(File.join(dir, "index.json"), %({"version": "1.0.0"}))
+      assert_raises(Errno::ENOENT) { RubyUI::MCP::Registry.load(dir) }
+    end
   end
 end

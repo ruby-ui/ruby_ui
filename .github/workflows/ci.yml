@@ -124,8 +124,9 @@ jobs:
         run: bundle exec exe/ruby-ui-mcp-build
       - name: Fail on diff
         run: |
-          if ! git diff --exit-code mcp/data/registry.json; then
-            echo "registry.json out of date — run 'cd mcp && bundle exec exe/ruby-ui-mcp-build' and commit"
+          git add -N mcp/data/registry
+          if ! git diff --exit-code mcp/data/registry; then
+            echo "mcp/data/registry/ out of date — run 'cd mcp && bundle exec exe/ruby-ui-mcp-build' and commit"
             exit 1
           fi
 

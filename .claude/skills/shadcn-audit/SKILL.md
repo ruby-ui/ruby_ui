@@ -54,7 +54,7 @@ an error as an empty result. Talk to the user in their language;
 
 ## Hard rules
 
-- **Never edit PR code**, `audit/divergences.yml` or `audit/component_map/`,
+- **Never edit PR code**, `audit/divergences/` or `audit/component_map/`,
   and never push. Suggest entries; the author adds them.
 - **Nothing unverified is `pass`.** HTML/ARIA/Behavior/Animation come only from
   DOM rendered in the sandbox/preview and driven in the browser. Can't verify →

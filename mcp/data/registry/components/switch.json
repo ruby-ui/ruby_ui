@@ -1,0 +1,44 @@
+{
+  "name": "Switch",
+  "description": "A control that allows the user to toggle between checked and not checked.",
+  "files": [
+    {
+      "path": "switch.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Switch < Base\n    def initialize(include_hidden: true, checked_value: \"1\", unchecked_value: \"0\", **attrs)\n      @include_hidden = include_hidden\n      @checked_value = checked_value\n      @unchecked_value = unchecked_value\n      super(**attrs)\n    end\n\n    def view_template\n      label(\n        role: \"switch\",\n        class: [\n          \"peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors bg-input\",\n          \"has-checked:bg-primary\",\n          \"has-disabled:cursor-not-allowed has-disabled:opacity-50\",\n          \"has-aria-disabled:cursor-not-allowed has-aria-disabled:opacity-50 has-aria-disabled:pointer-events-none\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\"\n        ]\n      ) do\n        input(type: \"hidden\", name: attrs[:name], value: @unchecked_value) if @include_hidden\n\n        input(**attrs.merge(type: \"checkbox\", class: \"hidden peer\", value: @checked_value))\n\n        span(class: [\n          \"pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-0\",\n          \"peer-checked:translate-x-5\"\n        ])\n      end\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Switch",
+  "docs_markdown": "# Switch\n\nA control that allows the user to toggle between checked and not checked.\n\n## Usage\n\n### Default\n\n```ruby\nSwitch(name: \"switch\")\n```\n\n### Checked\n\n```ruby\nSwitch(name: \"switch\", checked: true)\n```\n\n### Disabled\n\n```ruby\nSwitch(name: \"switch\", disabled: true)\n```\n\n### Aria Disabled\n\n```ruby\nSwitch(name: \"switch\", aria: {disabled: \"true\"})\n```\n\n### With flag include_hidden false\n\n```ruby\n# Supports the creation of a hidden input to be used in forms inspired by the Ruby on Rails implementation of check_box. Default is true.\nSwitch(name: \"switch\", include_hidden: false)\n```",
+  "examples": [
+    {
+      "title": "Default",
+      "code": "Switch(name: \"switch\")\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Checked",
+      "code": "Switch(name: \"switch\", checked: true)\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Disabled",
+      "code": "Switch(name: \"switch\", disabled: true)\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Aria Disabled",
+      "code": "Switch(name: \"switch\", aria: {disabled: \"true\"})\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With flag include_hidden false",
+      "code": "# Supports the creation of a hidden input to be used in forms inspired by the Ruby on Rails implementation of check_box. Default is true.\nSwitch(name: \"switch\", include_hidden: false)\n",
+      "language": "ruby"
+    }
+  ]
+}

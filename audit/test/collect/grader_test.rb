@@ -83,7 +83,7 @@ class CollectGraderTest < Minitest::Test
     s = side("DialogContent" => [el("border-top-width" => "0px")])
     lines = look(grader(parts: %w[DialogContent], divergences: [entry]).lines([obs("open", "light", r, s)]))
     assert_equal 1, lines.size
-    assert_equal({"status" => "pass", "basis" => "intentional", "source" => "audit/divergences.yml"},
+    assert_equal({"status" => "pass", "basis" => "intentional", "source" => "audit/divergences/dialog.yml"},
       lines[0].slice("status", "basis", "source"))
     assert_includes lines[0]["note"], "Kept the border."
   end

@@ -1,0 +1,29 @@
+{
+  "name": "Progress",
+  "description": "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+  "files": [
+    {
+      "path": "progress.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Progress < Base\n    def initialize(value: 0, **attrs)\n      @value = value.to_f.clamp(0, 100)\n\n      super(**attrs)\n    end\n\n    def view_template\n      div(**attrs) do\n        div(**indicator_attrs)\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        role: \"progressbar\",\n        aria_valuenow: @value,\n        aria_valuemin: 0,\n        aria_valuemax: 100,\n        aria_valuetext: \"#{@value}%\",\n        class: \"relative h-2 overflow-hidden rounded-full bg-primary/20 [&>*]:bg-primary\"\n      }\n    end\n\n    def indicator_attrs\n      {\n        class: \"h-full w-full flex-1\",\n        style: \"transform: translateX(-#{100 - @value}%)\"\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Progress",
+  "docs_markdown": "# Progress\n\nDisplays an indicator showing the completion progress of a task, typically displayed as a progress bar.\n\n### Example\n\n```ruby\nProgress(value: 50, class: \"w-[60%]\")\n```\n\n### With custom indicator color\n\n```ruby\nProgress(value: 35, class: \"w-[60%] [&>*]:bg-success\")\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Progress(value: 50, class: \"w-[60%]\")\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With custom indicator color",
+      "code": "Progress(value: 35, class: \"w-[60%] [&>*]:bg-success\")\n",
+      "language": "ruby"
+    }
+  ]
+}

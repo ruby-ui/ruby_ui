@@ -14,7 +14,7 @@ selectors:
   CarouselPrevious: '[data-slot="carousel-previous"]'
   CarouselNext: '[data-slot="carousel-next"]'
 props:
-  # plugins/setApi: see divergences.yml.
+  # plugins/setApi: see divergences/carousel.yml.
   Carousel: {opts: options, plugins: null, orientation: orientation, setApi: null}
   # Previous/Next forward attrs to Button, so variant:/size: reach it.
   CarouselPrevious: {variant: variant, size: size}

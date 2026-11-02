@@ -70,8 +70,82 @@ class DivergencesTest < Minitest::Test
   end
 
   def test_seed_file_loads
-    divergences = ShadcnAudit::Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
+    divergences = ShadcnAudit::Divergences.for_audit(ShadcnAudit.root.join("audit"))
     assert divergences.find(component: "dialog", dimension: "HTML")
+  end
+
+  def test_for_audit_reads_one_file_per_component
+    dir = File.join(@tmp, "divergences")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "dialog.yml"), valid_yaml)
+    File.write(File.join(dir, "sheet.yml"), valid_yaml.gsub("dialog", "sheet"))
+
+    divergences = ShadcnAudit::Divergences.for_audit(@tmp)
+    assert divergences.find(component: "dialog", dimension: "HTML")
+    assert divergences.find(component: "sheet", dimension: "HTML")
+  end
+
+  def test_for_audit_falls_back_to_the_single_file
+    File.write(@path, valid_yaml)
+
+    assert ShadcnAudit::Divergences.for_audit(@tmp).find(component: "dialog", dimension: "HTML")
+  end
+
+  def test_entry_must_live_in_its_component_file
+    dir = File.join(@tmp, "divergences")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "sheet.yml"), valid_yaml)
+
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.for_audit(@tmp) }
+    assert_match(%r{"dialog" belongs in divergences/dialog\.yml}, error.message)
+  end
+
+  def test_for_audit_refuses_both_layouts
+    FileUtils.mkdir_p(File.join(@tmp, "divergences"))
+    File.write(@path, valid_yaml)
+
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.for_audit(@tmp) }
+    assert_match(/both exist/, error.message)
+  end
+
+  def test_source_cites_the_file_the_entries_came_from
+    File.write(@path, valid_yaml)
+    assert_equal "audit/divergences.yml", ShadcnAudit::Divergences.for_audit(@tmp).source("dialog")
+
+    FileUtils.rm(@path)
+    FileUtils.mkdir_p(File.join(@tmp, "divergences"))
+    File.write(File.join(@tmp, "divergences", "dialog.yml"), valid_yaml)
+    assert_equal "audit/divergences/dialog.yml", ShadcnAudit::Divergences.for_audit(@tmp).source("dialog")
+  end
+
+  def test_entry_without_component_reports_the_missing_key_and_its_file
+    dir = File.join(@tmp, "divergences")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "dialog.yml"), valid_yaml.sub("- component: dialog\n  ", "- "))
+
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.for_audit(@tmp) }
+    assert_match(%r{\Aaudit/divergences/dialog\.yml: .*missing component}, error.message)
+  end
+
+  def test_other_files_in_the_folder_are_refused
+    dir = File.join(@tmp, "divergences")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "README.md"), "# Divergences")
+    File.write(File.join(dir, "dialog.yaml"), valid_yaml)
+
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.for_audit(@tmp) }
+    assert_match(/only <folder>\.yml files belong here \(found dialog\.yaml\)/, error.message)
+  end
+
+  def test_every_component_file_is_named_after_a_gem_folder
+    folders = Dir.children(ShadcnAudit.root.join("gem/lib/ruby_ui"))
+    ShadcnAudit.root.join("audit/divergences").glob("*.yml").each do |file|
+      assert_includes folders, file.basename(".yml").to_s
+    end
+  end
+
+  def test_path_for
+    assert_equal "audit/divergences/dialog.yml", ShadcnAudit::Divergences.path_for("dialog")
   end
 
   def test_required_fields_must_be_non_empty
@@ -136,7 +210,7 @@ class DivergencesTest < Minitest::Test
   end
 
   def test_existing_registry_still_loads
-    ShadcnAudit::Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
+    ShadcnAudit::Divergences.for_audit(ShadcnAudit.root.join("audit"))
   end
 
   def test_aria_match_is_exact

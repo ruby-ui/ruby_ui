@@ -1,0 +1,39 @@
+{
+  "name": "Textarea",
+  "description": "Displays a textarea field.",
+  "files": [
+    {
+      "path": "textarea.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Textarea < Base\n    def initialize(rows: 4, **attrs)\n      @rows = rows\n      super(**attrs)\n    end\n\n    def view_template(&)\n      textarea(rows: @rows, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          ruby_ui__form_field_target: \"input\",\n          action: \"input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid\"\n        },\n        class: [\n          \"flex w-full rounded-md border bg-background px-3 py-1 text-sm shadow-sm transition-colors border-border\",\n          \"placeholder:text-muted-foreground\",\n          \"disabled:cursor-not-allowed disabled:opacity-50\",\n          \"file:border-0 file:bg-transparent file:text-sm file:font-medium\",\n          \"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n          \"aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none\"\n        ]\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Textarea",
+  "docs_markdown": "# Textarea\n\nDisplays a textarea field.\n\n## Usage\n\n### Textarea\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(placeholder: \"Textarea\")\nend\n```\n\n### Disabled\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(disabled: true, placeholder: \"Disabled\")\nend\n```\n\n### Aria Disabled\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(aria: {disabled: \"true\"}, placeholder: \"Aria Disabled\")\nend\n```\n\n### With FormField\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  FormField do\n    FormFieldLabel(for: \"textarea\") { \"Textarea\" }\n    FormFieldHint { \"This is a textarea\" }\n    Textarea(placeholder: \"Textarea\", id: \"textarea\")\n    FormFieldError()\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Textarea",
+      "code": "div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(placeholder: \"Textarea\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Disabled",
+      "code": "div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(disabled: true, placeholder: \"Disabled\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Aria Disabled",
+      "code": "div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(aria: {disabled: \"true\"}, placeholder: \"Aria Disabled\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With FormField",
+      "code": "div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  FormField do\n    FormFieldLabel(for: \"textarea\") { \"Textarea\" }\n    FormFieldHint { \"This is a textarea\" }\n    Textarea(placeholder: \"Textarea\", id: \"textarea\")\n    FormFieldError()\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

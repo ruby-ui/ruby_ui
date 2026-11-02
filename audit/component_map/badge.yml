@@ -6,7 +6,7 @@ parts:
 selectors:
   Badge: '[data-slot="badge"]'
 props:
-  # render: RubyUI covers its one badge use, <a>, with href: (see divergences.yml).
+  # render: RubyUI covers its one badge use, <a>, with href: (see divergences/badge.yml).
   Badge: {variant: variant, render: href}
 rubyui_only:
   Badge: [size]

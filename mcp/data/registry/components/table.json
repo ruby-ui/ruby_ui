@@ -1,0 +1,52 @@
+{
+  "name": "Table",
+  "description": "A responsive table component.",
+  "files": [
+    {
+      "path": "table.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Table < Base\n    def view_template(&block)\n      div(class: \"relative w-full overflow-auto\") do\n        table(**attrs, &block)\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"w-full caption-bottom text-sm\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "table_body.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TableBody < Base\n    def view_template(&)\n      tbody(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"[&_tr:last-child]:border-0\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "table_caption.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TableCaption < Base\n    def view_template(&)\n      caption(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"mt-4 text-sm text-muted-foreground\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "table_cell.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TableCell < Base\n    def view_template(&)\n      td(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "table_footer.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TableFooter < Base\n    def view_template(&)\n      tfoot(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"border-t bg-muted/50 font-medium[& amp;>tr]:last:border-b-0\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "table_head.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TableHead < Base\n    def view_template(&)\n      th(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "table_header.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TableHeader < Base\n    def view_template(&)\n      thead(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"[&_tr]:border-b\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "table_row.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TableRow < Base\n    def view_template(&)\n      tr(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted\"\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Table",
+  "docs_markdown": "# Table\n\nA responsive table component.\n\n## Usage\n\n### Without builder\n\n```ruby\nTable do\n  TableCaption { \"Employees at Acme inc.\" }\n  TableHeader do\n    TableRow do\n      TableHead { \"Name\" }\n      TableHead { \"Email\" }\n      TableHead { \"Status\" }\n      TableHead(class: \"text-right\") { \"Role\" }\n    end\n  end\n  TableBody do\n    invoices.each do |invoice|\n      TableRow do\n        TableCell(class: 'font-medium') { invoice.identifier }\n        TableCell { render_status_badge(invoice.status) }\n        TableCell { invoice.method }\n        TableCell(class: \"text-right\") { format_amount(invoice.amount) }\n      end\n    end\n  end\n  TableFooter do\n    TableRow do\n      TableHead(class: \"font-medium\", colspan: 3) { \"Total\" }\n      TableHead(class: \"font-medium text-right\") { format_amount(invoices.sum(&:amount)) }\n    end\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Without builder",
+      "code": "Table do\n  TableCaption { \"Employees at Acme inc.\" }\n  TableHeader do\n    TableRow do\n      TableHead { \"Name\" }\n      TableHead { \"Email\" }\n      TableHead { \"Status\" }\n      TableHead(class: \"text-right\") { \"Role\" }\n    end\n  end\n  TableBody do\n    invoices.each do |invoice|\n      TableRow do\n        TableCell(class: 'font-medium') { invoice.identifier }\n        TableCell { render_status_badge(invoice.status) }\n        TableCell { invoice.method }\n        TableCell(class: \"text-right\") { format_amount(invoice.amount) }\n      end\n    end\n  end\n  TableFooter do\n    TableRow do\n      TableHead(class: \"font-medium\", colspan: 3) { \"Total\" }\n      TableHead(class: \"font-medium text-right\") { format_amount(invoices.sum(&:amount)) }\n    end\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}
