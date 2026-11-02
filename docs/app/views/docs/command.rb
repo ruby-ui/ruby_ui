@@ -4,7 +4,7 @@ class Views::Docs::Command < Views::Base
   def view_template
     component = "Command"
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: component, description: "Fast, composable command menu for Phlex.")
+      render Docs::Header.new(title: "Command", description: "Fast, composable command menu for Phlex.")
 
       Heading(level: 2) { "Usage" }
 
@@ -56,9 +56,9 @@ class Views::Docs::Command < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Dialog", description: "CommandDialog opens the Command in a modal dialog from its trigger, and with ⌘K / Ctrl+K by default. This site's search already takes ⌘K, so the example turns the shortcut off with keybindings: []. title: and description: name the dialog for screen readers (they are visually hidden); show_close_button: adds a close button.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Dialog", description: "CommandDialog opens the Command in a modal dialog from its trigger, and with ⌘K / Ctrl+K by default. This site's search already takes ⌘K, so the example turns the shortcut off with keybindings: []. title: and description: name the dialog for screen readers and are visually hidden. show_close_button: true adds the Dialog close button; it is off by default, as in shadcn, because it sits over the search field.", context: self) do
         <<~RUBY
-          CommandDialog do
+          CommandDialog(title: "Command menu", description: "Choose an action") do
             CommandDialogTrigger(keybindings: []) do
               Button(variant: :outline) { "Open Menu" }
             end

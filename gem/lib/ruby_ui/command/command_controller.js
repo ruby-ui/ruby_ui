@@ -18,7 +18,6 @@ export default class extends Controller {
 
   connect() {
     this.active = null;
-    this.searchIndex = null;
     this.wireAria();
     this.dialog = this.element.closest("dialog");
     this.dialog?.addEventListener("close", this.reset);
@@ -39,13 +38,11 @@ export default class extends Controller {
   // Items added or removed later (e.g. a Turbo Stream) get an id and go through
   // the current search, once per batch of changes.
   itemTargetConnected(item) {
-    this.searchIndex = null;
     this.ensureId(item, this.nextOptionId());
     this.scheduleRefresh();
   }
 
   itemTargetDisconnected(item) {
-    this.searchIndex = null;
     if (item === this.active) this.active = null;
     this.scheduleRefresh();
   }
@@ -104,16 +101,16 @@ export default class extends Controller {
     this.activate(next, { scroll });
   }
 
+  // Built on every search: a morph or the app can change an item's text,
+  // data-value or data-keywords without reconnecting it, and command menus
+  // are small enough that rebuilding costs nothing noticeable.
   index() {
-    if (!this.searchIndex) {
-      const entries = this.itemTargets.map((element) => ({
-        value: this.valueOf(element),
-        keywords: element.dataset.keywords || "",
-        element,
-      }));
-      this.searchIndex = new Fuse(entries, { keys: ["value", "keywords"], threshold: 0.2, ignoreLocation: true });
-    }
-    return this.searchIndex;
+    const entries = this.itemTargets.map((element) => ({
+      value: this.valueOf(element),
+      keywords: element.dataset.keywords || "",
+      element,
+    }));
+    return new Fuse(entries, { keys: ["value", "keywords"], threshold: 0.2, ignoreLocation: true });
   }
 
   inputKeydown(event) {
@@ -130,8 +127,10 @@ export default class extends Controller {
         break;
       case "Home":
       case "End": {
-        event.preventDefault();
         const items = this.selectableItems();
+        // Nothing to jump to: leave Home/End to the text caret.
+        if (items.length === 0) break;
+        event.preventDefault();
         this.activate(event.key === "Home" ? items[0] : items[items.length - 1]);
         break;
       }
@@ -174,6 +173,8 @@ export default class extends Controller {
   // Dispatches ruby-ui--command:select (cancelable) and, unless prevented,
   // follows the item's href. ⌘/Ctrl opens the href in a new tab.
   select(item, event) {
+    // The item may have been disabled after it became active.
+    if (this.isDisabled(item)) return;
     const value = this.valueOf(item);
     const href = item.dataset.href;
     const selectEvent = this.dispatch("select", { detail: { value, href, item }, cancelable: true });
