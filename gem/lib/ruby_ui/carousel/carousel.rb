@@ -6,8 +6,11 @@ module RubyUI
   # orientation classes are plain utilities a caller's class can override
   # (shadcn's cn behavior).
   class Carousel < Base
+    VALID_ORIENTATIONS = %i[horizontal vertical].freeze
+
     def initialize(orientation: :horizontal, options: {}, **user_attrs)
-      @orientation = (orientation.to_s == "vertical") ? :vertical : :horizontal
+      @orientation = orientation.to_s.to_sym
+      raise ArgumentError, "orientation must be :horizontal or :vertical" unless VALID_ORIENTATIONS.include?(@orientation)
       @options = options
 
       super(**user_attrs)

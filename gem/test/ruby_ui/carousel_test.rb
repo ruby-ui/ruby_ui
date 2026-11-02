@@ -156,6 +156,30 @@ class RubyUI::CarouselTest < ComponentTest
     assert_includes opening_tag(output, "carousel"), "&quot;axis&quot;:&quot;y&quot;"
   end
 
+  def test_orientation_accepts_strings
+    output = phlex { RubyUI.Carousel(orientation: "vertical") { "A" } }
+
+    assert_includes opening_tag(output, "carousel"), "is-vertical"
+  end
+
+  def test_unknown_orientation_raises
+    error = assert_raises(ArgumentError) { RubyUI::Carousel.new(orientation: :verticle) }
+    assert_equal "orientation must be :horizontal or :vertical", error.message
+  end
+
+  # The vertical buttons are already rotated 90°; an RTL flip would point
+  # them the wrong way.
+  def test_vertical_chevrons_are_not_mirrored_in_rtl
+    output = phlex do
+      RubyUI.Carousel(orientation: :vertical) do
+        RubyUI.CarouselPrevious()
+        RubyUI.CarouselNext()
+      end
+    end
+
+    refute_includes output, "rtl:rotate-180"
+  end
+
   # Outside a Carousel (or after one closes) the parts fall back to horizontal.
   def test_orientation_does_not_leak_past_the_carousel
     output = phlex do

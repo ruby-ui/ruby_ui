@@ -96,7 +96,7 @@ class Views::Docs::Carousel < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Loop", description: "options: takes any Embla option. With loop: true the carousel wraps from the last slide to the first, so Previous and Next never disable.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Loop", description: "options: takes JSON-compatible Embla options. With loop: true the carousel wraps from the last slide to the first, so Previous and Next never disable.", context: self) do
         <<~RUBY
           Carousel(options: {loop: true}, aria_label: "Numbers", class: "w-full max-w-xs") do
             CarouselContent do

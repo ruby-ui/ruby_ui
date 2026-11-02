@@ -34,7 +34,7 @@ module RubyUI
       }
     end
 
-    # lucide chevron-right, mirrored in RTL.
+    # lucide chevron-right, mirrored in RTL when horizontal.
     def icon
       svg(
         width: "24",
@@ -47,7 +47,9 @@ module RubyUI
         stroke_linejoin: "round",
         xmlns: "http://www.w3.org/2000/svg",
         aria_hidden: "true",
-        class: "rtl:rotate-180"
+        # Mirrored in RTL only when horizontal: the vertical axis doesn't
+        # depend on reading direction.
+        class: (orientation == :horizontal) ? "rtl:rotate-180" : nil
       ) do |s|
         s.path(d: "m9 18 6-6-6-6")
       end
