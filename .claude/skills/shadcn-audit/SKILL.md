@@ -341,6 +341,11 @@ Then:
    updated; a marked comment by anyone else is left alone and a new one is
    created.
    Without an ok, don't post.
+6. When the audited PR (or the user's branch) brings the component to match
+   shadcn, its map file needs a new baseline so the weekly `drift` (skill
+   `shadcn-drift`) starts from this audit: `baseline <folder> <shadcn_sha>`
+   with the report's `shadcn_sha`, committed in the same PR. On someone
+   else's PR this is a request in the comment, like any other edit.
 
 ### 9. Clean up
 

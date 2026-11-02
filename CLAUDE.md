@@ -10,7 +10,7 @@ Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile` and
 | --- | --- |
 | [`gem/`](gem/) | The `ruby_ui` gem — Phlex components, generators, gemspec, Minitest suite. Published to RubyGems from here. |
 | [`docs/`](docs/) | Rails 8 app powering https://rubyui.com. Consumes the local gem via `path: "../gem"`. |
-| [`audit/`](audit/) | shadcn fidelity audit tooling; skill in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/). |
+| [`audit/`](audit/) | shadcn fidelity audit tooling; skills in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/) (audit a PR/component) and [`.claude/skills/shadcn-drift/`](.claude/skills/shadcn-drift/) (weekly upstream watch). |
 | [`mcp/`](mcp/) | MCP server for ruby_ui; `mcp/data/registry/` (one JSON per component plus `index.json`) is generated from the gem's component source and parsed docs. |
 | `.github/workflows/ci.yml` | Unified CI: `gem` tests (Ruby 3.3 + 3.4), `docs` Rails tests, `mcp` tests + registry check, `audit` (shadcn-audit CLI) tests, docker build for the docs devcontainer. |
 
