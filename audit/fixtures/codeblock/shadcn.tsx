@@ -17,7 +17,7 @@ Done in 2.8s
 export default function CodeblockFixture() {
   return (
     <div className="w-[32rem] p-6">
-      <CodeBlock>
+      <CodeBlock data-audit-trigger="">
         <CodeBlockActions>
           <CodeBlockCopyButton value={code} />
         </CodeBlockActions>

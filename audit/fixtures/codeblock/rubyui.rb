@@ -15,7 +15,7 @@ module ShadcnAuditFixtures
 
     def view_template
       div(class: "w-[32rem] p-6") do
-        Codeblock(CODE, syntax: :plaintext)
+        Codeblock(CODE, syntax: :plaintext, data: {audit_trigger: true})
       end
     end
   end
