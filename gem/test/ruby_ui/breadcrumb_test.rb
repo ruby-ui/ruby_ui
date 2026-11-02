@@ -34,8 +34,12 @@ class RubyUI::BreadcrumbTest < ComponentTest
   def test_data_slot_on_every_part
     output = render_breadcrumb
 
-    %w[breadcrumb breadcrumb-list breadcrumb-item breadcrumb-link breadcrumb-page breadcrumb-separator breadcrumb-ellipsis].each do |slot|
-      assert_match(/data-slot="#{slot}"/, output)
+    {
+      "breadcrumb" => "nav", "breadcrumb-list" => "ol", "breadcrumb-item" => "li",
+      "breadcrumb-link" => "a", "breadcrumb-page" => "span",
+      "breadcrumb-separator" => "li", "breadcrumb-ellipsis" => "span"
+    }.each do |slot, tag|
+      assert opening_tag(output, slot).start_with?("<#{tag} "), "#{slot} should be a <#{tag}>"
     end
   end
 
