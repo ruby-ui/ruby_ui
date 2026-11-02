@@ -52,6 +52,7 @@ class Views::Docs::Button < Views::Base
             Button(variant: :outline, size: :sm) { "Small" }
             Button(variant: :outline) { "Default" }
             Button(variant: :outline, size: :lg) { "Large" }
+            Button(variant: :outline, size: :xl) { "Extra Large" }
           end
         RUBY
       end
@@ -59,7 +60,7 @@ class Views::Docs::Button < Views::Base
       render Docs::VisualCodeExample.new(title: "Icon", description: "icon: true makes a square button of the given size. Give it an aria-label.", context: self) do
         <<~RUBY
           div(class: "flex flex-wrap items-center gap-2 justify-center") do
-            [:xs, :sm, :md, :lg].each do |size|
+            [:xs, :sm, :md, :lg, :xl].each do |size|
               Button(variant: :outline, size: size, icon: true, aria: {label: "Next"}) do
                 svg(xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewbox: "0 0 24 24", fill: "none",
                   stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
@@ -72,7 +73,7 @@ class Views::Docs::Button < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "With Icon", description: "Mark the icon with data-icon=\"inline-start\" or \"inline-end\" so the button tightens the padding on that side. Icons are sized to 16px unless they carry a size-* class.", context: self) do
+      render Docs::VisualCodeExample.new(title: "With Icon", description: "Mark the icon with data-icon=\"inline-start\" or \"inline-end\" so the button tightens the padding on that side. Icons are sized to 16px (12px on :xs) unless they carry a size-* class.", context: self) do
         <<~RUBY
           div(class: "flex flex-wrap items-center gap-2 justify-center") do
             Button(variant: :outline) do
@@ -112,7 +113,7 @@ class Views::Docs::Button < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "As Link", description: "Pass href: to render an <a> that looks like a button.", context: self) do
+      render Docs::VisualCodeExample.new(title: "As Link", description: "Pass href: to render an <a>. As with shadcn's render={<a />}, it carries role=\"button\": screen readers announce a button, and Space activates it like Enter.", context: self) do
         <<~RUBY
           Button(href: "#") { "Login" }
         RUBY
@@ -124,7 +125,7 @@ class Views::Docs::Button < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Focusable When Disabled", description: "focusable_when_disabled: true keeps a disabled button in the tab order (aria-disabled instead of disabled), for example so a tooltip can explain why. Clicks and keyboard activation are blocked.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Focusable When Disabled", description: "focusable_when_disabled: true keeps a disabled button in the tab order (aria-disabled instead of disabled), for example so a tooltip can explain why. Clicks and keyboard activation are blocked. As in shadcn, only the disabled attribute dims a button, so this one keeps its enabled look.", context: self) do
         <<~RUBY
           Button(disabled: true, focusable_when_disabled: true) { "Focusable" }
         RUBY

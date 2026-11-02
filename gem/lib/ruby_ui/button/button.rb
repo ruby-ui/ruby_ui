@@ -2,7 +2,8 @@
 
 module RubyUI
   # A button, styled after shadcn's Button (Base UI + vega). Renders a
-  # <button>, or an <a> when given href: (shadcn's render={<a />}).
+  # <button>, or an <a role="button"> when given href: (shadcn's
+  # render={<a />}).
   #
   # icon: true makes a square icon button of the given size (shadcn's
   # size="icon", "icon-sm"…); size: :icon, :icon_sm… work too. An icon marked
@@ -10,6 +11,8 @@ module RubyUI
   #
   # focusable_when_disabled: true (with disabled: true) keeps the button in the
   # tab order: it renders aria-disabled instead of disabled and blocks clicks.
+  # As in shadcn, only the disabled attribute dims the button, so it keeps its
+  # enabled look.
   class Button < Base
     BASE = [
       "group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap",
@@ -19,7 +22,6 @@ module RubyUI
       "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
       "dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
       "disabled:pointer-events-none disabled:opacity-50",
-      "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
       "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
     ].freeze
 
@@ -102,8 +104,13 @@ module RubyUI
       attrs = {class: [BASE, (@icon ? ICON_SIZES : SIZES).fetch(@size), VARIANTS.fetch(@variant)], data: data}
 
       if @href
-        # A disabled link has no href: it can't be followed or focused.
+        # Like Base UI's render={<a />}: the link is a button to assistive
+        # tech, and the controller makes Space activate it. A disabled link
+        # has no href, so it can't be followed.
+        attrs[:role] = "button"
         attrs[:href] = @href unless @disabled
+        attrs[:tabindex] = 0 if focusable?
+        data[:controller] = "ruby-ui--button"
       else
         attrs[:type] = @type
       end
@@ -112,18 +119,17 @@ module RubyUI
         data[:disabled] = true
         if aria_disabled?
           attrs[:aria] = {disabled: "true"}
-          # A link without href has no role of its own; keep it a link.
-          attrs[:role] = "link" if @href
-          if @focusable_when_disabled
-            attrs[:tabindex] = 0 if @href
-            data[:controller] = "ruby-ui--button"
-          end
+          data[:controller] = "ruby-ui--button"
         else
           attrs[:disabled] = true
         end
       end
 
       attrs
+    end
+
+    def focusable?
+      !@disabled || @focusable_when_disabled
     end
 
     # Disabled through aria-disabled instead of the disabled attribute: links

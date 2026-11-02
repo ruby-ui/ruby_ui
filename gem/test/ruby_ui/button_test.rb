@@ -51,6 +51,7 @@ class RubyUI::ButtonTest < ComponentTest
   def test_every_size_uses_text_sm_except_xs
     %i[sm md lg xl].each do |size|
       output = phlex { RubyUI.Button(size: size) { "A" } }
+      assert_includes output, "text-sm", "size #{size}"
       refute_match(/\btext-(xs|base)\b/, output, "size #{size}")
     end
     assert_includes phlex { RubyUI.Button(size: :xs) { "A" } }, "h-6 gap-1"
@@ -70,7 +71,7 @@ class RubyUI::ButtonTest < ComponentTest
   def test_disabled
     output = phlex { RubyUI.Button(disabled: true) { "A" } }
 
-    assert_match(/<button [^>]*\bdisabled\b/, output)
+    assert_match(/<button [^>]*\sdisabled[\s>]/, output)
     assert_includes output, "data-disabled"
     refute_includes output, "aria-disabled=\""
   end
@@ -102,7 +103,7 @@ class RubyUI::ButtonTest < ComponentTest
   def test_focusable_disabled_link_stays_in_tab_order
     output = phlex { RubyUI.Button(href: "/docs", disabled: true, focusable_when_disabled: true) { "Docs" } }
 
-    assert_includes output, 'role="link"'
+    assert_includes output, 'role="button"'
     assert_includes output, 'tabindex="0"'
     assert_includes output, 'data-controller="ruby-ui--button"'
     refute_includes output, "href="
@@ -113,6 +114,7 @@ class RubyUI::ButtonTest < ComponentTest
 
     refute_includes output, "ruby-ui--button"
     refute_match(/\s(data-)?disabled[\s>=]/, output)
+    refute_includes output, "aria-disabled:"
   end
 
   def test_href_renders_a_link
@@ -121,6 +123,9 @@ class RubyUI::ButtonTest < ComponentTest
     assert_match(/\A<a /, output)
     assert_includes output, 'href="/docs"'
     assert_includes output, 'data-slot="button"'
+    assert_includes output, 'role="button"'
+    assert_includes output, 'tabindex="0"'
+    assert_includes output, 'data-controller="ruby-ui--button"'
     refute_includes output, "type="
   end
 
@@ -129,9 +134,8 @@ class RubyUI::ButtonTest < ComponentTest
 
     refute_includes output, "href="
     assert_includes output, 'aria-disabled="true"'
-    assert_includes output, 'role="link"'
+    assert_includes output, 'role="button"'
     refute_includes output, "tabindex"
-    refute_includes output, "ruby-ui--button"
   end
 
   def test_caller_classes_win

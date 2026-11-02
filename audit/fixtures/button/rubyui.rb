@@ -24,6 +24,8 @@ module ShadcnAuditFixtures
           plain "Send"
         end
         Button(disabled: true) { "Disabled" }
+        Button(href: "#") { "Open Link" }
+        Button(disabled: true, focusable_when_disabled: true) { "Focusable" }
       end
     end
 

@@ -34,6 +34,8 @@ export default function ButtonFixture() {
       <Button variant="outline" size="icon" aria-label="Next"><ChevronRight /></Button>
       <Button><Send />Send</Button>
       <Button disabled>Disabled</Button>
+      <Button nativeButton={false} render={<a href="#" />}>Open Link</Button>
+      <Button disabled focusableWhenDisabled>Focusable</Button>
     </div>
   )
 }
