@@ -1,0 +1,199 @@
+mcp/data/registry/components/tooltip.json
+  s_afe49718472e2e::t_c543160965b72f 1-45
+mcp/data/registry/components/masked_input.json
+  s_afe49718472e2e::t_c543160965b72f 1-42
+audit/component_map/badge.yml
+  s_afe49718472e2e::t_3546eb29a182bd 9
+audit/divergences/dialog.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-12
+gem/AGENTS.md
+  s_afe49718472e2e::t_3546eb29a182bd 29
+mcp/data/registry/index.json
+  s_afe49718472e2e::t_c543160965b72f 1-3
+audit/lib/shadcn_audit/cli.rb
+  s_afe49718472e2e::t_0775fb329ec091 52
+audit/component_map/carousel.yml
+  s_afe49718472e2e::t_3546eb29a182bd 17
+audit/README.md
+  s_afe49718472e2e::t_3546eb29a182bd 13
+mcp/data/registry/components/alert_dialog.json
+  s_afe49718472e2e::t_c543160965b72f 1-76
+mcp/data/registry/components/calendar.json
+  s_afe49718472e2e::t_c543160965b72f 1-77
+.claude/skills/shadcn-audit/references/grading.md
+  s_afe49718472e2e::t_3546eb29a182bd 24,107,123
+audit/lib/shadcn_audit/divergences.rb
+  s_afe49718472e2e::t_c70591d2dfe6ad 9-24,26-41
+audit/divergences/carousel.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-6
+mcp/data/registry/components/card.json
+  s_afe49718472e2e::t_c543160965b72f 1-68
+mcp/data/registry/components/link.json
+  s_afe49718472e2e::t_c543160965b72f 1-59
+mcp/data/registry/components/clipboard.json
+  s_afe49718472e2e::t_c543160965b72f 1-42
+mcp/data/registry/components/command.json
+  s_afe49718472e2e::t_c543160965b72f 1-71
+mcp/data/registry/components/radio_button.json
+  s_afe49718472e2e::t_c543160965b72f 1-39
+mcp/data/registry/components/switch.json
+  s_afe49718472e2e::t_c543160965b72f 1-44
+audit/lib/shadcn_audit/collect/grader.rb
+  s_afe49718472e2e::t_0775fb329ec091 149
+mcp/data/registry/components/data_table.json
+  s_afe49718472e2e::t_c543160965b72f 1-123
+mcp/Rakefile
+  s_afe49718472e2e::t_dfe7f5eebe269e 17
+mcp/data/registry/components/skeleton.json
+  s_afe49718472e2e::t_c543160965b72f 1-24
+mcp/data/registry/components/tabs.json
+  s_afe49718472e2e::t_c543160965b72f 1-60
+mcp/data/registry/components/theme_toggle.json
+  s_afe49718472e2e::t_c543160965b72f 1-35
+mcp/data/registry/components/checkbox.json
+  s_afe49718472e2e::t_c543160965b72f 1-37
+mcp/data/registry/components/context_menu.json
+  s_afe49718472e2e::t_c543160965b72f 1-55
+mcp/data/registry/components/message.json
+  s_afe49718472e2e::t_c543160965b72f 1-62
+mcp/data/registry/components/sidebar.json
+  s_afe49718472e2e::t_c543160965b72f 1-128
+mcp/data/registry/components/button.json
+  s_afe49718472e2e::t_c543160965b72f 1-98
+audit/divergences/calendar.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-24
+mcp/data/registry/components/empty.json
+  s_afe49718472e2e::t_c543160965b72f 1-54
+mcp/data/registry/components/accordion.json
+  s_afe49718472e2e::t_c543160965b72f 1-55
+audit/divergences/form.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-12
+audit/divergences/card.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-6
+mcp/data/registry/components/bubble.json
+  s_afe49718472e2e::t_c543160965b72f 1-81
+mcp/data/registry/components/dialog.json
+  s_afe49718472e2e::t_c543160965b72f 1-68
+mcp/data/registry/components/shortcut_key.json
+  s_afe49718472e2e::t_c543160965b72f 1-24
+mcp/data/registry/components/table.json
+  s_afe49718472e2e::t_c543160965b72f 1-52
+mcp/data/registry/components/aspect_ratio.json
+  s_afe49718472e2e::t_c543160965b72f 1-44
+audit/divergences/badge.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-6
+mcp/data/registry/components/input.json
+  s_afe49718472e2e::t_c543160965b72f 1-49
+mcp/data/registry/components/collapsible.json
+  s_afe49718472e2e::t_c543160965b72f 1-41
+mcp/lib/ruby_ui/mcp/registry.rb
+  s_afe49718472e2e::t_f1b5f06aafc827 16,19-20,22-28
+mcp/data/registry/components/codeblock.json
+  s_afe49718472e2e::t_c543160965b72f 1-39
+mcp/exe/ruby-ui-mcp-build
+  s_afe49718472e2e::t_3041b7083c8eb2 8
+mcp/data/registry/components/select.json
+  s_afe49718472e2e::t_c543160965b72f 1-87
+mcp/data/registry/components/toast.json
+  s_afe49718472e2e::t_c543160965b72f 1-58
+audit/divergences/button.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-6
+mcp/data/registry/components/carousel.json
+  s_afe49718472e2e::t_c543160965b72f 1-66
+mcp/test/builders/registry_builder_test.rb
+  s_afe49718472e2e::t_c543160965b72f 3
+  s_afe49718472e2e::t_3041b7083c8eb2 40-53
+mcp/data/registry/components/native_select.json
+  s_afe49718472e2e::t_c543160965b72f 1-51
+mcp/data/registry/components/sheet.json
+  s_afe49718472e2e::t_c543160965b72f 1-65
+.claude/skills/shadcn-audit/SKILL.md
+  s_afe49718472e2e::t_3546eb29a182bd 57
+mcp/data/registry/components/typography.json
+  s_afe49718472e2e::t_c543160965b72f 1-100
+.github/workflows/ci.yml
+  s_afe49718472e2e::t_be606ec7426641 127-129
+mcp/data/registry/components/avatar.json
+  s_afe49718472e2e::t_c543160965b72f 1-78
+CLAUDE.md
+  s_afe49718472e2e::t_48e5a931dfcbc2 14,24,70,103
+  s_afe49718472e2e::t_3546eb29a182bd 25
+mcp/data/registry/components/textarea.json
+  s_afe49718472e2e::t_c543160965b72f 1-39
+mcp/data/registry/components/toggle.json
+  s_afe49718472e2e::t_c543160965b72f 1-22
+mcp/data/registry/components/chart.json
+  s_afe49718472e2e::t_c543160965b72f 1-45
+audit/component_map/breadcrumb.yml
+  s_afe49718472e2e::t_3546eb29a182bd 21
+mcp/data/registry/components/hover_card.json
+  s_afe49718472e2e::t_c543160965b72f 1-43
+audit/divergences/README.md
+  s_afe49718472e2e::t_8778e949bd1aa2 1-17
+audit/divergences/alert_dialog.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-30
+audit/component_map/button.yml
+  s_afe49718472e2e::t_3546eb29a182bd 12
+mcp/data/registry/components/form.json
+  s_afe49718472e2e::t_c543160965b72f 1-139
+audit/divergences/accordion.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-24
+mcp/data/registry/components/message_scroller.json
+  s_afe49718472e2e::t_c543160965b72f 1-66
+mcp/data/registry/components/badge.json
+  s_afe49718472e2e::t_c543160965b72f 1-74
+audit/test/divergences_test.rb
+  s_afe49718472e2e::t_bdb9d9493555bb 73,176
+  s_afe49718472e2e::t_67856d2bb67439 77-113
+mcp/data/registry/components/combobox.json
+  s_afe49718472e2e::t_c543160965b72f 1-125
+mcp/test/registry_test.rb
+  s_afe49718472e2e::t_3041b7083c8eb2 41,43,48
+  s_afe49718472e2e::t_c543160965b72f 42,44-47
+mcp/data/registry/components/toggle_group.json
+  s_afe49718472e2e::t_c543160965b72f 1-28
+mcp/lib/ruby_ui/mcp/builders/registry_builder.rb
+  s_afe49718472e2e::t_559e369ee4ea23 26-39
+audit/lib/shadcn_audit/collect/runner.rb
+  s_afe49718472e2e::t_0775fb329ec091 63,66
+audit/test/collect/grader_test.rb
+  s_afe49718472e2e::t_bdb9d9493555bb 86
+mcp/data/registry/components/alert.json
+  s_afe49718472e2e::t_c543160965b72f 1-71
+mcp/data/registry/components/separator.json
+  s_afe49718472e2e::t_c543160965b72f 1-24
+mcp/data/registry/components/date_picker.json
+  s_afe49718472e2e::t_c543160965b72f 1-28
+audit/divergences/breadcrumb.yml
+  s_afe49718472e2e::t_c8d46ad5c64142 1-6
+mcp/data/registry/components/dropdown_menu.json
+  s_afe49718472e2e::t_c543160965b72f 1-55
+mcp/README.md
+  s_afe49718472e2e::t_48e5a931dfcbc2 22,41
+mcp/data/registry/components/pagination.json
+  s_afe49718472e2e::t_c543160965b72f 1-38
+mcp/data/registry/components/input_otp.json
+  s_afe49718472e2e::t_c543160965b72f 1-70
+mcp/data/registry/components/popover.json
+  s_afe49718472e2e::t_c543160965b72f 1-48
+mcp/data/registry/components/breadcrumb.json
+  s_afe49718472e2e::t_c543160965b72f 1-63
+mcp/data/registry/components/progress.json
+  s_afe49718472e2e::t_c543160965b72f 1-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "00ac2113ae046ad2243cff853de14ecb89ef8b5b",
+  "prompts": {},
+  "sessions": {
+    "s_afe49718472e2e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7a36fffa-1e03-4018-bb9f-2321f1a905c2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
