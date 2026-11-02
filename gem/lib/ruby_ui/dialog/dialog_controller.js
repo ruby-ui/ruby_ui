@@ -117,22 +117,41 @@ export default class extends Controller {
     }
   }
 
+  // Candidates in the browser's sequential focus order: positive tabindex first,
+  // ascending, then tabindex 0 in DOM order (Array#sort is stable).
   tabbables() {
-    const selector = "a[href], area[href], button, input, select, textarea, iframe, summary, audio[controls], video[controls], [contenteditable], [tabindex]"
-    return [...this.dialogTarget.querySelectorAll(selector)].filter((el) =>
-      this.inTabOrder(el) &&
-      !el.matches(":disabled") && // also covers controls inside fieldset[disabled]
-      !el.closest("[inert]") &&
-      el.closest("dialog") === this.dialogTarget &&
-      el.checkVisibility({ visibilityProperty: true })
-    )
+    const selector = "a[href], area[href], button, input, select, textarea, iframe, object, embed, summary, audio[controls], video[controls], [contenteditable], [tabindex]"
+    return [...this.dialogTarget.querySelectorAll(selector)]
+      .filter((el) =>
+        this.inTabOrder(el) &&
+        !el.matches(":disabled") && // also covers controls inside fieldset[disabled]
+        !el.closest("[inert]") &&
+        el.closest("dialog") === this.dialogTarget &&
+        this.isVisible(el)
+      )
+      .sort((a, b) => {
+        const ta = Math.max(a.tabIndex, 0)
+        const tb = Math.max(b.tabIndex, 0)
+        if (ta === tb) return 0
+        if (ta === 0) return 1
+        if (tb === 0) return -1
+        return ta - tb
+      })
   }
 
   // An explicit tabindex decides; otherwise the element is natively focusable.
-  // `tabIndex` reads -1 for a contenteditable without tabindex, yet Tab reaches it.
+  // `tabIndex` reads -1 for an editing host and (in Chromium and WebKit) for
+  // <embed>, yet Tab reaches both. A contenteditable inside another is skipped.
   inTabOrder(el) {
     if (el.hasAttribute("tabindex")) return el.tabIndex >= 0
-    return el.isContentEditable || el.tabIndex >= 0
+    if (el.isContentEditable) return !el.parentElement?.isContentEditable
+    return el.localName === "embed" || el.tabIndex >= 0
+  }
+
+  // checkVisibility() landed in Safari 17.4; older engines fall back to layout boxes.
+  isVisible(el) {
+    if (typeof el.checkVisibility === "function") return el.checkVisibility({ visibilityProperty: true })
+    return el.getClientRects().length > 0
   }
 
   handleClose = () => {
