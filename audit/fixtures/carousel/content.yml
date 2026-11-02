@@ -1,0 +1,6 @@
+# The shadcn "Usage" carousel: five numbered slides, horizontal, default
+# opts, Previous/Next buttons. Width max-w-xs inside a padded frame so the
+# buttons (-left-12/-right-12) stay on screen.
+# Static kind: only the closed (initial) state is collected; the Next button
+# carries data-audit-trigger to satisfy the fixture contract.
+slides: ["1", "2", "3", "4", "5"]

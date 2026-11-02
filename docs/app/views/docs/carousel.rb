@@ -8,9 +8,9 @@ class Views::Docs::Carousel < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", description: "Carousel is a region, and a region needs a name: give it an aria_label (or aria_labelledby pointing at a visible heading). Previous and Next disable at the first and last slide.", context: self) do
         <<~RUBY
-          Carousel(options: {loop:false}, class: "w-full max-w-xs") do
+          Carousel(aria_label: "Numbers", class: "w-full max-w-xs") do
             CarouselContent do
               5.times do |index|
                 CarouselItem do
@@ -32,7 +32,7 @@ class Views::Docs::Carousel < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Sizes", context: self) do
         <<~RUBY
-          Carousel(class: "w-full max-w-sm") do
+          Carousel(aria_label: "Numbers", class: "w-full max-w-sm") do
             CarouselContent do
               5.times do |index|
                 CarouselItem(class: "md:basis-1/2 lg:basis-1/3") do
@@ -54,7 +54,7 @@ class Views::Docs::Carousel < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Spacing", context: self) do
         <<~RUBY
-          Carousel(class: "w-full max-w-sm") do
+          Carousel(aria_label: "Numbers", class: "w-full max-w-sm") do
             CarouselContent(class: "-ml-1") do
               5.times do |index|
                 CarouselItem(class: "pl-1 md:basis-1/2 lg:basis-1/3") do
@@ -76,7 +76,7 @@ class Views::Docs::Carousel < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Orientation", context: self) do
         <<~RUBY
-          Carousel(orientation: :vertical, options: {align: "start"}, class: "w-full max-w-xs") do
+          Carousel(orientation: :vertical, options: {align: "start"}, aria_label: "Numbers", class: "w-full max-w-xs") do
             CarouselContent(class: "-mt-1 h-[200px]") do
               5.times do |index|
                 CarouselItem(class: "pt-1 md:basis-1/2") do
@@ -84,6 +84,28 @@ class Views::Docs::Carousel < Views::Base
                     Card(class: "py-0") do
                       CardContent(class: "flex items-center justify-center p-6") do
                         span(class: "text-3xl font-semibold") { index + 1 }
+                      end
+                    end
+                  end
+                end
+              end
+            end
+            CarouselPrevious()
+            CarouselNext()
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Loop", description: "options: takes JSON-compatible Embla options. With loop: true the carousel wraps from the last slide to the first, so Previous and Next never disable.", context: self) do
+        <<~RUBY
+          Carousel(options: {loop: true}, aria_label: "Numbers", class: "w-full max-w-xs") do
+            CarouselContent do
+              5.times do |index|
+                CarouselItem do
+                  div(class: "p-1") do
+                    Card(class: "py-0") do
+                      CardContent(class: "flex aspect-square items-center justify-center p-6") do
+                        span(class: "text-4xl font-semibold") { index + 1 }
                       end
                     end
                   end
