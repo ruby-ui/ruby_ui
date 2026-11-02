@@ -54,7 +54,8 @@ module RubyUI
           stroke: "currentColor",
           stroke_width: "2",
           stroke_linecap: "round",
-          stroke_linejoin: "round"
+          stroke_linejoin: "round",
+          aria_hidden: "true"
         ) do |s|
           s.path(d: "M18 6 6 18")
           s.path(d: "m6 6 12 12")

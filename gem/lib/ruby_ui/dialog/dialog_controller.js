@@ -17,6 +17,7 @@ export default class extends Controller {
     this.closing = false
     this.dialogTarget.addEventListener("close", this.handleClose)
     this.dialogTarget.addEventListener("cancel", this.handleCancel)
+    this.dialogTarget.addEventListener("keydown", this.handleKeydown)
     this.wireAria()
     if (this.openValue) {
       this.open()
@@ -27,6 +28,7 @@ export default class extends Controller {
     this.closing = false
     this.dialogTarget.removeEventListener("close", this.handleClose)
     this.dialogTarget.removeEventListener("cancel", this.handleCancel)
+    this.dialogTarget.removeEventListener("keydown", this.handleKeydown)
     document.body.classList.remove("overflow-hidden")
   }
 
@@ -90,6 +92,68 @@ export default class extends Controller {
     this.animateClose()
   }
 
+  // Native <dialog> lets Tab leave the last control for the browser UI before it
+  // wraps. Keep focus cycling inside, as the APG dialog pattern asks.
+  handleKeydown = (e) => {
+    if (e.key !== "Tab" || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return
+    // A nested dialog handles its own Tab.
+    if (e.target.closest("dialog") !== this.dialogTarget) return
+
+    const tabbables = this.tabbables()
+    if (tabbables.length === 0) {
+      e.preventDefault()
+      return
+    }
+
+    const first = tabbables[0]
+    const last = tabbables[tabbables.length - 1]
+    const active = document.activeElement
+    if (e.shiftKey && (active === first || active === this.dialogTarget)) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
+
+  // Candidates in the browser's sequential focus order: positive tabindex first,
+  // ascending, then tabindex 0 in DOM order (Array#sort is stable).
+  tabbables() {
+    const selector = "a[href], area[href], button, input, select, textarea, iframe, object, embed, summary, audio[controls], video[controls], [contenteditable], [tabindex]"
+    return [...this.dialogTarget.querySelectorAll(selector)]
+      .filter((el) =>
+        this.inTabOrder(el) &&
+        !el.matches(":disabled") && // also covers controls inside fieldset[disabled]
+        !el.closest("[inert]") &&
+        el.closest("dialog") === this.dialogTarget &&
+        this.isVisible(el)
+      )
+      .sort((a, b) => {
+        const ta = Math.max(a.tabIndex, 0)
+        const tb = Math.max(b.tabIndex, 0)
+        if (ta === tb) return 0
+        if (ta === 0) return 1
+        if (tb === 0) return -1
+        return ta - tb
+      })
+  }
+
+  // An explicit tabindex decides; otherwise the element is natively focusable.
+  // `tabIndex` reads -1 for an editing host and (in Chromium and WebKit) for
+  // <embed>, yet Tab reaches both. A contenteditable inside another is skipped.
+  inTabOrder(el) {
+    if (el.hasAttribute("tabindex")) return el.tabIndex >= 0
+    if (el.isContentEditable) return !el.parentElement?.isContentEditable
+    return el.localName === "embed" || el.tabIndex >= 0
+  }
+
+  // checkVisibility() landed in Safari 17.4; older engines fall back to layout boxes.
+  isVisible(el) {
+    if (typeof el.checkVisibility === "function") return el.checkVisibility({ visibilityProperty: true })
+    return el.getClientRects().length > 0
+  }
+
   handleClose = () => {
     this.closing = false
     delete this.dialogTarget.dataset.state
@@ -120,11 +184,11 @@ export default class extends Controller {
       }
     }
 
+    this.dialogId = dialogId
     this.triggerControls().forEach((control) => {
       if (!control.hasAttribute("aria-haspopup")) control.setAttribute("aria-haspopup", "dialog")
-      if (!control.hasAttribute("aria-controls")) control.setAttribute("aria-controls", dialogId)
-      control.setAttribute("aria-expanded", String(dialog.open))
     })
+    this.setTriggersExpanded(dialog.open)
   }
 
   // First target that lives inside this controller's own <dialog>.
@@ -148,7 +212,18 @@ export default class extends Controller {
       .filter(Boolean)
   }
 
+  // aria-controls is set only while open, as Base UI does. On close only a value
+  // pointing at this dialog is removed; one pointing elsewhere is the author's and
+  // stays. No state is kept, so a trigger added later or a reconnect (Turbo cache)
+  // behaves the same.
   setTriggersExpanded(expanded) {
-    this.triggerControls().forEach((control) => control.setAttribute("aria-expanded", String(expanded)))
+    this.triggerControls().forEach((control) => {
+      control.setAttribute("aria-expanded", String(expanded))
+      if (expanded && !control.hasAttribute("aria-controls")) {
+        control.setAttribute("aria-controls", this.dialogId)
+      } else if (!expanded && control.getAttribute("aria-controls") === this.dialogId) {
+        control.removeAttribute("aria-controls")
+      }
+    })
   }
 }

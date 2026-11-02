@@ -8,10 +8,9 @@ module RubyUI
 
     private
 
+    # No padding: DialogContent's gap-6 spaces the body, as in shadcn (vega).
     def default_attrs
-      {
-        class: "py-4"
-      }
+      {}
     end
   end
 end

@@ -284,6 +284,28 @@ class RubyUI::DialogTest < ComponentTest
     ].each { |token| assert_includes output, token }
   end
 
+  # The X icon is decorative (the sr-only "Close" names the button). The value must
+  # be the string "true": Phlex renders a boolean as a bare attribute, which ARIA ignores.
+  def test_content_close_icon_is_hidden_from_assistive_tech
+    output = phlex do
+      RubyUI.Dialog do
+        RubyUI.DialogContent { "Content" }
+      end
+    end
+
+    assert_match(/<svg\b[^>]*\saria-hidden="true"/, output)
+  end
+
+  # shadcn has no body part: DialogContent's gap-6 spaces it. Padding here would
+  # add 16px above and below the body compared with vega.
+  def test_dialog_middle_has_no_padding
+    output = render_dialog_part { RubyUI.DialogMiddle { "Body" } }
+
+    middle = output[/<div\b[^>]*>Body<\/div>/].to_s
+    refute_empty middle
+    refute_match(/\sclass=/, middle)
+  end
+
   def test_footer_close_button
     default = render_footer { RubyUI.DialogFooter { "Footer" } }
     refute_includes default, "dismiss"
