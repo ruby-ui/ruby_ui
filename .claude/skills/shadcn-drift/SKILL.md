@@ -81,7 +81,8 @@ Look at the RubyUI side when it helps decide:
 ### 3. Global checks
 
 - `theme.status == "fail"`: neutral theme tokens differ from RubyUI's CSS.
-  Always reported, with the tokens.
+  Always reported, with the tokens. `theme.status == "inconclusive"`: report
+  its `reason` (the theme couldn't be read, so it is not "clean").
 - `base_ui.head` differs from any `base_ui.baselines` value: `@base-ui/react`
   was bumped. Always reported: behavior can change with no shadcn diff.
 
@@ -97,18 +98,25 @@ Fixed shape. Short `head_sha` (7 chars) links to
 • *<Componente>* (<dimensão>): <o que mudou no shadcn, em uma frase>. <por que importa pra RubyUI>. <links dos commits>
 *Divergência possivelmente obsoleta*
 • *<Componente>*: <divergência> — <o que mudou>. <links>
+*Removido ou renomeado no shadcn*
+• *<Componente>*: o `<shadcn>.tsx` não existe mais no shadcn. <commit, se achar>
 *Global*
-• Tema neutral: <tokens> | Base UI <de> → <para>
+• Tema neutral: <tokens ou motivo de inconclusivo> | Base UI <de> → <para>
 
 Só mudanças cobertas ou sem impacto visual: <componentes>.
 Sem baseline: <componentes> (nunca auditados contra o shadcn).
 Inconclusivo: <componente> (<motivo>).
 
-Quer que eu rode o audit completo em: <componentes com drift novo, obsoleta ou sem baseline>?
+Quer que eu rode o audit completo em: <componentes com drift novo, obsoleta, removidos/renomeados ou sem baseline>?
 ```
 
-Omit empty sections. When every component is `unchanged` and the global
-checks are clean, the whole message is one line:
+Omit empty sections. `no_counterpart` components (no shadcn equivalent)
+never appear. `missing_upstream` is the biggest event `drift` can report:
+the component's file is gone (often a rename); find where it went in
+`commits` or the shadcn history before writing the line. When every
+component is `unchanged`, `no_counterpart` or `no_baseline`, and the global
+checks are clean (`theme.status == "pass"`, no Base UI bump), the whole
+message is one line:
 `*shadcn drift — semana de <dd/mm>*: nada mudou no shadcn que afete a RubyUI (shadcn <sha7>).`
 plus the "Sem baseline" line if there is one.
 

@@ -60,8 +60,13 @@ module ShadcnAudit
         return result unless changed
 
         result.merge(commits(baseline, shadcn)).merge("related_divergences" => related(folder, diff))
+      # Unattended weekly runs degrade per component: any failure here (git,
+      # a Reference parser gap on new TSX, a missing binary) costs one entry,
+      # never the whole report.
       rescue Shell::Error, ConfigError => e
         {"status" => "inconclusive", "shadcn" => shadcn, "baseline_sha" => baseline, "reason" => e.message}
+      rescue => e
+        {"status" => "inconclusive", "shadcn" => shadcn, "baseline_sha" => baseline, "reason" => "#{e.class}: #{e.message}"}
       end
 
       def reference(root, shadcn) = Reference.new(registry_dir: root.join("apps/v4/registry")).for(shadcn)
@@ -79,7 +84,7 @@ module ShadcnAudit
           "-f", "since=#{@snapshot.commit_date(baseline)}", "-f", "per_page=30",
           "--jq", '[.[] | {sha, title: (.commit.message | split("\n")[0]), url: .html_url}]')
         {"commits" => JSON.parse(json).reject { |c| c["sha"] == baseline }, "commits_error" => nil}
-      rescue Shell::Error, JSON::ParserError => e
+      rescue Shell::Error, SystemCallError, JSON::ParserError => e
         {"commits" => [], "commits_error" => e.message}
       end
 

@@ -203,4 +203,31 @@ class DriftRunnerTest < Minitest::Test
     error = assert_raises(ArgumentError) { run_drift(components: ["nope"]) }
     assert_match(/nope/, error.message)
   end
+
+  def test_missing_gh_binary_fills_commits_error
+    edit_head_badge { |path, src| path.write(src.sub("w-fit", "w-full")) }
+    @shell.stub(->(argv) { argv[0, 2] == %w[gh api] }, Errno::ENOENT.new("gh"))
+
+    badge = run_drift(components: ["badge"])["components"]["badge"]
+
+    assert_equal "changed", badge["status"]
+    assert_match(/gh/, badge["commits_error"])
+  end
+
+  def test_unexpected_error_in_one_component_is_inconclusive_and_others_still_run
+    map = ShadcnAudit::ComponentMap.new({
+      "badge" => {"shadcn" => "badge", "shadcn_sha" => BASE, "parts" => {"Badge" => "badge"}},
+      "button" => {"shadcn" => "button", "shadcn_sha" => BASE, "parts" => {"Button" => "button"}}
+    })
+    def @snapshot.diff(from, to, path)
+      raise NoMethodError, "boom" if path.end_with?("badge.tsx")
+      ""
+    end
+
+    result = run_drift(map: map)["components"]
+
+    assert_equal "inconclusive", result["badge"]["status"]
+    assert_equal "NoMethodError: boom", result["badge"]["reason"]
+    assert_equal "unchanged", result["button"]["status"]
+  end
 end
