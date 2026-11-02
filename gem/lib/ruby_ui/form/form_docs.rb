@@ -219,10 +219,10 @@ class Views::Docs::Form < Views::Base
         <<~RUBY
           Form(class: "w-2/3 space-y-6") do
             FormField do
-              FormFieldLabel { "Combobox" }
+              FormFieldLabel(for: "food-combobox") { "Combobox" }
 
               Combobox(name: "food", required: true) do
-                ComboboxTrigger { ComboboxValue(placeholder: "Pick value") }
+                ComboboxTrigger(id: "food-combobox") { ComboboxValue(placeholder: "Pick value") }
 
                 ComboboxContent do
                   ComboboxInput(placeholder: "Search", show_trigger: false)

@@ -20,7 +20,7 @@ module RubyUI
 
     def remove_button
       render Button.new(
-        variant: :ghost, size: :xs, icon: true, tabindex: -1,
+        variant: :ghost, size: :xs, icon: true,
         class: "-ml-1 opacity-50 hover:opacity-100",
         aria: {label: "Remove"},
         data: {slot!: "combobox-chip-remove", action: "click->ruby-ui--combobox#removeChip"}

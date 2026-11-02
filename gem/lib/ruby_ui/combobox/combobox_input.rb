@@ -40,7 +40,7 @@ module RubyUI
     def view_template
       @disabled ||= !!combobox[:disabled]
       div(class: INPUT_GROUP, role: "group", data: {slot: "input-group", disabled: (@disabled ? "true" : nil)}) do
-        input(**with_combobox_defaults(disabled: @disabled, aria: {controls: combobox[:list_id]}))
+        input(**with_combobox_defaults(disabled: @disabled, aria: {controls: combobox[:list_id], required: (combobox[:required] ? "true" : nil)}))
         addon
       end
     end
@@ -48,7 +48,7 @@ module RubyUI
     private
 
     def addon
-      div(class: ADDON, role: "group", data: {slot: "input-group-addon", align: "inline-end"}) do
+      div(class: ADDON, role: "group", data: {slot: "input-group-addon", align: "inline-end", action: "click->ruby-ui--combobox#focusInput"}) do
         trigger_button if @show_trigger
         clear_button if @show_clear
       end

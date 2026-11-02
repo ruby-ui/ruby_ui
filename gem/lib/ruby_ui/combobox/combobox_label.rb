@@ -2,10 +2,14 @@
 
 module RubyUI
   class ComboboxLabel < Base
+    # Inside a ComboboxGroup, the first label names the group.
     def view_template(&)
-      label_id = context[:ruby_ui_combobox_group]&.dig(:label_id)
-      label_attrs = (label_id && !attrs[:id]) ? attrs.merge(id: label_id) : attrs
-      div(**label_attrs, &)
+      names = context[:ruby_ui_combobox_group]
+      return div(**attrs, &) if names.nil? || (!attrs[:id] && names[:labelledby])
+
+      id = attrs[:id] || names[:label_id]
+      names[:labelledby] ||= id
+      div(**attrs.merge(id: id), &)
     end
 
     private

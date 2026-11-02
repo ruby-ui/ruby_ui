@@ -13,7 +13,7 @@ module RubyUI
     end
 
     def view_template
-      input(**with_combobox_defaults(disabled: @disabled || !!combobox[:disabled], aria: {controls: combobox[:list_id]}))
+      input(**with_combobox_defaults(disabled: @disabled || !!combobox[:disabled], aria: {controls: combobox[:list_id], required: (combobox[:required] ? "true" : nil)}))
     end
 
     private

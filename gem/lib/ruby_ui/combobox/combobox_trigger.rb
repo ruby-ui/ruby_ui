@@ -12,7 +12,8 @@ module RubyUI
       # The popup holds the search input, so it is a dialog (Base UI's role).
       combobox[:popup] = :dialog
       # aria-controls is set by the controller while the popup is open.
-      render Button.new(variant: :outline, disabled: !!combobox[:disabled], **attrs) do
+      trigger_attrs = with_combobox_defaults(aria: {required: (combobox[:required] ? "true" : nil)})
+      render Button.new(variant: :outline, disabled: !!combobox[:disabled], **trigger_attrs) do
         yield if block
         chevron
       end

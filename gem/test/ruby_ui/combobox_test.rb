@@ -91,7 +91,7 @@ class RubyUI::ComboboxTest < ComponentTest
   def test_input_without_trigger_keeps_an_empty_addon
     output = phlex { RubyUI.ComboboxInput(show_trigger: false) }
 
-    assert_match(/data-slot="input-group-addon" data-align="inline-end"><\/div>/, output)
+    assert_match(/data-slot="input-group-addon" data-align="inline-end" data-action="click->ruby-ui--combobox#focusInput"><\/div>/, output)
   end
 
   def test_disabled_root_disables_the_input
@@ -170,6 +170,43 @@ class RubyUI::ComboboxTest < ComponentTest
     refute_match(/value="apple" required/, output)
   end
 
+  def test_required_without_name_raises
+    assert_raises(ArgumentError) { RubyUI::Combobox.new(required: true) }
+  end
+
+  def test_required_marks_visible_controls
+    output = phlex do
+      RubyUI.Combobox(name: "f", required: true) do
+        RubyUI.ComboboxTrigger { RubyUI.ComboboxValue() }
+        RubyUI.ComboboxContent { RubyUI.ComboboxInput(show_trigger: false) }
+      end
+    end
+
+    assert_equal 2, output.scan('aria-required="true"').size
+  end
+
+  def test_group_without_label_has_no_labelledby
+    output = phlex do
+      RubyUI.ComboboxGroup(id: "g") { RubyUI.ComboboxItem(value: "a") { "A" } }
+    end
+
+    refute_match(/aria-labelledby/, output)
+  end
+
+  def test_group_uses_the_label_own_id
+    output = phlex do
+      RubyUI.ComboboxGroup(id: "g") { RubyUI.ComboboxLabel(id: "custom") { "Fruits" } }
+    end
+
+    assert_match(/aria-labelledby="custom"/, output)
+  end
+
+  def test_chip_remove_is_in_tab_order
+    output = phlex { RubyUI.ComboboxChips() }
+
+    refute_match(/data-slot="combobox-chip-remove"[^<]*tabindex/, output)
+  end
+
   def test_item_input_attributes
     output = phlex do
       RubyUI.ComboboxItem(value: "a", input: {data: {value_missing: "Pick one"}}) { "A" }
@@ -181,7 +218,7 @@ class RubyUI::ComboboxTest < ComponentTest
   def test_group_is_named_by_its_label
     output = render_popup
 
-    assert_match(/role="group" aria-labelledby="g-label"/, output)
+    assert_match(/aria-labelledby="g-label" role="group"/, output)
     assert_match(/aria-hidden="true" data-slot="combobox-label" class="px-2 py-1.5 text-xs text-muted-foreground" id="g-label"/, output)
   end
 

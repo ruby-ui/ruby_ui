@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "securerandom"
+
 module RubyUI
   # Root of a combobox. Like Base UI's Combobox.Root it has no look of its own:
   # it holds the Stimulus controller and shares name/multiple with the parts
@@ -7,6 +9,9 @@ module RubyUI
   # radio/checkbox that carries its value in the form.
   class Combobox < Base
     def initialize(name: nil, multiple: false, term: nil, disabled: false, required: false, id: nil, **)
+      # Unnamed radios are separate groups, so a required one could never pass.
+      raise ArgumentError, "name: is required when required: is true" if required && name.to_s.empty?
+
       @name = name
       @multiple = multiple
       @term = term

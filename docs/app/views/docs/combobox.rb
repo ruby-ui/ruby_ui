@@ -236,9 +236,9 @@ class Views::Docs::Combobox < Views::Base
         <<~RUBY
           form(class: "flex w-80 flex-col gap-4") do
             FormField do
-              FormFieldLabel { "Framework" }
+              FormFieldLabel(for: "framework-form-input") { "Framework" }
               Combobox(name: "framework_form", required: true) do
-                ComboboxInput(placeholder: "Select a framework")
+                ComboboxInput(id: "framework-form-input", placeholder: "Select a framework")
                 ComboboxContent do
                   ComboboxEmpty { "No items found." }
                   ComboboxList do
@@ -251,10 +251,10 @@ class Views::Docs::Combobox < Views::Base
               FormFieldError()
             end
             FormField do
-              FormFieldLabel { "Stack" }
+              FormFieldLabel(for: "stack-form-input") { "Stack" }
               Combobox(name: "stack_form[]", multiple: true, required: true) do
                 ComboboxChips do
-                  ComboboxChipsInput(placeholder: "Add a tool")
+                  ComboboxChipsInput(id: "stack-form-input", placeholder: "Add a tool")
                 end
                 ComboboxContent do
                   ComboboxEmpty { "No items found." }

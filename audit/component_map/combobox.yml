@@ -34,14 +34,19 @@ selectors:
   ComboboxChips: null
   ComboboxChip: null
   ComboboxChipsInput: null
+# Combobox, ComboboxItem and the inputs' placeholder are Base UI primitive
+# props (Combobox.Root, Combobox.Item, Combobox.Input), not declared in the .tsx.
 props:
+  Combobox: {name: name, multiple: multiple, disabled: disabled, required: required}
   ComboboxContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset, anchor: null}
-  ComboboxInput: {disabled: disabled, showTrigger: show_trigger, showClear: show_clear}
+  ComboboxInput: {placeholder: placeholder, disabled: disabled, showTrigger: show_trigger, showClear: show_clear}
+  ComboboxChipsInput: {placeholder: placeholder, disabled: disabled}
+  ComboboxItem: {value: value, disabled: disabled}
+  # RubyUI takes show_remove: on ComboboxChips (audit/divergences/combobox.yml).
   ComboboxChip: {showRemove: null}
 rubyui_only:
-  Combobox: [name, multiple, term, disabled, required]
+  Combobox: [term]
   ComboboxValue: [placeholder]
-  ComboboxItem: [value, selected, disabled, text, input]
-  ComboboxChips: [show_remove]
-  ComboboxChipsInput: [placeholder, disabled]
+  ComboboxItem: [selected, text, input]
+  ComboboxChips: [max]
 fixture_shadcn: [button]

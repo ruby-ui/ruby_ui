@@ -41,6 +41,10 @@ export default class extends Controller {
     // the control people see, so the error is announced and styled there.
     this.invalidObserver = new MutationObserver(() => this.syncInvalid());
     this.invalidObserver.observe(this.element, { subtree: true, attributes: true, attributeFilter: ["aria-invalid", "aria-describedby"] });
+    // The form's reset unchecks the inputs without firing change.
+    this.form = this.element.closest("form");
+    this.form?.addEventListener("reset", this.handleFormReset);
+    this.syncInvalid();
     this.refresh();
   }
 
@@ -48,6 +52,8 @@ export default class extends Controller {
     document.removeEventListener("pointerdown", this.handleOutsidePointerDown, true);
     this.removeFocusReturn();
     this.invalidObserver?.disconnect();
+    this.form?.removeEventListener("reset", this.handleFormReset);
+    clearTimeout(this.resetTimeout);
     this.stopAutoUpdate();
     if (this.hasContentTarget) this.settleExit(this.contentTarget);
   }
@@ -56,6 +62,9 @@ export default class extends Controller {
   // server markup may have reset, and the checked inputs.
   refresh() {
     this.assignOptionIds();
+    if (this.hasListTarget && this.listTarget.id) {
+      this.inputTargets.forEach((input) => input.setAttribute("aria-controls", this.listTarget.id));
+    }
     if (this.hasContentTarget) {
       const content = this.contentTarget;
       // A morph can restore data-closed while the native popover is still open
@@ -71,6 +80,18 @@ export default class extends Controller {
   itemTargetConnected() {
     this.assignOptionIds();
   }
+
+  // reset fires before the form restores its controls; the next task sees the
+  // restored checked state.
+  handleFormReset = () => {
+    clearTimeout(this.resetTimeout);
+    this.resetTimeout = setTimeout(() => {
+      this.refresh();
+      // Lets CheckboxGroup (required multiple:) recompute its required flags.
+      const first = this.itemTargets.map((item) => this.inputOf(item)).find(Boolean);
+      if (first?.type === "checkbox") first.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  };
 
   syncInvalid() {
     const control = this.hasTriggerTarget ? this.triggerTarget : this.hasInputTarget ? this.inputTarget : null;
@@ -476,6 +497,7 @@ export default class extends Controller {
       chip.setAttribute("data-summary", "");
       const text = chip.querySelector("[data-text]") || chip;
       text.textContent = `${selected.length} ${this.termValue || "selected"}`;
+      chip.querySelector("[data-slot=combobox-chip-remove]")?.setAttribute("aria-label", "Clear selection");
       if (this.disabled) chip.querySelector("button")?.setAttribute("disabled", "");
       this.chipsTarget.insertBefore(chip, before);
       return;
@@ -485,6 +507,7 @@ export default class extends Controller {
       chip.dataset.value = item.dataset.value;
       const text = chip.querySelector("[data-text]") || chip;
       text.textContent = this.textOf(item);
+      chip.querySelector("[data-slot=combobox-chip-remove]")?.setAttribute("aria-label", `Remove ${this.textOf(item)}`);
       if (this.isDisabled(item) || this.disabled) chip.querySelector("button")?.setAttribute("disabled", "");
       this.chipsTarget.insertBefore(chip, before);
     });
@@ -508,10 +531,6 @@ export default class extends Controller {
 
   get selectedItems() {
     return this.itemTargets.filter((item) => this.inputOf(item)?.checked);
-  }
-
-  get selectedInputs() {
-    return this.selectedItems.map((item) => this.inputOf(item));
   }
 
   get selectedText() {
