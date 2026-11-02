@@ -131,7 +131,7 @@ This file expands the curated /llms.txt map into a compact reference that can be
 ### Calendar
 
 - URL: https://rubyui.com/docs/calendar
-- Summary: Date field component for entering and editing dates.
+- Summary: A calendar that lets users pick a date, with keyboard navigation.
 
 ### Card
 

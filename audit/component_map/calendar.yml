@@ -16,7 +16,7 @@ parts:
 selectors:
   Calendar: '[data-controller="ruby-ui--calendar"]'
 props:
-  Calendar: {selected: selected_date, disabled: min_date, showOutsideDays: null, captionLayout: null, buttonVariant: null, locale: null, formatters: null, components: null, classNames: null}
+  Calendar: {selected: selected_date, disabled: min_date, weekStartsOn: week_starts_on, showOutsideDays: null, captionLayout: null, buttonVariant: null, locale: null, formatters: null, components: null, classNames: null}
 rubyui_only:
   Calendar: [input_id, date_format]
   CalendarTitle: [default]

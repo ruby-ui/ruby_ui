@@ -43,6 +43,20 @@ export default class extends Controller {
   initialize() {
     this.focusedDate = null;
     this.shouldFocus = false;
+
+    // Nothing selected and today before min_date: open on the min_date month,
+    // where days can be picked, instead of a month that is all disabled.
+    const minDate = this.minDate();
+    if (
+      !this.selectedDate() &&
+      minDate &&
+      this.startOfDay(new Date()) < this.startOfDay(minDate)
+    ) {
+      this.viewDateValue = this.toISODate(
+        new Date(minDate.getFullYear(), minDate.getMonth(), 2),
+      );
+    }
+
     this.updateCalendar(); // Initial calendar render
   }
 
@@ -61,10 +75,13 @@ export default class extends Controller {
     const date = this.parseDate(e.currentTarget.dataset.day);
     if (!date || this.isDateDisabled(date)) return;
 
-    // Selecting the selected day again needs no re-render, but the linked
-    // input may have been edited since: write the date back into it.
+    // Selecting the selected day again: make it the Tab stop again and write
+    // the date back into the linked input, which may have been edited since.
     const value = this.toISODate(date);
     if (value === this.selectedDateValue) {
+      this.focusedDate = date;
+      this.shouldFocus = true;
+      this.updateCalendar();
       this.syncInputs(date);
       return;
     }
@@ -244,7 +261,8 @@ export default class extends Controller {
   }
 
   // The one day in the Tab sequence: the focused day, else the selected day,
-  // else today, else the first enabled day of the month on view.
+  // else today, else the first enabled day of the month on view, else the
+  // first enabled day anywhere in the rendered grid (outside days included).
   tabbableDate() {
     const view = this.viewDate();
     const inView = (date) =>
@@ -263,7 +281,11 @@ export default class extends Controller {
       const date = new Date(view.getFullYear(), view.getMonth(), day);
       if (!this.isDateDisabled(date)) return date;
     }
-    return null;
+    return (
+      this.weeks()
+        .flat()
+        .find((date) => !this.isDateDisabled(date)) || null
+    );
   }
 
   // Full weeks covering the month on view, starting on weekStartsOn.

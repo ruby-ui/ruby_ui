@@ -30,7 +30,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Breadcrumb](https://rubyui.com/docs/breadcrumb): Navigation trail showing the current location in a hierarchy.
 - [Bubble](https://rubyui.com/docs/bubble): Chat bubble surface with variants, alignment, grouping, and reactions.
 - [Button](https://rubyui.com/docs/button): Button component and button-like variants.
-- [Calendar](https://rubyui.com/docs/calendar): Date field component for entering and editing dates.
+- [Calendar](https://rubyui.com/docs/calendar): A calendar that lets users pick a date, with keyboard navigation.
 - [Card](https://rubyui.com/docs/card): Content container with header, content, and footer primitives.
 - [Carousel](https://rubyui.com/docs/carousel): Embla-powered carousel with motion and swipe interactions.
 - [Checkbox](https://rubyui.com/docs/checkbox): Control for toggling between checked and unchecked states.

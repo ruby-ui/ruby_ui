@@ -88,7 +88,7 @@ class SiteFiles
     {title: "Breadcrumb", path: "/docs/breadcrumb", description: "Navigation trail showing the current location in a hierarchy."},
     {title: "Bubble", path: "/docs/bubble", description: "Chat bubble surface with variants, alignment, grouping, and reactions."},
     {title: "Button", path: "/docs/button", description: "Button component and button-like variants."},
-    {title: "Calendar", path: "/docs/calendar", description: "Date field component for entering and editing dates."},
+    {title: "Calendar", path: "/docs/calendar", description: "A calendar that lets users pick a date, with keyboard navigation."},
     {title: "Card", path: "/docs/card", description: "Content container with header, content, and footer primitives."},
     {title: "Carousel", path: "/docs/carousel", description: "Embla-powered carousel with motion and swipe interactions."},
     {title: "Checkbox", path: "/docs/checkbox", description: "Control for toggling between checked and unchecked states."},

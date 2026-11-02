@@ -1,6 +1,7 @@
 # One single-mode Calendar showing March 2026 (a fixed month, away from today),
 # with 2026-03-12 selected and every day before 2026-03-05 disabled
-# (RubyUI min_date, shadcn disabled={{ before }}). Outside days on both sides.
+# (RubyUI min_date, shadcn disabled={{ before }}). Both sides show trailing
+# outside days (April 1-4); March 2026 starts on Sunday, so there are no leading ones.
 # form_control kind: closed and focus; data-audit-trigger is on the root, so the
 # first Tab into it (the previous-month button) counts as focus.
 selected: "2026-03-12"
