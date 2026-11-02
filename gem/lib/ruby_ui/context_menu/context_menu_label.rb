@@ -11,7 +11,8 @@ module RubyUI
 
     def view_template(&)
       names = context[:ruby_ui_context_menu_group]
-      return div(**attrs, &) if names.nil? || (!attrs[:id] && names[:labelledby])
+      # Only the first label names the group; later ones stay plain headings.
+      return div(**attrs, &) if names.nil? || names[:labelledby]
 
       id = attrs[:id] || names[:label_id]
       names[:labelledby] ||= id

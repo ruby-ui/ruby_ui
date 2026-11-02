@@ -1,9 +1,12 @@
 import {
   ContextMenu,
+  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuGroup,
   ContextMenuItem,
   ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
   ContextMenuTrigger,
@@ -54,6 +57,13 @@ export default function ContextMenuFixture() {
           <ContextMenuItem>Developer Tools</ContextMenuItem>
           <ContextMenuItem>Task Manager</ContextMenuItem>
         </ContextMenuGroup>
+        <ContextMenuSeparator />
+        <ContextMenuCheckboxItem defaultChecked>Show Bookmarks Bar</ContextMenuCheckboxItem>
+        <ContextMenuSeparator />
+        <ContextMenuRadioGroup defaultValue="pedro">
+          <ContextMenuRadioItem value="pedro">Pedro Duarte</ContextMenuRadioItem>
+          <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
       </ContextMenuContent>
     </ContextMenu>
   )

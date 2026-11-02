@@ -42,6 +42,13 @@ module ShadcnAuditFixtures
             ContextMenuItem { "Developer Tools" }
             ContextMenuItem { "Task Manager" }
           end
+          ContextMenuSeparator()
+          ContextMenuCheckboxItem(checked: true) { "Show Bookmarks Bar" }
+          ContextMenuSeparator()
+          ContextMenuRadioGroup do
+            ContextMenuRadioItem(value: "pedro", checked: true) { "Pedro Duarte" }
+            ContextMenuRadioItem(value: "colm") { "Colm Tuite" }
+          end
         end
       end
       script { raw(safe(OPEN_AS_CONTEXT_MENU)) }

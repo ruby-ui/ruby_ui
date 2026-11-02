@@ -29,6 +29,8 @@ module RubyUI
         popover: "manual",
         data: {
           slot: "context-menu-content",
+          # Kept in sync with data-open/data-closed for CSS that targets data-[state=...].
+          state: "closed",
           ruby_ui__context_menu_target: "content",
           action: "keydown->ruby-ui--context-menu#keydown",
           closed: "",

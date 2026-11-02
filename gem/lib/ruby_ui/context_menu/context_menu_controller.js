@@ -76,6 +76,7 @@ export default class extends Controller {
     content.style.setProperty("--transform-origin", this.transformOrigin(content.dataset.preferredSide || "right", align));
     content.removeAttribute("data-closed");
     content.setAttribute("data-open", "");
+    content.dataset.state = "open";
     if (!content.matches(":popover-open")) content.showPopover();
     this.position();
     this.makeModal();
@@ -94,6 +95,7 @@ export default class extends Controller {
     const focusWasInside = content.contains(document.activeElement);
     content.removeAttribute("data-open");
     content.setAttribute("data-closed", "");
+    content.dataset.state = "closed";
     animate ? this.hideAfterExitAnimation(content) : this.settleExit(content);
 
     if (focusWasInside) {
@@ -378,6 +380,7 @@ export default class extends Controller {
     if (animated.hasAttribute("data-open")) return;
     animated.removeAttribute("data-open");
     animated.setAttribute("data-closed", "");
+    animated.dataset.state = "closed";
     if (animated.matches(":popover-open")) animated.hidePopover();
   }
 }

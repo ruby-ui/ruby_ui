@@ -140,8 +140,39 @@ class RubyUI::ContextMenuTest < ComponentTest
     checkbox = phlex { RubyUI.ContextMenuCheckboxItem(checked: true) { "Bookmarks" } }
     radio = phlex { RubyUI.ContextMenuRadioItem(value: "a") { "A" } }
 
-    assert_match(/group\/context-menu-checkbox-item .*group-aria-checked\/context-menu-checkbox-item:flex/m, checkbox)
-    assert_match(/group\/context-menu-radio-item .*group-aria-checked\/context-menu-radio-item:flex/m, radio)
+    assert_match(/role="menuitemcheckbox"[^>]*aria-checked="true"/, checkbox)
+    assert_match(/role="menuitemradio"[^>]*aria-checked="false"/, radio)
+    assert_match(/class="group\/context-menu-checkbox-item /, checkbox)
+    assert_match(/class="group\/context-menu-radio-item /, radio)
+    # The indicator starts hidden and only its parent's aria-checked="true" shows it.
+    assert_match(/data-slot="context-menu-item-indicator" class="[^"]*\bhidden\b[^"]*group-aria-checked\/context-menu-checkbox-item:flex/, checkbox)
+    assert_match(/data-slot="context-menu-item-indicator" class="[^"]*\bhidden\b[^"]*group-aria-checked\/context-menu-radio-item:flex/, radio)
+  end
+
+  def test_removed_options_raise_a_clear_error
+    error = assert_raises(ArgumentError) { RubyUI::ContextMenu.new(options: {placement: "right"}) }
+
+    assert_match(/ContextMenuContent\(side:/, error.message)
+  end
+
+  def test_content_keeps_data_state_for_existing_css
+    output = phlex { RubyUI.ContextMenuContent { RubyUI.ContextMenuItem { "Back" } } }
+
+    assert_match(/data-state="closed"/, output)
+  end
+
+  def test_only_the_first_label_names_the_group
+    output = phlex do
+      RubyUI.ContextMenuGroup(id: "tools") do
+        RubyUI.ContextMenuLabel { "More Tools" }
+        RubyUI.ContextMenuLabel(id: "second") { "Extras" }
+      end
+    end
+
+    assert_match(/aria-labelledby="tools-label"/, output)
+    second = output[/<div[^>]*id="second"[^>]*>/]
+    refute_nil second
+    refute_match(/aria-hidden/, second)
   end
 
   def test_label_outside_a_group_stays_visible_to_assistive_tech

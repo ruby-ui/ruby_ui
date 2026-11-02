@@ -1,6 +1,6 @@
 # Same strings on both sides. The trigger converts a left click into a
 # contextmenu event at the click point (collect only left-clicks). Forward is
-# disabled.
+# disabled; Show Bookmarks Bar and Pedro Duarte start checked.
 trigger: Right click here
 items:
   - Back
@@ -14,3 +14,7 @@ label: More Tools
 tools:
   - Developer Tools
   - Task Manager
+checkbox: Show Bookmarks Bar
+radios:
+  - Pedro Duarte
+  - Colm Tuite

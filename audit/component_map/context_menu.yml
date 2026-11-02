@@ -3,7 +3,8 @@ shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
 kind: menu
 docs_view: context_menu
 # The fixture follows the docs example: two groups (the second labelled),
-# items with shortcuts, one disabled. Both triggers turn a left click into a
+# items with shortcuts, one disabled, then a checked checkbox item and a
+# radio group. Both triggers turn a left click into a
 # contextmenu event at the same point, so collect's click opens the menu.
 parts:
   ContextMenu: context-menu
@@ -27,9 +28,9 @@ selectors:
   ContextMenuShortcut: '[data-slot="context-menu-shortcut"]'
   ContextMenuLabel: '[data-slot="context-menu-label"]'
   ContextMenuSeparator: '[data-slot="context-menu-separator"]'
-  ContextMenuCheckboxItem: null
-  ContextMenuRadioGroup: null
-  ContextMenuRadioItem: null
+  ContextMenuCheckboxItem: '[data-slot="context-menu-checkbox-item"]'
+  ContextMenuRadioGroup: '[data-slot="context-menu-radio-group"]'
+  ContextMenuRadioItem: '[data-slot="context-menu-radio-item"]'
 # Item/Label/CheckboxItem/RadioItem props come from the .tsx (inset, variant,
 # checked) and the Base UI primitives (disabled, value). Content placement
 # props from the .tsx.

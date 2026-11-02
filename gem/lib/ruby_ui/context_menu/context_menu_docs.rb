@@ -8,7 +8,7 @@ class Views::Docs::ContextMenu < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Basic", description: "Right click (or press the ContextMenu key) on the trigger: the menu opens at the pointer and takes focus. Arrow keys, Home/End and typing a letter move through the items; Enter or Space picks one, Esc closes. While it is open the page behind is inert and doesn't scroll.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Basic", description: "Right click the trigger, or press the ContextMenu key while it has focus (give it tabindex: 0 if it holds nothing focusable): the menu opens at the pointer and takes focus. Arrow keys, Home/End and typing a letter move through the items; Enter or Space picks one, Esc closes. While it is open the page behind is inert and doesn't scroll.", context: self) do
         <<~RUBY
           ContextMenu do
             ContextMenuTrigger(class: "flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm") { "Right click here" }
@@ -72,8 +72,8 @@ class Views::Docs::ContextMenu < Views::Base
           ContextMenu do
             ContextMenuTrigger(class: "flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm") { "Right click here" }
             ContextMenuContent do
-              ContextMenuItem(href: "#links") { "Copy link" }
-              ContextMenuItem(href: "#links") { "Open in new tab" }
+              ContextMenuItem(href: "#links") { "History" }
+              ContextMenuItem(href: "#links") { "Settings" }
             end
           end
         RUBY
@@ -92,7 +92,7 @@ class Views::Docs::ContextMenu < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Radio group", description: "ContextMenuRadioItems in a ContextMenuRadioGroup: checking one unchecks the rest. event.detail.value of ruby-ui--context-menu:change carries the value:.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Radio group", description: "ContextMenuRadioItems in a ContextMenuRadioGroup: checking one unchecks the rest. In ruby-ui--context-menu:change, event.detail.value carries the item's value: argument.", context: self) do
         <<~RUBY
           ContextMenu do
             ContextMenuTrigger(class: "flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm") { "Right click here" }
