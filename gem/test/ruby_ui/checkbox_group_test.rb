@@ -32,7 +32,7 @@ class RubyUI::CheckboxGroupTest < ComponentTest
     assert_match(/data-required/, output)
   end
 
-  def test_checkbox_revalidates_its_field_on_group_change
+  def test_checkbox_listens_for_group_change
     output = phlex { RubyUI.Checkbox(id: "a") }
 
     assert_match(/ruby-ui--checkbox-group:change-&gt;ruby-ui--form-field#onChange|ruby-ui--checkbox-group:change->ruby-ui--form-field#onChange/, output)

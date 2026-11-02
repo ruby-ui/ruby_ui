@@ -62,33 +62,36 @@ class Views::Docs::CheckboxGroup < Views::Base
       render Docs::VisualCodeExample.new(title: "With error message", context: self) do
         <<~RUBY
           form(class: "flex flex-col gap-6") do
-            FormField do
-              FormFieldLabel { "Topics" }
-              FormFieldHint { "Pick at least one topic." }
+            FormFieldSet do
+              FormFieldLegend(variant: :label) { "Topics" }
 
-              CheckboxGroup(required: true) do
-                div(class: "flex items-center gap-3") do
-                  Checkbox(
-                    id: "topic_rails",
-                    name: "topics[]",
-                    value: "rails",
-                    data: {value_missing: "Pick at least one topic."}
-                  )
-                  FormFieldLabel(for: "topic_rails", class: "font-normal") { "Rails" }
+              FormField do
+                FormFieldHint { "Pick at least one topic." }
+
+                CheckboxGroup(required: true) do
+                  div(class: "flex items-center gap-3") do
+                    Checkbox(
+                      id: "topic_rails",
+                      name: "topics[]",
+                      value: "rails",
+                      data: {value_missing: "Pick at least one topic."}
+                    )
+                    FormFieldLabel(for: "topic_rails", class: "font-normal") { "Rails" }
+                  end
+
+                  div(class: "flex items-center gap-3") do
+                    Checkbox(
+                      id: "topic_hotwire",
+                      name: "topics[]",
+                      value: "hotwire",
+                      data: {value_missing: "Pick at least one topic."}
+                    )
+                    FormFieldLabel(for: "topic_hotwire", class: "font-normal") { "Hotwire" }
+                  end
                 end
 
-                div(class: "flex items-center gap-3") do
-                  Checkbox(
-                    id: "topic_hotwire",
-                    name: "topics[]",
-                    value: "hotwire",
-                    data: {value_missing: "Pick at least one topic."}
-                  )
-                  FormFieldLabel(for: "topic_hotwire", class: "font-normal") { "Hotwire" }
-                end
+                FormFieldError()
               end
-
-              FormFieldError()
             end
 
             Button(type: "submit", class: "w-fit") { "Save" }

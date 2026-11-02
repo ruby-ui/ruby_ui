@@ -6,7 +6,7 @@
   since: "2026-11-02"
 - component: checkbox
   dimension: Behavior
-  rubyui: "After a group's required state flips, the CheckboxGroup controller dispatches ruby-ui--checkbox-group:change on every checkbox so each enclosing FormField re-validates"
+  rubyui: "In a required group, every checkbox change makes the CheckboxGroup controller dispatch ruby-ui--checkbox-group:change on every checkbox so each enclosing FormField re-validates"
   shadcn: "Validation is left to the app's form library"
   reason: "With shadcn's composition (one Field orientation=horizontal per checkbox) only the clicked checkbox's field would see the change, leaving its siblings marked invalid."
   since: "2026-11-02"

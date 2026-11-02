@@ -10,6 +10,8 @@ export default class extends Controller {
   onChange() {
     this.#handleRequired();
 
+    if (!this.element.hasAttribute("data-required")) return;
+
     // Toggling `required` changes every checkbox's validity, not only the one
     // the user clicked. When each checkbox sits in its own FormField (shadcn's
     // Field orientation="horizontal"), tell each field to re-check its state.
