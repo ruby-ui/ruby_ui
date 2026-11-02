@@ -1,0 +1,17 @@
+shadcn: collapsible
+kind: disclosure
+docs_view: collapsible
+parts:
+  Collapsible: collapsible
+  CollapsibleTrigger: collapsible-trigger
+  CollapsibleContent: collapsible-content
+selectors:
+  Collapsible: '[data-slot="collapsible"]'
+  CollapsibleTrigger: '[data-slot="collapsible-trigger"]'
+  CollapsibleContent: '[data-slot="collapsible-content"]'
+props:
+  Collapsible: {open: null, defaultOpen: open, onOpenChange: null, disabled: disabled}
+  CollapsibleContent: {keepMounted: null, hiddenUntilFound: hidden_until_found}
+rubyui_only:
+  CollapsibleTrigger: [variant, size, icon]
+fixture_shadcn: [button]
