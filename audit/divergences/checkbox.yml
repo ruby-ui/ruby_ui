@@ -1,0 +1,12 @@
+- component: checkbox
+  dimension: Props
+  rubyui: "CheckboxGroup(required: true) renders data-required; its Stimulus controller makes every checkbox required until one is checked, so the form needs at least one"
+  shadcn: "No CheckboxGroup component: a checkbox group is FieldGroup data-slot=\"checkbox-group\", with no group-level required (Base UI's CheckboxGroup has none either)"
+  reason: "HTML has no required for a group of checkboxes, and Rails forms have no client form library to enforce it; apps (e.g. dynamic required multi-choice fields) need at least-one validation."
+  since: "2026-11-02"
+- component: checkbox
+  dimension: Behavior
+  rubyui: "In a required group, every checkbox change makes the CheckboxGroup controller dispatch ruby-ui--checkbox-group:change on every checkbox so each enclosing FormField re-validates"
+  shadcn: "Validation is left to the app's form library"
+  reason: "With shadcn's composition (one Field orientation=horizontal per checkbox) only the clicked checkbox's field would see the change, leaving its siblings marked invalid."
+  since: "2026-11-02"
