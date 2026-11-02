@@ -191,6 +191,8 @@ GEM
     nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    nokogiri (1.19.4-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
     parallel (2.3.0)
@@ -304,6 +306,7 @@ GEM
     sin_lru_redux (2.5.3)
     sqlite3 (2.10.2)
       mini_portile2 (~> 2.8.0)
+    sqlite3 (2.10.2-arm64-darwin)
     sqlite3 (2.10.2-x86_64-linux-gnu)
     standard (1.57.0)
       language_server-protocol (~> 3.17.0.2)
@@ -349,6 +352,7 @@ GEM
     zeitwerk (2.8.3)
 
 PLATFORMS
+  arm64-darwin
   ruby
   x86_64-linux
 
