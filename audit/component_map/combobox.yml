@@ -1,0 +1,52 @@
+shadcn: combobox
+kind: popover
+docs_view: combobox
+# The fixture follows shadcn's "Combobox in Popup" example: a Button trigger
+# with the value, the search input inside the popup, one labelled group.
+parts:
+  Combobox: null
+  ComboboxTrigger: combobox-trigger
+  ComboboxValue: combobox-value
+  ComboboxInput: input-group-control
+  ComboboxContent: combobox-content
+  ComboboxList: combobox-list
+  ComboboxEmpty: combobox-empty
+  ComboboxGroup: combobox-group
+  ComboboxLabel: combobox-label
+  ComboboxSeparator: combobox-separator
+  ComboboxItem: combobox-item
+  ComboboxChips: combobox-chips
+  ComboboxChip: combobox-chip
+  ComboboxChipsInput: combobox-chip-input
+  ComboboxToggleAll: null
+  ComboboxContext: null
+selectors:
+  ComboboxTrigger: 'button[data-ruby-ui--combobox-target="trigger"]'
+  ComboboxValue: null
+  ComboboxInput: '[data-slot="input-group-control"]'
+  ComboboxContent: '[data-slot="combobox-content"]'
+  ComboboxList: '[data-slot="combobox-list"]'
+  ComboboxEmpty: '[data-slot="combobox-empty"]'
+  ComboboxGroup: '[data-slot="combobox-group"]'
+  ComboboxLabel: '[data-slot="combobox-label"]'
+  ComboboxItem: '[data-slot="combobox-item"]'
+  ComboboxSeparator: null
+  ComboboxChips: null
+  ComboboxChip: null
+  ComboboxChipsInput: null
+# Combobox, ComboboxItem and the inputs' placeholder are Base UI primitive
+# props (Combobox.Root, Combobox.Item, Combobox.Input), not declared in the .tsx.
+props:
+  Combobox: {name: name, multiple: multiple, disabled: disabled, required: required}
+  ComboboxContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset, anchor: null}
+  ComboboxInput: {placeholder: placeholder, disabled: disabled, showTrigger: show_trigger, showClear: show_clear}
+  ComboboxChipsInput: {placeholder: placeholder, disabled: disabled}
+  ComboboxItem: {value: value, disabled: disabled}
+  # RubyUI takes show_remove: on ComboboxChips (audit/divergences/combobox.yml).
+  ComboboxChip: {showRemove: null}
+rubyui_only:
+  Combobox: [term]
+  ComboboxValue: [placeholder]
+  ComboboxItem: [selected, text, input]
+  ComboboxChips: [max]
+fixture_shadcn: [button]

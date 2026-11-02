@@ -1,0 +1,12 @@
+# shadcn "Combobox in Popup": the trigger shows the selected value (Apple is
+# preselected on both sides) and the search input lives inside the popup.
+value: Apple
+placeholder: Search
+empty: No items found.
+group: Fruits
+items:
+  - Apple
+  - Banana
+  - Blueberry
+  - Grapes
+  - Pineapple

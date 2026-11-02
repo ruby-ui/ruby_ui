@@ -30,6 +30,8 @@ collapsible:
     - "Button"
 
 combobox:
+  components:
+    - "Button"
   js_packages:
     - "@floating-ui/dom"
 

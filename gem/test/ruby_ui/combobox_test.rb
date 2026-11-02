@@ -3,250 +3,279 @@
 require "test_helper"
 
 class RubyUI::ComboboxTest < ComponentTest
-  def test_render_with_radio_items
-    output = phlex do
-      RubyUI.Combobox(multiple: true, term: "frameworks") do
-        RubyUI.ComboboxTrigger placeholder: "Select your framework"
-
-        RubyUI.ComboboxPopover do
-          RubyUI.ComboboxSearchInput(placeholder: "Type the framework name")
-
+  def render_popup(**root)
+    phlex do
+      RubyUI.Combobox(name: "fruit", id: "fruits", **root) do
+        RubyUI.ComboboxTrigger { RubyUI.ComboboxValue(placeholder: "Pick a fruit") }
+        RubyUI.ComboboxContent do
+          RubyUI.ComboboxInput(placeholder: "Search", show_trigger: false)
+          RubyUI.ComboboxEmpty { "No items found." }
           RubyUI.ComboboxList do
-            RubyUI.ComboboxEmptyState { "No results" }
-
-            RubyUI.ComboboxListGroup label: "Ruby" do
-              RubyUI.ComboboxItem do
-                RubyUI.ComboboxRadio(name: "Rails", value: "rails")
-              end
-              RubyUI.ComboboxItem do
-                RubyUI.ComboboxRadio(name: "Hanami", value: "hanami")
-              end
+            RubyUI.ComboboxGroup(id: "g") do
+              RubyUI.ComboboxLabel { "Fruits" }
+              RubyUI.ComboboxItem(value: "apple", selected: true) { "Apple" }
+              RubyUI.ComboboxItem(value: "banana", disabled: true) { "Banana" }
             end
-
-            RubyUI.ComboboxItem do
-              RubyUI.ComboboxRadio(name: "Lucky", value: "lucky")
-            end
-            RubyUI.ComboboxItem do
-              RubyUI.ComboboxRadio(name: "Kemal", value: "kemal")
-            end
+            RubyUI.ComboboxSeparator()
           end
         end
       end
     end
-
-    assert_match(/Hanami/, output)
   end
 
-  def test_render_with_checkbox_items
+  def test_root_has_no_role_and_wires_the_controller
+    output = render_popup
+
+    assert_match(/<div id="fruits" data-slot="combobox" data-controller="ruby-ui--combobox"/, output)
+    refute_match(/<div id="fruits"[^>]*role=/, output)
+  end
+
+  def test_trigger_is_an_outline_button_with_combobox_role
+    output = render_popup
+
+    assert_match(/role="combobox"/, output)
+    assert_match(/aria-haspopup="dialog"/, output)
+    refute_match(/aria-controls="fruits-content"/, output)
+    assert_match(/aria-expanded="false"/, output)
+    assert_match(/border-border bg-background shadow-xs/, output)
+    assert_match(/font-normal/, output)
+  end
+
+  def test_content_is_a_manual_popover_dialog_with_vega_classes
+    output = render_popup
+
+    assert_match(/id="fruits-content" role="dialog" popover="manual" data-slot="combobox-content"/, output)
+    assert_match(/data-closed=""/, output)
+    assert_match(/ring-1 ring-foreground\/10/, output)
+    assert_match(/data-open:animate-in/, output)
+  end
+
+  def test_content_without_trigger_has_no_dialog_role
     output = phlex do
-      RubyUI.Combobox(multiple: true, term: "frameworks") do
-        RubyUI.ComboboxTrigger placeholder: "Select your framework"
-
-        RubyUI.ComboboxPopover do
-          RubyUI.ComboboxSearchInput(placeholder: "Type the framework name")
-
-          RubyUI.ComboboxList do
-            RubyUI.ComboboxEmptyState { "No results" }
-
-            RubyUI.ComboboxListGroup label: "Ruby" do
-              RubyUI.ComboboxItem do
-                RubyUI.ComboboxCheckbox(name: "Rails", value: "rails")
-              end
-              RubyUI.ComboboxItem do
-                RubyUI.ComboboxCheckbox(name: "Hanami", value: "hanami")
-              end
-            end
-
-            RubyUI.ComboboxItem do
-              RubyUI.ComboboxCheckbox(name: "Lucky", value: "lucky")
-            end
-            RubyUI.ComboboxItem do
-              RubyUI.ComboboxCheckbox(name: "Kemal", value: "kemal")
-            end
-          end
-        end
+      RubyUI.Combobox(name: "f", id: "c") do
+        RubyUI.ComboboxInput(placeholder: "Pick")
+        RubyUI.ComboboxContent { RubyUI.ComboboxList { RubyUI.ComboboxItem(value: "a") { "A" } } }
       end
     end
 
-    assert_match(/Hanami/, output)
+    refute_match(/role="dialog"/, output)
   end
 
-  def test_combobox_item_renders_expected_role_and_state_classes
-    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/role="option"/, output)
-    assert_match(/has-\[:checked\]:bg-accent/, output)
-    assert_match(/aria-\[current=true\]:ring/, output)
+  def test_content_placement
+    output = phlex { RubyUI.ComboboxContent(side: :top, align: :end, side_offset: 10, align_offset: 2) }
+
+    assert_match(/data-preferred-side="top"/, output)
+    assert_match(/data-align="end"/, output)
+    assert_match(/data-side-offset="10"/, output)
+    assert_match(/data-align-offset="2"/, output)
   end
 
-  def test_combobox_radio_renders_styled_input
-    output = phlex { RubyUI.ComboboxRadio(name: "x", value: "1") }
-    assert_match(/rounded-full/, output)
-    assert_match(/border-primary/, output)
-    assert_match(/checked:bg-primary/, output)
+  def test_input_is_a_combobox_controlling_the_list
+    output = render_popup
+
+    assert_match(/aria-controls="fruits-list" aria-autocomplete="list" aria-expanded="false" aria-haspopup="listbox" type="text" role="combobox"/, output)
+    assert_match(/data-slot="input-group"/, output)
+    assert_match(/data-slot="input-group-control"/, output)
   end
 
-  def test_combobox_checkbox_renders_styled_input
-    output = phlex { RubyUI.ComboboxCheckbox(name: "x", value: "1") }
-    assert_match(/\bpeer\b/, output)
-    assert_match(/rounded-sm border/, output)
-    assert_match(/checked:bg-primary/, output)
+  def test_input_trigger_and_clear_buttons
+    output = phlex { RubyUI.ComboboxInput(placeholder: "Pick", show_clear: true) }
+
+    assert_match(/data-slot="input-group-button"/, output)
+    assert_match(/data-slot="combobox-clear"[^<]*?type="button" hidden aria-label="Clear"/, output)
+    # The clear button stays in the tab order (keyboard way to clear).
+    refute_match(/data-slot="combobox-clear"[^<]*?tabindex/, output)
+    refute_match(/data-slot="button input-group-button"/, output)
   end
 
-  def test_combobox_checkbox_wires_checkbox_group_and_form_field
-    output = phlex { RubyUI.ComboboxCheckbox(name: "x", value: "1") }
-    assert_match(/data-ruby-ui--checkbox-group-target="checkbox"/, output)
-    assert_match(/data-ruby-ui--form-field-target="input"/, output)
-    assert_match(/change->ruby-ui--checkbox-group#onChange/, output)
-    assert_match(/change->ruby-ui--form-field#onInput/, output)
-    assert_match(/invalid->ruby-ui--form-field#onInvalid/, output)
+  def test_input_without_trigger_keeps_an_empty_addon
+    output = phlex { RubyUI.ComboboxInput(show_trigger: false) }
+
+    assert_match(/data-slot="input-group-addon" data-align="inline-end" data-action="click->ruby-ui--combobox#focusInput"><\/div>/, output)
   end
 
-  def test_combobox_item_indicator_renders_check_svg
-    output = phlex { RubyUI.ComboboxItemIndicator() }
-    assert_match(/peer-checked:opacity-100/, output)
-    assert_match(/opacity-0/, output)
-    assert_match(/M20 6 9 17l-5-5/, output)
+  def test_disabled_root_disables_the_input
+    output = phlex do
+      RubyUI.Combobox(disabled: true) { RubyUI.ComboboxInput(placeholder: "Pick") }
+    end
+
+    assert_match(/data-disabled="true"/, output)
+    assert_match(/<input disabled/, output)
   end
 
-  def test_combobox_badge_trigger_renders_targets
-    output = phlex { RubyUI.ComboboxBadgeTrigger() }
-    assert_match(/badgeContainer/, output)
-    assert_match(/badgeInput/, output)
-    assert_match(/openPopover/, output)
+  def test_invalid_input_keeps_aria_invalid
+    output = phlex { RubyUI.ComboboxInput(aria: {invalid: "true"}) }
+
+    assert_match(/aria-invalid="true"/, output)
   end
 
-  def test_combobox_badge_renders_span
-    output = phlex { RubyUI.ComboboxBadge { "Item" } }
-    assert_match(/bg-secondary/, output)
-    assert_match(/Item/, output)
-    assert_match(/<span/, output)
+  def test_list_is_a_listbox
+    output = render_popup
+
+    assert_match(/id="fruits-list" role="listbox" data-slot="combobox-list"/, output)
   end
 
-  def test_combobox_clear_button_renders
-    output = phlex { RubyUI.ComboboxClearButton() }
-    assert_match(/clearAll/, output)
-    assert_match(/\bhidden\b/, output)
-    assert_match(/clearButton/, output)
+  def test_multiple_list_is_multiselectable
+    output = phlex do
+      RubyUI.Combobox(multiple: true) { RubyUI.ComboboxList {} }
+    end
+
+    assert_match(/aria-multiselectable="true"/, output)
   end
 
-  def test_combobox_item_has_hover_state
-    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/hover:bg-accent/, output)
+  def test_item_renders_option_with_hidden_radio
+    output = render_popup
+
+    assert_match(/role="option" aria-selected="true" data-slot="combobox-item"/, output)
+    assert_match(/<input type="radio" name="fruit" value="apple" checked tabindex="-1" aria-hidden="true" class="sr-only"/, output)
+    assert_match(/group-aria-selected\/combobox-item:flex/, output)
   end
 
-  def test_combobox_item_has_keyboard_highlight
-    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/aria-\[current=true\]:bg-accent/, output)
+  def test_disabled_item
+    output = render_popup
+
+    assert_match(/aria-disabled="true"[^>]*data-value="banana"[^>]*data-disabled=""/, output)
+    assert_match(/value="banana" disabled/, output)
   end
 
-  def test_combobox_item_has_disabled_state
-    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/has-disabled:opacity-50/, output)
+  def test_multiple_items_use_checkboxes
+    output = phlex do
+      RubyUI.Combobox(name: "fruits[]", multiple: true) do
+        RubyUI.ComboboxItem(value: "apple") { "Apple" }
+      end
+    end
+
+    assert_match(/<input type="checkbox" name="fruits\[\]" value="apple"/, output)
+    assert_match(/ruby-ui--checkbox-group-target="checkbox"/, output)
   end
 
-  def test_combobox_toggle_all_checkbox_renders_styled_input
-    output = phlex { RubyUI.ComboboxToggleAllCheckbox() }
-    assert_match(/\bpeer\b/, output)
-    assert_match(/rounded-sm border/, output)
-    assert_match(/change->ruby-ui--combobox#toggleAllItems/, output)
+  def test_required_single_combobox_marks_the_radios
+    output = phlex do
+      RubyUI.Combobox(name: "fruit", required: true) do
+        RubyUI.ComboboxItem(value: "apple") { "Apple" }
+      end
+    end
+
+    assert_match(/value="apple" required/, output)
   end
 
-  def test_combobox_input_trigger_renders
-    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick one") }
-    assert_match(/inputTrigger/, output)        # inputTrigger target on input
-    assert_match(/trigger/, output)             # trigger target on wrapper
-    assert_match(/Pick one/, output)            # placeholder
-    assert_match(/openPopover/, output)         # focus action
-    assert_match(/filterItems/, output)         # keyup action
-    assert_match(/path.*d="m6 9 6 6 6-6"/, output) # chevron-down SVG present
+  def test_required_multiple_combobox_uses_checkbox_group
+    output = phlex do
+      RubyUI.Combobox(name: "fruits[]", multiple: true, required: true) do
+        RubyUI.ComboboxItem(value: "apple") { "Apple" }
+      end
+    end
+
+    assert_match(/data-controller="ruby-ui--combobox ruby-ui--checkbox-group" data-required=""/, output)
+    refute_match(/value="apple" required/, output)
   end
 
-  def test_combobox_input_trigger_invalid_state
-    output = phlex { RubyUI.ComboboxInputTrigger(aria: {invalid: "true"}, placeholder: "Pick") }
-    assert_match(/aria-invalid.*true|invalid.*true/, output)
-    assert_match(/aria-invalid:border-destructive/, output)
+  def test_required_without_name_raises
+    assert_raises(ArgumentError) { RubyUI::Combobox.new(required: true) }
   end
 
-  def test_combobox_clear_button_is_subtle
-    output = phlex { RubyUI.ComboboxClearButton() }
-    assert_match(/text-muted-foreground/, output)
-    assert_match(/focus-visible:ring-2/, output)
+  def test_required_marks_visible_controls
+    output = phlex do
+      RubyUI.Combobox(name: "f", required: true) do
+        RubyUI.ComboboxTrigger { RubyUI.ComboboxValue() }
+        RubyUI.ComboboxContent { RubyUI.ComboboxInput(show_trigger: false) }
+      end
+    end
+
+    assert_equal 2, output.scan('aria-required="true"').size
   end
 
-  def test_combobox_badge_trigger_input_has_no_border
-    output = phlex { RubyUI.ComboboxBadgeTrigger(placeholder: "Select") }
-    assert_match(/border-0/, output)
+  def test_group_without_label_has_no_labelledby
+    output = phlex do
+      RubyUI.ComboboxGroup(id: "g") { RubyUI.ComboboxItem(value: "a") { "A" } }
+    end
+
+    refute_match(/aria-labelledby/, output)
   end
 
-  def test_combobox_badge_trigger_clear_button_prop
-    output = phlex { RubyUI.ComboboxBadgeTrigger(clear_button: true) }
-    assert_match(/clearButton/, output)
-    assert_match(/clearAll/, output)
+  def test_group_uses_the_label_own_id
+    output = phlex do
+      RubyUI.ComboboxGroup(id: "g") { RubyUI.ComboboxLabel(id: "custom") { "Fruits" } }
+    end
+
+    assert_match(/aria-labelledby="custom"/, output)
   end
 
-  def test_combobox_badge_trigger_no_clear_button_by_default
-    output = phlex { RubyUI.ComboboxBadgeTrigger() }
-    refute_match(/clearButton/, output)
+  def test_chip_remove_is_in_tab_order
+    output = phlex { RubyUI.ComboboxChips() }
+
+    refute_match(/data-slot="combobox-chip-remove"[^<]*tabindex/, output)
   end
 
-  def test_combobox_badge_trigger_no_chevron
-    output = phlex { RubyUI.ComboboxBadgeTrigger() }
-    refute_match(/chevron|m6 9 6 6 6-6/, output)
+  def test_item_input_attributes
+    output = phlex do
+      RubyUI.ComboboxItem(value: "a", input: {data: {value_missing: "Pick one"}}) { "A" }
+    end
+
+    assert_match(/data-value-missing="Pick one"/, output)
   end
 
-  def test_combobox_trigger_chevron_down
-    output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
-    assert_match(/m6 9 6 6 6-6/, output)
+  def test_group_is_named_by_its_label
+    output = render_popup
+
+    assert_match(/aria-labelledby="g-label" role="group"/, output)
+    assert_match(/aria-hidden="true" data-slot="combobox-label" class="px-2 py-1.5 text-xs text-muted-foreground" id="g-label"/, output)
   end
 
-  def test_combobox_trigger_sets_placeholder_data
-    output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
-    assert_match(/data-placeholder="Pick"/, output)
+  def test_separator_and_empty
+    output = render_popup
+
+    assert_match(/role="separator"/, output)
+    assert_match(/data-slot="combobox-empty"[^>]*group-data-empty\/combobox-content:flex/, output)
   end
 
-  def test_combobox_trigger_uses_toggle_action
-    output = phlex { RubyUI.ComboboxTrigger(placeholder: "Pick") }
-    assert_match(/ruby-ui--combobox#togglePopover/, output)
-    assert_match(/h-4 w-4/, output)
+  def test_value_shows_the_placeholder
+    output = render_popup
+
+    assert_match(/data-placeholder-text="Pick a fruit" data-placeholder="">Pick a fruit</, output)
   end
 
-  def test_combobox_input_trigger_chevron_hover_effect
-    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick") }
-    assert_match(/hover:bg-muted/, output)
-    assert_match(/size-6/, output)
-    assert_match(/rounded-sm/, output)
+  def test_term_value
+    output = phlex { RubyUI.Combobox(term: "fruits") {} }
+
+    assert_match(/data-ruby-ui--combobox-term-value="fruits"/, output)
   end
 
-  def test_combobox_input_trigger_no_inner_padding
-    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick") }
-    assert_match(/px-0/, output)
+  def test_chips_with_template_and_input
+    output = phlex do
+      RubyUI.Combobox(name: "f[]", multiple: true, id: "m") do
+        RubyUI.ComboboxChips { RubyUI.ComboboxChipsInput(placeholder: "Add") }
+      end
+    end
+
+    assert_match(/data-slot="combobox-chips"/, output)
+    assert_match(/<template data-ruby-ui--combobox-target="chipTemplate"><div data-slot="combobox-chip"/, output)
+    assert_match(/data-slot="combobox-chip-remove"/, output)
+    assert_match(/aria-controls="m-list"[^>]*role="combobox" placeholder="Add"/, output)
   end
 
-  def test_combobox_keyboard_actions_on_controller
-    output = phlex { RubyUI.ComboboxPopover { "" } }
-    assert_match(/keydown\.down/, output)
-    assert_match(/keydown\.up/, output)
-    assert_match(/keydown\.enter/, output)
-    assert_match(/keydown\.esc/, output)
+  def test_chips_max
+    output = phlex { RubyUI.ComboboxChips(max: 3) }
+
+    assert_match(/data-slot="combobox-chips" data-ruby-ui--combobox-target="chips" data-max="3"/, output)
   end
 
-  def test_combobox_input_trigger_focusin_action
-    output = phlex { RubyUI.ComboboxInputTrigger(placeholder: "Pick") }
-    assert_match(/focusin->ruby-ui--combobox#openPopover/, output)
+  def test_chips_without_max_has_no_cap
+    output = phlex { RubyUI.ComboboxChips() }
+
+    refute_match(/data-max/, output)
   end
 
-  def test_combobox_item_has_selected_background
-    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/has-\[:checked\]:bg-accent/, output)
+  def test_chips_without_remove
+    output = phlex { RubyUI.ComboboxChips(show_remove: false) }
+
+    refute_match(/data-slot="combobox-chip-remove"/, output)
   end
 
-  def test_combobox_item_has_ring_on_current
-    output = phlex { RubyUI.ComboboxItem { RubyUI.ComboboxRadio(name: "x", value: "1") } }
-    assert_match(/aria-\[current=true\]:ring\b/, output)
-  end
+  def test_toggle_all
+    output = phlex { RubyUI.ComboboxToggleAll { "Select all" } }
 
-  def test_combobox_popover_has_autofocus
-    output = phlex { RubyUI.ComboboxPopover { "" } }
-    assert_match(/autofocus/, output)
+    assert_match(/role="option" aria-selected="false"/, output)
+    assert_match(/ruby-ui--combobox-target="toggleAll"/, output)
   end
 end
