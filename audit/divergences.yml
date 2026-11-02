@@ -111,3 +111,27 @@
   shadcn: "plugins (Embla plugin objects) and setApi (callback receiving the Embla API)"
   reason: "Both take JavaScript objects or functions, which a Phlex kwarg can't carry; in Stimulus the Embla API lives on the controller."
   since: "2026-11-01"
+- component: calendar
+  dimension: HTML
+  rubyui: "div > CalendarHeader (nav + title) + table[role=grid]; day rows rendered by Stimulus from <template>s"
+  shadcn: "div > div.rdp-months > nav + div.rdp-month > div.rdp-month_caption + table[role=grid]"
+  reason: "Server-rendered Phlex parts plus client-side templates; the landmarks, grid, cells and labels match react-day-picker, only the wrapper divs differ."
+  since: "2026-11-02"
+- component: calendar
+  dimension: Behavior
+  rubyui: "clicking the selected day keeps it selected"
+  shadcn: "clicking the selected day clears it (mode single, not required)"
+  reason: "The calendar fills a linked input (input_id); clearing on a second click would empty it by accident."
+  since: "2026-11-02"
+- component: calendar
+  dimension: Native
+  rubyui: "inline month grid in Stimulus"
+  shadcn: "react-day-picker"
+  reason: "<input type=\"date\"> only offers a browser popup picker; there is no native inline month grid, styling or custom disabled days."
+  since: "2026-11-02"
+- component: calendar
+  dimension: Props
+  rubyui: "no formatters, components, classNames"
+  shadcn: "React render overrides passed to DayPicker"
+  reason: "React-only customization hooks; RubyUI parts are customized through Phlex and class."
+  since: "2026-11-02"
