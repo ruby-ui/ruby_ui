@@ -35,6 +35,9 @@ module ShadcnAudit
 
       entries = []
       origins = []
+      stray = path.children.reject { |file| file.extname == ".yml" || file.basename.to_s == "README.md" }
+      raise ConfigError, "#{DIR}/: only <folder>.yml files belong here (found #{stray.map { |f| f.basename.to_s }.sort.join(", ")})" unless stray.empty?
+
       path.children.select { |file| file.extname == ".yml" }.sort.each do |file|
         list = YAML.safe_load_file(file.to_s) || []
         raise ConfigError, "#{DIR}/#{file.basename}: must be a list of entries" unless list.is_a?(Array)

@@ -127,6 +127,16 @@ class DivergencesTest < Minitest::Test
     assert_match(%r{\Aaudit/divergences/dialog\.yml: .*missing component}, error.message)
   end
 
+  def test_other_files_in_the_folder_are_refused
+    dir = File.join(@tmp, "divergences")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "README.md"), "# Divergences")
+    File.write(File.join(dir, "dialog.yaml"), valid_yaml)
+
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::Divergences.for_audit(@tmp) }
+    assert_match(/only <folder>\.yml files belong here \(found dialog\.yaml\)/, error.message)
+  end
+
   def test_every_component_file_is_named_after_a_gem_folder
     folders = Dir.children(ShadcnAudit.root.join("gem/lib/ruby_ui"))
     ShadcnAudit.root.join("audit/divergences").glob("*.yml").each do |file|
