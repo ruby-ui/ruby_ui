@@ -24,7 +24,9 @@ module RubyUI
       {
         data: {slot: "card", size: @size},
         class: [
-          "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground shadow-xs ring-1 ring-foreground/10",
+          # No overflow-hidden (vega has it): RubyUI popups such as Select and
+          # Popover render inside the card, and clipping would hide them.
+          "group/card flex flex-col gap-(--card-spacing) rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground shadow-xs ring-1 ring-foreground/10",
           "[--card-spacing:--spacing(6)] data-[size=sm]:[--card-spacing:--spacing(4)]",
           # An image as the first or last child runs to the card's edge.
           "has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl"

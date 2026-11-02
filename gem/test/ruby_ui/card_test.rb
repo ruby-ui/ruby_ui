@@ -55,10 +55,24 @@ class RubyUI::CardTest < ComponentTest
     assert_match(/class="flex items-center/, output)
   end
 
-  def test_small_size
-    output = phlex { RubyUI.Card(size: :sm) { "Hi" } }
+  def test_small_size_reaches_the_title
+    output = phlex do
+      RubyUI.Card(size: :sm) do
+        RubyUI.CardHeader { RubyUI.CardTitle { "Title" } }
+      end
+    end
 
-    assert_match(/data-size="sm"/, output)
+    card = output[/<div[^>]*data-slot="card"[^>]*>/]
+    title = output[/<div[^>]*data-slot="card-title"[^>]*>/]
+    assert_match(/data-size="sm"/, card)
+    assert_match(%r{class="group/card }, card)
+    assert_match(%r{group-data-\[size=sm\]/card:text-sm}, title)
+  end
+
+  def test_card_does_not_clip_popups
+    output = phlex { RubyUI.Card { "Hi" } }
+
+    refute_match(/overflow-hidden/, output)
   end
 
   def test_unknown_size_falls_back_to_default
