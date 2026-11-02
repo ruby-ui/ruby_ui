@@ -1,16 +1,24 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Embla carousel. The orientation reaches CarouselContent, CarouselItem,
+  # CarouselPrevious and CarouselNext through the render context, so their
+  # orientation classes are plain utilities a caller's class can override
+  # (shadcn's cn behavior).
   class Carousel < Base
     def initialize(orientation: :horizontal, options: {}, **user_attrs)
-      @orientation = orientation
+      @orientation = (orientation.to_s == "vertical") ? :vertical : :horizontal
       @options = options
 
       super(**user_attrs)
     end
 
     def view_template(&)
+      previous = context[:ruby_ui_carousel]
+      context[:ruby_ui_carousel] = {orientation: @orientation}
       div(**attrs, &)
+    ensure
+      context[:ruby_ui_carousel] = previous
     end
 
     private
@@ -21,6 +29,7 @@ module RubyUI
         role: "region",
         aria_roledescription: "carousel",
         data: {
+          slot: "carousel",
           controller: "ruby-ui--carousel",
           ruby_ui__carousel_options_value: default_options.merge(@options).to_json,
           action: %w[

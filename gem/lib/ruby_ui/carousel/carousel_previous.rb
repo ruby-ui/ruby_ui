@@ -2,24 +2,30 @@
 
 module RubyUI
   class CarouselPrevious < Base
-    def view_template(&)
-      Button(**attrs) do
+    ORIENTATION_CLASSES = {
+      horizontal: "-left-12 top-1/2 -translate-y-1/2",
+      vertical: "-top-12 left-1/2 -translate-x-1/2 rotate-90"
+    }.freeze
+
+    def view_template
+      # slot! overrides Button's data-slot="button" instead of appending to it.
+      Button(**attrs, class: [ORIENTATION_CLASSES.fetch(orientation), attrs[:class]], data: {**attrs[:data], slot!: "carousel-previous"}) do
         icon
-        span(class: "sr-only") { "Next slide" }
+        span(class: "sr-only") { "Previous slide" }
       end
     end
 
     private
 
+    def orientation
+      context.dig(:ruby_ui_carousel, :orientation) || :horizontal
+    end
+
     def default_attrs
       {
         variant: :outline,
         icon: true,
-        class: [
-          "absolute h-8 w-8 rounded-full",
-          "group-[.is-horizontal]:-left-12 group-[.is-horizontal]:top-1/2 group-[.is-horizontal]:-translate-y-1/2",
-          "group-[.is-vertical]:-top-12 group-[.is-vertical]:left-1/2 group-[.is-vertical]:-translate-x-1/2 group-[.is-vertical]:rotate-90"
-        ],
+        class: "absolute h-8 w-8 rounded-full touch-manipulation",
         disabled: true,
         data: {
           action: "click->ruby-ui--carousel#scrollPrev",
@@ -28,6 +34,7 @@ module RubyUI
       }
     end
 
+    # lucide chevron-left, mirrored in RTL.
     def icon
       svg(
         width: "24",
@@ -39,10 +46,10 @@ module RubyUI
         stroke_linecap: "round",
         stroke_linejoin: "round",
         xmlns: "http://www.w3.org/2000/svg",
-        class: "w-4 h-4"
+        aria_hidden: "true",
+        class: "rtl:rotate-180"
       ) do |s|
-        s.path(d: "m12 19-7-7 7-7")
-        s.path(d: "M19 12H5")
+        s.path(d: "m15 18-6-6 6-6")
       end
     end
   end
