@@ -1,10 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import EmblaCarousel from 'embla-carousel'
 
-const DEFAULT_OPTIONS = {
-  loop: true
-}
-
 export default class extends Controller {
   static values = {
     options: {
@@ -15,7 +11,7 @@ export default class extends Controller {
   static targets = ["viewport", "nextButton", "prevButton"]
 
   connect() {
-    this.initCarousel(this.#mergedOptions)
+    this.initCarousel(this.optionsValue)
   }
 
   disconnect() {
@@ -47,14 +43,11 @@ export default class extends Controller {
     this.#toggleButtonsDisabledState(this.prevButtonTargets, !this.carousel.canScrollPrev())
   }
 
+  // Button renders data-disabled next to disabled; keep both in step.
   #toggleButtonsDisabledState(buttons, isDisabled) {
-    buttons.forEach((button) => button.disabled = isDisabled)
-  }
-
-  get #mergedOptions() {
-    return {
-      ...DEFAULT_OPTIONS,
-      ...this.optionsValue
-    }
+    buttons.forEach((button) => {
+      button.disabled = isDisabled
+      button.toggleAttribute("data-disabled", isDisabled)
+    })
   }
 }
