@@ -1,4 +1,5 @@
 shadcn: calendar
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
 kind: form_control
 docs_view: calendar
 # shadcn's Calendar is react-day-picker: only the root carries a data-slot

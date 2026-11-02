@@ -328,6 +328,13 @@ Then:
    "Before/after images for a fix PR". A decision never changes a grade by
    itself: grades change only through an override (see "4. Look") or a registered
    divergence, followed by a new `render`.
+   When the audited PR (or the user's branch) brings the component to match
+   shadcn, its map file needs a new baseline so the weekly `drift` (skill
+   `shadcn-drift`) starts from this audit: `baseline <folder> <shadcn_sha>`
+   with the report's `shadcn_sha`, committed in the same PR. Record it as a
+   decision in the `note` of the component's first line ("Requested: run
+   `baseline <folder> <shadcn_sha>` in this PR") and re-run `render`, so the
+   comment below carries it. On someone else's PR it stays a request.
 4. Only when `target.kind` is `pr` **and** `target.state` is `OPEN`:
    `comment <report.json>` →
    `{"posted": false, "body": …}`. Show the **exact body** and ask for an ok.
@@ -341,7 +348,6 @@ Then:
    updated; a marked comment by anyone else is left alone and a new one is
    created.
    Without an ok, don't post.
-
 ### 9. Clean up
 
 Close the browser pages you opened, then stop both servers: `herdr pane close
