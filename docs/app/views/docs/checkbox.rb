@@ -10,25 +10,66 @@ class Views::Docs::Checkbox < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
-          div(class: 'flex items-center space-x-3') do
-            Checkbox(id: 'terms')
-            label(for: 'terms', class: 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70') { "Accept terms and conditions" }
+          div(class: "flex items-center gap-3") do
+            Checkbox(id: "terms")
+            FormFieldLabel(for: "terms") { "Accept terms and conditions" }
           end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Checked", context: self) do
         <<~RUBY
-          div(class: "items-top flex space-x-3") do
-            Checkbox(id: 'terms1', checked: true)
-            div(class: "grid gap-1.5 leading-none") do
-              label(
-                for: "terms1",
-                class:
-                  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              ) { " Accept terms and conditions " }
-              p(class: "text-sm text-muted-foreground") { " You agree to our Terms of Service and Privacy Policy." }
+          div(class: "flex items-start gap-3") do
+            Checkbox(id: "terms_checked", checked: true)
+            div(class: "grid gap-2") do
+              FormFieldLabel(for: "terms_checked") { "Accept terms and conditions" }
+              p(class: "text-sm text-muted-foreground") { "By clicking this checkbox, you agree to the terms and conditions." }
             end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Indeterminate", description: 'The mixed state, for example a "select all" box. The browser clears it on the first click.', context: self) do
+        <<~RUBY
+          div(class: "flex items-center gap-3") do
+            Checkbox(id: "select_all", indeterminate: true)
+            FormFieldLabel(for: "select_all") { "Select all" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
+        <<~RUBY
+          div(class: "flex items-center gap-3") do
+            Checkbox(id: "toggle_disabled", disabled: true)
+            FormFieldLabel(for: "toggle_disabled") { "Enable notifications" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Invalid", context: self) do
+        <<~RUBY
+          div(class: "flex items-center gap-3") do
+            Checkbox(id: "terms_invalid", aria: {invalid: "true"})
+            FormFieldLabel(for: "terms_invalid") { "Accept terms and conditions" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Read only", description: "Keeps its value and is submitted with the form, but can't be toggled.", context: self) do
+        <<~RUBY
+          div(class: "flex items-center gap-3") do
+            Checkbox(id: "terms_readonly", name: "terms_accepted", value: "1", checked: true, readonly: true)
+            FormFieldLabel(for: "terms_readonly") { "Accepted on sign up" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Unchecked value", description: "unchecked_value: renders a hidden input with the same name before the checkbox, so the form also sends a value when the box is unchecked (like Rails' check_box).", context: self) do
+        <<~RUBY
+          div(class: "flex items-center gap-3") do
+            Checkbox(id: "user_admin", name: "user[admin]", value: "1", unchecked_value: "0")
+            FormFieldLabel(for: "user_admin") { "Admin" }
           end
         RUBY
       end

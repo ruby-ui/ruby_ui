@@ -1,0 +1,7 @@
+# One checkbox per state: unchecked (data-audit-trigger, used for focus),
+# checked, disabled and invalid (aria-invalid). Labels are plain <label>s
+# with the same classes on both sides; they are not audited parts.
+terms: Accept terms and conditions
+checked: Enable notifications
+disabled: Disabled option
+invalid: Invalid option
