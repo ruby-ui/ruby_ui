@@ -383,8 +383,13 @@ hold for auditing someone else's PR; this section is for the user's own fix.
      sha=$(git commit-tree "$tree" -m "Add images for <pr-folder>")
    fi
    rm -f "$GIT_INDEX_FILE"; unset GIT_INDEX_FILE
-   git push origin "$sha:refs/heads/pr-assets"
+   git push origin "${sha}:refs/heads/pr-assets"   # braces: zsh reads "$sha:r" as a modifier
    ```
+
+   Run the whole block in one go, right before the push: parallel audits move
+   `pr-assets` often. If the push is rejected as non-fast-forward, rerun the
+   block from `git fetch` so the commit is rebuilt on the latest tip; never
+   force-push this branch.
 
    Link each image by commit SHA so the link never moves:
    `![State](https://github.com/ruby-ui/ruby_ui/blob/<sha>/<pr-folder>/<file>.png?raw=true)`.
