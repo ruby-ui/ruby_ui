@@ -1,33 +1,35 @@
 {
   "name": "Link",
-  "description": "Displays a link that looks like a button or underline link.",
+  "description": "Displays a link that looks like a button or an underlined text link.",
   "files": [
     {
       "path": "link.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Link < Base\n    BASE_CLASSES = [\n      \"whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors\",\n      \"disabled:pointer-events-none disabled:opacity-50\",\n      \"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n      \"aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed\"\n    ].freeze\n\n    def initialize(href: \"#\", variant: :link, size: :md, icon: false, **attrs)\n      @href = href\n      @variant = variant.to_sym\n      @size = size.to_sym\n      @icon = icon\n      super(**attrs)\n    end\n\n    def view_template(&)\n      a(href: @href, **attrs, &)\n    end\n\n    private\n\n    def size_classes\n      if @icon\n        case @size\n        when :sm then \"h-6 w-6\"\n        when :md then \"h-9 w-9\"\n        when :lg then \"h-10 w-10\"\n        when :xl then \"h-12 w-12\"\n        end\n      else\n        case @size\n        when :sm then \"px-3 py-1.5 h-8 text-xs\"\n        when :md then \"px-4 py-2 h-9 text-sm\"\n        when :lg then \"px-4 py-2 h-10 text-base\"\n        when :xl then \"px-6 py-3 h-12 text-base\"\n        end\n      end\n    end\n\n    def primary_classes\n      [\n        BASE_CLASSES,\n        size_classes,\n        \"bg-primary text-primary-foreground shadow\",\n        \"hover:bg-primary/90\"\n      ]\n    end\n\n    def link_classes\n      [\n        BASE_CLASSES,\n        size_classes,\n        \"text-primary underline-offset-4\",\n        \"hover:underline\"\n      ]\n    end\n\n    def secondary_classes\n      [\n        BASE_CLASSES,\n        size_classes,\n        \"bg-secondary text-secondary-foreground\",\n        \"hover:bg-opacity-80\"\n      ]\n    end\n\n    def destructive_classes\n      [\n        BASE_CLASSES,\n        size_classes,\n        \"bg-destructive text-white shadow-sm\",\n        \"[a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20\",\n        \"dark:focus-visible:ring-destructive/40 dark:bg-destructive/60\"\n      ]\n    end\n\n    def outline_classes\n      [\n        BASE_CLASSES,\n        size_classes,\n        \"border border-input bg-background shadow-sm\",\n        \"hover:bg-accent hover:text-accent-foreground\"\n      ]\n    end\n\n    def ghost_classes\n      [\n        BASE_CLASSES,\n        size_classes,\n        \"hover:bg-accent hover:text-accent-foreground\"\n      ]\n    end\n\n    def default_classes\n      case @variant\n      when :primary then primary_classes\n      when :link then link_classes\n      when :secondary then secondary_classes\n      when :destructive then destructive_classes\n      when :outline then outline_classes\n      when :ghost then ghost_classes\n      end\n    end\n\n    def default_attrs\n      {type: \"button\", class: default_classes}\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A link styled like a button, after shadcn's Button rendered as <a>\n  # (Base UI + vega). It reuses Button's classes, so variant: and size: take\n  # the same values (default :primary, as shadcn; variant: :link for a text\n  # link).\n  #\n  # Unlike Button(href:), it keeps native link semantics: role link, Enter\n  # follows it, no JS. Base UI's Button docs say links shouldn't be rendered\n  # as buttons, and to style the <a> instead.\n  #\n  # disabled: true drops the href (ARIA in HTML: to convey a disabled link,\n  # remove the href) and renders <a role=\"link\" aria-disabled=\"true\">: out of\n  # the tab order, can't be followed, dimmed. focusable_when_disabled: true\n  # keeps it in the tab order (tabindex 0), still without an href.\n  class Link < Base\n    DISABLED = \"aria-disabled:pointer-events-none aria-disabled:opacity-50\"\n\n    def initialize(href: \"#\", variant: :primary, size: :md, icon: false,\n      disabled: false, focusable_when_disabled: false, **attrs)\n      @href = href\n      @variant = variant.to_s.to_sym\n      @variant = Button::VARIANT_ALIASES.fetch(@variant, @variant)\n      @variant = :primary unless Button::VARIANTS.key?(@variant)\n      size = size.to_s.tr(\"-\", \"_\").to_sym\n      @icon = icon || size.start_with?(\"icon\")\n      @size = Button::SIZE_ALIASES.fetch(size, size)\n      @size = :md unless Button::SIZES.key?(@size)\n      @disabled = disabled\n      @focusable_when_disabled = focusable_when_disabled\n      super(**attrs)\n      # mix concatenates strings: a caller's own aria: {disabled: \"true\"}\n      # would otherwise become \"true true\".\n      @attrs[:aria][:disabled] = \"true\" if @disabled\n    end\n\n    def view_template(&)\n      a(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      sizes = @icon ? Button::ICON_SIZES : Button::SIZES\n      attrs = {\n        class: [Button::BASE, sizes.fetch(@size), Button::VARIANTS.fetch(@variant), DISABLED],\n        data: {slot: \"button\"}\n      }\n\n      if @disabled\n        attrs[:role] = \"link\"\n        attrs[:aria] = {disabled: \"true\"}\n        attrs[:tabindex] = 0 if @focusable_when_disabled\n      else\n        attrs[:href] = @href\n      end\n\n      attrs\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
-    "components": [],
+    "components": [
+      "Button"
+    ],
     "js_packages": [],
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Link",
-  "docs_markdown": "# Link\n\nDisplays a link that looks like a button or underline link.\n\n## Usage\n\n### Example\n\n```ruby\nLink(href: \"#\") { \"Link\" }\n```\n\n### Aria Disabled\n\n```ruby\nLink(aria: {disabled: \"true\"}, href: \"#\") { \"Link\" }\n```\n\n### Primary\n\n```ruby\nLink(href: \"#\", variant: :primary) { \"Primary\" }\n```\n\n### Secondary\n\n```ruby\nLink(href: \"#\", variant: :secondary) { \"Secondary\" }\n```\n\n### Destructive\n\n```ruby\nLink(href: \"#\", variant: :destructive) { \"Destructive\" }\n```\n\n### Icon\n\n```ruby\nLink(href: \"#\", variant: :outline, icon: true) do\n  chevron_icon\nend\n```\n\n### With Icon\n\n```ruby\nLink(href: \"#\", variant: :primary) do\n  email_icon\n  span { \"Login with Email\" }\nend\n```\n\n### Ghost\n\n```ruby\nLink(href: \"#\", variant: :ghost) { \"Ghost\" }\n```",
+  "docs_markdown": "# Link\n\nDisplays a link that looks like a button or an underlined text link.\n\n## Usage\n\n### Example\n\n```ruby\nLink(href: \"#\") { \"Get started\" }\n```\n\n### Link\n\n```ruby\nLink(href: \"#\", variant: :link) { \"Read the docs\" }\n```\n\n### Disabled\n\n```ruby\ndiv(class: \"flex gap-2\") do\n  Link(href: \"#\", disabled: true) { \"Disabled\" }\n  Link(href: \"#\", disabled: true, focusable_when_disabled: true) { \"Focusable\" }\nend\n```\n\n### Secondary\n\n```ruby\nLink(href: \"#\", variant: :secondary) { \"Secondary\" }\n```\n\n### Destructive\n\n```ruby\nLink(href: \"#\", variant: :destructive) { \"Destructive\" }\n```\n\n### Outline\n\n```ruby\nLink(href: \"#\", variant: :outline) { \"Outline\" }\n```\n\n### Sizes\n\n```ruby\ndiv(class: \"flex items-center gap-2\") do\n  Link(href: \"#\", size: :xs) { \"Extra small\" }\n  Link(href: \"#\", size: :sm) { \"Small\" }\n  Link(href: \"#\") { \"Default\" }\n  Link(href: \"#\", size: :lg) { \"Large\" }\nend\n```\n\n### Icon\n\n```ruby\nLink(href: \"#\", variant: :outline, icon: true) do\n  chevron_icon\nend\n```\n\n### With Icon\n\n```ruby\nLink(href: \"#\") do\n  email_icon\n  span { \"Login with Email\" }\nend\n```\n\n### Ghost\n\n```ruby\nLink(href: \"#\", variant: :ghost) { \"Ghost\" }\n```",
   "examples": [
     {
       "title": "Example",
-      "code": "Link(href: \"#\") { \"Link\" }\n",
+      "code": "Link(href: \"#\") { \"Get started\" }\n",
       "language": "ruby"
     },
     {
-      "title": "Aria Disabled",
-      "code": "Link(aria: {disabled: \"true\"}, href: \"#\") { \"Link\" }\n",
+      "title": "Link",
+      "code": "Link(href: \"#\", variant: :link) { \"Read the docs\" }\n",
       "language": "ruby"
     },
     {
-      "title": "Primary",
-      "code": "Link(href: \"#\", variant: :primary) { \"Primary\" }\n",
+      "title": "Disabled",
+      "code": "div(class: \"flex gap-2\") do\n  Link(href: \"#\", disabled: true) { \"Disabled\" }\n  Link(href: \"#\", disabled: true, focusable_when_disabled: true) { \"Focusable\" }\nend\n",
       "language": "ruby"
     },
     {
@@ -41,13 +43,23 @@
       "language": "ruby"
     },
     {
+      "title": "Outline",
+      "code": "Link(href: \"#\", variant: :outline) { \"Outline\" }\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Sizes",
+      "code": "div(class: \"flex items-center gap-2\") do\n  Link(href: \"#\", size: :xs) { \"Extra small\" }\n  Link(href: \"#\", size: :sm) { \"Small\" }\n  Link(href: \"#\") { \"Default\" }\n  Link(href: \"#\", size: :lg) { \"Large\" }\nend\n",
+      "language": "ruby"
+    },
+    {
       "title": "Icon",
       "code": "Link(href: \"#\", variant: :outline, icon: true) do\n  chevron_icon\nend\n",
       "language": "ruby"
     },
     {
       "title": "With Icon",
-      "code": "Link(href: \"#\", variant: :primary) do\n  email_icon\n  span { \"Login with Email\" }\nend\n",
+      "code": "Link(href: \"#\") do\n  email_icon\n  span { \"Login with Email\" }\nend\n",
       "language": "ruby"
     },
     {

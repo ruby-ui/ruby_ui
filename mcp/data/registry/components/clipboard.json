@@ -31,11 +31,11 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Clipboard",
-  "docs_markdown": "# Clipboard\n\nA control to allow you to copy content to the clipboard.\n\n## Usage\n\n### Example\n\n```ruby\nClipboard(success: \"Copied!\", error: \"Copy failed!\", class: \"relative\", options: {placement: \"top\"}) do\n  ClipboardSource(class: \"hidden\") { span { \"Born rich!!!\" } }\n\n  ClipboardTrigger do\n    Link(href: \"#\", class: \"gap-1\") do\n      Text(size: :small, class: \"text-primary\") { \"Copy the secret of success!!!\" }\n    end\n  end\nend\n```",
+  "docs_markdown": "# Clipboard\n\nA control to allow you to copy content to the clipboard.\n\n## Usage\n\n### Example\n\n```ruby\nClipboard(success: \"Copied!\", error: \"Copy failed!\", class: \"relative\", options: {placement: \"top\"}) do\n  ClipboardSource(class: \"hidden\") { span { \"Born rich!!!\" } }\n\n  ClipboardTrigger do\n    Link(href: \"#\", variant: :link, class: \"gap-1\") do\n      Text(size: :small, class: \"text-primary\") { \"Copy the secret of success!!!\" }\n    end\n  end\nend\n```",
   "examples": [
     {
       "title": "Example",
-      "code": "Clipboard(success: \"Copied!\", error: \"Copy failed!\", class: \"relative\", options: {placement: \"top\"}) do\n  ClipboardSource(class: \"hidden\") { span { \"Born rich!!!\" } }\n\n  ClipboardTrigger do\n    Link(href: \"#\", class: \"gap-1\") do\n      Text(size: :small, class: \"text-primary\") { \"Copy the secret of success!!!\" }\n    end\n  end\nend\n",
+      "code": "Clipboard(success: \"Copied!\", error: \"Copy failed!\", class: \"relative\", options: {placement: \"top\"}) do\n  ClipboardSource(class: \"hidden\") { span { \"Born rich!!!\" } }\n\n  ClipboardTrigger do\n    Link(href: \"#\", variant: :link, class: \"gap-1\") do\n      Text(size: :small, class: \"text-primary\") { \"Copy the secret of success!!!\" }\n    end\n  end\nend\n",
       "language": "ruby"
     }
   ]
