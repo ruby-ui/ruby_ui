@@ -25,7 +25,7 @@
 - component: input_otp
   dimension: Behavior
   rubyui: "Paste drops non-matching characters and fills from the selection (\"12-34 56\" becomes 123456)"
-  shadcn: "Native paste; with a pattern, a paste containing any non-matching character is rejected whole"
+  shadcn: "Native paste, not reproduced in the browser. From the input-otp 1.5.0 source: with a pattern, a paste containing any non-matching character is rejected whole"
   reason: "Codes copied from SMS or e-mail often carry spaces or hyphens."
   since: "2026-11-03"
 - component: input_otp
