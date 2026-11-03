@@ -1,0 +1,12 @@
+- component: hover_card
+  dimension: HTML
+  rubyui: "HoverCard root <div> carrying the Stimulus controller; HoverCardTrigger <div class=\"inline-block\"> wrapping its child; the closed card stays in the DOM next to the trigger as a closed popover=\"manual\" and opens in the top layer"
+  shadcn: "Root renders no element; trigger is the <button> itself (render prop); the card is portaled to body and unmounted while closed"
+  reason: "Phlex has no render prop and callers pass any child (link, button, avatar); Stimulus needs an element that scopes trigger and card. Server-rendered markup keeps the card mounted; the top layer does what the portal does (no ancestor clips it) and the UA hides a closed popover."
+  since: "2026-11-03"
+- component: hover_card
+  dimension: Props
+  rubyui: "open: is the initial state only"
+  shadcn: "open (controlled), defaultOpen and onOpenChange"
+  reason: "Server-rendered component: there is no parent re-render to control it, so open: covers defaultOpen, as in Collapsible and Dialog. Change state from outside through the Stimulus open value."
+  since: "2026-11-03"

@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Root of the hover card: scopes the trigger and the card for the Stimulus
+  # controller. open: renders it open on load (shadcn's defaultOpen).
+  #
+  # option: is the older API and still works as a fallback: placement: when
+  # HoverCardContent gets no side:/align:, delay: ([open, close] or a number)
+  # when HoverCardTrigger gets no delay:/close_delay:. strategy: is ignored:
+  # the card opens in the top layer, so no ancestor clips it.
   class HoverCard < Base
-    def initialize(option: {}, **attrs)
+    def initialize(open: false, option: {}, **attrs)
+      @open = open
       @options = option
-      @options[:delay] ||= [500, 250]
-      @options[:trigger] ||= "mouseenter focus click"
       super(**attrs)
     end
 
@@ -17,21 +23,13 @@ module RubyUI
 
     def default_attrs
       {
-        class: [
-          "group/hover-card",
-          (strategy == "fixed") ? "is-fixed" : "is-absolute"
-        ],
         data: {
+          slot: "hover-card",
           controller: "ruby-ui--hover-card",
+          ruby_ui__hover_card_open_value: @open.to_s,
           ruby_ui__hover_card_options_value: @options.to_json
         }
       }
-    end
-
-    # An ancestor with `overflow: hidden` clips an absolutely positioned card;
-    # `strategy: "fixed"` positions it against the viewport instead.
-    def strategy
-      @_strategy ||= @options[:strategy] || "absolute"
     end
   end
 end
