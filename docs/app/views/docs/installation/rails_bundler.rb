@@ -64,7 +64,7 @@ class Views::Docs::Installation::RailsBundler < Views::Base
               Codeblock(code, syntax: :javascript)
             end
 
-            Alert(class: "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50") do
+            Alert(class: "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50 *:data-[slot=alert-description]:text-amber-900/90 dark:*:data-[slot=alert-description]:text-amber-50/90") do
               info_icon
               AlertTitle { "Phlex compatibility" }
               AlertDescription { "Note that RubyUI components target Phlex 2.x most recent version" }

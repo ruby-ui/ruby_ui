@@ -83,7 +83,7 @@ class Views::Docs::Badge < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Custom Colors", description: "Badge ships the shadcn variants. For any other color, pass classes: a light and a dark shade of the same scale keep the text readable in both themes.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Custom Colors", description: "Badge ships the shadcn variants. For any other color, pass class: with a light and a dark shade of the same scale, so the text stays readable in both themes.", context: self) do
         <<~RUBY
           div(class: "flex flex-wrap gap-2 justify-center") do
             Badge(class: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300") { "Blue" }
