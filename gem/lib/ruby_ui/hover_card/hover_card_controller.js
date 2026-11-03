@@ -44,8 +44,10 @@ export default class extends Controller {
     this.listen(trigger);
   }
 
+  // Floating UI would keep placing the card against the detached trigger.
   triggerTargetDisconnected(trigger) {
     this.unlisten(trigger);
+    if (this.isOpen) this.hide({ animate: false });
   }
 
   contentTargetConnected(content) {
@@ -60,7 +62,10 @@ export default class extends Controller {
   // The open card was removed on its own: release the listeners and Floating UI.
   contentTargetDisconnected(content) {
     this.unlisten(content);
-    if (content === this.openContent) this.teardown();
+    if (content === this.openContent) {
+      this.teardown();
+      this.openValue = false;
+    }
   }
 
   // Changing the open value from outside opens or closes the card.

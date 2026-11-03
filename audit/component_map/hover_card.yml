@@ -20,7 +20,7 @@ selectors:
 # PreviewCard.Trigger, open/defaultOpen from PreviewCard.Root (RubyUI's open:
 # is the initial state only, see audit/divergences/hover_card.yml).
 props:
-  HoverCard: {open: open, defaultOpen: open}
+  HoverCard: {open: null, defaultOpen: open}
   HoverCardTrigger: {delay: delay, closeDelay: close_delay}
   HoverCardContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset}
 # option: is the older API (placement:/delay: fallbacks).

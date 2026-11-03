@@ -52,7 +52,7 @@ class Views::Docs::HoverCard < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Side and delay", description: "side: and align: place the card around the trigger, side_offset: and align_offset: set the gap. delay: and close_delay: on the trigger set how long the pointer has to stay before the card opens and closes, in milliseconds (600 and 300 by default).", context: self) do
+      render Docs::VisualCodeExample.new(title: "Side and delay", description: "side: and align: place the card around the trigger. side_offset: is the gap between them, and align_offset: shifts the card along the trigger's edge. delay: is how long the pointer rests on the trigger before the card opens, and close_delay: how long after it leaves before the card closes, in milliseconds (600 and 300 by default).", context: self) do
         <<~RUBY
           HoverCard do
             HoverCardTrigger(delay: 100, close_delay: 100) do
