@@ -1,0 +1,20 @@
+shadcn: checkbox
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: form_control
+docs_view: checkbox
+parts:
+  Checkbox: checkbox
+  CheckboxGroup: null
+selectors:
+  Checkbox: 'input[type="checkbox"]'
+props:
+  Checkbox:
+    checked: checked
+    defaultChecked: checked
+    disabled: disabled
+    required: required
+    name: name
+    value: value
+    indeterminate: indeterminate
+    readOnly: readonly
+    uncheckedValue: unchecked_value

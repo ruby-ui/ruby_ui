@@ -4,7 +4,7 @@ module RubyUI
   class EmptyMedia < Base
     VARIANTS = {
       default: "bg-transparent",
-      icon: "size-10 rounded-xl bg-muted text-foreground [&_svg:not([class*='size-'])]:size-5"
+      icon: "size-10 rounded-lg bg-muted text-foreground [&_svg:not([class*='size-'])]:size-6"
     }
 
     def initialize(variant: :default, **attrs)

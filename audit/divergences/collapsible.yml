@@ -1,0 +1,24 @@
+- component: collapsible
+  dimension: HTML
+  rubyui: "Closed CollapsibleContent stays in the DOM with the hidden attribute"
+  shadcn: "Closed panel is unmounted (keepMounted defaults to false)"
+  reason: "Server-rendered markup: the content is always present, as with keepMounted. It is out of the accessibility tree either way, but form fields inside a closed panel keep their values and still submit."
+  since: "2026-11-02"
+- component: collapsible
+  dimension: Props
+  rubyui: "no keepMounted (content is always mounted)"
+  shadcn: "keepMounted on CollapsibleContent"
+  reason: "Server-rendered markup: the content is always present, as with keepMounted. Form fields inside a closed panel keep their values and still submit."
+  since: "2026-11-02"
+- component: collapsible
+  dimension: Props
+  rubyui: "open: is the initial state only; the ruby-ui--collapsible:change event stands in for onOpenChange"
+  shadcn: "open (controlled), defaultOpen and onOpenChange"
+  reason: "Server-rendered component: there is no controlled prop. Change state from outside through the Stimulus open value; the change event is dispatched before the state changes and preventDefault() cancels it, like eventDetails.cancel()."
+  since: "2026-11-02"
+- component: collapsible
+  dimension: ARIA
+  rubyui: "Trigger keeps aria-controls while closed"
+  shadcn: "aria-controls only while open (the closed panel is unmounted)"
+  reason: "The panel is always in the DOM (see the HTML entry), so aria-controls always points to a real element. APG lists aria-controls as optional on a disclosure button."
+  since: "2026-11-02"

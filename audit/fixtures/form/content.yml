@@ -1,0 +1,17 @@
+# shadcn ships no validation: the invalid Email field is static on both sides
+# (data-invalid + aria-invalid + errors), and Username's error only exists in
+# RubyUI after an invalid submit (data-audit-trigger).
+username: Username
+username_hint: Choose a public username.
+email: Email
+errors:
+  - is too short
+  - is invalid
+legend: Notifications
+legend_hint: Pick how we reach you.
+newsletter: Email me updates
+newsletter_hint: One email a month.
+separator: Or
+phone: Phone
+company: Company
+submit: Save

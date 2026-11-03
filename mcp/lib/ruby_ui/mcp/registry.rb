@@ -13,12 +13,20 @@ module RubyUI
       end
 
       def self.default_path
-        File.expand_path("../../../data/registry.json", __dir__)
+        File.expand_path("../../../data/registry", __dir__)
       end
 
+      # A directory written by RegistryBuilder#write (index.json plus
+      # components/<slug>.json), or a single JSON with version and components.
       def self.load(path)
-        raw = JSON.parse(File.read(path), symbolize_names: true)
-        new(raw)
+        return new(JSON.parse(File.read(path), symbolize_names: true)) unless File.directory?(path)
+
+        index = JSON.parse(File.read(File.join(path, "index.json")), symbolize_names: true)
+        components_dir = File.join(path, "components")
+        components = Dir.children(components_dir).grep(/\.json\z/).sort.to_h do |file|
+          [File.basename(file, ".json").to_sym, JSON.parse(File.read(File.join(components_dir, file)), symbolize_names: true)]
+        end
+        new(index.merge(components: components))
       end
 
       attr_reader :version

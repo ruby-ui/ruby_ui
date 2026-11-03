@@ -25,9 +25,9 @@ class Views::Docs::Empty < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "With action", context: self) do
+      render Docs::VisualCodeExample.new(title: "With action and border", context: self) do
         <<~RUBY
-          Empty do
+          Empty(class: "border") do
             EmptyHeader do
               EmptyMedia(variant: :icon) do
                 svg(xmlns: "http://www.w3.org/2000/svg", fill: "none", viewbox: "0 0 24 24", stroke_width: "1.5", stroke: "currentColor", class: "size-6") do |s|
@@ -46,7 +46,7 @@ class Views::Docs::Empty < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Default media", context: self) do
         <<~RUBY
-          Empty(class: "border-none") do
+          Empty do
             EmptyHeader do
               EmptyMedia(variant: :default) do
                 Avatar(size: :lg) do

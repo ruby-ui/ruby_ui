@@ -1,17 +1,19 @@
 // app/javascript/controllers/ruby_ui/data_table_column_visibility_controller.js
 import { Controller } from "@hotwired/stimulus";
 
+// Shows/hides [data-column] cells from the DropdownMenuCheckboxItems of
+// DataTableColumnToggle (data-column-key + aria-checked).
 export default class extends Controller {
   connect() {
     this.element
-      .querySelectorAll("input[type=checkbox][data-column-key]")
-      .forEach((checkbox) =>
-        this._apply(checkbox.dataset.columnKey, checkbox.checked)
-      );
+      .querySelectorAll("[data-column-key]")
+      .forEach((item) => this._apply(item.dataset.columnKey, item.getAttribute("aria-checked") !== "false"));
   }
 
+  // ruby-ui--dropdown-menu:change, fired by the checkbox item that changed.
   toggle(event) {
-    this._apply(event.target.dataset.columnKey, event.target.checked);
+    const key = event.target.dataset.columnKey;
+    if (key) this._apply(key, event.detail.checked);
   }
 
   _apply(key, visible) {

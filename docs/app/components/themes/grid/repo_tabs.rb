@@ -19,7 +19,7 @@ module Components
               end
             end
             TabsContent(value: "overview") do
-              RubyUI::Card(class: "p-6 space-y-4 shadow-none") do
+              RubyUI::Card(class: "p-6 gap-4 shadow-none") do
                 Avatar do
                   AvatarImage(src: "https://avatars.githubusercontent.com/u/246692?v=4", alt: "joeldrapper")
                   AvatarFallback { "JD" }

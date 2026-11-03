@@ -1,0 +1,10 @@
+# One card as in the shadcn "Login" example, trimmed to text:
+#   header (title, description, action), content (one paragraph), footer (one button).
+# Plain <button>s, no shadcn Button, so the button look stays out of this audit.
+# The footer button carries data-audit-trigger (static kind: only the closed
+# state is collected).
+title: Login to your account
+description: Enter your email below to login to your account
+header_action: Sign up
+content: Your account details stay private.
+action: Login

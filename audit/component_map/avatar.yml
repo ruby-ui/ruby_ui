@@ -1,0 +1,21 @@
+shadcn: avatar
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: static
+docs_view: avatar
+parts:
+  Avatar: avatar
+  AvatarImage: avatar-image
+  AvatarFallback: avatar-fallback
+  AvatarBadge: avatar-badge
+  AvatarGroup: avatar-group
+  AvatarGroupCount: avatar-group-count
+selectors:
+  Avatar: '[data-slot="avatar"]'
+  AvatarImage: '[data-slot="avatar-image"]'
+  AvatarFallback: '[data-slot="avatar-fallback"]'
+  AvatarBadge: '[data-slot="avatar-badge"]'
+  AvatarGroup: '[data-slot="avatar-group"]'
+  AvatarGroupCount: '[data-slot="avatar-group-count"]'
+props:
+  Avatar: {size: size}
+  AvatarFallback: {delay: delay}

@@ -21,7 +21,7 @@ Behavior or Animation. When unsure, use ⏸ and say what's missing.
 
 | `basis` | Shows as | Rule |
 | --- | --- | --- |
-| `intentional` | ✅ … — intentional | The difference matches an entry from `divergences <folder>` (same `dimension`). `source` = `audit/divergences.yml`, `note` = its `reason`. |
+| `intentional` | ✅ … — intentional | The difference matches an entry from `divergences <folder>` (same `dimension`). `source` = `audit/divergences/<folder>.yml`, `note` = its `reason`. Entries with a structured `match` are applied by `collect` automatically; prose-only entries by hand. |
 | `native` | ✅ … — native | RubyUI swaps shadcn's JS for a native feature **and keeps** what shadcn delivers: focus in and back, Esc, dismiss, inertness of the page behind. Labelling is markup, graded on the ARIA line, not here. Tag differences go in `note`. No registration needed. |
 | `spec` | ✅ … — follows spec | shadcn breaks a spec (stage 2) and RubyUI follows it. `source` = the spec URL#anchor. No registration needed. |
 
@@ -52,6 +52,16 @@ still graded on its own and is still a finding.
    `native-html.md` does → ❌ "candidate for <feature>", citing MDN. Native
    already used and nothing lost → ✅ basis `native`.
 
+## Lines from `collect`
+
+`collect` grades Look (computed styles: ❌ / ✅) and ARIA (snapshot + attributes:
+⚠️ / ✅) per part, by the same rules as below. Its ⏸ lines say why (state not
+reached, selector count mismatch, theme token, environment diff). Keep every
+`collect` line. Change a grade only with a verified reason that the rules
+below allow (e.g. values that render the same), written in its `note`; a ✅
+with a basis still needs its usual route (registered divergence, native, spec).
+Otherwise keep the grade.
+
 ## Per-dimension notes
 
 - **Look**: compare per part, light and dark. Class tokens that differ but
@@ -62,7 +72,7 @@ still graded on its own and is still a finding.
   `showCloseButton`"). `rubyui_only` kwargs → a `note` on the Props line,
   never a failure. A prop the `.tsx` declares (reference `parts.<slot>.props`)
   that the map lacks → ⏸ "map gap", and tell the user to add it to
-  `audit/component_map.yml`.
+  `audit/component_map/<folder>.yml`.
 - **Reference `unresolved`** (cn-* markers with no vega rule): shadcn's CLI
   strips them, so they add no classes. Mention in a `note`, never as a missing
   class.
@@ -94,7 +104,7 @@ before blaming the component.
 
 - Pre-existing drift is reported **mixed with** drift the PR introduced. No
   "old debt" section, no filtering by changed lines.
-- The audit never edits PR code, `divergences.yml` or `component_map.yml`.
+- The audit never edits PR code, `audit/divergences/` or `audit/component_map/`.
   When a difference looks deliberate, show a ready-to-paste divergences entry
   (fields: `component`, `dimension`, `rubyui`, `shadcn`, `reason`, `since`)
   for the PR author to add by hand. `component`, `rubyui`, `shadcn` and
@@ -110,7 +120,7 @@ From `audit/test/fixtures/report_572.json` (pins: head `a9a5d1fa`, base
 | Dialog ✅ Look `overlay bg-black/10 + supports-backdrop-filter:backdrop-blur-xs` | Effective vega classes for `dialog-overlay` match the RubyUI overlay's classes in the DOM. `source: style-vega.css:464`. |
 | Dialog ❌ Look `p-6 gap-4 border shadow-lg sm:rounded-lg max-w-lg` vs `p-6 gap-6 ring-1 ring-foreground/10 rounded-xl sm:max-w-md` | Look difference, not registered → ❌. Both values concrete, `source: style-vega.css:468`. |
 | Dialog ⚠️ Animation "no exit fade" vs `data-closed:fade-out-0 duration-100` | Seen in the browser: shadcn's popup runs an animation on close, RubyUI's disappears at once. Animation → ⚠️, `source: style-vega.css:468`. |
-| Dialog ✅ HTML native `<dialog>` — intentional | `divergences dialog` has the HTML entry → basis `intentional`, `source: audit/divergences.yml`. |
+| Dialog ✅ HTML native `<dialog>` — intentional | `divergences dialog` has the HTML entry → basis `intentional`, `source: audit/divergences/dialog.yml`. |
 | Dialog ⚠️ ARIA "no aria-labelledby/aria-describedby" | Base UI wires Title/Description in the sandbox DOM; RubyUI doesn't. ARIA → ⚠️, `source: bases/base/ui/dialog.tsx:122-138`. (A dialog with no accessible name also breaks WAI-ARIA 1.2 `#dialog` "Accessible Name Required", which is a separate ❌ Spec line, rule 5.) |
 | Dialog ⏸ Behavior "scroll lock not exercised" | The state wasn't reached. Never ✅ by default. |
 | Dialog ✅ Native `showModal()` — native | Native `<dialog>` gives inert, Esc and focus. Scroll lock is kept on both sides (RubyUI's controller adds `overflow-hidden` to `body`; Base UI locks it too), so nothing shadcn delivers is lost. `source` = MDN showModal. |

@@ -1,0 +1,12 @@
+- component: command
+  dimension: Look
+  rubyui: "CommandInput resets @tailwindcss/forms on the <input> (border-0 bg-transparent ring-0)"
+  shadcn: "cmdk's <input type=text> has no reset; with @tailwindcss/forms loaded it gets a white background, a 1px border and a focus ring"
+  reason: "RubyUI apps load @tailwindcss/forms (the docs do). Without the reset the search field would draw a box inside the input group. RubyUI matches shadcn as rendered without the plugin."
+  since: "2026-11-02"
+- component: command
+  dimension: ARIA
+  rubyui: "sr-only DialogTitle and DialogDescription inside the <dialog> (exposed as a heading and a paragraph)"
+  shadcn: "sr-only DialogHeader rendered outside DialogContent, under the aria-hidden app root (reachable only through aria-labelledby/aria-describedby)"
+  reason: "Same accessible name and description. Keeping the title inside the native modal dialog keeps it in the accessibility tree instead of pointing aria-labelledby at inert content."
+  since: "2026-11-02"

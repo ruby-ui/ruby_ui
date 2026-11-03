@@ -1,0 +1,8 @@
+# The RubyUI docs example on both sides: a header with a title and an icon
+# ghost button (the trigger, carrying data-audit-trigger), one visible row,
+# and two rows inside the collapsed content.
+title: "@peduarte starred 3 repositories"
+toggle: Toggle
+row_1: "@radix-ui/primitives"
+row_2: "@radix-ui/colors"
+row_3: "@stitches/react"

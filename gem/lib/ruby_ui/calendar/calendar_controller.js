@@ -1,6 +1,10 @@
 import { Controller } from "@hotwired/stimulus";
 import Mustache from "mustache";
 
+// Renders the month grid from the templates in CalendarWeekdays and
+// CalendarDays. Keyboard support follows the APG date picker grid:
+// one day is in the Tab sequence; arrows move by day/week, Home/End to the
+// start/end of the week, PageUp/PageDown by month (Shift: by year).
 export default class extends Controller {
   static targets = [
     "calendar",
@@ -29,10 +33,30 @@ export default class extends Controller {
       type: String,
       default: "yyyy-MM-dd", // Default format
     },
+    weekStartsOn: {
+      type: Number,
+      default: 0, // Sunday
+    },
   };
   static outlets = ["ruby-ui--calendar-input"];
 
   initialize() {
+    this.focusedDate = null;
+    this.shouldFocus = false;
+
+    // Nothing selected and today before min_date: open on the min_date month,
+    // where days can be picked, instead of a month that is all disabled.
+    const minDate = this.minDate();
+    if (
+      !this.selectedDate() &&
+      minDate &&
+      this.startOfDay(new Date()) < this.startOfDay(minDate)
+    ) {
+      this.viewDateValue = this.toISODate(
+        new Date(minDate.getFullYear(), minDate.getMonth(), 2),
+      );
+    }
+
     this.updateCalendar(); // Initial calendar render
   }
 
@@ -48,10 +72,94 @@ export default class extends Controller {
 
   selectDay(e) {
     e.preventDefault();
-    if (this.isDateDisabled(e.currentTarget.dataset.day)) return;
+    const date = this.parseDate(e.currentTarget.dataset.day);
+    if (!date || this.isDateDisabled(date)) return;
 
-    // Set the selected date value
-    this.selectedDateValue = e.currentTarget.dataset.day;
+    // Selecting the selected day again: make it the Tab stop again and write
+    // the date back into the linked input, which may have been edited since.
+    const value = this.toISODate(date);
+    if (value === this.selectedDateValue) {
+      this.focusedDate = date;
+      this.shouldFocus = true;
+      this.updateCalendar();
+      this.syncInputs(date);
+      return;
+    }
+
+    this.focusedDate = date;
+    this.shouldFocus = true;
+    this.selectedDateValue = value;
+  }
+
+  navigate(e) {
+    const button = e.target.closest("button[data-day]");
+    if (!button) return;
+
+    const current = this.parseDate(button.dataset.day);
+    const offset = this.weekdayOffset(current);
+    let step = 0;
+    let next;
+
+    switch (e.key) {
+      case "ArrowLeft":
+        step = -1;
+        break;
+      case "ArrowRight":
+        step = 1;
+        break;
+      case "ArrowUp":
+        step = -7;
+        break;
+      case "ArrowDown":
+        step = 7;
+        break;
+      case "Home":
+        next = this.addDays(current, -offset);
+        break;
+      case "End":
+        next = this.addDays(current, 6 - offset);
+        break;
+      case "PageUp":
+        next = this.addMonths(current, e.shiftKey ? -12 : -1);
+        break;
+      case "PageDown":
+        next = this.addMonths(current, e.shiftKey ? 12 : 1);
+        break;
+      default:
+        return;
+    }
+    e.preventDefault();
+
+    if (step !== 0) {
+      next = this.addDays(current, step);
+      // Skip disabled days, as react-day-picker does.
+      for (let i = 0; i < 366 && this.isDateDisabled(next); i++) {
+        next = this.addDays(next, step);
+      }
+      if (this.isDateDisabled(next)) return;
+    } else {
+      // Home/End/PageUp/PageDown landing on a disabled day: walk back toward
+      // the current (enabled) day until an enabled one, so focus never lands
+      // on a month with no focusable day.
+      const back = next < current ? 1 : -1;
+      while (this.isDateDisabled(next) && !this.sameDay(next, current)) {
+        next = this.addDays(next, back);
+      }
+    }
+    this.focusDay(next);
+  }
+
+  focusDay(date) {
+    this.focusedDate = date;
+    this.shouldFocus = true;
+    const viewDate = this.toISODate(
+      new Date(date.getFullYear(), date.getMonth(), 2),
+    );
+    if (viewDate === this.viewDateValue) {
+      this.updateCalendar();
+    } else {
+      this.viewDateValue = viewDate; // triggers updateCalendar()
+    }
   }
 
   selectedDateValueChanged(value, prevValue) {
@@ -61,17 +169,21 @@ export default class extends Controller {
       return;
     }
 
-    // update the viewDateValue to the first day of month of the selected date (This will trigger updateCalendar() function)
-    const newViewDate = new Date(selectedDate);
-    newViewDate.setDate(2); // set the day to the 2nd (to avoid issues with months with different number of days and timezones)
-    this.viewDateValue = newViewDate.toISOString().slice(0, 10);
+    // update the viewDateValue to the month of the selected date (This will trigger updateCalendar() function)
+    this.viewDateValue = this.toISODate(
+      new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 2),
+    );
 
     // Re-render the calendar
     this.updateCalendar();
 
-    // update the input value
+    this.syncInputs(selectedDate);
+  }
+
+  // Write the date into the linked inputs (input_id).
+  syncInputs(date) {
+    const formattedDate = this.formatDate(date);
     this.rubyUiCalendarInputOutlets.forEach((outlet) => {
-      const formattedDate = this.formatDate(selectedDate);
       outlet.setValue(formattedDate);
     });
   }
@@ -82,15 +194,28 @@ export default class extends Controller {
 
   adjustMonth(adjustment) {
     const date = this.viewDate();
-    date.setDate(2); // set the day to the 2nd (to avoid issues with months with different number of days and timezones)
-    date.setMonth(date.getMonth() + adjustment);
-    return date.toISOString().slice(0, 10);
+    return this.toISODate(
+      new Date(date.getFullYear(), date.getMonth() + adjustment, 2),
+    );
   }
 
   updateCalendar() {
+    if (!this.hasCalendarTarget) return;
+
+    // Re-rendering replaces the day buttons: keep focus in the grid if it was there.
+    const keepFocus =
+      this.shouldFocus || this.calendarTarget.contains(document.activeElement);
+
     // Update the title with month and year
-    this.titleTarget.textContent = this.monthAndYear();
+    const title = this.monthAndYear();
+    this.titleTarget.textContent = title;
+    this.calendarTarget.setAttribute("aria-label", title);
     this.calendarTarget.innerHTML = this.calendarHTML();
+
+    if (keepFocus) {
+      this.calendarTarget.querySelector('button[tabindex="0"]')?.focus();
+    }
+    this.shouldFocus = false;
   }
 
   calendarHTML() {
@@ -98,59 +223,103 @@ export default class extends Controller {
   }
 
   calendarDays() {
-    return this.getFullWeeksStartAndEndInMonth()
-      .map((week) => this.renderWeek(week))
-      .join("");
+    const tabbable = this.tabbableDate();
+    return `<tbody>${this.weeks()
+      .map((week) => this.renderWeek(week, tabbable))
+      .join("")}</tbody>`;
   }
 
-  renderWeek(week) {
-    const days = week
-      .map((day) => {
-        return this.renderDay(day);
-      })
-      .join("");
+  renderWeek(week, tabbable) {
+    const days = week.map((day) => this.renderDay(day, tabbable)).join("");
     return `<tr class="flex w-full mt-2">${days}</tr>`;
   }
 
-  renderDay(day) {
-    const today = new Date();
+  renderDay(day, tabbable) {
     const selectedDate = this.selectedDate();
-    let dateHTML = "";
-    const data = { day: day, dayDate: day.getDate() };
+    const isSelected = this.sameDay(day, selectedDate);
+    const isToday = this.sameDay(day, new Date());
+    const data = {
+      date: this.toISODate(day),
+      dayDate: day.getDate(),
+      label: this.dayLabel(day, { isSelected, isToday }),
+      tabindex: this.sameDay(day, tabbable) ? "0" : "-1",
+    };
 
+    let template;
     if (this.isDateDisabled(day)) {
-      // disabledDate
-      dateHTML = Mustache.render(
-        this.disabledDateTemplateTarget.innerHTML,
-        data,
-      );
-    } else if (
-      selectedDate &&
-      day.toDateString() === selectedDate.toDateString()
-    ) {
-      // selectedDate
-      // Render the selected date template target innerHTML with Mustache
-      dateHTML = Mustache.render(
-        this.selectedDateTemplateTarget.innerHTML,
-        data,
-      );
-    } else if (day.toDateString() === today.toDateString()) {
-      // todayDate
-      dateHTML = Mustache.render(this.todayDateTemplateTarget.innerHTML, data);
+      template = this.disabledDateTemplateTarget;
+    } else if (isSelected) {
+      template = this.selectedDateTemplateTarget;
+    } else if (isToday) {
+      template = this.todayDateTemplateTarget;
     } else if (day.getMonth() === this.viewDate().getMonth()) {
-      // currentMonthDate
-      dateHTML = Mustache.render(
-        this.currentMonthDateTemplateTarget.innerHTML,
-        data,
-      );
+      template = this.currentMonthDateTemplateTarget;
     } else {
-      // otherMonthDate
-      dateHTML = Mustache.render(
-        this.otherMonthDateTemplateTarget.innerHTML,
-        data,
+      template = this.otherMonthDateTemplateTarget;
+    }
+    return Mustache.render(template.innerHTML, data);
+  }
+
+  // The one day in the Tab sequence: the focused day, else the selected day,
+  // else today, else the first enabled day of the month on view, else the
+  // first enabled day anywhere in the rendered grid (outside days included).
+  tabbableDate() {
+    const view = this.viewDate();
+    const inView = (date) =>
+      date &&
+      date.getFullYear() === view.getFullYear() &&
+      date.getMonth() === view.getMonth() &&
+      !this.isDateDisabled(date);
+
+    const candidate = [this.focusedDate, this.selectedDate(), new Date()].find(
+      inView,
+    );
+    if (candidate) return candidate;
+
+    const lastDay = new Date(view.getFullYear(), view.getMonth() + 1, 0);
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+      const date = new Date(view.getFullYear(), view.getMonth(), day);
+      if (!this.isDateDisabled(date)) return date;
+    }
+    return (
+      this.weeks()
+        .flat()
+        .find((date) => !this.isDateDisabled(date)) || null
+    );
+  }
+
+  // Full weeks covering the month on view, starting on weekStartsOn.
+  weeks() {
+    const view = this.viewDate();
+    const year = view.getFullYear();
+    const month = view.getMonth();
+    const first = new Date(year, month, 1);
+    const last = new Date(year, month + 1, 0);
+    const start = 1 - this.weekdayOffset(first);
+
+    const weeks = [];
+    for (let day = start; new Date(year, month, day) <= last; day += 7) {
+      weeks.push(
+        Array.from({ length: 7 }, (_, i) => new Date(year, month, day + i)),
       );
     }
-    return dateHTML;
+    return weeks;
+  }
+
+  // Days since the start of the week (0-6).
+  weekdayOffset(date) {
+    return (date.getDay() - this.weekStartsOnValue + 7) % 7;
+  }
+
+  // "Monday, March 16th, 2026", as react-day-picker labels its day buttons.
+  dayLabel(date, { isSelected, isToday }) {
+    const weekday = date.toLocaleString("en-US", { weekday: "long" });
+    const month = date.toLocaleString("en-US", { month: "long" });
+    const day = date.getDate();
+    let label = `${weekday}, ${month} ${day}${this.getDaySuffix(day)}, ${date.getFullYear()}`;
+    if (isToday) label = `Today, ${label}`;
+    if (isSelected) label = `${label}, selected`;
+    return label;
   }
 
   monthAndYear() {
@@ -169,59 +338,31 @@ export default class extends Controller {
     );
   }
 
-  getFullWeeksStartAndEndInMonth() {
-    const month = this.viewDate().getMonth();
-    const year = this.viewDate().getFullYear();
+  addDays(date, days) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
+  }
 
-    let weeks = [],
-      firstDate = new Date(year, month, 1),
-      lastDate = new Date(year, month + 1, 0),
-      numDays = lastDate.getDate();
+  // Same day in another month, clamped to that month's last day.
+  addMonths(date, months) {
+    const lastDay = new Date(
+      date.getFullYear(),
+      date.getMonth() + months + 1,
+      0,
+    ).getDate();
+    return new Date(
+      date.getFullYear(),
+      date.getMonth() + months,
+      Math.min(date.getDate(), lastDay),
+    );
+  }
 
-    let start = 1;
-    let end;
-    if (firstDate.getDay() === 1) {
-      end = 7;
-    } else if (firstDate.getDay() === 0) {
-      let preMonthEndDay = new Date(year, month, 0);
-      start = preMonthEndDay.getDate() - 6 + 1;
-      end = 1;
-    } else {
-      let preMonthEndDay = new Date(year, month, 0);
-      start = preMonthEndDay.getDate() + 1 - firstDate.getDay() + 1;
-      end = 7 - firstDate.getDay() + 1;
-      weeks.push({
-        start: start,
-        end: end,
-      });
-      start = end + 1;
-      end = end + 7;
-    }
-    while (start <= numDays) {
-      weeks.push({
-        start: start,
-        end: end,
-      });
-      start = end + 1;
-      end = end + 7;
-      end = start === 1 && end === 8 ? 1 : end;
-      if (end > numDays && start <= numDays) {
-        end = end - numDays;
-        weeks.push({
-          start: start,
-          end: end,
-        });
-        break;
-      }
-    }
-    // *** the magic starts here
-    return weeks.map(({ start, end }, index) => {
-      const sub = +(start > end && index === 0);
-      return Array.from({ length: 7 }, (_, index) => {
-        const date = new Date(year, month - sub, start + index);
-        return date;
-      });
-    });
+  sameDay(a, b) {
+    return !!(a && b && a.toDateString() === b.toDateString());
+  }
+
+  toISODate(date) {
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
   }
 
   formatDate(date) {
@@ -249,8 +390,9 @@ export default class extends Controller {
       PPPP: `${dayOfWeek}, ${monthName} ${day}${daySuffix}, ${year}`,
     };
 
+    // Longer tokens first: with MM before MMMM, "MMMM" came out as "0303".
     const formattedDate = format.replace(
-      /yyyy|MM|dd|HH|mm|ss|EEEE|MMMM|do|PPPP/g,
+      /yyyy|MMMM|EEEE|PPPP|MM|dd|do|HH|mm|ss/g,
       (matched) => map[matched],
     );
     return formattedDate;

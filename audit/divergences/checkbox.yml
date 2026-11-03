@@ -1,0 +1,25 @@
+- component: checkbox
+  dimension: Props
+  rubyui: "CheckboxGroup(required: true) renders data-required; its Stimulus controller makes every checkbox required until one is checked, so the form needs at least one"
+  shadcn: "No CheckboxGroup component: a checkbox group is FieldGroup data-slot=\"checkbox-group\", with no group-level required (Base UI's CheckboxGroup has none either)"
+  reason: "HTML has no required for a group of checkboxes, and Rails forms have no client form library to enforce it; apps (e.g. dynamic required multi-choice fields) need at least-one validation."
+  since: "2026-11-02"
+- component: checkbox
+  dimension: Behavior
+  rubyui: "In a required group, every checkbox change makes the CheckboxGroup controller dispatch ruby-ui--checkbox-group:change on every checkbox so each enclosing FormField re-validates"
+  shadcn: "Validation is left to the app's form library"
+  reason: "With shadcn's composition (one Field orientation=horizontal per checkbox) only the clicked checkbox's field would see the change, leaving its siblings marked invalid."
+  since: "2026-11-02"
+- component: checkbox
+  dimension: Look
+  match: {part: Checkbox, property: opacity, rubyui: "0.5", shadcn: "1"}
+  rubyui: "disabled checkbox at opacity-50"
+  shadcn: "disabled checkbox at full opacity outside a Field"
+  reason: "shadcn's disabled:opacity-50 never applies: the Base UI root is a <span> with data-disabled, and :disabled doesn't match a span (it only dims inside a Field, via group-has-disabled/field). RubyUI's native input matches :disabled, so it gets the dimming the class asks for."
+  since: "2026-11-02"
+- component: checkbox
+  dimension: Look
+  rubyui: "Indeterminate checkbox shows a dash"
+  shadcn: "Indeterminate checkbox shows the same check icon as checked (Base UI Checkbox.Indicator renders one icon; aria-checked=mixed)"
+  reason: "With one icon, mixed and checked look identical (e.g. a data table's select-all with some rows selected). The dash tells them apart; aria-checked=mixed is the same on both sides."
+  since: "2026-11-02"

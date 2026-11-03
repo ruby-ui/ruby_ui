@@ -23,11 +23,11 @@ class RenderersTest < Minitest::Test
     d = JSON.parse(File.read(FIXTURE))
     d["target"]["unmapped"] = ["new_thing"]
     d["components"] << {"folder" => "new_thing", "shadcn_file" => nil,
-                        "lines" => [{"dimension" => "Look", "status" => "inconclusive", "note" => "not in audit/component_map.yml"}]}
+                        "lines" => [{"dimension" => "Look", "status" => "inconclusive", "note" => "not in the component map"}]}
     d["components"] << {"folder" => "native_only", "shadcn_file" => nil,
                         "lines" => [{"dimension" => "Look", "status" => "inconclusive", "note" => "no shadcn equivalent"}]}
     text = ShadcnAudit::Renderers::Terminal.render(ShadcnAudit::Report.new(d))
-    assert_includes text, "NewThing  (not in component_map.yml)"
+    assert_includes text, "NewThing  (not in the component map)"
     assert_includes text, "NativeOnly  (no shadcn equivalent)"
   end
 

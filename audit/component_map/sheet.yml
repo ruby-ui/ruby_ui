@@ -1,0 +1,22 @@
+shadcn: sheet
+kind: modal
+docs_view: sheet
+parts:
+  Sheet: sheet
+  SheetTrigger: sheet-trigger
+  SheetContent: sheet-content
+  SheetHeader: sheet-header
+  SheetFooter: sheet-footer
+  SheetTitle: sheet-title
+  SheetDescription: sheet-description
+  SheetMiddle: null
+selectors:
+  Sheet: null
+  SheetTrigger: '[data-controller="ruby-ui--sheet"] > [data-action] > button'
+  SheetContent: '[data-ruby-ui--sheet-content-target="panel"]'
+  SheetHeader: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child'
+  SheetFooter: '[data-ruby-ui--sheet-content-target="panel"] > div:last-of-type'
+  SheetTitle: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child > h3'
+  SheetDescription: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child > p'
+props:
+  SheetContent: {side: side, showCloseButton: null}

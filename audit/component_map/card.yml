@@ -1,0 +1,22 @@
+shadcn: card
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: static
+docs_view: card
+parts:
+  Card: card
+  CardHeader: card-header
+  CardTitle: card-title
+  CardDescription: card-description
+  CardAction: card-action
+  CardContent: card-content
+  CardFooter: card-footer
+selectors:
+  Card: '[data-slot="card"]'
+  CardHeader: '[data-slot="card-header"]'
+  CardTitle: '[data-slot="card-title"]'
+  CardDescription: '[data-slot="card-description"]'
+  CardAction: '[data-slot="card-action"]'
+  CardContent: '[data-slot="card-content"]'
+  CardFooter: '[data-slot="card-footer"]'
+props:
+  Card: {size: size}

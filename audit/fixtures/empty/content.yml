@@ -1,0 +1,10 @@
+# One empty state as in the shadcn "With Icon" example, trimmed to text:
+#   header (icon media, title, description with a link), content (one button).
+# The icon is lucide's folder as lucide-react renders it (24x24, no size class),
+# so the media's [&_svg:not([class*='size-'])] rule applies on both sides.
+# Plain <button>, no shadcn Button, so the button look stays out of this audit.
+# The button carries data-audit-trigger (static kind: only the closed state is collected).
+title: No projects yet
+description: You haven't created any projects yet.
+link: Learn more
+action: Create project

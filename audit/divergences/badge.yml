@@ -1,0 +1,6 @@
+- component: badge
+  dimension: Props
+  rubyui: "href: renders the badge as <a href> (span otherwise)"
+  shadcn: "render prop (useRender), e.g. render={<a href=\"…\" />}"
+  reason: "Phlex has no render prop; a link is the only other element a badge needs, and href: matches Link and PaginationItem."
+  since: "2026-11-01"

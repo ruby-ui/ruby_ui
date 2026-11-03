@@ -1,0 +1,11 @@
+# Date picker with an input (shadcn examples/base/date-picker-input.tsx).
+# Label "Date" for input#date; value and selection 2026-03-12 (a fixed month,
+# away from today), written as yyyy-MM-dd (RubyUI's default date_format) on
+# both sides; placeholder "Select a date". The caller sets the width (w-48) on
+# both sides, as the example does on Field.
+# popover kind: data-audit-trigger is what opens the calendar: the icon button
+# on both sides (the input group's calendar button).
+label: "Date"
+id: "date"
+value: "2026-03-12"
+placeholder: "Select a date"

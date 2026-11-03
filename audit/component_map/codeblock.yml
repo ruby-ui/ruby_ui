@@ -1,0 +1,31 @@
+shadcn: code-block
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: static
+docs_view: codeblock
+parts:
+  Codeblock: code-block
+  CodeblockHeader: code-block-header
+  CodeblockTitle: code-block-title
+  CodeblockActions: code-block-actions
+  CodeblockCopyButton: code-block-copy-button
+  CodeblockContent: code-block-content
+  CodeblockLine: code-block-line
+  CodeblockFooter: code-block-footer
+  CodeblockTheme: null
+selectors:
+  Codeblock: '[data-audit-fixture] [data-slot="code-block"]'
+  CodeblockActions: '[data-audit-fixture] [data-slot="code-block-actions"]'
+  CodeblockCopyButton: '[data-audit-fixture] [data-slot="code-block-copy-button"]'
+  CodeblockContent: '[data-audit-fixture] [data-slot="code-block-content"]'
+props:
+  # Codeblock(code, ...) is a shorthand that also takes CodeblockContent's props.
+  Codeblock: {variant: variant, size: size}
+  CodeblockContent: {wrap: wrap, lineNumbers: line_numbers, startLine: start_line}
+  CodeblockCopyButton: {value: value, variant: variant, size: size}
+  CodeblockLine: {variant: variant}
+rubyui_only:
+  # syntax: Rouge highlighting (shadcn's base ships no highlighter).
+  # clipboard*: the shorthand's copy button on/off and its labels.
+  Codeblock: [syntax, clipboard, clipboard_success, clipboard_error, wrap, line_numbers, start_line]
+  CodeblockContent: [syntax]
+  CodeblockCopyButton: [label, copied_label, error_label]

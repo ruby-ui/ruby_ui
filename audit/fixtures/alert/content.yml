@@ -1,0 +1,8 @@
+# Two alerts (default, destructive), each with an icon, title and description.
+# The Undo button carries data-audit-trigger (static kind: only the closed state is collected).
+# The first alert has an AlertAction with a plain <button> (no shadcn Button, so its look stays out of this audit).
+action_1: Undo
+title_1: Heads up!
+description_1: You can add components to your app using the CLI.
+title_2: Something went wrong
+description_2: Your session has expired. Please log in again.

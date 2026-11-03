@@ -1,0 +1,17 @@
+# One input per state: email (data-audit-trigger, used for focus), no type
+# (each side's default), password with a value, file, disabled, aria-disabled
+# and invalid (aria-invalid). Every audited input carries data-audit-input.
+# Labels are plain <label>s with the same classes on both sides; not audited.
+email: Email
+email_placeholder: m@example.com
+plain: Name
+plain_placeholder: Your name
+password: Password
+password_value: secret
+file: Picture
+disabled: Disabled
+disabled_placeholder: Disabled input
+aria_disabled: Aria disabled
+aria_disabled_placeholder: Aria disabled input
+invalid: Invalid
+invalid_placeholder: Invalid input

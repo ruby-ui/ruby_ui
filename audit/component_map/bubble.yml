@@ -1,0 +1,19 @@
+shadcn: bubble
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: static
+docs_view: bubble
+parts:
+  BubbleGroup: bubble-group
+  Bubble: bubble
+  BubbleContent: bubble-content
+  BubbleReactions: bubble-reactions
+selectors:
+  BubbleGroup: '[data-slot="bubble-group"]'
+  Bubble: '[data-slot="bubble"]'
+  BubbleContent: '[data-slot="bubble-content"]'
+  BubbleReactions: '[data-slot="bubble-reactions"]'
+props:
+  Bubble: {variant: variant, align: align}
+  BubbleContent: {render: as}
+  BubbleReactions: {side: side, align: align}
+fixture_shadcn: [message]

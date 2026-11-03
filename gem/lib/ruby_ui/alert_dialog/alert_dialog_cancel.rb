@@ -13,8 +13,7 @@ module RubyUI
         variant: :outline,
         data: {
           action: "click->ruby-ui--alert-dialog#dismiss"
-        },
-        class: "mt-2 sm:mt-0"
+        }
       }
     end
   end

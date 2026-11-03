@@ -1,0 +1,10 @@
+shadcn: aspect-ratio
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: static
+docs_view: aspect_ratio
+parts:
+  AspectRatio: aspect-ratio
+selectors:
+  AspectRatio: '[data-slot="aspect-ratio"]'
+props:
+  AspectRatio: {ratio: ratio}

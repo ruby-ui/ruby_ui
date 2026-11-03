@@ -14,7 +14,7 @@ rescue LoadError
 end
 
 namespace :mcp do
-  desc "Rebuild registry.json from ../gem"
+  desc "Rebuild data/registry/ from ../gem"
   task :build do
     sh "exe/ruby-ui-mcp-build"
   end

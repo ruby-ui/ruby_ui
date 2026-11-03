@@ -1,0 +1,13 @@
+# shadcn dashboard-01 data table (Base UI), reduced to the parts RubyUI's
+# DataTable has: "Columns" dropdown, select-all + row checkboxes, selection
+# summary ("0 of 3 row(s) selected.", computed on both sides), rows per page,
+# pagination on page 1 of 3 ("Page 1 of 3" is a literal in shadcn.tsx; RubyUI
+# computes it from total_count: 30).
+columns_label: Columns
+toggle_columns: [Type, Status, Reviewer]
+headers: [Header, Type, Status, Reviewer]
+rows:
+  - [Cover page, Cover page, In Process, Eddie Lake]
+  - [Table of contents, Table of contents, Done, Eddie Lake]
+  - [Executive summary, Narrative, Done, Jamik Tashpulatov]
+rows_per_page: Rows per page

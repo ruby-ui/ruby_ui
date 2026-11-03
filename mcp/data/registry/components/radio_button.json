@@ -1,0 +1,39 @@
+{
+  "name": "RadioButton",
+  "description": "A control that allows users to make a single selection from a list of options.",
+  "files": [
+    {
+      "path": "radio_button.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class RadioButton < Base\n    def view_template\n      input(**attrs)\n    end\n\n    private\n\n    def default_attrs\n      {\n        type: \"radio\",\n        data: {\n          ruby_ui__form_field_target: \"input\",\n          action: \"change->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid\"\n        },\n        class: [\n          \"h-4 w-4 p-0 border-primary rounded-full flex-none\",\n          \"disabled:cursor-not-allowed disabled:opacity-50\",\n          \"checked:bg-primary checked:text-primary-foreground dark:checked:bg-secondary checked:text-primary checked:border-primary\",\n          \"aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none\"\n        ]\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component RadioButton",
+  "docs_markdown": "# Radio Button\n\nA control that allows users to make a single selection from a list of options.\n\n## Usage\n\n### Example\n\n```ruby\ndiv(class: \"flex items-center space-x-2\") do\n  RadioButton(id: \"default\")\n  FormFieldLabel(for: \"default\") { \"Default\" }\nend\n```\n\n### Checked\n\n```ruby\ndiv(class: \"flex items-center space-x-2\") do\n  RadioButton(id: \"checked\", checked: true)\n  FormFieldLabel(for: \"checked\") { \"Checked\" }\nend\n```\n\n### Disabled\n\n```ruby\ndiv(class: \"flex flex-row items-center gap-2\") do\n  RadioButton(class: \"peer\",id: \"disabled\", disabled: true)\n  FormFieldLabel(for: \"disabled\") { \"Disabled\" }\nend\n```\n\n### Aria Disabled\n\n```ruby\ndiv(class: \"flex flex-row items-center gap-2\") do\n  RadioButton(class: \"peer\", id: \"aria-disabled\", aria: {disabled: \"true\"})\n  FormFieldLabel(for: \"aria-disabled\") { \"Aria Disabled\" }\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "div(class: \"flex items-center space-x-2\") do\n  RadioButton(id: \"default\")\n  FormFieldLabel(for: \"default\") { \"Default\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Checked",
+      "code": "div(class: \"flex items-center space-x-2\") do\n  RadioButton(id: \"checked\", checked: true)\n  FormFieldLabel(for: \"checked\") { \"Checked\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Disabled",
+      "code": "div(class: \"flex flex-row items-center gap-2\") do\n  RadioButton(class: \"peer\",id: \"disabled\", disabled: true)\n  FormFieldLabel(for: \"disabled\") { \"Disabled\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Aria Disabled",
+      "code": "div(class: \"flex flex-row items-center gap-2\") do\n  RadioButton(class: \"peer\", id: \"aria-disabled\", aria: {disabled: \"true\"})\n  FormFieldLabel(for: \"aria-disabled\") { \"Aria Disabled\" }\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

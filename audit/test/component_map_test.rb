@@ -71,8 +71,9 @@ class ComponentMapTest < Minitest::Test
     stub = @map.suggest_entry("alert_dialog")
     parsed = YAML.safe_load(stub)
 
-    assert_equal "alert-dialog", parsed["alert_dialog"]["shadcn"]
-    assert_equal "alert_dialog", parsed["alert_dialog"]["docs_view"]
+    assert_equal "alert-dialog", parsed["shadcn"]
+    assert_equal "alert_dialog", parsed["docs_view"]
+    assert_equal "audit/component_map/alert_dialog.yml", ShadcnAudit::ComponentMap.path_for("alert_dialog")
   end
 
   def test_unknown_kind_raises
@@ -94,7 +95,26 @@ class ComponentMapTest < Minitest::Test
     assert_includes error.message, "rubyui_only.DialogContent"
   end
 
-  def seed_map = ShadcnAudit::ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+  def test_fixture_shadcn_must_be_a_list_of_names
+    File.write(@path, "form:\n  shadcn: field\n  kind: form_control\n  fixture_shadcn: input\n")
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(@path) }
+    assert_includes error.message, "form"
+    assert_includes error.message, "fixture_shadcn"
+  end
+
+  def test_fixture_shadcn_rejects_malformed_names
+    ["", "Input", "input group", "../input"].each do |name|
+      File.write(@path, "form:\n  shadcn: field\n  kind: form_control\n  fixture_shadcn: [#{name.inspect}]\n")
+      error = assert_raises(ShadcnAudit::ConfigError, name) { ShadcnAudit::ComponentMap.load(@path) }
+      assert_includes error.message, "fixture_shadcn"
+    end
+  end
+
+  def test_form_fixture_declares_its_extra_components
+    assert_equal %w[button input checkbox], seed_map.entry("form")["fixture_shadcn"]
+  end
+
+  def seed_map = ShadcnAudit::ComponentMap.for_audit(ShadcnAudit.root.join("audit"))
 
   def test_seed_files_load
     map = seed_map
@@ -117,9 +137,99 @@ class ComponentMapTest < Minitest::Test
     end
   end
 
+  def test_split_directory_loads_one_file_per_folder
+    dir = File.join(@tmp, "audit", "component_map")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "sheet.yml"), "shadcn: sheet\nkind: modal\n")
+    File.write(File.join(dir, "dialog.yml"), "shadcn: dialog\nkind: modal\n")
+    File.write(File.join(dir, "README.md"), "not an entry")
+
+    map = ShadcnAudit::ComponentMap.for_audit(File.join(@tmp, "audit"))
+
+    assert_equal %w[dialog sheet], map.all_folders
+    assert_equal "sheet", map.entry("sheet")["shadcn"]
+  end
+
+  def test_split_directory_errors_name_the_file
+    dir = File.join(@tmp, "component_map")
+    FileUtils.mkdir_p(dir)
+    File.write(File.join(dir, "dialog.yml"), "shadcn: dialog\nkind: wizard\n")
+
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(dir) }
+    assert_match(/\Acomponent_map\/dialog\.yml: unknown kind/, error.message)
+  end
+
+  def test_audit_dir_without_split_falls_back_to_the_single_file
+    # Preview checkouts of SHAs from before the split still have audit/component_map.yml.
+    audit = File.join(@tmp, "old_audit")
+    FileUtils.mkdir_p(audit)
+    File.write(File.join(audit, "component_map.yml"), "dialog:\n  shadcn: dialog\n  kind: modal\n")
+
+    assert_equal %w[dialog], ShadcnAudit::ComponentMap.for_audit(audit).all_folders
+  end
+
+  def test_every_fixture_has_a_map_file_and_every_compared_entry_has_fixtures
+    audit = ShadcnAudit.root.join("audit")
+    compared = seed_map.all_folders.reject { |folder| seed_map.selectors(folder).compact.empty? }
+    assert_equal compared.sort, Dir.children(audit.join("fixtures")).sort
+    Dir.children(audit.join("fixtures")).each do |folder|
+      assert File.file?(audit.join("component_map", "#{folder}.yml")), "#{folder}: missing map file"
+    end
+  end
+
   def test_non_mapping_entry_raises
     File.write(@path, "dialog: dialog\n")
     error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.load(@path) }
     assert_equal "component_map.yml: dialog: entry must be a mapping", error.message
+  end
+
+  def selector_map(selectors)
+    ShadcnAudit::ComponentMap.new("dialog" => {"parts" => {"DialogContent" => "dialog-content"}, "selectors" => selectors})
+  end
+
+  def test_selectors_are_returned
+    assert_equal({"DialogContent" => "dialog > div"}, selector_map("DialogContent" => "dialog > div").selectors("dialog"))
+  end
+
+  def test_selectors_default_to_empty
+    assert_equal({}, @map.selectors("dialog"))
+  end
+
+  def test_selector_for_unknown_part_is_rejected
+    error = assert_raises(ShadcnAudit::ConfigError) { selector_map("Nope" => "div") }
+    assert_match(/selectors.Nope is not a mapped part/, error.message)
+  end
+
+  def test_null_selector_means_not_compared
+    assert_equal({"DialogContent" => nil}, selector_map("DialogContent" => nil).selectors("dialog"))
+  end
+
+  def test_blank_selector_is_rejected
+    error = assert_raises(ShadcnAudit::ConfigError) { selector_map("DialogContent" => " ") }
+    assert_match(/selectors.DialogContent must be a non-empty CSS selector/, error.message)
+  end
+
+  def test_selectors_must_be_a_mapping
+    error = assert_raises(ShadcnAudit::ConfigError) { selector_map(["dialog > div"]) }
+    assert_match(/selectors must be a mapping/, error.message)
+  end
+
+  def test_selector_on_part_without_shadcn_slot_is_rejected
+    map = {"dialog" => {"parts" => {"DialogMiddle" => nil}, "selectors" => {"DialogMiddle" => "div"}}}
+    error = assert_raises(ShadcnAudit::ConfigError) { ShadcnAudit::ComponentMap.new(map) }
+    assert_match(/selectors.DialogMiddle is not a mapped part/, error.message)
+  end
+
+  def test_shadcn_sha_reads_the_baseline
+    map = ShadcnAudit::ComponentMap.new({"badge" => {"shadcn" => "badge", "shadcn_sha" => "a" * 40}})
+    assert_equal "a" * 40, map.shadcn_sha("badge")
+    assert_nil map.shadcn_sha("missing")
+  end
+
+  def test_rejects_a_short_shadcn_sha
+    error = assert_raises(ShadcnAudit::ConfigError) do
+      ShadcnAudit::ComponentMap.new({"badge" => {"shadcn" => "badge", "shadcn_sha" => "abc123"}})
+    end
+    assert_match(/shadcn_sha must be a full 40-character commit SHA/, error.message)
   end
 end

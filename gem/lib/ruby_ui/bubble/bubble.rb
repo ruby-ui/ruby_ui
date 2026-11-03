@@ -28,7 +28,7 @@ module RubyUI
       {
         data: {slot: "bubble", variant: @variant, align: @align},
         class: [
-          "group/bubble relative flex w-fit min-w-0 flex-col gap-1 max-w-[80%] data-[align=end]:self-end data-[variant=ghost]:max-w-full",
+          "group/bubble relative flex w-fit min-w-0 flex-col gap-1 max-w-[80%] data-[align=end]:self-end data-[variant=ghost]:max-w-full group-data-[align=end]/message:self-end",
           VARIANTS[@variant]
         ]
       }

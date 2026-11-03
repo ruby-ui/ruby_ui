@@ -11,6 +11,7 @@ module RubyUI
     def default_attrs
       {
         data: {
+          ruby_ui__dialog_target: "trigger",
           action: "click->ruby-ui--dialog#open"
         },
         class: "inline-block"

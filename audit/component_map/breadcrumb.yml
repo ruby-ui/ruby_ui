@@ -1,0 +1,23 @@
+shadcn: breadcrumb
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: static
+docs_view: breadcrumb
+parts:
+  Breadcrumb: breadcrumb
+  BreadcrumbList: breadcrumb-list
+  BreadcrumbItem: breadcrumb-item
+  BreadcrumbLink: breadcrumb-link
+  BreadcrumbPage: breadcrumb-page
+  BreadcrumbSeparator: breadcrumb-separator
+  BreadcrumbEllipsis: breadcrumb-ellipsis
+selectors:
+  Breadcrumb: '[data-slot="breadcrumb"]'
+  BreadcrumbList: '[data-slot="breadcrumb-list"]'
+  BreadcrumbItem: '[data-slot="breadcrumb-item"]'
+  BreadcrumbLink: '[data-slot="breadcrumb-link"]'
+  BreadcrumbPage: '[data-slot="breadcrumb-page"]'
+  BreadcrumbSeparator: '[data-slot="breadcrumb-separator"]'
+  BreadcrumbEllipsis: '[data-slot="breadcrumb-ellipsis"]'
+props:
+  # render: RubyUI covers the link case with href: (see divergences/breadcrumb.yml).
+  BreadcrumbLink: {render: href}

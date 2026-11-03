@@ -10,7 +10,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex justify-center pt-1 relative items-center"
+        class: "relative mb-4 flex h-8 w-full items-center justify-center px-8"
       }
     end
   end

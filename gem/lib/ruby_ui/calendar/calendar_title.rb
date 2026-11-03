@@ -15,9 +15,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "text-sm font-medium",
+        class: "text-sm font-medium select-none",
+        role: "status",
         aria_live: "polite",
-        role: "presentation",
         data: {
           ruby_ui__calendar_target: "title"
         }

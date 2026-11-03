@@ -12,9 +12,10 @@ class CliMapTest < Minitest::Test
   end
 
   def test_map_unmapped_prints_suggestion
-    result = run_cli("map", "button")
+    result = run_cli("map", "shortcut_key")
     assert_equal true, result["missing"]
-    assert_includes result["suggestion"], "button:"
+    assert_equal "audit/component_map/shortcut_key.yml", result["path"]
+    assert_equal "shortcut-key", YAML.safe_load(result["suggestion"])["shadcn"]
   end
 
   def test_divergences_lists_for_folder

@@ -1,0 +1,7 @@
+# Three items, all collapsed on load. The first trigger carries data-audit-trigger.
+trigger_1: Is it accessible?
+content_1: Yes. It adheres to the WAI-ARIA design pattern.
+trigger_2: Is it styled?
+content_2: Yes. It comes with default styles that match the other components.
+trigger_3: Is it animated?
+content_3: Yes. It's animated by default, but you can disable it if you prefer.

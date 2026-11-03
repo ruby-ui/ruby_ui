@@ -1,0 +1,24 @@
+{
+  "name": "ShortcutKey",
+  "description": "A component for displaying keyboard shortcuts.",
+  "files": [
+    {
+      "path": "shortcut_key.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class ShortcutKey < Base\n    def view_template(&)\n      kbd(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100\"\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component ShortcutKey",
+  "docs_markdown": "# Shortcut Key\n\nA component for displaying keyboard shortcuts.\n\n## Usage\n\n### Example\n\n```ruby\ndiv(class: \"flex flex-col items-center gap-y-4\") do\n  ShortcutKey do\n    span(class: \"text-xs\") { \"⌘\" }\n    plain \"K\"\n  end\n  p(class: \"text-muted-foreground text-sm text-center\") { \"Note this does not trigger anything, it is purely a visual prompt\" }\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "div(class: \"flex flex-col items-center gap-y-4\") do\n  ShortcutKey do\n    span(class: \"text-xs\") { \"⌘\" }\n    plain \"K\"\n  end\n  p(class: \"text-muted-foreground text-sm text-center\") { \"Note this does not trigger anything, it is purely a visual prompt\" }\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

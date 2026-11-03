@@ -1,0 +1,24 @@
+{
+  "name": "Separator",
+  "description": "Visually or semantically separates content.",
+  "files": [
+    {
+      "path": "separator.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Separator < Base\n    ORIENTATIONS = %i[horizontal vertical].freeze\n\n    def initialize(as: :div, orientation: :horizontal, decorative: true, **attrs)\n      raise ArgumentError, \"Invalid orientation: #{orientation}\" unless ORIENTATIONS.include?(orientation.to_sym)\n\n      @as = as\n      @orientation = orientation.to_sym\n      @decorative = decorative\n      super(**attrs)\n    end\n\n    def view_template(&)\n      tag(@as, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        role: (@decorative ? \"none\" : \"separator\"),\n        class: [\n          \"shrink-0 bg-border\",\n          orientation_classes\n        ]\n      }\n    end\n\n    def orientation_classes\n      return \"h-[1px] w-full\" if @orientation == :horizontal\n\n      \"h-full w-[1px]\"\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Separator",
+  "docs_markdown": "# Separator\n\nVisually or semantically separates content.\n\n## Usage\n\n### Example\n\n```ruby\ndiv do\n  div(class: \"space-y-1\") do\n    h4(class: \"text-sm font-medium leading-none\") { \"RubyUI\" }\n    p(class: \"text-sm text-muted-foreground\") { \"An open-source UI component library.\" }\n  end\n  Separator(class: \"my-4\")\n  div(class: \"flex h-5 items-center space-x-4 text-sm\") do\n    div { \"Blog\" }\n    Separator(as: :hr, orientation: :vertical)\n    div { \"Docs\" }\n    Separator(orientation: :vertical)\n    div { \"Source\" }\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "div do\n  div(class: \"space-y-1\") do\n    h4(class: \"text-sm font-medium leading-none\") { \"RubyUI\" }\n    p(class: \"text-sm text-muted-foreground\") { \"An open-source UI component library.\" }\n  end\n  Separator(class: \"my-4\")\n  div(class: \"flex h-5 items-center space-x-4 text-sm\") do\n    div { \"Blog\" }\n    Separator(as: :hr, orientation: :vertical)\n    div { \"Docs\" }\n    Separator(orientation: :vertical)\n    div { \"Source\" }\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+# Same strings on both sides (RubyUI docs example).
+trigger: Open
+label: My Account
+items:
+  - Profile
+  - Billing
+  - Team
+  - Subscription

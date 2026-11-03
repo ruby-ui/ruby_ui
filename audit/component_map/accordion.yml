@@ -1,0 +1,22 @@
+shadcn: accordion
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: disclosure
+docs_view: accordion
+parts:
+  Accordion: accordion
+  AccordionItem: accordion-item
+  AccordionTrigger: accordion-trigger
+  AccordionIcon: accordion-trigger-icon
+  AccordionContent: accordion-content
+selectors:
+  Accordion: '[data-slot="accordion"]'
+  AccordionItem: '[data-slot="accordion-item"]'
+  AccordionTrigger: '[data-slot="accordion-trigger"]'
+  AccordionIcon: '[data-slot="accordion-trigger-icon"]'
+  AccordionContent: '[data-slot="accordion-content"]'
+props:
+  Accordion: {multiple: multiple, disabled: disabled, defaultValue: null, orientation: null}
+  AccordionItem: {value: null, disabled: disabled}
+rubyui_only:
+  AccordionItem: [open]
+  AccordionTrigger: [level, icon]

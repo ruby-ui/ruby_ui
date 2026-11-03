@@ -1,0 +1,22 @@
+shadcn: carousel
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: static
+docs_view: carousel
+parts:
+  Carousel: carousel
+  CarouselContent: carousel-content
+  CarouselItem: carousel-item
+  CarouselPrevious: carousel-previous
+  CarouselNext: carousel-next
+selectors:
+  Carousel: '[data-slot="carousel"]'
+  CarouselContent: '[data-slot="carousel-content"]'
+  CarouselItem: '[data-slot="carousel-item"]'
+  CarouselPrevious: '[data-slot="carousel-previous"]'
+  CarouselNext: '[data-slot="carousel-next"]'
+props:
+  # plugins/setApi: see divergences/carousel.yml.
+  Carousel: {opts: options, plugins: null, orientation: orientation, setApi: null}
+  # Previous/Next forward attrs to Button, so variant:/size: reach it.
+  CarouselPrevious: {variant: variant, size: size}
+  CarouselNext: {variant: variant, size: size}

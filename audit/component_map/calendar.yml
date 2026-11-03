@@ -1,0 +1,23 @@
+shadcn: calendar
+shadcn_sha: c0d63c339d6cd2fc26135590a54cf1f362269451
+kind: form_control
+docs_view: calendar
+# shadcn's Calendar is react-day-picker: only the root carries a data-slot
+# ("calendar"); nav and day buttons are Button (data-slot="button", shared).
+# The inner parts are compared by hand against react-day-picker's rdp-* classes.
+parts:
+  Calendar: calendar
+  CalendarHeader: null
+  CalendarTitle: null
+  CalendarPrev: null
+  CalendarNext: null
+  CalendarBody: null
+  CalendarWeekdays: null
+  CalendarDays: null
+selectors:
+  Calendar: '[data-controller="ruby-ui--calendar"]'
+props:
+  Calendar: {selected: selected_date, disabled: min_date, weekStartsOn: week_starts_on, showOutsideDays: null, captionLayout: null, buttonVariant: null, locale: null, formatters: null, components: null, classNames: null}
+rubyui_only:
+  Calendar: [input_id, date_format]
+  CalendarTitle: [default]

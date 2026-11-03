@@ -10,14 +10,14 @@ application.register("iframe-theme", IframeThemeController)
 import MessageScrollerChatController from "./message_scroller_chat_controller"
 application.register("message-scroller-chat", MessageScrollerChatController)
 
-import RubyUi__AccordionController from "./ruby_ui/accordion_controller"
-application.register("ruby-ui--accordion", RubyUi__AccordionController)
-
 import RubyUi__AlertDialogController from "./ruby_ui/alert_dialog_controller"
 application.register("ruby-ui--alert-dialog", RubyUi__AlertDialogController)
 
 import RubyUi__AvatarController from "./ruby_ui/avatar_controller"
 application.register("ruby-ui--avatar", RubyUi__AvatarController)
+
+import RubyUi__ButtonController from "./ruby_ui/button_controller"
+application.register("ruby-ui--button", RubyUi__ButtonController)
 
 import RubyUi__CalendarController from "./ruby_ui/calendar_controller"
 application.register("ruby-ui--calendar", RubyUi__CalendarController)
@@ -31,11 +31,17 @@ application.register("ruby-ui--carousel", RubyUi__CarouselController)
 import RubyUi__ChartController from "./ruby_ui/chart_controller"
 application.register("ruby-ui--chart", RubyUi__ChartController)
 
+import RubyUi__CheckboxController from "./ruby_ui/checkbox_controller"
+application.register("ruby-ui--checkbox", RubyUi__CheckboxController)
+
 import RubyUi__CheckboxGroupController from "./ruby_ui/checkbox_group_controller"
 application.register("ruby-ui--checkbox-group", RubyUi__CheckboxGroupController)
 
 import RubyUi__ClipboardController from "./ruby_ui/clipboard_controller"
 application.register("ruby-ui--clipboard", RubyUi__ClipboardController)
+
+import RubyUi__CodeblockController from "./ruby_ui/codeblock_controller"
+application.register("ruby-ui--codeblock", RubyUi__CodeblockController)
 
 import RubyUi__CollapsibleController from "./ruby_ui/collapsible_controller"
 application.register("ruby-ui--collapsible", RubyUi__CollapsibleController)
@@ -45,9 +51,6 @@ application.register("ruby-ui--combobox", RubyUi__ComboboxController)
 
 import RubyUi__CommandController from "./ruby_ui/command_controller"
 application.register("ruby-ui--command", RubyUi__CommandController)
-
-import RubyUi__CommandDialogController from "./ruby_ui/command_dialog_controller"
-application.register("ruby-ui--command-dialog", RubyUi__CommandDialogController)
 
 import RubyUi__ContextMenuController from "./ruby_ui/context_menu_controller"
 application.register("ruby-ui--context-menu", RubyUi__ContextMenuController)
@@ -64,11 +67,17 @@ application.register("ruby-ui--data-table-per-page-select", RubyUi__DataTablePer
 import RubyUi__DataTableSearchController from "./ruby_ui/data_table_search_controller"
 application.register("ruby-ui--data-table-search", RubyUi__DataTableSearchController)
 
+import RubyUi__DatePickerController from "./ruby_ui/date_picker_controller"
+application.register("ruby-ui--date-picker", RubyUi__DatePickerController)
+
 import RubyUi__DialogController from "./ruby_ui/dialog_controller"
 application.register("ruby-ui--dialog", RubyUi__DialogController)
 
 import RubyUi__DropdownMenuController from "./ruby_ui/dropdown_menu_controller"
 application.register("ruby-ui--dropdown-menu", RubyUi__DropdownMenuController)
+
+import RubyUi__FormController from "./ruby_ui/form_controller"
+application.register("ruby-ui--form", RubyUi__FormController)
 
 import RubyUi__FormFieldController from "./ruby_ui/form_field_controller"
 application.register("ruby-ui--form-field", RubyUi__FormFieldController)

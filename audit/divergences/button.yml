@@ -1,0 +1,6 @@
+- component: button
+  dimension: Props
+  rubyui: "href: renders the button as <a href> (button otherwise)"
+  shadcn: "Base UI render prop, e.g. render={<a href=\"…\" />}"
+  reason: "Phlex has no render prop; a link is the only other element a button needs, and href: matches Badge, Link and PaginationItem."
+  since: "2026-11-01"

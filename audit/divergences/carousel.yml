@@ -1,0 +1,6 @@
+- component: carousel
+  dimension: Props
+  rubyui: "no plugins: or setApi:; extend the Stimulus controller (initCarousel(options, plugins)) or read its carousel property"
+  shadcn: "plugins (Embla plugin objects) and setApi (callback receiving the Embla API)"
+  reason: "Both take JavaScript objects or functions, which a Phlex kwarg can't carry; in Stimulus the Embla API lives on the controller."
+  since: "2026-11-01"

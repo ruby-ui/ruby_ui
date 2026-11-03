@@ -6,6 +6,13 @@ from the `.tsx` or the Ruby source. Run the same set on both URLs:
 - shadcn: `http://localhost:5179/?c=<folder>&theme=<light|dark>` (sandbox `url_template`)
 - RubyUI: `http://localhost:3179/__audit/<folder>?theme=<light|dark>` (preview `url_template`)
 
+`collect` (SKILL.md step 3) already runs the setup below, the environment
+probe, the states closed/open/focus/after-esc, the computed-style and ARIA
+probes per part, and the screenshots, deterministically. Use this file for
+what it doesn't cover: the per-`kind` sequences (focus trap order, Esc and
+focus return, outside click, scroll lock, arrows, typeahead, Enter/Space),
+animations, and any state `collect` reported as not reached.
+
 ## Setup (once per page)
 
 1. `new_page` (one per side), then `resize_page` both to the **same viewport**,

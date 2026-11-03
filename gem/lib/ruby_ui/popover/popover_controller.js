@@ -98,19 +98,26 @@ export default class extends Controller {
   showPopover() {
     if (!this.hasTriggerTarget || !this.hasContentTarget) return;
 
+    const wasOpen = this.openValue;
     this.openValue = true;
     this.contentTarget.classList.remove("hidden");
     this.contentTarget.dataset.state = "open";
     document.addEventListener("keydown", this.handleKeydown);
     this.updatePosition();
+    // Lets a composite (DatePicker) follow the state: aria-expanded, focus.
+    // Only on the closed -> open transition: hover re-entering an open popover
+    // (or a reconnect) must not look like a new open.
+    if (!wasOpen) this.dispatch("show");
   }
 
   // Same rule as disconnect(): release what is held outside the element first, so a
   // missing content target cannot leave the keydown listener or autoUpdate running.
   hidePopover() {
+    const wasOpen = this.openValue;
     this.openValue = false;
     document.removeEventListener("keydown", this.handleKeydown);
     this.stopAutoUpdate();
+    if (wasOpen) this.dispatch("hide");
 
     if (!this.hasContentTarget) return;
 

@@ -8,9 +8,12 @@ module RubyUI
 
     private
 
+    # aria values are strings: Phlex renders `true` as a bare attribute
+    # (aria-disabled=""), which ARIA treats as undefined.
     def default_attrs
       {
-        aria: {disabled: true, current: "page"},
+        aria: {disabled: "true", current: "page"},
+        data: {slot: "breadcrumb-page"},
         class: "font-normal text-foreground",
         role: "link"
       }

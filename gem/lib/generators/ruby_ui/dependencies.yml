@@ -1,7 +1,3 @@
-accordion:
-  js_packages:
-    - "motion"
-
 alert_dialog:
   components:
     - "Button"
@@ -25,16 +21,23 @@ clipboard:
 codeblock:
   components:
     - "Button"
-    - "Clipboard"
 
   gems:
     - "rouge"
 
+collapsible:
+  components:
+    - "Button"
+
 combobox:
+  components:
+    - "Button"
   js_packages:
     - "@floating-ui/dom"
 
 command:
+  components:
+    - "Dialog"
   js_packages:
     - "fuse.js"
 
@@ -44,6 +47,8 @@ context_menu:
 
 date_picker:
   components:
+    - "Button"
+    - "Form"
     - "Input"
     - "Popover"
     - "Calendar"
@@ -58,9 +63,17 @@ data_table:
     - "Pagination"
     - "Table"
 
+dialog:
+  components:
+    - "Button"
+
 dropdown_menu:
   js_packages:
     - "@floating-ui/dom"
+
+form:
+  components:
+    - "Separator"
 
 hover_card:
   js_packages:

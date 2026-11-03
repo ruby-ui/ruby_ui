@@ -1,0 +1,11 @@
+<!doctype html>
+<html><body>
+  <div id="root"></div>
+  <script>
+    // Mounts the fixture after load, like a client-rendered app.
+    window.addEventListener("load", () => setTimeout(() => {
+      document.getElementById("root").innerHTML =
+        '<div data-audit-fixture="late"><button data-audit-trigger aria-controls=" p " aria-describedby="nope">Open</button><div id="p">P</div></div>'
+    }, 400))
+  </script>
+</body></html>

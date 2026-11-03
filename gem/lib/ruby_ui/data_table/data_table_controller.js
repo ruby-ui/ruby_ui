@@ -41,6 +41,14 @@ export default class extends Controller {
     const total = this.rowCheckboxTargets.length;
     const selected = this.rowCheckboxTargets.filter((cb) => cb.checked).length;
 
+    // TableRow styles data-state="selected" (bg-muted), as shadcn's rows.
+    this.rowCheckboxTargets.forEach((cb) => {
+      const row = cb.closest("tr");
+      if (!row) return;
+      if (cb.checked) row.dataset.state = "selected";
+      else if (row.dataset.state === "selected") delete row.dataset.state;
+    });
+
     if (this.hasSelectAllTarget) {
       this.selectAllTarget.checked = total > 0 && selected === total;
       this.selectAllTarget.indeterminate = selected > 0 && selected < total;

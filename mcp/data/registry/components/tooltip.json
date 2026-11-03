@@ -1,0 +1,45 @@
+{
+  "name": "Tooltip",
+  "description": "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+  "files": [
+    {
+      "path": "tooltip.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Tooltip < Base\n    def initialize(placement: \"top\", **attrs)\n      @placement = placement\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          controller: \"ruby-ui--tooltip\",\n          ruby_ui__tooltip_placement_value: @placement\n        },\n        class: \"group\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "tooltip_content.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TooltipContent < Base\n    def initialize(**attrs)\n      @id = \"tooltip#{SecureRandom.hex(4)}\"\n      super\n    end\n\n    def view_template(&)\n      template(data: {ruby_ui__tooltip_target: \"content\"}) do\n        div(**attrs, &)\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        id: @id,\n        class: [\n          \"invisible pointer-events-none w-fit max-w-[calc(100vw-2rem)] text-balance break-words absolute top-0 left-0 z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md\",\n          \"data-[placement=bottom]:slide-in-from-top-2\",\n          \"data-[placement=left]:slide-in-from-right-2\",\n          \"data-[placement=right]:slide-in-from-left-2\",\n          \"data-[placement=top]:slide-in-from-bottom-2\",\n          \"data-[state=open]:visible data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95\",\n          \"data-[state=closed]:visible data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:fill-mode-forwards\"\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "tooltip_controller.js",
+      "content": "import { Controller } from \"@hotwired/stimulus\";\nimport { computePosition, autoUpdate, offset, shift } from \"@floating-ui/dom\";\n\nexport default class extends Controller {\n  static targets = [\"trigger\", \"content\"];\n\n  static values = { placement: \"top\" };\n\n  mount() {\n    if (this.mounted) return;\n\n    const element = this.cloneTemplate();\n    element.setAttribute(\"data-placement\", this.placementValue);\n    document.body.appendChild(element);\n\n    this.triggerTarget.setAttribute(\"aria-describedby\", element.id);\n    // animationcancel covers an exit run cut short (backgrounded tab, interrupting\n    // style change) — without it the cloned node is never removed from <body>.\n    element.addEventListener(\"animationend\", this.handleExitAnimationEnd);\n    element.addEventListener(\"animationcancel\", this.handleExitAnimationEnd);\n\n    const onBeforeCache = () => this.unmount();\n    document.addEventListener(\"turbo:before-cache\", onBeforeCache);\n\n    this.mounted = { element, onBeforeCache };\n    this.mounted.stopAutoUpdate = autoUpdate(this.triggerTarget, element, () => this.reposition());\n  }\n\n  unmount() {\n    if (!this.mounted) return;\n\n    document.removeEventListener(\"turbo:before-cache\", this.mounted.onBeforeCache);\n\n    this.mounted.stopAutoUpdate?.();\n    this.mounted.element.remove();\n    this.triggerTarget.removeAttribute(\"aria-describedby\");\n\n    this.mounted = null;\n  }\n\n  disconnect() {\n    this.unmount();\n  }\n\n  show() {\n    if (!this.hasContentTarget) return;\n\n    this.mount();\n    this.mounted.element.setAttribute(\"data-state\", \"open\");\n  }\n\n  hide() {\n    this.mounted?.element.setAttribute(\"data-state\", \"closed\");\n  }\n\n  handleExitAnimationEnd = (event) => {\n    if (event.animationName !== \"exit\") return;\n    if (this.mounted?.element.getAttribute(\"data-state\") !== \"closed\") return;\n\n    this.unmount();\n  };\n\n  cloneTemplate() {\n    return this.contentTarget.content.firstElementChild.cloneNode(true);\n  }\n\n  reposition() {\n    if (!this.mounted) return;\n\n    const position = { placement: this.placementValue, middleware: [offset(4), shift()] };\n\n    computePosition(this.triggerTarget, this.mounted.element, position).then(({ x, y }) => {\n      this.mounted?.element.style.setProperty(\"left\", `${x}px`);\n      this.mounted?.element.style.setProperty(\"top\", `${y}px`);\n    });\n  }\n}\n"
+    },
+    {
+      "path": "tooltip_trigger.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class TooltipTrigger < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          ruby_ui__tooltip_target: \"trigger\",\n          action: [\n            \"mouseenter->ruby-ui--tooltip#show\",\n            \"mouseleave->ruby-ui--tooltip#hide\",\n            \"focus->ruby-ui--tooltip#show\",\n            \"blur->ruby-ui--tooltip#hide\"\n          ]\n        },\n        variant: :outline\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [
+      "Typography"
+    ],
+    "js_packages": [
+      "@floating-ui/dom"
+    ],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Tooltip",
+  "docs_markdown": "# Tooltip\n\nA popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.\n\n## Usage\n\n### Example\n\n```ruby\nTooltip do\n  TooltipTrigger do\n    Button(variant: :outline, icon: true) do\n      bookmark_icon\n    end\n  end\n  TooltipContent do\n    Text { \"Add to library\" }\n  end\nend\n```\n\n### Long content\n\n```ruby\nTooltip do\n  TooltipTrigger do\n    Button(variant: :outline) { \"Hover me\" }\n  end\n  TooltipContent do\n    Text { \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\" }\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Tooltip do\n  TooltipTrigger do\n    Button(variant: :outline, icon: true) do\n      bookmark_icon\n    end\n  end\n  TooltipContent do\n    Text { \"Add to library\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Long content",
+      "code": "Tooltip do\n  TooltipTrigger do\n    Button(variant: :outline) { \"Hover me\" }\n  end\n  TooltipContent do\n    Text { \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\" }\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

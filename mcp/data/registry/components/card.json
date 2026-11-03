@@ -1,0 +1,68 @@
+{
+  "name": "Card",
+  "description": "Displays a card with header, content, and footer.",
+  "files": [
+    {
+      "path": "card.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A container for a header, content and footer, like shadcn's Card. The card\n  # owns the spacing: it stacks its parts with --card-spacing as gap and\n  # vertical padding, and each part pads only its sides. size: :sm tightens\n  # the spacing and the title; it is exposed as data-size for the parts.\n  class Card < Base\n    SIZES = %i[default sm].freeze\n\n    def initialize(size: :default, **attrs)\n      @size = size.to_s.to_sym\n      @size = :default unless SIZES.include?(@size) # nil or unknown: default size\n      super(**attrs)\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"card\", size: @size},\n        class: [\n          # No overflow-hidden (vega has it): RubyUI popups such as Select and\n          # Popover render inside the card, and clipping would hide them.\n          \"group/card flex flex-col gap-(--card-spacing) rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground shadow-xs ring-1 ring-foreground/10\",\n          \"[--card-spacing:--spacing(6)] data-[size=sm]:[--card-spacing:--spacing(4)]\",\n          # An image as the first or last child runs to the card's edge.\n          \"has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl\"\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "card_action.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Top-right slot of a CardHeader for a control (a button, a link). It spans\n  # the title and description rows.\n  class CardAction < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"card-action\"},\n        class: \"col-start-2 row-span-2 row-start-1 self-start justify-self-end\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "card_content.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class CardContent < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"card-content\"},\n        class: \"px-(--card-spacing)\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "card_description.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class CardDescription < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"card-description\"},\n        class: \"text-sm text-muted-foreground\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "card_footer.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class CardFooter < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"card-footer\"},\n        class: \"flex items-center rounded-b-xl px-(--card-spacing) [.border-t]:pt-(--card-spacing)\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "card_header.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Title and description in a grid; a CardAction takes a second column on\n  # the right, spanning both rows.\n  class CardHeader < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"card-header\"},\n        class: [\n          \"group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing)\",\n          \"has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto]\",\n          \"[.border-b]:pb-(--card-spacing)\"\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "card_title.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A div, as in shadcn: the card can't know its heading level. Wrap the text\n  # in an h2/h3 when the title should be a heading.\n  class CardTitle < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"card-title\"},\n        class: \"font-heading text-base leading-normal font-medium group-data-[size=sm]/card:text-sm\"\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Card",
+  "docs_markdown": "# Card\n\nDisplays a card with header, content, and footer.\n\n## Usage\n\n### Card with image\n\n```ruby\nCard(class: 'w-96') do\n  CardHeader do\n    CardTitle { 'You might like \"RubyUI\"' }\n    CardDescription { \"@joeldrapper\" }\n  end\n  CardContent do\n    AspectRatio(ratio: \"16/9\", class: \"rounded-md overflow-hidden border\") do\n      img(\n        alt: \"Placeholder\",\n        class: \"absolute inset-0 size-full object-cover\",\n        loading: \"lazy\",\n        src: image_url('pattern.jpg')\n      )\n    end\n  end\n  CardFooter(class: 'justify-end gap-2') do\n    Button(variant: :outline) { \"See more\" }\n    Button(variant: :primary) { \"Buy now\" }\n  end\nend\n```\n\n### Card with full-width image\n\n```ruby\nCard(class: 'w-96') do\n  img(\n    alt: \"Placeholder\",\n    class: \"aspect-video w-full object-cover\",\n    loading: \"lazy\",\n    src: image_url('pattern.jpg')\n  )\n  CardHeader do\n    CardTitle { 'Introducing RubyUI' }\n    CardDescription { \"Kickstart your project today!\" }\n  end\n  CardFooter(class: 'justify-end') do\n    Button(variant: :outline) { \"Get started\" }\n  end\nend\n```\n\n### Account balance\n\n```ruby\nCard(class: 'w-96') do\n  CardHeader do\n    div(class: 'w-10 h-10 rounded-xl flex items-center justify-center bg-violet-100 text-violet-700 -rotate-6') do\n      cash_icon\n    end\n  end\n  CardContent(class: 'space-y-1') do\n    CardDescription(class: 'font-medium') { \"Current Balance\" }\n    h5(class: 'font-semibold text-4xl') { '$2,602' }\n  end\n  CardFooter do\n    Text(size: \"2\", class: \"text-muted-foreground\") { \"**** 4620\" }\n  end\nend\n```\n\n### With action\n\n```ruby\nCard(class: 'w-96') do\n  CardHeader do\n    CardTitle { \"Login to your account\" }\n    CardDescription { \"Enter your email below to login to your account\" }\n    CardAction do\n      Button(variant: :link) { \"Sign up\" }\n    end\n  end\n  CardContent do\n    div(class: \"grid gap-2\") do\n      FormFieldLabel(for: \"card-email\") { \"Email\" }\n      Input(id: \"card-email\", type: \"email\", placeholder: \"m@example.com\")\n    end\n  end\n  CardFooter do\n    Button(class: \"w-full\") { \"Login\" }\n  end\nend\n```\n\n### Small\n\n```ruby\nCard(size: :sm, class: 'w-80') do\n  CardHeader do\n    CardTitle { \"Small card\" }\n    CardDescription { \"size: :sm tightens the spacing and the title.\" }\n  end\n  CardContent do\n    plain \"Use it in dense layouts such as sidebars and grids.\"\n  end\n  CardFooter do\n    Button(variant: :outline, size: :sm, class: \"w-full\") { \"Action\" }\n  end\nend\n```",
+  "examples": [
+    {
+      "title": "Card with image",
+      "code": "Card(class: 'w-96') do\n  CardHeader do\n    CardTitle { 'You might like \"RubyUI\"' }\n    CardDescription { \"@joeldrapper\" }\n  end\n  CardContent do\n    AspectRatio(ratio: \"16/9\", class: \"rounded-md overflow-hidden border\") do\n      img(\n        alt: \"Placeholder\",\n        class: \"absolute inset-0 size-full object-cover\",\n        loading: \"lazy\",\n        src: image_url('pattern.jpg')\n      )\n    end\n  end\n  CardFooter(class: 'justify-end gap-2') do\n    Button(variant: :outline) { \"See more\" }\n    Button(variant: :primary) { \"Buy now\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Card with full-width image",
+      "code": "Card(class: 'w-96') do\n  img(\n    alt: \"Placeholder\",\n    class: \"aspect-video w-full object-cover\",\n    loading: \"lazy\",\n    src: image_url('pattern.jpg')\n  )\n  CardHeader do\n    CardTitle { 'Introducing RubyUI' }\n    CardDescription { \"Kickstart your project today!\" }\n  end\n  CardFooter(class: 'justify-end') do\n    Button(variant: :outline) { \"Get started\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Account balance",
+      "code": "Card(class: 'w-96') do\n  CardHeader do\n    div(class: 'w-10 h-10 rounded-xl flex items-center justify-center bg-violet-100 text-violet-700 -rotate-6') do\n      cash_icon\n    end\n  end\n  CardContent(class: 'space-y-1') do\n    CardDescription(class: 'font-medium') { \"Current Balance\" }\n    h5(class: 'font-semibold text-4xl') { '$2,602' }\n  end\n  CardFooter do\n    Text(size: \"2\", class: \"text-muted-foreground\") { \"**** 4620\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With action",
+      "code": "Card(class: 'w-96') do\n  CardHeader do\n    CardTitle { \"Login to your account\" }\n    CardDescription { \"Enter your email below to login to your account\" }\n    CardAction do\n      Button(variant: :link) { \"Sign up\" }\n    end\n  end\n  CardContent do\n    div(class: \"grid gap-2\") do\n      FormFieldLabel(for: \"card-email\") { \"Email\" }\n      Input(id: \"card-email\", type: \"email\", placeholder: \"m@example.com\")\n    end\n  end\n  CardFooter do\n    Button(class: \"w-full\") { \"Login\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Small",
+      "code": "Card(size: :sm, class: 'w-80') do\n  CardHeader do\n    CardTitle { \"Small card\" }\n    CardDescription { \"size: :sm tightens the spacing and the title.\" }\n  end\n  CardContent do\n    plain \"Use it in dense layouts such as sidebars and grids.\"\n  end\n  CardFooter do\n    Button(variant: :outline, size: :sm, class: \"w-full\") { \"Action\" }\n  end\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

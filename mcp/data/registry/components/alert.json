@@ -1,0 +1,71 @@
+{
+  "name": "Alert",
+  "description": "Displays a callout for user attention.",
+  "files": [
+    {
+      "path": "alert.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A callout for user attention. An icon placed as the first child sits in\n  # its own grid column next to the title and description, like shadcn's Alert.\n  # role=\"alert\" makes screen readers announce it and interrupt the user. Pass\n  # role: \"status\" to announce it politely, or role: nil for a static callout.\n  class Alert < Base\n    VARIANTS = {\n      default: \"bg-card text-card-foreground\",\n      destructive: \"text-destructive bg-card *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current\",\n      warning: \"text-warning bg-card *:data-[slot=alert-description]:text-warning/90 *:[svg]:text-current\",\n      success: \"text-success bg-card *:data-[slot=alert-description]:text-success/90 *:[svg]:text-current\"\n    }.freeze\n\n    def initialize(variant: :default, **attrs)\n      @variant = variant.to_s.to_sym\n      @variant = :default unless VARIANTS.key?(@variant) # nil or unknown: default look\n\n      super(**attrs) # must be called after variant is set\n      # mix joins string attributes (\"alert status\") and ignores nil, so the\n      # user's role replaces the default here, and nil removes it.\n      if attrs.key?(:role)\n        attrs[:role].nil? ? @attrs.delete(:role) : @attrs[:role] = attrs[:role]\n      end\n    end\n\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"alert\"},\n        role: \"alert\",\n        class: [\n          \"group/alert relative grid w-full gap-0.5 rounded-lg border px-4 py-3 text-left text-sm\",\n          \"has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18\",\n          \"has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5\",\n          \"*:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4\",\n          VARIANTS.fetch(@variant)\n        ]\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "alert_action.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Top-right slot for a control (a button, a link). The Alert reserves right\n  # padding for it when present.\n  class AlertAction < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"alert-action\"},\n        class: \"absolute top-2.5 right-3\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "alert_description.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class AlertDescription < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"alert-description\"},\n        class: \"text-muted-foreground text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "alert_title.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class AlertTitle < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"alert-title\"},\n        class: \"font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground\"\n      }\n    end\n  end\nend\n"
+    }
+  ],
+  "dependencies": {
+    "components": [],
+    "js_packages": [],
+    "gems": []
+  },
+  "install_command": "rails g ruby_ui:component Alert",
+  "docs_markdown": "# Alert\n\nDisplays a callout for user attention.\n\n## Usage\n\n### Example\n\n```ruby\nAlert do\n  info_icon\n  AlertTitle { \"Heads up!\" }\n  AlertDescription { \"You can add components to your app using the CLI.\" }\nend\n```\n\n### Without Icon\n\n```ruby\nAlert do\n  AlertTitle { \"Pro tip\" }\n  AlertDescription { \"Simply, don't include an icon and your alert will look like this.\" }\nend\n```\n\n### Destructive\n\n```ruby\nAlert(variant: :destructive) do\n  circle_alert_icon\n  AlertTitle { \"Something went wrong\" }\n  AlertDescription { \"Your session has expired. Please log in again.\" }\nend\n```\n\n### Warning\n\n```ruby\nAlert(variant: :warning) do\n  triangle_alert_icon\n  AlertTitle { \"Ship often\" }\n  AlertDescription { \"Shipping is good, your users will thank you for it.\" }\nend\n```\n\n### Success\n\n```ruby\nAlert(variant: :success) do\n  circle_check_icon\n  AlertTitle { \"Installation successful\" }\n  AlertDescription { \"You're all set to start using RubyUI in your application.\" }\nend\n```\n\n### With Action\n\n```ruby\nAlert do\n  info_icon\n  AlertTitle { \"Dark mode is now available\" }\n  AlertDescription { \"Enable it under your profile settings.\" }\n  AlertAction do\n    Button(variant: :outline, size: :sm) { \"Enable\" }\n  end\nend\n```\n\n### Static callout\n\n```ruby\nAlert(role: nil) do\n  AlertTitle { \"Pro tip\" }\n  AlertDescription { \"With RubyUI you'll ship faster.\" }\nend\n```\n\n### Title as a heading\n\n```ruby\nAlert(role: nil) do\n  AlertTitle { h3 { \"Billing\" } }\n  AlertDescription { \"Your plan renews on the first day of each month.\" }\nend\n```",
+  "examples": [
+    {
+      "title": "Example",
+      "code": "Alert do\n  info_icon\n  AlertTitle { \"Heads up!\" }\n  AlertDescription { \"You can add components to your app using the CLI.\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Without Icon",
+      "code": "Alert do\n  AlertTitle { \"Pro tip\" }\n  AlertDescription { \"Simply, don't include an icon and your alert will look like this.\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Destructive",
+      "code": "Alert(variant: :destructive) do\n  circle_alert_icon\n  AlertTitle { \"Something went wrong\" }\n  AlertDescription { \"Your session has expired. Please log in again.\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Warning",
+      "code": "Alert(variant: :warning) do\n  triangle_alert_icon\n  AlertTitle { \"Ship often\" }\n  AlertDescription { \"Shipping is good, your users will thank you for it.\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Success",
+      "code": "Alert(variant: :success) do\n  circle_check_icon\n  AlertTitle { \"Installation successful\" }\n  AlertDescription { \"You're all set to start using RubyUI in your application.\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With Action",
+      "code": "Alert do\n  info_icon\n  AlertTitle { \"Dark mode is now available\" }\n  AlertDescription { \"Enable it under your profile settings.\" }\n  AlertAction do\n    Button(variant: :outline, size: :sm) { \"Enable\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Static callout",
+      "code": "Alert(role: nil) do\n  AlertTitle { \"Pro tip\" }\n  AlertDescription { \"With RubyUI you'll ship faster.\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Title as a heading",
+      "code": "Alert(role: nil) do\n  AlertTitle { h3 { \"Billing\" } }\n  AlertDescription { \"Your plan renews on the first day of each month.\" }\nend\n",
+      "language": "ruby"
+    }
+  ]
+}

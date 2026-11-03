@@ -2,7 +2,13 @@
 
 module RubyUI
   class CalendarPrev < Base
-    def view_template(&block)
+    NAV_CLASS = "group/button inline-flex size-8 shrink-0 items-center justify-center rounded-md border border-transparent " \
+      "bg-clip-padding p-0 text-sm font-medium whitespace-nowrap transition-all outline-none select-none " \
+      "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px " \
+      "disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 " \
+      "hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+
+    def view_template
       button(**attrs) do
         icon
       end
@@ -10,31 +16,31 @@ module RubyUI
 
     private
 
+    # lucide chevron, as in shadcn.
     def icon
       svg(
-        width: "15",
-        height: "15",
-        viewbox: "0 0 15 15",
-        fill: "none",
         xmlns: "http://www.w3.org/2000/svg",
-        class: "h-4 w-4"
+        width: "24",
+        height: "24",
+        viewbox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        stroke_width: "2",
+        stroke_linecap: "round",
+        stroke_linejoin: "round",
+        class: "size-4",
+        aria_hidden: "true"
       ) do |s|
-        s.path(
-          d:
-                "M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z",
-          fill: "currentColor",
-          fill_rule: "evenodd",
-          clip_rule: "evenodd"
-        )
+        s.path(d: "m15 18-6-6 6-6")
       end
     end
 
+    # shadcn's ghost Button at the calendar cell size.
     def default_attrs
       {
         name: "previous-month",
-        aria_label: "Go to previous month",
-        class:
-              "rdp-button_reset rdp-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input hover:bg-accent hover:text-accent-foreground h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute left-1",
+        aria_label: "Go to the Previous Month",
+        class: NAV_CLASS,
         type: "button",
         data_action: "click->ruby-ui--calendar#prevMonth"
       }

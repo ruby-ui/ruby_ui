@@ -19,7 +19,7 @@ class Views::Docs::DataTable < Views::Base
       )
 
       Heading(level: 2) { "Complete demo" }
-      p(class: "-mt-6") { "Full feature set — search, sort, numbered pagination, per-page, select-all, row checkboxes, bulk actions, row actions dropdown, column visibility, badge cells." }
+      p(class: "-mt-6") { "Full feature set — search, sort, first/previous/next/last pagination, per-page, select-all, row checkboxes, bulk actions, row actions dropdown, column visibility, badge cells." }
 
       render Docs::VisualCodeExample.new(title: "Complete demo", src: "/docs/data_table_demo", context: self) do
         <<~RUBY
@@ -33,7 +33,6 @@ class Views::Docs::DataTable < Views::Base
                   {key: :email, label: "Email"},
                   {key: :department, label: "Department"}
                 ])
-                DataTablePerPageSelect(path: docs_data_table_demo_path, value: @per_page)
                 DataTableBulkActions do
                   Button(type: "submit", form: FORM_ID, formaction: bulk_delete_path, formmethod: "post", variant: :destructive, size: :sm) { "Delete" }
                   Button(type: "submit", form: FORM_ID, formaction: bulk_export_path, formmethod: "post", variant: :outline, size: :sm) { "Export" }
@@ -42,11 +41,11 @@ class Views::Docs::DataTable < Views::Base
             end
 
             DataTableForm(id: FORM_ID, action: "") do
-              div(class: "rounded-md border") do
+              div(class: "overflow-hidden rounded-lg border") do
                 Table do
-                  TableHeader do
+                  TableHeader(class: "bg-muted") do
                     TableRow do
-                      TableHead(class: "w-10") { DataTableSelectAllCheckbox() }
+                      TableHead(class: "w-8") { div(class: "flex items-center justify-center") { DataTableSelectAllCheckbox() } }
                       DataTableSortHead(column_key: :name, label: "Name", sort: @sort, direction: @direction, path: docs_data_table_demo_path)
                       DataTableSortHead(column_key: :salary, label: "Salary", sort: @sort, direction: @direction, path: docs_data_table_demo_path)
                     end
@@ -54,7 +53,7 @@ class Views::Docs::DataTable < Views::Base
                   TableBody do
                     @employees.each do |e|
                       TableRow do
-                        TableCell { DataTableRowCheckbox(value: e.id) }
+                        TableCell { div(class: "flex items-center justify-center") { DataTableRowCheckbox(value: e.id) } }
                         TableCell { e.name }
                         TableCell { e.salary }
                       end
@@ -66,7 +65,10 @@ class Views::Docs::DataTable < Views::Base
 
             DataTablePaginationBar do
               DataTableSelectionSummary(total_on_page: @employees.size)
-              DataTablePagination(page: @page, per_page: @per_page, total_count: @total_count, path: docs_data_table_demo_path)
+              div(class: "flex w-full items-center gap-8 lg:w-fit") do
+                DataTablePerPageSelect(path: docs_data_table_demo_path, frame_id: "employees_list", value: @per_page, preserved_params: {search: @search, sort: @sort, direction: @direction})
+                DataTablePagination(page: @page, per_page: @per_page, total_count: @total_count, path: docs_data_table_demo_path)
+              end
             end
           end
         RUBY
@@ -83,7 +85,7 @@ class Views::Docs::DataTable < Views::Base
             end
 
             Table do
-              TableHeader do
+              TableHeader(class: "bg-muted") do
                 TableRow do
                   DataTableSortHead(column_key: :name, label: "Name", path: my_path)
                 end
@@ -119,7 +121,7 @@ class Views::Docs::DataTable < Views::Base
 
             DataTableForm(id: "selection_form", action: "") do
               Table do
-                TableHeader do
+                TableHeader(class: "bg-muted") do
                   TableRow do
                     TableHead { DataTableSelectAllCheckbox() }
                     TableHead { "Name" }
@@ -128,7 +130,7 @@ class Views::Docs::DataTable < Views::Base
                 TableBody do
                   @rows.each do |r|
                     TableRow do
-                      TableCell { DataTableRowCheckbox(value: r.id) }
+                      TableCell { div(class: "flex items-center justify-center") { DataTableRowCheckbox(value: r.id) } }
                       TableCell { r.name }
                     end
                   end
@@ -145,7 +147,7 @@ class Views::Docs::DataTable < Views::Base
       p { "Because the submit buttons live inside DataTableToolbar (outside DataTableForm), you must use HTML5 form-association attributes to wire them up. Server receives params[:ids] as an array." }
 
       Table do
-        TableHeader do
+        TableHeader(class: "bg-muted") do
           TableRow do
             TableHead { "Attribute" }
             TableHead { "Required" }
@@ -206,7 +208,7 @@ class Views::Docs::DataTable < Views::Base
             end
 
             Table do
-              TableHeader do
+              TableHeader(class: "bg-muted") do
                 TableRow do
                   TableHead { "Name" }
                   TableHead(data: {column: "email"}) { "Email" }
@@ -239,7 +241,7 @@ class Views::Docs::DataTable < Views::Base
 
           DataTable(id: "renderers") do
             Table do
-              TableHeader do
+              TableHeader(class: "bg-muted") do
                 TableRow do
                   TableHead { "Name" }
                   TableHead { "Status" }
@@ -267,7 +269,7 @@ class Views::Docs::DataTable < Views::Base
         <<~RUBY
           DataTable(id: "expand_demo") do
             Table do
-              TableHeader do
+              TableHeader(class: "bg-muted") do
                 TableRow do
                   TableHead(class: "w-10") { }
                   TableHead { "Name" }

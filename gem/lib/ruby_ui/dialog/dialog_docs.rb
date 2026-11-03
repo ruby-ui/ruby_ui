@@ -21,9 +21,10 @@ class Views::Docs::Dialog < Views::Base
                 DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
               end
               DialogMiddle do
-                AspectRatio(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                AspectRatio(ratio: "16/9", class: 'rounded-md overflow-hidden border') do
                   img(
                     alt: "Placeholder",
+                    class: "absolute inset-0 size-full object-cover",
                     loading: "lazy",
                     src: image_path("pattern.jpg")
                   )
@@ -38,7 +39,7 @@ class Views::Docs::Dialog < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Size", description: "Applicable for wider screens", context: self) do
+      render Docs::VisualCodeExample.new(title: "Size", description: "Without a size, the dialog fills the viewport width up to 28rem (max-w-md) on wider screens. The sizes below apply on wider screens.", context: self) do
         <<~RUBY
           div(class: 'flex flex-wrap justify-center gap-2') do
             Dialog do
@@ -51,9 +52,10 @@ class Views::Docs::Dialog < Views::Base
                   DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
                 end
                 DialogMiddle do
-                  AspectRatio(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                  AspectRatio(ratio: "16/9", class: 'rounded-md overflow-hidden border') do
                     img(
                       alt: "Placeholder",
+                      class: "absolute inset-0 size-full object-cover",
                       loading: "lazy",
                       src: image_path("pattern.jpg")
                     )
@@ -76,9 +78,10 @@ class Views::Docs::Dialog < Views::Base
                   DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
                 end
                 DialogMiddle do
-                  AspectRatio(aspect_ratio: "16/9", class: 'rounded-md overflow-hidden border') do
+                  AspectRatio(ratio: "16/9", class: 'rounded-md overflow-hidden border') do
                     img(
                       alt: "Placeholder",
+                      class: "absolute inset-0 size-full object-cover",
                       loading: "lazy",
                       src: image_path("pattern.jpg")
                     )
@@ -88,6 +91,25 @@ class Views::Docs::Dialog < Views::Base
                   Button(variant: :outline, data: { action: 'click->ruby-ui--dialog#dismiss' }) { "Cancel" }
                   Button { "Save" }
                 end
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Close button", description: "DialogContent shows a close button in the corner by default. Pass show_close_button: false to hide it, and show_close_button: true on DialogFooter to add a Close button to the footer.", context: self) do
+        <<~RUBY
+          Dialog do
+            DialogTrigger do
+              Button { "Open Dialog" }
+            end
+            DialogContent(show_close_button: false) do
+              DialogHeader do
+                DialogTitle { "RubyUI to the rescue" }
+                DialogDescription { "RubyUI helps you build accessible standard compliant web apps with ease" }
+              end
+              DialogFooter(show_close_button: true) do
+                Button { "Save" }
               end
             end
           end

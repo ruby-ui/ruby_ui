@@ -94,7 +94,7 @@ class Views::Docs::GettingStarted::Theming < Views::Base
       div(class: "space-y-4") do
         Heading(level: 2) { "List of variables" }
         Text { "Here's the list of variables available for customization:" }
-        Card(class: "space-y-4 shadow-none p-4 md:p-6") do
+        Card(class: "gap-4 shadow-none p-4 md:p-6") do
           css_variables
         end
       end

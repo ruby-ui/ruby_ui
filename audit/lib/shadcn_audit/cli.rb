@@ -16,44 +16,48 @@ module ShadcnAudit
       "sandbox" => ->(args, out:) { sandbox(args, out: out) },
       "preview" => ->(args, out:) { preview(args, out: out) },
       "render" => ->(args, out:) { render(args, out: out) },
-      "comment" => ->(args, out:) { comment(args, out: out) }
+      "comment" => ->(args, out:) { comment(args, out: out) },
+      "collect" => ->(args, out:, **deps) { collect(args, out: out, **deps) },
+      "drift" => ->(args, out:, **deps) { drift(args, out: out, **deps) },
+      "baseline" => ->(args, out:, **deps) { baseline(args, out: out, **deps) }
     }
 
     # Failures the CLI reports as {"error": ...} with exit status 1 instead
     # of a backtrace, so callers always get one JSON object.
-    ERRORS = [UnknownCommand, Shell::Error, ConfigError, ReportError, ArgumentError,
+    ERRORS = [UnknownCommand, Collect::BrowserError, Shell::Error, ConfigError, ReportError, ArgumentError,
       Errno::ENOENT, JSON::ParserError, Psych::SyntaxError, OptionParser::ParseError].freeze
 
     # Entry point for exe/shadcn-audit; returns the process exit status.
-    def self.run(argv, out: $stdout)
-      start(argv, out: out)
+    # `deps` injects collaborators in tests (e.g. collect's driver_factory).
+    def self.run(argv, out: $stdout, **deps)
+      start(argv, out: out, **deps)
       0
     rescue *ERRORS => e
       out.puts JSON.generate("error" => e.message)
       1
     end
 
-    def self.start(argv, out: $stdout)
+    def self.start(argv, out: $stdout, **deps)
       name, *args = argv
       handler = COMMANDS[name] or raise UnknownCommand, "unknown subcommand: #{name.inspect}"
-      out.puts JSON.generate(handler.call(args, out: out))
+      out.puts JSON.generate(handler.call(args, out: out, **deps))
     end
 
     def self.map(args, out:)
       folder = args.first or raise ArgumentError, "usage: map <folder>"
-      component_map = ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
-      component_map.entry(folder) || {"missing" => true, "suggestion" => component_map.suggest_entry(folder)}
+      component_map = ComponentMap.for_audit(ShadcnAudit.root.join("audit"))
+      component_map.entry(folder) || {"missing" => true, "path" => ComponentMap.path_for(folder), "suggestion" => component_map.suggest_entry(folder)}
     end
 
     def self.divergences(args, out:)
       folder = args.first or raise ArgumentError, "usage: divergences <folder>"
-      registry = Divergences.load(ShadcnAudit.root.join("audit/divergences.yml"))
+      registry = Divergences.for_audit(ShadcnAudit.root.join("audit"))
       {"divergences" => registry.for_component(folder)}
     end
 
     def self.target(args, out:)
       arg = args.first or raise ArgumentError, "usage: target <pr-number|branch|component>"
-      component_map = ComponentMap.load(ShadcnAudit.root.join("audit/component_map.yml"))
+      component_map = ComponentMap.for_audit(ShadcnAudit.root.join("audit"))
       Target.resolve(arg, shell: Shell.new, map: component_map)
     end
 
@@ -108,6 +112,54 @@ module ShadcnAudit
       result = PrComment.new(shell: shell)
         .upsert(pr: pr, body: body, expected_head_sha: report.target["head_sha"])
       result.merge("posted" => result["action"] != "refused")
+    end
+
+    # Drives both fixtures in Chromium and grades the objective lines.
+    def self.collect(args, out:, driver_factory: Collect::Driver.method(:open), root: ShadcnAudit.root, theme: nil)
+      run_dir = preview = nil
+      urls = {}
+      parser = OptionParser.new do |o|
+        o.on("--run DIR") { |v| run_dir = v }
+        o.on("--preview DIR") { |v| preview = v }
+        o.on("--shadcn-url TEMPLATE") { |v| urls[:shadcn_url] = v }
+        o.on("--rubyui-url TEMPLATE") { |v| urls[:rubyui_url] = v }
+      end
+      folder = parser.parse!(args).first
+      raise ArgumentError, "usage: collect <folder> --run <dir> [--preview <path>] [--shadcn-url T] [--rubyui-url T]" unless folder && run_dir
+
+      Collect::Runner.new(folder: folder, run_dir: run_dir, preview: preview, root: root,
+        theme: theme, driver_factory: driver_factory, **urls).call
+    end
+
+    # What changed in shadcn under each mapped component since its baseline.
+    def self.drift(args, out:, shell: Shell.new, workspace_dir: ShadcnAudit.workspace_dir,
+      runner_factory: Drift::Runner.method(:new), root: ShadcnAudit.root)
+      head = components = nil
+      OptionParser.new do |o|
+        o.on("--head SHA") { |v| head = v }
+        o.on("--components LIST") { |v| components = v.split(",").map(&:strip).reject(&:empty?) }
+      end.parse!(args)
+      head_sha = Workspace.new(shell: shell, dir: workspace_dir).sync(sha: head)["shadcn_sha"]
+      audit_dir = root.join("audit")
+      runner_factory.call(
+        map: ComponentMap.for_audit(audit_dir),
+        divergences: Divergences.for_audit(audit_dir),
+        snapshot: Snapshot.new(shell: shell, dir: workspace_dir),
+        shell: shell,
+        head_sha: head_sha,
+        rubyui_css: root.join("docs/app/assets/stylesheets/application.tailwind.css"),
+        components: components
+      ).call
+    end
+
+    def self.baseline(args, out:, root: ShadcnAudit.root)
+      folder, sha = args
+      raise ArgumentError, "usage: baseline <folder> <sha>" unless folder && sha
+      path = root.join(ComponentMap.path_for(folder))
+      mapped = folder.match?(/\A[a-z0-9_]+\z/) && path.file? && ComponentMap.for_audit(root.join("audit")).entry(folder)
+      raise ArgumentError, "#{folder} is not mapped (no #{ComponentMap.path_for(folder)})" unless mapped
+
+      Baseline.write(path: path, sha: sha)
     end
 
     def self.workspace(args, out:)

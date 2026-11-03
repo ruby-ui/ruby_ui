@@ -5,6 +5,7 @@ description: >-
   base + vega style + neutral theme): Look, HTML, Props, ARIA, Behavior and
   Animation side by side in the browser, shadcn checked against the HTML/ARIA
   specs, JS that native HTML could replace, a checklist plus a screenshot page,
+  a finding-by-finding walkthrough with a recommendation and a question each,
   and the checklist posted on the PR after an explicit ok. Triggers on
   /shadcn-audit, "audita o PR 572 contra o shadcn", "compara com o shadcn",
   "audita esse PR", "isso bate com o shadcn?", "o Dialog está fiel ao shadcn?".
@@ -42,13 +43,18 @@ an error as an empty result. Talk to the user in their language;
 - `gh` authenticated (`gh auth status`) with read access to
   `ruby-ui/ruby_ui`; posting the comment needs write access.
 - Node and pnpm (the shadcn sandbox and the docs assets).
-- The chrome-devtools MCP server, for every browser step.
+- Playwright for `collect`: `cd audit && pnpm install` in every checkout or
+  worktree (it installs `audit/node_modules`), then `pnpm exec playwright
+  install chromium` (the browser download is shared by every checkout on the
+  machine).
+- The chrome-devtools MCP server, for the browser steps `collect` doesn't
+  cover (the kind-specific behavior sequences, animation, exploration).
 - Optional: Herdr. When `HERDR_ENV=1` the servers run in Herdr panes;
   otherwise as background shell processes (step 2.6).
 
 ## Hard rules
 
-- **Never edit PR code**, `audit/divergences.yml` or `audit/component_map.yml`,
+- **Never edit PR code**, `audit/divergences/` or `audit/component_map/`,
   and never push. Suggest entries; the author adds them.
 - **Nothing unverified is `pass`.** HTML/ARIA/Behavior/Animation come only from
   DOM rendered in the sandbox/preview and driven in the browser. Can't verify →
@@ -71,9 +77,12 @@ it becomes `report.json`'s `target`.
 - `needs_selection: true` → the PR touches shared code only. List
   `candidates` and ask which to audit; continue with the chosen folders.
 - `components` = every touched component folder, mapped or not. `unmapped`
-  lists the folders missing from `component_map.yml` (handled in step 3).
+  lists the folders missing from `audit/component_map/` (handled in step 3).
 - Create the run folder `.shadcn-audit/runs/<YYYYMMDD-HHMMSS>-<pr|branch|component>/`
-  with a `screens/` subfolder.
+  with a `screens/` subfolder. `.shadcn-audit/` is git-ignored and lives in
+  this checkout: removing the worktree deletes the runs, the sandbox and the
+  shadcn clone. Copy the run folder elsewhere first if it must outlive the
+  worktree.
 
 ### 2. Workspace, sandbox, preview, servers
 
@@ -81,8 +90,9 @@ it becomes `report.json`'s `target`.
    `workspace --sha <sha>`.)
 2. `sandbox` → `path`, `url_template`, `lock` (→ `report.json`'s
    `sandbox_lock`), `created` (true = it rebuilt the app; tell the user),
-   `refreshed` (true = the workspace moved since the last pull, so it re-added
-   the mapped components with `--overwrite`; tell the user), `registry` and
+   `refreshed` (true = the workspace moved, or the component map now needs
+   other shadcn components (`shadcn` plus `fixture_shadcn`) than the last pull
+   installed, so it re-added them all with `--overwrite`; tell the user), `registry` and
    `built_at`. `registry: "live"` means the components come from the
    published shadcn registry as of `built_at`, not from the workspace clone:
    the sandbox tracks `main` loosely, and `shadcn_sha` pins only the files the
@@ -104,7 +114,11 @@ it becomes `report.json`'s `target`.
    from source) still run, and the browser-fed RubyUI lines are ⏸ "fork code
    not run". Same-repository heads come from collaborators with write access
    and skip this step.
-6. Boot both servers. When `HERDR_ENV=1`, **each in its own Herdr pane**
+6. **Ports.** The defaults are 5179 (shadcn) and 3179 (RubyUI). Another
+   audit running in parallel (another worktree) already holds them: check
+   with `lsof -nP -iTCP:<port> -sTCP:LISTEN` and pick a free pair (5180/3180,
+   5181/3181…). Use it in the commands below and in both `url_template`s.
+   Boot both servers. When `HERDR_ENV=1`, **each in its own Herdr pane**
    (see the `herdr` skill), as below. Otherwise run each as a background
    shell process with its output sent to a log in the run folder
    (`<run>/shadcn.log`, `<run>/rubyui.log`), wait for the same text by
@@ -129,9 +143,9 @@ it becomes `report.json`'s `target`.
 For each folder in `components`:
 
 - `map <folder>`:
-  - `{"missing": true, "suggestion": …}` (every `unmapped` folder) → one
-    `inconclusive` line ("not in audit/component_map.yml"), `shadcn_file: null`,
-    and show the user the `suggestion` YAML to paste into the map. Tell them a
+  - `{"missing": true, "path": …, "suggestion": …}` (every `unmapped` folder) → one
+    `inconclusive` line ("not in the component map"), `shadcn_file: null`,
+    and show the user the `suggestion` YAML to save as `path` (one file per component). Tell them a
     newly mapped component also needs fixtures,
     `audit/fixtures/<folder>/{content.yml,shadcn.tsx,rubyui.rb}` (same strings
     on both sides, one `data-audit-trigger`), or the browser steps have nothing
@@ -160,16 +174,50 @@ For each folder in `components`:
   list is ⏸ "map gap".
 - `divergences <folder>` → registered differences (`dimension`, `rubyui`,
   `shadcn`, `reason`). A matching difference is ✅ basis `intentional`.
+  Entries with a structured `match` are applied by `collect` on its own;
+  prose-only entries you apply by hand.
+- `collect <folder> --run <run> --preview <preview path>` (add
+  `--shadcn-url`/`--rubyui-url` with the `url_template`s when step 2.6 picked
+  other ports). It drives both fixtures in headless Chromium at 1280×800,
+  light and dark, through the states the `kind` has (closed, open, focus,
+  after-esc; `form_control`: closed, focus; `static`: closed), and grades the
+  objective lines: computed styles per part (Look ❌ / ✅ grouped), the
+  accessibility snapshot plus `aria-expanded`/`aria-controls`/`aria-haspopup`/
+  `aria-describedby` per part (ARIA ⚠️ / ✅ grouped), structured divergences
+  (✅ intentional), differences explained by a theme token or an environment
+  diff (⏸), unreachable states and selector count mismatches (⏸). It writes
+  `<run>/collect.json` and `<run>/screens/`, with a pixel diff per state as
+  evidence only, and only for states reached on both sides. Append its `lines` and `screenshots` to the component and
+  copy its `environment_diffs` into the report. Running it twice on the same
+  SHAs gives the same `collect.json`.
+  - `{"error": "… has no selectors …"}` → the component has no `selectors`
+    in `audit/component_map/<folder>.yml`: tell the user to add them (RubyUI part → CSS
+    selector in the rendered fixture; `null` = shadcn renders no element for
+    that part). Until they exist, collect that component by hand with the
+    chrome-devtools MCP: for each mapped part, the shadcn classes from
+    `[data-slot=<slot>]` against `effective`, the RubyUI element found from
+    its Ruby source at `<preview path>/gem/lib/ruby_ui/<folder>/` (tag,
+    Stimulus target, class string), look-alikes settled with
+    `getComputedStyle`; then the whole set for its `kind` in
+    `references/interactions.md`, including the Setup, the states and the
+    screenshots.
+  - `{"error": "playwright not found …"}` / `"chromium failed to launch"` →
+    install as in Prerequisites and re-run.
 
 ### 4. Look
 
-Light and dark. For each mapped part: shadcn classes from the DOM
-(`[data-slot=<slot>]`) checked against `effective`; RubyUI classes from the
-preview DOM via `evaluate_script`. RubyUI parts have no `data-slot`: find the
-element from the part's Ruby source at `<preview path>/gem/lib/ruby_ui/<folder>/`
-(tag, Stimulus target, class string). List the tokens missing and extra on each
-side; settle look-alikes with computed styles. Variant props (size, side) are
+`collect` already graded Look from computed styles. Review its lines instead
+of re-collecting: explain each ❌ with the class tokens behind it (shadcn
+`effective` from `reference` vs the RubyUI class string) in the `note`, and
+settle the ⏸ it left (count mismatches, theme/environment explanations,
+reference `warnings`) when the DOM lets you. Variant props (size, side) are
 compared against `variants`.
+
+**Overrides.** Change a `collect` grade only with a verified reason that the
+rules in `references/grading.md` allow, written in that line's `note` (e.g.
+`text-align: left` vs `start` in LTR renders the same → ✅ with the note). A ✅
+with a basis still needs its usual route: a registered divergence, a native
+replacement or the spec. Never drop a `collect` line.
 
 Fixture-originated wrappers aren't findings (`references/grading.md`): Sheet
 body (shadcn `div.px-4` vs `SheetMiddle`), Dialog body (bare `<p>` vs
@@ -177,7 +225,11 @@ body (shadcn `div.px-4` vs `SheetMiddle`), Dialog body (bare `<p>` vs
 
 ### 5. HTML, ARIA, Behavior, Animation
 
-Run the set for the component's `kind` from `references/interactions.md` on
+`collect` already covered the setup, the environment probe, the states
+closed/open/focus/after-esc, the ARIA snapshot and attributes per part, and
+the screenshots. Run the rest of the `kind`'s set from
+`references/interactions.md` (focus trap order, Esc and focus return, outside
+click, scroll lock, arrow keys, typeahead, Enter/Space, animation) on
 both URLs (`url_template`s; `{folder}` = folder, `{light|dark}` = theme), in
 the same viewport on both sides (aim for 1280×800; record the actual size from
 the environment probe), with chrome-devtools MCP. Open by clicking `[data-audit-trigger]`.
@@ -205,7 +257,7 @@ when Base UI looks wrong; the normative spec settles disagreements. Then grade
 every line per `references/grading.md`: spec beats shadcn, native replacements
 pass when behavior/ARIA are kept, registered divergences pass as intentional.
 
-### 8. Report, render, comment
+### 8. Report, render, walk through, comment
 
 Write `<run>/report.json`:
 
@@ -247,12 +299,48 @@ Then:
 2. `render <report.json> --html` → `html` is the written path, or `null` when
    no component has screenshots plus a non-pass Look/Behavior/Animation line.
    If there's a path, `open` it.
-3. Only when `target.kind` is `pr` **and** `target.state` is `OPEN`:
+3. **Walk through the findings, one item at a time.** Cover every `fail`,
+   `warn` and `inconclusive` line, in report order (component, then
+   dimension); `pass` lines aren't discussed. Lines with one root cause (e.g.
+   several Look lines one class token explains) form a single item. For each
+   item, in the user's language:
+   - **What it is**: dimension, the concrete values on both sides and the
+     source, in plain words, plus what someone using the component would
+     notice.
+   - **Recommendation**: one action and why: fix it in RubyUI (what and
+     where), suggest a divergence entry (show the YAML), fix the map or
+     fixtures, settle it by hand (inconclusive), or leave it. Say so when the
+     spec beats shadcn.
+   - **Ask** with AskUserQuestion: the recommended option first, labeled
+     "(Recommended)", then the realistic alternatives. Wait for the answer
+     before the next item.
+
+   Keep a list of the decisions (item, choice, user's note) and act on none
+   of them during the walk. After the last item, show the list and ask
+   whether to go ahead. Once the user agrees, write each decision into the
+   `note` of its lines in `report.json` (e.g. "Requested: use ring-1 instead
+   of border", "Kept as is: …", "Suggested divergence: …"), leaving `status`
+   and `basis` untouched, re-run `render` so the PR comment carries them, and
+   re-run `render <report.json> --html` if `report.html` was already written.
+   The hard rules still hold: on someone else's PR, "fix"
+   becomes a request in the PR comment and divergence entries stay
+   suggestions for the author; on the user's own branch, fixes follow
+   "Before/after images for a fix PR". A decision never changes a grade by
+   itself: grades change only through an override (see "4. Look") or a registered
+   divergence, followed by a new `render`.
+   When the audited PR (or the user's branch) brings the component to match
+   shadcn, its map file needs a new baseline so the weekly `drift` (skill
+   `shadcn-drift`) starts from this audit: `baseline <folder> <shadcn_sha>`
+   with the report's `shadcn_sha`, committed in the same PR. Record it as a
+   decision in the `note` of the component's first line ("Requested: run
+   `baseline <folder> <shadcn_sha>` in this PR") and re-run `render`, so the
+   comment below carries it. On someone else's PR it stays a request.
+4. Only when `target.kind` is `pr` **and** `target.state` is `OPEN`:
    `comment <report.json>` →
    `{"posted": false, "body": …}`. Show the **exact body** and ask for an ok.
    Branch/component targets, or a PR whose `state` isn't `OPEN`: don't offer
    posting. Tell the user why (no PR, or the PR is MERGED/CLOSED).
-4. On an explicit "ok"/"pode mandar" for that body:
+5. On an explicit "ok"/"pode mandar" for that body:
    `comment <report.json> --post` → `action` `created`/`updated` (give the
    `url`) or `refused` (`reason`): the PR head moved since the audit pinned it
    (offer a re-run), or the PR is no longer `OPEN`. `posted: false` means
@@ -260,12 +348,62 @@ Then:
    updated; a marked comment by anyone else is left alone and a new one is
    created.
    Without an ok, don't post.
-
 ### 9. Clean up
 
 Close the browser pages you opened, then stop both servers: `herdr pane close
 <pane>` for each server pane, or kill the background processes you started.
 Tell the user where the run folder is.
+
+## Before/after images for a fix PR
+
+When the user asks you to fix what the audit found and open a PR, the PR
+shows the fix side by side with `main` and shadcn. The hard rules above still
+hold for auditing someone else's PR; this section is for the user's own fix.
+
+1. **Keep the "before".** Before fixing anything, copy `report.json` to
+   `report-main.json` and run `render report-main.json --html` while a Look,
+   Behavior or Animation line with screenshots still fails: `--html` returns
+   `null` otherwise.
+2. **Shoot the "after"** of the same states, same clips and themes, into
+   `screens/` with a `-now` suffix, plus the fixture on both sides.
+3. **Compose one image per state**: three columns, `RubyUI · main`,
+   `RubyUI · this PR`, `shadcn · Base UI + vega`. A small HTML page with the
+   three screenshots, captured with the browser, is enough. Save them to
+   `<run>/pr-assets/`.
+4. **Publish to `pr-assets`** (only after the user's ok for the PR). GitHub
+   has no API to attach files to a PR, so images go to the orphan branch
+   `pr-assets`, one folder per PR, committed with plumbing so the working
+   tree and index stay untouched:
+
+   ```bash
+   git fetch origin pr-assets 2>/dev/null || true       # absent on the first PR
+   export GIT_INDEX_FILE=$(mktemp -u)
+   git read-tree origin/pr-assets 2>/dev/null || true   # keep earlier PRs' folders
+   for f in <run>/pr-assets/*.png; do
+     git update-index --add --cacheinfo 100644,$(git hash-object -w "$f"),<pr-folder>/$(basename "$f")
+   done
+   tree=$(git write-tree)
+   if parent=$(git rev-parse -q --verify origin/pr-assets); then
+     sha=$(git commit-tree "$tree" -p "$parent" -m "Add images for <pr-folder>")
+   else
+     sha=$(git commit-tree "$tree" -m "Add images for <pr-folder>")
+   fi
+   rm -f "$GIT_INDEX_FILE"; unset GIT_INDEX_FILE
+   git push origin "${sha}:refs/heads/pr-assets"   # braces: zsh reads "$sha:r" as a modifier
+   ```
+
+   Run the whole block in one go, right before the push: parallel audits move
+   `pr-assets` often. If the push is rejected as non-fast-forward, rerun the
+   block from `git fetch` so the commit is rebuilt on the latest tip; never
+   force-push this branch.
+
+   Link each image by commit SHA so the link never moves:
+   `![State](https://github.com/ruby-ui/ruby_ui/blob/<sha>/<pr-folder>/<file>.png?raw=true)`.
+   Check one URL answers `200 image/png` before opening the PR. Never delete
+   the branch: old PRs lose their images.
+5. **Description**: the images, then both checklists (`render` text of
+   `report-main.json` and of the fixed `report.json`) inside `<details>`
+   blocks, and test steps. Show it to the user before opening the PR.
 
 ## References
 

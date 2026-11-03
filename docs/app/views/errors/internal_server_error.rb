@@ -2,7 +2,7 @@
 
 class Views::Errors::InternalServerError < Views::Base
   def view_template
-    Card(class: "p-8 space-y-6 flex flex-col items-center") do
+    Card(class: "p-8 gap-6 flex flex-col items-center") do
       div(class: "space-y-2") do
         Badge(variant: :destructive, class: "font-mono") { "STATUS: 500" }
         Heading(level: 1, class: "!leading-tight") { "Oops! Something went wrong" }

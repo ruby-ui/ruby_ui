@@ -1,0 +1,18 @@
+# One button per shadcn variant (default, outline, secondary, ghost, destructive, link),
+# then sizes sm and lg, an icon button (size icon / icon: true), a button with a
+# leading icon, a disabled one, a link (shadcn render={<a />}, RubyUI href:) and a
+# disabled button that stays focusable (focusableWhenDisabled / focusable_when_disabled:). Same order on both sides: parts are compared by index.
+# The first button carries data-audit-trigger (form_control: closed and focus).
+button_1: Button
+button_2: Outline
+button_3: Secondary
+button_4: Ghost
+button_5: Destructive
+button_6: Link
+button_7: Small
+button_8: Large
+button_9_label: Next
+button_10: Send
+button_11: Disabled
+button_12: Open Link
+button_13: Focusable

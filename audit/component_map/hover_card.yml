@@ -1,0 +1,29 @@
+shadcn: hover-card
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: popover
+docs_view: hover_card
+# The fixture follows shadcn's "Sides" example (bottom side): an outline
+# Button as the trigger, a title and a paragraph in the card. Both sides set
+# the open/close delay to 0 so collect's click (which hovers the trigger)
+# reaches the open state before it reads styles.
+parts:
+  HoverCard: hover-card
+  HoverCardTrigger: hover-card-trigger
+  HoverCardContent: hover-card-content
+# HoverCardTrigger is a <div> wrapper in RubyUI; the Button inside it is what
+# shadcn renders as the trigger (render={<Button />}), so that is compared.
+selectors:
+  HoverCard: null
+  HoverCardTrigger: '[data-slot="hover-card-trigger"] > button'
+  HoverCardContent: '[data-slot="hover-card-content"]'
+# Content placement props from the .tsx; delay/closeDelay from the Base UI
+# PreviewCard.Trigger, open/defaultOpen from PreviewCard.Root (RubyUI's open:
+# is the initial state only, see audit/divergences/hover_card.yml).
+props:
+  HoverCard: {open: null, defaultOpen: open}
+  HoverCardTrigger: {delay: delay, closeDelay: close_delay}
+  HoverCardContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset}
+# option: is the older API (placement:/delay: fallbacks).
+rubyui_only:
+  HoverCard: [option]
+fixture_shadcn: [button]

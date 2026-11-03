@@ -45,11 +45,6 @@ class Views::Docs::DataTableDemo::Index < Views::Base
         )
         div(class: "flex items-center gap-2") do
           DataTableColumnToggle(columns: TOGGLABLE_COLUMNS)
-          DataTablePerPageSelect(
-            path: docs_data_table_demo_path,
-            frame_id: FRAME_ID,
-            value: @per_page
-          )
           DataTableBulkActions do
             Button(type: "submit", form: FORM_ID, formaction: docs_data_table_demo_bulk_delete_path, formmethod: "post", variant: :destructive, size: :sm) { "Delete" }
             Button(type: "submit", form: FORM_ID, formaction: docs_data_table_demo_bulk_export_path, formmethod: "post", variant: :outline, size: :sm) { "Export" }
@@ -58,11 +53,11 @@ class Views::Docs::DataTableDemo::Index < Views::Base
       end
 
       DataTableForm(id: FORM_ID, action: "") do
-        div(class: "rounded-md border") do
+        div(class: "overflow-hidden rounded-lg border") do
           Table do
-            TableHeader do
+            TableHeader(class: "bg-muted") do
               TableRow do
-                TableHead(class: "w-10") { DataTableSelectAllCheckbox() }
+                TableHead(class: "w-8") { div(class: "flex items-center justify-center") { DataTableSelectAllCheckbox() } }
                 DataTableSortHead(column_key: :name, label: "Name", sort: @sort, direction: @direction, path: docs_data_table_demo_path, query: preserved_query)
                 DataTableSortHead(column_key: :email, label: "Email", sort: @sort, direction: @direction, path: docs_data_table_demo_path, query: preserved_query, data: {column: "email"})
                 DataTableSortHead(column_key: :department, label: "Department", sort: @sort, direction: @direction, path: docs_data_table_demo_path, query: preserved_query, data: {column: "department"})
@@ -80,7 +75,7 @@ class Views::Docs::DataTableDemo::Index < Views::Base
               else
                 @employees.each do |e|
                   TableRow do
-                    TableCell(class: "w-10") { DataTableRowCheckbox(value: e.id, label: "Select row for #{e.name}") }
+                    TableCell(class: "w-8") { div(class: "flex items-center justify-center") { DataTableRowCheckbox(value: e.id, label: "Select row for #{e.name}") } }
                     TableCell(class: "font-medium") { plain e.name }
                     TableCell(data: {column: "email"}) { plain e.email }
                     TableCell(data: {column: "department"}) { plain e.department }
@@ -99,13 +94,22 @@ class Views::Docs::DataTableDemo::Index < Views::Base
 
       DataTablePaginationBar do
         DataTableSelectionSummary(total_on_page: @employees.size)
-        DataTablePagination(
-          page: @page,
-          per_page: @per_page,
-          total_count: @total_count,
-          path: docs_data_table_demo_path,
-          query: preserved_query
-        )
+        div(class: "flex w-full items-center gap-8 lg:w-fit") do
+          DataTablePerPageSelect(
+            path: docs_data_table_demo_path,
+            frame_id: FRAME_ID,
+            value: @per_page,
+            preserved_params: preserved_query,
+            class: "hidden lg:flex"
+          )
+          DataTablePagination(
+            page: @page,
+            per_page: @per_page,
+            total_count: @total_count,
+            path: docs_data_table_demo_path,
+            query: preserved_query
+          )
+        end
       end
     end
   end
