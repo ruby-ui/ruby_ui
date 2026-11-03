@@ -26,7 +26,7 @@ parts:
   DataTableExpandToggle: null
 selectors:
   DataTableColumnToggle: '[data-controller~="ruby-ui--data-table-column-visibility"] button'
-  DropdownMenuContent: '[data-ruby-ui--dropdown-menu-target="panel"]'
+  DropdownMenuContent: '[data-slot="dropdown-menu-content"]'
   DataTablePerPageSelect: 'select[name="per_page"]'
   # Same slot as the row checkboxes: compared together under DataTableRowCheckbox.
   DataTableSelectAllCheckbox: null

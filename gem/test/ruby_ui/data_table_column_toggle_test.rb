@@ -14,6 +14,7 @@ class RubyUI::DataTableColumnToggleTest < ComponentTest
     assert_match(/data-controller="[^"]*ruby-ui--data-table-column-visibility/, output)
     assert_match(/data-column-key="email"/, output)
     assert_match(/data-column-key="salary"/, output)
+    assert_match(/data-action="ruby-ui--dropdown-menu:change->ruby-ui--data-table-column-visibility#toggle"/, output)
     assert_match(/Email/, output)
     assert_match(/Salary/, output)
   end
@@ -34,8 +35,8 @@ class RubyUI::DataTableColumnToggleTest < ComponentTest
         {key: :salary, label: "Salary", visible: false}
       ])
     end
-    # only the visible column renders the `checked` boolean attribute on its checkbox
-    assert_equal 1, output.scan(/\bchecked(?:\s|>)/).length
+    assert_match(/role="menuitemcheckbox"[^<]*aria-checked="true"[^<]*data-column-key="email"/, output)
+    assert_match(/role="menuitemcheckbox"[^<]*aria-checked="false"[^<]*data-column-key="salary"/, output)
   end
 
   def test_trigger_icons_carry_data_icon

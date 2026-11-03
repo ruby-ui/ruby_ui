@@ -1,0 +1,18 @@
+- component: dropdown_menu
+  dimension: HTML
+  rubyui: "No DropdownMenuPortal: DropdownMenuContent stays inside DropdownMenu as a native popover (top layer)"
+  shadcn: "DropdownMenuPortal (Menu.Portal) moves the popup to the end of <body>"
+  reason: "The top layer already lifts the menu above any overflow or z-index of its ancestors, which is what the portal is for, and keeping the menu in place lets Turbo morphs and the controller's targets find it."
+  since: "2026-11-03"
+- component: dropdown_menu
+  dimension: Native
+  rubyui: "popover=\"manual\": the controller handles Esc, the outside click and focus return"
+  shadcn: "Base UI handles dismissal in JS (no popover attribute)"
+  reason: "popover=\"auto\" would hide the menu the instant Esc or a light dismiss happens, cutting the exit animation shadcn shows, and its light dismiss would fight the modal inert page. The top layer and native show/hide still come from the popover attribute."
+  since: "2026-11-03"
+- component: dropdown_menu
+  dimension: Props
+  rubyui: "DropdownMenu(options: {placement:}) and DropdownMenuItem(as:, href:)"
+  shadcn: "no counterpart (side/align on DropdownMenuContent; links through render)"
+  reason: "Kept from the previous API: options[:placement] fills in side:/align: when the content doesn't set them (deprecated), as: :div forces a div, href: renders the item as a link."
+  since: "2026-11-03"

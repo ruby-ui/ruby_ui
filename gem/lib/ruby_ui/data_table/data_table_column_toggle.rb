@@ -18,23 +18,13 @@ module RubyUI
               chevron_down_icon
             end
           end
-          render RubyUI::DropdownMenuContent.new do
+          render RubyUI::DropdownMenuContent.new(align: :end, class: "w-32") do
             @columns.each do |col|
-              label(class: "flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm cursor-pointer hover:bg-accent") do
-                input(
-                  type: "checkbox",
-                  checked: col.fetch(:visible, true),
-                  class: [
-                    "h-4 w-4 rounded border border-input accent-primary cursor-pointer",
-                    "checked:bg-primary checked:text-primary-foreground dark:checked:bg-secondary checked:text-primary checked:border-primary"
-                  ],
-                  data: {
-                    column_key: col[:key].to_s,
-                    action: "change->ruby-ui--data-table-column-visibility#toggle"
-                  }
-                )
-                span { plain col[:label] }
-              end
+              render RubyUI::DropdownMenuCheckboxItem.new(
+                checked: col.fetch(:visible, true),
+                class: "capitalize",
+                data: {column_key: col[:key].to_s}
+              ) { plain col[:label] }
             end
           end
         end
@@ -66,7 +56,10 @@ module RubyUI
     def default_attrs
       {
         class: "relative",
-        data: {controller: "ruby-ui--data-table-column-visibility"}
+        data: {
+          controller: "ruby-ui--data-table-column-visibility",
+          action: "ruby-ui--dropdown-menu:change->ruby-ui--data-table-column-visibility#toggle"
+        }
       }
     end
   end
