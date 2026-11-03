@@ -121,6 +121,26 @@ class Views::Docs::InputOtp < Views::Base
         RUBY
       end
 
+      Heading(level: 2) { "Container class" }
+
+      Text { "Attributes passed to InputOtp go to the hidden <input> (name, value, required, disabled). Use container_class: to style the wrapper that holds the groups — for example, a wider gap." }
+
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+        <<~RUBY
+          InputOtp(length: 4, name: "pin", container_class: "gap-4") do
+            InputOtpGroup do
+              InputOtpSlot(index: 0)
+              InputOtpSlot(index: 1)
+            end
+            InputOtpSeparator()
+            InputOtpGroup do
+              InputOtpSlot(index: 2)
+              InputOtpSlot(index: 3)
+            end
+          end
+        RUBY
+      end
+
       Heading(level: 2) { "Form" }
 
       Text { "A full example combining InputOtp with Card, Button, and InlineLink — bigger slots via class:, a resend action, and fallback links." }

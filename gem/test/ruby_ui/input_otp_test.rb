@@ -41,10 +41,13 @@ class RubyUI::InputOtpTest < ComponentTest
     assert_match(/marker/, output)
   end
 
-  def test_group_renders_flex_wrapper
+  def test_group_renders_flex_wrapper_with_invalid_ring
     output = phlex { RubyUI.InputOtpGroup { RubyUI.Badge { "marker" } } }
 
-    assert_match(/class="flex items-center"/, output)
+    assert_match(/data-slot="input-otp-group"/, output)
+    assert_match(/class="flex items-center rounded-md /, output)
+    assert_match(/has-aria-invalid:ring-3/, output)
+    assert_match(/has-aria-invalid:ring-destructive\/20/, output)
     assert_match(/marker/, output)
   end
 
@@ -93,5 +96,42 @@ class RubyUI::InputOtpTest < ComponentTest
     output = phlex { RubyUI.InputOtp(length: 4, name: "otp", disabled: true) }
 
     assert_match(/disabled(="disabled")?/, output)
+  end
+
+  def test_render_marks_parts_like_shadcn
+    output = phlex { RubyUI.InputOtp(length: 4, name: "otp") }
+
+    assert_match(/<div translate="no"/, output)
+    assert_match(/<input[^>]*spellcheck="false"/, output)
+    assert_match(/<input[^>]*data-slot="input-otp"/, output)
+  end
+
+  def test_render_puts_slots_directly_in_the_gapped_container
+    output = phlex { RubyUI.InputOtp(length: 1, name: "otp") { RubyUI.InputOtpGroup { "x" } } }
+
+    assert_match(/class="relative flex items-center gap-2 has-disabled:opacity-50"><div data-slot="input-otp-group"/, output)
+  end
+
+  def test_render_merges_container_class
+    output = phlex { RubyUI.InputOtp(length: 4, name: "otp", container_class: "gap-4 justify-center") }
+
+    assert_match(/class="relative flex items-center has-disabled:opacity-50 gap-4 justify-center"/, output)
+    refute_match(/container_class/, output)
+  end
+
+  def test_separator_icon_is_hidden_from_assistive_tech
+    output = phlex { RubyUI.InputOtpSeparator() }
+
+    assert_match(/data-slot="input-otp-separator"/, output)
+    assert_match(/<svg[^>]*aria-hidden="true"/, output)
+    refute_match(/text-muted-foreground/, output)
+  end
+
+  def test_slot_matches_vega_active_ring_and_dark_background
+    output = phlex { RubyUI.InputOtpSlot(index: 0) }
+
+    assert_match(/data-slot="input-otp-slot"/, output)
+    assert_match(/data-\[active=true\]:ring-3/, output)
+    assert_match(/dark:bg-input\/30/, output)
   end
 end

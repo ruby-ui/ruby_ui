@@ -9,7 +9,10 @@ module RubyUI
     private
 
     def default_attrs
-      {class: "flex items-center"}
+      {
+        data: {slot: "input-otp-group"},
+        class: "flex items-center rounded-md has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40"
+      }
     end
   end
 end
