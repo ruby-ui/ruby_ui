@@ -1,0 +1,6 @@
+# Same strings on both sides. Follows shadcn's hover-card "Sides" example on
+# the default bottom side. Open and close delays are 0 on both sides so
+# collect's click (a hover on the trigger) opens the card at once.
+trigger: Hover me
+title: Hover Card
+body: This hover card appears on the bottom side of the trigger.

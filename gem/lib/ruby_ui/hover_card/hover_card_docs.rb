@@ -52,15 +52,31 @@ class Views::Docs::HoverCard < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Escaping a clipping ancestor", description: "The card is positioned absolutely by default, so a positioned ancestor that hides its overflow — a scroll area, a table cell, a truncating container — clips it. The fixed strategy positions the card against the viewport instead, so it escapes.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Side and delay", description: "side: and align: place the card around the trigger, side_offset: and align_offset: set the gap. delay: and close_delay: on the trigger set how long the pointer has to stay before the card opens and closes, in milliseconds (600 and 300 by default).", context: self) do
+        <<~RUBY
+          HoverCard do
+            HoverCardTrigger(delay: 100, close_delay: 100) do
+              Button(variant: :outline) { "Top" }
+            end
+            HoverCardContent(side: :top, align: :start) do
+              div(class: "flex flex-col gap-2") do
+                h4(class: "font-medium") { "Hover Card" }
+                p { "This hover card appears on the top side of the trigger." }
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Inside a clipping container", description: "The card opens in the top layer, so a container that hides its overflow (a scroll area, a table cell, a truncating container) doesn't clip it.", context: self) do
         <<~RUBY
           div(class: "relative h-24 w-64 overflow-hidden rounded-md border p-4") do
-            HoverCard(option: {strategy: "fixed"}) do
+            HoverCard do
               HoverCardTrigger do
                 Button(variant: :link) { "@joeldrapper" }
               end
               HoverCardContent do
-                p(class: "text-sm") { "Not clipped by the container above." }
+                p { "Not clipped by the container above." }
               end
             end
           end
