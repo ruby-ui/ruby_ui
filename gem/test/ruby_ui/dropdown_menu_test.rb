@@ -183,11 +183,10 @@ class RubyUI::DropdownMenuTest < ComponentTest
       end
     end
 
-    assert_match(/id="invite-trigger"/, output)
-    assert_match(/aria-label="Invite"/, output)
-    assert_match(/aria-controls="invite-content"/, output)
-    assert_match(/id="invite-content"/, output)
-    assert_match(/aria-labelledby="invite-trigger"/, output)
+    trigger = output[/<div [^<]*data-slot="dropdown-menu-sub-trigger"[^<]*>/]
+    content = output[/<div [^<]*data-slot="dropdown-menu-sub-content"[^<]*>/]
+    %w[id="invite-trigger" aria-label="Invite" aria-controls="invite-content"].each { |a| assert_includes trigger, a }
+    %w[id="invite-content" aria-labelledby="invite-trigger"].each { |a| assert_includes content, a }
     refute_match(/id="(mine|theirs)"/, output)
   end
 end
