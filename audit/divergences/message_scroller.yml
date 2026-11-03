@@ -1,0 +1,12 @@
+- component: message_scroller
+  dimension: HTML
+  rubyui: "MessageScrollerProvider renders <div data-slot=\"message-scroller-provider\" class=\"contents\"> holding the Stimulus controller"
+  shadcn: "MessageScroller.Provider renders no element (React context only)"
+  reason: "Stimulus needs a DOM element to own the scroll state; display: contents keeps it out of layout, and the provider can still wrap controls outside the scroller."
+  since: "2026-11-03"
+- component: message_scroller
+  dimension: Props
+  rubyui: "MessageScrollerButton has no render prop; custom content via block"
+  shadcn: "MessageScrollerButton render prop swaps the rendered element"
+  reason: "The gem has no render-prop/as_child pattern; the block covers custom children."
+  since: "2026-11-03"

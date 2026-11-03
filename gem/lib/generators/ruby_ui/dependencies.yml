@@ -97,6 +97,7 @@ message:
 
 message_scroller:
   components:
+    - "Button"
     - "Message"
     - "Bubble"
 
