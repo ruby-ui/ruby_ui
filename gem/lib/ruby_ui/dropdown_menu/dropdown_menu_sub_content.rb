@@ -16,17 +16,19 @@ module RubyUI
     end
 
     def view_template(&)
-      div(**mix(sub_attrs, attrs), &)
+      div(**with_sub_ids(attrs), &)
     end
 
     private
 
-    # The ids come from the DropdownMenuSub around it, known only while rendering.
-    def sub_attrs
+    # The ids come from the DropdownMenuSub around it, known only while
+    # rendering. They win over a caller's id:, so the trigger's
+    # aria-controls always points here.
+    def with_sub_ids(given)
       id = context[:ruby_ui_dropdown_menu_sub]
-      return {} unless id
+      return given unless id
 
-      {id: "#{id}-content", aria: {labelledby: "#{id}-trigger"}}
+      given.merge(id: "#{id}-content", aria: (given[:aria] || {}).merge(labelledby: "#{id}-trigger"))
     end
 
     def default_attrs

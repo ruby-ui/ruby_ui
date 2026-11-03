@@ -166,9 +166,28 @@ class RubyUI::DropdownMenuTest < ComponentTest
       end
     end
 
-    assert_match(/<div id="invite-trigger" aria-controls="invite-content" aria-haspopup="menu" aria-expanded="false" role="menuitem"/, output)
-    assert_match(/<div id="invite-content" aria-labelledby="invite-trigger" role="menu" tabindex="-1" popover="manual"/, output)
+    trigger = output[/<div [^<]*data-slot="dropdown-menu-sub-trigger"[^<]*>/]
+    content = output[/<div [^<]*data-slot="dropdown-menu-sub-content"[^<]*>/]
+    %w[id="invite-trigger" role="menuitem" aria-haspopup="menu" aria-expanded="false" aria-controls="invite-content"].each { |a| assert_includes trigger, a }
+    %w[id="invite-content" role="menu" popover="manual" aria-labelledby="invite-trigger"].each { |a| assert_includes content, a }
     assert_match(/data-preferred-side="right"[^<]*data-align="start"[^<]*data-side-offset="0"[^<]*data-align-offset="-3"/, output)
     assert_includes output, "min-w-[96px]"
+  end
+
+  # A caller's id: can't break the trigger/submenu link.
+  def test_sub_ids_win_over_caller_ids
+    output = phlex do
+      RubyUI.DropdownMenuSub(id: "invite") do
+        RubyUI.DropdownMenuSubTrigger(id: "mine", aria: {label: "Invite"}) { "Invite users" }
+        RubyUI.DropdownMenuSubContent(id: "theirs") { RubyUI.DropdownMenuItem { "Email" } }
+      end
+    end
+
+    assert_match(/id="invite-trigger"/, output)
+    assert_match(/aria-label="Invite"/, output)
+    assert_match(/aria-controls="invite-content"/, output)
+    assert_match(/id="invite-content"/, output)
+    assert_match(/aria-labelledby="invite-trigger"/, output)
+    refute_match(/id="(mine|theirs)"/, output)
   end
 end

@@ -9,6 +9,7 @@ class RubyUI::DropdownMenuItemTest < ComponentTest
     assert_match(/\A<div/, output)
     assert_match(/role="menuitem"/, output)
     assert_match(/data-slot="dropdown-menu-item"/, output)
+    assert_match(/>Delete<\/div>/, output)
     refute_match(/href=/, output)
   end
 
@@ -17,12 +18,14 @@ class RubyUI::DropdownMenuItemTest < ComponentTest
 
     assert_match(/\A<a href="\/edit"/, output)
     assert_match(/role="menuitem"/, output)
+    assert_match(/>Edit<\/a>/, output)
   end
 
   def test_as_div_drops_href
     output = phlex { RubyUI.DropdownMenuItem(as: :div, href: "/edit") { "Delete" } }
 
     assert_match(/\A<div/, output)
+    assert_match(/>Delete<\/div>/, output)
     refute_match(/href=/, output)
   end
 
@@ -31,6 +34,7 @@ class RubyUI::DropdownMenuItemTest < ComponentTest
 
     assert_match(/\A<a/, output)
     assert_match(/href="\/edit"/, output)
+    assert_match(/>Edit<\/a>/, output)
   end
 
   def test_variant_inset_and_disabled

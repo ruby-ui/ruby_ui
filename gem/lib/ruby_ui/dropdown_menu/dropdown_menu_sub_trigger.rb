@@ -10,7 +10,7 @@ module RubyUI
     end
 
     def view_template(&block)
-      div(**mix(sub_attrs, attrs)) do
+      div(**with_sub_ids(attrs)) do
         yield if block
         chevron_right_icon
       end
@@ -33,12 +33,14 @@ module RubyUI
       ) { |s| s.path(d: "m9 18 6-6-6-6") }
     end
 
-    # The ids come from the DropdownMenuSub around it, known only while rendering.
-    def sub_attrs
+    # The ids come from the DropdownMenuSub around it, known only while
+    # rendering. They win over a caller's id:, so the submenu's
+    # aria-labelledby always points here.
+    def with_sub_ids(given)
       id = context[:ruby_ui_dropdown_menu_sub]
-      return {} unless id
+      return given unless id
 
-      {id: "#{id}-trigger", aria: {controls: "#{id}-content"}}
+      given.merge(id: "#{id}-trigger", aria: (given[:aria] || {}).merge(controls: "#{id}-content"))
     end
 
     def default_attrs

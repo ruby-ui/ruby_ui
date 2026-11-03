@@ -194,7 +194,8 @@ export default class extends Controller {
     // Leave the menu for the button, unless something else took focus on
     // purpose (an item that opened a modal dialog, a click outside).
     const focusLeft = focusWasInside || document.activeElement === document.body;
-    const dialogTookFocus = !!document.querySelector("dialog:modal");
+    // Only a dialog opened from inside this menu; a dialog that contains the menu doesn't count.
+    const dialogTookFocus = [...document.querySelectorAll("dialog:modal")].some((dialog) => content.contains(dialog));
     if (dialogTookFocus) {
       // Leave focus where the dialog put it.
     } else if (restoreFocus && focusLeft && this.returnFocus?.isConnected) {
