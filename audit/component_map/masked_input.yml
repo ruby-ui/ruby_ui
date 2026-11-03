@@ -1,0 +1,13 @@
+# shadcn has no masked input; MaskedInput renders RubyUI Input, so it is
+# compared against the shadcn Input. Masking is a registered divergence.
+shadcn: input
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: form_control
+docs_view: masked_input
+parts:
+  MaskedInput: input
+selectors:
+  MaskedInput: 'input[data-audit-input]'
+props:
+  MaskedInput:
+    type: type

@@ -1,0 +1,16 @@
+# One input per state: phone with placeholder (data-audit-trigger, used for
+# focus), phone with a value (maska formats it on connect; shadcn gets the
+# already-formatted string), CPF/CNPJ dynamic mask with a value, disabled and
+# invalid (aria-invalid). Every audited input carries data-audit-input.
+phone: Phone
+phone_placeholder: (11) 98765-4321
+phone_filled: Phone (filled)
+phone_value_raw: "11987654321"
+phone_value: (11) 98765-4321
+document: CPF / CNPJ
+document_value_raw: "12345678000190"
+document_value: 12.345.678/0001-90
+disabled: Disabled
+disabled_placeholder: Disabled input
+invalid: Invalid
+invalid_placeholder: Invalid input

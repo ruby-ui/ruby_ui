@@ -5,6 +5,7 @@ module RubyUI
     def initialize(type: nil, **attrs)
       @type = type
       @caller_slot = caller_slot?(attrs)
+      @disabled = attrs[:disabled] || attrs["disabled"]
       super(**attrs)
     end
 
@@ -30,6 +31,8 @@ module RubyUI
       {
         data: {
           slot: (@caller_slot ? nil : "input"),
+          # Base UI Input marks the disabled state for data-disabled: styling.
+          disabled: (@disabled ? true : nil),
           ruby_ui__form_field_target: "input",
           action: "input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid"
         }.compact,
