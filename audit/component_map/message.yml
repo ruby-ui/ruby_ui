@@ -1,0 +1,21 @@
+shadcn: message
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: static
+docs_view: message
+parts:
+  MessageGroup: message-group
+  Message: message
+  MessageAvatar: message-avatar
+  MessageContent: message-content
+  MessageHeader: message-header
+  MessageFooter: message-footer
+selectors:
+  MessageGroup: '[data-slot="message-group"]'
+  Message: '[data-slot="message"]'
+  MessageAvatar: '[data-slot="message-avatar"]'
+  MessageContent: '[data-slot="message-content"]'
+  MessageHeader: '[data-slot="message-header"]'
+  MessageFooter: '[data-slot="message-footer"]'
+props:
+  Message: {align: align}
+fixture_shadcn: [avatar, bubble]
