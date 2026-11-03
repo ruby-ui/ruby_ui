@@ -2,22 +2,26 @@
 
 module RubyUI
   class InputOtp < Base
-    def initialize(length:, pattern: nil, **attrs)
+    CONTAINER_CLASS = "relative flex items-center gap-2 has-disabled:opacity-50"
+
+    def initialize(length:, pattern: nil, container_class: nil, **attrs)
       @length = length
       @char_class = pattern || "[0-9]"
+      @container_class = container_class
       super(**attrs)
     end
 
     def view_template(&block)
       div(
+        translate: "no",
         data: {
           controller: "ruby-ui--input-otp",
           ruby_ui__input_otp_length_value: @length,
           ruby_ui__input_otp_char_class_value: @char_class
         },
-        class: "relative flex items-center has-disabled:opacity-50"
+        class: TAILWIND_MERGER.merge([CONTAINER_CLASS, @container_class].compact.join(" "))
       ) do
-        div(class: "flex items-center gap-2", &block)
+        block&.call
         input(**attrs)
       end
     end
@@ -31,7 +35,9 @@ module RubyUI
         pattern: "^(?:#{@char_class}){#{@length}}$",
         maxlength: @length,
         autocomplete: "one-time-code",
+        spellcheck: "false",
         data: {
+          slot: "input-otp",
           ruby_ui__input_otp_target: "input",
           action: "input->ruby-ui--input-otp#onInput keydown->ruby-ui--input-otp#onKeydown paste->ruby-ui--input-otp#onPaste focus->ruby-ui--input-otp#onFocus blur->ruby-ui--input-otp#onBlur"
         },

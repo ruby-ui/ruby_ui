@@ -1,0 +1,36 @@
+- component: input_otp
+  dimension: Props
+  rubyui: "pattern: is a one-character class, default \"[0-9]\" (digits only); rendered as <input pattern=\"^(?:<class>){length}$\">"
+  shadcn: "pattern is a whole-value RegExp, default none (any character)"
+  reason: "OTP codes are digits in most cases. Filtering per character keeps typing and paste forgiving, and the native pattern attribute blocks submitting a partial code."
+  since: "2026-11-03"
+- component: input_otp
+  dimension: Behavior
+  rubyui: "Typing or pasting a non-matching character drops it; a partial code fails native validation on submit"
+  shadcn: "Any character is accepted without a pattern; a partial code submits"
+  reason: "Follows from the pattern: divergence (Props)."
+  since: "2026-11-03"
+- component: input_otp
+  dimension: Props
+  rubyui: "ruby-ui--input-otp:input and ruby-ui--input-otp:complete events (detail.value)"
+  shadcn: "onChange and onComplete callbacks"
+  reason: "Server-rendered Phlex has no JS callbacks; a Stimulus action listens to the dispatched events instead (documented under \"Reacting to completion\")."
+  since: "2026-11-03"
+- component: input_otp
+  dimension: ARIA
+  rubyui: "Slots are aria-hidden=\"true\"; the code is exposed only by the labelled <input>"
+  shadcn: "Each slot exposes its character as text"
+  reason: "The input already exposes the value; exposing the slots too makes screen readers announce the code twice."
+  since: "2026-11-03"
+- component: input_otp
+  dimension: Behavior
+  rubyui: "Paste drops non-matching characters and fills from the selection (\"12-34 56\" becomes 123456)"
+  shadcn: "Native paste; with a pattern, a paste containing any non-matching character is rejected whole"
+  reason: "Codes copied from SMS or e-mail often carry spaces or hyphens."
+  since: "2026-11-03"
+- component: input_otp
+  dimension: HTML
+  rubyui: "The <input> is a direct child of the container, positioned with absolute inset-0; the fake caret is a ::after pseudo-element on the active slot"
+  shadcn: "input-otp wraps the <input> in an absolutely positioned div and renders the fake caret as a nested div inside the slot"
+  reason: "One fewer element with the same overlay and the same caret (1px x 16px, caret-blink 1.25s); the slot text is set by the Stimulus controller, so a pseudo-element avoids a child it would have to keep around."
+  since: "2026-11-03"
