@@ -40,8 +40,7 @@ class RubyUI::InputTest < ComponentTest
   def test_caller_slot_replaces_default
     output = phlex { RubyUI.Input(data: {slot: "input-group-control"}) }
 
-    assert_match(/data-slot="input-group-control"/, output)
-    refute_match(/data-slot="input input-group-control"/, output)
+    assert_equal ["input-group-control"], output.scan(/data-slot="([^"]*)"/).flatten
   end
 
   def test_flat_data_slot_replaces_default
