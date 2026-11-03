@@ -38,9 +38,9 @@ module Components
                     component.built_using
                     case component.built_using&.to_sym
                     when :phlex
-                      Badge(size: :sm, variant: :rose) { "Phlex" }
+                      Badge(size: :sm, class: "bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300") { "Phlex" }
                     when :stimulus
-                      Badge(size: :sm, variant: :amber) { "Stimulus JS" }
+                      Badge(size: :sm, class: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300") { "Stimulus JS" }
                     end
                   end
                   TableCell do

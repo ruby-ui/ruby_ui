@@ -95,12 +95,12 @@ class Views::Pages::Home < Views::Base
               CardTitle { "Activity Feed" }
             end
             CardContent(class: "flex flex-wrap gap-2") do
-              Badge(variant: :sky) { "In Review" }
-              Badge(variant: :success) { "Ready to Ship" }
+              Badge(class: "bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300") { "In Review" }
+              Badge(class: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300") { "Ready to Ship" }
               Badge(variant: :outline) { "Draft" }
               Badge(variant: :destructive) { "Rejected" }
               Badge(variant: :primary) { "Deployed" }
-              Badge(variant: :amber) { "Agent Thinking" }
+              Badge(class: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300") { "Agent Thinking" }
             end
           end
         end

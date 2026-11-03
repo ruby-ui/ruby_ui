@@ -5,12 +5,11 @@ module RubyUI
   # its own grid column next to the title and description, like shadcn's Alert.
   # role="alert" makes screen readers announce it and interrupt the user. Pass
   # role: "status" to announce it politely, or role: nil for a static callout.
+  # Variants mirror shadcn; pass class: for any other color.
   class Alert < Base
     VARIANTS = {
       default: "bg-card text-card-foreground",
-      destructive: "text-destructive bg-card *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current",
-      warning: "text-warning bg-card *:data-[slot=alert-description]:text-warning/90 *:[svg]:text-current",
-      success: "text-success bg-card *:data-[slot=alert-description]:text-success/90 *:[svg]:text-current"
+      destructive: "text-destructive bg-card *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current"
     }.freeze
 
     def initialize(variant: :default, **attrs)

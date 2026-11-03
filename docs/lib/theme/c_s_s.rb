@@ -1,11 +1,7 @@
 module Theme
   class CSS
-    # Ruby UI specific variables that are not part of the standard shadcn theme
-    RUBY_UI_SPECIFIC_VARS = %w[warning warning-foreground success success-foreground].freeze
-
-    def self.retrieve(theme, with_directive: true, format: :css, exclude_ruby_ui_vars: false)
+    def self.retrieve(theme, with_directive: true, format: :css)
       theme_hash = send(theme)
-      theme_hash = filter_ruby_ui_vars(theme_hash) if exclude_ruby_ui_vars
 
       case format
       when :css
@@ -15,12 +11,6 @@ module Theme
         theme_hash
       else
         raise ArgumentError, "Invalid format: #{format}"
-      end
-    end
-
-    def self.filter_ruby_ui_vars(theme_hash)
-      theme_hash.transform_values do |properties|
-        properties.reject { |key, _| RUBY_UI_SPECIFIC_VARS.include?(key.to_s) }
       end
     end
 
@@ -87,11 +77,7 @@ module Theme
           "sidebar-accent": "oklch(0.97 0 0)",
           "sidebar-accent-foreground": "oklch(0.205 0 0)",
           "sidebar-border": "oklch(0.922 0 0)",
-          "sidebar-ring": "oklch(0.708 0 0)",
-          warning: "hsl(38 92% 50%)",
-          "warning-foreground": "hsl(0 0% 100%)",
-          success: "hsl(87 100% 37%)",
-          "success-foreground": "hsl(0 0% 100%)"
+          "sidebar-ring": "oklch(0.708 0 0)"
         },
         dark: {
           background: "oklch(0.145 0 0)",
@@ -125,11 +111,7 @@ module Theme
           "sidebar-accent": "oklch(0.269 0 0)",
           "sidebar-accent-foreground": "oklch(0.985 0 0)",
           "sidebar-border": "oklch(1 0 0 / 10%)",
-          "sidebar-ring": "oklch(0.556 0 0)",
-          warning: "hsl(38 92% 50%)",
-          "warning-foreground": "hsl(0 0% 100%)",
-          success: "hsl(84 81% 44%)",
-          "success-foreground": "hsl(0 0% 100%)"
+          "sidebar-ring": "oklch(0.556 0 0)"
         }
       }
     end
@@ -455,11 +437,7 @@ module Theme
         "sidebar-accent": "oklch(0.97 0 0)",
         "sidebar-accent-foreground": "oklch(0.205 0 0)",
         "sidebar-border": "oklch(0.922 0 0)",
-        "sidebar-ring": "oklch(0.708 0 0)",
-        warning: "hsl(38 92% 50%)",
-        "warning-foreground": "hsl(0 0% 100%)",
-        success: "hsl(87 100% 37%)",
-        "success-foreground": "hsl(0 0% 100%)"
+        "sidebar-ring": "oklch(0.708 0 0)"
       }
     end
 
@@ -496,11 +474,7 @@ module Theme
         "sidebar-accent": "oklch(0.269 0 0)",
         "sidebar-accent-foreground": "oklch(0.985 0 0)",
         "sidebar-border": "oklch(1 0 0 / 10%)",
-        "sidebar-ring": "oklch(0.556 0 0)",
-        warning: "hsl(38 92% 50%)",
-        "warning-foreground": "hsl(0 0% 100%)",
-        success: "hsl(84 81% 44%)",
-        "success-foreground": "hsl(0 0% 100%)"
+        "sidebar-ring": "oklch(0.556 0 0)"
       }
     end
 

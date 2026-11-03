@@ -15,7 +15,7 @@ class Views::Docs::Progress < Views::Base
 
       render Docs::VisualCodeExample.new(title: "With custom indicator color", context: self) do
         <<~RUBY
-          Progress(value: 35, class: "w-[60%] [&>*]:bg-success")
+          Progress(value: 35, class: "w-[60%] [&>*]:bg-green-600")
         RUBY
       end
 

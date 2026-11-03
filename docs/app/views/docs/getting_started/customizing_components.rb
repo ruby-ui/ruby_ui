@@ -157,8 +157,6 @@ class Views::Docs::GettingStarted::CustomizingComponents < Views::Base
           def colors
             case @variant
             when nil then 'ring-border bg-muted/20 text-foreground [&>svg]:opacity-80'
-            when :warning then 'ring-warning/20 bg-warning/5 text-warning [&>svg]:text-warning/80'
-            when :success then 'ring-success/20 bg-success/5 text-success [&>svg]:text-success/80'
             when :destructive then 'ring-destructive/20 bg-destructive/5 text-destructive [&>svg]:text-destructive/80'
             end
           end

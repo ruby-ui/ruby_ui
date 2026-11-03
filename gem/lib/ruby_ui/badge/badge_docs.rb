@@ -83,35 +83,14 @@ class Views::Docs::Badge < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Status Colors", context: self) do
+      render Docs::VisualCodeExample.new(title: "Custom Colors", description: "Badge ships the shadcn variants. For any other color, pass classes: a light and a dark shade of the same scale keep the text readable in both themes.", context: self) do
         <<~RUBY
           div(class: "flex flex-wrap gap-2 justify-center") do
-            Badge(variant: :success) { "Success" }
-            Badge(variant: :warning) { "Warning" }
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Other Colors", context: self) do
-        <<~RUBY
-          div(class: "flex flex-wrap gap-2 justify-center") do
-            Badge(variant: :red) { "Red" }
-            Badge(variant: :orange) { "Orange" }
-            Badge(variant: :amber) { "Amber" }
-            Badge(variant: :yellow) { "Yellow" }
-            Badge(variant: :lime) { "Lime" }
-            Badge(variant: :green) { "Green" }
-            Badge(variant: :emerald) { "Emerald" }
-            Badge(variant: :teal) { "Teal" }
-            Badge(variant: :cyan) { "Cyan" }
-            Badge(variant: :sky) { "Sky" }
-            Badge(variant: :blue) { "Blue" }
-            Badge(variant: :indigo) { "Indigo" }
-            Badge(variant: :violet) { "Violet" }
-            Badge(variant: :purple) { "Purple" }
-            Badge(variant: :fuchsia) { "Fuchsia" }
-            Badge(variant: :pink) { "Pink" }
-            Badge(variant: :rose) { "Rose" }
+            Badge(class: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300") { "Blue" }
+            Badge(class: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300") { "Green" }
+            Badge(class: "bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300") { "Sky" }
+            Badge(class: "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300") { "Purple" }
+            Badge(class: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300") { "Red" }
           end
         RUBY
       end
