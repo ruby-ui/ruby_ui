@@ -51,21 +51,21 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Calendar",
-  "docs_markdown": "# Calendar\n\nA calendar that lets users pick a date, with keyboard navigation.\n\n## Usage\n\n### Connect to input\n\n```ruby\ndiv(class: 'space-y-4') do\n  Input(type: 'string', placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#date', class: 'rounded-md border shadow')\nend\n```\n\n### Format date\n\n```ruby\ndiv(class: 'space-y-4') do\n  Input(type: 'string', placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'formatted-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#formatted-date', date_format: 'PPPP', class: 'rounded-md border shadow')\nend\n```\n\n### Minimum date\n\n```ruby\ndiv(class: 'space-y-4') do\n  Input(type: 'string', placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'minimum-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#minimum-date', min_date: Date.current, class: 'rounded-md border shadow')\nend\n```\n\n### Week start\n\n```ruby\nCalendar(week_starts_on: :monday, class: 'rounded-md border shadow')\n```",
+  "docs_markdown": "# Calendar\n\nA calendar that lets users pick a date, with keyboard navigation.\n\n## Usage\n\n### Connect to input\n\n```ruby\ndiv(class: 'space-y-4') do\n  Input(placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#date', class: 'rounded-md border shadow')\nend\n```\n\n### Format date\n\n```ruby\ndiv(class: 'space-y-4') do\n  Input(placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'formatted-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#formatted-date', date_format: 'PPPP', class: 'rounded-md border shadow')\nend\n```\n\n### Minimum date\n\n```ruby\ndiv(class: 'space-y-4') do\n  Input(placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'minimum-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#minimum-date', min_date: Date.current, class: 'rounded-md border shadow')\nend\n```\n\n### Week start\n\n```ruby\nCalendar(week_starts_on: :monday, class: 'rounded-md border shadow')\n```",
   "examples": [
     {
       "title": "Connect to input",
-      "code": "div(class: 'space-y-4') do\n  Input(type: 'string', placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#date', class: 'rounded-md border shadow')\nend\n",
+      "code": "div(class: 'space-y-4') do\n  Input(placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#date', class: 'rounded-md border shadow')\nend\n",
       "language": "ruby"
     },
     {
       "title": "Format date",
-      "code": "div(class: 'space-y-4') do\n  Input(type: 'string', placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'formatted-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#formatted-date', date_format: 'PPPP', class: 'rounded-md border shadow')\nend\n",
+      "code": "div(class: 'space-y-4') do\n  Input(placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'formatted-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#formatted-date', date_format: 'PPPP', class: 'rounded-md border shadow')\nend\n",
       "language": "ruby"
     },
     {
       "title": "Minimum date",
-      "code": "div(class: 'space-y-4') do\n  Input(type: 'string', placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'minimum-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#minimum-date', min_date: Date.current, class: 'rounded-md border shadow')\nend\n",
+      "code": "div(class: 'space-y-4') do\n  Input(placeholder: \"Select a date\", class: 'rounded-md border shadow', id: 'minimum-date', data_controller: 'ruby-ui--calendar-input')\n  Calendar(input_id: '#minimum-date', min_date: Date.current, class: 'rounded-md border shadow')\nend\n",
       "language": "ruby"
     },
     {

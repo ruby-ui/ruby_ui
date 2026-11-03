@@ -185,6 +185,8 @@ class RubyUI::FormTest < ComponentTest
     assert_match(/leading-snug/, output)
     assert_match(/group-data-\[disabled=true\]\/field:opacity-50/, output)
     refute_match(/opacity-70/, output)
+    # shadcn's Label uses an unnamed group, which never matches Field's group/field.
+    refute_match(/group-data-\[disabled=true\]\/field:pointer-events-none/, output)
   end
 
   def test_form_field_hint_is_a_controller_target

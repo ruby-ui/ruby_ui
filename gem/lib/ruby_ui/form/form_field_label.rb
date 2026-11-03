@@ -13,7 +13,7 @@ module RubyUI
         data: {slot: "field-label"},
         class: [
           "empty:hidden flex w-fit items-center gap-2 text-sm leading-snug font-medium select-none",
-          "group-data-[disabled=true]/field:pointer-events-none group-data-[disabled=true]/field:opacity-50",
+          "group-data-[disabled=true]/field:opacity-50",
           "peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
           "peer-aria-disabled:cursor-not-allowed peer-aria-disabled:opacity-50 peer-aria-disabled:pointer-events-none",
           # A label wrapping a FormField becomes a selectable card (shadcn's
