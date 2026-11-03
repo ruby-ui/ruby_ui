@@ -1,0 +1,9 @@
+# One pagination as in the shadcn Base UI "Basic" example:
+#   Previous · 1 · 2 (active) · 3 · ellipsis · Next, all hrefs "#".
+# Both sides use the Previous/Next parts with their default labels.
+# Static kind: only the closed state is collected; link "1" carries
+# data-audit-trigger to satisfy the fixture contract.
+previous: Previous
+pages: ["1", "2", "3"]
+active: "2"
+next: Next
