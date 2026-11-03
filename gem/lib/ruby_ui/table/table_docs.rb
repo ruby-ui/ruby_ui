@@ -92,11 +92,11 @@ class Views::Docs::Table < Views::Base
   def render_status_badge(status)
     case status.downcase
     when "active"
-      Badge(variant: :success, size: :sm) { status }
+      Badge(size: :sm, class: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300") { status }
     when "inactive"
       Badge(variant: :destructive, size: :sm) { status }
     when "pending"
-      Badge(variant: :warning, size: :sm) { status }
+      Badge(size: :sm, class: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300") { status }
     end
   end
 end

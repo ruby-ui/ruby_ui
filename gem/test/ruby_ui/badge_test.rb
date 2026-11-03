@@ -67,11 +67,21 @@ class RubyUI::BadgeTest < ComponentTest
     refute_includes output, "border-transparent"
   end
 
-  def test_extras_use_tinted_pattern_without_ring
-    output = phlex { RubyUI.Badge(variant: :blue) { "x" } }
+  def test_removed_color_variants_fall_back_to_default
+    %i[success warning blue amber].each do |variant|
+      output = phlex { RubyUI.Badge(variant: variant) { "x" } }
 
-    assert_includes output, "bg-blue-500/10 text-blue-500 dark:bg-blue-500/20"
-    refute_match(/\bring-1\b/, output)
+      assert_includes output, 'data-variant="default"', variant.inspect
+      assert_includes output, "bg-primary text-primary-foreground", variant.inspect
+    end
+  end
+
+  def test_custom_colors_replace_the_variant_colors
+    output = phlex { RubyUI.Badge(class: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300") { "x" } }
+
+    assert_includes output, "bg-green-50 text-green-700"
+    refute_match(/\sbg-primary\s/, output)
+    refute_includes output, "text-primary-foreground"
   end
 
   def test_sizes

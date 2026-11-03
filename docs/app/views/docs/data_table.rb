@@ -235,8 +235,8 @@ class Views::Docs::DataTable < Views::Base
       render Docs::VisualCodeExample.new(title: "Custom cell renderers", context: self) do
         <<~RUBY
           def status_badge(status)
-            variant = {"Active" => :success, "Inactive" => :destructive}.fetch(status, :outline)
-            Badge(variant: variant, size: :sm) { plain status }
+            attrs = {"Active" => {class: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300"}, "Inactive" => {variant: :destructive}}
+            Badge(**attrs.fetch(status, {variant: :outline}), size: :sm) { plain status }
           end
 
           DataTable(id: "renderers") do

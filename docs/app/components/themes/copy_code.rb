@@ -21,7 +21,7 @@ module Components
               SheetDescription { "Copy and paste the following code into your CSS file. These styles are compatible with TailwindCSS 4." }
             end
             SheetMiddle(class: "flex-1 relative") do
-              Codeblock(Theme::CSS.retrieve(@theme, with_directive: true, exclude_ruby_ui_vars: true), syntax: :css, class: "h-full max-h-none")
+              Codeblock(Theme::CSS.retrieve(@theme, with_directive: true), syntax: :css, class: "h-full max-h-none")
             end
           end
         end

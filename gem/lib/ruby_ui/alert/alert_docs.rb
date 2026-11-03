@@ -37,22 +37,12 @@ class Views::Docs::Alert < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Warning", description: "Warning and success are RubyUI extras, styled like destructive.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Custom Colors", description: "Alert ships the default and destructive variants. For any other color, pass class: with a light and a dark shade of the same scale, so the text stays readable in both themes.", context: self) do
         <<~RUBY
-          Alert(variant: :warning) do
+          Alert(class: "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50 *:data-[slot=alert-description]:text-amber-900/90 dark:*:data-[slot=alert-description]:text-amber-50/90") do
             triangle_alert_icon
-            AlertTitle { "Ship often" }
-            AlertDescription { "Shipping is good, your users will thank you for it." }
-          end
-        RUBY
-      end
-
-      render Docs::VisualCodeExample.new(title: "Success", context: self) do
-        <<~RUBY
-          Alert(variant: :success) do
-            circle_check_icon
-            AlertTitle { "Installation successful" }
-            AlertDescription { "You're all set to start using RubyUI in your application." }
+            AlertTitle { "Your subscription will expire in 3 days." }
+            AlertDescription { "Renew now to avoid service interruption or upgrade to a paid plan to continue using the service." }
           end
         RUBY
       end

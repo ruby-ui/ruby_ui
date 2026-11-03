@@ -13,7 +13,7 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Progress",
-  "docs_markdown": "# Progress\n\nDisplays an indicator showing the completion progress of a task, typically displayed as a progress bar.\n\n### Example\n\n```ruby\nProgress(value: 50, class: \"w-[60%]\")\n```\n\n### With custom indicator color\n\n```ruby\nProgress(value: 35, class: \"w-[60%] [&>*]:bg-success\")\n```",
+  "docs_markdown": "# Progress\n\nDisplays an indicator showing the completion progress of a task, typically displayed as a progress bar.\n\n### Example\n\n```ruby\nProgress(value: 50, class: \"w-[60%]\")\n```\n\n### With custom indicator color\n\n```ruby\nProgress(value: 35, class: \"w-[60%] [&>*]:bg-green-600\")\n```",
   "examples": [
     {
       "title": "Example",
@@ -22,7 +22,7 @@
     },
     {
       "title": "With custom indicator color",
-      "code": "Progress(value: 35, class: \"w-[60%] [&>*]:bg-success\")\n",
+      "code": "Progress(value: 35, class: \"w-[60%] [&>*]:bg-green-600\")\n",
       "language": "ruby"
     }
   ]

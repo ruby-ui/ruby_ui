@@ -45,10 +45,6 @@ module Components
               --input: 240 5.9% 90%;
               --ring: 240 5.9% 10%;
               --radius: 0.5rem;
-              --warning: 38 92% 50%;
-              --warning-foreground: 0 0% 100%;
-              --success: 87 100% 37%;
-              --success-foreground: 0 0% 100%;
             }
 
             .dark {
@@ -71,10 +67,6 @@ module Components
               --border: 240 3.7% 15.9%;
               --input: 240 3.7% 15.9%;
               --ring: 240 4.9% 83.9%;
-              --warning: 38 92% 50%;
-              --warning-foreground: 0 0% 100%;
-              --success: 84 81% 44%;
-              --success-foreground: 0 0% 100%;
             }
           }
 
