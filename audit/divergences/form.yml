@@ -10,3 +10,9 @@
   shadcn: "FieldError returns null when it has no children and no errors"
   reason: "The FormField Stimulus controller writes client-side validation messages into that div, so it must exist before the first error."
   since: "2026-11-01"
+- component: form
+  dimension: ARIA
+  rubyui: "FormField controller sets aria-describedby on each control, pointing at its FormFieldHint and FormFieldError ids"
+  shadcn: "Field leaves FieldDescription/FieldError unlinked; the app wires aria-describedby itself"
+  reason: "Screen readers announce the hint and the client-side error on focus without app code (WCAG technique ARIA1; GOV.UK Design System links them the same way). Revisit: an aria-live region plus aria-describedby announced errors twice in Chrome 111 + JAWS (adrianroselli.com/2023/04/exposing-field-errors.html); FormFieldError's role=alert is an assertive live region, so it may do the same. Untested here."
+  since: "2026-11-03"
