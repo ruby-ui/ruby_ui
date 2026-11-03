@@ -1,0 +1,30 @@
+shadcn: pagination
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: static
+docs_view: pagination
+# RubyUI's PaginationItem renders <li data-slot=pagination-item><a>; its attrs
+# (class, aria-current, data-slot=pagination-link) land on the <a>, so it maps
+# to shadcn's pagination-link (see divergences/pagination.yml). Previous/Next
+# are pagination-link too: the PaginationItem selector covers all five links.
+parts:
+  Pagination: pagination
+  PaginationContent: pagination-content
+  PaginationItem: pagination-link
+  PaginationPrevious: pagination-link
+  PaginationNext: pagination-link
+  PaginationEllipsis: pagination-ellipsis
+selectors:
+  Pagination: '[data-slot="pagination"]'
+  PaginationContent: '[data-slot="pagination-content"]'
+  PaginationItem: '[data-slot="pagination-link"]'
+  # Compared within PaginationItem.
+  PaginationPrevious: null
+  PaginationNext: null
+  PaginationEllipsis: '[data-slot="pagination-ellipsis"]'
+props:
+  PaginationItem: {isActive: active, size: size}
+  PaginationPrevious: {text: text}
+  PaginationNext: {text: text}
+rubyui_only:
+  PaginationItem: [href]
+fixture_shadcn: [button]

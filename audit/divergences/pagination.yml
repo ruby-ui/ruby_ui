@@ -1,0 +1,12 @@
+- component: pagination
+  dimension: HTML
+  rubyui: "PaginationItem renders <li><a> (Item + Link in one part); PaginationEllipsis renders its own <li>"
+  shadcn: "PaginationItem <li> wrapping PaginationLink <a> or PaginationEllipsis <span>"
+  reason: "Same rendered tree (nav > ul > li > a|span); one Phlex part avoids a breaking change for existing PaginationItem(href:) callers."
+  since: "2026-11-03"
+- component: pagination
+  dimension: ARIA
+  rubyui: "<a href> keeps the native link role"
+  shadcn: "<a href role=\"button\" tabindex=\"0\"> (Base UI Button, nativeButton={false})"
+  reason: "Pagination items navigate, so link is the matching role (APG button pattern: role must match function). shadcn's Radix and React Aria bases also render links."
+  since: "2026-11-03"
