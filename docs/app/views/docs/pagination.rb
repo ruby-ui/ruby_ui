@@ -38,7 +38,7 @@ class Views::Docs::Pagination < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Custom labels", description: "Previous and Next take text:; translate the aria-label with it, using label! to replace the default. Below the sm breakpoint only the chevron shows.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Custom labels", description: "Previous and Next take text:. Translate the aria-label along with it, using label! to replace the default. Below the sm breakpoint only the chevron shows.", context: self) do
         <<~RUBY
           Pagination do
             PaginationContent do

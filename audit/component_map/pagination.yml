@@ -22,9 +22,7 @@ selectors:
   PaginationNext: null
   PaginationEllipsis: '[data-slot="pagination-ellipsis"]'
 props:
-  PaginationItem: {isActive: active, size: size}
+  PaginationItem: {isActive: active, size: size, href: href}
   PaginationPrevious: {text: text}
   PaginationNext: {text: text}
-rubyui_only:
-  PaginationItem: [href]
 fixture_shadcn: [button]
