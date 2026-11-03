@@ -1,0 +1,20 @@
+shadcn: empty
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: static
+docs_view: empty
+parts:
+  Empty: empty
+  EmptyHeader: empty-header
+  EmptyMedia: empty-icon
+  EmptyTitle: empty-title
+  EmptyDescription: empty-description
+  EmptyContent: empty-content
+selectors:
+  Empty: '[data-slot="empty"]'
+  EmptyHeader: '[data-slot="empty-header"]'
+  EmptyMedia: '[data-slot="empty-icon"]'
+  EmptyTitle: '[data-slot="empty-title"]'
+  EmptyDescription: '[data-slot="empty-description"]'
+  EmptyContent: '[data-slot="empty-content"]'
+props:
+  EmptyMedia: {variant: variant}
