@@ -31,15 +31,6 @@ class Views::Docs::Form < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
-        <<~RUBY
-          FormField(data: {disabled: "true"}) do
-            FormFieldLabel(for: "aria_disabled") { "Aria Disabled" }
-            Input(id: "aria_disabled", aria: {disabled: "true"}, placeholder: "Joel Drapper", required: true, minlength: "3") { "Joel Drapper" }
-          end
-        RUBY
-      end
-
       render Docs::VisualCodeExample.new(title: "Custom error message", context: self) do
         <<~RUBY
           Form(class: "w-2/3 space-y-6") do

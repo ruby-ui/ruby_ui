@@ -34,10 +34,10 @@ class Views::Docs::Input < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+      render Docs::VisualCodeExample.new(title: "Read only", context: self) do
         <<~RUBY
-          div(class: 'grid w-full max-w-sm items-center gap-1.5') do
-            Input(aria: {disabled: "true"}, type: "email", placeholder: "Email")
+          div(class: "grid w-full max-w-sm items-center gap-1.5") do
+            Input(readonly: true, type: "email", value: "joel@drapper.me")
           end
         RUBY
       end

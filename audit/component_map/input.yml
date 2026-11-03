@@ -1,0 +1,11 @@
+shadcn: input
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: form_control
+docs_view: input
+parts:
+  Input: input
+selectors:
+  Input: 'input[data-audit-input]'
+props:
+  Input:
+    type: type
