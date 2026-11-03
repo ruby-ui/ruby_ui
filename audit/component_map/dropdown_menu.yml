@@ -1,0 +1,57 @@
+shadcn: dropdown-menu
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: menu
+docs_view: dropdown_menu
+# The fixture follows the docs Basic example: a labelled group of four items
+# under an outline Button trigger (Base UI needs GroupLabel inside a Group).
+# Portal has no RubyUI part: the content stays in place as a top-layer popover.
+parts:
+  DropdownMenu: dropdown-menu
+  DropdownMenuTrigger: dropdown-menu-trigger
+  DropdownMenuContent: dropdown-menu-content
+  DropdownMenuGroup: dropdown-menu-group
+  DropdownMenuLabel: dropdown-menu-label
+  DropdownMenuItem: dropdown-menu-item
+  DropdownMenuShortcut: dropdown-menu-shortcut
+  DropdownMenuSeparator: dropdown-menu-separator
+  DropdownMenuCheckboxItem: dropdown-menu-checkbox-item
+  DropdownMenuRadioGroup: dropdown-menu-radio-group
+  DropdownMenuRadioItem: dropdown-menu-radio-item
+  DropdownMenuItemIndicator: null
+  DropdownMenuSub: dropdown-menu-sub
+  DropdownMenuSubTrigger: dropdown-menu-sub-trigger
+  DropdownMenuSubContent: dropdown-menu-sub-content
+selectors:
+  DropdownMenu: null
+  # The controller moves data-slot onto the Button inside the trigger wrapper.
+  DropdownMenuTrigger: '[data-slot="dropdown-menu-trigger"]'
+  DropdownMenuContent: '[data-slot="dropdown-menu-content"]'
+  DropdownMenuGroup: '[data-slot="dropdown-menu-group"]'
+  DropdownMenuLabel: '[data-slot="dropdown-menu-label"]'
+  DropdownMenuItem: '[data-slot="dropdown-menu-item"]'
+  DropdownMenuSeparator: '[data-slot="dropdown-menu-separator"]'
+  # Not in the fixture.
+  DropdownMenuShortcut: null
+  DropdownMenuCheckboxItem: null
+  DropdownMenuRadioGroup: null
+  DropdownMenuRadioItem: null
+  DropdownMenuSub: null
+  DropdownMenuSubTrigger: null
+  DropdownMenuSubContent: null
+# Placement props from the .tsx; open/defaultOpen/modal from Menu.Root
+# (RubyUI's open: is the initial state); disabled/value/checked from the
+# Base UI items.
+props:
+  DropdownMenu: {open: open, defaultOpen: open, onOpenChange: null, modal: modal}
+  DropdownMenuContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset}
+  DropdownMenuItem: {inset: inset, variant: variant, disabled: disabled}
+  DropdownMenuLabel: {inset: inset}
+  DropdownMenuCheckboxItem: {checked: checked, inset: inset, disabled: disabled}
+  DropdownMenuRadioItem: {value: value, inset: inset, disabled: disabled}
+  DropdownMenuSubTrigger: {inset: inset, disabled: disabled}
+  DropdownMenuSubContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset}
+rubyui_only:
+  DropdownMenu: [options]
+  DropdownMenuItem: [as, href]
+  DropdownMenuRadioItem: [checked]
+fixture_shadcn: [button]
