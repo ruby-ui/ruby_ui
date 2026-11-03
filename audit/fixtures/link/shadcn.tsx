@@ -34,6 +34,7 @@ export default function LinkFixture() {
       <Button nativeButton={false} render={<a href="#" />} variant="outline" size="icon" aria-label="Next"><ChevronRight /></Button>
       <Button nativeButton={false} render={<a href="#" />}><Send />Send</Button>
       <Button nativeButton={false} render={<a href="#" />} disabled>Disabled</Button>
+      <Button nativeButton={false} render={<a href="#" />} disabled focusableWhenDisabled>Focusable</Button>
     </div>
   )
 }

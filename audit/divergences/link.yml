@@ -14,7 +14,7 @@
   dimension: Behavior
   rubyui: "disabled: true renders <a role=\"link\" aria-disabled=\"true\"> without href (tabindex 0 only with focusable_when_disabled:), no JS"
   shadcn: "keeps href, adds aria-disabled, tabindex=-1 and prevents the click in JS"
-  reason: "ARIA in HTML: aria-disabled on a[href] is NOT RECOMMENDED; to convey a disabled link, remove the href (https://www.w3.org/TR/html-aria/#el-a). Without an href the link can't be focused or followed, with no JS."
+  reason: "ARIA in HTML: aria-disabled on a[href] is NOT RECOMMENDED; to convey a disabled link, remove the href (https://www.w3.org/TR/html-aria/#el-a). Without an href the link can't be followed, and it is out of the tab order unless focusable_when_disabled: is set, with no JS."
   since: "2026-11-03"
 - component: link
   dimension: Look

@@ -24,6 +24,7 @@ module ShadcnAuditFixtures
           plain "Send"
         end
         Link(href: "#", disabled: true) { "Disabled" }
+        Link(href: "#", disabled: true, focusable_when_disabled: true) { "Focusable" }
       end
     end
 

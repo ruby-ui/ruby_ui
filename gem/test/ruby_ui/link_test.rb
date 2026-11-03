@@ -25,7 +25,7 @@ class RubyUI::LinkTest < ComponentTest
 
   def test_uses_the_same_classes_as_button
     %i[primary outline secondary ghost destructive link].each do |variant|
-      %i[xs sm md lg].each do |size|
+      %i[xs sm md lg xl].each do |size|
         link = phlex { RubyUI.Link(variant: variant, size: size) { "A" } }
         button = phlex { RubyUI.Button(variant: variant, size: size) { "A" } }
         assert_equal button[/class="([^"]*)"/, 1].split - ["disabled:pointer-events-none", "disabled:opacity-50"],
