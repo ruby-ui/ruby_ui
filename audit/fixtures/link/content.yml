@@ -1,0 +1,16 @@
+# One link per shadcn Button variant rendered as <a> (default, outline, secondary,
+# ghost, destructive, link), then sizes sm and lg, an icon link, a link with a
+# leading icon and a disabled link (shadcn disabled on render={<a />}, RubyUI
+# disabled: true). Same order on both sides: parts are compared by index.
+# The first link carries data-audit-trigger (form_control: closed and focus).
+link_1: Button
+link_2: Outline
+link_3: Secondary
+link_4: Ghost
+link_5: Destructive
+link_6: Link
+link_7: Small
+link_8: Large
+link_9_label: Next
+link_10: Send
+link_11: Disabled

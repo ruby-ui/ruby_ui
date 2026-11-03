@@ -1,0 +1,18 @@
+# shadcn has no Link component: the counterpart is Button rendered as an
+# anchor (render={<a href />}, nativeButton={false}), i.e. buttonVariants on <a>.
+shadcn: button
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: form_control
+docs_view: link
+parts:
+  Link: button
+selectors:
+  Link: '[data-audit-fixture] a'
+props:
+  # shadcn default variant = RubyUI :primary (the default; :default works too);
+  # size default = RubyUI :md; size icon* = RubyUI icon: true (size: :icon_sm… work
+  # too). render: Link is always <a href>. disabled drops the href
+  # (see divergences/link.yml).
+  Link: {variant: variant, size: size, render: href, disabled: disabled, focusableWhenDisabled: focusable_when_disabled}
+rubyui_only:
+  Link: [icon]

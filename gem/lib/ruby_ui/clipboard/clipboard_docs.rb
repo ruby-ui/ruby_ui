@@ -14,7 +14,7 @@ class Views::Docs::Clipboard < Views::Base
             ClipboardSource(class: "hidden") { span { "Born rich!!!" } }
 
             ClipboardTrigger do
-              Link(href: "#", class: "gap-1") do
+              Link(href: "#", variant: :link, class: "gap-1") do
                 Text(size: :small, class: "text-primary") { "Copy the secret of success!!!" }
               end
             end

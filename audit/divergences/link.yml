@@ -1,0 +1,25 @@
+- component: link
+  dimension: ARIA
+  rubyui: "native <a href>: role link, Enter follows it, Space does nothing"
+  shadcn: "Button render={<a />} nativeButton={false}: role=\"button\" on the <a>, Enter and Space activate"
+  reason: "Base UI's Button docs say links should not be rendered as buttons and to style the <a> instead (https://base-ui.com/react/components/button). Link navigates, so it keeps native link semantics; Button(href:) is the way to get an <a role=\"button\">."
+  since: "2026-11-03"
+- component: link
+  dimension: Behavior
+  rubyui: "Space on a focused link does nothing; Enter follows it (native link)"
+  shadcn: "Space and Enter both activate (Base UI role=button keyboard handling)"
+  reason: "Follows from the native link role (see the ARIA entry): Space activation is what role=button promises, a link only answers Enter."
+  since: "2026-11-03"
+- component: link
+  dimension: Behavior
+  rubyui: "disabled: true renders <a role=\"link\" aria-disabled=\"true\"> without href (tabindex 0 only with focusable_when_disabled:), no JS"
+  shadcn: "keeps href, adds aria-disabled, tabindex=-1 and prevents the click in JS"
+  reason: "ARIA in HTML: aria-disabled on a[href] is NOT RECOMMENDED; to convey a disabled link, remove the href (https://www.w3.org/TR/html-aria/#el-a). Without an href the link can't be focused or followed, with no JS."
+  since: "2026-11-03"
+- component: link
+  dimension: Look
+  match: {part: Link, property: opacity, rubyui: "0.5", shadcn: "1"}
+  rubyui: "disabled link at opacity-50 (aria-disabled:opacity-50)"
+  shadcn: "disabled link at full opacity"
+  reason: "shadcn's disabled:opacity-50 never applies: Base UI disables the <a> with aria-disabled/data-disabled, and :disabled doesn't match an <a>. WAI-ARIA says authors SHOULD change the appearance of a disabled element (https://www.w3.org/TR/wai-aria-1.2/#aria-disabled), so RubyUI dims it."
+  since: "2026-11-03"

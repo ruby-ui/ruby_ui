@@ -79,6 +79,10 @@ hover_card:
   js_packages:
     - "@floating-ui/dom"
 
+link:
+  components:
+    - "Button"
+
 masked_input:
   components:
     - "Input"
