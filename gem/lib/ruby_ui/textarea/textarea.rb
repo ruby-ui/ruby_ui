@@ -37,8 +37,8 @@ module RubyUI
           action: "input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid"
         }.compact,
         class: [
-          (@rows ? "field-sizing-fixed" : "field-sizing-content"),
-          "flex min-h-16 w-full rounded-md border border-input bg-transparent px-2.5 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm dark:bg-input/30",
+          (@rows ? "field-sizing-fixed" : "field-sizing-content min-h-16"),
+          "flex w-full rounded-md border border-input bg-transparent px-2.5 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm dark:bg-input/30",
           "placeholder:text-muted-foreground",
           "disabled:cursor-not-allowed disabled:opacity-50",
           "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",

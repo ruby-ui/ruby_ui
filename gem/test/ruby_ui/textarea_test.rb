@@ -23,7 +23,7 @@ class RubyUI::TextareaTest < ComponentTest
     output = phlex { RubyUI.Textarea }
 
     refute_match(/rows=/, output)
-    assert_match(/field-sizing-content/, output)
+    assert_match(/field-sizing-content min-h-16/, output)
   end
 
   def test_renders_given_rows
@@ -32,6 +32,7 @@ class RubyUI::TextareaTest < ComponentTest
     assert_match(/rows="6"/, output)
     assert_match(/field-sizing-fixed/, output)
     refute_match(/field-sizing-content/, output)
+    refute_match(/min-h-16/, output)
   end
 
   def test_renders_data_slot
