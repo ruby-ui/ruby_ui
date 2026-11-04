@@ -94,4 +94,24 @@ class RubyUI::TableTest < ComponentTest
     assert_match(%r{has-aria-expanded:bg-muted/50}, output)
     assert_match(/data-\[state=selected\]:bg-muted/, output)
   end
+
+  def test_a_caller_slot_replaces_the_default
+    {
+      RubyUI::Table => "table", RubyUI::TableHeader => "thead", RubyUI::TableBody => "tbody",
+      RubyUI::TableFooter => "tfoot", RubyUI::TableRow => "tr", RubyUI::TableHead => "th",
+      RubyUI::TableCell => "td", RubyUI::TableCaption => "caption"
+    }.each do |klass, tag|
+      output = phlex { RubyUI.public_send(klass.name.split("::").last, data: {slot: "custom", column: "email"}) { "x" } }
+
+      assert_match(/<#{tag}\b[^>]*data-slot="custom"/, output, klass.name)
+      assert_match(/data-column="email"/, output, klass.name)
+    end
+    assert_match(/data-slot="table-container"/, phlex { RubyUI.Table(data: {slot: "custom"}) { "" } })
+  end
+
+  def test_checkbox_columns_drop_the_right_padding
+    [phlex { RubyUI.TableHead { "" } }, phlex { RubyUI.TableCell { "" } }].each do |output|
+      assert_match(/\[&amp;:has\(\[data-slot=checkbox\]\)\]:pr-0|\[&:has\(\[data-slot=checkbox\]\)\]:pr-0/, output)
+    end
+  end
 end

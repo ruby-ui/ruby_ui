@@ -5,6 +5,8 @@ module RubyUI
   # Table: wide tables scroll instead of wrapping their cells. Attributes go
   # to the <table>; the wrapper is data-slot="table-container".
   class Table < Base
+    include TableSlot
+
     def view_template(&block)
       div(data: {slot: "table-container"}, class: "relative w-full overflow-x-auto") do
         table(**attrs, &block)
@@ -15,7 +17,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {slot: "table"},
+        data: {slot: default_slot("table")}.compact,
         class: "w-full caption-bottom text-sm"
       }
     end

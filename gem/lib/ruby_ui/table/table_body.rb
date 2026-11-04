@@ -2,6 +2,8 @@
 
 module RubyUI
   class TableBody < Base
+    include TableSlot
+
     def view_template(&)
       tbody(**attrs, &)
     end
@@ -10,7 +12,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {slot: "table-body"},
+        data: {slot: default_slot("table-body")}.compact,
         class: "[&_tr:last-child]:border-0"
       }
     end

@@ -2,6 +2,8 @@
 
 module RubyUI
   class TableRow < Base
+    include TableSlot
+
     def view_template(&)
       tr(**attrs, &)
     end
@@ -10,7 +12,7 @@ module RubyUI
 
     def default_attrs
       {
-        data: {slot: "table-row"},
+        data: {slot: default_slot("table-row")}.compact,
         class: "border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted"
       }
     end
