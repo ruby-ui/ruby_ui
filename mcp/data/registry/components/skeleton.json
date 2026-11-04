@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "skeleton.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Skeleton < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"animate-pulse rounded-md bg-primary/10\"\n      }\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Skeleton < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"skeleton\"},\n        class: \"animate-pulse rounded-md bg-muted\"\n      }\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
@@ -13,11 +13,31 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Skeleton",
-  "docs_markdown": "# Skeleton\n\nUse to show a placeholder while content is loading.\n\n## Usage\n\n### Example\n\n```ruby\ndiv(class: \"flex items-center space-x-4\") do\n  Skeleton(class: \"h-12 w-12 rounded-full\")\n  div(class: \"space-y-2\") do\n    Skeleton(class: \"h-4 w-[250px]\")\n    Skeleton(class: \"h-4 w-[200px]\")\n  end\nend\n```",
+  "docs_markdown": "# Skeleton\n\nUse to show a placeholder while content is loading.\n\n## Usage\n\n### Avatar\n\n```ruby\ndiv(class: \"flex w-full items-center gap-4\") do\n  Skeleton(class: \"size-10 shrink-0 rounded-full\")\n  div(class: \"grid gap-2\") do\n    Skeleton(class: \"h-4 w-[150px]\")\n    Skeleton(class: \"h-4 w-[100px]\")\n  end\nend\n```\n\n### Card\n\n```ruby\nCard(class: \"w-full\") do\n  CardHeader do\n    Skeleton(class: \"h-4 w-2/3\")\n    Skeleton(class: \"h-4 w-1/2\")\n  end\n  CardContent do\n    Skeleton(class: \"aspect-square w-full\")\n  end\nend\n```\n\n### Text\n\n```ruby\ndiv(class: \"flex w-full flex-col gap-2\") do\n  Skeleton(class: \"h-4 w-full\")\n  Skeleton(class: \"h-4 w-full\")\n  Skeleton(class: \"h-4 w-3/4\")\nend\n```\n\n### Form\n\n```ruby\ndiv(class: \"flex w-full flex-col gap-7\") do\n  div(class: \"flex flex-col gap-3\") do\n    Skeleton(class: \"h-4 w-20\")\n    Skeleton(class: \"h-10 w-full\")\n  end\n  div(class: \"flex flex-col gap-3\") do\n    Skeleton(class: \"h-4 w-24\")\n    Skeleton(class: \"h-10 w-full\")\n  end\n  Skeleton(class: \"h-9 w-24\")\nend\n```\n\n### Table\n\n```ruby\ndiv(class: \"flex w-full flex-col gap-2\") do\n  3.times do\n    div(class: \"flex gap-4\") do\n      Skeleton(class: \"h-4 flex-1\")\n      Skeleton(class: \"h-4 w-24\")\n      Skeleton(class: \"h-4 w-20\")\n    end\n  end\nend\n```",
   "examples": [
     {
-      "title": "Example",
-      "code": "div(class: \"flex items-center space-x-4\") do\n  Skeleton(class: \"h-12 w-12 rounded-full\")\n  div(class: \"space-y-2\") do\n    Skeleton(class: \"h-4 w-[250px]\")\n    Skeleton(class: \"h-4 w-[200px]\")\n  end\nend\n",
+      "title": "Avatar",
+      "code": "div(class: \"flex w-full items-center gap-4\") do\n  Skeleton(class: \"size-10 shrink-0 rounded-full\")\n  div(class: \"grid gap-2\") do\n    Skeleton(class: \"h-4 w-[150px]\")\n    Skeleton(class: \"h-4 w-[100px]\")\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Card",
+      "code": "Card(class: \"w-full\") do\n  CardHeader do\n    Skeleton(class: \"h-4 w-2/3\")\n    Skeleton(class: \"h-4 w-1/2\")\n  end\n  CardContent do\n    Skeleton(class: \"aspect-square w-full\")\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Text",
+      "code": "div(class: \"flex w-full flex-col gap-2\") do\n  Skeleton(class: \"h-4 w-full\")\n  Skeleton(class: \"h-4 w-full\")\n  Skeleton(class: \"h-4 w-3/4\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Form",
+      "code": "div(class: \"flex w-full flex-col gap-7\") do\n  div(class: \"flex flex-col gap-3\") do\n    Skeleton(class: \"h-4 w-20\")\n    Skeleton(class: \"h-10 w-full\")\n  end\n  div(class: \"flex flex-col gap-3\") do\n    Skeleton(class: \"h-4 w-24\")\n    Skeleton(class: \"h-10 w-full\")\n  end\n  Skeleton(class: \"h-9 w-24\")\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Table",
+      "code": "div(class: \"flex w-full flex-col gap-2\") do\n  3.times do\n    div(class: \"flex gap-4\") do\n      Skeleton(class: \"h-4 flex-1\")\n      Skeleton(class: \"h-4 w-24\")\n      Skeleton(class: \"h-4 w-20\")\n    end\n  end\nend\n",
       "language": "ruby"
     }
   ]
