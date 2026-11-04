@@ -1,0 +1,42 @@
+shadcn: toast
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: popover
+docs_view: toast
+parts:
+  Toast: null
+  ToastRegion: toast-viewport
+  ToastItem: toast
+  ToastIcon: toast-icon
+  ToastTitle: toast-title
+  ToastDescription: toast-description
+  ToastAction: toast-action
+  ToastCancel: null
+  ToastClose: toast-close
+selectors:
+  ToastRegion: '#ruby-ui-toaster-region'
+  ToastItem: '#ruby-ui-toaster > [data-slot="toast"]'
+  ToastTitle: '#ruby-ui-toaster [data-slot="toast-title"]'
+  ToastDescription: '#ruby-ui-toaster [data-slot="toast-description"]'
+  ToastClose: '#ruby-ui-toaster [data-slot="toast-close"]'
+  ToastIcon: null
+  ToastAction: null
+props:
+  ToastRegion:
+    limit: max
+    timeout: duration
+    toastManager: null
+  ToastItem:
+    id: id
+    timeout: duration
+    type: variant
+    priority: priority
+    onClose: on_dismiss
+    onRemove: on_remove
+    actionProps: null
+rubyui_only:
+  ToastRegion: [position, expand, gap, close_button, hotkey, swipe_directions, flash]
+  ToastItem: [dismissible]
+  ToastAction: [label, "on"]
+  ToastCancel: [label]
+  ToastIcon: [variant]
+fixture_shadcn: [button]
