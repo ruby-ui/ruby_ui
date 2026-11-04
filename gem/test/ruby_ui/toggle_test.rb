@@ -89,6 +89,7 @@ class RubyUI::ToggleTest < ComponentTest
       output = phlex { RubyUI.Toggle(size: size) { "x" } }
       assert_match(/px-2\.5/, output)
       assert_match(/has-data-\[icon=inline-start\]:#{Regexp.escape(icon_pad)}/, output)
+      assert_match(/has-data-\[icon=inline-end\]:#{Regexp.escape(icon_pad.sub("pl-", "pr-"))}/, output)
     end
   end
 
