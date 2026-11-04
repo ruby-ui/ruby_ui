@@ -9,36 +9,76 @@ class Views::Docs::Switch < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Default", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", description: "A native checkbox with role=\"switch\": Tab focuses it, Space toggles it, and a label with for= names it.", context: self) do
         <<~RUBY
-          Switch(name: "switch")
+          div(class: "flex items-center gap-3") do
+            Switch(id: "airplane_mode", name: "airplane_mode")
+            FormFieldLabel(for: "airplane_mode") { "Airplane Mode" }
+          end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Checked", context: self) do
         <<~RUBY
-          Switch(name: "switch", checked: true)
+          div(class: "flex items-center gap-3") do
+            Switch(id: "notifications", name: "notifications", checked: true)
+            FormFieldLabel(for: "notifications") { "Enable notifications" }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Size", description: "size: :sm renders a smaller switch.", context: self) do
+        <<~RUBY
+          div(class: "flex flex-col gap-4") do
+            div(class: "flex items-center gap-3") do
+              Switch(id: "size_sm", size: :sm)
+              FormFieldLabel(for: "size_sm") { "Small" }
+            end
+            div(class: "flex items-center gap-3") do
+              Switch(id: "size_default")
+              FormFieldLabel(for: "size_default") { "Default" }
+            end
+          end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
         <<~RUBY
-          Switch(name: "switch", disabled: true)
+          div(class: "flex items-center gap-3") do
+            Switch(id: "switch_disabled", name: "switch_disabled", disabled: true)
+            FormFieldLabel(for: "switch_disabled") { "Disabled" }
+          end
         RUBY
       end
 
       render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
         <<~RUBY
-          Switch(name: "switch", aria: {disabled: "true"})
+          div(class: "flex items-center gap-3") do
+            Switch(id: "switch_aria_disabled", name: "switch_aria_disabled", aria: {disabled: "true"})
+            FormFieldLabel(for: "switch_aria_disabled") { "Aria disabled" }
+          end
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "With flag include_hidden false", context: self) do
+      render Docs::VisualCodeExample.new(title: "Invalid", context: self) do
         <<~RUBY
-          # Supports the creation of a hidden input to be used in forms inspired by the Ruby on Rails implementation of check_box. Default is true.
-          Switch(name: "switch", include_hidden: false)
+          div(class: "flex items-center gap-3") do
+            Switch(id: "switch_invalid", name: "terms", aria: {invalid: "true"})
+            FormFieldLabel(for: "switch_invalid") { "Accept terms and conditions" }
+          end
         RUBY
       end
+
+      render Docs::VisualCodeExample.new(title: "With flag include_hidden false", description: "By default a hidden input with the same name sends unchecked_value (\"0\") when the switch is off, like Rails' check_box. include_hidden: false skips it.", context: self) do
+        <<~RUBY
+          div(class: "flex items-center gap-3") do
+            Switch(id: "switch_no_hidden", name: "switch", include_hidden: false)
+            FormFieldLabel(for: "switch_no_hidden") { "Without hidden input" }
+          end
+        RUBY
+      end
+
+      render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
     end
