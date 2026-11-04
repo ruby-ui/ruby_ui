@@ -7,14 +7,16 @@ class RubyUI::ToggleTest < ComponentTest
     output = phlex { RubyUI.Toggle { "Bold" } }
     assert_match(/<button[^>]*type="button"/, output)
     assert_match(/aria-pressed="false"/, output)
-    assert_match(/data-state="off"/, output)
+    assert_match(/data-slot="toggle"/, output)
+    refute_match(/data-pressed/, output)
+    refute_match(/data-state/, output)
     assert_match(/Bold/, output)
   end
 
   def test_renders_pressed_when_pressed_true
     output = phlex { RubyUI.Toggle(pressed: true) { "Bold" } }
     assert_match(/aria-pressed="true"/, output)
-    assert_match(/data-state="on"/, output)
+    assert_match(/<button[^>]*data-pressed/, output)
   end
 
   def test_renders_hidden_input_when_name_present
@@ -51,6 +53,7 @@ class RubyUI::ToggleTest < ComponentTest
   def test_disabled_sets_attribute
     output = phlex { RubyUI.Toggle(disabled: true) { "x" } }
     assert_match(/<button[^>]*disabled/, output)
+    assert_match(/<button[^>]*data-disabled/, output)
   end
 
   def test_includes_stimulus_controller_and_action
@@ -64,5 +67,35 @@ class RubyUI::ToggleTest < ComponentTest
     assert_match(/data-ruby-ui--toggle-pressed-value="true"/, output)
     assert_match(/data-ruby-ui--toggle-value-value="x"/, output)
     assert_match(/data-ruby-ui--toggle-unpressed-value-value="y"/, output)
+  end
+
+  def test_no_data_disabled_when_enabled
+    output = phlex { RubyUI.Toggle { "x" } }
+    refute_match(/data-disabled/, output)
+  end
+
+  def test_vega_classes
+    output = phlex { RubyUI.Toggle { "x" } }
+    assert_match(/gap-1 /, output)
+    assert_match(/hover:bg-muted hover:text-foreground/, output)
+    assert_match(/aria-pressed:bg-muted/, output)
+    assert_match(%r{dark:aria-invalid:ring-destructive/40}, output)
+    refute_match(/accent/, output)
+    refute_match(/muted-foreground/, output)
+  end
+
+  def test_sizes_use_px_2_5_and_icon_padding
+    {sm: "pl-1.5", default: "pl-2", lg: "pl-2"}.each do |size, icon_pad|
+      output = phlex { RubyUI.Toggle(size: size) { "x" } }
+      assert_match(/px-2\.5/, output)
+      assert_match(/has-data-\[icon=inline-start\]:#{Regexp.escape(icon_pad)}/, output)
+      assert_match(/has-data-\[icon=inline-end\]:#{Regexp.escape(icon_pad.sub("pl-", "pr-"))}/, output)
+    end
+  end
+
+  def test_outline_hover_matches_default
+    output = phlex { RubyUI.Toggle(variant: :outline) { "x" } }
+    assert_match(/shadow-xs/, output)
+    refute_match(/hover:bg-accent/, output)
   end
 end

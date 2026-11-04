@@ -1,0 +1,4 @@
+# shadcn's skeleton-example (Base UI): Avatar, Text, Form and Table groups (Card left out: it would audit Card too).
+# Every skeleton carries data-audit-skeleton so one selector finds it on both sides.
+# Static kind: only the closed state is collected; data-audit-trigger sits on the first title only because every fixture needs one.
+titles: [Avatar, Text, Form, Table]

@@ -2,26 +2,31 @@
 
 module RubyUI
   class Toggle < Base
+    # Matches shadcn Base UI + vega (cn-toggle). A child marked
+    # data-icon="inline-start" or "inline-end" tightens the padding on that side.
     BASE_CLASSES = [
-      "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap",
+      "group/toggle inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium whitespace-nowrap",
       "transition-[color,box-shadow] outline-none",
-      "hover:bg-muted hover:text-muted-foreground",
+      "hover:bg-muted hover:text-foreground aria-pressed:bg-muted",
+      # ToggleGroupItem in single mode is role=radio + aria-checked with data-state,
+      # so aria-pressed misses it. Kept here so an app that updates only Toggle
+      # keeps its existing ToggleGroup's pressed style.
+      "data-[state=on]:bg-muted",
       "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
       "disabled:pointer-events-none disabled:opacity-50",
-      "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
-      "data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
+      "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
       "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
     ].freeze
 
     VARIANT_CLASSES = {
       default: "bg-transparent",
-      outline: "border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground"
+      outline: "border border-input bg-transparent shadow-xs hover:bg-muted"
     }.freeze
 
     SIZE_CLASSES = {
-      sm: "h-8 min-w-8 px-1.5",
-      default: "h-9 min-w-9 px-2",
-      lg: "h-10 min-w-10 px-2.5"
+      sm: "h-8 min-w-8 px-2.5 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5",
+      default: "h-9 min-w-9 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+      lg: "h-10 min-w-10 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2"
     }.freeze
 
     def self.classes_for(variant:, size:)
@@ -91,7 +96,9 @@ module RubyUI
       base.merge(
         aria: {pressed: @pressed.to_s},
         data: {
-          state: @pressed ? "on" : "off",
+          slot: "toggle",
+          pressed: @pressed || nil,
+          disabled: @disabled || nil,
           "ruby-ui--toggle-target": "button"
         },
         class: self.class.classes_for(variant: @variant, size: @size)
