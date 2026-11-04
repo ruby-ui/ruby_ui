@@ -1,0 +1,17 @@
+# One input per state: phone with placeholder (data-audit-trigger, used for
+# focus), phone with a value, CPF/CNPJ dynamic mask with a value, disabled and
+# invalid (aria-invalid). Every audited input carries data-audit-input.
+#
+# The two values are side-specific on purpose, so they are not listed here:
+# RubyUI passes raw digits (11987654321, 12345678000190) and maska formats them
+# on connect; shadcn renders the formatted strings ((11) 98765-4321,
+# 12.345.678/0001-90). If maska stops formatting on connect, the rendered
+# values differ and the screenshots and pixel diff show it.
+phone: Phone
+phone_placeholder: (11) 98765-4321
+phone_filled: Phone (filled)
+document: CPF / CNPJ
+disabled: Disabled
+disabled_placeholder: Disabled input
+invalid: Invalid
+invalid_placeholder: Invalid input

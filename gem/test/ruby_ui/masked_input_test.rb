@@ -24,4 +24,11 @@ class RubyUI::MaskedInputTest < ComponentTest
     assert_match(/data-maska="####"/, output)
     assert_match(/data-controller="ruby-ui--masked-input"/, output)
   end
+
+  def test_passes_disabled_through_to_input
+    output = phlex { RubyUI.MaskedInput(disabled: true, data: {maska: "##"}) }
+
+    assert_match(/ disabled[ >]/, output)
+    assert_match(/data-disabled/, output)
+  end
 end

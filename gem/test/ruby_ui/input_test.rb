@@ -31,6 +31,17 @@ class RubyUI::InputTest < ComponentTest
     assert_match(/type="password"/, output)
   end
 
+  def test_marks_disabled_with_data_disabled
+    output = phlex { RubyUI.Input(disabled: true) }
+
+    assert_match(/<input[^>]* data-disabled[ >]/, output)
+  end
+
+  def test_omits_data_disabled_when_enabled
+    refute_match(/data-disabled/, phlex { RubyUI.Input })
+    refute_match(/data-disabled/, phlex { RubyUI.Input(disabled: false) })
+  end
+
   def test_renders_data_slot
     output = phlex { RubyUI.Input }
 

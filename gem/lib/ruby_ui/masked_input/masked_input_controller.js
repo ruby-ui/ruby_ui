@@ -4,6 +4,11 @@ import { MaskInput } from "maska";
 // Connects to data-controller="ruby-ui--masked-input"
 export default class extends Controller {
   connect() {
-    new MaskInput(this.element)
+    this.mask = new MaskInput(this.element);
+  }
+
+  disconnect() {
+    this.mask?.destroy();
+    this.mask = null;
   }
 }
