@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+        data: {slot: "table-row"},
+        class: "border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted"
       }
     end
   end

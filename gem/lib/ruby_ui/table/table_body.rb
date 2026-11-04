@@ -10,6 +10,7 @@ module RubyUI
 
     def default_attrs
       {
+        data: {slot: "table-body"},
         class: "[&_tr:last-child]:border-0"
       }
     end

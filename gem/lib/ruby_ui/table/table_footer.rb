@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "border-t bg-muted/50 font-medium[& amp;>tr]:last:border-b-0"
+        data: {slot: "table-footer"},
+        class: "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0"
       }
     end
   end

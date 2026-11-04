@@ -10,6 +10,7 @@ module RubyUI
 
     def default_attrs
       {
+        data: {slot: "table-caption"},
         class: "mt-4 text-sm text-muted-foreground"
       }
     end

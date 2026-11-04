@@ -10,6 +10,7 @@ module RubyUI
 
     def default_attrs
       {
+        data: {slot: "table-header"},
         class: "[&_tr]:border-b"
       }
     end
