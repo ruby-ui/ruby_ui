@@ -8,13 +8,13 @@ module RubyUI
     # goes to the <select>.
     def initialize(size: :default, **attrs)
       @size = size
-      @wrapper_class = attrs.delete(:class) || attrs.delete("class")
+      @wrapper_classes = [attrs.delete(:class), attrs.delete("class")].compact
       super(**attrs)
     end
 
     def view_template(&block)
       div(
-        class: TAILWIND_MERGER.merge(mix({class: WRAPPER_CLASS}, {class: @wrapper_class})[:class]),
+        class: TAILWIND_MERGER.merge(mix({class: WRAPPER_CLASS}, *@wrapper_classes.map { |c| {class: c} })[:class]),
         data: {slot: "native-select-wrapper", size: @size}
       ) do
         select(**attrs, &block)

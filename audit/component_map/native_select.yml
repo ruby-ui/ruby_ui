@@ -6,8 +6,8 @@ docs_view: native_select
 # focus), grouped options, disabled, invalid (aria-invalid) and size sm.
 # NativeSelectWrapper is not a RubyUI class: it is the outer <div> that
 # NativeSelect renders around the <select> (shadcn's native-select-wrapper).
-# RubyUI's NativeSelectIcon is a <span> around the <svg>; shadcn puts the
-# data-slot on the <svg> itself.
+# RubyUI's default NativeSelectIcon is the <svg> itself, as in shadcn; only a
+# custom icon passed as a block renders inside a <span>.
 parts:
   NativeSelectWrapper: native-select-wrapper
   NativeSelect: native-select

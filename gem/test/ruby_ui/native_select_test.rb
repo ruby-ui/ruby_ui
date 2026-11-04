@@ -52,6 +52,7 @@ class RubyUI::NativeSelectTest < ComponentTest
 
     assert_includes classes(tag(output, "div")), "has-[select:disabled]:opacity-50"
     refute_includes classes(tag(output, "select")), "disabled:opacity-50"
+    assert_match(/\sdisabled(="disabled")?[\s>]/, tag(output, "select"))
   end
 
   def test_class_goes_to_wrapper_and_attrs_to_select
@@ -65,6 +66,14 @@ class RubyUI::NativeSelectTest < ComponentTest
     assert_match('id="fruit"', select)
     assert_match('name="fruit"', select)
     refute_match("id=", wrapper)
+  end
+
+  def test_string_and_symbol_class_keys_both_go_to_wrapper
+    output = phlex { RubyUI.NativeSelect(:class => "w-full", "class" => "mt-2") }
+
+    assert_includes classes(tag(output, "div")), "w-full"
+    assert_includes classes(tag(output, "div")), "mt-2"
+    refute_includes classes(tag(output, "select")), "mt-2"
   end
 
   def test_wrapper_class_accepts_arrays_and_sets
