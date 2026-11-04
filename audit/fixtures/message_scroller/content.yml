@@ -1,0 +1,16 @@
+# A 320px-tall scroller with ten plain-text rows (no Message/Bubble, so only
+# message-scroller parts are compared). Rows 1 and 6 are scroll anchors with a
+# message id. Two buttons: direction end (inactive at the default end position)
+# and direction start (active, since the view is away from the top).
+# autoScroll on for both (shadcn defaults to false). The viewport carries
+# data-audit-trigger. All text is fictional.
+row_1: Hello there!
+row_2: Hey, how's it going?
+row_3: I'm prototyping a chat surface for our product docs.
+row_4: Treat the chat as three layers so scrolling and the composer never fight.
+row_5: The transcript owns vertical rhythm, not individual bubbles.
+row_6: What about spacing when one reply is short and the next is long?
+row_7: Use a consistent gap on the message list.
+row_8: Pin the viewport to the bottom until the reader scrolls up.
+row_9: Thanks, that helps.
+row_10: Happy to help.

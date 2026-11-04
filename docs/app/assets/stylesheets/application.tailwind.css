@@ -135,6 +135,39 @@
   max-width: 1400px;
 }
 
+/* Scroll fade (MessageScroller): fades the bottom edge while there is content
+   below, from shadcn's scroll-fade-b (MIT). */
+@property --scroll-fade-b {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes scroll-fade-reveal-b {
+  from {
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+  to {
+    --scroll-fade-b: 0px;
+  }
+}
+
+@utility scroll-fade-b {
+  --_scroll-fade-size-b: var(--scroll-fade-b-size, min(12%, calc(var(--spacing) * 10)));
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - var(--scroll-fade-b, 0px)), transparent 100%);
+  mask-repeat: no-repeat;
+
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-b 1ms ease-in-out both;
+    animation-timeline: scroll(self y);
+    animation-range: calc(100% - calc(var(--spacing) * 24)) 100%;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -92,7 +92,7 @@ class Views::Docs::MessageScroller < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      Text(class: "text-muted-foreground") { "MessageScroller fills its parent, so place it inside a height-constrained container. It follows the live edge while you are pinned to the bottom and releases the moment you scroll up. Scroll up in the panel below — a jump-to-latest button appears." }
+      Text(class: "text-muted-foreground") { "MessageScroller fills its parent, so place it inside a height-constrained container. With auto_scroll: true it follows the live edge while you are pinned to the bottom and releases the moment you scroll up (auto-scroll is off by default, as in shadcn). Scroll up in the panel below — a jump-to-latest button appears." }
 
       render Docs::VisualCodeExample.new(title: "Streaming chat", context: self) do
         <<~RUBY
@@ -164,6 +164,10 @@ class Views::Docs::MessageScroller < Views::Base
           end
         RUBY
       end
+
+      Heading(level: 2) { "Loading older messages" }
+
+      Text(class: "text-muted-foreground") { "Insert older rows at the top of MessageScrollerContent and the reader's row stays where it was: the browser's scroll anchoring keeps it in place. Pass preserve_scroll_on_prepend: false to MessageScrollerViewport to turn that off." }
 
       Heading(level: 2) { "Scroll commands" }
 

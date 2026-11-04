@@ -1,0 +1,28 @@
+shadcn: message-scroller
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: static
+docs_view: message_scroller
+parts:
+  MessageScrollerProvider: null
+  MessageScroller: message-scroller
+  MessageScrollerViewport: message-scroller-viewport
+  MessageScrollerContent: message-scroller-content
+  MessageScrollerItem: message-scroller-item
+  MessageScrollerButton: message-scroller-button
+selectors:
+  MessageScroller: '[data-audit-fixture] [data-slot="message-scroller"]'
+  MessageScrollerViewport: '[data-audit-fixture] [data-slot="message-scroller-viewport"]'
+  MessageScrollerContent: '[data-audit-fixture] [data-slot="message-scroller-content"]'
+  MessageScrollerItem: '[data-audit-fixture] [data-slot="message-scroller-item"]'
+  MessageScrollerButton: '[data-audit-fixture] [data-slot="message-scroller-button"]'
+props:
+  # Provider props come from @shadcn/react/message-scroller (index.d.ts).
+  MessageScrollerProvider: {autoScroll: auto_scroll, defaultScrollPosition: default_position, scrollPreviousItemPeek: previous_item_peek, scrollEdgeThreshold: scroll_edge_threshold, scrollMargin: scroll_margin}
+  MessageScrollerViewport: {preserveScrollOnPrepend: preserve_scroll_on_prepend}
+  MessageScrollerContent: {spacerClassName: spacer_class}
+  MessageScrollerItem: {scrollAnchor: scroll_anchor, messageId: message_id}
+  # render: no counterpart (audit/divergences/message_scroller.yml).
+  MessageScrollerButton: {direction: direction, behavior: behavior, variant: variant, size: size, render: null}
+rubyui_only:
+  # Deprecated alias of MessageScrollerViewport(preserve_scroll_on_prepend:).
+  MessageScrollerProvider: [preserve_on_prepend]
