@@ -1,0 +1,30 @@
+- component: sheet
+  dimension: HTML
+  rubyui: "<dialog> + showModal()"
+  shadcn: "<div role=\"dialog\">"
+  reason: "Native modal dialog, as in RubyUI's Dialog: the browser provides inert, Esc and focus handling."
+  since: "2026-11-04"
+- component: sheet
+  dimension: HTML
+  rubyui: "overlay is the <dialog>'s ::backdrop"
+  shadcn: "separate <div data-slot=\"sheet-overlay\">"
+  reason: "A modal <dialog> paints its own ::backdrop in the top layer; the vega overlay classes go on backdrop:."
+  since: "2026-11-04"
+- component: sheet
+  dimension: HTML
+  rubyui: "SheetTrigger <div> wrapping its child; ARIA set on the first interactive descendant"
+  shadcn: "trigger is the <button> itself (render prop)"
+  reason: "Phlex has no render prop and callers pass non-button children; the wrapper only carries the Stimulus action, as DialogTrigger does."
+  since: "2026-11-04"
+- component: sheet
+  dimension: ARIA
+  rubyui: "popup exposed as modal (showModal(); page behind is inert)"
+  shadcn: "no aria-modal; Base UI sets aria-hidden on the page behind"
+  reason: "showModal() makes the sheet modal natively and inerts the page behind it, which hides that content from the accessibility tree the same way shadcn's aria-hidden does. Same as Dialog and AlertDialog."
+  since: "2026-11-04"
+- component: sheet
+  dimension: HTML
+  rubyui: "Sheet root <div class=\"contents\"> carrying the Stimulus controller"
+  shadcn: "Root renders no element"
+  reason: "Stimulus needs an element that scopes the trigger and the dialog; display: contents keeps it out of layout. Same as AlertDialog."
+  since: "2026-11-04"
