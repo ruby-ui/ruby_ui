@@ -22,8 +22,11 @@ module RubyUI
     def initialize(value: 0, min: 0, max: 100, **attrs)
       @min = min.to_f
       @max = max.to_f
+      @raw_value = value
       @value = finite(value)&.clamp(*[@min, @max].sort)
-      # A given aria-valuetext replaces the default one (mix would join them).
+      # A given aria-valuetext (aria: {valuetext:} or aria_valuetext:)
+      # replaces the default one; mix would join or duplicate them.
+      @valuetext = attrs.delete(:aria_valuetext)
       aria = attrs[:aria]
       if aria.is_a?(Hash) && aria.key?(:valuetext)
         @valuetext = aria[:valuetext]
@@ -38,7 +41,7 @@ module RubyUI
       previous = context[:ruby_ui_progress]
       state = context[:ruby_ui_progress] = {
         status: status,
-        value: @value,
+        value: @raw_value,
         formatted_value: formatted_value,
         percentage: percentage,
         label_id: "progress-#{SecureRandom.hex(4)}-label"

@@ -66,6 +66,32 @@ class RubyUI::ProgressTest < ComponentTest
     assert_match(/aria-valuetext="Step 3 of 7"/, output)
   end
 
+  def test_flat_valuetext_replaces_the_default
+    output = phlex { RubyUI::Progress(value: 3, max: 7, aria_valuetext: "Step 3 of 7") }
+
+    assert_equal 1, output.scan("aria-valuetext").size
+    assert_match(/aria-valuetext="Step 3 of 7"/, output)
+  end
+
+  def test_each_label_gets_its_own_id
+    output = phlex do
+      RubyUI::Progress(value: 50) do
+        RubyUI::ProgressLabel { "First" }
+        RubyUI::ProgressLabel { "Second" }
+      end
+    end
+
+    ids = output.scan(/<span[^>]* id="([^"]+)"/).flatten
+    assert_equal 2, ids.uniq.size
+    assert_match(/aria-labelledby="#{ids.last}"/, output)
+  end
+
+  def test_value_block_gets_the_value_before_clamping
+    output = phlex { RubyUI::Progress(value: 150) { RubyUI::ProgressValue { |formatted, value| "#{formatted} #{value}" } } }
+
+    assert_match(/100% 150</, output)
+  end
+
   def test_label_names_the_progressbar
     output = phlex do
       RubyUI::Progress(value: 56) do

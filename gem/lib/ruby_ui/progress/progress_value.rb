@@ -3,8 +3,8 @@
 module RubyUI
   # Shows the formatted value ("56%"; empty when indeterminate). Hidden from
   # assistive tech: the progressbar already announces it. A block replaces
-  # the text and receives the formatted value and the raw value (nil when
-  # indeterminate).
+  # the text and receives the formatted value and the value given to
+  # Progress, before clamping (nil when indeterminate).
   class ProgressValue < Base
     def view_template(&block)
       progress = context[:ruby_ui_progress] || {}
