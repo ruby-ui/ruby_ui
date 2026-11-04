@@ -63,6 +63,14 @@ export default class extends Controller {
       }
     }
 
+    // A blank copy of the spacer, to put back if the rows are replaced
+    // wholesale (e.g. a Turbo Stream update on the content).
+    if (this.hasSpacerTarget && !this.spacerTemplate) {
+      this.spacerTemplate = this.spacerTarget.cloneNode(false);
+      this.spacerTemplate.hidden = true;
+      this.spacerTemplate.removeAttribute("style");
+    }
+
     if (this.hasContentTarget) {
       // Announce added messages to assistive tech at a calm pace.
       if (!this.contentTarget.hasAttribute("role")) {
@@ -167,7 +175,11 @@ export default class extends Controller {
 
   onMutations(records) {
     let appended = null;
+    let anchorRow = null;
     let streamed = false;
+    if (!this.hasSpacerTarget && this.spacerTemplate) {
+      this.contentTarget.appendChild(this.spacerTemplate.cloneNode(false));
+    }
     const spacer = this.hasSpacerTarget ? this.spacerTarget : null;
 
     // Our own move of the spacer to the end: nothing to react to.
@@ -194,7 +206,11 @@ export default class extends Controller {
         // Inserted above existing rows → history prepend. The browser's
         // scroll anchoring keeps the reader's row in place; nothing to do.
         const prepended = record.previousSibling === null && record.nextSibling !== null && record.nextSibling !== spacer;
-        if (!prepended) appended = node;
+        if (prepended) continue;
+        appended = node;
+        if (!anchorRow && (node.matches?.('[data-scroll-anchor="true"]') || node.querySelector?.('[data-scroll-anchor="true"]'))) {
+          anchorRow = node;
+        }
       }
     }
 
@@ -207,9 +223,11 @@ export default class extends Controller {
     // If they scrolled away, leave them there and let the button surface it.
     const follow = this.autoScrollValue && this.following;
     if (appended && follow) {
-      const anchor = appended.matches?.('[data-scroll-anchor="true"]')
-        ? appended
-        : appended.querySelector?.('[data-scroll-anchor="true"]');
+      // Several rows in one go (a question and its answer): the first
+      // anchored one settles, as in shadcn.
+      const anchor = anchorRow?.matches('[data-scroll-anchor="true"]')
+        ? anchorRow
+        : anchorRow?.querySelector('[data-scroll-anchor="true"]');
       if (anchor) {
         this.scrollToAnchor(anchor);
       } else if (this.anchored) {
@@ -250,7 +268,15 @@ export default class extends Controller {
       this.clearSpacer();
       return;
     }
+    const hadRoom = this.hasSpacerTarget && !this.spacerTarget.hidden;
     const target = this.sizeSpacer(this.anchored);
+    // The reply has filled the room below the turn: with autoScroll on and
+    // the reader still following, go back to following the live edge (as
+    // shadcn does when its spacer reaches 0).
+    if (hadRoom && this.spacerTarget.hidden && this.autoScrollValue && this.following) {
+      this.scrollToEnd("auto");
+      return;
+    }
     this.heldTop = target;
     if (Math.abs(this.viewportTarget.scrollTop - target) >= 1) {
       this.viewportTarget.scrollTop = target;
@@ -429,11 +455,18 @@ export default class extends Controller {
       this.cancelPendingScroll();
       this.finishScroll();
     };
-    const timer = "onscrollend" in viewport ? null : setTimeout(done, 1000);
-    viewport.addEventListener("scrollend", done);
+    // Without scrollend, call it done once scroll events stop arriving.
+    const native = "onscrollend" in viewport;
+    let timer = null;
+    const idle = () => {
+      clearTimeout(timer);
+      timer = setTimeout(done, 150);
+    };
+    viewport.addEventListener(native ? "scrollend" : "scroll", native ? done : idle);
+    if (!native) idle();
     this.cancelPendingScroll = () => {
       clearTimeout(timer);
-      viewport.removeEventListener("scrollend", done);
+      viewport.removeEventListener(native ? "scrollend" : "scroll", native ? done : idle);
       this.cancelPendingScroll = null;
     };
     viewport.scrollTo({ top: target, behavior: "smooth" });

@@ -50,14 +50,17 @@ class RubyUI::MessageScrollerTest < ComponentTest
   end
 
   def test_provider_preserve_on_prepend_is_deprecated
+    previous = Warning[:deprecated]
+    Warning[:deprecated] = true
     output = nil
     _, err = capture_io do
-      Warning[:deprecated] = true
       output = phlex { RubyUI.MessageScrollerProvider(preserve_on_prepend: false) { "x" } }
     end
 
     assert_match(/preserve_on_prepend:` is deprecated/, err)
     assert_match(/message-scroller-preserve-on-prepend-value="false"/, output)
+  ensure
+    Warning[:deprecated] = previous
   end
 
   def test_viewport_is_a_named_region_pending_first_scroll
