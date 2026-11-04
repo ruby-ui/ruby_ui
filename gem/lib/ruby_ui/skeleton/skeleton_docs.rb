@@ -9,13 +9,67 @@ class Views::Docs::Skeleton < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      render Docs::VisualCodeExample.new(title: "Avatar", context: self) do
         <<~RUBY
-          div(class: "flex items-center space-x-4") do
-            Skeleton(class: "h-12 w-12 rounded-full")
-            div(class: "space-y-2") do
-              Skeleton(class: "h-4 w-[250px]")
-              Skeleton(class: "h-4 w-[200px]")
+          div(class: "flex w-full items-center gap-4") do
+            Skeleton(class: "size-10 shrink-0 rounded-full")
+            div(class: "grid gap-2") do
+              Skeleton(class: "h-4 w-[150px]")
+              Skeleton(class: "h-4 w-[100px]")
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Card", context: self) do
+        <<~RUBY
+          Card(class: "w-full") do
+            CardHeader do
+              Skeleton(class: "h-4 w-2/3")
+              Skeleton(class: "h-4 w-1/2")
+            end
+            CardContent do
+              Skeleton(class: "aspect-square w-full")
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Text", context: self) do
+        <<~RUBY
+          div(class: "flex w-full flex-col gap-2") do
+            Skeleton(class: "h-4 w-full")
+            Skeleton(class: "h-4 w-full")
+            Skeleton(class: "h-4 w-3/4")
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Form", context: self) do
+        <<~RUBY
+          div(class: "flex w-full flex-col gap-7") do
+            div(class: "flex flex-col gap-3") do
+              Skeleton(class: "h-4 w-20")
+              Skeleton(class: "h-10 w-full")
+            end
+            div(class: "flex flex-col gap-3") do
+              Skeleton(class: "h-4 w-24")
+              Skeleton(class: "h-10 w-full")
+            end
+            Skeleton(class: "h-9 w-24")
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Table", context: self) do
+        <<~RUBY
+          div(class: "flex w-full flex-col gap-2") do
+            3.times do
+              div(class: "flex gap-4") do
+                Skeleton(class: "h-4 flex-1")
+                Skeleton(class: "h-4 w-24")
+                Skeleton(class: "h-4 w-20")
+              end
             end
           end
         RUBY
