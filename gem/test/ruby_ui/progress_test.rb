@@ -63,6 +63,7 @@ class RubyUI::ProgressTest < ComponentTest
   def test_valuetext_can_be_replaced
     output = phlex { RubyUI::Progress(value: 3, max: 7, aria: {valuetext: "Step 3 of 7"}) }
 
+    assert_equal 1, output.scan("aria-valuetext").size
     assert_match(/aria-valuetext="Step 3 of 7"/, output)
   end
 
