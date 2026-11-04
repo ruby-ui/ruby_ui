@@ -17,6 +17,14 @@ class Views::Docs::Textarea < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Rows", context: self) do
+        <<~RUBY
+          div(class: "grid w-full max-w-sm items-center gap-1.5") do
+            Textarea(rows: 6, placeholder: "Fixed at 6 rows")
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Disabled", context: self) do
         <<~RUBY
           div(class: "grid w-full max-w-sm items-center gap-1.5") do

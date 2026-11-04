@@ -30,6 +30,8 @@ class RubyUI::TextareaTest < ComponentTest
     output = phlex { RubyUI.Textarea(rows: 6) }
 
     assert_match(/rows="6"/, output)
+    assert_match(/field-sizing-fixed/, output)
+    refute_match(/field-sizing-content/, output)
   end
 
   def test_renders_data_slot
