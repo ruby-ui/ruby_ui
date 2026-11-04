@@ -66,7 +66,7 @@ class RubyUI::ToggleGroupTest < ComponentTest
     refute_match(/rounded-none/, output)
   end
 
-  def test_loop_focus_and_orientation_values
+  def test_renders_loop_focus_and_orientation_stimulus_values
     output = phlex do
       RubyUI.ToggleGroup(type: :single, orientation: :vertical, loop_focus: false) do |g|
         g.ToggleGroupItem(value: "a") { "A" }
