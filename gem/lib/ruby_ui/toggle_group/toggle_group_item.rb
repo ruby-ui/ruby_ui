@@ -2,7 +2,9 @@
 
 module RubyUI
   class ToggleGroupItem < Toggle
-    JOIN_BASE = "w-auto min-w-0 shrink-0 px-3 focus:z-10 focus-visible:z-10"
+    # data-[state=on]:bg-muted styles pressed items in single mode, where the
+    # state is role=radio + aria-checked and Toggle's aria-pressed:bg-muted misses.
+    JOIN_BASE = "w-auto min-w-0 shrink-0 px-3 focus:z-10 focus-visible:z-10 data-[state=on]:bg-muted"
 
     def initialize(value:, group_context:, variant: nil, size: nil, **attrs)
       @item_value = value.to_s

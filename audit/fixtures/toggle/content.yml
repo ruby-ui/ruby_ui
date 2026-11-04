@@ -1,0 +1,15 @@
+# One toggle per case, same order on both sides (parts compared by index):
+# default unpressed icon-only (data-audit-trigger, used for focus), default
+# pressed icon-only, outline with icon + text, outline pressed with icon + text,
+# outline with a data-icon="inline-start" icon (tighter left padding),
+# sizes sm / default / lg (outline, text only), disabled, aria-invalid.
+toggle_1_label: Toggle bold
+toggle_2_label: Toggle italic
+toggle_3: Italic
+toggle_4: Bold
+toggle_5: Underline
+toggle_6: Small
+toggle_7: Default
+toggle_8: Large
+toggle_9: Disabled
+toggle_10: Invalid
