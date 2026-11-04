@@ -19,7 +19,7 @@ export default class extends Controller {
   pressedValueChanged(current, previous) {
     if (this.hasButtonTarget) {
       this.buttonTarget.setAttribute("aria-pressed", current ? "true" : "false")
-      this.buttonTarget.dataset.state = current ? "on" : "off"
+      this.buttonTarget.toggleAttribute("data-pressed", current)
     }
 
     if (this.hasInputTarget) {
