@@ -1,0 +1,18 @@
+- component: toggle
+  dimension: HTML
+  rubyui: "The <button> sits inside <span class=\"contents\"> that carries the Stimulus controller and, with name:, a hidden input"
+  shadcn: "A bare <button data-slot=\"toggle\">"
+  reason: "The wrapper holds the controller and the optional hidden form input next to the button; display: contents keeps the layout and the accessibility tree the same as a bare button."
+  since: "2026-11-04"
+- component: toggle
+  dimension: Props
+  rubyui: "No on_pressed_change: kwarg; the controller dispatches a bubbling ruby-ui--toggle:change event with detail.pressed"
+  shadcn: "onPressedChange callback"
+  reason: "Server-rendered Phlex has no JS callbacks; state changes surface as a Stimulus DOM event."
+  since: "2026-11-04"
+- component: toggle
+  dimension: Props
+  rubyui: "value: is the hidden input's form value (with name:)"
+  shadcn: "value identifies the toggle inside a ToggleGroup"
+  reason: "RubyUI's ToggleGroupItem takes its own value:; a standalone Toggle uses value: for form submission, which Base UI's Toggle doesn't do."
+  since: "2026-11-04"

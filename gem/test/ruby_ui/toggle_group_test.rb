@@ -265,4 +265,16 @@ class RubyUI::ToggleGroupTest < ComponentTest
       end
     end
   end
+
+  def test_single_pressed_item_keeps_pressed_style
+    output = phlex do
+      RubyUI.ToggleGroup(type: :single, name: "align", value: "right") do |g|
+        g.ToggleGroupItem(value: "left") { "L" }
+        g.ToggleGroupItem(value: "right") { "R" }
+      end
+    end
+    pressed = output.split("<button").find { |b| b.include?(%(data-value="right")) }
+    assert_match(/data-state="on"/, pressed)
+    assert_match(/data-\[state=on\]:bg-muted/, pressed)
+  end
 end

@@ -1,0 +1,22 @@
+shadcn: toggle
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: form_control
+docs_view: toggle
+parts:
+  Toggle: toggle
+selectors:
+  Toggle: '[data-audit-fixture] button[aria-pressed]'
+props:
+  # Base UI pressed/defaultPressed both map to RubyUI pressed: (no controlled mode).
+  # Base UI value identifies the toggle inside a ToggleGroup; RubyUI value: is the
+  # hidden input's form value, so they are not the same prop.
+  Toggle:
+    variant: variant
+    size: size
+    pressed: pressed
+    defaultPressed: pressed
+    onPressedChange: null
+    disabled: disabled
+    value: null
+rubyui_only:
+  Toggle: [name, value, unpressed_value, wrapper]
