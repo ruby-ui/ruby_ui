@@ -5,7 +5,7 @@ module RubyUI
   # controller. open: renders it open on load (Base UI's defaultOpen) and
   # disabled: keeps it from opening (Base UI's Root disabled). Setting the
   # data-ruby-ui--tooltip-open-value or -disabled-value attribute later
-  # opens, closes or disables it; every change dispatches
+  # opens, closes or disables it; each open or close dispatches
   # ruby-ui--tooltip:change with detail {open:}.
   #
   # placement: is the older API: TooltipContent's side: wins over it.
@@ -29,8 +29,8 @@ module RubyUI
           slot: "tooltip",
           controller: "ruby-ui--tooltip",
           ruby_ui__tooltip_placement_value: @placement&.to_s,
-          ruby_ui__tooltip_open_value: @open.to_s,
-          ruby_ui__tooltip_disabled_value: @disabled.to_s
+          ruby_ui__tooltip_open_value: (!!@open).to_s,
+          ruby_ui__tooltip_disabled_value: (!!@disabled).to_s
         },
         class: "group"
       }

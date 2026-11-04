@@ -9,7 +9,7 @@ class Views::Docs::Tooltip < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", description: "The tooltip opens while the pointer rests on the trigger or when the trigger gets keyboard focus. The pointer can move onto the tooltip; it closes when the pointer leaves both, on blur, on Escape, or when the trigger is pressed. The trigger's button is described by the tooltip (aria-describedby).", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", description: "The tooltip opens while the pointer rests on the trigger or when the trigger gets keyboard focus. The pointer can move onto the tooltip; it closes when the pointer leaves both, on blur (unless the pointer is still over it), on Escape, or when the trigger is pressed. The trigger's button is described by the tooltip (aria-describedby).", context: self) do
         <<~RUBY
           Tooltip do
             TooltipTrigger do
@@ -108,7 +108,7 @@ class Views::Docs::Tooltip < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Disabled tooltip", description: "disabled: true keeps the tooltip from opening. open: true renders it open on load. Changing the data-ruby-ui--tooltip-open-value or -disabled-value attribute later opens, closes or disables it, and every change dispatches ruby-ui--tooltip:change with detail.open.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Disabled tooltip", description: "disabled: true keeps the tooltip from opening. open: true renders it open on load. Changing the data-ruby-ui--tooltip-open-value or -disabled-value attribute later opens, closes or disables it, and each open or close dispatches ruby-ui--tooltip:change with detail.open.", context: self) do
         <<~RUBY
           Tooltip(disabled: true) do
             TooltipTrigger do

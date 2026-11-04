@@ -41,6 +41,14 @@ class RubyUI::TooltipTest < ComponentTest
     assert_match(/data-ruby-ui--tooltip-placement-value="bottom"/, output)
   end
 
+  # An empty value would read as true in Stimulus.
+  def test_root_coerces_nil_to_false
+    output = phlex { RubyUI.Tooltip(open: nil, disabled: nil) { "x" } }
+
+    assert_match(/data-ruby-ui--tooltip-open-value="false"/, output)
+    assert_match(/data-ruby-ui--tooltip-disabled-value="false"/, output)
+  end
+
   def test_root_defaults_leave_placement_to_the_content
     output = phlex { RubyUI.Tooltip { "x" } }
 

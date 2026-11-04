@@ -5,7 +5,7 @@ module RubyUI
   # opens while the pointer rests on it for delay: ms, or when it gets
   # keyboard focus, and closes close_delay: ms after the pointer leaves both
   # the trigger and the content (plus a short grace to cross the gap), on
-  # blur or on Escape. close_on_click: closes it when the trigger is pressed.
+  # blur (unless the pointer is still over it) or on Escape. close_on_click: closes it when the trigger is pressed.
   # Defaults follow shadcn's TooltipProvider (delay 0) and Base UI's Trigger.
   class TooltipTrigger < Base
     def initialize(delay: 0, close_delay: 0, close_on_click: true, **attrs)

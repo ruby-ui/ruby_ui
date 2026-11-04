@@ -85,7 +85,13 @@ export default class extends Controller {
   }
 
   disabledValueChanged(disabled) {
-    if (this.ready && disabled) this.close();
+    if (!this.ready) return;
+    // An open value set while disabled takes effect once enabled again.
+    if (disabled) {
+      this.close();
+    } else if (this.openValue) {
+      this.open();
+    }
   }
 
   // Kept for markup that still wires data-action to show/hide.
@@ -128,11 +134,18 @@ export default class extends Controller {
     this.mountedTemplate = null;
   }
 
+  // A swapped trigger or content while open stays open, without telling
+  // listeners about a close and reopen that never happened.
   remount() {
     const wasOpen = this.isOpen;
-    this.unmount();
-    this.mount();
-    if (wasOpen) this.open();
+    this.remounting = wasOpen;
+    try {
+      this.unmount();
+      this.mount();
+      if (wasOpen) this.open();
+    } finally {
+      this.remounting = false;
+    }
   }
 
   // --- aria-describedby ---------------------------------------------------------
@@ -304,6 +317,7 @@ export default class extends Controller {
   // Mirrors the state on the open value (so openValueChanged sees no change)
   // and tells listeners, as Base UI's onOpenChange does.
   setOpenValue(open) {
+    if (this.remounting) return;
     if (this.openValue !== open) this.openValue = open;
     this.dispatch("change", { detail: { open } });
   }
@@ -312,7 +326,9 @@ export default class extends Controller {
 
   // TooltipContent side:/align:, else Tooltip placement:, else top/center.
   preferredPlacement(popup) {
-    const [placementSide, placementAlign] = String(this.placementValue || "").split("-");
+    // Logical sides keep their hyphen: "inline-start" is a side, not side-align.
+    const placement = String(this.placementValue || "");
+    const [placementSide, placementAlign] = placement.startsWith("inline-") ? [placement] : placement.split("-");
     const side = [popup.dataset.preferredSide, placementSide].find((value) => SIDES.includes(value)) || "top";
     const align = popup.dataset.preferredSide
       ? popup.dataset.preferredAlign || "center"

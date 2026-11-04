@@ -264,8 +264,10 @@ class RubyUI::SidebarTest < ComponentTest
     refute_match(/data-action/, output)
   end
 
-  # Each tooltip hides from its own sidebar's state, not from any expanded
-  # sidebar on the page (two sidebars on one page).
+  # Pins the classes that scope the hiding to the sidebar around the button
+  # (the content sits inside it), instead of a body-level selector that any
+  # expanded sidebar on the page matched. The two-sidebar behavior itself is
+  # checked in the browser (see the PR).
   def test_menu_button_tooltip_hides_from_its_own_sidebar
     output = phlex { RubyUI.SidebarMenuButton(tooltip: "Home") { "Home" } }
 
