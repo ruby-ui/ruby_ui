@@ -45,6 +45,9 @@ export default class extends Controller {
     this.ready = false;
     document.removeEventListener("turbo:before-cache", this.handleBeforeCache);
     this.unmount();
+    // Stimulus reuses this instance if the element comes back.
+    this.pointerInside = false;
+    this.pressedClosed = false;
   }
 
   // Target callbacks run before connect() and again whenever Turbo or other
@@ -214,17 +217,21 @@ export default class extends Controller {
     this.close();
   };
 
-  // Enter and Space on the trigger's button arrive here as a click too.
+  // Enter and Space on the trigger's button arrive here as a click too. A
+  // press during the open delay cancels the pending open as well.
   handleClick = () => {
-    if (!this.closeOnClick || !this.isOpen) return;
+    if (!this.closeOnClick) return;
+    this.clearTimers();
     this.pressedClosed = this.pointerInside;
     this.close();
   };
 
   handleKeydown = (event) => {
     if (event.key !== "Escape" || !this.isOpen) return;
-    // Keeps an enclosing <dialog> from closing on the same key.
-    event.preventDefault();
+    // A tooltip hidden by CSS (an expanded or mobile sidebar) closes without
+    // taking the key, so an enclosing Sheet or dialog still gets it.
+    // A visible one keeps an enclosing <dialog> from closing on the same key.
+    if (this.isRendered(this.popup)) event.preventDefault();
     this.close();
   };
 
@@ -232,6 +239,10 @@ export default class extends Controller {
     // The snapshot keeps the <template>; connect() places a fresh copy on restore.
     this.unmount();
   };
+
+  isRendered(element) {
+    return Boolean(element?.isConnected && element.getClientRects().length > 0);
+  }
 
   keyboardFocusInside() {
     const active = document.activeElement;
@@ -338,8 +349,9 @@ export default class extends Controller {
     const arrowElement = popup.querySelector('[data-slot="tooltip-arrow"]');
 
     const middleware = [
-      // alignmentAxis flips the offset for align: :end, as Base UI does.
-      offset({ mainAxis: sideOffset, alignmentAxis: alignOffset }),
+      // crossAxis shifts a centered tooltip; alignmentAxis takes over for
+      // :start / :end and flips the offset for :end, as Base UI does.
+      offset({ mainAxis: sideOffset, crossAxis: alignOffset, alignmentAxis: alignOffset }),
       flip(),
       shift({ padding: 5 }),
     ];
@@ -356,15 +368,17 @@ export default class extends Controller {
           : resolvedSide;
         popup.dataset.side = finalSide;
         popup.dataset.align = resolvedAlign;
-        if (arrowElement) this.placeArrow(arrowElement, finalSide, resolvedSide, resolvedAlign, middlewareData.arrow);
+        if (arrowElement) this.placeArrow(arrowElement, resolvedSide, resolvedAlign, middlewareData.arrow);
         popup.style.setProperty("--transform-origin", this.transformOrigin(anchor, popup, resolvedSide, x, y, sideOffset));
       },
     );
   }
 
   // Along the trigger for top/bottom; the classes center it for left/right.
-  placeArrow(arrowElement, side, physical, align, data = {}) {
-    arrowElement.dataset.side = side;
+  // The arrow takes the physical side, so a logical side points the right
+  // way in RTL too.
+  placeArrow(arrowElement, physical, align, data = {}) {
+    arrowElement.dataset.side = physical;
     arrowElement.dataset.align = align;
     const vertical = physical === "top" || physical === "bottom";
     arrowElement.style.left = vertical && data.x != null ? `${data.x}px` : "";
