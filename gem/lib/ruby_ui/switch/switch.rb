@@ -22,7 +22,7 @@ module RubyUI
       # High contrast: give the drawing back to the browser (as @tailwindcss/forms does).
       "forced-colors:appearance-auto forced-colors:before:hidden",
       "bg-input dark:bg-input/80 checked:bg-primary dark:checked:bg-primary checked:bg-none",
-      "text-inherit shadow-xs transition-all outline-none",
+      "text-inherit shadow-xs transition-all outline-hidden",
       "after:absolute after:-inset-x-3 after:-inset-y-2",
       "focus:ring-0 focus:ring-offset-0 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
       "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",

@@ -16,7 +16,22 @@ class RubyUI::SwitchTest < ComponentTest
       RubyUI.Switch(name: "toggle", checked: true)
     end
 
-    assert_match(/<input[^>]*role="switch"[^>]*checked/, output)
+    assert_match(/<input[^>]*role="switch"[^>]*\schecked(?=[\s>])/, output)
+  end
+
+  def test_render_unchecked_has_no_checked_attribute
+    output = phlex do
+      RubyUI.Switch(name: "toggle")
+    end
+
+    refute_match(/\schecked(?=[\s>])/, output)
+  end
+
+  def test_focus_outline_survives_forced_colors
+    output = phlex { RubyUI.Switch }
+
+    assert_match(/\boutline-hidden\b/, output)
+    refute_match(/\boutline-none\b/, output)
   end
 
   def test_renders_a_focusable_native_checkbox_with_role_switch
