@@ -1,0 +1,17 @@
+# One textarea per state: default (data-audit-trigger, used for focus), a
+# multi-line value, disabled, aria-disabled and invalid (aria-invalid). Every
+# audited textarea carries data-audit-textarea. Labels are plain <label>s with
+# the same classes on both sides; not audited. No rows on either side: each
+# side's default sizing is part of what is compared.
+message: Message
+message_placeholder: Type your message here.
+bio: Bio
+bio_line_1: Line one
+bio_line_2: Line two
+bio_line_3: Line three
+disabled: Disabled
+disabled_placeholder: Disabled textarea
+aria_disabled: Aria disabled
+aria_disabled_placeholder: Aria disabled textarea
+invalid: Invalid
+invalid_placeholder: Invalid textarea
