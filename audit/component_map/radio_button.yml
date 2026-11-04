@@ -1,0 +1,24 @@
+shadcn: radio-group
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: form_control
+docs_view: radio_button
+parts:
+  RadioGroup: radio-group
+  RadioButton: radio-group-item
+selectors:
+  RadioGroup: '[data-slot="radio-group"]'
+  RadioButton: 'input[type="radio"]'
+props:
+  RadioGroup:
+    name: null
+    defaultValue: null
+    value: null
+    onValueChange: null
+    disabled: null
+    readOnly: null
+    required: null
+  RadioButton:
+    value: value
+    disabled: disabled
+    readOnly: null
+    required: required
