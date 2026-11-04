@@ -13,8 +13,6 @@ export default class extends Controller {
     this.cleanup = null;
     this.focusReturn = null;
     this.typeahead = "";
-    this.mirroredInvalid = false;
-    this.mirroredDescribedBy = false;
     // FormField marks the hidden input aria-invalid; mirror it on the trigger,
     // so the error is announced and styled where people look.
     this.invalidObserver = new MutationObserver(() => this.syncInvalid());
@@ -24,6 +22,9 @@ export default class extends Controller {
     // The form's reset restores the input without firing change.
     this.form = this.element.closest("form");
     this.form?.addEventListener("reset", this.handleFormReset);
+    // A reconnect (Turbo cache, morph) can bring back an open state the
+    // popover itself no longer has: settle on closed.
+    if (this.isOpen || this.triggerTarget.getAttribute("aria-expanded") === "true") this.markClosed();
     this.assignOptionIds();
     this.syncSelection();
     this.syncInvalid();
@@ -37,7 +38,7 @@ export default class extends Controller {
     clearTimeout(this.resetTimeout);
     clearTimeout(this.typeaheadTimeout);
     this.stopAutoUpdate();
-    if (this.hasContentTarget && this.contentTarget.matches(":popover-open")) this.contentTarget.hidePopover();
+    this.markClosed();
   }
 
   itemTargetConnected() {
@@ -89,15 +90,19 @@ export default class extends Controller {
   hide({ restoreFocus = false } = {}) {
     document.removeEventListener("pointerdown", this.handleOutsidePointerDown, true);
     this.stopAutoUpdate();
-    this.setExpanded(false);
     this.resetTypeahead();
+    this.markClosed();
+    if (restoreFocus) this.triggerTarget.focus();
+  }
+
+  markClosed() {
+    this.setExpanded(false);
     if (!this.hasContentTarget) return;
 
     const content = this.contentTarget;
     content.removeAttribute("data-open");
     content.setAttribute("data-closed", "");
     if (content.matches(":popover-open")) content.hidePopover();
-    if (restoreFocus) this.triggerTarget.focus();
   }
 
   setExpanded(open) {
@@ -250,41 +255,54 @@ export default class extends Controller {
     const selected = this.selectedItem;
     this.itemTargets.forEach((item) => item.setAttribute("aria-selected", item === selected ? "true" : "false"));
 
-    const placeholder = !selected;
+    // A value with no matching option (e.g. a disabled Select rendered
+    // without items) keeps the text the server rendered in SelectValue.
+    const current = this.hasInputTarget ? this.inputTarget.value : "";
+    const placeholder = !selected && current === "";
     this.triggerTarget.toggleAttribute("data-placeholder", placeholder);
     if (!this.hasValueTarget) return;
 
     const value = this.valueTarget;
     value.toggleAttribute("data-placeholder", placeholder);
     if (selected) value.textContent = this.textOf(selected);
-    else if (value.dataset.placeholderText !== undefined) value.textContent = value.dataset.placeholderText;
+    else if (placeholder && value.dataset.placeholderText !== undefined) value.textContent = value.dataset.placeholderText;
   }
 
+  // What the controller mirrored lives on the trigger (data-mirrored-*), so a
+  // reconnect still knows which attributes are its own to undo.
   syncInvalid() {
     if (!this.hasInputTarget) return;
     const trigger = this.triggerTarget;
 
-    const describedBy = this.inputTarget.getAttribute("aria-describedby");
-    if (describedBy && (!trigger.hasAttribute("aria-describedby") || this.mirroredDescribedBy)) {
-      trigger.setAttribute("aria-describedby", describedBy);
-      this.mirroredDescribedBy = true;
-    }
+    // aria-describedby: the input's ids (FormField hint/error) are merged
+    // with the author's own, which stay.
+    const ids = (value) => (value || "").split(/\s+/).filter(Boolean);
+    const mirrored = ids(trigger.dataset.mirroredDescribedby);
+    const own = ids(trigger.getAttribute("aria-describedby")).filter((id) => !mirrored.includes(id));
+    const fromInput = ids(this.inputTarget.getAttribute("aria-describedby")).filter((id) => !own.includes(id));
+    const merged = [...own, ...fromInput];
+    if (merged.length) trigger.setAttribute("aria-describedby", merged.join(" "));
+    else trigger.removeAttribute("aria-describedby");
+    if (fromInput.length) trigger.dataset.mirroredDescribedby = fromInput.join(" ");
+    else delete trigger.dataset.mirroredDescribedby;
 
     if (this.inputTarget.getAttribute("aria-invalid") === "true") {
       if (trigger.getAttribute("aria-invalid") === "true") return;
       trigger.setAttribute("aria-invalid", "true");
-      this.mirroredInvalid = true;
-    } else if (this.mirroredInvalid) {
+      trigger.dataset.mirroredInvalid = "";
+    } else if (trigger.hasAttribute("data-mirrored-invalid")) {
       // Only undo what we set: an author's own aria-invalid stays.
       trigger.removeAttribute("aria-invalid");
-      this.mirroredInvalid = false;
+      delete trigger.dataset.mirroredInvalid;
     }
   }
 
   // --- Helpers --------------------------------------------------------------
 
   get selectedItem() {
-    if (!this.hasInputTarget || this.inputTarget.value === "") return null;
+    if (!this.hasInputTarget) return null;
+    // An option may carry the empty value (e.g. "None"); it is selected when
+    // the input is empty, as in a native select.
     return this.itemTargets.find((item) => item.dataset.value === this.inputTarget.value) || null;
   }
 
