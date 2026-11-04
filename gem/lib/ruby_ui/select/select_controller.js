@@ -41,8 +41,10 @@ export default class extends Controller {
     this.markClosed();
   }
 
+  // Options added later (a morph, a lazy list) pick up the current value.
   itemTargetConnected() {
     this.assignOptionIds();
+    if (this.hasTriggerTarget) this.syncSelection();
   }
 
   handleFormReset = () => {
@@ -265,7 +267,7 @@ export default class extends Controller {
     const value = this.valueTarget;
     value.toggleAttribute("data-placeholder", placeholder);
     if (selected) value.textContent = this.textOf(selected);
-    else if (placeholder && value.dataset.placeholderText !== undefined) value.textContent = value.dataset.placeholderText;
+    else if (placeholder) value.textContent = value.dataset.placeholderText ?? "";
   }
 
   // What the controller mirrored lives on the trigger (data-mirrored-*), so a

@@ -9,15 +9,15 @@ module RubyUI
 
       id = attrs[:id] || names[:label_id]
       names[:labelledby] ||= id
-      div(**attrs.merge(id: id), &)
+      # The group is named through aria-labelledby, so this text is hidden to
+      # avoid reading it twice. Other labels stay in the accessibility tree.
+      div(**mix({aria: {hidden: "true"}}, attrs.merge(id: id)), &)
     end
 
     private
 
     def default_attrs
       {
-        # The group is named through aria-labelledby; the text itself is hidden.
-        aria: {hidden: "true"},
         data: {slot: "select-label"},
         class: "px-2 py-1.5 text-xs text-muted-foreground"
       }

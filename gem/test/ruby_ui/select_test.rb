@@ -88,7 +88,7 @@ class RubyUI::SelectTest < ComponentTest
   def test_content_ignores_outlet_id
     output = phlex { RubyUI.SelectContent(outlet_id: "fruit") { "options" } }
 
-    refute_match("outlet_id", output)
+    refute_match("outlet", output)
   end
 
   def test_group_is_labelled_by_its_label
@@ -100,10 +100,34 @@ class RubyUI::SelectTest < ComponentTest
     refute_match("<h3", output)
   end
 
-  def test_label_outside_a_group_has_no_id
+  def test_label_outside_a_group_has_no_id_and_stays_visible_to_assistive_tech
     output = phlex { RubyUI.SelectLabel { "Fruits" } }
 
     refute_match("id=", output)
+    refute_match("aria-hidden", output)
+  end
+
+  def test_only_the_naming_label_is_hidden
+    output = phlex do
+      RubyUI.SelectGroup do
+        RubyUI.SelectLabel { "Fruits" }
+        RubyUI.SelectLabel { "More" }
+      end
+    end
+
+    assert_match(/<div[^>]*aria-hidden="true"[^>]*>Fruits<\/div>/, output)
+    refute_match(/aria-hidden="true"[^>]*>More/, output)
+  end
+
+  def test_trigger_height_is_overridable
+    trigger = render_select(trigger: {class: "h-10"})[/<button(?:[^>"]|"[^"]*")*>/]
+
+    assert_match("h-10", trigger)
+    refute_match(/\bh-9\b/, trigger)
+  end
+
+  def test_trigger_size_nil_falls_back_to_default
+    assert_match('data-size="default"', render_select(trigger: {size: nil})[/<button(?:[^>"]|"[^"]*")*>/])
   end
 
   def test_item_is_a_roving_option_with_the_indicator_on_the_right

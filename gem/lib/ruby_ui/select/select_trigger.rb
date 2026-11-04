@@ -7,7 +7,7 @@ module RubyUI
     SIZES = %i[default sm].freeze
 
     def initialize(size: :default, **)
-      @size = SIZES.include?(size.to_sym) ? size.to_sym : :default
+      @size = SIZES.include?(size.to_s.to_sym) ? size.to_s.to_sym : :default
       super(**)
     end
 
@@ -54,7 +54,8 @@ module RubyUI
           "dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
           "disabled:cursor-not-allowed disabled:opacity-50",
           "aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none",
-          "data-[size=default]:h-9 data-[size=sm]:h-8",
+          # A bare class, so a caller's h-* replaces it through TailwindMerge.
+          (@size == :sm) ? "h-8" : "h-9",
           "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5",
           "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
         ]
