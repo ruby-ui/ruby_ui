@@ -1,0 +1,14 @@
+shadcn: skeleton
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: static
+docs_view: skeleton
+parts:
+  Skeleton: skeleton
+selectors:
+  # Both fixtures tag each skeleton with data-audit-skeleton so one selector works on both sides.
+  Skeleton: '#skeleton-fixture [data-audit-skeleton]'
+props:
+  # shadcn Skeleton takes React.ComponentProps<"div"> only (className + div attrs); no declared props.
+  Skeleton: {}
+rubyui_only:
+  Skeleton: []
