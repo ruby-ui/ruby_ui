@@ -2,8 +2,13 @@
 
 module RubyUI
   class SidebarGroupLabel < Base
+    def initialize(as: :div, **attrs)
+      @as = as
+      super(**attrs)
+    end
+
     def view_template(&)
-      div(**attrs, &)
+      tag(@as, **attrs, &)
     end
 
     private
@@ -18,6 +23,7 @@ module RubyUI
           "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0"
         ],
         data: {
+          slot: "sidebar-group-label",
           sidebar: "group-label"
         }
       }

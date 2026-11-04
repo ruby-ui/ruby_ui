@@ -16,6 +16,7 @@ module RubyUI
           "group-data-[collapsible=icon]:hidden"
         ],
         data: {
+          slot: "sidebar-menu-sub",
           sidebar: "menu-sub"
         }
       }

@@ -1,0 +1,19 @@
+- component: sidebar
+  dimension: Look
+  rubyui: "SidebarSeparator: mx-2 w-auto → 239px, ends 8px before the sidebar border"
+  shadcn: "Separator's data-horizontal:w-full beats w-auto → 255px, overflows 8px past the sidebar border"
+  reason: "shadcn's width is a CSS specificity side effect, not a design choice; RubyUI keeps what mx-2 w-auto intend"
+  since: "2026-11-04"
+- component: sidebar
+  dimension: ARIA
+  rubyui: "SidebarSeparator role=none (decorative)"
+  shadcn: "role=separator"
+  reason: "The line only splits the header input from the menu, with no named sections around it; RubyUI separators are decorative by default"
+  since: "2026-11-04"
+  match: {part: SidebarSeparator, attribute: snapshot, rubyui: "", shadcn: "- separator"}
+- component: sidebar
+  dimension: Props
+  rubyui: "Initial state via Sidebar(open:); toggles dispatch ruby-ui--sidebar:change {open}; no controlled open"
+  shadcn: "SidebarProvider defaultOpen, open, onOpenChange"
+  reason: "Server-rendered: the app reads the sidebar_state cookie and passes open:; controlled state is a React pattern, and the change event covers onOpenChange"
+  since: "2026-11-04"

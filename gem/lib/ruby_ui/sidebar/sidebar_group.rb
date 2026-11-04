@@ -12,6 +12,7 @@ module RubyUI
       {
         class: "relative flex w-full min-w-0 flex-col p-2",
         data: {
+          slot: "sidebar-group",
           sidebar: "group"
         }
       }

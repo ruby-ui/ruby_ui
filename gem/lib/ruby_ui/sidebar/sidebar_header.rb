@@ -12,6 +12,7 @@ module RubyUI
       {
         class: "flex flex-col gap-2 p-2",
         data: {
+          slot: "sidebar-header",
           sidebar: "header"
         }
       }

@@ -162,4 +162,124 @@ class RubyUI::SidebarTest < ComponentTest
 
     assert_match(/data-collapsible-kind="offcanvas"/, output)
   end
+
+  def test_menu_item_renders_li
+    output = phlex { RubyUI.SidebarMenu { RubyUI.SidebarMenuItem { "Home" } } }
+
+    assert_match(%r{<ul class="[^"]*" data-slot="sidebar-menu" data-sidebar="menu"><li class="[^"]*" data-slot="sidebar-menu-item"}, output)
+  end
+
+  def test_menu_sub_item_has_slot
+    output = phlex { RubyUI.SidebarMenuSubItem { "Design" } }
+
+    assert_match(%r{<li[^>]*data-slot="sidebar-menu-sub-item"}, output)
+  end
+
+  def test_rail_is_named_and_not_tabbable
+    output = phlex { RubyUI.SidebarRail() }
+
+    assert_match(/tabindex="-1"/, output)
+    assert_match(/aria-label="Toggle Sidebar"/, output)
+    assert_match(/title="Toggle Sidebar"/, output)
+    refute_match(/data-tabindex/, output)
+  end
+
+  def test_trigger_is_icon_sm_with_hidden_icon
+    output = phlex { RubyUI.SidebarTrigger(data: {testid: "toggle"}) }
+
+    assert_match(/data-slot="sidebar-trigger"/, output)
+    refute_match(/data-slot="button/, output)
+    assert_match(/h-8 w-8/, output)
+    assert_match(/aria-hidden="true"/, output)
+  end
+
+  def test_sidebar_parts_have_data_slot
+    output = phlex do
+      RubyUI.SidebarWrapper do
+        RubyUI.Sidebar(collapsible: :icon) do
+          RubyUI.SidebarHeader { RubyUI.SidebarInput(placeholder: "Search") }
+          RubyUI.SidebarSeparator()
+          RubyUI.SidebarContent { RubyUI.SidebarGroup { RubyUI.SidebarGroupLabel { "Label" } } }
+          RubyUI.SidebarFooter { "Footer" }
+        end
+        RubyUI.SidebarInset { "Main" }
+      end
+    end
+
+    %w[sidebar-wrapper sidebar sidebar-gap sidebar-container sidebar-inner sidebar-header sidebar-input
+      sidebar-separator sidebar-content sidebar-group sidebar-group-label sidebar-footer sidebar-inset].each do |slot|
+      assert_match(/data-slot="#{slot}"/, output)
+    end
+  end
+
+  def test_sidebar_attrs_go_to_container
+    output = phlex { RubyUI.Sidebar(class: "custom-width") }
+
+    assert_match(%r{data-slot="sidebar-container"[^>]*>|class="[^"]*custom-width[^"]*"[^>]*data-slot="sidebar-container"}, output)
+    refute_match(/class="group peer[^"]*custom-width/, output)
+  end
+
+  def test_container_carries_side
+    output = phlex { RubyUI.Sidebar(side: :right) }
+
+    assert_match(/data-slot="sidebar-container" data-side="right"/, output)
+  end
+
+  def test_invalid_variant_raises_argument_error
+    assert_raises(ArgumentError) { phlex { RubyUI.Sidebar(variant: :bogus) } }
+  end
+
+  def test_menu_action_show_on_hover
+    output = phlex { RubyUI.SidebarMenuAction(show_on_hover: true) { "More" } }
+
+    assert_match(/md:opacity-0/, output)
+    assert_match(/aria-expanded:opacity-100/, output)
+  end
+
+  def test_menu_action_without_show_on_hover
+    output = phlex { RubyUI.SidebarMenuAction { "More" } }
+
+    refute_match(/md:opacity-0/, output)
+  end
+
+  def test_menu_button_outline_uses_css_variable
+    output = phlex { RubyUI.SidebarMenuButton(variant: :outline) { "Home" } }
+
+    assert_match(/shadow-\[0_0_0_1px_var\(--sidebar-border\)\]/, output)
+    refute_match(/hsl\(var/, output)
+  end
+
+  def test_menu_button_tooltip
+    output = phlex { RubyUI.SidebarMenuButton(tooltip: "Home") { "Home" } }
+
+    assert_match(/data-controller="ruby-ui--tooltip"/, output)
+    assert_match(/data-ruby-ui--tooltip-placement-value="right"/, output)
+    assert_match(/data-ruby-ui--tooltip-target="trigger"/, output)
+    assert_match(%r{blur->ruby-ui--tooltip#hide"><template data-ruby-ui--tooltip-target="content">}, output)
+  end
+
+  def test_menu_button_without_tooltip
+    output = phlex { RubyUI.SidebarMenuButton { "Home" } }
+
+    refute_match(/ruby-ui--tooltip/, output)
+  end
+
+  def test_menu_sub_button_defaults_to_link
+    output = phlex { RubyUI.SidebarMenuSubButton(href: "#") { "Design" } }
+
+    assert_match(%r{\A<a .*href="#">Design</a>\z}, output)
+  end
+
+  def test_group_label_as
+    output = phlex { RubyUI.SidebarGroupLabel(as: :button) { "Projects" } }
+
+    assert_match(%r{\A<button .*data-slot="sidebar-group-label"}, output)
+  end
+
+  def test_wrapper_keyboard_shortcut
+    output = phlex { RubyUI.SidebarWrapper { "content" } }
+
+    assert_match(/keydown\.ctrl\+b@window->ruby-ui--sidebar#toggle/, output)
+    assert_match(/keydown\.meta\+b@window->ruby-ui--sidebar#toggle/, output)
+  end
 end

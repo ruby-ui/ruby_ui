@@ -18,6 +18,7 @@ module RubyUI
             "--sidebar-width": SIDEBAR_WIDTH_MOBILE
           },
           data: {
+            slot: "sidebar",
             sidebar: "sidebar",
             mobile: "true"
           }

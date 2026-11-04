@@ -3,7 +3,7 @@
 module RubyUI
   class SidebarMenuItem < Base
     def view_template(&)
-      ul(**attrs, &)
+      li(**attrs, &)
     end
 
     private
@@ -12,6 +12,7 @@ module RubyUI
       {
         class: "group/menu-item relative",
         data: {
+          slot: "sidebar-menu-item",
           sidebar: "menu-item"
         }
       }

@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex h-full w-[var(--sidebar-width)] flex-col bg-sidebar text-sidebar-foreground"
+        class: "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
+        data: {slot: "sidebar"}
       }
     end
   end

@@ -34,6 +34,9 @@ export default class extends Controller {
   onToggle() {
     this.#updateSidebarState();
     this.#persistSidebarState();
+    // shadcn's onOpenChange: listen with
+    // data-action="ruby-ui--sidebar:change->your-controller#method".
+    this.dispatch("change", { detail: { open: this.open } });
   }
 
   #updateSidebarState() {

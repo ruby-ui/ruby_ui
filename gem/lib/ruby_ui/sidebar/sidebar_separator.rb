@@ -12,6 +12,7 @@ module RubyUI
       {
         class: "mx-2 w-auto bg-sidebar-border",
         data: {
+          slot: "sidebar-separator",
           sidebar: "separator"
         }
       }
