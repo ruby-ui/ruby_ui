@@ -1,0 +1,36 @@
+shadcn: select
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: menu
+docs_view: select
+# The fixture follows shadcn's Basic example plus a group label (RubyUI docs
+# shape), with nothing selected so both triggers show the placeholder.
+# Base UI's Root renders only its hidden input; RubyUI's Select is a wrapper
+# div holding the controller and SelectInput the hidden input it writes into.
+parts:
+  Select: null
+  SelectInput: null
+  SelectTrigger: select-trigger
+  SelectValue: select-value
+  SelectContent: select-content
+  SelectGroup: select-group
+  SelectLabel: select-label
+  SelectItem: select-item
+selectors:
+  SelectTrigger: '[data-slot="select-trigger"]'
+  SelectValue: '[data-slot="select-value"]'
+  SelectContent: '[data-slot="select-content"]'
+  SelectGroup: '[data-slot="select-group"]'
+  SelectLabel: '[data-slot="select-label"]'
+  SelectItem: '[data-slot="select-item"]'
+# size and placement props from the .tsx; name/value/disabled/required from
+# Select.Root and Select.Item (Base UI primitive). alignItemWithTrigger is a
+# registered divergence (audit/divergences/select.yml).
+props:
+  SelectInput: {name: name, defaultValue: value, required: required}
+  SelectTrigger: {size: size, disabled: disabled}
+  SelectContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset, alignItemWithTrigger: null}
+  SelectItem: {value: value, disabled: disabled}
+rubyui_only:
+  SelectValue: [placeholder]
+  # Accepted for backwards compatibility and ignored.
+  SelectContent: [outlet_id]

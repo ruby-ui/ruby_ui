@@ -1,60 +1,60 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # An option. Focus moves onto it (roving tabindex), as in Base UI's
+  # Select.Item; the check on the right marks the selected one.
   class SelectItem < Base
-    def initialize(value: nil, **attrs)
+    def initialize(value: nil, disabled: false, **)
       @value = value
-      super(**attrs)
+      @disabled = disabled
+      super(**)
     end
 
-    def view_template(&block)
+    def view_template(&)
       div(**attrs) do
-        selected_icon
-        block&.call
+        span(class: "flex flex-1 shrink-0 gap-2 whitespace-nowrap", &)
+        indicator
       end
     end
 
     private
 
-    def selected_icon
-      svg(
-        xmlns: "http://www.w3.org/2000/svg",
-        viewbox: "0 0 24 24",
-        fill: "none",
-        stroke: "currentColor",
-        class: "invisible group-aria-selected:visible	mr-2 h-4 w-4 flex-none",
-        stroke_width: "2",
-        stroke_linecap: "round",
-        stroke_linejoin: "round"
-      ) do |s|
-        s.path(
-          d: "M20 6 9 17l-5-5"
-        )
+    def indicator
+      span(class: "pointer-events-none invisible absolute right-2 size-4 items-center justify-center group-aria-selected/select-item:visible", aria: {hidden: "true"}) do
+        svg(
+          xmlns: "http://www.w3.org/2000/svg",
+          viewbox: "0 0 24 24",
+          fill: "none",
+          stroke: "currentColor",
+          stroke_width: "2",
+          stroke_linecap: "round",
+          stroke_linejoin: "round",
+          aria_hidden: "true",
+          class: "pointer-events-none size-4"
+        ) { |s| s.path(d: "M20 6 9 17l-5-5") }
       end
     end
 
     def default_attrs
       {
         role: "option",
-        tabindex: "0",
-        data_value: @value,
-        aria_selected: "false",
-        data_orientation: "vertical",
-        class: [
-          "item group relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors",
-          "focus:bg-accent focus:text-accent-foreground",
-          "hover:bg-accent hover:text-accent-foreground",
-          "disabled:pointer-events-none disabled:opacity-50",
-          "aria-selected:bg-accent aria-selected:text-accent-foreground",
-          "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-          "aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
-        ],
+        tabindex: "-1",
+        aria: {selected: "false", disabled: (@disabled ? "true" : nil)},
         data: {
-          controller: "ruby-ui--select-item",
-          action: "click->ruby-ui--select#selectItem keydown.enter->ruby-ui--select#selectItem keydown.down->ruby-ui--select#handleKeyDown keydown.up->ruby-ui--select#handleKeyUp keydown.esc->ruby-ui--select#handleEsc",
-          ruby_ui__select_target: "item"
-        }
-
+          slot: "select-item",
+          value: @value,
+          disabled: (@disabled ? "" : nil),
+          ruby_ui__select_target: "item",
+          action: "click->ruby-ui--select#select pointermove->ruby-ui--select#hover"
+        },
+        class: [
+          "group/select-item relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none",
+          "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
+          "data-disabled:pointer-events-none data-disabled:opacity-50",
+          "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+          "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          "*:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2"
+        ]
       }
     end
   end

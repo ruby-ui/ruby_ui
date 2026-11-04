@@ -1,0 +1,18 @@
+- component: select
+  dimension: Behavior
+  rubyui: "No scroll lock while the list is open"
+  shadcn: "Base UI's Select is modal by default and sets overflow: hidden on the body while open"
+  reason: "Non-modal select: the list follows the trigger through Floating UI autoUpdate, so scrolling the page keeps it attached, and locking the body shifts the layout when the scrollbar goes away."
+  since: "2026-11-04"
+- component: select
+  dimension: Props
+  rubyui: "No align_item_with_trigger: on SelectContent; the list always opens beside the trigger (side:/align:)"
+  shadcn: "alignItemWithTrigger (default true) lays the selected item over the trigger when there is room"
+  reason: "Overlaying the selected item needs custom positioning beyond Floating UI offset/flip/shift; the beside-the-trigger placement is what shadcn falls back to when there is no room."
+  since: "2026-11-04"
+- component: select
+  dimension: HTML
+  rubyui: "SelectContent is the role=listbox element itself, a native popover in the top layer, rendered inside Select"
+  shadcn: "Portal > Positioner > Popup (role=presentation) > List (role=listbox)"
+  reason: "The popover attribute puts the list in the top layer, which is what the portal and positioner are for, so one element carries the listbox role and the vega classes."
+  since: "2026-11-04"
