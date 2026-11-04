@@ -1,0 +1,12 @@
+# Four groups, same strings and options on both sides:
+# - Alignment: single, outline, spacing 0 (joined), nothing pressed. data-audit-trigger
+#   sits on Left: with no selection both libraries make the first item the tab stop
+#   (with a selection RubyUI picks the pressed item, Base UI the first one).
+# - Formatting: multiple, default variant, spacing 1, Bold pressed.
+# - Size: single, vertical, outline, size sm, spacing 0, Medium pressed.
+# - Range: multiple, outline, spacing 2, whole group disabled.
+groups: [Alignment, Formatting, Size, Range]
+alignment: [Left, Center, Right]
+formatting: [Bold, Italic, Underline]
+size: [Small, Medium, Large]
+range: [Day, Week]

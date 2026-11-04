@@ -13,8 +13,9 @@ module RubyUI
       variant: :default,
       size: :default,
       disabled: false,
-      spacing: 0,
+      spacing: 2,
       orientation: :horizontal,
+      loop_focus: true,
       **attrs
     )
       @type = type.to_sym
@@ -31,6 +32,9 @@ module RubyUI
       @size = size.to_sym
       @disabled = disabled
       @spacing = spacing
+      raise ArgumentError, "loop_focus must be true or false" unless [true, false].include?(loop_focus)
+
+      @loop_focus = loop_focus
       super(**attrs)
     end
 
@@ -54,10 +58,21 @@ module RubyUI
     end
 
     def ToggleGroupItem(**kwargs, &block)
-      render RubyUI::ToggleGroupItem.new(group_context: item_context, **kwargs), &block
+      context = item_context.merge(tab_stop: claim_tab_stop?(kwargs))
+      render RubyUI::ToggleGroupItem.new(group_context: context, **kwargs), &block
     end
 
     private
+
+    # One tab stop in the server HTML: the first pressed enabled item, else the
+    # first enabled item. The controller keeps it in sync afterwards.
+    def claim_tab_stop?(kwargs)
+      return false if @tab_stop_claimed
+      return false if kwargs.fetch(:disabled, @disabled)
+      return false if selected_values.any? && !selected_values.include?(kwargs[:value].to_s)
+
+      @tab_stop_claimed = true
+    end
 
     def selected_values
       case @type
@@ -89,24 +104,29 @@ module RubyUI
     end
 
     def default_attrs
-      {
-        role: (@type == :single) ? "radiogroup" : "group",
-        data: {
-          controller: "ruby-ui--toggle-group",
-          "ruby-ui--toggle-group-type-value": @type.to_s,
-          "ruby-ui--toggle-group-name-value": @name.to_s,
-          orientation: @orientation.to_s,
-          spacing: @spacing.to_s
-        },
-        class: container_classes
+      data = {
+        slot: "toggle-group",
+        variant: @variant.to_s,
+        size: @size.to_s,
+        spacing: @spacing.to_s,
+        orientation: @orientation.to_s,
+        controller: "ruby-ui--toggle-group",
+        "ruby-ui--toggle-group-type-value": @type.to_s,
+        "ruby-ui--toggle-group-name-value": @name.to_s,
+        "ruby-ui--toggle-group-orientation-value": @orientation.to_s,
+        "ruby-ui--toggle-group-loop-focus-value": @loop_focus.to_s
       }
+      data[:multiple] = "" if @type == :multiple
+      data[:disabled] = "" if @disabled
+
+      {role: "group", data: data, class: container_classes}
     end
 
     def container_classes
       base = if @orientation == :vertical
         "flex w-fit flex-col items-stretch rounded-md"
       else
-        "flex w-fit items-center rounded-md"
+        "flex w-fit flex-row items-center rounded-md"
       end
 
       [

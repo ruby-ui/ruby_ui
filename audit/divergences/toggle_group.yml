@@ -1,0 +1,12 @@
+- component: toggle_group
+  dimension: Behavior
+  rubyui: "With a selection, Tab enters the group on the first pressed item"
+  shadcn: "Base UI makes the first item the tab stop whatever is pressed"
+  reason: "Landing on the current choice tells keyboard users the group's value at once and saves arrow presses; with no selection both enter on the first item."
+  since: "2026-11-04"
+- component: toggle_group
+  dimension: Props
+  rubyui: "value sets the initial state; the state reaches forms through hidden inputs (name)"
+  shadcn: "value/onValueChange, and pressed/defaultPressed/onPressedChange on items (controlled React state)"
+  reason: "Server-rendered Phlex has no controlled state or JS callbacks; listen to clicks on the items or read the hidden inputs."
+  since: "2026-11-04"

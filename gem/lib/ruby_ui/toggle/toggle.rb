@@ -8,10 +8,6 @@ module RubyUI
       "group/toggle inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium whitespace-nowrap",
       "transition-[color,box-shadow] outline-none",
       "hover:bg-muted hover:text-foreground aria-pressed:bg-muted",
-      # ToggleGroupItem in single mode is role=radio + aria-checked with data-state,
-      # so aria-pressed misses it. Kept here so an app that updates only Toggle
-      # keeps its existing ToggleGroup's pressed style.
-      "data-[state=on]:bg-muted",
       "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
       "disabled:pointer-events-none disabled:opacity-50",
       "aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
