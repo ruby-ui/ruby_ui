@@ -13,7 +13,8 @@ class Views::Docs::Toast < Views::Base
     {key: "promise", label: "Promise", title: nil},
     {key: "text_only", label: "Text Only", title: "Event has been created"},
     {key: "close_button", label: "Close Button", title: "Event has been created"},
-    {key: "close_action", label: "Close + Action", title: "Event has been created"}
+    {key: "close_action", label: "Close + Action", title: "Event has been created"},
+    {key: "no_close", label: "No Close Button", title: "Event has been created"}
   ].freeze
 
   POSITIONS = %w[top-left top-center top-right bottom-left bottom-center bottom-right].freeze
@@ -42,7 +43,8 @@ class Views::Docs::Toast < Views::Base
               ["promise", "Promise"],
               ["text_only", "Text Only"],
               ["close_button", "Close Button"],
-              ["close_action", "Close + Action"]
+              ["close_action", "Close + Action"],
+              ["no_close", "No Close Button"]
             ].each do |key, label|
               div(class: "rounded-md border p-6 flex items-center justify-center min-h-[100px]") do
                 button(
@@ -60,14 +62,8 @@ class Views::Docs::Toast < Views::Base
       p(class: "text-muted-foreground text-sm leading-relaxed") do
         plain "Trigger toasts from the server with Turbo Streams or from JavaScript via "
         code(class: "rounded bg-muted px-1.5 py-0.5 text-xs") { "window.RubyUI.toast.*" }
-        plain ". Heavily inspired by the original "
-        a(
-          href: "https://github.com/emilkowalski/sonner",
-          target: "_blank",
-          rel: "noopener",
-          class: "underline underline-offset-2 hover:text-foreground"
-        ) { "sonner" }
-        plain "."
+        plain ". Mirrors shadcn's Toast (Base UI): a polite live region, toasts that stack, "
+        plain "pause while hovered or focused, and swipe away. Press F6 to move focus to the newest toast."
       end
 
       Heading(level: 2) { "Mount" }
@@ -78,6 +74,10 @@ class Views::Docs::Toast < Views::Base
 
           # Pass flash to render Rails flash on initial load:
           render RubyUI::ToastRegion.new(flash: helpers.flash.to_h)
+
+          # The region is a popover="manual": a toast fired while a modal
+          # Dialog/Sheet is open shows above it (it becomes clickable once
+          # the modal closes, since the page behind a modal is inert).
         RUBY
       end
 
@@ -116,8 +116,12 @@ class Views::Docs::Toast < Views::Base
           render turbo_stream: turbo_stream.append("ruby-ui-toaster") {
             render RubyUI::ToastItem.new(variant: :success) do
               render RubyUI::ToastIcon.new(variant: :success)
-              render RubyUI::ToastTitle.new { "Saved" }
-              render RubyUI::ToastDescription.new { "Project updated." }
+              div(class: "flex min-w-0 flex-1 flex-col gap-1") do
+                render RubyUI::ToastTitle.new { "Saved" }
+                render RubyUI::ToastDescription.new { "Project updated." }
+              end
+              render RubyUI::ToastAction.new(label: "Undo", on: "click->projects#undo")
+              render RubyUI::ToastClose.new
             end
           }
         RUBY
@@ -135,7 +139,8 @@ class Views::Docs::Toast < Views::Base
           RubyUI.toast.info("Heads up")
           RubyUI.toast.warning("Storage almost full")
           RubyUI.toast.loading("Working...")
-          RubyUI.toast.dismiss(id)              // no-arg: dismiss all
+          RubyUI.toast("Saved", { priority: "high" }) // announced right away
+          RubyUI.toast.dismiss(id)              // no-arg: dismiss all (alias: close)
           RubyUI.toast.promise(p, { loading, success, error })
 
           // Equivalent CustomEvent (any source can dispatch this):
@@ -151,7 +156,7 @@ class Views::Docs::Toast < Views::Base
 
       Heading(level: 2) { "API Reference" }
 
-      Heading(level: 3) { "Toaster (Region)" }
+      Heading(level: 3) { "ToastRegion (Toaster)" }
       props_table(REGION_PROPS)
 
       Heading(level: 3) { "ToastItem" }
@@ -170,41 +175,42 @@ class Views::Docs::Toast < Views::Base
   end
 
   REGION_PROPS = [
-    {name: "position", default: ":bottom_right", values: ":top_left | :top_center | :top_right | :bottom_left | :bottom_center | :bottom_right", description: "Where the toaster mounts on the viewport."},
-    {name: "expand", default: "false", values: "Boolean", description: "Always show items expanded (no stack peek)."},
-    {name: "max", default: "3", values: "Integer", description: "Max visible toasts before oldest auto-evicts."},
-    {name: "duration", default: "4000", values: "Integer (ms)", description: "Default lifetime per toast. Pass 0 or Infinity to disable auto-dismiss."},
-    {name: "gap", default: "14", values: "Integer (px)", description: "Spacing between toasts when expanded."},
-    {name: "offset", default: "24", values: "Integer (px)", description: "Distance from the viewport edge."},
-    {name: "theme", default: ":system", values: ":system | :light | :dark", description: "Color scheme override."},
-    {name: "rich_colors", default: "false", values: "Boolean", description: "Enable variant-tinted backgrounds."},
-    {name: "close_button", default: "false", values: "Boolean", description: "Render an X button in every toast (top-right)."},
-    {name: "hotkey", default: "%w[alt t]", values: "Array<String>", description: "Keyboard shortcut to focus the first toast."},
-    {name: "dir", default: ":ltr", values: ":ltr | :rtl", description: "Text direction."},
+    {name: "position", default: ":bottom_right", values: ":top_left | :top_center | :top_right | :bottom_left | :bottom_center | :bottom_right", description: "Where the toaster mounts on the viewport (shadcn's is bottom-right)."},
+    {name: "expand", default: "false", values: "Boolean", description: "Always show toasts expanded (no stack peek)."},
+    {name: "max", default: "3", values: "Integer", description: "Toasts shown at once (Base UI limit). Older ones stay hidden and come back when a front toast closes."},
+    {name: "duration", default: "5000", values: "Integer (ms)", description: "Default lifetime per toast (Base UI timeout). 0 keeps toasts until dismissed."},
+    {name: "gap", default: "12", values: "Integer (px)", description: "Spacing between toasts when expanded."},
+    {name: "close_button", default: "true", values: "Boolean", description: "Render the X button in every toast."},
+    {name: "hotkey", default: "%w[F6]", values: "Array<String>", description: "Shortcut that moves focus to the newest toast, e.g. %w[alt t]."},
+    {name: "swipe_directions", default: "(from position)", values: "Array<:up | :down | :left | :right>", description: "Directions a swipe can dismiss in. Defaults to down/right for bottom-right."},
     {name: "flash", default: "nil", values: "Hash | nil", description: "Pass `helpers.flash.to_h` to render Rails flash on initial load."}
   ].freeze
 
   ITEM_PROPS = [
-    {name: "variant", default: ":default", values: ":default | :success | :error | :warning | :info | :loading", description: "Visual + a11y role + icon."},
+    {name: "variant", default: ":default", values: ":default | :success | :error | :warning | :info | :loading", description: "Icon and data-type."},
+    {name: "priority", default: ":low", values: ":low | :high", description: "High-priority toasts are announced right away (role=alert) and use role=alertdialog."},
     {name: "id", default: "nil", values: "String", description: "DOM id; auto-generated when not provided."},
-    {name: "duration", default: "nil", values: "Integer | nil", description: "Override the Region default. nil inherits."},
-    {name: "dismissible", default: "true", values: "Boolean", description: "Allow Escape, swipe, X, and force-dismiss to close."},
-    {name: "invert", default: "false", values: "Boolean", description: "Invert background/foreground (light-on-dark in light theme)."},
-    {name: "on_dismiss", default: "nil", values: "String", description: "Stimulus action descriptor fired when the user dismisses."},
-    {name: "on_auto_close", default: "nil", values: "String", description: "Stimulus action descriptor fired when the timer expires."}
+    {name: "duration", default: "nil", values: "Integer | nil", description: "Override the region default. nil inherits it; 0 stays until dismissed."},
+    {name: "dismissible", default: "true", values: "Boolean", description: "Allow swipe, the X, Cancel and dismiss-all to close it."},
+    {name: "on_dismiss", default: "nil", values: "String", description: "Stimulus action (\"controller#method\") run on ruby-ui:toast:close. The controller must be on the toast or an ancestor."},
+    {name: "on_remove", default: "nil", values: "String", description: "Stimulus action run on ruby-ui:toast:remove, after the exit animation."}
   ].freeze
 
   JS_OPTIONS = [
     {name: "title", default: "—", values: "String", description: "Headline text. Falls back to the first positional argument."},
     {name: "description", default: "—", values: "String", description: "Secondary line under the title."},
-    {name: "duration", default: "(Region default)", values: "Number | Infinity", description: "ms before auto-dismiss. Infinity = sticky."},
-    {name: "action", default: "—", values: "{ label, onClick }", description: "Primary action button rendered inside the toast."},
-    {name: "cancel", default: "—", values: "{ label, onClick }", description: "Secondary dismiss button."},
-    {name: "closeButton", default: "false", values: "Boolean", description: "Force an X close button on this toast."},
-    {name: "position", default: "(Region default)", values: "String", description: "Per-toast position override (changes Region's data-position before append)."},
-    {name: "id", default: "(auto)", values: "String", description: "Set a stable id (used by .dismiss(id) and .promise)."},
-    {name: "dismissible", default: "true", values: "Boolean", description: "Disable Escape / swipe / dismiss-all for this toast."},
-    {name: "className", default: "—", values: "String", description: "Extra classes appended to the rendered <li>."}
+    {name: "duration", default: "(region default)", values: "Number | Infinity", description: "ms before auto-dismiss. 0 or Infinity = stays until dismissed."},
+    {name: "priority", default: "\"low\"", values: "\"low\" | \"high\"", description: "\"high\" is announced right away."},
+    {name: "action", default: "—", values: "{ label, onClick }", description: "Action button (outline). Clicking it closes the toast."},
+    {name: "cancel", default: "—", values: "{ label, onClick }", description: "Secondary dismiss button (RubyUI extra)."},
+    {name: "closeButton", default: "(region default)", values: "Boolean", description: "Show or hide the X on this toast."},
+    {name: "onClose", default: "—", values: "Function", description: "Called when the toast starts closing ({ id, reason })."},
+    {name: "onRemove", default: "—", values: "Function", description: "Called after the exit animation, when the toast leaves the DOM."},
+    {name: "swipeDirections", default: "(region default)", values: "Array<String>", description: "Directions a swipe can dismiss this toast in."},
+    {name: "position", default: "(region default)", values: "String", description: "Moves the region before this toast is added."},
+    {name: "id", default: "(auto)", values: "String", description: "Stable id (used by .dismiss(id) and .promise)."},
+    {name: "dismissible", default: "true", values: "Boolean", description: "Disable swipe / X / dismiss-all for this toast."},
+    {name: "className", default: "—", values: "String", description: "Extra classes on the toast element."}
   ].freeze
 
   private

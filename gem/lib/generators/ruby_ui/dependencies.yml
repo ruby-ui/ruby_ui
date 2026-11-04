@@ -123,6 +123,9 @@ sidebar:
     - "Tooltip"
 
 toast:
+  components:
+    - "Button"
+
   js_packages: []
 
 tooltip:

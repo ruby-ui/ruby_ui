@@ -43,12 +43,12 @@ module Docs
       def view_template
         render RubyUI::ToastItem.new(variant: @variant) do
           render RubyUI::ToastIcon.new(variant: @variant)
-          div(class: "flex flex-col gap-1 flex-1 min-w-0") do
+          div(class: "flex min-w-0 flex-1 flex-col gap-1") do
             render RubyUI::ToastTitle.new { @title }
             render(RubyUI::ToastDescription.new { @description }) if @description
           end
           if @action_label
-            render RubyUI::ToastAction.new(label: @action_label, on: "click->ruby-ui--toast#dismiss")
+            render RubyUI::ToastAction.new(label: @action_label)
           end
           render RubyUI::ToastClose.new
         end

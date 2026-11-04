@@ -20,7 +20,8 @@ module RubyUI
           stroke_width: "2",
           stroke_linecap: "round",
           stroke_linejoin: "round",
-          class: "#{svg_classes} -ml-px"
+          class: svg_classes,
+          aria_hidden: "true"
         ) { |s| paths(s) }
       end
     end
@@ -32,8 +33,11 @@ module RubyUI
     end
 
     def svg_classes
-      base = "size-4"
-      (@variant == :loading) ? "#{base} animate-spin" : base
+      case @variant
+      when :loading then "size-4 animate-spin"
+      when :error then "size-4 text-destructive"
+      else "size-4"
+      end
     end
 
     def paths(s)
@@ -59,7 +63,7 @@ module RubyUI
     end
 
     def default_attrs
-      {data: {slot: "icon"}, class: "shrink-0 inline-flex items-center justify-start relative size-4 -ml-[3px] mr-1 text-foreground"}
+      {data: {slot: "toast-icon"}, class: "shrink-0 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4"}
     end
   end
 end

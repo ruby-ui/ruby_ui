@@ -1,102 +1,137 @@
 import { Controller } from "@hotwired/stimulus"
 
-const SWIPE_THRESHOLD = 45
-const TIME_BEFORE_UNMOUNT = 200
+const SWIPE_THRESHOLD = 40
+const DEFAULT_DURATION = 5000
+const DIRECTIONS = ["up", "down", "left", "right"]
+
+let uid = 0
 
 // Connects to data-controller="ruby-ui--toast"
+//
+// One toast: its timer, swipe-to-dismiss and exit. The toaster controller
+// (region) owns stacking, limits and pausing; it talks to toasts through
+// ruby-ui:toast:* events dispatched on the toast element.
 export default class extends Controller {
   static values = {
-    duration: { type: Number, default: 4000 },
+    duration: Number,
     dismissible: { type: Boolean, default: true },
-    invert: { type: Boolean, default: false },
-    onDismiss: String,
-    onAutoClose: String,
+    swipeDirections: String,
   }
 
   connect() {
     this._timer = null
     this._startedAt = 0
-    this._remaining = this.durationValue
-    this._paused = false
-    this._swipe = { active: false, x: 0, y: 0, startedAt: 0 }
+    this._remaining = 0
+    this._holds = new Set()
+    this._swipe = null
+
+    this._wireLabels()
 
     this._onPointerDown = this._onPointerDown.bind(this)
     this._onPointerMove = this._onPointerMove.bind(this)
     this._onPointerUp = this._onPointerUp.bind(this)
-    this._onPointerEnter = () => this._pause()
-    this._onPointerLeave = () => { if (!this._swipe.active) this._resume() }
-    this._onKeyDown = this._onKeyDown.bind(this)
-    this._onForceDismiss = (e) => { e.stopPropagation(); this._close() }
+    this._onForceDismiss = (e) => { e.stopPropagation(); this._close("dismiss") }
     this._onRestart = () => this._restart()
-    this._onRegionPause = () => this._pause()
-    this._onRegionResume = () => this._resume()
+    this._onHold = (e) => this._setHold(e.detail.reason, e.detail.on)
 
     this.element.addEventListener("pointerdown", this._onPointerDown)
-    this.element.addEventListener("pointerenter", this._onPointerEnter)
-    this.element.addEventListener("pointerleave", this._onPointerLeave)
-    this.element.addEventListener("keydown", this._onKeyDown)
     this.element.addEventListener("ruby-ui:toast:force-dismiss", this._onForceDismiss)
     this.element.addEventListener("ruby-ui:toast:restart", this._onRestart)
-    document.addEventListener("ruby-ui:toast:pause", this._onRegionPause)
-    document.addEventListener("ruby-ui:toast:resume", this._onRegionResume)
+    this.element.addEventListener("ruby-ui:toast:hold", this._onHold)
 
-    requestAnimationFrame(() => {
-      this.element.dataset.state = "open"
-      this._start()
-    })
+    if (this.element.dataset.state === "pending") {
+      // Two frames: the toaster paints the start position (off-screen) first,
+      // so the move to the stack position transitions.
+      this._enterFrame = requestAnimationFrame(() => {
+        this._enterFrame = requestAnimationFrame(() => {
+          this._enterFrame = null
+          this.element.dataset.state = "open"
+          this.element.dispatchEvent(new CustomEvent("ruby-ui:toast:opened", { bubbles: true }))
+        })
+      })
+    }
+    this._start()
   }
 
   disconnect() {
+    if (this._enterFrame) cancelAnimationFrame(this._enterFrame)
     this._clearTimer()
+    this._endSwipe()
     this.element.removeEventListener("pointerdown", this._onPointerDown)
-    this.element.removeEventListener("pointerenter", this._onPointerEnter)
-    this.element.removeEventListener("pointerleave", this._onPointerLeave)
-    this.element.removeEventListener("keydown", this._onKeyDown)
     this.element.removeEventListener("ruby-ui:toast:force-dismiss", this._onForceDismiss)
     this.element.removeEventListener("ruby-ui:toast:restart", this._onRestart)
-    document.removeEventListener("ruby-ui:toast:pause", this._onRegionPause)
-    document.removeEventListener("ruby-ui:toast:resume", this._onRegionResume)
+    this.element.removeEventListener("ruby-ui:toast:hold", this._onHold)
   }
 
+  // X, Cancel and swipe: respect dismissible.
   dismiss(e) {
     e?.preventDefault()
     if (!this.dismissibleValue) return
     this._close("dismiss")
   }
 
-  _close(reason) {
-    if (this.element.dataset.state === "closing") return
-    this.element.dataset.state = "closing"
-    this.element.dispatchEvent(new CustomEvent(reason === "auto" ? "ruby-ui:toast:auto-close" : "ruby-ui:toast:dismiss", { bubbles: true, detail: { id: this.element.id } }))
-    setTimeout(() => this.element.remove(), TIME_BEFORE_UNMOUNT)
+  // The action button always closes the toast.
+  close(e) {
+    e?.preventDefault()
+    this._close("dismiss")
   }
 
+  // aria-labelledby / aria-describedby, as Base UI's Toast.Root does.
+  _wireLabels() {
+    const title = this.element.querySelector('[data-slot="toast-title"]')
+    const description = this.element.querySelector('[data-slot="toast-description"]')
+    const base = this.element.id || `ruby-ui-toast-${++uid}`
+    if (title && title.textContent.trim() !== "") {
+      title.id ||= `${base}-title`
+      this.element.setAttribute("aria-labelledby", title.id)
+    }
+    if (description && description.textContent.trim() !== "") {
+      description.id ||= `${base}-description`
+      this.element.setAttribute("aria-describedby", description.id)
+    }
+  }
+
+  _duration() {
+    if (this.hasDurationValue) return this.durationValue
+    const region = this.element.closest('[data-controller~="ruby-ui--toaster"]')
+    const inherited = Number(region?.getAttribute("data-ruby-ui--toaster-duration-value"))
+    return Number.isNaN(inherited) || region === null ? DEFAULT_DURATION : inherited
+  }
+
+  // 0, Infinity and non-numbers mean "stays until dismissed".
   _start() {
-    if (!Number.isFinite(this.durationValue) || this.durationValue <= 0) return
-    this._startedAt = performance.now()
-    this._remaining = this.durationValue
-    this._timer = setTimeout(() => this._close("auto"), this._remaining)
+    this._clearTimer()
+    const duration = this._duration()
+    if (!Number.isFinite(duration) || duration <= 0) { this._remaining = Infinity; return }
+    this._remaining = duration
+    const region = this.element.closest('[data-controller~="ruby-ui--toaster"]')
+    if (region?.dataset.paused) this._holds.add("region")
+    if (this.element.hasAttribute("data-limited")) this._holds.add("limited")
+    if (this._holds.size === 0) this._run()
   }
 
   _restart() {
-    this._clearTimer()
     this._start()
   }
 
-  _pause() {
-    if (this._paused || !this._timer) return
-    this._paused = true
-    clearTimeout(this._timer)
-    this._timer = null
-    this._remaining -= performance.now() - this._startedAt
-  }
-
-  _resume() {
-    if (!this._paused) return
-    this._paused = false
+  _run() {
+    if (!Number.isFinite(this._remaining)) return
     if (this._remaining <= 0) return this._close("auto")
     this._startedAt = performance.now()
     this._timer = setTimeout(() => this._close("auto"), this._remaining)
+  }
+
+  _setHold(reason, on) {
+    const wasHeld = this._holds.size > 0
+    if (on) this._holds.add(reason)
+    else this._holds.delete(reason)
+    const held = this._holds.size > 0
+    if (held && !wasHeld && this._timer) {
+      this._clearTimer()
+      this._remaining -= performance.now() - this._startedAt
+    } else if (!held && wasHeld && this.element.dataset.state !== "closing") {
+      this._run()
+    }
   }
 
   _clearTimer() {
@@ -104,48 +139,106 @@ export default class extends Controller {
     this._timer = null
   }
 
-  _onKeyDown(e) {
-    if (e.key === "Escape" && this.dismissibleValue) this.dismiss(e)
+  _close(reason, exitTransform = null) {
+    if (this.element.dataset.state === "closing") return
+    const el = this.element
+    const detail = { id: el.id, reason }
+    el.dataset.state = "closing"
+    this._clearTimer()
+    this._endSwipe()
+    el.removeAttribute("data-behind")
+    el.dispatchEvent(new CustomEvent("ruby-ui:toast:close", { bubbles: true, detail }))
+    el.dispatchEvent(new CustomEvent(reason === "auto" ? "ruby-ui:toast:auto-close" : "ruby-ui:toast:dismiss", { bubbles: true, detail }))
+
+    const top = el.closest("[data-position]")?.dataset.position?.startsWith("top")
+    el.style.transform = exitTransform || `translateY(${top ? "-150%" : "150%"})`
+
+    const transforming = () => el.getAnimations().some((a) => a.transitionProperty === "transform")
+    let removed = false
+    const remove = () => {
+      if (removed) return
+      removed = true
+      el.removeEventListener("transitionend", onEnd)
+      el.removeEventListener("transitioncancel", onEnd)
+      el.dispatchEvent(new CustomEvent("ruby-ui:toast:remove", { bubbles: true, detail }))
+      el.remove()
+    }
+    // A cancelled enter transition also fires here; wait for the exit one.
+    const onEnd = (e) => { if (e.target === el && e.propertyName === "transform" && !transforming()) remove() }
+    el.addEventListener("transitionend", onEnd)
+    el.addEventListener("transitioncancel", onEnd)
+    // Flush styles so the exit transition starts now; with none running
+    // (reduced motion, same transform) there is nothing to wait for.
+    void el.offsetWidth
+    if (document.hidden || !transforming()) remove()
+  }
+
+  _directions() {
+    const own = this.swipeDirectionsValue
+    const region = this.element.closest('[data-controller~="ruby-ui--toaster"]')
+    const list = own || region?.dataset.swipeDirections || "down right"
+    return list.split(/\s+/).filter((d) => DIRECTIONS.includes(d))
   }
 
   _onPointerDown(e) {
-    if (!this.dismissibleValue) return
-    if (e.target.closest("button")) return
+    if (!this.dismissibleValue || e.button !== 0) return
+    if (e.target.closest("button, a, input, select, textarea")) return
+    const directions = this._directions()
+    if (directions.length === 0) return
     try { this.element.setPointerCapture(e.pointerId) } catch {}
-    this._swipe = { active: true, x: e.clientX, y: e.clientY, startedAt: performance.now(), pointerId: e.pointerId }
-    this.element.dataset.swipe = "start"
+    this._swipe = { x: e.clientX, y: e.clientY, startedAt: performance.now(), base: this.element.style.transform, directions, dx: 0, dy: 0 }
+    this._setHold("swipe", true)
     this.element.addEventListener("pointermove", this._onPointerMove)
     this.element.addEventListener("pointerup", this._onPointerUp)
     this.element.addEventListener("pointercancel", this._onPointerUp)
   }
 
+  // Free movement along allowed directions, resistance along the others.
   _onPointerMove(e) {
-    const dx = e.clientX - this._swipe.x
-    const dy = e.clientY - this._swipe.y
+    const s = this._swipe
+    if (!s) return
+    const rawX = e.clientX - s.x
+    const rawY = e.clientY - s.y
+    const allowedX = (rawX > 0 && s.directions.includes("right")) || (rawX < 0 && s.directions.includes("left"))
+    const allowedY = (rawY > 0 && s.directions.includes("down")) || (rawY < 0 && s.directions.includes("up"))
+    s.dx = allowedX ? rawX : Math.sign(rawX) * Math.sqrt(Math.abs(rawX))
+    s.dy = allowedY ? rawY : Math.sign(rawY) * Math.sqrt(Math.abs(rawY))
     this.element.dataset.swipe = "move"
-    this.element.style.transform = `translate(${dx}px, ${dy}px)`
+    this.element.style.transform = `translateX(${s.dx}px) translateY(${s.dy}px) ${s.base}`
   }
 
-  _onPointerUp(e) {
-    const dx = e.clientX - this._swipe.x
-    const dy = e.clientY - this._swipe.y
-    const dist = Math.hypot(dx, dy)
-    const dt = performance.now() - this._swipe.startedAt
-    const velocity = dist / Math.max(dt, 1)
+  _onPointerUp() {
+    const s = this._swipe
+    if (!s) return
+    const elapsed = Math.max(performance.now() - s.startedAt, 1)
+    const exits = {
+      right: { distance: s.dx, transform: `translateX(calc(${s.dx}px + 150%)) translateY(${s.dy}px)` },
+      left: { distance: -s.dx, transform: `translateX(calc(${s.dx}px - 150%)) translateY(${s.dy}px)` },
+      down: { distance: s.dy, transform: `translateX(${s.dx}px) translateY(calc(${s.dy}px + 150%))` },
+      up: { distance: -s.dy, transform: `translateX(${s.dx}px) translateY(calc(${s.dy}px - 150%))` },
+    }
+    const direction = s.directions.find((d) => {
+      const distance = exits[d].distance
+      return distance > SWIPE_THRESHOLD || (distance > 10 && distance / elapsed > 0.5)
+    })
+    const base = s.base
+    this._endSwipe()
+    if (direction) {
+      this.element.dataset.swipe = "end"
+      this.element.dataset.swipeDirection = direction
+      this._close("dismiss", exits[direction].transform)
+    } else {
+      this.element.dataset.swipe = "cancel"
+      this.element.style.transform = base
+    }
+  }
+
+  _endSwipe() {
+    if (!this._swipe) return
+    this._swipe = null
     this.element.removeEventListener("pointermove", this._onPointerMove)
     this.element.removeEventListener("pointerup", this._onPointerUp)
     this.element.removeEventListener("pointercancel", this._onPointerUp)
-    this._swipe.active = false
-    if (dist > SWIPE_THRESHOLD || velocity > 0.5) {
-      this.element.style.setProperty("--swipe-end-x", `${Math.sign(dx) * 500}px`)
-      this.element.style.setProperty("--swipe-end-y", `${Math.sign(dy) * 500}px`)
-      this.element.dataset.swipe = "end"
-      this.element.style.transform = ""
-      this._close("dismiss")
-    } else {
-      this.element.dataset.swipe = "cancel"
-      this.element.style.transform = ""
-      this._resume()
-    }
+    this._setHold("swipe", false)
   }
 }
