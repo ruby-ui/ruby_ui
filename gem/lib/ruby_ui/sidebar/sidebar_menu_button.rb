@@ -16,10 +16,12 @@ module RubyUI
       lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0"
     }.freeze
 
-    # The tooltip is cloned into <body>, outside the sidebar, so it hides itself
-    # with a body-level selector: only shown while a desktop sidebar is
-    # collapsed (shadcn: hidden={state !== "collapsed" || isMobile}).
-    TOOLTIP_CLASSES = "[body:has([data-slot=sidebar][data-state=expanded])_&]:hidden max-md:hidden"
+    # The tooltip controller places the content right after this button, inside
+    # its own sidebar, so it hides from that sidebar's state alone: shown only
+    # while the desktop sidebar around it is collapsed (shadcn:
+    # hidden={state !== "collapsed" || isMobile}). A second, expanded sidebar
+    # on the page no longer hides it.
+    TOOLTIP_CLASSES = "[[data-slot=sidebar]:not([data-state=collapsed])_&]:hidden max-md:hidden"
 
     # tooltip: label shown on the right when the sidebar is collapsed to icons.
     def initialize(as: :button, variant: :default, size: :default, active: false, tooltip: nil, **attrs)
@@ -39,7 +41,7 @@ module RubyUI
 
       tag(@as, **mix(attrs, tooltip_attrs)) do
         # First child, so [&>span:last-child]:truncate still finds the label.
-        TooltipContent(class: TOOLTIP_CLASSES) { @tooltip }
+        TooltipContent(side: :right, class: TOOLTIP_CLASSES) { @tooltip }
         yield if block
       end
     end
@@ -50,14 +52,7 @@ module RubyUI
       {
         data: {
           controller: "ruby-ui--tooltip",
-          ruby_ui__tooltip_placement_value: "right",
-          ruby_ui__tooltip_target: "trigger",
-          action: [
-            "mouseenter->ruby-ui--tooltip#show",
-            "mouseleave->ruby-ui--tooltip#hide",
-            "focus->ruby-ui--tooltip#show",
-            "blur->ruby-ui--tooltip#hide"
-          ]
+          ruby_ui__tooltip_target: "trigger"
         }
       }
     end

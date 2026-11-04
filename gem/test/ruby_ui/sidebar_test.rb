@@ -259,9 +259,21 @@ class RubyUI::SidebarTest < ComponentTest
     output = phlex { RubyUI.SidebarMenuButton(tooltip: "Home") { "Home" } }
 
     assert_match(/data-controller="ruby-ui--tooltip"/, output)
-    assert_match(/data-ruby-ui--tooltip-placement-value="right"/, output)
-    assert_match(/data-ruby-ui--tooltip-target="trigger"/, output)
-    assert_match(%r{blur->ruby-ui--tooltip#hide"><template data-ruby-ui--tooltip-target="content">}, output)
+    assert_match(/data-ruby-ui--tooltip-target="trigger"><template data-ruby-ui--tooltip-target="content">/, output)
+    assert_match(/data-preferred-side="right"/, output)
+    refute_match(/data-action/, output)
+  end
+
+  # Pins the classes that scope the hiding to the sidebar around the button
+  # (the content sits inside it), instead of a body-level selector that any
+  # expanded sidebar on the page matched. The two-sidebar behavior itself is
+  # checked in the browser (see the PR).
+  def test_menu_button_tooltip_hides_from_its_own_sidebar
+    output = phlex { RubyUI.SidebarMenuButton(tooltip: "Home") { "Home" } }
+
+    assert_includes output, "[[data-slot=sidebar]:not([data-state=collapsed])_&]:hidden"
+    assert_includes output, "max-md:hidden"
+    refute_match(/body:has/, output)
   end
 
   def test_menu_button_without_tooltip
