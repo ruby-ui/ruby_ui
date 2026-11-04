@@ -17,6 +17,7 @@ module Components
           SheetContent(class: "w-[300px]", side: :left) do
             div(class: "flex flex-col h-full") do
               SheetHeader do
+                SheetTitle(class: "sr-only") { "Menu" }
                 div(class: "pl-2") do
                   render Shared::Logo.new
                 end

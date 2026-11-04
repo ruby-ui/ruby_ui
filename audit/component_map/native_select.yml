@@ -1,0 +1,26 @@
+shadcn: native-select
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: form_control
+docs_view: native_select
+# The fixture renders five selects: default (data-audit-trigger, used for
+# focus), grouped options, disabled, invalid (aria-invalid) and size sm.
+# NativeSelectWrapper is not a RubyUI class: it is the outer <div> that
+# NativeSelect renders around the <select> (shadcn's native-select-wrapper).
+# RubyUI's default NativeSelectIcon is the <svg> itself, as in shadcn; only a
+# custom icon passed as a block renders inside a <span>.
+parts:
+  NativeSelectWrapper: native-select-wrapper
+  NativeSelect: native-select
+  NativeSelectIcon: native-select-icon
+  NativeSelectOption: native-select-option
+  NativeSelectGroup: native-select-optgroup
+selectors:
+  NativeSelectWrapper: 'div:has(> select[data-audit-select])'
+  NativeSelect: 'select[data-audit-select]'
+  NativeSelectIcon: 'select[data-audit-select] + *'
+  NativeSelectOption: 'select[data-audit-select] option'
+  NativeSelectGroup: 'select[data-audit-select] optgroup'
+props:
+  NativeSelect:
+    size: size
+    disabled: disabled

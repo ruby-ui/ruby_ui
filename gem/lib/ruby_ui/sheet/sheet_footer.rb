@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 gap-y-2 sm:gap-y-0"
+        data: {slot: "sheet-footer"},
+        class: "mt-auto flex flex-col gap-2 p-4"
       }
     end
   end

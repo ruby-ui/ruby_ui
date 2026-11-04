@@ -288,4 +288,34 @@ class RubyUI::SidebarTest < ComponentTest
     assert_match(/keydown\.ctrl\+b@window->ruby-ui--sidebar#toggle/, output)
     assert_match(/keydown\.meta\+b@window->ruby-ui--sidebar#toggle/, output)
   end
+
+  # On mobile the sidebar is a Sheet: a native <dialog> (role=dialog, focus moved
+  # in by showModal, Esc closes) named by its sr-only title, with no close button.
+  def test_mobile_sidebar_is_a_sheet_dialog
+    output = phlex do
+      RubyUI.MobileSidebar { "menu" }
+    end
+
+    assert_match(/<dialog[^>]*data-ruby-ui--sheet-target="content"/, output)
+    assert_match(/<h2[^>]*data-ruby-ui--sheet-target="title"[^>]*>Sidebar<\/h2>/, output)
+    assert_includes output, %(data-side="left")
+    assert_includes output, "w-[var(--sidebar-width)]"
+    refute_includes output, "w-3/4"
+    refute_includes output, %(data-slot="sheet-close")
+    assert_includes output, "ruby--ui-sidebar:open->ruby-ui--sheet#open:self"
+  end
+
+  def test_separator_is_semantic_with_its_own_slot
+    output = phlex { RubyUI.SidebarSeparator() }
+
+    assert_match(/role="separator"/, output)
+    assert_match(/data-slot="sidebar-separator"/, output)
+    refute_match(/data-slot="separator /, output)
+  end
+
+  def test_mobile_sheet_content_slot_is_sidebar
+    output = phlex { RubyUI.MobileSidebar { "menu" } }
+
+    assert_match(/<dialog data-slot="sidebar"/, output)
+  end
 end

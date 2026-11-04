@@ -1,0 +1,14 @@
+shadcn: separator
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: static
+docs_view: separator
+parts:
+  Separator: separator
+selectors:
+  # Both fixtures tag each separator with data-audit-separator so one selector works on both sides.
+  Separator: '#separator-fixture [data-audit-separator]'
+props:
+  # Base UI SeparatorPrimitive.Props: orientation (+ render, className, style).
+  Separator: {orientation: orientation, render: as}
+rubyui_only:
+  Separator: [decorative]

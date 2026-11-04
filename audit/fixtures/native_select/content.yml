@@ -1,0 +1,19 @@
+# Five selects: default (data-audit-trigger, used for focus), grouped
+# options, disabled, invalid (aria-invalid) and size sm. Every audited
+# select carries data-audit-select. Labels are plain <label>s with the same
+# classes on both sides; not audited.
+fruit: Fruit
+fruit_placeholder: Select a fruit
+apple: Apple
+banana: Banana
+blueberry: Blueberry
+department: Department
+department_placeholder: Select a department
+engineering: Engineering
+frontend: Frontend
+backend: Backend
+sales: Sales
+account_executive: Account Executive
+disabled: Disabled
+invalid: Invalid
+small: Small

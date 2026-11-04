@@ -55,6 +55,19 @@ class Views::Docs::NativeSelect < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Size", description: "Use size: :sm for a compact select. Classes passed to NativeSelect style the wrapper, so class: \"w-full\" stretches the whole field.", context: self) do
+        <<~RUBY
+          div(class: "grid w-full max-w-sm items-center gap-1.5") do
+            NativeSelect(size: :sm, class: "w-full") do
+              NativeSelectOption(value: "") { "Select a fruit" }
+              NativeSelectOption(value: "apple") { "Apple" }
+              NativeSelectOption(value: "banana") { "Banana" }
+              NativeSelectOption(value: "blueberry") { "Blueberry" }
+            end
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Invalid", description: "Use aria-invalid to show validation errors.", context: self) do
         <<~RUBY
           div(class: "grid w-full max-w-sm items-center gap-1.5") do

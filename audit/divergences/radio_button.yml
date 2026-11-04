@@ -1,0 +1,19 @@
+- component: radio_button
+  dimension: Look
+  match: {part: RadioButton, property: opacity, rubyui: "0.5", shadcn: "1"}
+  rubyui: "disabled radio at opacity-50 with cursor-not-allowed"
+  shadcn: "disabled radio at full opacity, default cursor, outside a Field"
+  reason: "shadcn's disabled:opacity-50 and disabled:cursor-not-allowed never apply in the Base UI base: its root is a <span> with data-disabled, and :disabled doesn't match a span. The Radix base (<button disabled>) and the React Aria base (data-[disabled]:) do apply them. RubyUI's native input matches :disabled, so it gets the dimming the classes ask for."
+  since: "2026-11-04"
+- component: radio_button
+  dimension: Props
+  rubyui: "No readOnly: RadioButton is a native <input type=\"radio\">, and HTML ignores readonly on radios"
+  shadcn: "RadioGroup / RadioGroupItem readOnly (focusable, value can't change)"
+  reason: "HTML's readonly attribute doesn't apply to type=radio (https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly). Emulating it needs JS to cancel clicks and arrow keys, against RadioButton's no-JS native control; Rails forms use disabled plus a hidden field for a fixed value."
+  since: "2026-11-04"
+- component: radio_button
+  dimension: Props
+  rubyui: "RadioGroup only wraps (role=radiogroup); name, disabled, required and the checked value stay on each RadioButton"
+  shadcn: "RadioGroup name, defaultValue, value, onValueChange, disabled, readOnly, required, form"
+  reason: "Native radios already group by name and take disabled/required/checked per input, which is what Rails form builders render. Copying them down from the group would duplicate HTML; a fieldset disabled covers group-level disabling."
+  since: "2026-11-04"
