@@ -62,9 +62,9 @@ class Views::Docs::RadioButton < Views::Base
         <<~RUBY
           form(class: "flex w-fit flex-col gap-4") do
             FormFieldSet do
-              FormFieldLegend(variant: :label) { "Notify me about" }
+              FormFieldLegend(id: "notify_legend", variant: :label) { "Notify me about" }
               FormField do
-                RadioGroup(aria: {label: "Notify me about"}) do
+                RadioGroup(aria: {labelledby: "notify_legend"}) do
                   div(class: "flex items-center gap-3") do
                     RadioButton(id: "notify_mentions", name: "notify", value: "mentions", required: true)
                     FormFieldLabel(for: "notify_mentions") { "Direct messages and mentions" }

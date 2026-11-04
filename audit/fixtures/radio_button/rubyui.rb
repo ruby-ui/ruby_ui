@@ -9,7 +9,7 @@ module ShadcnAuditFixtures
 
     def view_template
       div(class: "flex flex-col gap-6") do
-        RadioGroup do
+        RadioGroup(aria: {label: "Density"}) do
           div(class: "flex items-center gap-3") do
             RadioButton(id: "r-default", name: "density", value: "default")
             label(for: "r-default", class: LABEL) { "Default" }
@@ -23,7 +23,7 @@ module ShadcnAuditFixtures
             label(for: "r-compact", class: LABEL) { "Compact" }
           end
         end
-        RadioGroup do
+        RadioGroup(aria: {label: "Validation"}) do
           div(class: "flex items-center gap-3") do
             RadioButton(id: "r-invalid", name: "invalid", value: "invalid", aria: {invalid: "true"})
             label(for: "r-invalid", class: LABEL) { "Invalid option" }

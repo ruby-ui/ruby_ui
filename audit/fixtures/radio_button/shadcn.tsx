@@ -5,7 +5,7 @@ const LABEL = "text-sm font-medium leading-none"
 export default function RadioButtonFixture() {
   return (
     <div className="flex flex-col gap-6">
-      <RadioGroup name="density" defaultValue="comfortable">
+      <RadioGroup name="density" defaultValue="comfortable" aria-label="Density">
         <div className="flex items-center gap-3">
           <RadioGroupItem id="r-default" value="default" />
           <label htmlFor="r-default" className={LABEL}>Default</label>
@@ -19,7 +19,7 @@ export default function RadioButtonFixture() {
           <label htmlFor="r-compact" className={LABEL}>Compact</label>
         </div>
       </RadioGroup>
-      <RadioGroup name="invalid">
+      <RadioGroup name="invalid" aria-label="Validation">
         <div className="flex items-center gap-3">
           <RadioGroupItem id="r-invalid" value="invalid" aria-invalid="true" />
           <label htmlFor="r-invalid" className={LABEL}>Invalid option</label>

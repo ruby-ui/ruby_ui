@@ -45,7 +45,7 @@ class RubyUI::RadioButtonTest < ComponentTest
 
     assert_match(/data-ruby-ui--form-field-target="input"/, output)
     assert_match(/invalid->ruby-ui--form-field#onInvalid/, output)
-    assert_match(/required/, output)
+    assert_match(/<input\b[^<]*\srequired[\s>]/, output)
   end
 
   def test_radio_group_renders_a_radiogroup

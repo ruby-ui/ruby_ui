@@ -7,3 +7,5 @@ default: Default
 comfortable: Comfortable
 compact: Compact
 invalid: Invalid option
+density_group: Density
+validation_group: Validation

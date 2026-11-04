@@ -8,7 +8,7 @@ module RubyUI
   # text-primary-foreground) and ::after widens the hit area, so there is no
   # wrapper and peer-* classes on a following label keep working.
   #
-  # Radios group by name:. Wrap them in RadioGroup for role="radiogroup".
+  # Radios group by their name attribute. Wrap them in RadioGroup for role="radiogroup".
   class RadioButton < Base
     BASE = [
       "peer relative aspect-square size-4 shrink-0 appearance-none rounded-full border border-input bg-transparent p-0",
