@@ -33,6 +33,19 @@ class RubyUI::RadioButtonTest < ComponentTest
     assert_match(/aria-invalid:checked:border-primary/, output)
   end
 
+  def test_disabled_dims_only_itself
+    output = phlex { RubyUI.RadioButton }
+
+    assert_match(/disabled:opacity-50/, output)
+    refute_match(/group-has-disabled/, output)
+  end
+
+  def test_form_field_label_is_the_field_label_group
+    output = phlex { RubyUI.FormFieldLabel(for: "a") { "A" } }
+
+    assert_match(/group\/field-label/, output)
+  end
+
   def test_wires_form_field_validation
     output = phlex { RubyUI.RadioButton(required: true) }
 

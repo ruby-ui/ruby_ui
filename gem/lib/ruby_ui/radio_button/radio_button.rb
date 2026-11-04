@@ -19,7 +19,7 @@ module RubyUI
       "before:pointer-events-none before:absolute before:top-1/2 before:left-1/2 before:hidden before:size-2",
       "before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-current",
       "focus:ring-0 focus:ring-offset-0 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
-      "disabled:cursor-not-allowed disabled:opacity-50 group-has-disabled/field:opacity-50",
+      "disabled:cursor-not-allowed disabled:opacity-50",
       "aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none",
       "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
       "dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
