@@ -274,7 +274,7 @@ class RubyUI::ToggleGroupTest < ComponentTest
       end
     end
     pressed = output.split("<button").find { |b| b.include?(%(data-value="right")) }
-    assert_match(/data-state="on"/, pressed)
-    assert_match(/data-\[state=on\]:bg-muted/, pressed)
+    assert_match(/aria-pressed="true"/, pressed)
+    assert_match(/aria-pressed:bg-muted/, pressed)
   end
 end
