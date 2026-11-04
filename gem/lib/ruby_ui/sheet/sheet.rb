@@ -16,6 +16,7 @@ module RubyUI
     def default_attrs
       {
         data: {
+          slot: "sheet",
           controller: "ruby-ui--sheet",
           ruby_ui__sheet_open_value: @open.to_s
         }

@@ -162,4 +162,20 @@ class RubyUI::SidebarTest < ComponentTest
 
     assert_match(/data-collapsible-kind="offcanvas"/, output)
   end
+
+  # On mobile the sidebar is a Sheet: a native <dialog> (role=dialog, focus moved
+  # in by showModal, Esc closes) named by its sr-only title, with no close button.
+  def test_mobile_sidebar_is_a_sheet_dialog
+    output = phlex do
+      RubyUI.MobileSidebar { "menu" }
+    end
+
+    assert_match(/<dialog[^>]*data-ruby-ui--sheet-target="content"/, output)
+    assert_match(/<h2[^>]*data-ruby-ui--sheet-target="title"[^>]*>Sidebar<\/h2>/, output)
+    assert_includes output, %(data-side="left")
+    assert_includes output, "w-[var(--sidebar-width)]"
+    refute_includes output, "w-3/4"
+    refute_includes output, %(data-slot="sheet-close")
+    assert_includes output, "ruby--ui-sidebar:open->ruby-ui--sheet#open:self"
+  end
 end
