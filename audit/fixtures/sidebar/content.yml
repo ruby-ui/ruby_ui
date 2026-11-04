@@ -1,0 +1,18 @@
+# Desktop sidebar (collapsible: icon) beside an inset whose header holds the
+# SidebarTrigger (data-audit-trigger). One group with a label and an action,
+# four items (active, badge, menu action, sub-menu), a header input, a
+# separator, a footer item and the rail.
+input: Search the docs
+group_label: Platform
+group_action: Add project
+home: Home
+inbox: Inbox
+badge: "24"
+search: Search
+more: More
+projects: Projects
+design: Design
+marketing: Marketing
+account: Account
+inset_title: Dashboard
+inset_body: Main content

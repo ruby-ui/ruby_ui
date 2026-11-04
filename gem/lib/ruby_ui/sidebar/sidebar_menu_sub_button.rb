@@ -7,7 +7,7 @@ module RubyUI
       md: "text-sm"
     }.freeze
 
-    def initialize(as: :button, size: :md, active: false, **attrs)
+    def initialize(as: :a, size: :md, active: false, **attrs)
       raise ArgumentError, "Invalid size: #{size}" unless SIZE_CLASSES.key?(size)
 
       @as = as
@@ -40,6 +40,7 @@ module RubyUI
           SIZE_CLASSES[@size]
         ],
         data: {
+          slot: "sidebar-menu-sub-button",
           sidebar: "menu-sub-button",
           size: @size,
           active: @active.to_s

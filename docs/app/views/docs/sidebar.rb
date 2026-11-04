@@ -37,6 +37,25 @@ class Views::Docs::Sidebar < Views::Base
         Views::Docs::Sidebar::InsetExample::CODE
       end
 
+      Heading(level: 2) { "Tooltips" }
+      Text { "With collapsible: :icon, pass tooltip: to SidebarMenuButton. The label shows on the right only while the sidebar is collapsed on desktop." }
+      Codeblock(<<~CODE, syntax: :ruby)
+        SidebarMenuButton(as: :a, href: "#", tooltip: "Inbox") do
+          inbox_icon()
+          span { "Inbox" }
+        end
+      CODE
+
+      Heading(level: 2) { "Keyboard shortcut and state" }
+      Text { "On desktop, Ctrl+B (Cmd+B on macOS) toggles the sidebar. Each desktop toggle saves the state in the sidebar_state cookie and dispatches ruby-ui--sidebar:change with detail.open; on mobile the trigger opens the sheet instead. Read the cookie on the server to render the last desktop state." }
+      Codeblock(<<~CODE, syntax: :ruby)
+        # Initial state from the cookie
+        Sidebar(open: cookies[:sidebar_state] != "false") { ... }
+
+        # React to changes in your own Stimulus controller
+        SidebarWrapper(data: {action: "ruby-ui--sidebar:change->layout#resize"}) { ... }
+      CODE
+
       render Docs::VisualCodeExample.new(title: "Dialog variant", context: self) do
         <<~RUBY
           Dialog(data: {action: "ruby-ui--dialog:connect->ruby-ui--dialog#open"}) do

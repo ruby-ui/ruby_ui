@@ -1,0 +1,79 @@
+shadcn: sidebar
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: disclosure
+docs_view: sidebar
+# Desktop sidebar (viewport 1280 >= md), collapsible: icon so the collapsed
+# state ("open" in collect = after clicking the trigger) still renders parts.
+# SidebarGap / SidebarContainer / SidebarInner are the internal divs that
+# RubyUI's CollapsibleSidebar renders inline (no RubyUI class of their own).
+# MobileSidebar (the Sheet) is shadcn's isMobile branch: not in the desktop DOM.
+parts:
+  SidebarWrapper: sidebar-wrapper
+  Sidebar: sidebar
+  SidebarGap: sidebar-gap
+  SidebarContainer: sidebar-container
+  SidebarInner: sidebar-inner
+  SidebarTrigger: sidebar-trigger
+  SidebarRail: sidebar-rail
+  SidebarInset: sidebar-inset
+  SidebarInput: sidebar-input
+  SidebarHeader: sidebar-header
+  SidebarFooter: sidebar-footer
+  SidebarSeparator: sidebar-separator
+  SidebarContent: sidebar-content
+  SidebarGroup: sidebar-group
+  SidebarGroupLabel: sidebar-group-label
+  SidebarGroupAction: sidebar-group-action
+  SidebarGroupContent: sidebar-group-content
+  SidebarMenu: sidebar-menu
+  SidebarMenuItem: sidebar-menu-item
+  SidebarMenuButton: sidebar-menu-button
+  SidebarMenuAction: sidebar-menu-action
+  SidebarMenuBadge: sidebar-menu-badge
+  SidebarMenuSkeleton: sidebar-menu-skeleton
+  SidebarMenuSub: sidebar-menu-sub
+  SidebarMenuSubItem: sidebar-menu-sub-item
+  SidebarMenuSubButton: sidebar-menu-sub-button
+  MobileSidebar: null
+  CollapsibleSidebar: null
+  NonCollapsibleSidebar: null
+selectors:
+  SidebarWrapper: '[data-controller="ruby-ui--sidebar"]'
+  Sidebar: '[data-ruby-ui--sidebar-target="sidebar"]'
+  SidebarGap: '[data-ruby-ui--sidebar-target="sidebar"] > div:first-child'
+  SidebarContainer: '[data-ruby-ui--sidebar-target="sidebar"] > div:nth-child(2)'
+  SidebarInner: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="sidebar"]'
+  SidebarTrigger: 'main [data-sidebar="trigger"]'
+  SidebarRail: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="rail"]'
+  SidebarInset: '[data-controller="ruby-ui--sidebar"] > main'
+  SidebarInput: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="input"]'
+  SidebarHeader: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="header"]'
+  SidebarFooter: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="footer"]'
+  SidebarSeparator: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="separator"]'
+  SidebarContent: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="content"]'
+  SidebarGroup: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="group"]'
+  SidebarGroupLabel: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="group-label"]'
+  SidebarGroupAction: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="group-action"]'
+  SidebarGroupContent: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="group-content"]'
+  SidebarMenu: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu"]'
+  SidebarMenuItem: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu-item"]'
+  SidebarMenuButton: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu-button"]'
+  SidebarMenuAction: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu-action"]'
+  SidebarMenuBadge: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu-badge"]'
+  SidebarMenuSub: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu-sub"]'
+  SidebarMenuSubItem: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu-sub"] > li'
+  SidebarMenuSubButton: '[data-ruby-ui--sidebar-target="sidebar"] [data-sidebar="menu-sub-button"]'
+  # Random width per render: not in the fixture.
+  SidebarMenuSkeleton: null
+props:
+  SidebarWrapper: {defaultOpen: null, open: null, onOpenChange: null}
+  Sidebar: {side: side, variant: variant, collapsible: collapsible}
+  SidebarMenuButton: {isActive: active, variant: variant, size: size, tooltip: tooltip, render: as}
+  SidebarMenuAction: {showOnHover: show_on_hover, render: as}
+  SidebarMenuSkeleton: {showIcon: show_icon}
+  SidebarMenuSubButton: {isActive: active, size: size, render: as}
+  SidebarGroupLabel: {render: as}
+  SidebarGroupAction: {render: as}
+rubyui_only:
+  Sidebar: [open]
+fixture_shadcn: [button, input, separator, sheet, skeleton, tooltip]

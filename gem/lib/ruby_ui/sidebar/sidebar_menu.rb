@@ -12,6 +12,7 @@ module RubyUI
       {
         class: "flex w-full min-w-0 flex-col gap-1",
         data: {
+          slot: "sidebar-menu",
           sidebar: "menu"
         }
       }

@@ -19,6 +19,8 @@ module RubyUI
             "--sidebar-width": SIDEBAR_WIDTH_MOBILE
           },
           data: {
+            # slot! replaces SheetContent's own data-slot instead of joining it.
+            slot!: "sidebar",
             sidebar: "sidebar",
             mobile: "true"
           }

@@ -10,8 +10,9 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        class: "flex min-h-0 flex-1 flex-col gap-2 overflow-auto [scrollbar-width:none] group-data-[collapsible=icon]:overflow-hidden [&::-webkit-scrollbar]:hidden",
         data: {
+          slot: "sidebar-content",
           sidebar: "content"
         }
       }

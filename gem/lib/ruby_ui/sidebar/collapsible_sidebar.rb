@@ -10,11 +10,13 @@ module RubyUI
       super(**attrs)
     end
 
+    # Like shadcn, the caller's class/attrs go to the fixed sidebar container,
+    # not to the outer peer div that only carries the state.
     def view_template(&)
       MobileSidebar(side: @side, **attrs, &)
-      div(**mix(sidebar_attrs, attrs)) do
+      div(**sidebar_attrs) do
         div(**gap_element_attrs)
-        div(**content_wrapper_attrs) do
+        div(**mix(content_wrapper_attrs, attrs)) do
           div(**content_attrs, &)
         end
       end
@@ -30,6 +32,7 @@ module RubyUI
           collapsible: @open ? "" : @collapsible,
           variant: @variant,
           side: @side,
+          slot: "sidebar",
           collapsible_kind: @collapsible,
           ruby_ui__sidebar_target: "sidebar"
         }
@@ -39,36 +42,39 @@ module RubyUI
     def gap_element_attrs
       {
         class: [
-          "relative w-[var(--sidebar-width)] bg-transparent transition-[width]",
+          "relative w-(--sidebar-width) bg-transparent transition-[width]",
           "duration-200 ease-linear",
           "group-data-[collapsible=offcanvas]:w-0",
           "group-data-[side=right]:rotate-180",
           variant_classes
-        ]
+        ],
+        data: {slot: "sidebar-gap"}
       }
     end
 
     def content_wrapper_attrs
       {
         class: [
-          "fixed inset-y-0 z-10 hidden h-svh w-[var(--sidebar-width)]",
+          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width)",
           "transition-[left,right,width] duration-200 ease-linear md:flex",
           content_wrapper_side_classes,
           content_wrapper_variant_classes
-        ]
+        ],
+        data: {slot: "sidebar-container", side: @side}
       }
     end
 
     def content_attrs
       {
         class: [
-          "flex h-full w-full flex-col bg-sidebar",
+          "flex size-full flex-col bg-sidebar",
           "group-data-[variant=floating]:rounded-lg",
-          "group-data-[variant=floating]:border",
-          "group-data-[variant=floating]:border-sidebar-border",
-          "group-data-[variant=floating]:shadow"
+          "group-data-[variant=floating]:shadow-sm",
+          "group-data-[variant=floating]:ring-1",
+          "group-data-[variant=floating]:ring-sidebar-border"
         ],
         data: {
+          slot: "sidebar-inner",
           sidebar: "sidebar"
         }
       }
@@ -76,9 +82,9 @@ module RubyUI
 
     def variant_classes
       if %i[floating inset].include?(@variant)
-        "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
+        "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
       else
-        "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)]"
+        "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
       end
     end
 
@@ -90,9 +96,9 @@ module RubyUI
 
     def content_wrapper_variant_classes
       if %i[floating inset].include?(@variant)
-        "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
+        "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
       else
-        "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l"
+        "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l"
       end
     end
   end

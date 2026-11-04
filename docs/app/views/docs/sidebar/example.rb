@@ -29,19 +29,19 @@ class Views::Docs::Sidebar::Example < Views::Base
         SidebarHeader do
           SidebarMenu do
             SidebarMenuItem do
-              SidebarMenuButton(as: :a, href: "#") do
+              SidebarMenuButton(as: :a, href: "#", tooltip: "Search") do
                 search_icon()
                 span { "Search" }
               end
             end
             SidebarMenuItem do
-              SidebarMenuButton(as: :a, href: "#", active: true) do
+              SidebarMenuButton(as: :a, href: "#", active: true, tooltip: "Home") do
                 home_icon()
                 span { "Home" }
               end
             end
             SidebarMenuItem do
-              SidebarMenuButton(as: :a, href: "#") do
+              SidebarMenuButton(as: :a, href: "#", tooltip: "Inbox") do
                 inbox_icon()
                 span { "Inbox" }
                 SidebarMenuBadge { 4 }
@@ -115,7 +115,7 @@ class Views::Docs::Sidebar::Example < Views::Base
               SidebarMenu do
                 nav_secondary.each do |item|
                   SidebarMenuItem do
-                    SidebarMenuButton(as: :a, href: "#") do
+                    SidebarMenuButton(as: :a, href: "#", tooltip: item[:label]) do
                       item[:icon].call
                       span { item[:label] }
                     end

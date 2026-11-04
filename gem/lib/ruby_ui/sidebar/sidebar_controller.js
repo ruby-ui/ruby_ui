@@ -19,14 +19,20 @@ export default class extends Controller {
   }
 
   toggle(e) {
-    e.preventDefault();
-
+    // A non-collapsible sidebar has neither target: leave the event (e.g.
+    // Ctrl+B in an editor) and the sidebar_state cookie alone.
     if (this.#isMobile()) {
+      if (!this.hasMobileSidebarTarget) return;
+
+      e.preventDefault();
       this.#openMobileSidebar();
 
       return;
     }
 
+    if (!this.hasSidebarTarget) return;
+
+    e.preventDefault();
     this.open = !this.open;
     this.onToggle();
   }
@@ -34,6 +40,9 @@ export default class extends Controller {
   onToggle() {
     this.#updateSidebarState();
     this.#persistSidebarState();
+    // shadcn's onOpenChange: listen with
+    // data-action="ruby-ui--sidebar:change->your-controller#method".
+    this.dispatch("change", { detail: { open: this.open } });
   }
 
   #updateSidebarState() {

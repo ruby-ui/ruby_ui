@@ -22,6 +22,7 @@ module RubyUI
           "group-data-[collapsible=icon]:hidden"
         ],
         data: {
+          slot: "sidebar-menu-badge",
           sidebar: "menu-badge"
         }
       }
