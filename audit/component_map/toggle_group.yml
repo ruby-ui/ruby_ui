@@ -1,0 +1,34 @@
+shadcn: toggle-group
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: form_control
+docs_view: toggle_group
+parts:
+  ToggleGroup: toggle-group
+  ToggleGroupItem: toggle-group-item
+selectors:
+  ToggleGroup: '[data-slot="toggle-group"]'
+  ToggleGroupItem: '[data-slot="toggle-group-item"]'
+props:
+  # shadcn's own props (variant, size, spacing, orientation) + Base UI ToggleGroup.Props.
+  ToggleGroup:
+    variant: variant
+    size: size
+    spacing: spacing
+    orientation: orientation
+    multiple: type
+    defaultValue: value
+    value: null
+    onValueChange: null
+    disabled: disabled
+    loopFocus: loop_focus
+  # shadcn's variant/size + Base UI Toggle.Props.
+  ToggleGroupItem:
+    variant: variant
+    size: size
+    value: value
+    disabled: disabled # item kwarg reaches Toggle and overrides the group value
+    pressed: null
+    defaultPressed: null
+    onPressedChange: null
+rubyui_only:
+  ToggleGroup: [name]

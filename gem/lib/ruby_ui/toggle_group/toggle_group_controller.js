@@ -3,75 +3,82 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="ruby-ui--toggle-group"
 export default class extends Controller {
   static targets = ["item", "input"]
-  static values = { type: String, name: String }
+  static values = {
+    type: String,
+    name: String,
+    orientation: { type: String, default: "horizontal" },
+    loopFocus: { type: Boolean, default: true }
+  }
 
   connect() {
     this.reconcile()
   }
 
+  // Native <button> activation (click, Enter, Space) lands here.
   select(event) {
     const item = event.currentTarget
     if (item.disabled) return
 
     if (this.typeValue === "single") {
-      this.itemTargets.forEach(el => this.setPressed(el, el === item))
+      // Like Base UI: pressing the pressed item clears the value.
+      const pressed = !this.isPressed(item)
+      this.itemTargets.forEach(el => this.setPressed(el, el === item && pressed))
     } else {
       this.setPressed(item, !this.isPressed(item))
     }
 
     this.rebuildInputs()
-    this.updateRovingTabindex(item)
+    this.setTabStop(item)
   }
 
   navigate(event) {
-    if (this.typeValue !== "single") return
     const items = this.enabledItems()
-    if (items.length === 0) return
-
-    const isRtl = document.documentElement.dir === "rtl"
     const currentIndex = items.indexOf(event.currentTarget)
-    let nextIndex = currentIndex
+    if (currentIndex === -1) return
 
-    switch (event.key) {
-      case "ArrowRight":
-      case "ArrowDown":
-        nextIndex = (currentIndex + (isRtl && event.key === "ArrowRight" ? -1 : 1) + items.length) % items.length
-        break
-      case "ArrowLeft":
-      case "ArrowUp":
-        nextIndex = (currentIndex + (isRtl && event.key === "ArrowLeft" ? 1 : -1) + items.length) % items.length
-        break
-      case "Home":
-        nextIndex = 0
-        break
-      case "End":
-        nextIndex = items.length - 1
-        break
-      case " ":
-      case "Enter":
-        event.preventDefault()
-        event.currentTarget.click()
-        return
-      default:
-        return
+    const step = this.stepFor(event.key)
+    let nextIndex
+
+    if (event.key === "Home") {
+      nextIndex = 0
+    } else if (event.key === "End") {
+      nextIndex = items.length - 1
+    } else if (step) {
+      nextIndex = currentIndex + step
+      if (nextIndex < 0 || nextIndex >= items.length) {
+        if (!this.loopFocusValue) return
+        nextIndex = (nextIndex + items.length) % items.length
+      }
+    } else {
+      return
     }
 
     event.preventDefault()
     const next = items[nextIndex]
-    this.updateRovingTabindex(next)
+    this.setTabStop(next)
     next.focus()
   }
 
-  reconcile() {
-    if (this.typeValue === "single") {
-      const pressed = this.itemTargets.find(el => this.isPressed(el))
-      const first = pressed || this.enabledItems()[0]
-      this.itemTargets.forEach(el => {
-        el.setAttribute("tabindex", el === first ? "0" : "-1")
-      })
-    } else {
-      this.itemTargets.forEach(el => el.setAttribute("tabindex", "0"))
+  // Arrow keys follow the orientation: Left/Right when horizontal (flipped in
+  // RTL), Up/Down when vertical.
+  stepFor(key) {
+    if (this.orientationValue === "vertical") {
+      if (key === "ArrowDown") return 1
+      if (key === "ArrowUp") return -1
+      return 0
     }
+
+    const rtl = getComputedStyle(this.element).direction === "rtl"
+    if (key === "ArrowRight") return rtl ? -1 : 1
+    if (key === "ArrowLeft") return rtl ? 1 : -1
+    return 0
+  }
+
+  // One tab stop per group: the first pressed enabled item, else the first
+  // enabled item.
+  reconcile() {
+    const enabled = this.enabledItems()
+    this.setTabStop(enabled.find(el => this.isPressed(el)) || enabled[0])
     this.rebuildInputs()
   }
 
@@ -81,17 +88,13 @@ export default class extends Controller {
 
   setPressed(item, pressed) {
     item.dataset.state = pressed ? "on" : "off"
-    if (this.typeValue === "single") {
-      item.setAttribute("aria-checked", pressed ? "true" : "false")
-    } else {
-      item.setAttribute("aria-pressed", pressed ? "true" : "false")
-    }
+    item.setAttribute("aria-pressed", pressed ? "true" : "false")
+    item.toggleAttribute("data-pressed", pressed)
   }
 
-  updateRovingTabindex(focusedItem) {
-    if (this.typeValue !== "single") return
+  setTabStop(stop) {
     this.itemTargets.forEach(el => {
-      el.setAttribute("tabindex", el === focusedItem ? "0" : "-1")
+      el.setAttribute("tabindex", el === stop ? "0" : "-1")
     })
   }
 
