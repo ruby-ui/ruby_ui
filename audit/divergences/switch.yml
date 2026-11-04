@@ -1,0 +1,18 @@
+- component: switch
+  dimension: HTML
+  rubyui: "One native <input type=\"checkbox\" role=\"switch\" data-slot=\"switch\">: the input is the track and its ::before is the thumb; a hidden input with unchecked_value comes first unless include_hidden: false"
+  shadcn: "Base UI span[role=switch][tabindex=0][aria-checked] > span[data-slot=switch-thumb], plus a visually hidden aria-hidden checkbox next to it"
+  reason: "The native checkbox gives focus, Space to toggle, the checked state, the label association and form submission with no JavaScript; ARIA in HTML allows role=switch on input type=checkbox. Same name, role and state in the accessibility tree."
+  since: "2026-11-04"
+- component: switch
+  dimension: Props
+  rubyui: "No readOnly, onCheckedChange, inputRef or nativeButton"
+  shadcn: "Base UI Switch.Root takes readOnly, onCheckedChange, inputRef and nativeButton"
+  reason: "onCheckedChange, inputRef and nativeButton are React-only (listen to the input's change event instead). readonly does nothing on a native checkbox, so readOnly would need a Stimulus controller; left out until someone needs it."
+  since: "2026-11-04"
+- component: switch
+  dimension: Behavior
+  rubyui: "Space toggles; Enter does what Enter does on a native checkbox (submits the enclosing form, if any)"
+  shadcn: "Space and Enter both toggle (Base UI keydown handler)"
+  reason: "Native checkbox behavior, no JavaScript. The APG switch pattern makes Enter optional (Space is the required key), and Enter submitting the form is what users get from every other checkbox."
+  since: "2026-11-04"
