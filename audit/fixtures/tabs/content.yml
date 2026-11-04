@@ -1,0 +1,9 @@
+# Three tabs, the first active on load, the third disabled. data-audit-trigger
+# sits on the second (inactive) tab: "open" = after clicking it. With a roving
+# tabindex, Tab never lands on an inactive tab, so "focus" may stay unreached.
+account: Account
+password: Password
+billing: Billing
+account_body: Make changes to your account here.
+password_body: Change your password here.
+billing_body: Manage your billing details here.
