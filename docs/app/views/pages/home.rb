@@ -165,7 +165,7 @@ class Views::Pages::Home < Views::Base
               end
             end
             CardContent do
-              Progress(value: 62)
+              Progress(value: 62, aria: {label: "Storage usage"})
             end
             CardFooter do
               Button(variant: :ghost, size: :sm, class: "w-full text-xs") { "Upgrade Plan" }
