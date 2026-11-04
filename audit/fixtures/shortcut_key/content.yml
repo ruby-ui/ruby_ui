@@ -1,0 +1,8 @@
+# shadcn's Basic example (three keys), then a KbdGroup with Ctrl + Shift + P.
+# The "Ctrl + B" key carries data-audit-trigger (static kind: only the closed
+# state is collected).
+kbd_1: Ctrl
+kbd_2: ⌘K
+kbd_3: Ctrl + B
+group_1: Shift
+group_2: P
