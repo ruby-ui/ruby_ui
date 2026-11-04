@@ -47,6 +47,11 @@ export default class extends Controller {
     if (this.hasTriggerTarget) this.syncSelection();
   }
 
+  // ...and removed ones stop being shown as the selection.
+  itemTargetDisconnected() {
+    if (this.hasTriggerTarget) this.syncSelection();
+  }
+
   handleFormReset = () => {
     clearTimeout(this.resetTimeout);
     this.resetTimeout = setTimeout(() => this.syncSelection());
