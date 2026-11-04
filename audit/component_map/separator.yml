@@ -5,7 +5,7 @@ docs_view: separator
 parts:
   Separator: separator
 selectors:
-  # RubyUI renders no data-slot: both fixtures tag each separator with data-audit-separator.
+  # Both fixtures tag each separator with data-audit-separator so one selector works on both sides.
   Separator: '#separator-fixture [data-audit-separator]'
 props:
   # Base UI SeparatorPrimitive.Props: orientation (+ render, className, style).
