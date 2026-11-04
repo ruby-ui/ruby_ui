@@ -1,0 +1,6 @@
+- component: textarea
+  dimension: Behavior
+  rubyui: "rows: switches to field-sizing-fixed, so the textarea keeps that many rows; without rows it grows with field-sizing-content min-h-16"
+  shadcn: "always field-sizing-content; a rows attribute has no effect on the height"
+  reason: "Callers that pass rows ask for a fixed height, and Textarea rendered rows=4 before; ignoring rows would silently change their layout. Without rows the behavior matches shadcn."
+  since: "2026-11-04"
