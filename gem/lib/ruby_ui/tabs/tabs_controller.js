@@ -13,6 +13,7 @@ export default class extends Controller {
   static values = { active: String, orientation: { type: String, default: "horizontal" } };
 
   connect() {
+    this.idCount = 0;
     this.idBase = this.element.id || `ruby-ui-tabs-${Math.random().toString(36).slice(2, 10)}`;
     this.connected = true;
     this.refresh();
@@ -39,8 +40,23 @@ export default class extends Controller {
     if (this.connected) this.refresh();
   }
 
+  // ...and removing the active tab hands selection to a remaining one.
+  triggerTargetDisconnected() {
+    if (this.connected) this.refresh();
+  }
+
+  contentTargetDisconnected() {
+    if (this.connected) this.refresh();
+  }
+
+  // Leaving the list without activating: Tab back in lands on the selected
+  // tab again, as the APG asks.
+  listFocusout(event) {
+    if (this.hasListTarget && this.listTarget.contains(event.relatedTarget)) return;
+    this.sync();
+  }
+
   refresh() {
-    this.wire();
     if (!this.triggerFor(this.activeValue)) {
       const first = this.triggerTargets.find((tab) => !this.isDisabled(tab)) ?? this.triggerTargets[0];
       // Assigning the value runs sync through activeValueChanged.
@@ -124,10 +140,10 @@ export default class extends Controller {
 
   wire() {
     this.triggerTargets.forEach((tab) => {
-      if (!tab.id) tab.id = this.idFor("tab", tab.dataset.value);
+      if (!tab.id) tab.id = this.nextId("tab");
     });
     this.contentTargets.forEach((panel) => {
-      if (!panel.id) panel.id = this.idFor("panel", panel.dataset.value);
+      if (!panel.id) panel.id = this.nextId("panel");
       const tab = this.triggerFor(panel.dataset.value);
       if (tab) {
         tab.setAttribute("aria-controls", panel.id);
@@ -137,6 +153,8 @@ export default class extends Controller {
   }
 
   sync() {
+    // Re-wiring is idempotent, and restores ids/ARIA a morph may have dropped.
+    this.wire();
     const orientation = this.orientationValue;
     const active = this.triggerFor(this.activeValue);
 
@@ -169,7 +187,9 @@ export default class extends Controller {
     return tab.disabled || tab.getAttribute("aria-disabled") === "true";
   }
 
-  idFor(kind, value) {
-    return `${this.idBase}-${kind}-${String(value).replace(/[^\w-]/g, "-")}`;
+  // A counter, not the value: distinct values never collide on one id.
+  nextId(kind) {
+    this.idCount += 1;
+    return `${this.idBase}-${kind}-${this.idCount}`;
   }
 }

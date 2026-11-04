@@ -30,7 +30,7 @@ module RubyUI
           activate_on_focus: (@activate_on_focus ? "true" : nil),
           loop_focus: (@loop_focus ? nil : "false"),
           ruby_ui__tabs_target: "list",
-          action: "keydown->ruby-ui--tabs#keydown"
+          action: "keydown->ruby-ui--tabs#keydown focusout->ruby-ui--tabs#listFocusout"
         },
         class: [
           "group/tabs-list inline-flex w-fit items-center justify-center p-[3px] text-muted-foreground",

@@ -72,7 +72,7 @@ class RubyUI::TabsTest < ComponentTest
     assert_match(/role="tablist"/, output)
     assert_match(/data-slot="tabs-list"/, output)
     assert_match(/data-variant="default"/, output)
-    assert_match(/keydown->ruby-ui--tabs#keydown/, output)
+    assert_match(/keydown->ruby-ui--tabs#keydown focusout->ruby-ui--tabs#listFocusout/, output)
     assert_match(/bg-muted/, output)
     refute_match(/data-activate-on-focus|data-loop-focus/, output)
   end
