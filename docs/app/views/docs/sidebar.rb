@@ -47,7 +47,7 @@ class Views::Docs::Sidebar < Views::Base
       CODE
 
       Heading(level: 2) { "Keyboard shortcut and state" }
-      Text { "Ctrl+B (Cmd+B on macOS) toggles the sidebar. Each toggle saves the state in the sidebar_state cookie and dispatches ruby-ui--sidebar:change with detail.open. Read the cookie on the server to render the last state." }
+      Text { "On desktop, Ctrl+B (Cmd+B on macOS) toggles the sidebar. Each desktop toggle saves the state in the sidebar_state cookie and dispatches ruby-ui--sidebar:change with detail.open; on mobile the trigger opens the sheet instead. Read the cookie on the server to render the last desktop state." }
       Codeblock(<<~CODE, syntax: :ruby)
         # Initial state from the cookie
         Sidebar(open: cookies[:sidebar_state] != "false") { ... }

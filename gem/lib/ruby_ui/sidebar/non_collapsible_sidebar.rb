@@ -11,7 +11,9 @@ module RubyUI
     def default_attrs
       {
         class: "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
-        data: {slot: "sidebar"}
+        # Always open: lets SidebarMenuButton tooltips hide, as shadcn does
+        # (its provider state stays "expanded").
+        data: {slot: "sidebar", state: "expanded"}
       }
     end
   end

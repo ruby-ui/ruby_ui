@@ -19,14 +19,20 @@ export default class extends Controller {
   }
 
   toggle(e) {
-    e.preventDefault();
-
+    // A non-collapsible sidebar has neither target: leave the event (e.g.
+    // Ctrl+B in an editor) and the sidebar_state cookie alone.
     if (this.#isMobile()) {
+      if (!this.hasMobileSidebarTarget) return;
+
+      e.preventDefault();
       this.#openMobileSidebar();
 
       return;
     }
 
+    if (!this.hasSidebarTarget) return;
+
+    e.preventDefault();
     this.open = !this.open;
     this.onToggle();
   }

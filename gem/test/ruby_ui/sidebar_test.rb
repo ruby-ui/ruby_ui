@@ -215,8 +215,14 @@ class RubyUI::SidebarTest < ComponentTest
   def test_sidebar_attrs_go_to_container
     output = phlex { RubyUI.Sidebar(class: "custom-width") }
 
-    assert_match(%r{data-slot="sidebar-container"[^>]*>|class="[^"]*custom-width[^"]*"[^>]*data-slot="sidebar-container"}, output)
+    assert_match(%r{<div class="[^"]*custom-width[^"]*"[^>]*data-slot="sidebar-container"}, output)
     refute_match(/class="group peer[^"]*custom-width/, output)
+  end
+
+  def test_non_collapsible_sidebar_reports_expanded_state
+    output = phlex { RubyUI.Sidebar(collapsible: :none) }
+
+    assert_match(/data-slot="sidebar" data-state="expanded"/, output)
   end
 
   def test_container_carries_side
