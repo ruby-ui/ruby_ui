@@ -112,7 +112,14 @@
     }
   ],
   "dependencies": {
-    "components": [],
+    "components": [
+      "Button",
+      "Input",
+      "Separator",
+      "Sheet",
+      "Skeleton",
+      "Tooltip"
+    ],
     "js_packages": [],
     "gems": []
   },

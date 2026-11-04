@@ -113,6 +113,15 @@ select:
   js_packages:
     - "@floating-ui/dom"
 
+sidebar:
+  components:
+    - "Button"
+    - "Input"
+    - "Separator"
+    - "Sheet"
+    - "Skeleton"
+    - "Tooltip"
+
 toast:
   js_packages: []
 

@@ -68,11 +68,11 @@ selectors:
 props:
   SidebarWrapper: {defaultOpen: null, open: null, onOpenChange: null}
   Sidebar: {side: side, variant: variant, collapsible: collapsible}
-  SidebarMenuButton: {isActive: active, variant: variant, size: size, tooltip: null, render: as}
+  SidebarMenuButton: {isActive: active, variant: variant, size: size, tooltip: tooltip, render: as}
   SidebarMenuAction: {showOnHover: show_on_hover, render: as}
   SidebarMenuSkeleton: {showIcon: show_icon}
   SidebarMenuSubButton: {isActive: active, size: size, render: as}
-  SidebarGroupLabel: {render: null}
+  SidebarGroupLabel: {render: as}
   SidebarGroupAction: {render: as}
 rubyui_only:
   Sidebar: [open]
