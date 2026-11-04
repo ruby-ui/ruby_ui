@@ -134,15 +134,21 @@ export default class extends Controller {
     return this.hasTriggerTarget ? this.controlFor(this.triggerTarget) : null;
   }
 
-  // aria-controls only while open, as Base UI does: closed, the popup is hidden.
+  // aria-controls only while open, as Base UI does: closed, the popup is
+  // hidden. A caller's own aria-controls (another id) is left alone.
   syncTrigger(open) {
     const control = this.control;
     if (!control) return;
     control.setAttribute("aria-expanded", String(open));
+    const own = control.getAttribute("aria-controls");
     if (open && this.openContent?.id) {
-      control.setAttribute("aria-controls", this.openContent.id);
-    } else {
+      if (!own || own === this.writtenControls) {
+        control.setAttribute("aria-controls", this.openContent.id);
+        this.writtenControls = this.openContent.id;
+      }
+    } else if (own && own === this.writtenControls) {
       control.removeAttribute("aria-controls");
+      this.writtenControls = null;
     }
   }
 
@@ -204,7 +210,7 @@ export default class extends Controller {
     if (!this.openOnHover) return;
     this.clearTimers();
     if (this.isOpen) return;
-    this.openTimeout = setTimeout(() => this.showPopover({ focus: false }), this.openDelay);
+    this.openTimeout = setTimeout(() => this.showPopover({ focus: false, hover: true }), this.openDelay);
   };
 
   handleLeave = () => {
@@ -285,10 +291,12 @@ export default class extends Controller {
 
   // openValue is set here rather than by the callers, so a guarded early return
   // can never leave the DOM claiming the popover is open while nothing is wired up.
-  showPopover({ focus = true } = {}) {
+  // hover: true only for the pointer-rest open, so a later click on the
+  // trigger keeps it open instead of toggling (Base UI's sticky hover).
+  showPopover({ focus = true, hover = false } = {}) {
     if (!this.hasContentTarget || !this.hasTriggerTarget || this.isOpen) return;
     const content = (this.openContent = this.contentTarget);
-    this.openedByHover = !focus && this.openOnHover;
+    this.openedByHover = hover;
     this.openValue = true;
 
     // Side and origin before the enter animation starts; position() refines both.

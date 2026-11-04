@@ -9,7 +9,7 @@ class Views::Docs::Popover < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", description: "A click, Enter or Space on the trigger opens the popover; Escape or a click outside closes it and focus goes back to the trigger. PopoverTitle names the dialog and PopoverDescription describes it for screen readers.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", description: "A click, Enter or Space on the trigger opens the popover; Escape or a click outside closes it, and focus goes back to the trigger unless the click moved it to another control. PopoverTitle names the dialog and PopoverDescription describes it for screen readers.", context: self) do
         <<~RUBY
           Popover do
             PopoverTrigger do
@@ -25,7 +25,7 @@ class Views::Docs::Popover < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Sides", description: "side: places the content around the trigger: :top, :right, :bottom (the default), :left, or the logical :inline_start and :inline_end, which follow the writing direction. side_offset: is the gap in pixels (4 by default). The content flips to the other side when there is no room.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Sides", description: "Content without a PopoverTitle needs aria: {label:} so the dialog has a name. side: places the content around the trigger: :top, :right, :bottom (the default), :left, or the logical :inline_start and :inline_end, which follow the writing direction. side_offset: is the gap in pixels (4 by default). The content flips to the other side when there is no room.", context: self) do
         <<~RUBY
           div(class: "flex flex-wrap gap-2") do
             [:inline_start, :left, :top, :bottom, :right, :inline_end].each do |side|
@@ -33,7 +33,7 @@ class Views::Docs::Popover < Views::Base
                 PopoverTrigger do
                   Button(variant: :outline, class: "capitalize") { side.to_s.tr("_", " ") }
                 end
-                PopoverContent(side: side, class: "w-40") do
+                PopoverContent(side: side, class: "w-40", aria: {label: "Popover on \#{side.to_s.tr("_", " ")}"}) do
                   p { "Popover on \#{side.to_s.tr("_", " ")}" }
                 end
               end
@@ -50,7 +50,7 @@ class Views::Docs::Popover < Views::Base
                 PopoverTrigger do
                   Button(variant: :outline, size: :sm, class: "capitalize") { align.to_s }
                 end
-                PopoverContent(align: align, class: "w-40") { "Aligned to \#{align}" }
+                PopoverContent(align: align, class: "w-40", aria: {label: "Aligned to \#{align}"}) { "Aligned to \#{align}" }
               end
             end
           end
@@ -83,7 +83,7 @@ class Views::Docs::Popover < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Open on hover", description: "open_on_hover: also opens the popover when the pointer rests on the trigger for delay: milliseconds (300 by default), and closes it close_delay: milliseconds (0 by default) after the pointer leaves both the trigger and the content. A click, Enter or Space still opens it, so it stays usable from the keyboard.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Open on hover", description: "open_on_hover: also opens the popover when the pointer rests on the trigger for delay: milliseconds (300 by default), and closes it close_delay: milliseconds (0 by default) plus a 100 ms grace after the pointer leaves both the trigger and the content, so the pointer can cross the gap onto the content. A click, Enter or Space still opens it, so it stays usable from the keyboard.", context: self) do
         <<~RUBY
           Popover do
             PopoverTrigger(open_on_hover: true, delay: 100, close_delay: 100) do
@@ -133,7 +133,7 @@ class Views::Docs::Popover < Views::Base
               PopoverTrigger do
                 Button(variant: :outline) { "Open Popover" }
               end
-              PopoverContent do
+              PopoverContent(aria: {label: "Clipping example"}) do
                 p { "Not clipped by the container above." }
               end
             end

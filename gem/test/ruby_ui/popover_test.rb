@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "cgi/escape"
 
 class RubyUI::PopoverTest < ComponentTest
   def test_render_with_all_items
