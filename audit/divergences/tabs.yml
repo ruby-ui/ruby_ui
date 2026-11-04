@@ -1,0 +1,12 @@
+- component: tabs
+  dimension: HTML
+  rubyui: "Every TabsContent stays in the page; the inactive ones carry the hidden attribute"
+  shadcn: "Only the active panel is mounted (Base UI Tabs.Panel keepMounted defaults to false)"
+  reason: "Panels are server-rendered, and keeping them lets every tab point aria-controls at its panel, as the APG tabs pattern asks (Base UI's unmounted panels leave inactive tabs without it)."
+  since: "2026-11-04"
+- component: tabs
+  dimension: Props
+  rubyui: "No value:/on_value_change: and no keep_mounted: (panels always stay mounted, see the HTML entry); the controller dispatches ruby-ui--tabs:change ({value, previousValue}) and follows data-ruby-ui--tabs-active-value"
+  shadcn: "Controlled value + onValueChange; TabsContent keepMounted (default false)"
+  reason: "A server-rendered component has no React state to control: the Stimulus value attribute is the controlled input and the DOM event is the change callback."
+  since: "2026-11-04"
