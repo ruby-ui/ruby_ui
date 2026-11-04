@@ -1,0 +1,18 @@
+- component: popover
+  dimension: HTML
+  rubyui: "Popover root <div> carrying the Stimulus controller; PopoverTrigger <div class=\"inline-block\"> wrapping its child; the closed content stays in the DOM next to the trigger as a closed popover=\"manual\" and opens in the top layer"
+  shadcn: "Root renders no element; trigger is the <button> itself (render prop); the content is portaled to body and unmounted while closed"
+  reason: "Phlex has no render prop and callers pass any child (button, link, input); Stimulus needs an element that scopes trigger and content. Server-rendered markup keeps the content mounted; the top layer does what the portal does (no ancestor clips it) and the UA hides a closed popover."
+  since: "2026-11-04"
+- component: popover
+  dimension: Props
+  rubyui: "open: is the initial state only; no onOpenChange, no modal"
+  shadcn: "open (controlled), defaultOpen, onOpenChange and modal"
+  reason: "Server-rendered component: there is no parent re-render to control it, so open: covers defaultOpen, as in HoverCard and Dialog. Change state from outside through the Stimulus open value and listen to the ruby-ui--popover:show / :hide events. Modal popovers (focus trap, inert page) are out of scope; use Dialog."
+  since: "2026-11-04"
+- component: popover
+  dimension: Native
+  rubyui: "popover=\"manual\" with Escape and outside click handled in JS"
+  shadcn: "Base UI (n/a)"
+  reason: "popover=\"auto\" would light-dismiss natively, but the UA hides the element at once on Escape or an outside click, which skips the exit animation, and it treats a press on the PopoverTrigger wrapper (not a popovertarget button) as an outside click, breaking the toggle. The top layer still comes from the native attribute."
+  since: "2026-11-04"

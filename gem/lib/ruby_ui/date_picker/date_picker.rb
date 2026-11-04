@@ -184,10 +184,10 @@ module RubyUI
     def content_attrs
       mix({
         id: content_id,
-        role: "dialog",
+        # PopoverContent already renders role="dialog" and data-slot="popover-content".
         aria: {label: "Choose date"},
         class: "w-auto overflow-hidden p-0 font-normal",
-        data: {slot: "popover-content", ruby_ui__date_picker_target: "content", action: "click->ruby-ui--date-picker#pick"}
+        data: {ruby_ui__date_picker_target: "content", action: "click->ruby-ui--date-picker#pick"}
       }, @content_attrs)
     end
 
