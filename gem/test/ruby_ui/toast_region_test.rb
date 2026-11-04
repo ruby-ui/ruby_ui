@@ -63,6 +63,11 @@ class RubyUI::ToastRegionTest < ComponentTest
     assert_match(/data-ruby-ui--toaster-swipe-directions-value="left right"/, out)
   end
 
+  def test_empty_swipe_directions_disable_swipe
+    out = phlex { RubyUI.ToastRegion(swipe_directions: []) }
+    assert_match(/data-ruby-ui--toaster-swipe-directions-value="none"/, out)
+  end
+
   def test_skeletons_render_close_button_by_default
     out = phlex { RubyUI.ToastRegion() }
     %w[default success error warning info loading].each do |v|

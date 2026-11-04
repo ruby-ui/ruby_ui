@@ -28,7 +28,7 @@ function registerStreamAction() {
 //
 // The toast viewport (shadcn's Base UI Toaster): stacks the toasts, limits how
 // many show, pauses every timer while the region is hovered or focused (or the
-// window is blurred), focuses the front toast on the hotkey (F6), and spawns
+// window is blurred), focuses the region on the hotkey (F6), and spawns
 // toasts from window.RubyUI.toast / the ruby-ui:toast event / Turbo Streams.
 export default class extends Controller {
   static targets = ["skeleton", "toast", "actionTpl", "cancelTpl", "closeTpl"]
@@ -48,9 +48,15 @@ export default class extends Controller {
     this._holds = new Set()
     this._heights = new WeakMap()
     this._resizeObservers = new WeakMap()
+    this._announcers = new Set()
   }
 
   connect() {
+    // Turbo moves this permanent region between pages: start from a clean
+    // pause state instead of whatever the last page left behind.
+    this._hovered = this.element.matches(":hover")
+    this._holds.clear()
+    delete this.element.dataset.paused
     this._listEl = this.element.querySelector("#ruby-ui-toaster") || this.element
     this._registerGlobalApi()
     registerStreamAction()
@@ -69,6 +75,15 @@ export default class extends Controller {
     this._onWindowToast = (e) => this._spawn(e.detail || {})
     this._onWindowDismissAll = () => this._dismissById(null)
     this._onToastChange = () => this._reflow()
+    this._onToastRemove = (e) => this._handOffFocus(e.target)
+    this._onRegionKeyDown = (e) => {
+      // Base UI: Tab from the focused viewport goes to the front toast.
+      if (e.key !== "Tab" || e.shiftKey || document.activeElement !== this.element) return
+      const front = this._frontToast()
+      if (!front) return
+      e.preventDefault()
+      front.focus()
+    }
     this._onKey = this._onKey.bind(this)
 
     window.addEventListener("ruby-ui:toast", this._onWindowToast)
@@ -81,8 +96,12 @@ export default class extends Controller {
     this.element.addEventListener("focusout", this._onFocusOut)
     this.element.addEventListener("ruby-ui:toast:opened", this._onToastChange)
     this.element.addEventListener("ruby-ui:toast:close", this._onToastChange)
+    this.element.addEventListener("ruby-ui:toast:remove", this._onToastRemove)
+    this.element.addEventListener("keydown", this._onRegionKeyDown)
     document.addEventListener("keydown", this._onKey)
 
+    if (this._hovered) this._setHold("hover", true)
+    if (this.element.contains(document.activeElement)) this._setHold("focus", true)
     this._syncSwipeDirections()
     this._reflow()
   }
@@ -98,8 +117,13 @@ export default class extends Controller {
     this.element.removeEventListener("focusout", this._onFocusOut)
     this.element.removeEventListener("ruby-ui:toast:opened", this._onToastChange)
     this.element.removeEventListener("ruby-ui:toast:close", this._onToastChange)
+    this.element.removeEventListener("ruby-ui:toast:remove", this._onToastRemove)
+    this.element.removeEventListener("keydown", this._onRegionKeyDown)
     document.removeEventListener("keydown", this._onKey)
     this._holds.clear()
+    delete this.element.dataset.paused
+    this._announcers.forEach((node) => node.remove())
+    this._announcers.clear()
   }
 
   positionValueChanged(value) {
@@ -139,7 +163,7 @@ export default class extends Controller {
   toastTargetDisconnected(el) {
     this._resizeObservers.get(el)?.disconnect()
     this._resizeObservers.delete(el)
-    this.element.querySelector(`[data-announce-for="${CSS.escape(el.id)}"]`)?.remove()
+    this._removeAnnouncer(el)
     this._reflow()
   }
 
@@ -182,11 +206,32 @@ export default class extends Controller {
     )
   }
 
+  // A focused toast leaving the DOM fires no focusout: move focus to the next
+  // front toast, else back to where it was before F6, and drop the focus hold.
+  _handOffFocus(toast) {
+    if (!toast.contains(document.activeElement)) return
+    const next = this._frontToast(toast)
+    if (next) return next.focus()
+    const previous = this._previousFocus
+    this._previousFocus = null
+    if (previous?.isConnected) previous.focus({ preventScroll: true })
+    else document.activeElement?.blur()
+    this._setHold("focus", false)
+    this._reflow()
+  }
+
+  _frontToast(except = null) {
+    return this.toastTargets
+      .filter((el) => el !== except && el.dataset.state !== "closing" && !el.hasAttribute("data-limited"))
+      .at(-1)
+  }
+
   // ---- high priority (Base UI): role=alertdialog, announced through a
   // visually hidden role=alert; the toast itself is hidden from AT until
   // focus enters the region, so it isn't read twice.
 
   _announce(el) {
+    if (this._holds.has("focus")) return
     const title = el.querySelector('[data-slot="toast-title"]')?.textContent || ""
     const description = el.querySelector('[data-slot="toast-description"]')?.textContent || ""
     const node = document.createElement("div")
@@ -195,11 +240,26 @@ export default class extends Controller {
     node.className = "sr-only"
     node.dataset.announceFor = el.id
     node.textContent = [title, description].filter(Boolean).join(". ")
-    this.element.appendChild(node)
-    if (!this._holds.has("focus")) el.setAttribute("aria-hidden", "true")
+    this.element.insertAdjacentElement("afterend", node)
+    this._announcers.add(node)
+    el.setAttribute("aria-hidden", "true")
   }
 
+  _removeAnnouncer(el) {
+    this._announcers.forEach((node) => {
+      if (node.dataset.announceFor !== el.id) return
+      node.remove()
+      this._announcers.delete(node)
+    })
+  }
+
+  // With focus inside, the toasts themselves are read: drop the hidden
+  // announcements (so nothing is read twice) and expose the toasts.
   _syncHighPriorityVisibility(focused) {
+    if (focused) {
+      this._announcers.forEach((node) => node.remove())
+      this._announcers.clear()
+    }
     this.toastTargets
       .filter((el) => el.dataset.priority === "high")
       .forEach((el) => (focused ? el.removeAttribute("aria-hidden") : el.setAttribute("aria-hidden", "true")))
@@ -299,7 +359,8 @@ export default class extends Controller {
     node.setAttribute("data-ruby-ui--toast-duration-value", String(duration === Infinity ? 0 : duration))
     if (detail.dismissible === false) node.setAttribute("data-ruby-ui--toast-dismissible-value", "false")
     if (detail.swipeDirections) {
-      node.setAttribute("data-ruby-ui--toast-swipe-directions-value", [].concat(detail.swipeDirections).join(" "))
+      const list = [].concat(detail.swipeDirections)
+      node.setAttribute("data-ruby-ui--toast-swipe-directions-value", list.length ? list.join(" ") : "none")
     }
     if (detail.priority === "high") {
       node.dataset.priority = "high"
@@ -358,8 +419,8 @@ export default class extends Controller {
     return tpl.content.firstElementChild.cloneNode(true)
   }
 
-  // Focus the front toast (Base UI: F6 moves focus to the viewport's first
-  // focusable toast).
+  // Base UI: the hotkey (F6) moves focus to the viewport; Tab then goes to
+  // the front toast.
   _onKey(e) {
     if (!e.key) return
     const parts = (this.hotkeyValue || "F6").toLowerCase().split("+")
@@ -369,12 +430,10 @@ export default class extends Controller {
     if (parts.includes("ctrl") !== e.ctrlKey) return
     if (parts.includes("meta") !== e.metaKey) return
     if (parts.includes("shift") !== e.shiftKey) return
-    const front = this.toastTargets
-      .filter((el) => el.dataset.state !== "closing" && !el.hasAttribute("data-limited"))
-      .at(-1)
-    if (!front) return
+    if (!this._frontToast() || document.activeElement === this.element) return
     e.preventDefault()
-    front.focus()
+    if (!this.element.contains(document.activeElement)) this._previousFocus = document.activeElement
+    this.element.focus({ preventScroll: true })
   }
 
   _registerGlobalApi() {

@@ -33,11 +33,15 @@ export default class extends Controller {
     this._onForceDismiss = (e) => { e.stopPropagation(); this._close("dismiss") }
     this._onRestart = () => this._restart()
     this._onHold = (e) => this._setHold(e.detail.reason, e.detail.on)
+    this._onKeyDown = (e) => {
+      if (e.key === "Escape" && this.element.contains(document.activeElement)) this.dismiss(e)
+    }
 
     this.element.addEventListener("pointerdown", this._onPointerDown)
     this.element.addEventListener("ruby-ui:toast:force-dismiss", this._onForceDismiss)
     this.element.addEventListener("ruby-ui:toast:restart", this._onRestart)
     this.element.addEventListener("ruby-ui:toast:hold", this._onHold)
+    this.element.addEventListener("keydown", this._onKeyDown)
 
     if (this.element.dataset.state === "pending") {
       // Two frames: the toaster paints the start position (off-screen) first,
@@ -55,12 +59,13 @@ export default class extends Controller {
 
   disconnect() {
     if (this._enterFrame) cancelAnimationFrame(this._enterFrame)
+    this._endSwipe({ resume: false })
     this._clearTimer()
-    this._endSwipe()
     this.element.removeEventListener("pointerdown", this._onPointerDown)
     this.element.removeEventListener("ruby-ui:toast:force-dismiss", this._onForceDismiss)
     this.element.removeEventListener("ruby-ui:toast:restart", this._onRestart)
     this.element.removeEventListener("ruby-ui:toast:hold", this._onHold)
+    this.element.removeEventListener("keydown", this._onKeyDown)
   }
 
   // X, Cancel and swipe: respect dismissible.
@@ -177,6 +182,7 @@ export default class extends Controller {
     const own = this.swipeDirectionsValue
     const region = this.element.closest('[data-controller~="ruby-ui--toaster"]')
     const list = own || region?.dataset.swipeDirections || "down right"
+    if (list === "none") return []
     return list.split(/\s+/).filter((d) => DIRECTIONS.includes(d))
   }
 
@@ -212,10 +218,10 @@ export default class extends Controller {
     if (!s) return
     const elapsed = Math.max(performance.now() - s.startedAt, 1)
     const exits = {
-      right: { distance: s.dx, transform: `translateX(calc(${s.dx}px + 150%)) translateY(${s.dy}px)` },
-      left: { distance: -s.dx, transform: `translateX(calc(${s.dx}px - 150%)) translateY(${s.dy}px)` },
-      down: { distance: s.dy, transform: `translateX(${s.dx}px) translateY(calc(${s.dy}px + 150%))` },
-      up: { distance: -s.dy, transform: `translateX(${s.dx}px) translateY(calc(${s.dy}px - 150%))` },
+      right: { distance: s.dx, transform: `translateX(calc(${s.dx}px + 150%)) translateY(${s.dy}px) ${s.base}` },
+      left: { distance: -s.dx, transform: `translateX(calc(${s.dx}px - 150%)) translateY(${s.dy}px) ${s.base}` },
+      down: { distance: s.dy, transform: `translateX(${s.dx}px) translateY(calc(${s.dy}px + 150%)) ${s.base}` },
+      up: { distance: -s.dy, transform: `translateX(${s.dx}px) translateY(calc(${s.dy}px - 150%)) ${s.base}` },
     }
     const direction = s.directions.find((d) => {
       const distance = exits[d].distance
@@ -233,12 +239,13 @@ export default class extends Controller {
     }
   }
 
-  _endSwipe() {
+  _endSwipe({ resume = true } = {}) {
     if (!this._swipe) return
     this._swipe = null
     this.element.removeEventListener("pointermove", this._onPointerMove)
     this.element.removeEventListener("pointerup", this._onPointerUp)
     this.element.removeEventListener("pointercancel", this._onPointerUp)
-    this._setHold("swipe", false)
+    if (resume) this._setHold("swipe", false)
+    else this._holds.delete("swipe")
   }
 }

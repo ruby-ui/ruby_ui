@@ -63,7 +63,7 @@ class Views::Docs::Toast < Views::Base
         plain "Trigger toasts from the server with Turbo Streams or from JavaScript via "
         code(class: "rounded bg-muted px-1.5 py-0.5 text-xs") { "window.RubyUI.toast.*" }
         plain ". Mirrors shadcn's Toast (Base UI): a polite live region, toasts that stack, "
-        plain "pause while hovered or focused, and swipe away. Press F6 to move focus to the newest toast."
+        plain "pause while hovered or focused, and swipe away. Press F6 to move focus to the notifications, Tab to reach the newest toast and Escape to dismiss it."
       end
 
       Heading(level: 2) { "Mount" }
@@ -181,8 +181,8 @@ class Views::Docs::Toast < Views::Base
     {name: "duration", default: "5000", values: "Integer (ms)", description: "Default lifetime per toast (Base UI timeout). 0 keeps toasts until dismissed."},
     {name: "gap", default: "12", values: "Integer (px)", description: "Spacing between toasts when expanded."},
     {name: "close_button", default: "true", values: "Boolean", description: "Render the X button in every toast."},
-    {name: "hotkey", default: "%w[F6]", values: "Array<String>", description: "Shortcut that moves focus to the newest toast, e.g. %w[alt t]."},
-    {name: "swipe_directions", default: "(from position)", values: "Array<:up | :down | :left | :right>", description: "Directions a swipe can dismiss in. Defaults to down/right for bottom-right."},
+    {name: "hotkey", default: "%w[F6]", values: "Array<String>", description: "Shortcut that moves focus to the notifications region (Tab then reaches the newest toast), e.g. %w[alt t]."},
+    {name: "swipe_directions", default: "(from position)", values: "Array<:up | :down | :left | :right>", description: "Directions a swipe can dismiss in. Defaults to down/right for bottom-right; [] disables swipe."},
     {name: "flash", default: "nil", values: "Hash | nil", description: "Pass `helpers.flash.to_h` to render Rails flash on initial load."}
   ].freeze
 
@@ -191,7 +191,7 @@ class Views::Docs::Toast < Views::Base
     {name: "priority", default: ":low", values: ":low | :high", description: "High-priority toasts are announced right away (role=alert) and use role=alertdialog."},
     {name: "id", default: "nil", values: "String", description: "DOM id; auto-generated when not provided."},
     {name: "duration", default: "nil", values: "Integer | nil", description: "Override the region default. nil inherits it; 0 stays until dismissed."},
-    {name: "dismissible", default: "true", values: "Boolean", description: "Allow swipe, the X, Cancel and dismiss-all to close it."},
+    {name: "dismissible", default: "true", values: "Boolean", description: "Allow Escape, swipe, the X and Cancel to close it."},
     {name: "on_dismiss", default: "nil", values: "String", description: "Stimulus action (\"controller#method\") run on ruby-ui:toast:close. The controller must be on the toast or an ancestor."},
     {name: "on_remove", default: "nil", values: "String", description: "Stimulus action run on ruby-ui:toast:remove, after the exit animation."}
   ].freeze

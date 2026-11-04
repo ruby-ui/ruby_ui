@@ -106,7 +106,10 @@ module RubyUI
         ruby_ui__toaster_close_button_value: @close_button.to_s,
         ruby_ui__toaster_hotkey_value: Array(@hotkey).join("+")
       }
-      data[:ruby_ui__toaster_swipe_directions_value] = @swipe_directions.join(" ") if @swipe_directions
+      # "none" disables swipe; leaving it unset derives it from the position.
+      if @swipe_directions
+        data[:ruby_ui__toaster_swipe_directions_value] = @swipe_directions.empty? ? "none" : @swipe_directions.join(" ")
+      end
       {
         id: "ruby-ui-toaster-region",
         role: "region",
