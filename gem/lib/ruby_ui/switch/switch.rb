@@ -50,7 +50,7 @@ module RubyUI
       if @include_hidden
         input(type: "hidden", name: attrs[:name], value: @unchecked_value, disabled: attrs[:disabled], form: attrs[:form], autocomplete: "off")
       end
-      input(**attrs, value: @checked_value)
+      input(**attrs, type: "checkbox", role: "switch", value: @checked_value)
     end
 
     private

@@ -57,6 +57,16 @@ class RubyUI::SwitchTest < ComponentTest
     output = phlex { RubyUI.Switch(size: :sm) }
 
     assert_match(/data-size="sm"/, output)
+    assert_match(/data-\[size=sm\]:h-\[14px\]/, output)
+    assert_match(/data-\[size=sm\]:w-\[24px\]/, output)
+    assert_match(/data-\[size=sm\]:before:size-3/, output)
+  end
+
+  def test_type_and_role_cannot_be_overridden
+    output = phlex { RubyUI.Switch(type: "text", role: "button") }
+
+    assert_match(/<input[^>]*type="checkbox"[^>]*role="switch"/, output)
+    refute_match(/type="text"|role="button"/, output)
   end
 
   def test_rejects_unknown_size
