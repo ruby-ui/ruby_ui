@@ -49,12 +49,9 @@ module RubyUI
       attrs
     end
 
-    # One tab stop per group: a pressed item when there is a selection, every
-    # item until the controller connects otherwise (it then keeps only one).
+    # The group picks the single tab stop (see ToggleGroup#claim_tab_stop?).
     def initial_tabindex
-      return "0" if @group_context[:selected_values].empty?
-
-      @pressed ? "0" : "-1"
+      @group_context[:tab_stop] ? "0" : "-1"
     end
 
     def join_classes

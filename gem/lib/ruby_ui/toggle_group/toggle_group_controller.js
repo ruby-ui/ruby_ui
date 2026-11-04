@@ -22,12 +22,16 @@ export default class extends Controller {
     this.observer = null
   }
 
+  // Items added or removed after connect: keep one tab stop and the hidden
+  // inputs in sync with what is pressed.
   itemTargetConnected() {
     this.ensureTabStop()
+    this.rebuildInputs()
   }
 
   itemTargetDisconnected() {
     this.ensureTabStop()
+    this.rebuildInputs()
   }
 
   // Native <button> activation (click, Enter, Space) lands here.
@@ -99,11 +103,15 @@ export default class extends Controller {
     this.rebuildInputs()
   }
 
-  // Repairs the tab stop if it was removed or disabled.
+  // Keeps exactly one tab stop: the current one if it is still enabled, else
+  // the first pressed enabled item, else the first enabled item.
   ensureTabStop() {
     const enabled = this.enabledItems()
-    if (enabled.some(el => el.getAttribute("tabindex") === "0")) return
-    this.setTabStop(enabled.find(el => this.isPressed(el)) || enabled[0])
+    this.setTabStop(
+      enabled.find(el => el.getAttribute("tabindex") === "0") ||
+        enabled.find(el => this.isPressed(el)) ||
+        enabled[0]
+    )
   }
 
   isPressed(item) {

@@ -16,6 +16,8 @@ props:
     spacing: spacing
     orientation: orientation
     multiple: type
+    # Base UI defaultValue is always an array; RubyUI value is a scalar for type: :single
+    # and an array for :multiple.
     defaultValue: value
     value: null
     onValueChange: null

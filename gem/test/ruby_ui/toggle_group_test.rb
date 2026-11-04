@@ -50,7 +50,9 @@ class RubyUI::ToggleGroupTest < ComponentTest
         g.ToggleGroupItem(value: "b") { "B" }
       end
     end
-    assert_equal 1, output.scan(/<button[^>]*disabled/).size
+    assert_equal 1, output.scan(/<button[^>]*\sdisabled(?:=|\s|>)/).size
+    # the disabled first item can't be the tab stop
+    assert_match(/tabindex="0"[^>]*data-value="b"/, output)
   end
 
   def test_default_spacing_is_two
@@ -223,6 +225,35 @@ class RubyUI::ToggleGroupTest < ComponentTest
     assert_match(/shadow-xs/, output)
     assert_match(/border-l-0/, output)
     assert_match(/first-of-type:border-l/, output)
+  end
+
+  def test_one_server_tab_stop_without_selection
+    output = phlex do
+      RubyUI.ToggleGroup(type: :multiple) do |g|
+        g.ToggleGroupItem(value: "a") { "A" }
+        g.ToggleGroupItem(value: "b") { "B" }
+      end
+    end
+    assert_equal 1, output.scan('tabindex="0"').size
+    assert_match(/tabindex="0"[^>]*data-value="a"/, output)
+  end
+
+  def test_one_server_tab_stop_with_several_selected
+    output = phlex do
+      RubyUI.ToggleGroup(type: :multiple, value: %w[c b]) do |g|
+        g.ToggleGroupItem(value: "a") { "A" }
+        g.ToggleGroupItem(value: "b") { "B" }
+        g.ToggleGroupItem(value: "c") { "C" }
+      end
+    end
+    assert_equal 1, output.scan('tabindex="0"').size
+    assert_match(/tabindex="0"[^>]*data-value="b"/, output)
+  end
+
+  def test_invalid_loop_focus_raises
+    assert_raises(ArgumentError) do
+      phlex { RubyUI.ToggleGroup(loop_focus: nil) { |g| g.ToggleGroupItem(value: "a") { "A" } } }
+    end
   end
 
   def test_invalid_orientation_raises
