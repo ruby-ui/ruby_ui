@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "textarea.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Textarea < Base\n    def initialize(rows: 4, **attrs)\n      @rows = rows\n      super(**attrs)\n    end\n\n    def view_template(&)\n      textarea(rows: @rows, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {\n          ruby_ui__form_field_target: \"input\",\n          action: \"input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid\"\n        },\n        class: [\n          \"flex w-full rounded-md border bg-background px-3 py-1 text-sm shadow-sm transition-colors border-border\",\n          \"placeholder:text-muted-foreground\",\n          \"disabled:cursor-not-allowed disabled:opacity-50\",\n          \"file:border-0 file:bg-transparent file:text-sm file:font-medium\",\n          \"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n          \"aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none\"\n        ]\n      }\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Textarea < Base\n    # rows is optional: without it the textarea sizes to its content\n    # (field-sizing-content, min-h-16), as shadcn does.\n    def initialize(rows: nil, **attrs)\n      @rows = rows\n      @caller_slot = caller_slot?(attrs)\n      super(**attrs)\n    end\n\n    def view_template(&)\n      textarea(rows: @rows, **attrs, &)\n    end\n\n    private\n\n    # A caller's slot replaces \"textarea\" (shadcn spreads props after\n    # data-slot), so the default is left out instead of letting mix join both.\n    SLOT_ATTRS = [:data_slot, :\"data-slot\", \"data-slot\", \"data_slot\"].freeze\n    SLOT_KEYS = [:slot, :slot!, \"slot\", \"slot!\"].freeze\n\n    def caller_slot?(attrs)\n      return true if attrs.key?(:data!) || SLOT_ATTRS.any? { |key| attrs.key?(key) }\n\n      data = attrs[:data] || attrs[\"data\"]\n      data.is_a?(Hash) && SLOT_KEYS.any? { |key| data.key?(key) }\n    end\n\n    def default_attrs\n      {\n        data: {\n          slot: (@caller_slot ? nil : \"textarea\"),\n          ruby_ui__form_field_target: \"input\",\n          action: \"input->ruby-ui--form-field#onInput invalid->ruby-ui--form-field#onInvalid\"\n        }.compact,\n        class: [\n          \"flex field-sizing-content min-h-16 w-full rounded-md border border-input bg-transparent px-2.5 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm dark:bg-input/30\",\n          \"placeholder:text-muted-foreground\",\n          \"disabled:cursor-not-allowed disabled:opacity-50\",\n          \"focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50\",\n          \"aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40\"\n        ]\n      }\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
@@ -13,7 +13,7 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Textarea",
-  "docs_markdown": "# Textarea\n\nDisplays a textarea field.\n\n## Usage\n\n### Textarea\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(placeholder: \"Textarea\")\nend\n```\n\n### Disabled\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(disabled: true, placeholder: \"Disabled\")\nend\n```\n\n### Aria Disabled\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(aria: {disabled: \"true\"}, placeholder: \"Aria Disabled\")\nend\n```\n\n### With FormField\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  FormField do\n    FormFieldLabel(for: \"textarea\") { \"Textarea\" }\n    FormFieldHint { \"This is a textarea\" }\n    Textarea(placeholder: \"Textarea\", id: \"textarea\")\n    FormFieldError()\n  end\nend\n```",
+  "docs_markdown": "# Textarea\n\nDisplays a textarea field.\n\n## Usage\n\n### Textarea\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(placeholder: \"Textarea\")\nend\n```\n\n### Disabled\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(disabled: true, placeholder: \"Disabled\")\nend\n```\n\n### With FormField\n\n```ruby\ndiv(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  FormField do\n    FormFieldLabel(for: \"textarea\") { \"Textarea\" }\n    FormFieldHint { \"This is a textarea\" }\n    Textarea(placeholder: \"Textarea\", id: \"textarea\")\n    FormFieldError()\n  end\nend\n```",
   "examples": [
     {
       "title": "Textarea",
@@ -23,11 +23,6 @@
     {
       "title": "Disabled",
       "code": "div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(disabled: true, placeholder: \"Disabled\")\nend\n",
-      "language": "ruby"
-    },
-    {
-      "title": "Aria Disabled",
-      "code": "div(class: \"grid w-full max-w-sm items-center gap-1.5\") do\n  Textarea(aria: {disabled: \"true\"}, placeholder: \"Aria Disabled\")\nend\n",
       "language": "ruby"
     },
     {
