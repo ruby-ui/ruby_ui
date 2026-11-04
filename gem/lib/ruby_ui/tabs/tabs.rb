@@ -33,7 +33,8 @@ module RubyUI
           ruby_ui__tabs_active_value: @default_value,
           ruby_ui__tabs_orientation_value: @orientation
         },
-        class: ["group/tabs flex gap-2", ("flex-col" if @orientation == :horizontal)]
+        # Keyed on data-orientation, which the controller keeps in sync.
+        class: "group/tabs flex gap-2 data-[orientation=horizontal]:flex-col"
       }
     end
   end

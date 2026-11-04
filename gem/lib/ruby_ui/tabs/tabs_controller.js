@@ -13,8 +13,8 @@ export default class extends Controller {
   static values = { active: String, orientation: { type: String, default: "horizontal" } };
 
   connect() {
-    this.idCount = 0;
-    this.idBase = this.element.id || `ruby-ui-tabs-${Math.random().toString(36).slice(2, 10)}`;
+    this.idCount ??= 0;
+    this.idBase ||= this.element.id || `ruby-ui-tabs-${Math.random().toString(36).slice(2, 10)}`;
     this.connected = true;
     this.refresh();
   }
@@ -144,11 +144,18 @@ export default class extends Controller {
     });
     this.contentTargets.forEach((panel) => {
       if (!panel.id) panel.id = this.nextId("panel");
+    });
+    // Point each tab and panel at its counterpart, and drop references to one
+    // that is gone.
+    this.triggerTargets.forEach((tab) => {
+      const panel = this.contentFor(tab.dataset.value);
+      if (panel) tab.setAttribute("aria-controls", panel.id);
+      else tab.removeAttribute("aria-controls");
+    });
+    this.contentTargets.forEach((panel) => {
       const tab = this.triggerFor(panel.dataset.value);
-      if (tab) {
-        tab.setAttribute("aria-controls", panel.id);
-        panel.setAttribute("aria-labelledby", tab.id);
-      }
+      if (tab) panel.setAttribute("aria-labelledby", tab.id);
+      else panel.removeAttribute("aria-labelledby");
     });
   }
 
@@ -156,6 +163,8 @@ export default class extends Controller {
     // Re-wiring is idempotent, and restores ids/ARIA a morph may have dropped.
     this.wire();
     const orientation = this.orientationValue;
+    // The root's layout and the parts' group-data variants follow this.
+    this.element.dataset.orientation = orientation;
     const active = this.triggerFor(this.activeValue);
 
     if (this.hasListTarget) {
@@ -183,13 +192,23 @@ export default class extends Controller {
     return this.triggerTargets.find((tab) => tab.dataset.value === value);
   }
 
+  contentFor(value) {
+    if (value === undefined || value === null || value === "") return undefined;
+    return this.contentTargets.find((panel) => panel.dataset.value === value);
+  }
+
   isDisabled(tab) {
     return tab.disabled || tab.getAttribute("aria-disabled") === "true";
   }
 
-  // A counter, not the value: distinct values never collide on one id.
+  // A counter, not the value, so distinct values never share an id; ids
+  // already in the document (kept across a reconnect) are skipped.
   nextId(kind) {
-    this.idCount += 1;
-    return `${this.idBase}-${kind}-${this.idCount}`;
+    let id;
+    do {
+      this.idCount += 1;
+      id = `${this.idBase}-${kind}-${this.idCount}`;
+    } while (document.getElementById(id));
+    return id;
   }
 }

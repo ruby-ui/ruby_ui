@@ -6,7 +6,7 @@ module ShadcnAuditFixtures
     include RubyUI
 
     def view_template
-      Tabs(default: "account", class: "w-96") do
+      Tabs(default_value: "account", class: "w-96") do
         TabsList do
           TabsTrigger(value: "account") { "Account" }
           TabsTrigger(value: "password", data: {audit_trigger: true}) { "Password" }

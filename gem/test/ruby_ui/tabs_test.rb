@@ -29,7 +29,7 @@ class RubyUI::TabsTest < ComponentTest
     assert_match(/data-slot="tabs"/, output)
     assert_match(/data-orientation="horizontal"/, output)
     assert_match(/data-ruby-ui--tabs-active-value="password"/, output)
-    assert_match(/class="[^"]*\bflex-col\b/, output)
+    assert_match(/data-\[orientation=horizontal\]:flex-col/, output)
     refute_match(/default-value=/, output)
   end
 
@@ -46,7 +46,7 @@ class RubyUI::TabsTest < ComponentTest
     assert_match(/data-ruby-ui--tabs-active-value="account"/, output)
   end
 
-  def test_without_default_value_the_controller_picks_the_first_tab
+  def test_without_default_value_no_active_value_is_rendered
     output = render_tabs
 
     refute_match(/data-ruby-ui--tabs-active-value/, output)
@@ -57,7 +57,6 @@ class RubyUI::TabsTest < ComponentTest
 
     assert_match(/data-orientation="vertical"/, output)
     assert_match(/data-ruby-ui--tabs-orientation-value="vertical"/, output)
-    refute_match(/data-slot="tabs"[^>]*flex-col/, output)
   end
 
   def test_unknown_orientation_falls_back_to_horizontal
