@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # A native <table> inside a horizontally scrolling container, like shadcn's
+  # Table: wide tables scroll instead of wrapping their cells. Attributes go
+  # to the <table>; the wrapper is data-slot="table-container".
   class Table < Base
+    include TableSlot
+
     def view_template(&block)
-      div(class: "relative w-full overflow-auto") do
+      div(data: {slot: "table-container"}, class: "relative w-full overflow-x-auto") do
         table(**attrs, &block)
       end
     end
@@ -12,6 +17,7 @@ module RubyUI
 
     def default_attrs
       {
+        data: {slot: default_slot("table")}.compact,
         class: "w-full caption-bottom text-sm"
       }
     end

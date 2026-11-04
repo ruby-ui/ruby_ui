@@ -2,6 +2,8 @@
 
 module RubyUI
   class TableHeader < Base
+    include TableSlot
+
     def view_template(&)
       thead(**attrs, &)
     end
@@ -10,6 +12,7 @@ module RubyUI
 
     def default_attrs
       {
+        data: {slot: default_slot("table-header")}.compact,
         class: "[&_tr]:border-b"
       }
     end

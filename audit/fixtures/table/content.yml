@@ -1,0 +1,23 @@
+# The shadcn Base UI "With Footer" table example (bases/base/examples/table-example.tsx):
+# caption, header, three body rows, footer. The second body row is selected
+# (data-state="selected") and carries data-audit-trigger (static kind: only the
+# closed state is collected).
+caption: A list of your recent invoices.
+head_1: Invoice
+head_2: Status
+head_3: Method
+head_4: Amount
+row_1_invoice: INV001
+row_1_status: Paid
+row_1_method: Credit Card
+row_1_amount: $250.00
+row_2_invoice: INV002
+row_2_status: Pending
+row_2_method: PayPal
+row_2_amount: $150.00
+row_3_invoice: INV003
+row_3_status: Unpaid
+row_3_method: Bank Transfer
+row_3_amount: $350.00
+footer_label: Total
+footer_amount: $2,500.00
