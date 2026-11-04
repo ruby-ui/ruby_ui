@@ -12,6 +12,22 @@ export default class extends Controller {
 
   connect() {
     this.reconcile()
+    // Keep one tab stop when an item gets disabled or enabled later.
+    this.observer = new MutationObserver(() => this.ensureTabStop())
+    this.observer.observe(this.element, { subtree: true, attributes: true, attributeFilter: ["disabled"] })
+  }
+
+  disconnect() {
+    this.observer?.disconnect()
+    this.observer = null
+  }
+
+  itemTargetConnected() {
+    this.ensureTabStop()
+  }
+
+  itemTargetDisconnected() {
+    this.ensureTabStop()
   }
 
   // Native <button> activation (click, Enter, Space) lands here.
@@ -46,7 +62,8 @@ export default class extends Controller {
     } else if (step) {
       nextIndex = currentIndex + step
       if (nextIndex < 0 || nextIndex >= items.length) {
-        if (!this.loopFocusValue) return
+        // At an end with loop_focus: false the key is still ours: don't scroll the page.
+        if (!this.loopFocusValue) return event.preventDefault()
         nextIndex = (nextIndex + items.length) % items.length
       }
     } else {
@@ -80,6 +97,13 @@ export default class extends Controller {
     const enabled = this.enabledItems()
     this.setTabStop(enabled.find(el => this.isPressed(el)) || enabled[0])
     this.rebuildInputs()
+  }
+
+  // Repairs the tab stop if it was removed or disabled.
+  ensureTabStop() {
+    const enabled = this.enabledItems()
+    if (enabled.some(el => el.getAttribute("tabindex") === "0")) return
+    this.setTabStop(enabled.find(el => this.isPressed(el)) || enabled[0])
   }
 
   isPressed(item) {
