@@ -1,0 +1,34 @@
+shadcn: popover
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: popover
+docs_view: popover
+# The fixture follows shadcn's "Basic" example: an outline Button as the
+# trigger, align="start", a header with title and description.
+parts:
+  Popover: popover
+  PopoverTrigger: popover-trigger
+  PopoverContent: popover-content
+  PopoverHeader: popover-header
+  PopoverTitle: popover-title
+  PopoverDescription: popover-description
+# PopoverTrigger is a <div> wrapper in RubyUI; the Button inside it is what
+# shadcn renders as the trigger (render={<Button />}), so that is compared.
+selectors:
+  Popover: null
+  PopoverTrigger: '[data-slot="popover-trigger"] > button'
+  PopoverContent: '[data-slot="popover-content"]'
+  PopoverHeader: '[data-slot="popover-header"]'
+  PopoverTitle: '[data-slot="popover-title"]'
+  PopoverDescription: '[data-slot="popover-description"]'
+# Content placement props from the .tsx; openOnHover/delay/closeDelay from the
+# Base UI Popover.Trigger, open/defaultOpen/onOpenChange/modal from
+# Popover.Root (RubyUI's open: is the initial state only, see
+# audit/divergences/popover.yml).
+props:
+  Popover: {open: null, defaultOpen: open, onOpenChange: null, modal: null}
+  PopoverTrigger: {openOnHover: open_on_hover, delay: delay, closeDelay: close_delay}
+  PopoverContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset}
+# options: is the older API (placement:/trigger: "hover" fallbacks).
+rubyui_only:
+  Popover: [options]
+fixture_shadcn: [button]

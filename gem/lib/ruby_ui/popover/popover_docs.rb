@@ -7,884 +7,34 @@ class Views::Docs::Popover < Views::Base
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(title: "Popover", description: "Displays rich content in a portal, triggered by a button.")
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      Heading(level: 2) { "Usage" }
+
+      render Docs::VisualCodeExample.new(title: "Example", description: "A click, Enter or Space on the trigger opens the popover; Escape or a click outside closes it and focus goes back to the trigger. PopoverTitle names the dialog and PopoverDescription describes it for screen readers.", context: self) do
         <<~RUBY
           Popover do
-            PopoverTrigger(class: 'w-full') do
+            PopoverTrigger do
               Button(variant: :outline) { "Open Popover" }
             end
-            PopoverContent(class: 'w-40') do
-              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                svg(
-                  xmlns: "http://www.w3.org/2000/svg",
-                  fill: "none",
-                  viewbox: "0 0 24 24",
-                  stroke_width: "1.5",
-                  stroke: "currentColor",
-                  class: "w-4 h-4 mr-2"
-                ) do |s|
-                  s.path(
-                    stroke_linecap: "round",
-                    stroke_linejoin: "round",
-                    d:
-                      "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                  )
-                end
-                plain "Profile"
-              end
-              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                svg(
-                  xmlns: "http://www.w3.org/2000/svg",
-                  fill: "none",
-                  viewbox: "0 0 24 24",
-                  stroke_width: "1.5",
-                  stroke: "currentColor",
-                  class: "w-4 h-4 mr-2"
-                ) do |s|
-                  s.path(
-                    stroke_linecap: "round",
-                    stroke_linejoin: "round",
-                    d:
-                      "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                  )
-                  s.path(
-                    stroke_linecap: "round",
-                    stroke_linejoin: "round",
-                    d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  )
-                end
-                plain "Settings"
-              end
-              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                svg(
-                  xmlns: "http://www.w3.org/2000/svg",
-                  fill: "none",
-                  viewbox: "0 0 24 24",
-                  stroke_width: "1.5",
-                  stroke: "currentColor",
-                  class: "w-4 h-4 mr-2"
-                ) do |s|
-                  s.path(
-                    stroke_linecap: "round",
-                    stroke_linejoin: "round",
-                    d:
-                      "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                  )
-                end
-                plain "Logout"
+            PopoverContent(align: :start) do
+              PopoverHeader do
+                PopoverTitle { "Dimensions" }
+                PopoverDescription { "Set the dimensions for the layer." }
               end
             end
           end
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Placement", context: self) do
+      render Docs::VisualCodeExample.new(title: "Sides", description: "side: places the content around the trigger: :top, :right, :bottom (the default), :left, or the logical :inline_start and :inline_end, which follow the writing direction. side_offset: is the gap in pixels (4 by default). The content flips to the other side when there is no room.", context: self) do
         <<~RUBY
-          div(class: 'grid grid-cols-1 sm:grid-cols-3 gap-4') do
-            # -- TOP --
-            Popover(options: { placement: 'top' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'top' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
+          div(class: "flex flex-wrap gap-2") do
+            [:inline_start, :left, :top, :bottom, :right, :inline_end].each do |side|
+              Popover do
+                PopoverTrigger do
+                  Button(variant: :outline, class: "capitalize") { side.to_s.tr("_", " ") }
                 end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'top-start' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'top-start' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'top-end' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'top-end' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            # -- RIGHT --
-            Popover(options: { placement: 'right' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'right' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'right-start' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'right-start' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'right-end' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'right-end' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            # -- LEFT --
-            Popover(options: { placement: 'left' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'left' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'left-start' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'left-start' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'left-end' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'left-end' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            # -- BOTTOM --
-            Popover(options: { placement: 'bottom' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'bottom' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'bottom-start' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'bottom-start' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
-                end
-              end
-            end
-
-            Popover(options: { placement: 'bottom-end' }) do
-              PopoverTrigger(class: 'w-full') do
-                Button(variant: :outline, class: 'w-full justify-center') { 'bottom-end' }
-              end
-              PopoverContent(class: 'w-40') do
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
-                end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
+                PopoverContent(side: side, class: "w-40") do
+                  p { "Popover on \#{side.to_s.tr("_", " ")}" }
                 end
               end
             end
@@ -892,72 +42,100 @@ class Views::Docs::Popover < Views::Base
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Trigger", context: self) do
+      render Docs::VisualCodeExample.new(title: "Alignments", description: "align: lines the content up with the trigger's :start, :center (the default) or :end. align_offset: shifts it along that edge.", context: self) do
         <<~RUBY
-          Popover(options: { trigger: 'click' }) do
-            PopoverTrigger(class: 'w-full') do
-              Button(variant: :outline) { "Click" }
+          div(class: "flex gap-6") do
+            [:start, :center, :end].each do |align|
+              Popover do
+                PopoverTrigger do
+                  Button(variant: :outline, size: :sm, class: "capitalize") { align.to_s }
+                end
+                PopoverContent(align: align, class: "w-40") { "Aligned to \#{align}" }
+              end
             end
-            PopoverContent(class: 'w-40') do
-              Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Profile"
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "With form", context: self) do
+        <<~RUBY
+          Popover do
+            PopoverTrigger do
+              Button(variant: :outline) { "Open Popover" }
+            end
+            PopoverContent(align: :start, class: "w-64") do
+              PopoverHeader do
+                PopoverTitle { "Dimensions" }
+                PopoverDescription { "Set the dimensions for the layer." }
+              end
+              div(class: "flex flex-col gap-4") do
+                div(class: "flex items-center gap-2") do
+                  FormFieldLabel(for: "popover-width", class: "w-1/2") { "Width" }
+                  Input(id: "popover-width", value: "100%")
                 end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                    )
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    )
-                  end
-                  plain "Settings"
+                div(class: "flex items-center gap-2") do
+                  FormFieldLabel(for: "popover-height", class: "w-1/2") { "Height" }
+                  Input(id: "popover-height", value: "25px")
                 end
-                Link(href: "#", variant: :ghost, class: 'w-full justify-start pl-2') do
-                  svg(
-                    xmlns: "http://www.w3.org/2000/svg",
-                    fill: "none",
-                    viewbox: "0 0 24 24",
-                    stroke_width: "1.5",
-                    stroke: "currentColor",
-                    class: "w-4 h-4 mr-2"
-                  ) do |s|
-                    s.path(
-                      stroke_linecap: "round",
-                      stroke_linejoin: "round",
-                      d:
-                        "M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                    )
-                  end
-                  plain "Logout"
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Open on hover", description: "open_on_hover: also opens the popover when the pointer rests on the trigger for delay: milliseconds (300 by default), and closes it close_delay: milliseconds (0 by default) after the pointer leaves both the trigger and the content. A click, Enter or Space still opens it, so it stays usable from the keyboard.", context: self) do
+        <<~RUBY
+          Popover do
+            PopoverTrigger(open_on_hover: true, delay: 100, close_delay: 100) do
+              Button(variant: :outline) { "Hover me" }
+            end
+            PopoverContent do
+              PopoverHeader do
+                PopoverTitle { "Hover popover" }
+                PopoverDescription { "Opens while the pointer rests on the trigger." }
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "In a dialog", description: "Escape closes the popover first and leaves the dialog open.", context: self) do
+        <<~RUBY
+          Dialog do
+            DialogTrigger do
+              Button(variant: :outline) { "Open Dialog" }
+            end
+            DialogContent do
+              DialogHeader do
+                DialogTitle { "Popover Example" }
+                DialogDescription { "Click the button below to see the popover." }
+              end
+              Popover do
+                PopoverTrigger do
+                  Button(variant: :outline, class: "w-fit") { "Open Popover" }
                 end
+                PopoverContent(align: :start) do
+                  PopoverHeader do
+                    PopoverTitle { "Popover in Dialog" }
+                    PopoverDescription { "This popover appears inside a dialog. Click the button to open it." }
+                  end
+                end
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Inside a clipping container", description: "The content opens in the top layer, so a container that hides its overflow (a scroll area, a table cell, a card) doesn't clip it.", context: self) do
+        <<~RUBY
+          div(class: "relative h-24 w-64 overflow-hidden rounded-md border p-4") do
+            Popover do
+              PopoverTrigger do
+                Button(variant: :outline) { "Open Popover" }
+              end
+              PopoverContent do
+                p { "Not clipped by the container above." }
+              end
             end
           end
         RUBY
