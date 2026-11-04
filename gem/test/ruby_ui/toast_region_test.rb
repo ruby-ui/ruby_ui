@@ -73,13 +73,16 @@ class RubyUI::ToastRegionTest < ComponentTest
     %w[default success error warning info loading].each do |v|
       assert_match(/data-variant="#{v}"/, out)
     end
-    assert_match(/<template data-ruby-ui--toaster-target="skeleton" data-variant="default">.*data-slot="toast-close"/m, out)
+    skeletons(out).each { |variant, html| assert_match(/data-slot="toast-close"/, html, "#{variant} skeleton") }
   end
 
   def test_close_button_false_drops_the_x_from_skeletons
     out = phlex { RubyUI.ToastRegion(close_button: false) }
-    skeleton = out[/<template data-ruby-ui--toaster-target="skeleton" data-variant="default">.*?<\/template>/m]
-    refute_match(/data-slot="toast-close"/, skeleton)
+    skeletons(out).each { |variant, html| refute_match(/data-slot="toast-close"/, html, "#{variant} skeleton") }
+  end
+
+  def test_unknown_swipe_direction_raises
+    assert_raises(ArgumentError) { RubyUI::ToastRegion.new(swipe_directions: %i[sideways]) }
   end
 
   def test_removed_kwargs_raise
@@ -94,5 +97,14 @@ class RubyUI::ToastRegionTest < ComponentTest
     assert_match(/Saved/, out)
     assert_match(/Oops/, out)
     assert_match(/id="flash-notice"/, out)
+  end
+
+  private
+
+  def skeletons(out)
+    variants = %w[default success error warning info loading]
+    found = variants.to_h { |v| [v, out[/<template data-ruby-ui--toaster-target="skeleton" data-variant="#{v}">.*?<\/template>/m]] }
+    assert_equal variants, found.compact.keys
+    found
   end
 end

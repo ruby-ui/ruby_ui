@@ -44,6 +44,8 @@ class RubyUI::ToastTest < ComponentTest
     assert_match(/data-slot="toast-cancel"/, out)
     assert_match(/click-(&gt;|>)ruby-ui--toast#dismiss/, out)
     assert_match(/h-8/, out)
+    assert_match(/hover:bg-muted/, out)
+    refute_match(/border-border bg-background/, out)
   end
 
   def test_icon_renders_per_variant
@@ -77,6 +79,8 @@ class RubyUI::ToastTest < ComponentTest
     assert_match(/click-(&gt;|>)ruby-ui--toast#dismiss/, out)
     assert_match(/h-8 w-8/, out)
     assert_match(/text-muted-foreground/, out)
+    assert_match(/hover:bg-muted/, out)
+    refute_match(/border-border bg-background/, out)
     refute_match(/absolute right-2/, out)
   end
 

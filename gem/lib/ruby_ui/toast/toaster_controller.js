@@ -48,7 +48,7 @@ export default class extends Controller {
     this._holds = new Set()
     this._heights = new WeakMap()
     this._resizeObservers = new WeakMap()
-    this._announcers = new Set()
+    this._announcers = new Map() // toast element -> its hidden role=alert
   }
 
   connect() {
@@ -238,19 +238,17 @@ export default class extends Controller {
     node.setAttribute("role", "alert")
     node.setAttribute("aria-atomic", "true")
     node.className = "sr-only"
-    node.dataset.announceFor = el.id
+    node.dataset.toastAnnouncement = ""
     node.textContent = [title, description].filter(Boolean).join(". ")
     this.element.insertAdjacentElement("afterend", node)
-    this._announcers.add(node)
+    this._announcers.get(el)?.remove()
+    this._announcers.set(el, node)
     el.setAttribute("aria-hidden", "true")
   }
 
   _removeAnnouncer(el) {
-    this._announcers.forEach((node) => {
-      if (node.dataset.announceFor !== el.id) return
-      node.remove()
-      this._announcers.delete(node)
-    })
+    this._announcers.get(el)?.remove()
+    this._announcers.delete(el)
   }
 
   // With focus inside, the toasts themselves are read: drop the hidden

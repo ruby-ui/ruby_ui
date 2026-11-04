@@ -48,7 +48,8 @@ class RubyUI::ToastItemTest < ComponentTest
     assert_match(/data-ruby-ui--toast-duration-value="7000"/, out)
   end
 
-  def test_duration_omitted_inherits_region
+  # The toast controller then reads the region's duration (checked in the browser).
+  def test_duration_omitted_leaves_no_duration_value
     out = phlex { RubyUI.ToastItem { "x" } }
     refute_match(/data-ruby-ui--toast-duration-value/, out)
   end

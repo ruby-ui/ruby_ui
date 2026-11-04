@@ -41,6 +41,8 @@ module RubyUI
       @close_button = close_button
       @hotkey = hotkey
       @swipe_directions = swipe_directions && Array(swipe_directions).map(&:to_sym)
+      unknown = Array(@swipe_directions) - SWIPE_DIRECTIONS
+      raise ArgumentError, "RubyUI::ToastRegion: unknown swipe direction(s) #{unknown.inspect}" unless unknown.empty?
       @flash = flash
       super(**attrs)
     end

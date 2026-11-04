@@ -81,18 +81,26 @@ export default class extends Controller {
     this._close("dismiss")
   }
 
-  // aria-labelledby / aria-describedby, as Base UI's Toast.Root does.
+  // aria-labelledby / aria-describedby, as Base UI's Toast.Root does. A
+  // dialog needs a name: without a title, the description names it, else a
+  // generic label. Labels the author set are left alone.
   _wireLabels() {
-    const title = this.element.querySelector('[data-slot="toast-title"]')
-    const description = this.element.querySelector('[data-slot="toast-description"]')
-    const base = this.element.id || `ruby-ui-toast-${++uid}`
-    if (title && title.textContent.trim() !== "") {
-      title.id ||= `${base}-title`
-      this.element.setAttribute("aria-labelledby", title.id)
+    const el = this.element
+    const filled = (node) => node && node.textContent.trim() !== ""
+    const title = el.querySelector('[data-slot="toast-title"]')
+    const description = el.querySelector('[data-slot="toast-description"]')
+    const base = el.id || `ruby-ui-toast-${++uid}`
+    const named = el.hasAttribute("aria-labelledby") || el.hasAttribute("aria-label")
+    if (filled(title)) title.id ||= `${base}-title`
+    if (filled(description)) description.id ||= `${base}-description`
+    if (!named) {
+      if (filled(title)) el.setAttribute("aria-labelledby", title.id)
+      else if (filled(description)) el.setAttribute("aria-labelledby", description.id)
+      else el.setAttribute("aria-label", "Notification")
     }
-    if (description && description.textContent.trim() !== "") {
-      description.id ||= `${base}-description`
-      this.element.setAttribute("aria-describedby", description.id)
+    const describedByTitle = filled(title) || named
+    if (filled(description) && describedByTitle && !el.hasAttribute("aria-describedby")) {
+      el.setAttribute("aria-describedby", description.id)
     }
   }
 

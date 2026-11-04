@@ -178,7 +178,7 @@ class Views::Docs::Toast < Views::Base
     {name: "position", default: ":bottom_right", values: ":top_left | :top_center | :top_right | :bottom_left | :bottom_center | :bottom_right", description: "Where the toaster mounts on the viewport (shadcn's is bottom-right)."},
     {name: "expand", default: "false", values: "Boolean", description: "Always show toasts expanded (no stack peek)."},
     {name: "max", default: "3", values: "Integer", description: "Toasts shown at once (Base UI limit). Older ones stay hidden and come back when a front toast closes."},
-    {name: "duration", default: "5000", values: "Integer (ms)", description: "Default lifetime per toast (Base UI timeout). 0 keeps toasts until dismissed."},
+    {name: "duration", default: "5000", values: "Integer (ms) | Float::INFINITY", description: "Default lifetime per toast (Base UI timeout). 0 or Float::INFINITY keeps toasts until dismissed."},
     {name: "gap", default: "12", values: "Integer (px)", description: "Spacing between toasts when expanded."},
     {name: "close_button", default: "true", values: "Boolean", description: "Render the X button in every toast."},
     {name: "hotkey", default: "%w[F6]", values: "Array<String>", description: "Shortcut that moves focus to the notifications region (Tab then reaches the newest toast), e.g. %w[alt t]."},
@@ -190,8 +190,8 @@ class Views::Docs::Toast < Views::Base
     {name: "variant", default: ":default", values: ":default | :success | :error | :warning | :info | :loading", description: "Icon and data-type."},
     {name: "priority", default: ":low", values: ":low | :high", description: "High-priority toasts are announced right away (role=alert) and use role=alertdialog."},
     {name: "id", default: "nil", values: "String", description: "DOM id; auto-generated when not provided."},
-    {name: "duration", default: "nil", values: "Integer | nil", description: "Override the region default. nil inherits it; 0 stays until dismissed."},
-    {name: "dismissible", default: "true", values: "Boolean", description: "Allow Escape, swipe, the X and Cancel to close it."},
+    {name: "duration", default: "nil", values: "Integer | Float::INFINITY | nil", description: "Override the region default. nil inherits it; 0 or Float::INFINITY stays until dismissed."},
+    {name: "dismissible", default: "true", values: "Boolean", description: "Allow Escape, swipe, the X and Cancel to close it. RubyUI.toast.dismiss() closes it either way."},
     {name: "on_dismiss", default: "nil", values: "String", description: "Stimulus action (\"controller#method\") run on ruby-ui:toast:close. The controller must be on the toast or an ancestor."},
     {name: "on_remove", default: "nil", values: "String", description: "Stimulus action run on ruby-ui:toast:remove, after the exit animation."}
   ].freeze
@@ -209,7 +209,7 @@ class Views::Docs::Toast < Views::Base
     {name: "swipeDirections", default: "(region default)", values: "Array<String>", description: "Directions a swipe can dismiss this toast in."},
     {name: "position", default: "(region default)", values: "String", description: "Moves the region before this toast is added."},
     {name: "id", default: "(auto)", values: "String", description: "Stable id (used by .dismiss(id) and .promise)."},
-    {name: "dismissible", default: "true", values: "Boolean", description: "Disable swipe / X / dismiss-all for this toast."},
+    {name: "dismissible", default: "true", values: "Boolean", description: "false turns off Escape, swipe, the X and Cancel for this toast; RubyUI.toast.dismiss() still closes it."},
     {name: "className", default: "—", values: "String", description: "Extra classes on the toast element."}
   ].freeze
 
