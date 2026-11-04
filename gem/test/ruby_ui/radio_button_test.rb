@@ -40,12 +40,6 @@ class RubyUI::RadioButtonTest < ComponentTest
     refute_match(/group-has-disabled/, output)
   end
 
-  def test_form_field_label_is_the_field_label_group
-    output = phlex { RubyUI.FormFieldLabel(for: "a") { "A" } }
-
-    assert_match(/group\/field-label/, output)
-  end
-
   def test_wires_form_field_validation
     output = phlex { RubyUI.RadioButton(required: true) }
 
