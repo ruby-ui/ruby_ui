@@ -9,29 +9,113 @@ class Views::Docs::Tooltip < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", description: "The tooltip opens while the pointer rests on the trigger or when the trigger gets keyboard focus. The pointer can move onto the tooltip; it closes when the pointer leaves both, on blur, on Escape, or when the trigger is pressed. The trigger's button is described by the tooltip (aria-describedby).", context: self) do
         <<~RUBY
           Tooltip do
             TooltipTrigger do
-              Button(variant: :outline, icon: true) do
-                bookmark_icon
-              end
+              Button(variant: :outline) { "Show Tooltip" }
             end
             TooltipContent do
-              Text { "Add to library" }
+              p { "Add to library" }
             end
           end
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Long content", context: self) do
+      render Docs::VisualCodeExample.new(title: "Sides", description: "side: places the tooltip around the trigger: :top (the default), :right, :bottom, :left, or the logical :inline_start and :inline_end, which follow the writing direction. side_offset: is the gap in pixels (4 by default); align: (:start, :center, :end) and align_offset: line it up along that edge. It flips to the other side when there is no room.", context: self) do
+        <<~RUBY
+          div(class: "flex flex-wrap gap-2") do
+            [:inline_start, :left, :top, :bottom, :right, :inline_end].each do |side|
+              Tooltip do
+                TooltipTrigger do
+                  Button(variant: :outline, class: "capitalize") { side.to_s.tr("_", " ") }
+                end
+                TooltipContent(side: side) do
+                  p { "Add to library" }
+                end
+              end
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "With icon", description: "An icon-only trigger still needs an accessible name: the tooltip describes the button, it doesn't name it.", context: self) do
         <<~RUBY
           Tooltip do
             TooltipTrigger do
-              Button(variant: :outline) { "Hover me" }
+              Button(variant: :ghost, icon: true) do
+                bookmark_icon
+                span(class: "sr-only") { "Bookmark" }
+              end
             end
             TooltipContent do
-              Text { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }
+              p { "Add to library" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Long content", description: "Long text wraps at 20rem.", context: self) do
+        <<~RUBY
+          Tooltip do
+            TooltipTrigger do
+              Button(variant: :outline) { "Show Tooltip" }
+            end
+            TooltipContent do
+              plain "To learn more about how this works, check out the docs. If you have any questions, please reach out to us."
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Disabled button", description: "A disabled button gets no pointer events, so the wrapper still opens the tooltip on hover.", context: self) do
+        <<~RUBY
+          Tooltip do
+            TooltipTrigger do
+              Button(variant: :outline, disabled: true) { "Disabled" }
+            end
+            TooltipContent do
+              p { "This feature is currently unavailable" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "With keyboard shortcut", context: self) do
+        <<~RUBY
+          Tooltip do
+            TooltipTrigger do
+              Button(variant: :outline, size: :sm) { "Save" }
+            end
+            TooltipContent do
+              plain "Save Changes"
+              ShortcutKey { "S" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Delay and click", description: "delay: waits that many milliseconds of pointer rest before opening (0 by default), close_delay: waits before closing (0 by default, plus a 100 ms grace to cross onto the tooltip). close_on_click: false keeps it open when the trigger is pressed.", context: self) do
+        <<~RUBY
+          Tooltip do
+            TooltipTrigger(delay: 500, close_on_click: false) do
+              Button(variant: :outline) { "Hover and wait" }
+            end
+            TooltipContent do
+              p { "Opened after 500 ms" }
+            end
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Disabled tooltip", description: "disabled: true keeps the tooltip from opening. open: true renders it open on load. Changing the data-ruby-ui--tooltip-open-value or -disabled-value attribute later opens, closes or disables it, and every change dispatches ruby-ui--tooltip:change with detail.open.", context: self) do
+        <<~RUBY
+          Tooltip(disabled: true) do
+            TooltipTrigger do
+              Button(variant: :outline) { "No tooltip" }
+            end
+            TooltipContent do
+              p { "You won't see this" }
             end
           end
         RUBY

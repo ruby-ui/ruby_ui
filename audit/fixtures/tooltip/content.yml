@@ -1,0 +1,3 @@
+# Same strings on both sides. Follows shadcn's tooltip "Basic" example.
+trigger: Show Tooltip
+body: Add to library
