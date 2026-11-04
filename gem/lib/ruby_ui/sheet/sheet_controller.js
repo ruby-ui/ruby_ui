@@ -31,12 +31,14 @@ export default class extends Controller {
     content.removeEventListener("close", this.handleClose)
     content.removeEventListener("cancel", this.handleCancel)
     content.removeEventListener("keydown", this.handleKeydown)
-    this.closing = false
+    this.closeToken = null
+    // Drop aria-expanded/aria-controls pointing at the panel that just left.
+    this.setTriggersExpanded(false)
     this.releaseScroll()
   }
 
   connect() {
-    this.closing = false
+    this.closeToken = null
     document.addEventListener("turbo:before-cache", this.handleBeforeCache)
     if (this.openValue) {
       this.open()
@@ -45,7 +47,7 @@ export default class extends Controller {
 
   disconnect() {
     document.removeEventListener("turbo:before-cache", this.handleBeforeCache)
-    this.closing = false
+    this.closeToken = null
     this.releaseScroll()
   }
 
@@ -53,8 +55,8 @@ export default class extends Controller {
     e?.preventDefault()
     if (!this.hasContentTarget) return
 
-    // Reopening during the exit animation must not be closed by the stale animation promise.
-    this.closing = false
+    // Reopening during the exit animation invalidates the pending close.
+    this.closeToken = null
     this.contentTarget.dataset.state = "open"
     if (!this.contentTarget.open) this.contentTarget.showModal()
     this.scrollLocked = true
@@ -67,7 +69,8 @@ export default class extends Controller {
   handleBeforeCache = () => {
     if (!this.hasContentTarget || !this.contentTarget.open) return
 
-    this.closing = false
+    this.closeToken = null
+    this.openValue = false
     this.contentTarget.close()
     delete this.contentTarget.dataset.state
     this.releaseScroll()
@@ -88,14 +91,14 @@ export default class extends Controller {
 
   // Plays the exit animation on the panel and its ::backdrop, then closes.
   async animateClose() {
-    if (this.closing || !this.hasContentTarget || !this.contentTarget.open) return
+    if (this.closeToken || !this.hasContentTarget || !this.contentTarget.open) return
 
-    this.closing = true
+    // Each close gets its own token: a reopen, a later close or a native close
+    // replaces it, so a stale animation promise never closes a newer open.
+    const token = (this.closeToken = Symbol("close"))
     this.contentTarget.dataset.state = "closed"
     await Promise.allSettled(this.ownAnimations().map((animation) => animation.finished))
-    // handleClose/disconnect reset `closing`: the dialog already closed (e.g. a forced
-    // second Esc) and may have been reopened since, so don't close it again.
-    if (this.closing) this.contentTarget.close()
+    if (this.closeToken === token) this.contentTarget.close()
   }
 
   // Only the dialog's own animations (panel + ::backdrop), never its descendants'.
@@ -195,7 +198,9 @@ export default class extends Controller {
   }
 
   handleClose = (e) => {
-    this.closing = false
+    this.closeToken = null
+    // A cached snapshot must not carry open-value="true" and reopen on restore.
+    this.openValue = false
     delete e.currentTarget.dataset.state
     this.releaseScroll()
     this.setTriggersExpanded(false)
@@ -225,10 +230,21 @@ export default class extends Controller {
     }
 
     this.contentId = contentId
-    this.triggerControls().forEach((control) => {
-      if (!control.hasAttribute("aria-haspopup")) control.setAttribute("aria-haspopup", "dialog")
-    })
-    this.setTriggersExpanded(dialog.open)
+    this.triggerTargets.forEach((trigger) => this.wireTrigger(trigger))
+  }
+
+  // Also wires triggers added after the panel connected.
+  triggerTargetConnected(trigger) {
+    this.wireTrigger(trigger)
+  }
+
+  wireTrigger(trigger) {
+    const control = this.triggerControl(trigger)
+    if (!control) return
+
+    if (!control.hasAttribute("aria-haspopup")) control.setAttribute("aria-haspopup", "dialog")
+    // Before the panel connects there is nothing to point at yet; wireAria comes back.
+    if (this.hasContentTarget && this.contentId) this.setExpanded(control, this.contentTarget.open)
   }
 
   // First target that lives inside this controller's own <dialog>.
@@ -245,10 +261,12 @@ export default class extends Controller {
   // trigger wrapper, or the menuitem/button that wraps it. A role-less wrapper
   // gets no ARIA. The `closest` lookup climbs above the Sheet root, as Dialog's
   // does, so a menu item that wraps the Sheet carries the ARIA.
+  triggerControl(trigger) {
+    return trigger.querySelector("button, a[href], [role=button]") || trigger.closest("[role=menuitem], [role=button]")
+  }
+
   triggerControls() {
-    return this.triggerTargets
-      .map((trigger) => trigger.querySelector("button, a[href], [role=button]") || trigger.closest("[role=menuitem], [role=button]"))
-      .filter(Boolean)
+    return this.triggerTargets.map((trigger) => this.triggerControl(trigger)).filter(Boolean)
   }
 
   // aria-controls is set only while open, as Base UI does. On close only a value
@@ -256,13 +274,15 @@ export default class extends Controller {
   // stays. No state is kept, so a trigger added later or a reconnect (Turbo cache)
   // behaves the same.
   setTriggersExpanded(expanded) {
-    this.triggerControls().forEach((control) => {
-      control.setAttribute("aria-expanded", String(expanded))
-      if (expanded && !control.hasAttribute("aria-controls")) {
-        control.setAttribute("aria-controls", this.contentId)
-      } else if (!expanded && control.getAttribute("aria-controls") === this.contentId) {
-        control.removeAttribute("aria-controls")
-      }
-    })
+    this.triggerControls().forEach((control) => this.setExpanded(control, expanded))
+  }
+
+  setExpanded(control, expanded) {
+    control.setAttribute("aria-expanded", String(expanded))
+    if (expanded && !control.hasAttribute("aria-controls")) {
+      control.setAttribute("aria-controls", this.contentId)
+    } else if (!expanded && control.getAttribute("aria-controls") === this.contentId) {
+      control.removeAttribute("aria-controls")
+    }
   }
 }

@@ -124,11 +124,27 @@ class RubyUI::SheetTest < ComponentTest
     refute_includes output, %(data-slot="sheet-close")
   end
 
-  # Old markup calls ruby-ui--sheet-content#close; the shim controller still answers it.
-  def test_content_keeps_the_legacy_close_controller
-    output = phlex { RubyUI.SheetContent { "body" } }
+  # Old markup calls ruby-ui--sheet-content#close; the shim controller on the
+  # <dialog> is an ancestor of that button, so Stimulus still routes the action.
+  def test_legacy_close_action_sits_inside_the_shim_controller
+    output = phlex do
+      RubyUI.Sheet do
+        RubyUI.SheetContent do
+          RubyUI.SheetFooter do
+            RubyUI.Button(variant: :outline, data: {action: "click->ruby-ui--sheet-content#close"}) { "Cancel" }
+          end
+        end
+      end
+    end
 
-    assert_match(/data-controller="ruby-ui--sheet-content"/, output)
+    assert_match(/<div[^>]*data-controller="ruby-ui--sheet"[^>]*>.*<dialog[^>]*data-controller="ruby-ui--sheet-content"[^>]*>.*data-action="click->ruby-ui--sheet-content#close"/m, output)
+  end
+
+  # shadcn's Root renders no element; display: contents keeps the wrapper out of layout.
+  def test_root_wrapper_is_display_contents
+    output = phlex { RubyUI.Sheet { "content" } }
+
+    assert_match(/<div[^>]*class="contents"/, output)
   end
 
   # The controller closes the <dialog> when the animation ends; without a forwards fill mode that frame flashes.

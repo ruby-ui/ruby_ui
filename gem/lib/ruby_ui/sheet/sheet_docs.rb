@@ -31,7 +31,7 @@ class Views::Docs::Sheet < Views::Base
                 end
               end
               SheetFooter do
-                Button(type: "submit") { "Save changes" }
+                Button { "Save changes" }
                 Button(variant: :outline, data: { action: 'click->ruby-ui--sheet#dismiss' }) { "Close" }
               end
             end
@@ -56,7 +56,7 @@ class Views::Docs::Sheet < Views::Base
                     p(class: 'text-sm text-muted-foreground') { "The sheet slides in from the \#{side}." }
                   end
                   SheetFooter do
-                    Button(type: "submit") { "Save changes" }
+                    Button { "Save changes" }
                     Button(variant: :outline, data: { action: 'click->ruby-ui--sheet#dismiss' }) { "Cancel" }
                   end
                 end
