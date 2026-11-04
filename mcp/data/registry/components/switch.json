@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "switch.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Switch < Base\n    def initialize(include_hidden: true, checked_value: \"1\", unchecked_value: \"0\", **attrs)\n      @include_hidden = include_hidden\n      @checked_value = checked_value\n      @unchecked_value = unchecked_value\n      super(**attrs)\n    end\n\n    def view_template\n      label(\n        role: \"switch\",\n        class: [\n          \"peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors bg-input\",\n          \"has-checked:bg-primary\",\n          \"has-disabled:cursor-not-allowed has-disabled:opacity-50\",\n          \"has-aria-disabled:cursor-not-allowed has-aria-disabled:opacity-50 has-aria-disabled:pointer-events-none\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background\"\n        ]\n      ) do\n        input(type: \"hidden\", name: attrs[:name], value: @unchecked_value) if @include_hidden\n\n        input(**attrs.merge(type: \"checkbox\", class: \"hidden peer\", value: @checked_value))\n\n        span(class: [\n          \"pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-0\",\n          \"peer-checked:translate-x-5\"\n        ])\n      end\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A switch, styled after shadcn's Switch (Base UI + vega). Renders a native\n  # <input type=\"checkbox\" role=\"switch\"> instead of Base UI's span[role=switch]\n  # plus hidden input: the input itself is the track (appearance-none) and its\n  # ::before is the thumb, so it is focusable, toggles with Space, is named by\n  # a <label for> and exposes its checked state with no JavaScript. ::after\n  # widens the hit area like shadcn, and peer-* classes on a following label\n  # keep working.\n  #\n  # size: :default (18.4x32px) or :sm (14x24px), as shadcn's size prop.\n  # include_hidden: renders a hidden input with the same name and\n  # unchecked_value before the switch, so the form also sends a value when it\n  # is off (Rails' check_box pattern). checked_value is the switch's value.\n  class Switch < Base\n    SIZES = %i[default sm].freeze\n\n    BASE = [\n      \"peer relative inline-flex shrink-0 appearance-none rounded-full border border-transparent p-0 align-middle\",\n      \"data-[size=default]:h-[18.4px] data-[size=default]:w-[32px] data-[size=sm]:h-[14px] data-[size=sm]:w-[24px]\",\n      # High contrast: give the drawing back to the browser (as @tailwindcss/forms does).\n      \"forced-colors:appearance-auto forced-colors:before:hidden\",\n      \"bg-input dark:bg-input/80 checked:bg-primary dark:checked:bg-primary checked:bg-none\",\n      \"text-inherit shadow-xs transition-all outline-none\",\n      \"after:absolute after:-inset-x-3 after:-inset-y-2\",\n      \"focus:ring-0 focus:ring-offset-0 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50\",\n      \"aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20\",\n      \"dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40\",\n      \"disabled:cursor-not-allowed disabled:opacity-50\",\n      \"aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none\",\n      # Thumb.\n      \"before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:my-auto before:block before:rounded-full\",\n      \"before:bg-background dark:before:bg-foreground dark:checked:before:bg-primary-foreground\",\n      \"before:transition-transform before:translate-x-0 checked:before:translate-x-[calc(100%-2px)]\",\n      \"data-[size=default]:before:size-4 data-[size=sm]:before:size-3\"\n    ].freeze\n\n    def initialize(size: :default, include_hidden: true, checked_value: \"1\", unchecked_value: \"0\", **attrs)\n      @size = size.to_sym\n      raise ArgumentError, \"size: must be one of #{SIZES.join(\", \")}\" unless SIZES.include?(@size)\n\n      @include_hidden = include_hidden\n      @checked_value = checked_value\n      @unchecked_value = unchecked_value\n      super(**attrs)\n    end\n\n    def view_template\n      if @include_hidden\n        input(type: \"hidden\", name: attrs[:name], value: @unchecked_value, disabled: attrs[:disabled], form: attrs[:form], autocomplete: \"off\")\n      end\n      input(**attrs, value: @checked_value)\n    end\n\n    private\n\n    def default_attrs\n      {\n        type: \"checkbox\",\n        role: \"switch\",\n        data: {slot: \"switch\", size: @size},\n        class: BASE\n      }\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
@@ -13,31 +13,41 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Switch",
-  "docs_markdown": "# Switch\n\nA control that allows the user to toggle between checked and not checked.\n\n## Usage\n\n### Default\n\n```ruby\nSwitch(name: \"switch\")\n```\n\n### Checked\n\n```ruby\nSwitch(name: \"switch\", checked: true)\n```\n\n### Disabled\n\n```ruby\nSwitch(name: \"switch\", disabled: true)\n```\n\n### Aria Disabled\n\n```ruby\nSwitch(name: \"switch\", aria: {disabled: \"true\"})\n```\n\n### With flag include_hidden false\n\n```ruby\n# Supports the creation of a hidden input to be used in forms inspired by the Ruby on Rails implementation of check_box. Default is true.\nSwitch(name: \"switch\", include_hidden: false)\n```",
+  "docs_markdown": "# Switch\n\nA control that allows the user to toggle between checked and not checked.\n\n## Usage\n\n### Example\n\n```ruby\ndiv(class: \"flex items-center gap-3\") do\n  Switch(id: \"airplane_mode\", name: \"airplane_mode\")\n  FormFieldLabel(for: \"airplane_mode\") { \"Airplane Mode\" }\nend\n```\n\n### Checked\n\n```ruby\ndiv(class: \"flex items-center gap-3\") do\n  Switch(id: \"notifications\", name: \"notifications\", checked: true)\n  FormFieldLabel(for: \"notifications\") { \"Enable notifications\" }\nend\n```\n\n### Size\n\n```ruby\ndiv(class: \"flex flex-col gap-4\") do\n  div(class: \"flex items-center gap-3\") do\n    Switch(id: \"size_sm\", size: :sm)\n    FormFieldLabel(for: \"size_sm\") { \"Small\" }\n  end\n  div(class: \"flex items-center gap-3\") do\n    Switch(id: \"size_default\")\n    FormFieldLabel(for: \"size_default\") { \"Default\" }\n  end\nend\n```\n\n### Disabled\n\n```ruby\ndiv(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_disabled\", name: \"switch_disabled\", disabled: true)\n  FormFieldLabel(for: \"switch_disabled\") { \"Disabled\" }\nend\n```\n\n### Aria Disabled\n\n```ruby\ndiv(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_aria_disabled\", name: \"switch_aria_disabled\", aria: {disabled: \"true\"})\n  FormFieldLabel(for: \"switch_aria_disabled\") { \"Aria disabled\" }\nend\n```\n\n### Invalid\n\n```ruby\ndiv(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_invalid\", name: \"terms\", aria: {invalid: \"true\"})\n  FormFieldLabel(for: \"switch_invalid\") { \"Accept terms and conditions\" }\nend\n```\n\n### With flag include_hidden false\n\n```ruby\ndiv(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_no_hidden\", name: \"switch\", include_hidden: false)\n  FormFieldLabel(for: \"switch_no_hidden\") { \"Without hidden input\" }\nend\n```",
   "examples": [
     {
-      "title": "Default",
-      "code": "Switch(name: \"switch\")\n",
+      "title": "Example",
+      "code": "div(class: \"flex items-center gap-3\") do\n  Switch(id: \"airplane_mode\", name: \"airplane_mode\")\n  FormFieldLabel(for: \"airplane_mode\") { \"Airplane Mode\" }\nend\n",
       "language": "ruby"
     },
     {
       "title": "Checked",
-      "code": "Switch(name: \"switch\", checked: true)\n",
+      "code": "div(class: \"flex items-center gap-3\") do\n  Switch(id: \"notifications\", name: \"notifications\", checked: true)\n  FormFieldLabel(for: \"notifications\") { \"Enable notifications\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Size",
+      "code": "div(class: \"flex flex-col gap-4\") do\n  div(class: \"flex items-center gap-3\") do\n    Switch(id: \"size_sm\", size: :sm)\n    FormFieldLabel(for: \"size_sm\") { \"Small\" }\n  end\n  div(class: \"flex items-center gap-3\") do\n    Switch(id: \"size_default\")\n    FormFieldLabel(for: \"size_default\") { \"Default\" }\n  end\nend\n",
       "language": "ruby"
     },
     {
       "title": "Disabled",
-      "code": "Switch(name: \"switch\", disabled: true)\n",
+      "code": "div(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_disabled\", name: \"switch_disabled\", disabled: true)\n  FormFieldLabel(for: \"switch_disabled\") { \"Disabled\" }\nend\n",
       "language": "ruby"
     },
     {
       "title": "Aria Disabled",
-      "code": "Switch(name: \"switch\", aria: {disabled: \"true\"})\n",
+      "code": "div(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_aria_disabled\", name: \"switch_aria_disabled\", aria: {disabled: \"true\"})\n  FormFieldLabel(for: \"switch_aria_disabled\") { \"Aria disabled\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Invalid",
+      "code": "div(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_invalid\", name: \"terms\", aria: {invalid: \"true\"})\n  FormFieldLabel(for: \"switch_invalid\") { \"Accept terms and conditions\" }\nend\n",
       "language": "ruby"
     },
     {
       "title": "With flag include_hidden false",
-      "code": "# Supports the creation of a hidden input to be used in forms inspired by the Ruby on Rails implementation of check_box. Default is true.\nSwitch(name: \"switch\", include_hidden: false)\n",
+      "code": "div(class: \"flex items-center gap-3\") do\n  Switch(id: \"switch_no_hidden\", name: \"switch\", include_hidden: false)\n  FormFieldLabel(for: \"switch_no_hidden\") { \"Without hidden input\" }\nend\n",
       "language": "ruby"
     }
   ]
