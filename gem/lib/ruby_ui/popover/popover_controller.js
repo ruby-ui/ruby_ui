@@ -66,6 +66,8 @@ export default class extends Controller {
     trigger.removeEventListener("click", this.handleClick);
     trigger.removeEventListener("mouseenter", this.handleEnter);
     trigger.removeEventListener("mouseleave", this.handleLeave);
+    // A pending hover delay must not open the popover against a trigger nobody touched.
+    this.clearTimers();
     if (this.isOpen) this.hidePopover({ animate: false, restoreFocus: false });
   }
 
@@ -82,23 +84,35 @@ export default class extends Controller {
     }
   }
 
-  // The open content was removed on its own: release the listeners and Floating UI.
+  // The open content was removed, or only lost its target attribute and is
+  // still in the top layer: close that element at once and release the
+  // listeners and Floating UI.
   contentTargetDisconnected(content) {
     content.removeEventListener("mouseenter", this.handleEnter);
     content.removeEventListener("mouseleave", this.handleLeave);
     content.removeEventListener("focusout", this.handleFocusOut);
-    if (content === this.openContent) {
-      this.teardown();
-      this.openValue = false;
-      this.syncTrigger(false);
-    }
+    this.clearTimers();
+    if (content === this.openContent) this.hidePopover({ animate: false, restoreFocus: false });
   }
 
+  // A Turbo Stream can swap the title or the description on their own.
   titleTargetConnected() {
-    if (this.hasContentTarget) this.labelContent(this.contentTarget);
+    this.relabel();
+  }
+
+  titleTargetDisconnected() {
+    this.relabel();
   }
 
   descriptionTargetConnected() {
+    this.relabel();
+  }
+
+  descriptionTargetDisconnected() {
+    this.relabel();
+  }
+
+  relabel() {
     if (this.hasContentTarget) this.labelContent(this.contentTarget);
   }
 
@@ -132,16 +146,35 @@ export default class extends Controller {
     }
   }
 
-  // A caller's own aria-label / aria-labelledby wins over PopoverTitle.
+  // The references this controller wrote, per content element, so a swapped
+  // title or description updates them while a caller's own attribute is kept.
+  generatedLabels = new WeakMap();
+
+  // A caller's own aria-label / aria-labelledby / aria-describedby wins over
+  // PopoverTitle and PopoverDescription.
   labelContent(content) {
+    const generated = this.generatedLabels.get(content) || {};
     const title = this.titleTargets.find((element) => content.contains(element));
     const description = this.descriptionTargets.find((element) => content.contains(element));
-    if (title?.id && !content.hasAttribute("aria-label") && !content.hasAttribute("aria-labelledby")) {
-      content.setAttribute("aria-labelledby", title.id);
+    const labelOwned = !content.hasAttribute("aria-label") &&
+      (!content.hasAttribute("aria-labelledby") || content.getAttribute("aria-labelledby") === generated.labelledby);
+    generated.labelledby = labelOwned ? this.writeReference(content, "aria-labelledby", title?.id) : generated.labelledby;
+    const descriptionOwned = !content.hasAttribute("aria-describedby") ||
+      content.getAttribute("aria-describedby") === generated.describedby;
+    generated.describedby = descriptionOwned
+      ? this.writeReference(content, "aria-describedby", description?.id)
+      : generated.describedby;
+    this.generatedLabels.set(content, generated);
+  }
+
+  // Sets the attribute to id, or removes it when there is no id; returns what it wrote.
+  writeReference(content, attribute, id) {
+    if (id) {
+      content.setAttribute(attribute, id);
+      return id;
     }
-    if (description?.id && !content.hasAttribute("aria-describedby")) {
-      content.setAttribute("aria-describedby", description.id);
-    }
+    content.removeAttribute(attribute);
+    return undefined;
   }
 
   // --- Hover --------------------------------------------------------------------
@@ -184,6 +217,7 @@ export default class extends Controller {
   clearTimers() {
     clearTimeout(this.openTimeout);
     clearTimeout(this.closeTimeout);
+    clearTimeout(this.focusOutTimeout);
   }
 
   // --- Click, Escape, outside click ---------------------------------------------
@@ -222,12 +256,20 @@ export default class extends Controller {
   // Tab (or a script) moved focus out of the open content: close, as Base UI
   // does. A null relatedTarget is a click on nothing focusable or the window
   // losing focus; the outside-click handler covers the first.
+  // Closes on the next task, once focus has landed: during focusout the
+  // document still reports body as focused, and a "hide" listener (DatePicker)
+  // would take that as lost focus and pull it back to the trigger.
   handleFocusOut = (event) => {
-    if (event.currentTarget !== this.openContent) return;
+    const content = event.currentTarget;
+    if (content !== this.openContent) return;
     const next = event.relatedTarget;
-    if (!next || this.openContent.contains(next)) return;
+    if (!next || content.contains(next)) return;
     if (this.pressingTrigger && this.triggerTarget.contains(next)) return;
-    this.hidePopover({ restoreFocus: false });
+    clearTimeout(this.focusOutTimeout);
+    this.focusOutTimeout = setTimeout(() => {
+      if (content !== this.openContent || content.contains(document.activeElement)) return;
+      this.hidePopover({ restoreFocus: false });
+    });
   };
 
   handleBeforeCache = () => {

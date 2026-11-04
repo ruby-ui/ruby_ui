@@ -7,7 +7,7 @@ module RubyUI
   # pointer leaves both the trigger and the content (shadcn's PopoverTrigger:
   # 300 and 0, plus a short grace to cross the gap onto the content).
   class PopoverTrigger < Base
-    def initialize(open_on_hover: false, delay: nil, close_delay: nil, **attrs)
+    def initialize(open_on_hover: nil, delay: nil, close_delay: nil, **attrs)
       @open_on_hover = open_on_hover
       @delay = delay
       @close_delay = close_delay
@@ -25,7 +25,8 @@ module RubyUI
         data: {
           slot: "popover-trigger",
           ruby_ui__popover_target: "trigger",
-          open_on_hover: (@open_on_hover ? "true" : nil),
+          # Unset (nil) lets Popover's older options trigger: "hover" apply; false turns hover off.
+          open_on_hover: @open_on_hover&.to_s,
           delay: @delay,
           close_delay: @close_delay
         },

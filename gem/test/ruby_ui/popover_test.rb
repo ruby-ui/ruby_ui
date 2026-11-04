@@ -57,6 +57,13 @@ class RubyUI::PopoverTest < ComponentTest
     assert_equal "50", trigger["data-close-delay"]
   end
 
+  # false must reach the controller so it beats the older options trigger: "hover".
+  def test_trigger_open_on_hover_false_is_explicit
+    trigger = tag(phlex { RubyUI.PopoverTrigger(open_on_hover: false) { "Open" } }, 'data-slot="popover-trigger"')
+
+    assert_equal "false", trigger["data-open-on-hover"]
+  end
+
   # A native popover in the top layer, closed until the controller opens it.
   def test_content_is_a_closed_dialog_popover
     output = phlex { RubyUI.PopoverContent { "popover body" } }
