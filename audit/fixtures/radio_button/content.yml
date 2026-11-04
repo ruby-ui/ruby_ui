@@ -1,0 +1,9 @@
+# One radio group (default; comfortable checked; compact disabled) plus a
+# separate invalid group (aria-invalid). data-audit-trigger sits on the checked
+# radio: Tab lands on a group's checked radio, so focus reaches it. Labels are
+# plain <label>s with the same classes on both sides; they are not audited
+# parts.
+default: Default
+comfortable: Comfortable
+compact: Compact
+invalid: Invalid option
