@@ -184,14 +184,14 @@ class Views::Pages::Home < Views::Base
                   p(class: "font-medium text-sm") { "Kubernetes" }
                   p(class: "text-xs text-muted-foreground") { "Highly available cluster." }
                 end
-                Switch(checked: true)
+                Switch(checked: true, aria: {label: "Kubernetes"})
               end
               div(class: "flex items-center justify-between rounded-lg border p-4 shadow-sm") do
                 div(class: "space-y-0.5") do
                   p(class: "font-medium text-sm") { "Dark Mode" }
                   p(class: "text-xs text-muted-foreground") { "Use the dark theme." }
                 end
-                Switch()
+                Switch(aria: {label: "Dark Mode"})
               end
             end
           end
