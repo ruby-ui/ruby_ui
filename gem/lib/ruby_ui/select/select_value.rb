@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Shows the selected item's text inside SelectTrigger, or placeholder: while
+  # nothing is selected. The controller keeps it in sync with SelectInput.
   class SelectValue < Base
-    def initialize(placeholder: nil, **attrs)
+    def initialize(placeholder: nil, **)
       @placeholder = placeholder
-      super(**attrs)
+      super(**)
     end
 
     def view_template(&block)
       span(**attrs) do
-        value = block ? block.call : @placeholder
+        value = block&.call
         value || @placeholder
       end
     end
@@ -19,9 +21,11 @@ module RubyUI
     def default_attrs
       {
         data: {
-          ruby_ui__select_target: "value"
+          slot: "select-value",
+          ruby_ui__select_target: "value",
+          placeholder_text: @placeholder
         },
-        class: "truncate pointer-events-none"
+        class: "flex flex-1 text-left"
       }
     end
   end

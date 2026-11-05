@@ -1,0 +1,24 @@
+shadcn: tabs
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: disclosure
+docs_view: tabs
+parts:
+  Tabs: tabs
+  TabsList: tabs-list
+  TabsTrigger: tabs-trigger
+  TabsContent: tabs-content
+selectors:
+  Tabs: '[data-slot="tabs"]'
+  TabsList: '[data-slot="tabs-list"]'
+  TabsTrigger: '[data-slot="tabs-trigger"]'
+  TabsContent: '[data-slot="tabs-content"]:not([hidden])'
+# orientation (Tabs) and variant (TabsList) from the .tsx; the rest from
+# @base-ui/react tabs. value/onValueChange: see audit/divergences/tabs.yml.
+props:
+  Tabs: {defaultValue: default_value, value: null, onValueChange: null, orientation: orientation}
+  TabsList: {variant: variant, activateOnFocus: activate_on_focus, loopFocus: loop_focus}
+  TabsTrigger: {value: value, disabled: disabled}
+  TabsContent: {value: value, keepMounted: null}
+rubyui_only:
+  Tabs: [default]
+  TabsTrigger: [as]

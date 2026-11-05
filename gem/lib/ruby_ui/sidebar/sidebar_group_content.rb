@@ -12,6 +12,7 @@ module RubyUI
       {
         class: "w-full text-sm",
         data: {
+          slot: "sidebar-group-content",
           sidebar: "group-content"
         }
       }

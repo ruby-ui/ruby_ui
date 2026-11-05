@@ -1,0 +1,10 @@
+# shadcn "Basic" example with a group label (RubyUI docs shape): no value
+# selected, so both triggers show the placeholder.
+placeholder: Select a fruit
+group: Fruits
+items:
+  - Apple
+  - Banana
+  - Blueberry
+  - Grapes
+  - Pineapple

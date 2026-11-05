@@ -11,11 +11,11 @@ module Components
             TabsList(class: "w-full grid grid-cols-2") do
               TabsTrigger(value: "overview") do
                 book_icon
-                span(class: "ml-2") { "Overview" }
+                span { "Overview" }
               end
               TabsTrigger(value: "repositories") do
                 repo_icon
-                span(class: "ml-2") { "Repositories" }
+                span { "Repositories" }
               end
             end
             TabsContent(value: "overview") do

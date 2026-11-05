@@ -1,0 +1,17 @@
+# A MessageGroup with two start-aligned messages (avatar + muted bubble), an
+# end-aligned message with header, bubble and footer (avatar lifted by the
+# footer, footer pushed to the end), and a start-aligned message whose bubble is
+# ghost (header/footer lose their padding). Avatars show only the fallback (no
+# image, so nothing loads from the network). All text is fictional.
+# Static kind: only the closed state is collected; the wrapper carries data-audit-trigger.
+avatar_1: AB
+avatar_2: ME
+avatar_3: CD
+message_1: Something went wrong. Any idea?
+message_2: I checked the latest deployment and the build failed during install.
+header_1: You
+message_3: Can you share the exact error from the logs?
+footer_1: Delivered
+header_2: Assistant
+message_4: Sure, here is the log excerpt.
+footer_2: 9:41 AM

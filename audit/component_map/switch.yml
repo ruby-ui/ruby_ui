@@ -1,0 +1,31 @@
+# Four switches: unchecked (data-audit-trigger, used for focus), checked,
+# disabled and invalid (aria-invalid). RubyUI renders one native
+# input[type=checkbox][role=switch] (the track) whose ::before is the thumb,
+# so shadcn's switch-thumb part has no element to select and isn't compared
+# by collect (check the ::before by hand). shadcn renders Base UI's
+# span[role=switch] > span[data-slot=switch-thumb] plus a visually hidden input.
+shadcn: switch
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: form_control
+docs_view: switch
+parts:
+  Switch: switch
+selectors:
+  Switch: 'input[role="switch"]'
+# size is declared by the .tsx; the rest come from Base UI's Switch.Root.
+props:
+  Switch:
+    size: size
+    checked: checked
+    defaultChecked: checked
+    onCheckedChange: null
+    disabled: disabled
+    readOnly: null
+    required: required
+    name: name
+    value: checked_value
+    uncheckedValue: unchecked_value
+    inputRef: null
+    nativeButton: null
+rubyui_only:
+  Switch: [include_hidden]

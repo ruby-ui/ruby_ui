@@ -183,13 +183,13 @@ class Views::Docs::Form < Views::Base
         <<~RUBY
           Form(class: "w-2/3 space-y-6") do
             FormField do
-              FormFieldLabel { "Select" }
+              FormFieldLabel(for: "form-select-fruit") { "Select" }
               Select do
-                SelectInput(required: true)
-                SelectTrigger do
+                SelectInput(name: "fruit", required: true)
+                SelectTrigger(id: "form-select-fruit", class: "w-56") do
                   SelectValue(placeholder: "Select a fruit")
                 end
-                SelectContent() do
+                SelectContent do
                   SelectGroup do
                     SelectLabel { "Fruits" }
                     SelectItem(value: "apple") { "Apple" }

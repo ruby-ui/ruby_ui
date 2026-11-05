@@ -4,6 +4,7 @@ module RubyUI
   class SidebarMenuAction < Base
     def initialize(as: :button, show_on_hover: false, **attrs)
       @as = as
+      @show_on_hover = show_on_hover
       super(**attrs)
     end
 
@@ -30,6 +31,7 @@ module RubyUI
           show_on_hover_classes
         ],
         data: {
+          slot: "sidebar-menu-action",
           sidebar: "menu-action"
         }
       }
@@ -40,7 +42,7 @@ module RubyUI
 
       [
         "group-focus-within/menu-item:opacity-100",
-        "group-hover/menu-item:opacity-100 data-[state=open]:opacity-100",
+        "group-hover/menu-item:opacity-100 aria-expanded:opacity-100",
         "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0"
       ].join(" ")
     end

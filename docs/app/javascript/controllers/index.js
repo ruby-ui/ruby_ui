@@ -100,9 +100,6 @@ application.register("ruby-ui--popover", RubyUi__PopoverController)
 import RubyUi__SelectController from "./ruby_ui/select_controller"
 application.register("ruby-ui--select", RubyUi__SelectController)
 
-import RubyUi__SelectItemController from "./ruby_ui/select_item_controller"
-application.register("ruby-ui--select-item", RubyUi__SelectItemController)
-
 import RubyUi__SheetContentController from "./ruby_ui/sheet_content_controller"
 application.register("ruby-ui--sheet-content", RubyUi__SheetContentController)
 

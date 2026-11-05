@@ -11,10 +11,10 @@ class Views::Docs::DataTableDemo::Index < Views::Base
     {key: :salary, label: "Salary"}
   ].freeze
 
-  BADGE_VARIANTS = {
-    "Active" => :success,
-    "Inactive" => :destructive,
-    "On Leave" => :warning
+  BADGE_ATTRS = {
+    "Active" => {class: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300"},
+    "Inactive" => {variant: :destructive},
+    "On Leave" => {class: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300"}
   }.freeze
 
   def initialize(employees:, total_count:, page:, per_page:, sort:, direction:, search:)
@@ -80,7 +80,7 @@ class Views::Docs::DataTableDemo::Index < Views::Base
                     TableCell(data: {column: "email"}) { plain e.email }
                     TableCell(data: {column: "department"}) { plain e.department }
                     TableCell(data: {column: "status"}) do
-                      Badge(variant: BADGE_VARIANTS.fetch(e.status, :outline), size: :sm) { plain e.status }
+                      Badge(**BADGE_ATTRS.fetch(e.status, {variant: :outline}), size: :sm) { plain e.status }
                     end
                     TableCell(class: "text-right", data: {column: "salary"}) { plain view_context.number_to_currency(e.salary, precision: 0, unit: "$") }
                     TableCell(class: "w-12 text-right") { row_actions(e) }

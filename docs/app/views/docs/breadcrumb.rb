@@ -82,7 +82,7 @@ class Views::Docs::Breadcrumb < Views::Base
               end
               BreadcrumbSeparator()
               BreadcrumbItem do
-                Link(href: "/docs/accordion", class: "px-0") { "Components" }
+                Link(href: "/docs/accordion", variant: :link, class: "px-0") { "Components" }
               end
               BreadcrumbSeparator()
               BreadcrumbItem do

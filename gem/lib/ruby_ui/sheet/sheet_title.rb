@@ -3,14 +3,15 @@
 module RubyUI
   class SheetTitle < Base
     def view_template(&)
-      h3(**attrs, &)
+      h2(**attrs, &)
     end
 
     private
 
     def default_attrs
       {
-        class: "text-lg font-semibold leading-none tracking-tight"
+        data: {slot: "sheet-title", ruby_ui__sheet_target: "title"},
+        class: "font-heading font-medium text-foreground"
       }
     end
   end

@@ -1,0 +1,16 @@
+shadcn: kbd
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: static
+docs_view: shortcut_key
+parts:
+  ShortcutKey: kbd
+  ShortcutKeyGroup: kbd-group
+selectors:
+  ShortcutKey: '[data-slot="kbd"]'
+  ShortcutKeyGroup: '[data-slot="kbd-group"]'
+props:
+  ShortcutKey: {}
+  ShortcutKeyGroup: {}
+rubyui_only:
+  ShortcutKey: []
+  ShortcutKeyGroup: []

@@ -15,13 +15,14 @@ module RubyUI
     private
 
     def default_attrs
-      data = {slot: "message-scroller-item"}
-      data[:scroll_anchor] = "" if @scroll_anchor
+      data = {slot: "message-scroller-item", scroll_anchor: @scroll_anchor ? "true" : "false"}
       data[:message_id] = @message_id if @message_id
 
       {
         data: data,
-        class: "min-w-0 shrink-0"
+        # content-visibility skips rendering rows that are off screen; the
+        # intrinsic size keeps the scrollbar stable meanwhile.
+        class: "min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]"
       }
     end
   end

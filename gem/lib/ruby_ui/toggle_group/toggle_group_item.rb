@@ -2,7 +2,9 @@
 
 module RubyUI
   class ToggleGroupItem < Toggle
-    JOIN_BASE = "w-auto min-w-0 shrink-0 px-3 focus:z-10 focus-visible:z-10"
+    JOIN_BASE = "shrink-0 focus:z-10 focus-visible:z-10 data-[state=on]:bg-muted"
+    # Joined groups (spacing 0): vega's cn-toggle-group-item padding and corners.
+    JOINED = "rounded-none shadow-none px-2 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5"
 
     def initialize(value:, group_context:, variant: nil, size: nil, **attrs)
       @item_value = value.to_s
@@ -27,39 +29,42 @@ module RubyUI
     private
 
     def default_attrs
-      attrs = {type: "button"}
+      attrs = {type: "button", aria: {pressed: @pressed.to_s}, tabindex: initial_tabindex}
       attrs[:disabled] = true if @disabled
-      attrs[:data] = {
+
+      data = {
+        slot: "toggle-group-item",
+        variant: @variant.to_s,
+        size: @size.to_s,
+        spacing: @group_context[:spacing].to_s,
         state: @pressed ? "on" : "off",
         value: @item_value,
         "ruby-ui--toggle-group-target": "item",
         action: "click->ruby-ui--toggle-group#select keydown->ruby-ui--toggle-group#navigate"
       }
+      data[:pressed] = "" if @pressed
+      data[:disabled] = "" if @disabled
+      attrs[:data] = data
       attrs[:class] = [Toggle.classes_for(variant: @variant, size: @size), join_classes]
-
-      if @group_context[:type] == :single
-        attrs[:role] = "radio"
-        attrs[:aria] = {checked: @pressed.to_s}
-        attrs[:tabindex] = @pressed ? "0" : "-1"
-      else
-        attrs[:aria] = {pressed: @pressed.to_s}
-        attrs[:tabindex] = "0"
-      end
-
       attrs
+    end
+
+    # The group picks the single tab stop (see ToggleGroup#claim_tab_stop?).
+    def initial_tabindex
+      @group_context[:tab_stop] ? "0" : "-1"
     end
 
     def join_classes
       classes = [JOIN_BASE]
       return classes unless @group_context[:spacing] == 0
 
-      classes << "rounded-none shadow-none"
+      classes << JOINED
       if @group_context[:orientation] == :vertical
         classes << "first-of-type:rounded-t-md last-of-type:rounded-b-md"
-        classes << "border-t-0 first-of-type:border-t" if @group_context[:variant] == :outline
+        classes << "border-t-0 first-of-type:border-t" if @variant == :outline
       else
         classes << "first-of-type:rounded-l-md last-of-type:rounded-r-md"
-        classes << "border-l-0 first-of-type:border-l" if @group_context[:variant] == :outline
+        classes << "border-l-0 first-of-type:border-l" if @variant == :outline
       end
       classes
     end

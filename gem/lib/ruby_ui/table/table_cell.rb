@@ -2,6 +2,8 @@
 
 module RubyUI
   class TableCell < Base
+    include TableSlot
+
     def view_template(&)
       td(**attrs, &)
     end
@@ -10,7 +12,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+        data: {slot: default_slot("table-cell")}.compact,
+        class: "p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&:has([data-slot=checkbox])]:pr-0"
       }
     end
   end

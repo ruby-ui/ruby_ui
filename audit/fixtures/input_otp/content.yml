@@ -1,0 +1,8 @@
+# Four OTPs: empty (data-audit-trigger, used for focus), filled 2+2+2 with
+# separators, disabled (filled), invalid (aria-invalid on every slot).
+simple: Simple
+filled: With Separator
+filled_value: "123456"
+disabled: Disabled
+invalid: Invalid State
+invalid_value: "000000"

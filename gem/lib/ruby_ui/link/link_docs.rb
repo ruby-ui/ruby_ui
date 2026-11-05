@@ -5,25 +5,28 @@ class Views::Docs::Link < Views::Base
     component = "Link"
 
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
-      render Docs::Header.new(title: "Link", description: "Displays a link that looks like a button or underline link.")
+      render Docs::Header.new(title: "Link", description: "Displays a link that looks like a button or an underlined text link.")
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", description: "This is the default appearance of a Link", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", description: "A Link looks like a primary button by default, but stays a native link: screen readers announce a link and Enter follows it.", context: self) do
         <<~RUBY
-          Link(href: "#") { "Link" }
+          Link(href: "#") { "Get started" }
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Aria Disabled", context: self) do
+      render Docs::VisualCodeExample.new(title: "Link", description: "An underlined text link", context: self) do
         <<~RUBY
-          Link(aria: {disabled: "true"}, href: "#") { "Link" }
+          Link(href: "#", variant: :link) { "Read the docs" }
         RUBY
       end
 
-      render Docs::VisualCodeExample.new(title: "Primary", description: "This is the primary variant of a Link", context: self) do
+      render Docs::VisualCodeExample.new(title: "Disabled", description: "disabled: true removes the href, so the link can't be focused or followed. Add focusable_when_disabled: true to keep it in the tab order (e.g. for a tooltip).", context: self) do
         <<~RUBY
-          Link(href: "#", variant: :primary) { "Primary" }
+          div(class: "flex gap-2") do
+            Link(href: "#", disabled: true) { "Disabled" }
+            Link(href: "#", disabled: true, focusable_when_disabled: true) { "Focusable" }
+          end
         RUBY
       end
 
@@ -39,6 +42,23 @@ class Views::Docs::Link < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Outline", description: "This is the outline variant of a Link", context: self) do
+        <<~RUBY
+          Link(href: "#", variant: :outline) { "Outline" }
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Sizes", context: self) do
+        <<~RUBY
+          div(class: "flex items-center gap-2") do
+            Link(href: "#", size: :xs) { "Extra small" }
+            Link(href: "#", size: :sm) { "Small" }
+            Link(href: "#") { "Default" }
+            Link(href: "#", size: :lg) { "Large" }
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Icon", description: "This is the icon variant of a Link", context: self) do
         <<~RUBY
           Link(href: "#", variant: :outline, icon: true) do
@@ -49,7 +69,7 @@ class Views::Docs::Link < Views::Base
 
       render Docs::VisualCodeExample.new(title: "With Icon", description: "This is the primary variant of a Link with an icon", context: self) do
         <<~RUBY
-          Link(href: "#", variant: :primary) do
+          Link(href: "#") do
             email_icon
             span { "Login with Email" }
           end
@@ -74,8 +94,7 @@ class Views::Docs::Link < Views::Base
     svg(
       xmlns: "http://www.w3.org/2000/svg",
       viewbox: "0 0 20 20",
-      fill: "currentColor",
-      class: "w-5 h-5"
+      fill: "currentColor"
     ) do |s|
       s.path(
         fill_rule: "evenodd",
@@ -93,7 +112,7 @@ class Views::Docs::Link < Views::Base
       viewbox: "0 0 24 24",
       stroke_width: "1.5",
       stroke: "currentColor",
-      class: "w-4 h-4 mr-2"
+      data: {icon: "inline-start"}
     ) do |s|
       s.path(
         stroke_linecap: "round",

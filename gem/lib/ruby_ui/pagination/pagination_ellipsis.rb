@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # "More pages" marker. Renders its own <li> (shadcn wraps it in
+  # PaginationItem) and is hidden from assistive tech, as in shadcn.
   class PaginationEllipsis < Base
-    def view_template(&block)
-      li do
+    def view_template
+      li(data: {slot: "pagination-item"}) do
         span(**attrs) do
           icon
           span(class: "sr-only") { "More pages" }
@@ -24,7 +26,7 @@ module RubyUI
         stroke_width: "2",
         stroke_linecap: "round",
         stroke_linejoin: "round",
-        class: "h-4 w-4"
+        aria_hidden: "true"
       ) do |s|
         s.circle(cx: "12", cy: "12", r: "1")
         s.circle(cx: "19", cy: "12", r: "1")
@@ -32,10 +34,13 @@ module RubyUI
       end
     end
 
+    # aria-hidden needs the string: Phlex renders true as an empty value,
+    # which doesn't hide the element.
     def default_attrs
       {
-        aria: {hidden: true},
-        class: "flex h-9 w-9 items-center justify-center"
+        aria: {hidden: "true"},
+        data: {slot: "pagination-ellipsis"},
+        class: "flex size-9 items-center justify-center [&_svg:not([class*='size-'])]:size-4"
       }
     end
   end

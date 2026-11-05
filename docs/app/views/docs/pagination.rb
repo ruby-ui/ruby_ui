@@ -9,35 +9,42 @@ class Views::Docs::Pagination < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Example", description: "This is the default appearance of a Pagination", context: self) do
+      render Docs::VisualCodeExample.new(title: "Example", context: self) do
         <<~RUBY
           Pagination do
             PaginationContent do
-              PaginationItem(href: "#") do
-                chevrons_left_icon
-                plain "First"
-              end
-              PaginationItem(href: "#") do
-                chevron_left_icon
-                plain "Prev"
-              end
+              PaginationPrevious(href: "#")
+              PaginationItem(href: "#") { "1" }
+              PaginationItem(href: "#", active: true) { "2" }
+              PaginationItem(href: "#") { "3" }
+              PaginationEllipsis()
+              PaginationNext(href: "#")
+            end
+          end
+        RUBY
+      end
 
-              PaginationEllipsis
-
+      render Docs::VisualCodeExample.new(title: "Simple", description: "Page numbers only.", context: self) do
+        <<~RUBY
+          Pagination do
+            PaginationContent do
+              PaginationItem(href: "#") { "1" }
+              PaginationItem(href: "#", active: true) { "2" }
+              PaginationItem(href: "#") { "3" }
               PaginationItem(href: "#") { "4" }
-              PaginationItem(href: "#", active: true) { "5" }
-              PaginationItem(href: "#") { "6" }
+              PaginationItem(href: "#") { "5" }
+            end
+          end
+        RUBY
+      end
 
-              PaginationEllipsis
-
-              PaginationItem(href: "#") do
-                plain "Next"
-                chevron_right_icon
-              end
-              PaginationItem(href: "#") do
-                plain "Last"
-                chevrons_right_icon
-              end
+      render Docs::VisualCodeExample.new(title: "Custom labels", description: "Previous and Next take text:. Translate the aria-label along with it, using label! to replace the default. Below the sm breakpoint only the chevron shows.", context: self) do
+        <<~RUBY
+          Pagination do
+            PaginationContent do
+              PaginationPrevious(href: "#", text: "Anterior", aria: {label!: "Página anterior"})
+              PaginationItem(href: "#", size: :default) { "Página 2 de 10" }
+              PaginationNext(href: "#", text: "Próxima", aria: {label!: "Próxima página"})
             end
           end
         RUBY
@@ -46,82 +53,6 @@ class Views::Docs::Pagination < Views::Base
       render Components::ComponentSetup::Tabs.new(component_name: component)
 
       render Docs::ComponentsTable.new(component_files(component))
-    end
-  end
-
-  private
-
-  def chevrons_left_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "24",
-      height: "24",
-      viewbox: "0 0 24 24",
-      stroke_width: "1.5",
-      stroke: "currentColor",
-      fill: "none",
-      stroke_linecap: "round",
-      stroke_linejoin: "round",
-      class: "h-4 w-4"
-    ) do |s|
-      s.path(stroke: "none", d: "M0 0h24v24H0z", fill: "none")
-      s.path(d: "M11 7l-5 5l5 5")
-      s.path(d: "M17 7l-5 5l5 5")
-    end
-  end
-
-  def chevron_left_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "24",
-      height: "24",
-      viewbox: "0 0 24 24",
-      stroke_width: "1.5",
-      stroke: "currentColor",
-      fill: "none",
-      stroke_linecap: "round",
-      stroke_linejoin: "round",
-      class: "h-4 w-4"
-    ) do |s|
-      s.path(stroke: "none", d: "M0 0h24v24H0z", fill: "none")
-      s.path(d: "M15 6l-6 6l6 6")
-    end
-  end
-
-  def chevrons_right_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "24",
-      height: "24",
-      viewbox: "0 0 24 24",
-      stroke_width: "1.5",
-      stroke: "currentColor",
-      fill: "none",
-      stroke_linecap: "round",
-      stroke_linejoin: "round",
-      class: "h-4 w-4"
-    ) do |s|
-      s.path(stroke: "none", d: "M0 0h24v24H0z", fill: "none")
-      s.path(d: "M7 7l5 5l-5 5")
-      s.path(d: "M13 7l5 5l-5 5")
-    end
-  end
-
-  def chevron_right_icon
-    svg(
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "24",
-      height: "24",
-      viewbox: "0 0 24 24",
-      stroke_width: "1.5",
-      stroke: "currentColor",
-      fill: "none",
-      stroke_linecap: "round",
-      stroke_linejoin: "round",
-      class: "h-4 w-4"
-    ) do |s|
-      s.path(stroke: "none", d: "M0 0h24v24H0z", fill: "none")
-      s.path(d: "M9 6l6 6l-6 6")
     end
   end
 end

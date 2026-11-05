@@ -18,7 +18,7 @@ class Views::Docs::MaskedInput < Views::Base
       render Docs::VisualCodeExample.new(title: "Phone number", context: self) do
         <<~RUBY
           div(class: 'grid w-full max-w-sm items-center gap-1.5') do
-            MaskedInput(data: {maska: "(##) #####-####"})
+            MaskedInput(inputmode: "numeric", data: {maska: "(##) #####-####"})
           end
         RUBY
       end
@@ -34,7 +34,7 @@ class Views::Docs::MaskedInput < Views::Base
       render Docs::VisualCodeExample.new(title: "CPF / CNPJ", context: self) do
         <<~RUBY
           div(class: 'grid w-full max-w-sm items-center gap-1.5') do
-            MaskedInput(data: {maska: "['###.###.###-##', '##.###.###/####-##']"})
+            MaskedInput(inputmode: "numeric", data: {maska: "['###.###.###-##', '##.###.###/####-##']"})
           end
         RUBY
       end

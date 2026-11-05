@@ -1,0 +1,32 @@
+shadcn: tooltip
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: popover
+docs_view: tooltip
+# The fixture follows shadcn's "Basic" example: an outline Button as the
+# trigger and a <p> in the content. Both sides open at once (delay 0) and stay
+# open on click (closeOnClick false / close_on_click: false) so collect's
+# click, which hovers the trigger first, reaches the open state.
+parts:
+  Tooltip: tooltip
+  TooltipTrigger: tooltip-trigger
+  TooltipContent: tooltip-content
+# TooltipTrigger is an inline-flex <div> wrapper in RubyUI; the Button inside
+# it is what shadcn renders as the trigger (render={<Button />}), so that is
+# compared. Base UI's Tooltip.Root renders no element.
+selectors:
+  Tooltip: null
+  TooltipTrigger: '[data-slot="tooltip-trigger"] > button'
+  TooltipContent: '[data-slot="tooltip-content"]'
+# side/sideOffset/align/alignOffset from the .tsx (TooltipContent);
+# delay/closeDelay/closeOnClick from the Base UI Tooltip.Trigger;
+# open/defaultOpen/onOpenChange/disabled from Tooltip.Root (RubyUI's open: is
+# the initial state; the open value attribute and the change event cover the
+# controlled use).
+props:
+  Tooltip: {open: null, defaultOpen: open, onOpenChange: null, disabled: disabled}
+  TooltipTrigger: {delay: delay, closeDelay: close_delay, closeOnClick: close_on_click}
+  TooltipContent: {side: side, sideOffset: side_offset, align: align, alignOffset: align_offset}
+# placement: is the older API (TooltipContent side: wins over it).
+rubyui_only:
+  Tooltip: [placement]
+fixture_shadcn: [button]

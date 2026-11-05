@@ -19,7 +19,7 @@ module ShadcnAuditFixtures
             p { "Your name and email are shown on your public profile." }
           end
           SheetFooter do
-            Button(variant: :outline, data: {action: "click->ruby-ui--sheet-content#close"}) { "Cancel" }
+            Button(variant: :outline, data: {action: "click->ruby-ui--sheet#dismiss"}) { "Cancel" }
             Button(type: "submit") { "Save changes" }
           end
         end

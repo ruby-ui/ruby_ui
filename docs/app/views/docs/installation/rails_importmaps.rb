@@ -65,7 +65,7 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
               Codeblock(code, syntax: :javascript)
             end
 
-            Alert(variant: :warning) do
+            Alert(class: "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50 *:data-[slot=alert-description]:text-amber-900/90 dark:*:data-[slot=alert-description]:text-amber-50/90") do
               info_icon
               AlertTitle { "Phlex compatibility" }
               AlertDescription { "Note that RubyUI components target Phlex 2.x most recent version" }
@@ -272,12 +272,6 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
                 --sidebar-accent-foreground: oklch(0.205 0 0);
                 --sidebar-border: oklch(0.922 0 0);
                 --sidebar-ring: oklch(0.708 0 0);
-
-                /* ruby_ui specific */
-                --warning: hsl(38 92% 50%);
-                --warning-foreground: hsl(0 0% 100%);
-                --success: hsl(87 100% 37%);
-                --success-foreground: hsl(0 0% 100%);
               }
 
               .dark {
@@ -313,12 +307,6 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
                 --sidebar-accent-foreground: oklch(0.985 0 0);
                 --sidebar-border: oklch(0.269 0 0);
                 --sidebar-ring: oklch(0.439 0 0);
-
-                /* ruby_ui specific */
-                --warning: hsl(38 92% 50%);
-                --warning-foreground: hsl(0 0% 100%);
-                --success: hsl(84 81% 44%);
-                --success-foreground: hsl(0 0% 100%);
               }
 
               @theme inline {
@@ -358,12 +346,6 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
                 --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
                 --color-sidebar-border: var(--sidebar-border);
                 --color-sidebar-ring: var(--sidebar-ring);
-
-                /* ruby_ui specific */
-                --color-warning: var(--warning);
-                --color-warning-foreground: var(--warning-foreground);
-                --color-success: var(--success);
-                --color-success-foreground: var(--success-foreground);
               }
 
               /* Container settings */
@@ -371,6 +353,39 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
                 margin-inline: auto;
                 padding-inline: 2rem;
                 max-width: 1400px;
+              }
+
+              /* Scroll fade (MessageScroller): fades the bottom edge while there is content
+                 below, from shadcn's scroll-fade-b (MIT). */
+              @property --scroll-fade-b {
+                syntax: "<length-percentage>";
+                inherits: false;
+                initial-value: 0px;
+              }
+
+              @keyframes scroll-fade-reveal-b {
+                from {
+                  --scroll-fade-b: var(--_scroll-fade-size-b);
+                }
+                to {
+                  --scroll-fade-b: 0px;
+                }
+              }
+
+              @utility scroll-fade-b {
+                --_scroll-fade-size-b: var(--scroll-fade-b-size, min(12%, calc(var(--spacing) * 10)));
+                mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - var(--scroll-fade-b, 0px)), transparent 100%);
+                mask-repeat: no-repeat;
+
+                @supports (animation-timeline: scroll()) {
+                  animation: scroll-fade-reveal-b 1ms ease-in-out both;
+                  animation-timeline: scroll(self y);
+                  animation-range: calc(100% - calc(var(--spacing) * 24)) 100%;
+                }
+
+                @supports not (animation-timeline: scroll()) {
+                  --scroll-fade-b: var(--_scroll-fade-size-b);
+                }
               }
 
               @layer base {

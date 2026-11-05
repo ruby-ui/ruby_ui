@@ -24,6 +24,7 @@ module RubyUI
       {
         class: "flex h-8 items-center gap-2 rounded-md px-2",
         data: {
+          slot: "sidebar-menu-skeleton",
           sidebar: "menu-skeleton"
         }
       }

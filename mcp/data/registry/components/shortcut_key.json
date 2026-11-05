@@ -1,10 +1,14 @@
 {
   "name": "ShortcutKey",
-  "description": "A component for displaying keyboard shortcuts.",
+  "description": "Displays a keyboard key or shortcut.",
   "files": [
     {
       "path": "shortcut_key.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class ShortcutKey < Base\n    def view_template(&)\n      kbd(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        class: \"pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100\"\n      }\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # A keyboard key, like shadcn's <Kbd>. Group several keys of a combo with\n  # ShortcutKeyGroup.\n  class ShortcutKey < Base\n    def view_template(&)\n      kbd(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"kbd\"},\n        class: [\n          \"pointer-events-none inline-flex h-5 w-fit min-w-5 select-none items-center justify-center gap-1\",\n          \"rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground\",\n          \"in-data-[slot=tooltip-content]:bg-background/20 in-data-[slot=tooltip-content]:text-background\",\n          \"dark:in-data-[slot=tooltip-content]:bg-background/10\",\n          \"[&_svg:not([class*='size-'])]:size-3\"\n        ].join(\" \")\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "shortcut_key_group.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Groups the keys of a combo (Ctrl + Shift + P), like shadcn's <KbdGroup>.\n  # Renders a <kbd>: nested kbd elements represent a key combination.\n  class ShortcutKeyGroup < Base\n    def view_template(&)\n      kbd(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        data: {slot: \"kbd-group\"},\n        class: \"inline-flex items-center gap-1\"\n      }\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
@@ -13,11 +17,31 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component ShortcutKey",
-  "docs_markdown": "# Shortcut Key\n\nA component for displaying keyboard shortcuts.\n\n## Usage\n\n### Example\n\n```ruby\ndiv(class: \"flex flex-col items-center gap-y-4\") do\n  ShortcutKey do\n    span(class: \"text-xs\") { \"⌘\" }\n    plain \"K\"\n  end\n  p(class: \"text-muted-foreground text-sm text-center\") { \"Note this does not trigger anything, it is purely a visual prompt\" }\nend\n```",
+  "docs_markdown": "# Shortcut Key\n\nDisplays a keyboard key or shortcut.\n\n## Usage\n\n### Example\n\n```ruby\ndiv(class: \"flex items-center justify-center gap-2\") do\n  ShortcutKey { \"Ctrl\" }\n  ShortcutKey { \"⌘K\" }\n  ShortcutKey { \"Ctrl + B\" }\nend\n```\n\n### Modifier Keys\n\n```ruby\ndiv(class: \"flex items-center justify-center gap-2\") do\n  ShortcutKey { \"⌘\" }\n  ShortcutKey { \"C\" }\nend\n```\n\n### Group\n\n```ruby\ndiv(class: \"flex justify-center\") do\n  ShortcutKeyGroup do\n    ShortcutKey { \"Ctrl\" }\n    ShortcutKey { \"Shift\" }\n    ShortcutKey { \"P\" }\n  end\nend\n```\n\n### Arrow Keys\n\n```ruby\ndiv(class: \"flex items-center justify-center gap-2\") do\n  ShortcutKey { \"↑\" }\n  ShortcutKey { \"↓\" }\n  ShortcutKey { \"←\" }\n  ShortcutKey { \"→\" }\nend\n```\n\n### In Text\n\n```ruby\np(class: \"text-muted-foreground text-sm text-center\") do\n  plain \"Press \"\n  ShortcutKeyGroup do\n    ShortcutKey { \"⌘\" }\n    ShortcutKey { \"K\" }\n  end\n  plain \" to open the command menu.\"\nend\n```",
   "examples": [
     {
       "title": "Example",
-      "code": "div(class: \"flex flex-col items-center gap-y-4\") do\n  ShortcutKey do\n    span(class: \"text-xs\") { \"⌘\" }\n    plain \"K\"\n  end\n  p(class: \"text-muted-foreground text-sm text-center\") { \"Note this does not trigger anything, it is purely a visual prompt\" }\nend\n",
+      "code": "div(class: \"flex items-center justify-center gap-2\") do\n  ShortcutKey { \"Ctrl\" }\n  ShortcutKey { \"⌘K\" }\n  ShortcutKey { \"Ctrl + B\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Modifier Keys",
+      "code": "div(class: \"flex items-center justify-center gap-2\") do\n  ShortcutKey { \"⌘\" }\n  ShortcutKey { \"C\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Group",
+      "code": "div(class: \"flex justify-center\") do\n  ShortcutKeyGroup do\n    ShortcutKey { \"Ctrl\" }\n    ShortcutKey { \"Shift\" }\n    ShortcutKey { \"P\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Arrow Keys",
+      "code": "div(class: \"flex items-center justify-center gap-2\") do\n  ShortcutKey { \"↑\" }\n  ShortcutKey { \"↓\" }\n  ShortcutKey { \"←\" }\n  ShortcutKey { \"→\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "In Text",
+      "code": "p(class: \"text-muted-foreground text-sm text-center\") do\n  plain \"Press \"\n  ShortcutKeyGroup do\n    ShortcutKey { \"⌘\" }\n    ShortcutKey { \"K\" }\n  end\n  plain \" to open the command menu.\"\nend\n",
       "language": "ruby"
     }
   ]

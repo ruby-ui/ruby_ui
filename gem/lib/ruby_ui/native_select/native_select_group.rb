@@ -9,7 +9,10 @@ module RubyUI
     private
 
     def default_attrs
-      {}
+      {
+        data: {slot: "native-select-optgroup"},
+        class: "bg-[Canvas] text-[CanvasText]"
+      }
     end
   end
 end

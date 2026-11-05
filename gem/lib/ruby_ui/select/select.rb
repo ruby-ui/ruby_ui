@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Root of a select. Like Base UI's Select.Root it has no look of its own: it
+  # holds the Stimulus controller, and SelectInput inside it carries the value.
   class Select < Base
     def view_template(&)
       div(**attrs, &)
@@ -11,12 +13,9 @@ module RubyUI
     def default_attrs
       {
         data: {
-          controller: "ruby-ui--select",
-          ruby_ui__select_open_value: "false",
-          action: "click@window->ruby-ui--select#clickOutside",
-          ruby_ui__select_ruby_ui__select_item_outlet: ".item"
-        },
-        class: "group/select w-full relative"
+          slot: "select",
+          controller: "ruby-ui--select"
+        }
       }
     end
   end

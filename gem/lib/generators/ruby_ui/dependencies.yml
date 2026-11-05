@@ -79,6 +79,10 @@ hover_card:
   js_packages:
     - "@floating-ui/dom"
 
+link:
+  components:
+    - "Button"
+
 masked_input:
   components:
     - "Input"
@@ -93,6 +97,7 @@ message:
 
 message_scroller:
   components:
+    - "Button"
     - "Message"
     - "Bubble"
 
@@ -108,7 +113,19 @@ select:
   js_packages:
     - "@floating-ui/dom"
 
+sidebar:
+  components:
+    - "Button"
+    - "Input"
+    - "Separator"
+    - "Sheet"
+    - "Skeleton"
+    - "Tooltip"
+
 toast:
+  components:
+    - "Button"
+
   js_packages: []
 
 tooltip:

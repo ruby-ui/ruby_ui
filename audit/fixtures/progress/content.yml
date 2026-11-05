@@ -1,0 +1,6 @@
+# Five progress bars at 0, 25, 50, 75 and 100, as in shadcn's progress-example
+# ("Progress Bar"), then one at 56 with a label and its value ("With Label"),
+# in a 384px column. The 50 bar carries data-audit-trigger (static kind: only
+# the closed state is collected).
+wrapper_class: flex w-96 flex-col gap-4
+label: Upload progress

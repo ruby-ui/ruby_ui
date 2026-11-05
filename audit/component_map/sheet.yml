@@ -1,4 +1,5 @@
 shadcn: sheet
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
 kind: modal
 docs_view: sheet
 parts:
@@ -12,11 +13,12 @@ parts:
   SheetMiddle: null
 selectors:
   Sheet: null
-  SheetTrigger: '[data-controller="ruby-ui--sheet"] > [data-action] > button'
-  SheetContent: '[data-ruby-ui--sheet-content-target="panel"]'
-  SheetHeader: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child'
-  SheetFooter: '[data-ruby-ui--sheet-content-target="panel"] > div:last-of-type'
-  SheetTitle: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child > h3'
-  SheetDescription: '[data-ruby-ui--sheet-content-target="panel"] > div:first-child > p'
+  SheetTrigger: '[data-slot="sheet-trigger"] > button'
+  SheetContent: 'dialog[data-slot="sheet-content"]'
+  SheetHeader: '[data-slot="sheet-header"]'
+  SheetFooter: '[data-slot="sheet-footer"]'
+  SheetTitle: '[data-slot="sheet-title"]'
+  SheetDescription: '[data-slot="sheet-description"]'
 props:
-  SheetContent: {side: side, showCloseButton: null}
+  Sheet: {open: open}
+  SheetContent: {side: side, showCloseButton: show_close_button}

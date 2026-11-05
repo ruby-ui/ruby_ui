@@ -1,0 +1,16 @@
+shadcn: textarea
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: form_control
+docs_view: textarea
+# The fixture renders five textareas: default with a placeholder
+# (data-audit-trigger, used for focus), one with a multi-line value,
+# disabled, aria-disabled and invalid (aria-invalid). Every audited textarea
+# carries data-audit-textarea. shadcn's Textarea is a plain <textarea> (no
+# Base UI primitive) and declares no props of its own.
+parts:
+  Textarea: textarea
+selectors:
+  Textarea: 'textarea[data-audit-textarea]'
+props: {}
+rubyui_only:
+  Textarea: [rows]

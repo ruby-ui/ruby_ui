@@ -1,0 +1,27 @@
+shadcn: table
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: static
+docs_view: table
+# RubyUI::Table renders the scroll container <div> (data-slot="table-container")
+# around the <table>, as shadcn's Table does.
+parts:
+  Table: table
+  TableContainer: table-container
+  TableHeader: table-header
+  TableBody: table-body
+  TableFooter: table-footer
+  TableRow: table-row
+  TableHead: table-head
+  TableCell: table-cell
+  TableCaption: table-caption
+selectors:
+  TableContainer: '[data-slot="table-container"]'
+  Table: '[data-slot="table"]'
+  TableHeader: '[data-slot="table-header"]'
+  TableBody: '[data-slot="table-body"]'
+  TableFooter: '[data-slot="table-footer"]'
+  TableRow: '[data-slot="table-row"]'
+  TableHead: '[data-slot="table-head"]'
+  TableCell: '[data-slot="table-cell"]'
+  TableCaption: '[data-slot="table-caption"]'
+props: {}

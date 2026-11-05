@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "separator.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Separator < Base\n    ORIENTATIONS = %i[horizontal vertical].freeze\n\n    def initialize(as: :div, orientation: :horizontal, decorative: true, **attrs)\n      raise ArgumentError, \"Invalid orientation: #{orientation}\" unless ORIENTATIONS.include?(orientation.to_sym)\n\n      @as = as\n      @orientation = orientation.to_sym\n      @decorative = decorative\n      super(**attrs)\n    end\n\n    def view_template(&)\n      tag(@as, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        role: (@decorative ? \"none\" : \"separator\"),\n        class: [\n          \"shrink-0 bg-border\",\n          orientation_classes\n        ]\n      }\n    end\n\n    def orientation_classes\n      return \"h-[1px] w-full\" if @orientation == :horizontal\n\n      \"h-full w-[1px]\"\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Separator < Base\n    ORIENTATIONS = %i[horizontal vertical].freeze\n\n    # decorative: true renders role=\"none\" for a purely visual line (hidden\n    # from assistive tech). shadcn (Base UI) has no such prop: it always\n    # renders a semantic separator, which is the default here too.\n    def initialize(as: :div, orientation: :horizontal, decorative: false, **attrs)\n      raise ArgumentError, \"Invalid orientation: #{orientation}\" unless ORIENTATIONS.include?(orientation.to_sym)\n\n      @as = as\n      @orientation = orientation.to_sym\n      @decorative = decorative\n      super(**attrs)\n    end\n\n    def view_template(&)\n      tag(@as, **attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {\n        role: role,\n        aria: {orientation: aria_orientation},\n        data: {slot: \"separator\", orientation: @orientation},\n        class: [\n          \"shrink-0 bg-border\",\n          orientation_classes,\n          hr_classes\n        ]\n      }\n    end\n\n    # <hr> already has the separator role: an explicit one would be redundant.\n    def role\n      return \"none\" if @decorative\n\n      \"separator\" unless hr?\n    end\n\n    # The separator role's implicit aria-orientation is horizontal, so <hr>\n    # only needs it when vertical. A decorative line has no orientation.\n    def aria_orientation\n      return if @decorative\n      return if hr? && @orientation == :horizontal\n\n      @orientation.to_s\n    end\n\n    def hr?\n      @as.to_sym == :hr\n    end\n\n    # Tailwind's preflight sets hr { height: 0; border-top-width: 1px }: drop the\n    # border (h-px already draws the line) and, when vertical, the fixed height,\n    # or self-stretch can't stretch it.\n    def hr_classes\n      return unless hr?\n      return \"border-0 h-auto\" if @orientation == :vertical\n\n      \"border-0\"\n    end\n\n    # shadcn keys these on data-orientation via its data-horizontal:/data-vertical:\n    # custom variants, which RubyUI's Tailwind setup doesn't define; the classes are\n    # picked here instead. self-stretch (not h-full) fills a flex row with no fixed height.\n    def orientation_classes\n      return \"h-px w-full\" if @orientation == :horizontal\n\n      \"w-px self-stretch\"\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
@@ -13,11 +13,36 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Separator",
-  "docs_markdown": "# Separator\n\nVisually or semantically separates content.\n\n## Usage\n\n### Example\n\n```ruby\ndiv do\n  div(class: \"space-y-1\") do\n    h4(class: \"text-sm font-medium leading-none\") { \"RubyUI\" }\n    p(class: \"text-sm text-muted-foreground\") { \"An open-source UI component library.\" }\n  end\n  Separator(class: \"my-4\")\n  div(class: \"flex h-5 items-center space-x-4 text-sm\") do\n    div { \"Blog\" }\n    Separator(as: :hr, orientation: :vertical)\n    div { \"Docs\" }\n    Separator(orientation: :vertical)\n    div { \"Source\" }\n  end\nend\n```",
+  "docs_markdown": "# Separator\n\nVisually or semantically separates content.\n\n## Usage\n\n### Horizontal\n\n```ruby\ndiv(class: \"flex flex-col gap-4 text-sm\") do\n  div(class: \"flex flex-col gap-1\") do\n    div(class: \"leading-none font-medium\") { \"RubyUI\" }\n    div(class: \"text-muted-foreground\") { \"An open-source UI component library.\" }\n  end\n  Separator()\n  div { \"Beautifully designed Phlex components that you can customize, extend, and build on.\" }\nend\n```\n\n### Vertical\n\n```ruby\ndiv(class: \"flex h-5 items-center gap-4 text-sm\") do\n  div { \"Blog\" }\n  Separator(orientation: :vertical)\n  div { \"Docs\" }\n  Separator(orientation: :vertical)\n  div { \"Source\" }\nend\n```\n\n### Vertical Menu\n\n```ruby\ndiv(class: \"flex items-center gap-2 text-sm md:gap-4\") do\n  div(class: \"flex flex-col gap-1\") do\n    span(class: \"font-medium\") { \"Settings\" }\n    span(class: \"text-xs text-muted-foreground\") { \"Manage preferences\" }\n  end\n  Separator(orientation: :vertical)\n  div(class: \"flex flex-col gap-1\") do\n    span(class: \"font-medium\") { \"Account\" }\n    span(class: \"text-xs text-muted-foreground\") { \"Profile & security\" }\n  end\n  Separator(orientation: :vertical)\n  div(class: \"flex flex-col gap-1\") do\n    span(class: \"font-medium\") { \"Help\" }\n    span(class: \"text-xs text-muted-foreground\") { \"Support & docs\" }\n  end\nend\n```\n\n### In List\n\n```ruby\ndiv(class: \"flex flex-col gap-2 text-sm\") do\n  dl(class: \"flex items-center justify-between\") do\n    dt { \"Item 1\" }\n    dd(class: \"text-muted-foreground\") { \"Value 1\" }\n  end\n  Separator()\n  dl(class: \"flex items-center justify-between\") do\n    dt { \"Item 2\" }\n    dd(class: \"text-muted-foreground\") { \"Value 2\" }\n  end\n  Separator()\n  dl(class: \"flex items-center justify-between\") do\n    dt { \"Item 3\" }\n    dd(class: \"text-muted-foreground\") { \"Value 3\" }\n  end\nend\n```\n\n### Decorative\n\n```ruby\ndiv(class: \"flex h-5 items-center gap-4 text-sm\") do\n  div { \"Profile\" }\n  Separator(orientation: :vertical, decorative: true)\n  div { \"Settings\" }\nend\n```\n\n### As <hr>\n\n```ruby\ndiv(class: \"flex flex-col gap-4 text-sm\") do\n  div { \"Section one\" }\n  Separator(as: :hr)\n  div { \"Section two\" }\nend\n```",
   "examples": [
     {
-      "title": "Example",
-      "code": "div do\n  div(class: \"space-y-1\") do\n    h4(class: \"text-sm font-medium leading-none\") { \"RubyUI\" }\n    p(class: \"text-sm text-muted-foreground\") { \"An open-source UI component library.\" }\n  end\n  Separator(class: \"my-4\")\n  div(class: \"flex h-5 items-center space-x-4 text-sm\") do\n    div { \"Blog\" }\n    Separator(as: :hr, orientation: :vertical)\n    div { \"Docs\" }\n    Separator(orientation: :vertical)\n    div { \"Source\" }\n  end\nend\n",
+      "title": "Horizontal",
+      "code": "div(class: \"flex flex-col gap-4 text-sm\") do\n  div(class: \"flex flex-col gap-1\") do\n    div(class: \"leading-none font-medium\") { \"RubyUI\" }\n    div(class: \"text-muted-foreground\") { \"An open-source UI component library.\" }\n  end\n  Separator()\n  div { \"Beautifully designed Phlex components that you can customize, extend, and build on.\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Vertical",
+      "code": "div(class: \"flex h-5 items-center gap-4 text-sm\") do\n  div { \"Blog\" }\n  Separator(orientation: :vertical)\n  div { \"Docs\" }\n  Separator(orientation: :vertical)\n  div { \"Source\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Vertical Menu",
+      "code": "div(class: \"flex items-center gap-2 text-sm md:gap-4\") do\n  div(class: \"flex flex-col gap-1\") do\n    span(class: \"font-medium\") { \"Settings\" }\n    span(class: \"text-xs text-muted-foreground\") { \"Manage preferences\" }\n  end\n  Separator(orientation: :vertical)\n  div(class: \"flex flex-col gap-1\") do\n    span(class: \"font-medium\") { \"Account\" }\n    span(class: \"text-xs text-muted-foreground\") { \"Profile & security\" }\n  end\n  Separator(orientation: :vertical)\n  div(class: \"flex flex-col gap-1\") do\n    span(class: \"font-medium\") { \"Help\" }\n    span(class: \"text-xs text-muted-foreground\") { \"Support & docs\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "In List",
+      "code": "div(class: \"flex flex-col gap-2 text-sm\") do\n  dl(class: \"flex items-center justify-between\") do\n    dt { \"Item 1\" }\n    dd(class: \"text-muted-foreground\") { \"Value 1\" }\n  end\n  Separator()\n  dl(class: \"flex items-center justify-between\") do\n    dt { \"Item 2\" }\n    dd(class: \"text-muted-foreground\") { \"Value 2\" }\n  end\n  Separator()\n  dl(class: \"flex items-center justify-between\") do\n    dt { \"Item 3\" }\n    dd(class: \"text-muted-foreground\") { \"Value 3\" }\n  end\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Decorative",
+      "code": "div(class: \"flex h-5 items-center gap-4 text-sm\") do\n  div { \"Profile\" }\n  Separator(orientation: :vertical, decorative: true)\n  div { \"Settings\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "As <hr>",
+      "code": "div(class: \"flex flex-col gap-4 text-sm\") do\n  div { \"Section one\" }\n  Separator(as: :hr)\n  div { \"Section two\" }\nend\n",
       "language": "ruby"
     }
   ]

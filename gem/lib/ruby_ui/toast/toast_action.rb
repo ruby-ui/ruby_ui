@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module RubyUI
+  # Primary action: shadcn's ToastAction (Button outline, size sm). Clicking it
+  # also closes the toast (registered divergence: Base UI leaves that to the
+  # handler).
   class ToastAction < Base
     def initialize(label:, on: nil, **attrs)
       @label = label
@@ -9,19 +12,20 @@ module RubyUI
     end
 
     def view_template
-      button(**attrs) { @label }
+      render RubyUI::Button.new(variant: :outline, size: :sm, **button_attrs) { @label }
     end
 
     private
 
+    # slot! makes Button replace its own data-slot="button" instead of joining
+    # it. Added after Base's mix, which would strip the bang.
+    def button_attrs
+      attrs.merge(data: attrs.fetch(:data, {}).merge(slot!: "toast-action"))
+    end
+
     def default_attrs
-      data = {slot: "action"}
-      data[:action] = @on if @on
-      {
-        type: "button",
-        data: data,
-        class: "inline-flex h-6 shrink-0 cursor-pointer items-center justify-center rounded px-2 text-xs font-medium bg-foreground text-background border-0 ml-auto hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-ring transition-opacity disabled:pointer-events-none disabled:opacity-50"
-      }
+      actions = [@on, "click->ruby-ui--toast#close"].compact
+      {data: {action: actions.join(" ")}, class: "shrink-0"}
     end
   end
 end

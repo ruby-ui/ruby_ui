@@ -1,0 +1,23 @@
+shadcn: input-otp
+shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+kind: form_control
+docs_view: input_otp
+# The fixture renders four OTPs (empty with data-audit-trigger, filled 2+2+2,
+# disabled, invalid).
+# shadcn puts data-slot="input-otp" on the hidden <input> (the input-otp lib
+# spreads rest props onto it); its container div has no data-slot.
+parts:
+  InputOtp: input-otp
+  InputOtpGroup: input-otp-group
+  InputOtpSlot: input-otp-slot
+  InputOtpSeparator: input-otp-separator
+selectors:
+  InputOtp: '[data-slot="input-otp"]'
+  InputOtpGroup: '[data-slot="input-otp-group"]'
+  InputOtpSlot: '[data-slot="input-otp-slot"]'
+  InputOtpSeparator: '[data-slot="input-otp-separator"]'
+# containerClassName is declared by the .tsx; the rest come from OTPInput
+# (input-otp lib). shadcn pattern is a whole-value regex, RubyUI a one-char class.
+props:
+  InputOtp: {maxLength: length, pattern: pattern, containerClassName: container_class, onComplete: null, onChange: null, value: value, disabled: disabled}
+  InputOtpSlot: {index: index}

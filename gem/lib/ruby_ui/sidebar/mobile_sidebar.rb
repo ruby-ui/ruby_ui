@@ -13,11 +13,14 @@ module RubyUI
       Sheet(**attrs) do
         SheetContent(
           side: @side,
-          class: "w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden",
+          show_close_button: false,
+          class: "w-[var(--sidebar-width)] bg-sidebar p-0 text-sidebar-foreground",
           style: {
             "--sidebar-width": SIDEBAR_WIDTH_MOBILE
           },
           data: {
+            # slot! replaces SheetContent's own data-slot instead of joining it.
+            slot!: "sidebar",
             sidebar: "sidebar",
             mobile: "true"
           }

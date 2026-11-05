@@ -4,7 +4,23 @@
   "files": [
     {
       "path": "progress.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class Progress < Base\n    def initialize(value: 0, **attrs)\n      @value = value.to_f.clamp(0, 100)\n\n      super(**attrs)\n    end\n\n    def view_template\n      div(**attrs) do\n        div(**indicator_attrs)\n      end\n    end\n\n    private\n\n    def default_attrs\n      {\n        role: \"progressbar\",\n        aria_valuenow: @value,\n        aria_valuemin: 0,\n        aria_valuemax: 100,\n        aria_valuetext: \"#{@value}%\",\n        class: \"relative h-2 overflow-hidden rounded-full bg-primary/20 [&>*]:bg-primary\"\n      }\n    end\n\n    def indicator_attrs\n      {\n        class: \"h-full w-full flex-1\",\n        style: \"transform: translateX(-#{100 - @value}%)\"\n      }\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nrequire \"securerandom\"\n\nmodule RubyUI\n  # A progress bar (role progressbar) mirroring shadcn's Base UI Progress:\n  # the root holds optional ProgressLabel / ProgressValue children and always\n  # renders the track and indicator after them.\n  #\n  # value: nil makes it indeterminate (no aria-valuenow). min:/max: set the\n  # range; the indicator width and the default aria-valuetext use the\n  # percentage of value between them. Pass aria: {valuetext: \"...\"} to\n  # replace the text.\n  class Progress < Base\n    # data-slot plus the status attribute Base UI puts on every part\n    # (data-progressing, data-complete or data-indeterminate).\n    def self.state_data(context, slot)\n      status = context[:ruby_ui_progress]&.dig(:status)\n      {data: {slot: slot, **(status ? {status => true} : {})}}\n    end\n\n    def initialize(value: 0, min: 0, max: 100, **attrs)\n      @min = min.to_f\n      @max = max.to_f\n      @raw_value = value\n      @value = finite(value)&.clamp(*[@min, @max].sort)\n      # A given aria-valuetext (aria: {valuetext:} or aria_valuetext:)\n      # replaces the default one; mix would join or duplicate them.\n      @valuetext = attrs.delete(:aria_valuetext)\n      aria = attrs[:aria]\n      if aria.is_a?(Hash) && aria.key?(:valuetext)\n        @valuetext = aria[:valuetext]\n        attrs = attrs.merge(aria: aria.except(:valuetext))\n      end\n      super(**attrs)\n    end\n\n    # Children are captured first so aria-labelledby only points at a\n    # ProgressLabel that actually rendered.\n    def view_template(&block)\n      previous = context[:ruby_ui_progress]\n      state = context[:ruby_ui_progress] = {\n        status: status,\n        value: @raw_value,\n        formatted_value: formatted_value,\n        percentage: percentage,\n        label_id: \"progress-#{SecureRandom.hex(4)}-label\"\n      }\n      body = block ? capture(&block) : \"\"\n      root_attrs = state[:labelledby] ? mix({aria: {labelledby: state[:labelledby]}}, attrs) : attrs\n      div(**root_attrs) do\n        raw(safe(body))\n        ProgressTrack { ProgressIndicator() }\n      end\n    ensure\n      context[:ruby_ui_progress] = previous\n    end\n\n    private\n\n    def finite(value)\n      return nil if value.nil?\n      number = value.to_f\n      number.finite? ? number : nil\n    end\n\n    def status\n      return :indeterminate if @value.nil?\n      (@value == @max) ? :complete : :progressing\n    end\n\n    def percentage\n      return nil if @value.nil?\n      range = @max - @min\n      return 0.0 unless range.positive?\n      ((@value - @min) / range * 100).clamp(0.0, 100.0)\n    end\n\n    # What Base UI's default Intl percent format gives: \"56%\".\n    def formatted_value\n      percentage ? \"#{percentage.round}%\" : \"\"\n    end\n\n    def number(value)\n      ((value % 1).zero? ? value.to_i : value).to_s\n    end\n\n    def default_attrs\n      {\n        role: \"progressbar\",\n        aria: {\n          valuemin: number(@min),\n          valuemax: number(@max),\n          valuenow: @value && number(@value),\n          valuetext: @valuetext || (@value ? formatted_value : \"indeterminate progress\")\n        },\n        data: {slot: \"progress\"}.merge(status => true),\n        class: \"flex flex-wrap gap-3\"\n      }\n    end\n  end\nend\n"
+    },
+    {
+      "path": "progress_indicator.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # The filled part of the track. Its width is the percentage of the value\n  # between min and max (no width when indeterminate). Progress renders it.\n  class ProgressIndicator < Base\n    def view_template\n      percentage = context[:ruby_ui_progress]&.dig(:percentage)\n      width = percentage && {style: \"inset-inline-start: 0px; height: inherit; width: #{format_percentage(percentage)}%;\"}\n      div(**mix(Progress.state_data(context, \"progress-indicator\"), width || {}, attrs))\n    end\n\n    private\n\n    def default_attrs\n      {class: \"h-full bg-primary transition-all\"}\n    end\n\n    def format_percentage(value)\n      ((value % 1).zero? ? value.to_i : value.round(4)).to_s\n    end\n  end\nend\n"
+    },
+    {
+      "path": "progress_label.rb",
+      "content": "# frozen_string_literal: true\n\nrequire \"securerandom\"\n\nmodule RubyUI\n  # Names the progress bar: inside Progress, the root gets aria-labelledby\n  # pointing at this element.\n  class ProgressLabel < Base\n    def view_template(&)\n      progress = context[:ruby_ui_progress]\n      # The root's generated id goes to the first label without an id; any\n      # other label gets its own, so ids stay unique.\n      id = attrs[:id] || (progress && !progress[:labelledby] && progress[:label_id]) || \"progress-#{SecureRandom.hex(4)}-label\"\n      progress[:labelledby] = id if progress\n      span(**mix(Progress.state_data(context, \"progress-label\"), attrs.except(:id), {id: id}), &)\n    end\n\n    private\n\n    def default_attrs\n      {role: \"presentation\", class: \"text-sm font-medium\"}\n    end\n  end\nend\n"
+    },
+    {
+      "path": "progress_track.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # The bar behind the indicator. Progress renders it after its children.\n  class ProgressTrack < Base\n    def view_template(&)\n      div(**mix(Progress.state_data(context, \"progress-track\"), attrs), &)\n    end\n\n    private\n\n    def default_attrs\n      {class: \"relative flex h-1.5 w-full items-center overflow-x-hidden rounded-full bg-muted\"}\n    end\n  end\nend\n"
+    },
+    {
+      "path": "progress_value.rb",
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  # Shows the formatted value (\"56%\"; empty when indeterminate). Hidden from\n  # assistive tech: the progressbar already announces it. A block replaces\n  # the text and receives the formatted value and the value given to\n  # Progress, before clamping (nil when indeterminate).\n  class ProgressValue < Base\n    def view_template(&block)\n      progress = context[:ruby_ui_progress] || {}\n      span(**mix(Progress.state_data(context, \"progress-value\"), attrs)) do\n        if block\n          yield(progress[:formatted_value].to_s, progress[:value])\n        else\n          plain progress[:formatted_value].to_s\n        end\n      end\n    end\n\n    private\n\n    def default_attrs\n      {aria: {hidden: \"true\"}, class: \"ml-auto text-sm text-muted-foreground tabular-nums\"}\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
@@ -13,16 +29,31 @@
     "gems": []
   },
   "install_command": "rails g ruby_ui:component Progress",
-  "docs_markdown": "# Progress\n\nDisplays an indicator showing the completion progress of a task, typically displayed as a progress bar.\n\n### Example\n\n```ruby\nProgress(value: 50, class: \"w-[60%]\")\n```\n\n### With custom indicator color\n\n```ruby\nProgress(value: 35, class: \"w-[60%] [&>*]:bg-success\")\n```",
+  "docs_markdown": "# Progress\n\nDisplays an indicator showing the completion progress of a task, typically displayed as a progress bar.\n\n### Example\n\n```ruby\nProgress(value: 50, class: \"w-[60%]\", aria: {label: \"Progress\"})\n```\n\n### With label\n\n```ruby\nProgress(value: 56, class: \"w-[60%]\") do\n  ProgressLabel { \"Upload progress\" }\n  ProgressValue()\nend\n```\n\n### Min and max\n\n```ruby\nProgress(value: 3, max: 7, class: \"w-[60%]\", aria: {valuetext: \"Step 3 of 7\"}) do\n  ProgressLabel { \"Onboarding\" }\n  ProgressValue { |_formatted, value| \"\\#{value.to_i} of 7\" }\nend\n```\n\n### Indeterminate\n\n```ruby\nProgress(value: nil, class: \"w-[60%]\") do\n  ProgressLabel { \"Preparing export\" }\nend\n```\n\n### With custom indicator color\n\n```ruby\nProgress(value: 35, class: \"w-[60%] **:data-[slot=progress-indicator]:bg-green-600\", aria: {label: \"Progress\"})\n```",
   "examples": [
     {
       "title": "Example",
-      "code": "Progress(value: 50, class: \"w-[60%]\")\n",
+      "code": "Progress(value: 50, class: \"w-[60%]\", aria: {label: \"Progress\"})\n",
+      "language": "ruby"
+    },
+    {
+      "title": "With label",
+      "code": "Progress(value: 56, class: \"w-[60%]\") do\n  ProgressLabel { \"Upload progress\" }\n  ProgressValue()\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Min and max",
+      "code": "Progress(value: 3, max: 7, class: \"w-[60%]\", aria: {valuetext: \"Step 3 of 7\"}) do\n  ProgressLabel { \"Onboarding\" }\n  ProgressValue { |_formatted, value| \"\\#{value.to_i} of 7\" }\nend\n",
+      "language": "ruby"
+    },
+    {
+      "title": "Indeterminate",
+      "code": "Progress(value: nil, class: \"w-[60%]\") do\n  ProgressLabel { \"Preparing export\" }\nend\n",
       "language": "ruby"
     },
     {
       "title": "With custom indicator color",
-      "code": "Progress(value: 35, class: \"w-[60%] [&>*]:bg-success\")\n",
+      "code": "Progress(value: 35, class: \"w-[60%] **:data-[slot=progress-indicator]:bg-green-600\", aria: {label: \"Progress\"})\n",
       "language": "ruby"
     }
   ]

@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex flex-col space-y-1.5 text-center sm:text-left"
+        data: {slot: "sheet-header"},
+        class: "flex flex-col gap-1.5 p-4"
       }
     end
   end

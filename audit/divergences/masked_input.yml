@@ -1,0 +1,6 @@
+- component: masked_input
+  dimension: Behavior
+  rubyui: "Masks the value with maska (data-maska) on connect and while typing"
+  shadcn: "No masked input; the plain Input keeps the value as typed"
+  reason: "RubyUI-only component for formats like phone and CPF/CNPJ; shadcn has no counterpart, so the masking itself is compared against nothing."
+  since: "2026-11-03"

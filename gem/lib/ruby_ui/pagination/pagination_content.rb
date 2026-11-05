@@ -10,7 +10,8 @@ module RubyUI
 
     def default_attrs
       {
-        class: "flex flex-row items-center gap-1"
+        data: {slot: "pagination-content"},
+        class: "flex items-center gap-1"
       }
     end
   end

@@ -11,11 +11,12 @@ class CliMapTest < Minitest::Test
     assert_equal "dialog", run_cli("map", "dialog")["shadcn"]
   end
 
+  # clipboard has no shadcn counterpart, so it stays unmapped.
   def test_map_unmapped_prints_suggestion
-    result = run_cli("map", "shortcut_key")
+    result = run_cli("map", "clipboard")
     assert_equal true, result["missing"]
-    assert_equal "audit/component_map/shortcut_key.yml", result["path"]
-    assert_equal "shortcut-key", YAML.safe_load(result["suggestion"])["shadcn"]
+    assert_equal "audit/component_map/clipboard.yml", result["path"]
+    assert_equal "clipboard", YAML.safe_load(result["suggestion"])["shadcn"]
   end
 
   def test_divergences_lists_for_folder

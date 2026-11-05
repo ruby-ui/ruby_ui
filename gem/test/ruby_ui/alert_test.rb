@@ -39,21 +39,28 @@ class RubyUI::AlertTest < ComponentTest
   end
 
   def test_default_variant_uses_card_colors
-    [nil, :default, "default", :info].each do |variant|
+    [nil, :default, "default", :info, :warning, :success].each do |variant|
       output = phlex { RubyUI.Alert(variant: variant) { "Hi" } }
 
       assert_match(/bg-card text-card-foreground/, output, "variant #{variant.inspect}")
     end
   end
 
-  def test_colored_variants_tint_text_not_background
-    {destructive: "destructive", warning: "warning", success: "success"}.each do |variant, token|
-      output = phlex { RubyUI.Alert(variant: variant) { "Hi" } }
+  def test_destructive_tints_text_not_background
+    output = phlex { RubyUI.Alert(variant: :destructive) { "Hi" } }
 
-      assert_match(/text-#{token} bg-card/, output)
-      assert_match(%r{data-\[slot=alert-description\]:text-#{token}/90}, output)
-      refute_match(/bg-#{token}/, output)
-    end
+    assert_match(/text-destructive bg-card/, output)
+    assert_match(%r{data-\[slot=alert-description\]:text-destructive/90}, output)
+    refute_match(/bg-destructive/, output)
+  end
+
+  def test_custom_colors_replace_the_variant_colors
+    output = phlex { RubyUI.Alert(class: "border-amber-200 bg-amber-50 text-amber-900") { "Hi" } }
+
+    assert_match(/bg-amber-50/, output)
+    assert_match(/text-amber-900/, output)
+    refute_match(/bg-card/, output)
+    refute_match(/text-card-foreground/, output)
   end
 
   def test_icon_gets_its_own_grid_column

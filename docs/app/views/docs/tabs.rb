@@ -66,11 +66,11 @@ class Views::Docs::Tabs < Views::Base
             TabsList(class: 'w-full grid grid-cols-2') do
               TabsTrigger(value: "overview") do
                 book_icon
-                span(class: 'ml-2') { "Overview" }
+                span { "Overview" }
               end
               TabsTrigger(value: "repositories") do
                 repo_icon
-                span(class: 'ml-2') { "Repositories" }
+                span { "Repositories" }
               end
             end
             TabsContent(value: "overview") do
@@ -116,9 +116,56 @@ class Views::Docs::Tabs < Views::Base
         RUBY
       end
 
+      render Docs::VisualCodeExample.new(title: "Line", context: self) do
+        <<~RUBY
+          Tabs(default_value: "overview", class: 'w-96') do
+            TabsList(variant: :line) do
+              TabsTrigger(value: "overview") { "Overview" }
+              TabsTrigger(value: "analytics") { "Analytics" }
+              TabsTrigger(value: "reports") { "Reports" }
+            end
+            TabsContent(value: "overview") { "A summary of your account activity." }
+            TabsContent(value: "analytics") { "Traffic and conversion over time." }
+            TabsContent(value: "reports") { "Download monthly reports." }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Vertical", context: self) do
+        <<~RUBY
+          # The arrow keys follow the orientation: Up/Down here, Left/Right otherwise.
+          Tabs(default_value: "general", orientation: :vertical, class: 'w-96') do
+            TabsList do
+              TabsTrigger(value: "general") { "General" }
+              TabsTrigger(value: "security") { "Security" }
+              TabsTrigger(value: "billing") { "Billing" }
+            end
+            TabsContent(value: "general") { "Name, language and time zone." }
+            TabsContent(value: "security") { "Password and two-factor authentication." }
+            TabsContent(value: "billing") { "Plan, invoices and payment method." }
+          end
+        RUBY
+      end
+
+      render Docs::VisualCodeExample.new(title: "Keyboard", context: self) do
+        <<~RUBY
+          # By default the arrow keys move focus and Enter/Space activate.
+          # activate_on_focus: true activates as focus moves; loop_focus: false
+          # stops at the first and last tab.
+          Tabs(default_value: "account", class: 'w-96') do
+            TabsList(activate_on_focus: true, loop_focus: false) do
+              TabsTrigger(value: "account") { "Account" }
+              TabsTrigger(value: "password") { "Password" }
+            end
+            TabsContent(value: "account") { "Make changes to your account here." }
+            TabsContent(value: "password") { "Change your password here." }
+          end
+        RUBY
+      end
+
       render Docs::VisualCodeExample.new(title: "Change default value", context: self) do
         <<~RUBY
-          Tabs(default: "password", class: 'w-96') do
+          Tabs(default_value: "password", class: 'w-96') do
             TabsList do
               TabsTrigger(value: "account") { "Account" }
               TabsTrigger(value: "password") { "Password" }

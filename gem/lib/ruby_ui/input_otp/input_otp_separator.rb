@@ -15,13 +15,15 @@ module RubyUI
     def icon
       svg(
         xmlns: "http://www.w3.org/2000/svg",
+        width: "24",
+        height: "24",
         viewbox: "0 0 24 24",
         fill: "none",
         stroke: "currentColor",
         stroke_width: "2",
         stroke_linecap: "round",
         stroke_linejoin: "round",
-        class: "h-4 w-4"
+        aria_hidden: "true"
       ) do |s|
         s.path(d: "M5 12h14")
       end
@@ -32,7 +34,8 @@ module RubyUI
     def default_attrs
       {
         role: "separator",
-        class: "text-muted-foreground"
+        data: {slot: "input-otp-separator"},
+        class: "flex items-center [&_svg:not([class*='size-'])]:size-4"
       }
     end
   end

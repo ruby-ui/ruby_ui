@@ -10,6 +10,7 @@ const PRESETS = {
   text_only: { variant: "default", title: "Event has been created" },
   close_button: { variant: "default", title: "Event has been created", description: "Close it manually with the X.", closeButton: true },
   close_action: { variant: "default", title: "Event has been created", description: "Friday at 3:00 PM", closeButton: true, action: { label: "Undo" } },
+  no_close: { variant: "default", title: "Event has been created", description: "No X on this one.", closeButton: false },
 }
 
 export default class extends Controller {
@@ -20,10 +21,10 @@ export default class extends Controller {
 
     if (kind === "promise") {
       t.promise(
-        new Promise((r) => setTimeout(() => r({ name: "Sonner" }), 1500)),
+        new Promise((r) => setTimeout(() => r({ name: "Event" }), 1500)),
         {
           loading: "Loading...",
-          success: (data) => `${data.name} toast has been added`,
+          success: (data) => `${data.name} created.`,
           error: "Error",
         }
       )

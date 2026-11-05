@@ -1,0 +1,45 @@
+- component: toast
+  dimension: ARIA
+  match: {part: ToastClose, attribute: snapshot, rubyui: "- button \"Close toast\"", shadcn: ""}
+  rubyui: "close button always exposed to assistive tech"
+  shadcn: "close button aria-hidden while the toast is neither expanded nor focused (Base UI ToastClose)"
+  reason: "RubyUI keeps the X in the accessibility tree: it is a real, focusable control, and hiding it until focus enters the toast makes it undiscoverable when browsing the region. The toast is still announced through the single polite region."
+  since: "2026-11-04"
+- component: toast
+  dimension: ARIA
+  match: {part: ToastItem, attribute: snapshot, rubyui: "- dialog \"Event created\":\n  - heading \"Event created\" [level=2]\n  - paragraph: Sunday, December 3 at 9:00 AM\n  - button \"Close toast\"", shadcn: "- dialog \"Event created\":\n  - heading \"Event created\" [level=2]\n  - paragraph: Sunday, December 3 at 9:00 AM"}
+  rubyui: "toast dialog lists the Close toast button"
+  shadcn: "toast dialog without the (aria-hidden) close button"
+  reason: "Follows from the ToastClose entry above: the only difference is the exposed close button."
+  since: "2026-11-04"
+- component: toast
+  dimension: ARIA
+  match: {part: ToastRegion, attribute: snapshot, rubyui: "- region \"Notifications\":\n  - dialog \"Event created\":\n    - heading \"Event created\" [level=2]\n    - paragraph: Sunday, December 3 at 9:00 AM\n    - button \"Close toast\"", shadcn: "- region \"Notifications\":\n  - dialog \"Event created\":\n    - heading \"Event created\" [level=2]\n    - paragraph: Sunday, December 3 at 9:00 AM"}
+  rubyui: "region tree lists the Close toast button"
+  shadcn: "region tree without the (aria-hidden) close button"
+  reason: "Follows from the ToastClose entry above."
+  since: "2026-11-04"
+- component: toast
+  dimension: HTML
+  rubyui: "ToastCancel: a ghost sm button that dismisses the toast"
+  shadcn: "no cancel part"
+  reason: "Kept from RubyUI's earlier sonner-style API (cancel: in the JS API, ToastCancel in Phlex) so existing callers keep working; it renders only when asked for."
+  since: "2026-11-04"
+- component: toast
+  dimension: Behavior
+  rubyui: "clicking the action button closes the toast"
+  shadcn: "the action's onClick decides (the example calls toast.close(id))"
+  reason: "Closing on action is the common case and what RubyUI callers already rely on; server-rendered actions (Stimulus descriptors) have no handle to close the toast themselves."
+  since: "2026-11-04"
+- component: toast
+  dimension: Props
+  rubyui: "one global manager (window.RubyUI.toast); actions via action:/ToastAction"
+  shadcn: "toastManager (createToastManager) and actionProps on toast.add"
+  reason: "Multiple managers are a React context pattern; Stimulus toasts go through the single region on the page. action: { label, onClick } and ToastAction cover actionProps."
+  since: "2026-11-04"
+- component: toast
+  dimension: Props
+  rubyui: "position: (six corners/edges), expand:, gap:, hotkey:, close_button:, swipe_directions:, flash:"
+  shadcn: "Toaster renders a bottom-right viewport only; hotkey fixed to F6"
+  reason: "RubyUI extras with Base UI's defaults (bottom-right, F6, gap 12, close shown, swipe down/right); flash: renders Rails flash on load."
+  since: "2026-11-04"

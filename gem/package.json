@@ -29,7 +29,7 @@
     "date-fns": "^2.30.0",
     "embla-carousel": "8.5.2",
     "fuse.js": "^7.0.0",
-    "maska": "^3.0.3",
+    "maska": "^3.2.2",
     "mustache": "^4.2.0"
   },
   "devDependencies": {

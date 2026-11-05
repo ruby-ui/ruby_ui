@@ -7,7 +7,7 @@ class Views::Docs::ToggleGroup < Views::Base
     div(class: "max-w-2xl mx-auto w-full py-10 space-y-10") do
       render Docs::Header.new(
         title: "Toggle Group",
-        description: "A set of two-state buttons that can be toggled on or off, with single or multiple selection. Mirrors shadcn/ui ToggleGroup."
+        description: "A set of two-state buttons that can be toggled on or off, with single or multiple selection. Arrow keys move between items (loop_focus: false stops at the ends); pressing the pressed item of a single group clears it. Mirrors shadcn/ui ToggleGroup."
       )
 
       Heading(level: 2) { "Usage" }
@@ -75,11 +75,21 @@ class Views::Docs::ToggleGroup < Views::Base
 
       render Docs::VisualCodeExample.new(title: "Spacing", context: self) do
         <<~RUBY
-          ToggleGroup(type: :single, name: "align", value: "top", variant: :outline, spacing: 2) do |g|
-            g.ToggleGroupItem(value: "top") { "Top" }
-            g.ToggleGroupItem(value: "bottom") { "Bottom" }
-            g.ToggleGroupItem(value: "left") { "Left" }
-            g.ToggleGroupItem(value: "right") { "Right" }
+          div(class: "flex flex-col gap-4") do
+            # spacing: 0 joins the items into one segmented control
+            ToggleGroup(type: :single, name: "align_joined", value: "top", variant: :outline, spacing: 0) do |g|
+              g.ToggleGroupItem(value: "top") { "Top" }
+              g.ToggleGroupItem(value: "bottom") { "Bottom" }
+              g.ToggleGroupItem(value: "left") { "Left" }
+              g.ToggleGroupItem(value: "right") { "Right" }
+            end
+            # spacing defaults to 2 (gap-2); any Integer 0..4 works
+            ToggleGroup(type: :single, name: "align", value: "top", variant: :outline) do |g|
+              g.ToggleGroupItem(value: "top") { "Top" }
+              g.ToggleGroupItem(value: "bottom") { "Bottom" }
+              g.ToggleGroupItem(value: "left") { "Left" }
+              g.ToggleGroupItem(value: "right") { "Right" }
+            end
           end
         RUBY
       end

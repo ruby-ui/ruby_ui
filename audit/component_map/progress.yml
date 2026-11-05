@@ -1,0 +1,23 @@
+shadcn: progress
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
+kind: static
+docs_view: progress
+# The fixture renders five bars (0, 25, 50 with data-audit-trigger, 75, 100)
+# and one bar with ProgressLabel + ProgressValue (56).
+# Progress renders ProgressTrack > ProgressIndicator itself, as shadcn does.
+parts:
+  Progress: progress
+  ProgressTrack: progress-track
+  ProgressIndicator: progress-indicator
+  ProgressLabel: progress-label
+  ProgressValue: progress-value
+selectors:
+  Progress: '[data-slot="progress"]'
+  ProgressTrack: '[data-slot="progress-track"]'
+  ProgressIndicator: '[data-slot="progress-indicator"]'
+  ProgressLabel: '[data-slot="progress-label"]'
+  ProgressValue: '[data-slot="progress-value"]'
+# value is declared by the .tsx; the rest come from Base UI's Progress.Root.
+# format/locale/getAriaValueText: see audit/divergences/progress.yml.
+props:
+  Progress: {value: value, min: min, max: max, format: null, locale: null, getAriaValueText: null}

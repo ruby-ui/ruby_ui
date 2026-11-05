@@ -1,0 +1,4 @@
+# Same strings on both sides. Follows shadcn's popover "Basic" example.
+trigger: Open Popover
+title: Dimensions
+body: Set the dimensions for the layer.

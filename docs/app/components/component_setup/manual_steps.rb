@@ -162,7 +162,7 @@ module Components
             TypographyList do
               dependencies["components"].each do |component|
                 TypographyListItem do
-                  Link(size: :lg, target: "_blank", href: public_send(:"docs_#{component.underscore}_path")) do
+                  Link(variant: :link, size: :lg, target: "_blank", href: public_send(:"docs_#{component.underscore}_path")) do
                     span(class: "font-bold") { component.camelcase }
                     span { " - Installation guide" }
                   end

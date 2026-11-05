@@ -1,0 +1,26 @@
+- component: progress
+  dimension: Props
+  rubyui: "no format:, locale: or get_aria_value_text:; aria: {valuetext:} replaces the text and a ProgressValue block formats the visible value"
+  shadcn: "format (Intl.NumberFormatOptions), locale and getAriaValueText (Base UI Progress.Root)"
+  reason: "They configure Intl.NumberFormat and a JS callback at render time in the browser. RubyUI renders on the server, where the app formats the number itself; aria-valuetext through attrs and the ProgressValue block cover both uses."
+  since: "2026-11-04"
+- component: progress
+  dimension: HTML
+  rubyui: "no visually hidden <span role=\"presentation\">x</span> inside the root"
+  shadcn: "Base UI appends a visually hidden <span role=\"presentation\">x</span> to the root"
+  reason: "Undocumented Base UI internal. In Chromium its only effect is that the progressbar's children text shows in the accessibility tree; the accessible name, value and look are the same without it (checked with the audit fixture, 2026-11-04)."
+  since: "2026-11-04"
+- component: progress
+  dimension: ARIA
+  match: {part: Progress, attribute: snapshot, rubyui: "- progressbar", shadcn: "- progressbar: x"}
+  rubyui: "unlabeled progressbar exposes no children text"
+  shadcn: "unlabeled progressbar exposes the hidden span's text \"x\""
+  reason: "Follows from the HTML entry (no hidden x span). progressbar has presentational children in WAI-ARIA 1.2 (https://www.w3.org/TR/wai-aria-1.2/#progressbar), so the text isn't part of what it announces."
+  since: "2026-11-04"
+- component: progress
+  dimension: ARIA
+  match: {part: Progress, attribute: snapshot, rubyui: "- progressbar \"Upload progress\"", shadcn: "- progressbar \"Upload progress\": Upload progress x"}
+  rubyui: "labeled progressbar: name \"Upload progress\", no children text"
+  shadcn: "labeled progressbar: name \"Upload progress\" plus children text \"Upload progress x\""
+  reason: "Same as the entry above: the accessible name is identical; only the hidden span's effect on the exposed children text differs."
+  since: "2026-11-04"
