@@ -8,7 +8,7 @@ class Views::Docs::DropdownMenu < Views::Base
 
       Heading(level: 2) { "Usage" }
 
-      render Docs::VisualCodeExample.new(title: "Basic", description: "Click the button, or focus it and press Enter, Space, ArrowDown or ArrowUp: the menu opens and takes focus. Arrow keys, Home/End and typing a letter move through the items; Enter or Space picks one; Esc or Tab closes it and focus goes back to the button. While it is open the page behind is inert and doesn't scroll.", context: self) do
+      render Docs::VisualCodeExample.new(title: "Basic", description: "Click the button, or focus it and press Enter, Space, ArrowDown or ArrowUp: the menu opens and takes focus. Arrow keys, Home/End and typing a letter move through the items; Enter or Space picks one; Esc closes it and focus goes back to the button; Tab closes it and moves on to the next control, Shift+Tab stops on the button. While it is open the page behind is inert and doesn't scroll.", context: self) do
         <<~RUBY
           DropdownMenu do
             DropdownMenuTrigger do

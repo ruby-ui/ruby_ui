@@ -5,8 +5,9 @@ import { computePosition, autoUpdate, offset, flip, shift, size } from "@floatin
 //
 // Behaves like Base UI's Menu (shadcn's DropdownMenu): a button opens the
 // menu next to itself, focus moves into it (roving focus) and between items on
-// arrow keys, Home/End and typeahead; Esc, Tab, picking an item or a click
-// outside close it and focus goes back to the button. The menu and its
+// arrow keys, Home/End and typeahead; Esc, picking an item or a click outside
+// close it and focus goes back to the button, and Tab closes it and moves on
+// to the control after the button. The menu and its
 // submenus are native popovers (top layer). While open it is modal by
 // default: the page scroll is locked and everything outside is inert.
 const ITEM_SELECTOR = "[role=menuitem], [role=menuitemcheckbox], [role=menuitemradio]";
