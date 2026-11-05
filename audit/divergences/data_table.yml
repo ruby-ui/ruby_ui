@@ -4,3 +4,9 @@
   shadcn: "dashboard-01 block: div with four <button>s calling TanStack Table's page setters; disabled ends use the disabled attribute"
   reason: "RubyUI's DataTable is server-driven: paging is a GET answered with HTML and swapped by a Turbo Frame, so links work without JS and can be opened in a new tab. Look and accessible names match the block."
   since: "2026-11-02"
+- component: data_table
+  dimension: Behavior
+  rubyui: "DataTablePerPageSelect: picking a size fires change on SelectInput and the ruby-ui--data-table-per-page-select controller submits the GET form (?per_page=N, search/sort kept, page reset), answered with HTML in the Turbo Frame"
+  shadcn: "dashboard-01 block: Select onValueChange calls TanStack Table's setPageSize on the client"
+  reason: "RubyUI's DataTable is server-driven, as for pagination: the page size is a query param the server reads, so the list comes back from the server and the URL can be shared. The Select itself (open, arrows, typeahead, Enter, Esc) behaves as shadcn's."
+  since: "2026-11-05"
