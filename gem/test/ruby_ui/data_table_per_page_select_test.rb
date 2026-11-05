@@ -30,6 +30,17 @@ class RubyUI::DataTablePerPageSelectTest < ComponentTest
     refute_match(/onchange/, output)
   end
 
+  def test_keeps_select_input_targets_and_actions
+    output = phlex { RubyUI.DataTablePerPageSelect(path: "/x") }
+    input_tag = output[/<input#{ATTRS}\sname="per_page"#{ATTRS}>/o]
+    assert_includes input_tag, 'data-ruby-ui--select-target="input"'
+    actions = input_tag[/data-action="([^"]*)"/, 1].split
+    assert_includes actions, "change->ruby-ui--form-field#onChange"
+    assert_includes actions, "invalid->ruby-ui--form-field#onInvalid"
+    assert_includes actions, "invalid->ruby-ui--select#focusTrigger"
+    assert_includes actions, "change->ruby-ui--data-table-per-page-select#submit"
+  end
+
   def test_targets_turbo_frame_from_the_form
     output = phlex { RubyUI.DataTablePerPageSelect(path: "/x", frame_id: "employees") }
     assert_match(/<form#{ATTRS}\sdata-turbo-frame="employees"/o, output)

@@ -93,7 +93,7 @@
       "Checkbox",
       "DropdownMenu",
       "Input",
-      "NativeSelect",
+      "Select",
       "Pagination",
       "Table"
     ],

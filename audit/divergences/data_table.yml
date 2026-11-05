@@ -6,7 +6,7 @@
   since: "2026-11-02"
 - component: data_table
   dimension: Behavior
-  rubyui: "DataTablePerPageSelect: picking a size fires change on SelectInput and the ruby-ui--data-table-per-page-select controller submits the GET form (?per_page=N, search/sort kept, page reset), answered with HTML in the Turbo Frame"
+  rubyui: "DataTablePerPageSelect: picking a size fires change on SelectInput and the ruby-ui--data-table-per-page-select controller submits the GET form with the size as a query param (per_page unless name: renames it), plus the preserved_params the caller passes, into the Turbo Frame when frame_id: is given; the page restarts at 1 unless the caller preserves page"
   shadcn: "dashboard-01 block: Select onValueChange calls TanStack Table's setPageSize on the client"
   reason: "RubyUI's DataTable is server-driven, as for pagination: the page size is a query param the server reads, so the list comes back from the server and the URL can be shared. The Select itself (open, arrows, typeahead, Enter, Esc) behaves as shadcn's."
   since: "2026-11-05"
