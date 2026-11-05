@@ -1,0 +1,19 @@
+audit/divergences/codeblock.yml
+  s_ab216b77c8becf::t_ed3035e9094b93 1-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "67fc7e8ebb91f73e440627bcf3fbac256456fbc5",
+  "prompts": {},
+  "sessions": {
+    "s_ab216b77c8becf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "91428037-ec4b-46f0-a761-de8f7ee5e490",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
