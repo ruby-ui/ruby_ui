@@ -97,7 +97,9 @@
       "Pagination",
       "Table"
     ],
-    "js_packages": [],
+    "js_packages": [
+      "@floating-ui/dom"
+    ],
     "gems": []
   },
   "install_command": "rails g ruby_ui:component DataTable",
