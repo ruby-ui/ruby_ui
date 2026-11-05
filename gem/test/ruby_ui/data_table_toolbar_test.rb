@@ -8,4 +8,9 @@ class RubyUI::DataTableToolbarTest < ComponentTest
     assert_match(/<div[^>]*class="[^"]*flex[^"]*"/, output)
     assert_match(/INNER/, output)
   end
+
+  def test_leaves_the_block_gap_above_the_table
+    output = phlex { RubyUI.DataTableToolbar { "INNER" } }
+    assert_match(/<div[^>]*class="[^"]*\bpb-2\b/, output)
+  end
 end

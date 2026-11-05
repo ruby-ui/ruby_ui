@@ -80,7 +80,7 @@
     },
     {
       "path": "data_table_toolbar.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class DataTableToolbar < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {class: \"flex items-center justify-between gap-2\"}\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class DataTableToolbar < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      # pb-2 on top of DataTable's space-y-4 leaves 24px above the table, as the\n      # gap-6 between the toolbar and the table in shadcn's dashboard-01 block.\n      {class: \"flex items-center justify-between gap-2 pb-2\"}\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
