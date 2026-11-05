@@ -22,11 +22,19 @@ module RubyUI
       form_attrs[:data] = {turbo_frame: @frame_id} if @frame_id
       form(**mix(attrs, form_attrs)) do
         label(for: @id, class: "text-sm font-medium") { plain @label }
-        render RubyUI::NativeSelect.new(id: @id, name: @name, size: :sm, data: select_data) do
-          @options.each do |opt|
-            option_attrs = {value: opt.to_s}
-            option_attrs[:selected] = true if opt.to_s == @value.to_s
-            option(**option_attrs) { plain opt.to_s }
+        # Same parts as shadcn's dashboard-01 block: SelectTrigger size=sm w-20
+        # labelled by id, and the list opening above it.
+        Select do
+          SelectInput(name: @name, value: @value&.to_s, data: input_data)
+          SelectTrigger(id: @id, size: :sm, class: "w-20") do
+            SelectValue(placeholder: @value&.to_s) { @value&.to_s }
+          end
+          SelectContent(side: :top) do
+            SelectGroup do
+              @options.each do |opt|
+                SelectItem(value: opt.to_s) { plain opt.to_s }
+              end
+            end
           end
         end
         # Keep search/sort when the page size changes; page is left out on
@@ -41,7 +49,9 @@ module RubyUI
 
     private
 
-    def select_data
+    # Select's controller fires change on SelectInput when an item is picked;
+    # submitting from there keeps working under a CSP without 'unsafe-inline'.
+    def input_data
       {
         controller: "ruby-ui--data-table-per-page-select",
         action: "change->ruby-ui--data-table-per-page-select#submit"
