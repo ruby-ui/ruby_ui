@@ -1,0 +1,6 @@
+- component: codeblock
+  dimension: Props
+  rubyui: "no onClick on CodeblockCopyButton; a data-action passed through attrs runs alongside the copy"
+  shadcn: "onClick on CodeBlockCopyButton, called before the copy"
+  reason: "Server-rendered component: there is no React event prop. Extra behavior hooks in through Stimulus with data: {action: \"click->my-controller#method\"}, merged with the button's own copy action."
+  since: "2026-11-05"
