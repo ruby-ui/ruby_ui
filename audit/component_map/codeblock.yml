@@ -1,5 +1,5 @@
 shadcn: code-block
-shadcn_sha: 4aaea19d9cff3e0908e12a8c1d504b8c5ec34610
+shadcn_sha: 8a3536678a528cc012b9e62484290e79d0be410f
 kind: static
 docs_view: codeblock
 parts:
@@ -14,18 +14,24 @@ parts:
   CodeblockTheme: null
 selectors:
   Codeblock: '[data-audit-fixture] [data-slot="code-block"]'
+  CodeblockHeader: '[data-audit-fixture] [data-slot="code-block-header"]'
+  CodeblockTitle: '[data-audit-fixture] [data-slot="code-block-title"]'
   CodeblockActions: '[data-audit-fixture] [data-slot="code-block-actions"]'
   CodeblockCopyButton: '[data-audit-fixture] [data-slot="code-block-copy-button"]'
   CodeblockContent: '[data-audit-fixture] [data-slot="code-block-content"]'
+  CodeblockLine: '[data-audit-fixture] [data-slot="code-block-line"]'
+  CodeblockFooter: '[data-audit-fixture] [data-slot="code-block-footer"]'
 props:
   # Codeblock(code, ...) is a shorthand that also takes CodeblockContent's props.
   Codeblock: {variant: variant, size: size}
-  CodeblockContent: {wrap: wrap, lineNumbers: line_numbers, startLine: start_line}
-  CodeblockCopyButton: {value: value, variant: variant, size: size}
+  CodeblockContent: {style: style, wrap: wrap, lineNumbers: line_numbers, startLine: start_line}
+  # onClick: React event prop; in RubyUI a data-action passes through attrs.
+  CodeblockCopyButton: {value: value, variant: variant, size: size, onClick: null}
   CodeblockLine: {variant: variant}
 rubyui_only:
   # syntax: Rouge highlighting (shadcn's base ships no highlighter).
-  # clipboard*: the shorthand's copy button on/off and its labels.
+  # clipboard*: the shorthand's copy button on/off and its labels (clipboard_error: deprecated, ignored).
   Codeblock: [syntax, clipboard, clipboard_success, clipboard_error, wrap, line_numbers, start_line]
   CodeblockContent: [syntax]
+  # error_label: deprecated, ignored (a failed copy shows nothing, as in shadcn).
   CodeblockCopyButton: [label, copied_label, error_label]

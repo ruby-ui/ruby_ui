@@ -1,11 +1,20 @@
-# One code block with a copy button, as shadcn's code-block example without
-# header/footer. Plain text on both sides (shadcn's base has no highlighter;
-# RubyUI uses Rouge's plaintext lexer) so syntax colors stay out of Look.
-# The root carries data-audit-trigger (static kind: only the closed state is
-# collected; the copy flow is driven by hand).
+# Three code blocks, the same on both sides:
+# 1. Floating copy button (CodeBlockActions as a direct child), no header/footer.
+# 2. Header with a title and the copy button, then a footer.
+# 3. Numbered lines with the default, added, removed and highlighted variants.
+# Plain text everywhere (shadcn's base has no highlighter; RubyUI uses Rouge's
+# plaintext lexer) so syntax colors stay out of Look. The first root carries
+# data-audit-trigger (static kind: only the closed state is collected; hover
+# and the copy flow are driven by hand).
 lines:
   - "$ pnpm add ai zod"
   - "dependencies:"
   - "+ ai 6.0.12"
   - "+ zod 4.1.12"
   - "Done in 2.8s"
+title: "install.sh"
+footer: "Runs in the project root."
+diff:
+  - "const answer = 41"
+  - "const answer = 42"
+  - "console.log(answer)"

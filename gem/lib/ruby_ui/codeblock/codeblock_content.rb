@@ -85,8 +85,8 @@ module RubyUI
         style: style,
         data: data,
         class: [
-          "min-h-0 min-w-0 overflow-auto px-4 py-4 text-start font-mono leading-relaxed outline-none",
-          "data-wrap:wrap-break-word data-wrap:whitespace-pre-wrap",
+          "min-h-0 min-w-0 scroll-fade-x scrollbar-thin overflow-auto px-4 py-4 text-start font-mono leading-relaxed outline-none",
+          "data-wrap:scroll-fade-y data-wrap:wrap-break-word data-wrap:whitespace-pre-wrap",
           "group-has-data-[slot=code-block-header]/code-block:pt-2 group-has-data-[slot=code-block-footer]/code-block:pb-2",
           "group-data-[size=sm]/code-block:px-3 group-data-[size=sm]/code-block:py-3",
           "group-data-[size=sm]/code-block:group-has-data-[slot=code-block-header]/code-block:pt-1.5"

@@ -3,7 +3,8 @@ import { Controller } from "@hotwired/stimulus";
 // Connects to data-controller="ruby-ui--codeblock"
 // Copies a CodeblockCopyButton's data-value (or the block's code), then shows
 // the copied state for two seconds: data-copied, the copied label as
-// aria-label and in the live region next to the button.
+// aria-label and in the live region next to the button. A failed copy shows
+// nothing, as in shadcn.
 export default class extends Controller {
   static RESET_AFTER = 2000;
 
@@ -25,29 +26,23 @@ export default class extends Controller {
     const button = event.currentTarget;
     const value = button.dataset.value ?? this.code();
 
-    // No Clipboard API outside a secure context (plain http): report it as a failure.
-    if (!navigator.clipboard?.writeText) {
-      this.show(button, button.dataset.errorLabel, false);
-      return;
-    }
+    // No Clipboard API outside a secure context (plain http).
+    if (!navigator.clipboard?.writeText) return;
 
     navigator.clipboard
       .writeText(value)
-      .then(() => this.show(button, button.dataset.copiedLabel, true))
-      .catch(() => this.show(button, button.dataset.errorLabel, false));
+      .then(() => this.show(button))
+      .catch(() => {});
   }
 
   code() {
     return this.element.querySelector("[data-slot=code-block-code]")?.innerText ?? "";
   }
 
-  show(button, label, copied) {
+  show(button) {
+    const label = button.dataset.copiedLabel;
     clearTimeout(this.timers.get(button));
-    if (copied) {
-      button.dataset.copied = "true";
-    } else {
-      delete button.dataset.copied;
-    }
+    button.dataset.copied = "true";
     button.setAttribute("aria-label", label);
     this.status(button, label);
 

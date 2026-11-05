@@ -21,9 +21,14 @@ module RubyUI
 
     SIZES = %i[default sm].freeze
 
+    # clipboard_error: is deprecated and ignored: a failed copy shows nothing.
     def initialize(code = nil, syntax: nil, variant: :default, size: :default, clipboard: true,
-      clipboard_success: "Copied", clipboard_error: "Copy failed", wrap: false, line_numbers: false,
+      clipboard_success: "Copied", clipboard_error: nil, wrap: false, line_numbers: false,
       start_line: 1, **attrs)
+      unless clipboard_error.nil?
+        Warning.warn("RubyUI::Codeblock: `clipboard_error:` is deprecated and ignored " \
+          "(a failed copy shows nothing, as in shadcn)\n", category: :deprecated)
+      end
       @code = code
       @syntax = syntax
       @variant = variant.to_s.to_sym
@@ -32,7 +37,6 @@ module RubyUI
       @size = :default unless SIZES.include?(@size)
       @clipboard = clipboard
       @clipboard_success = clipboard_success
-      @clipboard_error = clipboard_error
       @content = {wrap: wrap, line_numbers: line_numbers, start_line: start_line}
       super(**attrs)
     end
@@ -48,7 +52,7 @@ module RubyUI
     def shorthand
       if @clipboard
         render CodeblockActions.new do
-          render CodeblockCopyButton.new(value: @code, copied_label: @clipboard_success, error_label: @clipboard_error)
+          render CodeblockCopyButton.new(value: @code, copied_label: @clipboard_success)
         end
       end
       render CodeblockContent.new(@code, syntax: @syntax, **@content)
