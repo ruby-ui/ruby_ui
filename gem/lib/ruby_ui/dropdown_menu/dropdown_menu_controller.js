@@ -268,6 +268,7 @@ export default class extends Controller {
     menu.removeAttribute("data-closed");
     menu.setAttribute("data-open", "");
     menu.dataset.state = "open";
+    menu.inert = false;
     if (!menu.matches(":popover-open")) menu.showPopover();
     this.stopPositioning(menu);
     this.positionCleanups.set(
@@ -480,13 +481,18 @@ export default class extends Controller {
         else this.close();
         break;
       }
-      case "Tab":
+      case "Tab": {
         // Like Base UI's menu, Tab closes it. close() puts focus back on the
         // button first, so Tab carries on to the element after the button and
-        // Shift+Tab stops on the button itself.
+        // Shift+Tab stops on the button itself. The menu stays in the page
+        // during its exit animation; inert keeps that Tab from landing on a
+        // control inside it.
         if (event.shiftKey) event.preventDefault();
+        const content = this.openContent;
         this.close();
+        if (content?.matches(":popover-open")) content.inert = true;
         break;
+      }
       default:
         if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
           this.typeaheadTo(items, current, event.key);
