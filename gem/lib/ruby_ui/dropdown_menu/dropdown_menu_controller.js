@@ -480,8 +480,10 @@ export default class extends Controller {
         break;
       }
       case "Tab":
-        // Like Base UI's menu, Tab closes it and focus goes back to the button.
-        event.preventDefault();
+        // Like Base UI's menu, Tab closes it. close() puts focus back on the
+        // button first, so Tab carries on to the element after the button and
+        // Shift+Tab stops on the button itself.
+        if (event.shiftKey) event.preventDefault();
         this.close();
         break;
       default:
@@ -525,10 +527,11 @@ export default class extends Controller {
     if (match) match.focus({ preventScroll: false });
   }
 
-  // The item's own text, without its shortcut or indicator.
+  // The item's own text, without its shortcut or indicator. Comment nodes
+  // (e.g. Rails' annotate_rendered_view_with_filenames) are not text.
   labelOf(item) {
     return [...item.childNodes]
-      .filter((node) => !(node.nodeType === Node.ELEMENT_NODE && node.matches("[data-slot$=-shortcut], [data-slot$=-indicator], svg")))
+      .filter((node) => node.nodeType === Node.TEXT_NODE || (node.nodeType === Node.ELEMENT_NODE && !node.matches("[data-slot$=-shortcut], [data-slot$=-indicator], svg")))
       .map((node) => node.textContent)
       .join("")
       .trim();
