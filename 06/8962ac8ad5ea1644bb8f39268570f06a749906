@@ -1,0 +1,21 @@
+gem/lib/ruby_ui/dialog/dialog_content.rb
+  s_d1f1a6030f7bd1::t_9a7342e4a034c2 14-16,35-36
+gem/test/ruby_ui/dialog_test.rb
+  s_d1f1a6030f7bd1::t_cf8bd34dbec3f8 103-105,117,121-146,179-190
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "068962ac8ad5ea1644bb8f39268570f06a749906",
+  "prompts": {},
+  "sessions": {
+    "s_d1f1a6030f7bd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d474aa83-6993-475d-9549-623ab78426e9",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

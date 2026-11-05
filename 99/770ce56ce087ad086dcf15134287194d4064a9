@@ -1,0 +1,25 @@
+design/v2/01-research/golden-suite.md
+  s_02296ba27f582b::t_ae0a2462340409 189-198
+  s_02296ba27f582b::t_0872e0437cca89 38
+  s_02296ba27f582b::t_10e1aa671efc0d 136
+  s_02296ba27f582b::t_242d986ab5cba2 260-274
+  s_02296ba27f582b::t_23fc7186be5058 58
+  s_02296ba27f582b::t_abd1ebc4fb8616 105
+  s_02296ba27f582b::t_143a1d1c52ff56 290-292,294-296,298
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "99770ce56ce087ad086dcf15134287194d4064a9",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

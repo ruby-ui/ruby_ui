@@ -1,0 +1,21 @@
+audit/lib/shadcn_audit/divergences.rb
+  s_afe49718472e2e::t_a8fb4e2f6be028 38-40
+audit/test/divergences_test.rb
+  s_afe49718472e2e::t_a8fb4e2f6be028 130-139
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d8d17a97215f5fb92cfabb5c814095415e524c73",
+  "prompts": {},
+  "sessions": {
+    "s_afe49718472e2e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7a36fffa-1e03-4018-bb9f-2321f1a905c2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

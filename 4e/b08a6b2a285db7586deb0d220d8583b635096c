@@ -1,0 +1,63 @@
+gem/test/golden/views/button/icon_size_sm.html.erb
+  s_02296ba27f582b::t_d479fafe28f5f1 1
+gem/test/golden/catalog.rb
+  s_02296ba27f582b::t_d4a3f9c795624b 75-80
+  s_02296ba27f582b::t_c68bbf51632fe9 99
+  s_02296ba27f582b::t_e2836e65cf9a87 9
+  s_02296ba27f582b::t_f18a473fbb12fa 28-49
+gem/test/golden/views/button/variant_destructive.html.erb
+  s_02296ba27f582b::t_ee13741c09fc0c 1
+gem/test/golden/views/button/size_md.html.erb
+  s_02296ba27f582b::t_74cd910bf469a2 1
+gem/test/golden/views/button/size_sm.html.erb
+  s_02296ba27f582b::t_83fd51a9f4b4cf 1
+gem/test/golden/views/button/variant_ghost.html.erb
+  s_02296ba27f582b::t_9bbb63bf73a6a2 1
+gem/test/golden/views/button/variant_link.html.erb
+  s_02296ba27f582b::t_7eb9889d0f3162 1
+gem/test/golden_test.rb
+  s_02296ba27f582b::t_6ecdc37909cbf6 24-26,35-36,40,47
+  s_02296ba27f582b::t_84d9f2720e70cf 66-83
+  s_02296ba27f582b::t_59ee71a43862fc 27,114-128
+  s_02296ba27f582b::t_a9a6845a65049f 29-30
+  s_02296ba27f582b::t_fa8ef3eaab7bcb 134-137
+  s_02296ba27f582b::t_10cec1894e0485 28
+gem/test/golden/views/button/variant_secondary.html.erb
+  s_02296ba27f582b::t_cfbc07c414ec42 1
+gem/test/golden/views/button/size_lg.html.erb
+  s_02296ba27f582b::t_9db87ca828e0b4 1
+gem/test/golden/views/button/icon_size_xl.html.erb
+  s_02296ba27f582b::t_a7fef823ae1e86 1
+gem/test/golden/views/button/icon_size_md.html.erb
+  s_02296ba27f582b::t_370fbeb5f6786c 1
+gem/test/golden/views/button/submit_disabled.html.erb
+  s_02296ba27f582b::t_d84558277b6d9b 1
+gem/test/golden/harness.rb
+  s_02296ba27f582b::t_d1dd66344048c5 32-42
+  s_02296ba27f582b::t_2c4a79bff808c8 114-122
+  s_02296ba27f582b::t_0f920fb67fa57b 132-134
+gem/test/golden/views/button/variant_primary.html.erb
+  s_02296ba27f582b::t_340f3d6df13957 1
+gem/test/golden/views/button/variant_outline.html.erb
+  s_02296ba27f582b::t_00371b22d3b04b 1
+gem/test/golden/views/button/size_xl.html.erb
+  s_02296ba27f582b::t_3c2b5bb384be4e 1
+gem/test/golden/views/button/icon_size_lg.html.erb
+  s_02296ba27f582b::t_1ff30eb99d74fc 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4eb08a6b2a285db7586deb0d220d8583b635096c",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

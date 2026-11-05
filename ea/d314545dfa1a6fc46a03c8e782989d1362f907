@@ -1,0 +1,26 @@
+gem/lib/ruby_ui/dialog/dialog_controller.js
+  s_b3b66091dcb3f6::t_b3ca91701ee4c2 35-40,42-46,51-54
+  s_b3b66091dcb3f6::t_220a3a8d1ca08e 55
+gem/test/ruby_ui/dialog_test.rb
+  s_b3b66091dcb3f6::t_7ba2b9c3b3faa6 77-89
+mcp/data/registry.json
+  s_b3b66091dcb3f6::t_4b7a1eba216eb8 1332,1336
+gem/lib/ruby_ui/dialog/dialog_content.rb
+  s_b3b66091dcb3f6::t_8f18be80b7547a 31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ead314545dfa1a6fc46a03c8e782989d1362f907",
+  "prompts": {},
+  "sessions": {
+    "s_b3b66091dcb3f6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "290bffa4-5076-407e-93a6-5354138c4187",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jackson Pires <jackson.pires@gmail.com>"
+    }
+  }
+}

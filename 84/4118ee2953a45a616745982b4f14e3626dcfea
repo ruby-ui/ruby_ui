@@ -1,0 +1,21 @@
+docs/app/views/docs/installation/rails_importmaps.rb
+  s_ab216b77c8becf::t_322b7e048b6f4c 391-482
+docs/app/views/docs/installation/rails_bundler.rb
+  s_ab216b77c8becf::t_322b7e048b6f4c 391-482
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "844118ee2953a45a616745982b4f14e3626dcfea",
+  "prompts": {},
+  "sessions": {
+    "s_ab216b77c8becf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "91428037-ec4b-46f0-a761-de8f7ee5e490",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+design/2026-09-19-rubyui-2-0-design.md
+  s_76d07be8c07832::t_a61d2bc52a8525 638-643
+  s_76d07be8c07832::t_473f0a4587988b 362-364
+  s_76d07be8c07832::t_cc0efbf5f287f1 299-302
+design/v2/decisions.md
+  s_76d07be8c07832::t_bbaa3a99a36ec5 205-252
+gem/test/golden/scenarios.rb
+  s_76d07be8c07832::t_b8be0465f39e6a 20-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d9fe85eb82b757e0c12799400fed2a1af1227eac",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

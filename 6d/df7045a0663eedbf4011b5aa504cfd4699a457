@@ -1,0 +1,23 @@
+gem/LICENSE.txt
+  s_e8f7f6f328faa0::t_a5ae46a140dcf2 22-52
+gem/test/license_test.rb
+  s_e8f7f6f328faa0::t_26ae6a21e756fd 1-37
+gem/README.md
+  s_e8f7f6f328faa0::t_a5ae46a140dcf2 92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6ddf7045a0663eedbf4011b5aa504cfd4699a457",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+gem/test/ruby_ui/data_table_selection_summary_test.rb
+  s_d12e1df3e04021::t_b7ac9aee7f473f 7
+gem/test/ruby_ui/data_table_form_test.rb
+  s_d12e1df3e04021::t_b4c3a439a68156 7,12,17,22,27,32,35-42
+  s_d12e1df3e04021::t_64045452a6134f 43
+gem/lib/ruby_ui/data_table/data_table_selection_summary.html.erb
+  s_d12e1df3e04021::t_a93ae6e31ba015 1
+gem/lib/ruby_ui/data_table/data_table_bulk_actions.rb
+  s_d12e1df3e04021::t_4bec5a39ebc270 4
+gem/lib/ruby_ui/data_table/data_table_form.rb
+  s_d12e1df3e04021::t_7ed9870d727e68 4,12-17,20-22,24,27-28
+gem/lib/ruby_ui/data_table/data_table.html.erb
+  s_d12e1df3e04021::t_7fb09fc5b72972 1
+gem/test/ruby_ui/data_table_bulk_actions_test.rb
+  s_d12e1df3e04021::t_023e360900f7a3 7
+gem/lib/ruby_ui/data_table/data_table_pagination_bar.rb
+  s_d12e1df3e04021::t_25fb814e3768e8 4
+gem/lib/ruby_ui/data_table/data_table_selection_summary.rb
+  s_d12e1df3e04021::t_4af66ca3e6a34a 4-6
+gem/test/ruby_ui/data_table_expand_toggle_test.rb
+  s_d12e1df3e04021::t_8500f1a5b5daa4 7,12,17
+gem/lib/ruby_ui/data_table/data_table_select_all_checkbox.rb
+  s_d12e1df3e04021::t_35a338f6270298 4
+gem/lib/ruby_ui/data_table/data_table_pagination_bar.html.erb
+  s_d12e1df3e04021::t_07088fb1c06f39 1
+gem/lib/ruby_ui/data_table/data_table_form.html.erb
+  s_d12e1df3e04021::t_0159fa6a9ea652 1
+gem/lib/ruby_ui/data_table/data_table_row_checkbox.rb
+  s_d12e1df3e04021::t_fbc0a686e9c1dd 4
+gem/lib/ruby_ui/data_table/data_table_bulk_actions.html.erb
+  s_d12e1df3e04021::t_32a2f07ecfeea1 1
+gem/lib/ruby_ui/data_table/data_table_toolbar.rb
+  s_d12e1df3e04021::t_40bd286cc429fe 4
+gem/test/ruby_ui/data_table_row_checkbox_test.rb
+  s_d12e1df3e04021::t_99e91411872f51 7,14,19,21,25,30
+gem/lib/ruby_ui/data_table/data_table_toolbar.html.erb
+  s_d12e1df3e04021::t_3887d3594418bd 1
+mcp/data/registry.json
+  s_d12e1df3e04021::t_3cb545aa65fb23 1173,1175-1178,1181-1185,1189,1203-1206,1209-1213,1217,1231-1234,1237,1247-1250,1253,1263-1266,1269-1273,1277,1283-1286,1289
+gem/test/golden/scenarios.rb
+  s_d12e1df3e04021::t_72f456f677fe6b 454
+  s_d12e1df3e04021::t_7484e0110415c6 476
+gem/lib/ruby_ui/data_table/data_table_row_checkbox.html.erb
+  s_d12e1df3e04021::t_e5e1ca9c68bd45 1
+gem/test/ruby_ui/data_table_pagination_bar_test.rb
+  s_d12e1df3e04021::t_edc435be8a55db 7
+gem/test/ruby_ui/data_table_select_all_checkbox_test.rb
+  s_d12e1df3e04021::t_b8cb571e59490f 7,10
+gem/lib/ruby_ui/data_table/data_table_select_all_checkbox.html.erb
+  s_d12e1df3e04021::t_f03a5874a198be 1
+gem/test/ruby_ui/data_table_test.rb
+  s_d12e1df3e04021::t_0c3cdbb4a889b9 7,12,17,22
+gem/lib/ruby_ui/data_table/data_table_expand_toggle.rb
+  s_d12e1df3e04021::t_41c7dd55f63970 4,12-15,20-21
+gem/lib/ruby_ui/data_table/data_table.rb
+  s_d12e1df3e04021::t_77fc13ea873de9 4,10-13
+gem/test/ruby_ui/data_table_toolbar_test.rb
+  s_d12e1df3e04021::t_9597e11cfd4b14 7
+gem/lib/ruby_ui/data_table/data_table_expand_toggle.html.erb
+  s_d12e1df3e04021::t_fbd6cc76182361 1-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "00fe7ecfb803dc6647f382037407ed76e783b4fb",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

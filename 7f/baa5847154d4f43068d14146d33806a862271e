@@ -1,0 +1,21 @@
+design/plans/2026-10-29-dialog-shadcn-parity.md
+  s_d1f1a6030f7bd1::t_1a324e0cab419b 11,17,30,93,96,109,149
+gem/test/ruby_ui/dialog_test.rb
+  s_d1f1a6030f7bd1::t_bf10aeb6db7b97 261-265,273-277
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7fbaa5847154d4f43068d14146d33806a862271e",
+  "prompts": {},
+  "sessions": {
+    "s_d1f1a6030f7bd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d474aa83-6993-475d-9549-623ab78426e9",
+        "model": "unknown"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

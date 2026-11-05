@@ -1,0 +1,61 @@
+audit/lib/shadcn_audit/sandbox.rb
+  s_e8f7f6f328faa0::t_354018189c606a 1-102
+audit/lib/shadcn_audit.rb
+  s_e8f7f6f328faa0::t_c21a1bc0c57681 19
+audit/sandbox_template/src/parity.css
+  s_e8f7f6f328faa0::t_c86a8d0457eb11 1-9,11-19
+  s_e8f7f6f328faa0::t_34447a21d02200 10
+audit/fixtures/command/content.yml
+  s_e8f7f6f328faa0::t_5315a8649ce882 1-11
+audit/sandbox.yml
+  s_e8f7f6f328faa0::t_e9590e502106ff 1-16
+audit/sandbox_template/index.html
+  s_e8f7f6f328faa0::t_1b99906acb704c 1-12
+audit/fixtures/command/rubyui.rb
+  s_e8f7f6f328faa0::t_eb0ae91a7a0da9 1-29
+audit/fixtures/sheet/rubyui.rb
+  s_e8f7f6f328faa0::t_eb0ae91a7a0da9 1-29
+audit/exe/shadcn-audit
+  s_e8f7f6f328faa0::t_ec21aa7147ad28 7
+audit/fixtures/dialog/content.yml
+  s_e8f7f6f328faa0::t_5315a8649ce882 1-6
+audit/fixtures/alert_dialog/content.yml
+  s_e8f7f6f328faa0::t_5315a8649ce882 1-5
+audit/fixtures/command/shadcn.tsx
+  s_e8f7f6f328faa0::t_f8283aeee944c5 1-37
+audit/fixtures/sheet/shadcn.tsx
+  s_e8f7f6f328faa0::t_f8283aeee944c5 1-34
+audit/fixtures/dialog/rubyui.rb
+  s_e8f7f6f328faa0::t_eb0ae91a7a0da9 1-29
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_c21a1bc0c57681 15-16,58-59
+  s_e8f7f6f328faa0::t_8432daba9a5c7c 60-61
+audit/fixtures/alert_dialog/shadcn.tsx
+  s_e8f7f6f328faa0::t_f8283aeee944c5 1-32
+audit/sandbox_template/src/main.tsx
+  s_e8f7f6f328faa0::t_9e519fc7ebd9c9 1-24
+audit/test/sandbox_test.rb
+  s_e8f7f6f328faa0::t_0aef21604ae8e4 1-154
+audit/fixtures/sheet/content.yml
+  s_e8f7f6f328faa0::t_5315a8649ce882 1-6
+audit/fixtures/dialog/shadcn.tsx
+  s_e8f7f6f328faa0::t_f8283aeee944c5 1-32
+audit/fixtures/alert_dialog/rubyui.rb
+  s_e8f7f6f328faa0::t_eb0ae91a7a0da9 1-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e1e48c4defa6a08225405e5cbfdfc3957f0fff98",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

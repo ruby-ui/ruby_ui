@@ -1,0 +1,40 @@
+design/v2/03-plan-fase1.md
+  s_64a5cc32ad7faa::t_8ce7f363afcf47 4,6,8-9,14,20-24,26,29-30,32,34,36,38,40,42,44,46,48-49,51-54,56-61,63-67,69,75-87,89-93,96-101,103,105,107,109,111-113,115,117,119,121,123,127,129,131,133,135,137,139,141,143,145-150,152,154,156,158-167,169,171,173-174,182,186-191,193,197,199-200,205-206,208-219
+  s_64a5cc32ad7faa::t_05095a0c8d0669 1-3,5,7,10-13,15-19,25,27-28,31,33,35,37,39,41,43,45,47,50,55,62,68,70-74,88,94-95,102,104,106,108,110,114,116,118,120,122,124-126,128,130,132,134,136,138,140,142,144,151,153,155,157,168,170,172,175-181,183-185,192,194-196,198,201-204,207
+design/v2/01-research/golden-suite.md
+  s_3290dd58792ea2::t_1ebdbfd517c2d2 1-314
+design/v2/00-charter.md
+  s_411994edb8a5e2::t_28420503787230 1-227
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "67231dbd4f2b70120ae77f35c0306d46408120ce",
+  "prompts": {},
+  "sessions": {
+    "s_3290dd58792ea2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e2fe7b70-7446-407a-a421-6e60cddab68e",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    },
+    "s_411994edb8a5e2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ed322975-a771-4171-8df6-d103717c61c8",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    },
+    "s_64a5cc32ad7faa": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "48a73f23-bdc0-4da0-8681-b8ab94f9ab71",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+audit/lib/shadcn_audit/sandbox.rb
+  s_e8f7f6f328faa0::t_2da599a1ea80ce 70
+audit/test/workspace_test.rb
+  s_e8f7f6f328faa0::t_febde64244d6e6 40-51
+audit/test/reference_test.rb
+  s_e8f7f6f328faa0::t_febde64244d6e6 76-90
+audit/lib/shadcn_audit/workspace.rb
+  s_e8f7f6f328faa0::t_2da599a1ea80ce 14-16,19
+audit/test/theme_test.rb
+  s_e8f7f6f328faa0::t_febde64244d6e6 55-69
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_2da599a1ea80ce 22-35
+audit/exe/shadcn-audit
+  s_e8f7f6f328faa0::t_2da599a1ea80ce 5
+audit/test/sandbox_test.rb
+  s_e8f7f6f328faa0::t_febde64244d6e6 96-107
+audit/lib/shadcn_audit/reference.rb
+  s_e8f7f6f328faa0::t_2da599a1ea80ce 25-27,29,51-60
+  s_e8f7f6f328faa0::t_1cd732772dd712 87
+audit/lib/shadcn_audit/theme.rb
+  s_e8f7f6f328faa0::t_2da599a1ea80ce 41-43
+audit/test/cli_errors_test.rb
+  s_e8f7f6f328faa0::t_febde64244d6e6 1-67
+.claude/skills/shadcn-audit/SKILL.md
+  s_e8f7f6f328faa0::t_f20acf6c4c9dde 31-33,110-112,200-201
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0a0b5216fddcb7478c7e89589b1f603cec0b1573",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

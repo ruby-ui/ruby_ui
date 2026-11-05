@@ -1,0 +1,24 @@
+design/v2/decisions.md
+  s_02296ba27f582b::t_8528725f55c609 47-52
+design/v2/follow-up-issues.md
+  s_02296ba27f582b::t_2f16a9edede2ca 1-113
+design/plans/2026-09-19-golden-suite-implementation.md
+  s_02296ba27f582b::t_33b38a53362f88 1011-1044
+  s_02296ba27f582b::t_aa979e0b7f0828 50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "6a86867d52925eb737dfc0153c620167221adcd1",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

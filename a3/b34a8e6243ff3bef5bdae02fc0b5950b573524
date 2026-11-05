@@ -1,0 +1,25 @@
+design/plans/2026-09-20-phase-2-1-hard-components-implementation.md
+  s_d12e1df3e04021::t_2a56c3bca0a0fc 2210,2588-3385,3389-3636
+  s_d12e1df3e04021::t_77fec63c4b7b17 624-1158,1160-1562,2583-2587
+  s_d12e1df3e04021::t_48b54c2c0745a5 263,560-567,570-571
+  s_d12e1df3e04021::t_6ed35dddb0d436 156-262,264-559,568-569,572-623
+  s_d12e1df3e04021::t_0f13a1aa3a8467 1-155
+  s_d12e1df3e04021::t_9ac479c1d0a20c 3386-3388
+  s_d12e1df3e04021::t_be6f430c1910ea 1159,1563-2209,2211-2582
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "a3b34a8e6243ff3bef5bdae02fc0b5950b573524",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

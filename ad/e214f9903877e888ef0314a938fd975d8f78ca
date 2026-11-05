@@ -1,0 +1,45 @@
+audit/lib/shadcn_audit.rb
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 3,22-26
+audit/test/pr_comment_test.rb
+  s_e8f7f6f328faa0::t_712d3b6857e233 1-55
+audit/test/renderers_test.rb
+  s_e8f7f6f328faa0::t_19db6d19b2bae2 58-59
+  s_e8f7f6f328faa0::t_712d3b6857e233 1-57,60-79
+audit/lib/shadcn_audit/renderers/report.html.erb
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 1-46
+audit/lib/shadcn_audit/renderers/markdown.rb
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 1-31
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 17-19,70-99
+  s_e8f7f6f328faa0::t_894bcee51c5fd8 100
+audit/lib/shadcn_audit/report.rb
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 1-83
+audit/lib/shadcn_audit/pr_comment.rb
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 1-40,42-53
+  s_e8f7f6f328faa0::t_19db6d19b2bae2 41
+audit/test/report_test.rb
+  s_e8f7f6f328faa0::t_712d3b6857e233 1-52
+audit/test/fixtures/report_572.json
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 1-49
+audit/lib/shadcn_audit/renderers/html.rb
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 1-31
+audit/lib/shadcn_audit/renderers/terminal.rb
+  s_e8f7f6f328faa0::t_19db6d19b2bae2 53
+  s_e8f7f6f328faa0::t_f8e7ba24e07ed6 1-52,54-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ade214f9903877e888ef0314a938fd975d8f78ca",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

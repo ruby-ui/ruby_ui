@@ -1,0 +1,31 @@
+.claude/skills/shadcn-audit/SKILL.md
+  s_b8697b44ce9124::t_f15c940e0c0ce6 278-297,299-303,310-319,321
+  s_b8697b44ce9124::t_487e450b6e6431 111-115
+  s_b8697b44ce9124::t_2625df17063050 298
+  s_b8697b44ce9124::t_2194daf26351e5 76-79
+  s_b8697b44ce9124::t_6a34018eb24666 304-309
+  s_b8697b44ce9124::t_41de0aebcc4067 320
+CLAUDE.md
+  s_b8697b44ce9124::t_e404e6f9ba2de3 95
+  s_b8697b44ce9124::t_c37fdbb615b146 14
+  s_b8697b44ce9124::t_6453ce9ff5322a 103
+  s_b8697b44ce9124::t_feee0b309d20a3 24
+.claude/skills/ruby-ui-stimulus/SKILL.md
+  s_b8697b44ce9124::t_4c3919d97dc4fd 68-73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e23843ead82c3132e6c061be2715fc34fbfb53f",
+  "prompts": {},
+  "sessions": {
+    "s_b8697b44ce9124": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d0312388-6384-4314-bf51-61b070ae8bda",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

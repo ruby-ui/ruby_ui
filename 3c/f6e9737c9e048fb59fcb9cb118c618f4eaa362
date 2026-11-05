@@ -1,0 +1,405 @@
+gem/test/golden/strict/clipboard/popover_success.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sheet/content_top.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden_test.rb
+  s_02296ba27f582b::t_af3895acef5011 64-85
+  s_02296ba27f582b::t_61ca8131298534 154-161
+  s_02296ba27f582b::t_c2b37b361f46b4 102,104-106
+gem/test/golden/strict/button/variant_destructive.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/size_sm.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/icon_size_lg.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/alert_dialog/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/variant_ghost.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/variant_outline.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/input/typed_and_disabled.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/skeleton/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/heading_level_1.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/command/dialog.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/carousel/horizontal.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/bubble/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/pagination/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toast/item_with_all_slots.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/separator/vertical.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/context_menu/label_flush.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/command/dialog_content_md.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/card/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dialog/content_xl.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/size_lg.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/alert_dialog/open.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_9.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/context_menu/label_inset.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/heading_level_3.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/tooltip/placement_right.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/hover_card/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/data_table/search_without_debounce.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/combobox/clear_button.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/variant_outline.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/message_scroller/button_start.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/bubble/muted_aligned_end_with_reactions.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/table/detached_row.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toggle/pressed_outline_with_name.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/catalog.rb
+  s_02296ba27f582b::t_b09ccee09bdc85 53-56
+  s_02296ba27f582b::t_53cc72575bd581 90-93
+  s_02296ba27f582b::t_0258b6b8e6a217 11-15
+gem/test/golden/strict/textarea/rows_and_content.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toggle_group/disabled.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/size_sm.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/empty/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_3.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/form/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/avatar/size_md.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sidebar/non_collapsible.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_weight_bold.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/popover/with_options.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/native_select/icon.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/alert/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_as_div.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/input_otp/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dialog/content_md.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/inline_link.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/switch/checked_without_hidden_input.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/icon.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/carousel/vertical.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/radio_button/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/checkbox/group.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/command/dialog_content_lg.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/variant_link.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_2.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/clipboard/popover_error.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/blockquote.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toggle_group/multiple_outline_spaced_vertical.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/data_table/expand_toggle_expanded.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/popover/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dropdown_menu/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/heading_level_2.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/command/trigger_with_custom_keybindings.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/command/dialog_content_sm.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/native_select/small.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/heading_level_4.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/collapsible/closed.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/data_table/full_frame.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/input_otp/alphanumeric_pattern.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toggle/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/data_table/pagination_first_page.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/canonical_html_test.rb
+  s_02296ba27f582b::t_0b5c882dbf1d18 91-139
+gem/test/golden/strict/breadcrumb/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/accordion/custom_trigger_with_icon.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/size_md.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_as_span.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/variant_primary.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/data_table/pagination_wide_window.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/bubble/reactions_top_start.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/avatar/size_xl.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/date_picker/without_label.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/switch/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sheet/content_bottom.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/context_menu/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sheet/content_left.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/shortcut_key/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/native_select/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/avatar/size_sm.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_8.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/separator/as_hr.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/submit_disabled.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/combobox/radio_items.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/empty/media_default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_5.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/separator/not_decorative.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sidebar/collapsible_icon_right_floating.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_7.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_1.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/combobox/input_trigger.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/message_scroller/provider_custom_values.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/date_picker/generated_id.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/data_table/sort_head_unsorted.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/input/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/canonical_html.rb
+  s_02296ba27f582b::t_3daaa3332a32fc 68-72,74-75
+gem/test/golden/strict/tabs/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/badge/size_sm.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/icon_size_md.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sidebar/mobile.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/size_xl.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/calendar/bound_to_input.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/calendar/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/carousel/with_options.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/hover_card/with_options.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_weight_regular.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sheet/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/variant_link.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/collapsible/open.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/select/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/chart/bar.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/data_table/pagination_manual_adapter.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/tooltip/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/bubble/content_as_anchor.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/avatar/size_lg.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/badge/size_md.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/alert/success.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/alert/warning.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/heading_custom_size.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/context_menu/with_options.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sheet/open.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/clipboard/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/size_md.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/alert/destructive.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/variant_destructive.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/textarea/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/badge/size_lg.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dialog/open.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/aspect_ratio/square.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/variant_primary.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/codeblock/ruby_with_clipboard.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1-119
+gem/test/golden/strict/combobox/badge.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dialog/content_sm.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/variant_secondary.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toast/region_top_center_with_close_button.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_4.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/message/group_with_avatar_header_footer.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/combobox/multiple_with_badges.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/accordion/default_trigger_and_content.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/variant_secondary.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_weight_light.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/select/value_falls_back_to_placeholder.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_size_6.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_as_label.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/icon_size_xl.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/variant_ghost.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/link/size_xl.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/calendar/header_parts.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/separator/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/progress/value_100.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/table/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toggle_group/single.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_as_p.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/badge/all_variants.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/date_picker/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/clipboard/custom_source_and_trigger.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/theme_toggle/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/inline_code.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sheet/content_right.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/checkbox/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toast/region_with_flash.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/checkbox/checked_disabled.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/radio_button/checked.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/sidebar/collapsible_offcanvas.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/typography/text_weight_medium.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dropdown_menu/fixed_strategy.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/icon_size_sm.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/message_scroller/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dialog/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/progress/value_33_5.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/progress/value_0.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/toggle/disabled_small.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/codeblock/ruby_without_clipboard.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1-117
+gem/test/golden/strict/aspect_ratio/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/avatar/image_with_fallback.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/button/size_lg.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/dialog/content_lg.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+gem/test/golden/strict/masked_input/default.html
+  s_02296ba27f582b::t_16bfac1c9ebd5f 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "3cf6e9737c9e048fb59fcb9cb118c618f4eaa362",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

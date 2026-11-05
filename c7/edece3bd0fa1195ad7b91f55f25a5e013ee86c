@@ -1,0 +1,27 @@
+docs/app/views/docs/installation/rails_importmaps.rb
+  s_ee2996a2430363::t_ea84f727b12b31 261-265,303-307
+docs/app/assets/stylesheets/application.tailwind.css
+  s_ee2996a2430363::t_ea84f727b12b31 36-40,78-82
+docs/lib/theme/c_s_s.rb
+  s_ee2996a2430363::t_ea84f727b12b31 77-81,116-120
+gem/lib/generators/ruby_ui/install/templates/tailwind.css.erb
+  s_ee2996a2430363::t_ea84f727b12b31 31-35,73-77
+docs/app/views/docs/installation/rails_bundler.rb
+  s_ee2996a2430363::t_ea84f727b12b31 260-264,302-306
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c7edece3bd0fa1195ad7b91f55f25a5e013ee86c",
+  "prompts": {},
+  "sessions": {
+    "s_ee2996a2430363": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "611b1895-2639-4413-b2d1-7d6782b0cda6",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+gem/lib/ruby_ui/data_table/data_table_pagination.html.erb
+  s_d12e1df3e04021::t_4ef15b72570960 1-13
+gem/lib/ruby_ui/data_table/data_table_per_page_select.rb
+  s_d12e1df3e04021::t_b9c016099666d6 4-6,16-19,22-26,28-33
+gem/test/ruby_ui/data_table_column_toggle_test.rb
+  s_d12e1df3e04021::t_25fe1305d9fceb 7,17,22-25
+gem/lib/ruby_ui/data_table/data_table_search.rb
+  s_d12e1df3e04021::t_d4d885096939bf 4-6,18-32,36-37
+  s_d12e1df3e04021::t_a3f18a5266a44a 38-39
+gem/lib/ruby_ui/data_table/data_table_column_toggle.rb
+  s_d12e1df3e04021::t_e331576f40fd58 4-6,13-26
+gem/test/ruby_ui/data_table_search_test.rb
+  s_d12e1df3e04021::t_5065bc792baf32 7,14,19,24,27,31,36,42,47,54,60
+gem/lib/ruby_ui/data_table/data_table_search.html.erb
+  s_d12e1df3e04021::t_4eac5409ba4207 1
+gem/test/ruby_ui/data_table_sort_head_test.rb
+  s_d12e1df3e04021::t_82cd860146503e 7,14,19,24,29,35,39-44
+  s_d12e1df3e04021::t_6976f5b5df5fd5 45
+gem/lib/ruby_ui/data_table/data_table_per_page_select.html.erb
+  s_d12e1df3e04021::t_3f205ba2371936 1
+gem/test/golden/scenarios.rb
+  s_d12e1df3e04021::t_ce1afd0acb8f75 455-458,460
+mcp/data/registry.json
+  s_d12e1df3e04021::t_5d41054a1a560d 1191-1194,1197,1231-1234,1237,1251-1254,1257,1267-1270,1273,1295-1298,1301
+gem/lib/ruby_ui/data_table/data_table_sort_head.html.erb
+  s_d12e1df3e04021::t_4ab7c4f4b8acfe 1-12
+gem/test/ruby_ui/data_table_per_page_select_test.rb
+  s_d12e1df3e04021::t_25875ede5fbd0e 7,15,20
+gem/test/ruby_ui/data_table_pagination_test.rb
+  s_d12e1df3e04021::t_2966459fbed5f0 7,14,20,25,34-35
+gem/lib/ruby_ui/data_table/data_table_column_toggle.html.erb
+  s_d12e1df3e04021::t_40d231ba01af6b 1-17
+gem/lib/ruby_ui/data_table/data_table_pagination.rb
+  s_d12e1df3e04021::t_28bb8b3cfd5ac9 9-11,23-25,46-63
+gem/lib/ruby_ui/data_table/data_table_sort_head.rb
+  s_d12e1df3e04021::t_ffd27e60712066 6-8,22-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d31576ea764ffd3b429bfd174c2fb3fa46e50eb1",
+  "prompts": {},
+  "sessions": {
+    "s_d12e1df3e04021": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24ca9ed4-6277-49eb-b9d4-24d3e96c1065",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

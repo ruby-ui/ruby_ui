@@ -1,0 +1,59 @@
+gem/test/golden/views/input/default.html.erb
+  s_76d07be8c07832::t_ac169060da6264 1
+gem/test/golden/views/masked_input/default.html.erb
+  s_76d07be8c07832::t_6f2be116cbfa8d 1
+gem/test/golden/views/checkbox/checked_disabled.html.erb
+  s_76d07be8c07832::t_f5792ffbae7f90 1
+gem/test/golden/views/native_select/default.html.erb
+  s_76d07be8c07832::t_8498d35dc98143 1
+gem/test/golden/views/calendar/bound_to_input.html.erb
+  s_76d07be8c07832::t_bd56ce1eb4cd41 1
+gem/test/golden/views/form/default.html.erb
+  s_76d07be8c07832::t_e59f54f47d5f7e 1
+gem/test/golden/views/radio_button/default.html.erb
+  s_76d07be8c07832::t_c2c9e8a0e42628 1
+gem/test/golden/views/switch/default.html.erb
+  s_76d07be8c07832::t_b6392756fed129 1
+gem/test/golden/views/checkbox/group.html.erb
+  s_76d07be8c07832::t_f5792ffbae7f90 1
+gem/test/golden/views/native_select/icon.html.erb
+  s_76d07be8c07832::t_8498d35dc98143 1
+gem/test/golden/views/textarea/default.html.erb
+  s_76d07be8c07832::t_4d20ed0257ea65 1
+gem/test/golden/views/calendar/header_parts.html.erb
+  s_76d07be8c07832::t_bd56ce1eb4cd41 1
+gem/test/golden/views/input_otp/alphanumeric_pattern.html.erb
+  s_76d07be8c07832::t_7a2692a80e0086 1
+gem/test/golden/views/switch/checked_without_hidden_input.html.erb
+  s_76d07be8c07832::t_b6392756fed129 1
+gem/test/golden/views/input_otp/default.html.erb
+  s_76d07be8c07832::t_7a2692a80e0086 1
+gem/test/golden/views/native_select/small.html.erb
+  s_76d07be8c07832::t_8498d35dc98143 1
+gem/test/golden/views/input/typed_and_disabled.html.erb
+  s_76d07be8c07832::t_ac169060da6264 1
+gem/test/golden/views/textarea/rows_and_content.html.erb
+  s_76d07be8c07832::t_4d20ed0257ea65 1
+gem/test/golden/views/radio_button/checked.html.erb
+  s_76d07be8c07832::t_c2c9e8a0e42628 1
+gem/test/golden/views/calendar/default.html.erb
+  s_76d07be8c07832::t_bd56ce1eb4cd41 1
+gem/test/golden/views/checkbox/default.html.erb
+  s_76d07be8c07832::t_f5792ffbae7f90 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "19c1989e6387ea62ce3f13b30f3f0df4ec5697d5",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

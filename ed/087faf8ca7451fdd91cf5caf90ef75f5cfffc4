@@ -1,0 +1,89 @@
+gem/test/golden/views/link/icon.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/link/size_lg.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/heading_level_1.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/heading_level_2.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_size_7.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_as_p.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/heading_level_4.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/variant_link.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/text_size_2.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_as_label.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/heading_custom_size.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/variant_destructive.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/inline_link.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_size_1.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_as_span.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_size_4.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/size_md.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/text_size_9.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_weight_bold.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_size_3.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/size_xl.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/heading_level_3.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/inline_code.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_weight_medium.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/variant_secondary.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/text_size_5.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/variant_outline.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/text_as_div.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_size_8.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/size_sm.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/link/variant_primary.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/blockquote.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_weight_regular.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/typography/text_weight_light.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+gem/test/golden/views/link/variant_ghost.html.erb
+  s_76d07be8c07832::t_4ffacfd8724f27 1
+gem/test/golden/views/typography/text_size_6.html.erb
+  s_76d07be8c07832::t_62defa8933e71b 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "ed087faf8ca7451fdd91cf5caf90ef75f5cfffc4",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+mcp/data/registry.json
+  s_b8697b44ce9124::t_4657479200fb45 1510-1514,1518-1522,1526,1530-1534,1538,1542-1558,1562-1564,1569,1573,1578,1583,1588,1593-1598,1603-1628
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bf47e25200c72231d39f4d1da4e7cf7545303470",
+  "prompts": {},
+  "sessions": {
+    "s_b8697b44ce9124": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d0312388-6384-4314-bf51-61b070ae8bda",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

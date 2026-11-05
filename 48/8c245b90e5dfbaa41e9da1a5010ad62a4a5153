@@ -1,0 +1,46 @@
+audit/lib/shadcn_audit/sandbox.rb
+  s_b8697b44ce9124::t_d413aa9462decf 16-19,36
+audit/test/sandbox_test.rb
+  s_b8697b44ce9124::t_d413aa9462decf 92,117-127,157,173
+gem/lib/ruby_ui/form/form_field.rb
+  s_b8697b44ce9124::t_aae0e6e3fbbc04 21
+gem/lib/ruby_ui/form/form_field_controller.js
+  s_b8697b44ce9124::t_2d9296843e7827 97,100
+  s_b8697b44ce9124::t_1caf1efb699400 17
+  s_b8697b44ce9124::t_bc4b03bdc0f0b1 43-45,47-49,51,55-57,64
+gem/lib/ruby_ui/form/form_field_error.rb
+  s_b8697b44ce9124::t_aae0e6e3fbbc04 11
+audit/component_map.yml
+  s_b8697b44ce9124::t_4d4503a01d4fc1 104
+gem/test/ruby_ui/form_test.rb
+  s_b8697b44ce9124::t_aae0e6e3fbbc04 73,111,162-165
+  s_b8697b44ce9124::t_3fd1ca629577a7 166-167
+gem/lib/ruby_ui/form/form_field_legend.rb
+  s_b8697b44ce9124::t_aae0e6e3fbbc04 8
+mcp/data/registry.json
+  s_b8697b44ce9124::t_0f3d34e2df38cd 1514,1518,1526,1530,1546
+audit/test/component_map_test.rb
+  s_b8697b44ce9124::t_d413aa9462decf 104-113
+audit/fixtures/form/shadcn.tsx
+  s_b8697b44ce9124::t_d413aa9462decf 20
+audit/lib/shadcn_audit/component_map.rb
+  s_b8697b44ce9124::t_d413aa9462decf 9,93
+gem/lib/ruby_ui/form/form_controller.js
+  s_b8697b44ce9124::t_ef9398daefd50b 9-12,25-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "488c245b90e5dfbaa41e9da1a5010ad62a4a5153",
+  "prompts": {},
+  "sessions": {
+    "s_b8697b44ce9124": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d0312388-6384-4314-bf51-61b070ae8bda",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

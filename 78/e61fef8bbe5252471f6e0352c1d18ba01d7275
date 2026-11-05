@@ -1,0 +1,31 @@
+audit/sandbox.yml
+  s_e8f7f6f328faa0::t_d8df2c89b5ee85 14-16
+  s_e8f7f6f328faa0::t_42ce45783a6bea 1-3,20
+audit/test/sandbox_test.rb
+  s_e8f7f6f328faa0::t_d8df2c89b5ee85 124
+  s_e8f7f6f328faa0::t_42ce45783a6bea 79,82,85,96-97
+audit/lib/shadcn_audit/sandbox.rb
+  s_e8f7f6f328faa0::t_42ce45783a6bea 10-13,15-18,45,77-78
+audit/sandbox_template/src/main.tsx
+  s_e8f7f6f328faa0::t_42ce45783a6bea 1,19-21
+.claude/skills/shadcn-audit/SKILL.md
+  s_e8f7f6f328faa0::t_d8df2c89b5ee85 84-89
+audit/lib/shadcn_audit/workspace.rb
+  s_e8f7f6f328faa0::t_f0ce5b24bf4c41 26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "78e61fef8bbe5252471f6e0352c1d18ba01d7275",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

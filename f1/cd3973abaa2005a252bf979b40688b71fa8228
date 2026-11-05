@@ -1,0 +1,33 @@
+audit/test/fixtures/application.tailwind.css
+  s_e8f7f6f328faa0::t_3e92913adf5415 2-21,27-63,69-83
+  s_e8f7f6f328faa0::t_e7200f5a5598a7 1,22-26,64-68
+audit/lib/shadcn_audit/theme.rb
+  s_e8f7f6f328faa0::t_3e92913adf5415 1-57
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_3e92913adf5415 14-15,48-54
+  s_e8f7f6f328faa0::t_0b30035e0dbd56 55-56
+audit/lib/shadcn_audit.rb
+  s_e8f7f6f328faa0::t_3e92913adf5415 18
+audit/test/theme_test.rb
+  s_e8f7f6f328faa0::t_8e6790627bae47 12,25,41,47
+  s_e8f7f6f328faa0::t_e7200f5a5598a7 33
+  s_e8f7f6f328faa0::t_3e92913adf5415 1-11,13-24,26-32,34-40,42-46,48-55
+audit/test/fixtures/registry/themes.ts
+  s_e8f7f6f328faa0::t_3e92913adf5415 1-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f1cd3973abaa2005a252bf979b40688b71fa8228",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

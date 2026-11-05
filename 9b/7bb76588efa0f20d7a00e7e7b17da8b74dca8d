@@ -1,0 +1,21 @@
+design/2026-09-19-rubyui-2-0-design.md
+  s_02296ba27f582b::t_67eb59926cac83 248
+design/plans/2026-09-19-golden-suite-implementation.md
+  s_02296ba27f582b::t_c8b7fa0a8a744d 196
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "9b7bb76588efa0f20d7a00e7e7b17da8b74dca8d",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

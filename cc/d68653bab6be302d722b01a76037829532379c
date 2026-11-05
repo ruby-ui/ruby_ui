@@ -1,0 +1,112 @@
+gem/lib/ruby_ui/form/form.rb
+  s_b8697b44ce9124::t_ff7a98e5eb9834 12-17
+gem/lib/ruby_ui/form/form_field_title.rb
+  s_b8697b44ce9124::t_0ec719ba3f030b 1-20
+audit/fixtures/form/rubyui.rb
+  s_b8697b44ce9124::t_ecd1c4e360be99 1-49
+gem/lib/ruby_ui/form/form_controller.js
+  s_b8697b44ce9124::t_028752d2dc468b 1-27
+audit/test/rubyui_preview_test.rb
+  s_b8697b44ce9124::t_7e7466847c1458 6
+docs/app/javascript/controllers/index.js
+  s_b8697b44ce9124::t_811bf89b548a95 70-72
+gem/lib/ruby_ui/form/form_field_separator.rb
+  s_b8697b44ce9124::t_0ec719ba3f030b 1-6,8-27
+  s_b8697b44ce9124::t_07afd7e3e43988 7
+gem/lib/ruby_ui/form/form_field_label.rb
+  s_b8697b44ce9124::t_630eb57e344246 15-17
+  s_b8697b44ce9124::t_21f06122ce8518 13,18-24
+docs/app/views/docs/form.rb
+  s_b8697b44ce9124::t_592722c86eb61b 83-92
+  s_b8697b44ce9124::t_d8b50429ca6fb3 105-190
+  s_b8697b44ce9124::t_0cc4c9dd2d926d 15-16,27-29,36-38,47-48,60-61
+  s_b8697b44ce9124::t_d70dbc5b735d6d 69,73-82,93-98,357-359
+audit/lib/shadcn_audit/sandbox.rb
+  s_b8697b44ce9124::t_f5e6475214472d 35,69,77-79,110-116
+gem/lib/ruby_ui/form/form_field_controller.js
+  s_b8697b44ce9124::t_85ef106ad0bd6c 71-73
+  s_b8697b44ce9124::t_4084b12b7775a2 85,88
+  s_b8697b44ce9124::t_440ec7931c7f7b 3-4,6,10-11,17,48-54,56-70,74-84,86-87,90
+  s_b8697b44ce9124::t_7c5a9f5ccebb63 12-13,15,19
+  s_b8697b44ce9124::t_2cd99744516d69 24-26
+  s_b8697b44ce9124::t_e529e1244370e4 43,47
+  s_b8697b44ce9124::t_bf708ac62c3f9c 44-46
+audit/lib/shadcn_audit/component_map.rb
+  s_b8697b44ce9124::t_9debaf652b7451 92
+  s_b8697b44ce9124::t_9ff567ffd03d9c 90-91,93-94
+audit/fixtures/form/shadcn.tsx
+  s_b8697b44ce9124::t_ecd1c4e360be99 1-61
+audit/fixtures/form/content.yml
+  s_b8697b44ce9124::t_ecd1c4e360be99 1-17
+gem/lib/ruby_ui/form/form_docs.rb
+  s_b8697b44ce9124::t_592722c86eb61b 83-92
+  s_b8697b44ce9124::t_0cc4c9dd2d926d 15-16,27-29,36-38,47-48,60-61
+  s_b8697b44ce9124::t_d8b50429ca6fb3 105-190
+  s_b8697b44ce9124::t_d70dbc5b735d6d 69,73-82,93-98,357-359
+gem/test/ruby_ui/form_test.rb
+  s_b8697b44ce9124::t_07afd7e3e43988 130
+  s_b8697b44ce9124::t_2abd07e9c11aea 187
+  s_b8697b44ce9124::t_2b6fb4d4b680cc 56-58,63-70,72-101,104-129,131-141
+  s_b8697b44ce9124::t_2204617825e640 21-34
+  s_b8697b44ce9124::t_cc40f1715d8290 45-55,59-62,71,142-172
+  s_b8697b44ce9124::t_0b3664c3014390 20,35-44,173-186,189-198
+  s_b8697b44ce9124::t_2cf49b89adc69e 102-103
+  s_b8697b44ce9124::t_8bb83c87a97457 188
+gem/lib/ruby_ui/form/form_field_content.rb
+  s_b8697b44ce9124::t_0ec719ba3f030b 1-18
+gem/lib/ruby_ui/form/form_field_group.rb
+  s_b8697b44ce9124::t_0ec719ba3f030b 1-21
+gem/lib/ruby_ui/form/form_field.rb
+  s_b8697b44ce9124::t_630eb57e344246 35,41,44
+  s_b8697b44ce9124::t_21f06122ce8518 5,8-17,37
+  s_b8697b44ce9124::t_300970e5423f07 6-7,18-26,38-39,42-43
+gem/lib/ruby_ui/form/form_field_error.rb
+  s_b8697b44ce9124::t_fa8f512adbedba 5-28
+  s_b8697b44ce9124::t_630eb57e344246 35,40
+  s_b8697b44ce9124::t_21f06122ce8518 37
+audit/test/sandbox_test.rb
+  s_b8697b44ce9124::t_f5e6475214472d 105-131
+  s_b8697b44ce9124::t_7e7466847c1458 92
+  s_b8697b44ce9124::t_ecd1c4e360be99 5,147,163
+audit/divergences.yml
+  s_b8697b44ce9124::t_e5c37d8a254502 15-20
+  s_b8697b44ce9124::t_c461bfc4b2a5e9 21-26
+gem/lib/ruby_ui/form/form_field_hint.rb
+  s_b8697b44ce9124::t_630eb57e344246 12-13,15-18,25-27
+  s_b8697b44ce9124::t_21f06122ce8518 14
+  s_b8697b44ce9124::t_2abd07e9c11aea 21-23
+  s_b8697b44ce9124::t_6606d990ac78bf 19-20,24
+gem/lib/ruby_ui/form/form_field_legend.rb
+  s_b8697b44ce9124::t_0ec719ba3f030b 1-27
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_b8697b44ce9124::t_21f06122ce8518 69-72
+audit/component_map.yml
+  s_b8697b44ce9124::t_9ff567ffd03d9c 5,83-104
+gem/lib/ruby_ui/form/form_field_set.rb
+  s_b8697b44ce9124::t_0ec719ba3f030b 1-13,15-18
+  s_b8697b44ce9124::t_2cf49b89adc69e 14
+audit/test/component_map_test.rb
+  s_b8697b44ce9124::t_45f294e91c3f60 97-107
+gem/AGENTS.md
+  s_b8697b44ce9124::t_b88ce266a9529b 28
+.claude/skills/shadcn-audit/SKILL.md
+  s_b8697b44ce9124::t_3478616a576adf 84-86
+docs/app/javascript/controllers/ruby_ui/form_controller.js
+  s_b8697b44ce9124::t_d061e3cce44987 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ccd68653bab6be302d722b01a76037829532379c",
+  "prompts": {},
+  "sessions": {
+    "s_b8697b44ce9124": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d0312388-6384-4314-bf51-61b070ae8bda",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

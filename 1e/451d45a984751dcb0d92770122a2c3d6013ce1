@@ -1,0 +1,23 @@
+.claude/skills/shadcn-audit/SKILL.md
+  s_afe49718472e2e::t_5d49d7aa0bd6ce 8
+  s_afe49718472e2e::t_6fc0229e111c4c 260
+  s_afe49718472e2e::t_cdb2571f8a7000 302-323,325-326
+  s_afe49718472e2e::t_ee96f54b002fb2 331
+  s_afe49718472e2e::t_3255bdefd1fffb 324
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e451d45a984751dcb0d92770122a2c3d6013ce1",
+  "prompts": {},
+  "sessions": {
+    "s_afe49718472e2e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7a36fffa-1e03-4018-bb9f-2321f1a905c2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

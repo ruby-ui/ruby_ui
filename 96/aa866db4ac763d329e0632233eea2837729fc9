@@ -1,0 +1,375 @@
+experiments/v2-gate/test/probes/components/probes/fallback.html.erb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1
+experiments/v2-gate/config/boot.rb
+  s_5e24aa3a077029::t_3da66d67bd66c1 1-3
+  s_5e24aa3a077029::t_230359b2d8abdb 4-5
+experiments/v2-gate/test/probes/components/probes/fallback.rb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-11
+experiments/v2-gate/HERB_FINDINGS.md
+  s_5e24aa3a077029::t_f5acdbc2f2fd14 1-28,43-45
+  s_5e24aa3a077029::t_8d1fab68130288 29-42
+experiments/v2-gate/bin/setup
+  s_5e24aa3a077029::t_230359b2d8abdb 1-26
+experiments/v2-gate/Gemfile.base
+  s_5e24aa3a077029::t_3da66d67bd66c1 1-37
+experiments/v2-gate/app/views/gate/dialog_open_tags.html.erb
+  s_5e24aa3a077029::t_74062acdde223c 1-3
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_description.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/app/views/pwa/manifest.json.erb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-22
+experiments/v2-gate/test/probes/components/probes/div.rb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-6
+experiments/v2-gate/config/importmap.rb
+  s_5e24aa3a077029::t_11a7c3150b61a3 1-7
+  s_5e24aa3a077029::t_4839e0b65509f3 8-11
+experiments/v2-gate/test/probes/layer_probe_test.rb
+  s_5e24aa3a077029::t_6cd23fd364d5c7 1-6,9-35,39-41,43-51,53-71
+  s_5e24aa3a077029::t_5be3986805b937 7-8,36-38,42,52
+experiments/v2-gate/app/components/ruby_ui/base.rb
+  s_5e24aa3a077029::t_130b4d2997407c 1-40,44-79
+  s_5e24aa3a077029::t_281ab62b791a86 41-43
+experiments/v2-gate/app/views/gate/sentinel_dialog_default.html.erb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1-36
+experiments/v2-gate/test/probes/components/probes/with_id.html.erb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1
+experiments/v2-gate/test/lane_test.rb
+  s_5e24aa3a077029::t_c40176ec5b0499 1-23,31-42
+  s_5e24aa3a077029::t_5bb4b7b82aa0d4 24-30
+experiments/v2-gate/Rakefile
+  s_5e24aa3a077029::t_230359b2d8abdb 1-6
+experiments/v2-gate/bin/rails
+  s_5e24aa3a077029::t_230359b2d8abdb 1-4
+experiments/v2-gate/bin/importmap
+  s_5e24aa3a077029::t_11a7c3150b61a3 1-4
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_header.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/test/probes/components/probes/issue57_helper.rb
+  s_5e24aa3a077029::t_5be3986805b937 4
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-3,5-7
+experiments/v2-gate/config/initializers/component_tags.rb
+  s_5e24aa3a077029::t_5f66883dbb177d 1-5,10-14,20-21,24
+  s_5e24aa3a077029::t_7b5028af93de95 6-9,15-19,22-23
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_trigger.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/app/views/gate/dialog_default_tags.html.erb
+  s_5e24aa3a077029::t_74062acdde223c 1-16
+experiments/v2-gate/public/422.html
+  s_5e24aa3a077029::t_230359b2d8abdb 1-135
+experiments/v2-gate/app/javascript/application.js
+  s_5e24aa3a077029::t_11a7c3150b61a3 1-3
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_footer.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-13
+experiments/v2-gate/app/assets/stylesheets/application.css
+  s_5e24aa3a077029::t_230359b2d8abdb 1-10
+experiments/v2-gate/bin/dev
+  s_5e24aa3a077029::t_230359b2d8abdb 1-2
+experiments/v2-gate/app/views/gate/dialog_content_md.html.erb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1
+experiments/v2-gate/config/environment.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-5
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-21
+experiments/v2-gate/test/probes/components/probes/rootless.html.erb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-3
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_content.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-9
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_middle.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-13
+experiments/v2-gate/config/puma.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-39
+experiments/v2-gate/config/ci.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-19
+experiments/v2-gate/config/environments/development.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-48
+experiments/v2-gate/test/probes/components/probes/frame.html.erb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1
+experiments/v2-gate/app/views/gate/dialog_content_sm.html.erb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1
+experiments/v2-gate/public/406-unsupported-browser.html
+  s_5e24aa3a077029::t_230359b2d8abdb 1-135
+design/v2/05-decisions.md
+  s_5e24aa3a077029::t_d687720ffd855a 29-38
+  s_5e24aa3a077029::t_8d1fab68130288 27-28
+  s_5e24aa3a077029::t_8d37af59b384d9 1-26
+experiments/v2-gate/config.ru
+  s_5e24aa3a077029::t_230359b2d8abdb 1-6
+experiments/v2-gate/test/probes/components/probes/issue57.html.erb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-6
+experiments/v2-gate/config/initializers/content_security_policy.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-29
+experiments/v2-gate/app/views/gate/dialog_content_xl.html.erb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1
+experiments/v2-gate/bin/rake
+  s_5e24aa3a077029::t_230359b2d8abdb 1-4
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_description.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-13
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_trigger.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-16
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_footer.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/test/application_system_test_case.rb
+  s_5e24aa3a077029::t_6cd23fd364d5c7 1-5
+experiments/v2-gate/app/views/gate/dialog_content_lg.html.erb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1
+experiments/v2-gate/README.md
+  s_5e24aa3a077029::t_f5acdbc2f2fd14 1-12,18-24,26-28,30-56,61-62,65-66,70-81
+  s_5e24aa3a077029::t_8d1fab68130288 13-17,25,29,57-60,63-64,67-69,82-85
+experiments/v2-gate/test/system/dialog_test.rb
+  s_5e24aa3a077029::t_5bb4b7b82aa0d4 10-15,38
+  s_5e24aa3a077029::t_5be3986805b937 21-22,25-26,29-30,36-37
+  s_5e24aa3a077029::t_6cd23fd364d5c7 1-9,16-20,23-24,27-28,31-35,39-40
+experiments/v2-gate/app/views/gate/dialog_content_sm_tags.html.erb
+  s_5e24aa3a077029::t_74062acdde223c 1
+experiments/v2-gate/config/initializers/ruby_ui.rb
+  s_5e24aa3a077029::t_130b4d2997407c 1-12,17
+  s_5e24aa3a077029::t_65afe85e8e1791 13-16
+experiments/v2-gate/app/components/ruby_ui/attributes.rb
+  s_5e24aa3a077029::t_130b4d2997407c 1-147
+experiments/v2-gate/public/robots.txt
+  s_5e24aa3a077029::t_230359b2d8abdb 1
+experiments/v2-gate/app/javascript/controllers/index.js
+  s_5e24aa3a077029::t_11a7c3150b61a3 1-4
+experiments/v2-gate/bin/ci
+  s_5e24aa3a077029::t_230359b2d8abdb 1-6
+experiments/v2-gate/app/controllers/gate_controller.rb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1-20
+experiments/v2-gate/test/probes/components/probes/div.html.erb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1
+experiments/v2-gate/public/400.html
+  s_5e24aa3a077029::t_230359b2d8abdb 1-135
+experiments/v2-gate/app/views/gate/dialog_content_md_tags.html.erb
+  s_5e24aa3a077029::t_74062acdde223c 1
+experiments/v2-gate/app/views/layouts/application.html.erb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-3,5-7,12,14-15,17-19
+  s_5e24aa3a077029::t_11a7c3150b61a3 13
+  s_5e24aa3a077029::t_844dbbcc3b2a15 4,8-11,16
+experiments/v2-gate/config/initializers/inflections.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-16
+experiments/v2-gate/test/attributes_differential_test.rb
+  s_5e24aa3a077029::t_6cd23fd364d5c7 1-75,77-78
+  s_5e24aa3a077029::t_5be3986805b937 76
+experiments/v2-gate/config/environments/production.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-61
+experiments/v2-gate/public/500.html
+  s_5e24aa3a077029::t_230359b2d8abdb 1-135
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_title.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-13
+experiments/v2-gate/app/views/gate/dialog_content_xl_tags.html.erb
+  s_5e24aa3a077029::t_74062acdde223c 1
+experiments/v2-gate/config/initializers/reactionview.rb
+  s_5e24aa3a077029::t_130b4d2997407c 1-22
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_middle.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/test/test_helper.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-4,53-57
+  s_5e24aa3a077029::t_5bb4b7b82aa0d4 18,20-26
+  s_5e24aa3a077029::t_c40176ec5b0499 5-17,19,27-29,35,37-52
+  s_5e24aa3a077029::t_6523cd3f5f591e 30-34,36
+experiments/v2-gate/public/404.html
+  s_5e24aa3a077029::t_230359b2d8abdb 1-135
+experiments/v2-gate/app/controllers/application_controller.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-7
+experiments/v2-gate/test/probes/components/probes/with_id.rb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-18
+experiments/v2-gate/app/components/ruby_ui/button/button.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/test/probes/components/probes/issue57.rb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-8
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_header.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-13
+experiments/v2-gate/Gemfile.tags
+  s_5e24aa3a077029::t_87b24cb74b22fa 1-13
+experiments/v2-gate/Gemfile.herb
+  s_5e24aa3a077029::t_3da66d67bd66c1 1-8
+experiments/v2-gate/config/initializers/filter_parameter_logging.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-8
+experiments/v2-gate/config/locales/en.yml
+  s_5e24aa3a077029::t_230359b2d8abdb 1-31
+experiments/v2-gate/public/icon.svg
+  s_5e24aa3a077029::t_230359b2d8abdb 1-3
+experiments/v2-gate/.gitignore
+  s_5e24aa3a077029::t_4839e0b65509f3 1-8
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_title.html.erb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1
+experiments/v2-gate/config/routes.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-3,6
+  s_5e24aa3a077029::t_844dbbcc3b2a15 4-5
+experiments/v2-gate/LAYER.md
+  s_5e24aa3a077029::t_f5acdbc2f2fd14 1-70
+experiments/v2-gate/config/application.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-39
+experiments/v2-gate/config/environments/test.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-42
+experiments/v2-gate/app/components/ruby_ui/dialog/dialog_content.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-32
+experiments/v2-gate/app/javascript/controllers/application.js
+  s_5e24aa3a077029::t_11a7c3150b61a3 1-9
+experiments/v2-gate/app/views/gate/dialog_content_lg_tags.html.erb
+  s_5e24aa3a077029::t_74062acdde223c 1
+experiments/v2-gate/test/golden/parity_test.rb
+  s_5e24aa3a077029::t_c40176ec5b0499 1-11,14,23,25,28,39-40
+  s_5e24aa3a077029::t_5bb4b7b82aa0d4 12-13,15-22,24,26-27,29-38
+experiments/v2-gate/Gemfile.erubi
+  s_5e24aa3a077029::t_3da66d67bd66c1 1-4
+experiments/v2-gate/app/views/gate/dialog_open.html.erb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1-3
+experiments/v2-gate/.ruby-version
+  s_5e24aa3a077029::t_230359b2d8abdb 1
+experiments/v2-gate/test/golden/scenarios.rb
+  s_5e24aa3a077029::t_c40176ec5b0499 1-46
+experiments/v2-gate/app/views/pwa/service-worker.js
+  s_5e24aa3a077029::t_230359b2d8abdb 1-26
+experiments/v2-gate/test/probes/components/probes/rootless.rb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-13
+experiments/v2-gate/test/probes/components/probes/frame.rb
+  s_5e24aa3a077029::t_a1f11032aa4a5b 1-10
+experiments/v2-gate/app/views/gate/dialog_default.html.erb
+  s_5e24aa3a077029::t_844dbbcc3b2a15 1-16
+experiments/v2-gate/app/helpers/application_helper.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-2
+experiments/v2-gate/config/initializers/assets.rb
+  s_5e24aa3a077029::t_230359b2d8abdb 1-7
+experiments/v2-gate/test/probes/herb_probe_test.rb
+  s_5e24aa3a077029::t_5be3986805b937 8,14,24,36,53,57
+  s_5e24aa3a077029::t_5bb4b7b82aa0d4 51-52
+  s_5e24aa3a077029::t_6cd23fd364d5c7 1-7,9-13,15-23,25-35,37-50,54-56,58-69
+experiments/v2-gate/test/golden/harness.rb
+  s_5e24aa3a077029::t_c40176ec5b0499 1-38
+experiments/v2-gate/app/components/ruby_ui/button/button.rb
+  s_5e24aa3a077029::t_206a5b11ea8e15 1-109
+experiments/v2-gate/Gemfile.erubi.lock
+  s_5e24aa3a077029::t_530feb04f80b0e 1-311
+experiments/v2-gate/Gemfile.herb.lock
+  s_5e24aa3a077029::t_08ae447abb4652 1-325
+experiments/v2-gate/app/javascript/controllers/ruby_ui/accordion_controller.js
+  s_5e24aa3a077029::t_5cf46ad9d6e87c 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/alert_dialog_controller.js
+  s_5e24aa3a077029::t_0ae0ca6e0d7618 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/avatar_controller.js
+  s_5e24aa3a077029::t_9217c241062557 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/calendar_controller.js
+  s_5e24aa3a077029::t_6ef789c9716dbe 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/calendar_input_controller.js
+  s_5e24aa3a077029::t_d7c3ccf3ba3366 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/carousel_controller.js
+  s_5e24aa3a077029::t_fae792d655320b 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/chart_controller.js
+  s_5e24aa3a077029::t_8060abdb28af3f 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/checkbox_group_controller.js
+  s_5e24aa3a077029::t_3f7f8601c9bdd4 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/clipboard_controller.js
+  s_5e24aa3a077029::t_e18725a57d65b6 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/collapsible_controller.js
+  s_5e24aa3a077029::t_92e6d01a14d8b3 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/combobox_controller.js
+  s_5e24aa3a077029::t_45189c7e6dcbb8 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/command_controller.js
+  s_5e24aa3a077029::t_37cec8575d167a 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/command_dialog_controller.js
+  s_5e24aa3a077029::t_50edba9a821950 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/context_menu_controller.js
+  s_5e24aa3a077029::t_7435e49a8d0dda 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/data_table_column_visibility_controller.js
+  s_5e24aa3a077029::t_59e47e4b3475f7 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/data_table_controller.js
+  s_5e24aa3a077029::t_b09c0585b70a6a 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/data_table_search_controller.js
+  s_5e24aa3a077029::t_4ce73fb5d5877b 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/dialog_controller.js
+  s_5e24aa3a077029::t_ab06bb30598e2d 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/dropdown_menu_controller.js
+  s_5e24aa3a077029::t_afe2d7d63c7937 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/form_field_controller.js
+  s_5e24aa3a077029::t_bac3c238c51fbe 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/hover_card_controller.js
+  s_5e24aa3a077029::t_d97715e4f1ede1 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/input_otp_controller.js
+  s_5e24aa3a077029::t_1bd83923f3fdc0 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/masked_input_controller.js
+  s_5e24aa3a077029::t_113cddb4574896 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/message_scroller_controller.js
+  s_5e24aa3a077029::t_bb15c7bb3759e2 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/popover_controller.js
+  s_5e24aa3a077029::t_30dfa28b367bf5 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/select_controller.js
+  s_5e24aa3a077029::t_41a68d40a6f41d 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/select_item_controller.js
+  s_5e24aa3a077029::t_e036f3b41dd8f5 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/sheet_content_controller.js
+  s_5e24aa3a077029::t_ee847896068efe 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/sheet_controller.js
+  s_5e24aa3a077029::t_20680122ac3bdc 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/sidebar_controller.js
+  s_5e24aa3a077029::t_7edde5e0c2eeb5 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/tabs_controller.js
+  s_5e24aa3a077029::t_422ea37364364f 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/theme_toggle_controller.js
+  s_5e24aa3a077029::t_9bc93ac758ec8f 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/toast_controller.js
+  s_5e24aa3a077029::t_9d26c7c20c1695 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/toaster_controller.js
+  s_5e24aa3a077029::t_d0de86c6b66c5c 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/toggle_controller.js
+  s_5e24aa3a077029::t_c3f977c96e48ab 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/toggle_group_controller.js
+  s_5e24aa3a077029::t_0796c38935ecf3 1
+experiments/v2-gate/app/javascript/controllers/ruby_ui/tooltip_controller.js
+  s_5e24aa3a077029::t_dff9ffbeabdeb7 1
+experiments/v2-gate/test/probes/views/probe/_wrapper.html.erb
+  s_5e24aa3a077029::t_731a484929e70e 1
+experiments/v2-gate/test/probes/views/probe/attr_probe.html.erb
+  s_5e24aa3a077029::t_3496f62526e54f 1
+experiments/v2-gate/test/probes/views/probe/attributes.html.erb
+  s_5e24aa3a077029::t_32bf1e0f7c6e08 1
+experiments/v2-gate/test/probes/views/probe/bad_nesting.html.erb
+  s_5e24aa3a077029::t_cd29fa385cd38f 1
+experiments/v2-gate/test/probes/views/probe/block_with_context.html.erb
+  s_5e24aa3a077029::t_4fac8552537ea6 1-3
+experiments/v2-gate/test/probes/views/probe/fallback_empty.html.erb
+  s_5e24aa3a077029::t_a8276a8dd42b83 1
+experiments/v2-gate/test/probes/views/probe/fallback_text.html.erb
+  s_5e24aa3a077029::t_b3b678b7ed37f9 1
+experiments/v2-gate/test/probes/views/probe/fallback_whitespace.html.erb
+  s_5e24aa3a077029::t_69f5b4f49af4b7 1-2
+experiments/v2-gate/test/probes/views/probe/frame.html.erb
+  s_5e24aa3a077029::t_74b24240598abd 1
+experiments/v2-gate/test/probes/views/probe/issue57.html.erb
+  s_5e24aa3a077029::t_861b2451008be6 1
+experiments/v2-gate/test/probes/views/probe/nested_render.html.erb
+  s_5e24aa3a077029::t_b1400ab1542582 1-5
+experiments/v2-gate/test/probes/views/probe/rootless_hidden.html.erb
+  s_5e24aa3a077029::t_5fee3a174c4cdb 1
+experiments/v2-gate/test/probes/views/probe/rootless_shown.html.erb
+  s_5e24aa3a077029::t_6135a60b4150f8 1
+experiments/v2-gate/test/probes/views/probe/with_id.html.erb
+  s_5e24aa3a077029::t_5852b17d421467 1
+experiments/v2-gate/vendor/javascript/@floating-ui--core.js
+  s_5e24aa3a077029::t_5669203c214e00 1-4
+experiments/v2-gate/vendor/javascript/@floating-ui--dom.js
+  s_5e24aa3a077029::t_8f839f4ff1a037 1-4
+experiments/v2-gate/vendor/javascript/@floating-ui--utils--dom.js
+  s_5e24aa3a077029::t_aa5615fe13bc6c 1-4
+experiments/v2-gate/vendor/javascript/@floating-ui--utils.js
+  s_5e24aa3a077029::t_09ef8fb4fc81a3 1-4
+experiments/v2-gate/Gemfile.tags.lock
+  s_5e24aa3a077029::t_9af7e3c2870831 1-318
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "96aa866db4ac763d329e0632233eea2837729fc9",
+  "prompts": {},
+  "sessions": {
+    "s_5e24aa3a077029": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d338f8cd-a0f3-4390-a569-f6a9084925b9",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

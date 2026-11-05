@@ -1,0 +1,32 @@
+gem/test/golden/catalog.rb
+  s_02296ba27f582b::t_cb28b7a1cbe79b 104-107
+design/plans/2026-09-20-phase-2-0a-foundation-implementation.md
+  s_02296ba27f582b::t_cb28b7a1cbe79b 2118
+design/v2/follow-up-issues.md
+  s_02296ba27f582b::t_cb28b7a1cbe79b 4-5,114-155
+  s_02296ba27f582b::t_b6a68a0d4e1cb5 156
+design/2026-09-19-rubyui-2-0-design.md
+  s_02296ba27f582b::t_cb28b7a1cbe79b 684-687
+design/v2/decisions.md
+  s_02296ba27f582b::t_966b4996ea52dc 121-124
+gem/test/erb_harness_test.rb
+  s_02296ba27f582b::t_1863e65f88cbe9 10-13
+gem/test/test_helper.rb
+  s_02296ba27f582b::t_c14bffbad99fec 30-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "afb83f602438864edfadc5f8d65259836a637fbc",
+  "prompts": {},
+  "sessions": {
+    "s_02296ba27f582b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d9e100d-4043-4c40-a8e4-121fb0a603d2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

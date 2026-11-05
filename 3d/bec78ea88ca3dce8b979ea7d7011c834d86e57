@@ -1,0 +1,55 @@
+audit/lib/shadcn_audit/divergences.rb
+  s_e8f7f6f328faa0::t_7695965e783094 7,43-44,46-49
+audit/lib/shadcn_audit/shell.rb
+  s_e8f7f6f328faa0::t_7695965e783094 10-13
+audit/test/rubyui_preview_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 128-138
+audit/Rakefile
+  s_e8f7f6f328faa0::t_7695965e783094 9-11
+audit/test/renderers_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 129-139
+audit/test/cli_errors_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 67-77
+audit/test/theme_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 70-78
+audit/test/shell_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 1-22
+audit/lib/shadcn_audit/component_map.rb
+  s_e8f7f6f328faa0::t_7695965e783094 78-79
+audit/lib/shadcn_audit/reference.rb
+  s_e8f7f6f328faa0::t_7695965e783094 468-471
+audit/lib/shadcn_audit/workspace.rb
+  s_e8f7f6f328faa0::t_7695965e783094 18,36
+audit/test/component_map_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 112-117
+audit/test/reference_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 118
+audit/lib/shadcn_audit/cli.rb
+  s_e8f7f6f328faa0::t_7695965e783094 25
+audit/lib/shadcn_audit/theme.rb
+  s_e8f7f6f328faa0::t_7695965e783094 37-38
+.claude/skills/shadcn-audit/references/grading.md
+  s_e8f7f6f328faa0::t_c113538c4136dc 100-101
+audit/lib/shadcn_audit/rubyui_preview.rb
+  s_e8f7f6f328faa0::t_7695965e783094 102-103
+audit/lib/shadcn_audit/renderers/html.rb
+  s_e8f7f6f328faa0::t_7695965e783094 2,20
+audit/test/divergences_test.rb
+  s_e8f7f6f328faa0::t_a72439b51752b7 76-88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3dbec78ea88ca3dce8b979ea7d7011c834d86e57",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

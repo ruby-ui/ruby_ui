@@ -1,0 +1,63 @@
+gem/test/golden/views/alert/default.html.erb
+  s_76d07be8c07832::t_6e0057fbd93b4d 1
+gem/test/golden/views/alert/destructive.html.erb
+  s_76d07be8c07832::t_6e0057fbd93b4d 1
+gem/test/golden/views/badge/size_sm.html.erb
+  s_76d07be8c07832::t_96e5bb1370c0e3 1
+gem/test/golden/views/separator/not_decorative.html.erb
+  s_76d07be8c07832::t_df43a4c8368680 1
+gem/test/golden/views/avatar/size_lg.html.erb
+  s_76d07be8c07832::t_f1620a5ebd3b74 1
+gem/test/golden/views/alert/warning.html.erb
+  s_76d07be8c07832::t_6e0057fbd93b4d 1
+gem/test/golden/views/avatar/size_xl.html.erb
+  s_76d07be8c07832::t_f1620a5ebd3b74 1
+gem/test/golden/views/card/default.html.erb
+  s_76d07be8c07832::t_d8b1f94da8ebe7 1
+gem/test/golden/views/separator/default.html.erb
+  s_76d07be8c07832::t_df43a4c8368680 1
+gem/test/golden/views/progress/value_0.html.erb
+  s_76d07be8c07832::t_8f7a9d1f0f4bb3 1
+gem/test/golden/views/progress/value_100.html.erb
+  s_76d07be8c07832::t_8f7a9d1f0f4bb3 1
+gem/test/golden/views/badge/size_lg.html.erb
+  s_76d07be8c07832::t_96e5bb1370c0e3 1
+gem/test/golden/views/avatar/size_sm.html.erb
+  s_76d07be8c07832::t_f1620a5ebd3b74 1
+gem/test/golden/views/avatar/image_with_fallback.html.erb
+  s_76d07be8c07832::t_f1620a5ebd3b74 1
+gem/test/golden/views/alert/success.html.erb
+  s_76d07be8c07832::t_6e0057fbd93b4d 1
+gem/test/golden/views/progress/value_33_5.html.erb
+  s_76d07be8c07832::t_8f7a9d1f0f4bb3 1
+gem/test/golden/views/badge/size_md.html.erb
+  s_76d07be8c07832::t_96e5bb1370c0e3 1
+gem/test/golden/views/avatar/size_md.html.erb
+  s_76d07be8c07832::t_f1620a5ebd3b74 1
+gem/test/golden/views/separator/as_hr.html.erb
+  s_76d07be8c07832::t_df43a4c8368680 1
+gem/test/golden/views/breadcrumb/default.html.erb
+  s_76d07be8c07832::t_3907bf5fa4018a 1
+gem/test/golden/views/separator/vertical.html.erb
+  s_76d07be8c07832::t_df43a4c8368680 1
+gem/test/golden/views/badge/all_variants.html.erb
+  s_76d07be8c07832::t_96e5bb1370c0e3 1
+gem/test/golden/views/skeleton/default.html.erb
+  s_76d07be8c07832::t_ec6a5afd4fe40b 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "2339de89dba6e01f38fa504750fef9eb1c23b516",
+  "prompts": {},
+  "sessions": {
+    "s_76d07be8c07832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c508db8f-40bb-4316-a647-4e7cf11ba0b7",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

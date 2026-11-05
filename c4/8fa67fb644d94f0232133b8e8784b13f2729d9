@@ -1,0 +1,38 @@
+design/plans/2026-10-26-shadcn-audit-implementation.md
+  s_e8f7f6f328faa0::t_9c2b91a09f2428 1-28,30,33-78,80-81,108-110,112-129,131-158,160-201,203-232,234-256,258-264,266-298
+  s_e8f7f6f328faa0::t_da7eba7ef1c8c1 29,31-32,79,82-107,111,130,159,202
+  s_e8f7f6f328faa0::t_623dd681a787c2 233,257,265
+design/2026-10-26-shadcn-audit-design.md
+  s_e8f7f6f328faa0::t_bba6f585cbe2f2 138
+  s_e8f7f6f328faa0::t_644e40a3c00f28 111
+  s_e8f7f6f328faa0::t_90a00cf45a35c4 118
+  s_e8f7f6f328faa0::t_a5fdd87fbf75c2 4
+  s_e8f7f6f328faa0::t_f8f406c2b202f2 91
+  s_e8f7f6f328faa0::t_a810c837e5eab5 1-3,5-21,27-36,43-51,62-78,82,93-104,115-117,119-128,130-134,142-147
+  s_e8f7f6f328faa0::t_983150de06840d 52-61
+  s_e8f7f6f328faa0::t_777bbf88bad3ff 105-110,113-114
+  s_e8f7f6f328faa0::t_ebf872aa2d356b 148-149
+  s_e8f7f6f328faa0::t_03bb59da4434dd 129
+  s_e8f7f6f328faa0::t_d3c36f9392a884 135-137,139-141
+  s_e8f7f6f328faa0::t_9d3d05d8bc7a0f 112
+  s_e8f7f6f328faa0::t_f2670a978de394 83-90,92
+  s_e8f7f6f328faa0::t_574b86903dd5be 37-42
+  s_e8f7f6f328faa0::t_64c3cb4acd7844 79-81
+  s_e8f7f6f328faa0::t_62112eaa75e8fa 22-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c48fa67fb644d94f0232133b8e8784b13f2729d9",
+  "prompts": {},
+  "sessions": {
+    "s_e8f7f6f328faa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1747226-a095-42b3-a737-e73a6d916e62",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
