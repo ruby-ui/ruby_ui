@@ -4,3 +4,24 @@
   shadcn: "dashboard-01 block: div with four <button>s calling TanStack Table's page setters; disabled ends use the disabled attribute"
   reason: "RubyUI's DataTable is server-driven: paging is a GET answered with HTML and swapped by a Turbo Frame, so links work without JS and can be opened in a new tab. Look and accessible names match the block."
   since: "2026-11-02"
+- component: data_table
+  dimension: Look
+  match: {part: DataTableColumnToggle, property: display, rubyui: inline-flex, shadcn: flex}
+  rubyui: "Columns trigger (RubyUI::Button, inline-flex) sits inside the DropdownMenu and DropdownMenuTrigger wrappers, so it stays inline-flex"
+  shadcn: "dashboard-01 block: the trigger Button (also inline-flex) is a direct child of div.flex, so the browser blockifies it to flex"
+  reason: "Same classes on both sides; only the parent differs. RubyUI's DropdownMenu needs its wrapper elements for the Stimulus controller and the popover. The trigger's box is identical (1142.9, 24, 113.1x32 at 1280x800)."
+  since: "2026-11-05"
+- component: data_table
+  dimension: Look
+  match: {part: DataTableRowCheckbox, property: display, rubyui: block, shadcn: flex}
+  rubyui: "Row checkbox is RubyUI::Checkbox, a native <input type=checkbox> (blockified to block inside div.flex)"
+  shadcn: "Base UI Checkbox root is a <span class=\"flex …\"> that centers its indicator"
+  reason: "The native input draws its check itself and has no children to lay out, so display flex would change nothing; same 16x16 box and x position on both sides."
+  since: "2026-11-05"
+- component: data_table
+  dimension: Look
+  match: {part: DataTableRowCheckbox, property: text-align, rubyui: start, shadcn: left}
+  rubyui: "Native checkbox input: text-align start (the UA default for inputs)"
+  shadcn: "Base UI span: text-align left, inherited from the table cell"
+  reason: "start and left are the same in LTR, and a checkbox input has no text to align."
+  since: "2026-11-05"
