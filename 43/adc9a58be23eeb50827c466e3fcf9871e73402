@@ -1,0 +1,1089 @@
+.claude/skills/ruby-ui-stimulus/SKILL.md
+  s_2b905a913f5829::t_7491f45934d2ec 68-73
+.claude/skills/shadcn-audit/SKILL.md
+  s_2b905a913f5829::t_00b7b387398381 8,46-51,57,80,82-85,93-95,117-121,146-148,177-205,209-213,216-221,228-232,260,302-338,343,357-407
+.claude/skills/shadcn-audit/references/grading.md
+  s_2b905a913f5829::t_37007dc1e018d6 24,55-64,75,107,123
+.claude/skills/shadcn-audit/references/interactions.md
+  s_2b905a913f5829::t_1ae5167807b320 9-15
+.claude/skills/shadcn-drift/SKILL.md
+  s_2b905a913f5829::t_afb1030a39fc74 1-147
+.github/workflows/ci.yml
+  s_2b905a913f5829::t_76e364195f8b05 127-129
+CLAUDE.md
+  s_2b905a913f5829::t_e91d44338d3e2a 13-14,24-25,70,95,103
+audit/.gitignore
+  s_2b905a913f5829::t_3bc15629621fa1 2
+audit/Gemfile
+  s_2b905a913f5829::t_6a4d71d8f4bd1f 6-7
+audit/Gemfile.lock
+  s_2b905a913f5829::t_d7b94a7608d0c6 5-7,12-16,24-27,73,75
+audit/README.md
+  s_2b905a913f5829::t_d5619dff229a03 13-18,23,25
+audit/component_map/README.md
+  s_2b905a913f5829::t_cd2537010f773b 1-19
+audit/component_map/accordion.yml
+  s_2b905a913f5829::t_0cf087b676b467 1-22
+audit/component_map/alert.yml
+  s_2b905a913f5829::t_25bbdb8ba55eb0 1-16
+audit/component_map/alert_dialog.yml
+  s_2b905a913f5829::t_924db119843c56 1-30
+audit/component_map/aspect_ratio.yml
+  s_2b905a913f5829::t_be11496e4dade7 1-10
+audit/component_map/avatar.yml
+  s_2b905a913f5829::t_a09fa0ce659eb3 1-21
+audit/component_map/badge.yml
+  s_2b905a913f5829::t_9e731add9c00f8 1-13
+audit/component_map/breadcrumb.yml
+  s_2b905a913f5829::t_915bd035d7569f 1-23
+audit/component_map/bubble.yml
+  s_2b905a913f5829::t_ad449e13357ae5 1-19
+audit/component_map/button.yml
+  s_2b905a913f5829::t_22576569f291d1 1-18
+audit/component_map/calendar.yml
+  s_2b905a913f5829::t_393b6aaf06dcd8 1-23
+audit/component_map/card.yml
+  s_2b905a913f5829::t_783f3c95dc2ea4 1-22
+audit/component_map/carousel.yml
+  s_2b905a913f5829::t_da290195a1b85f 1-22
+audit/component_map/checkbox.yml
+  s_2b905a913f5829::t_2650f72193edab 1-20
+audit/component_map/codeblock.yml
+  s_2b905a913f5829::t_456552becda7e3 1-31
+audit/component_map/collapsible.yml
+  s_2b905a913f5829::t_e6dfc9bab88c9b 1-18
+audit/component_map/combobox.yml
+  s_2b905a913f5829::t_e22dc241e8c175 1-52
+audit/component_map/command.yml
+  s_2b905a913f5829::t_3f095dbcb587d0 1-42
+audit/component_map/context_menu.yml
+  s_2b905a913f5829::t_de9da9ff9ac4b7 1-45
+audit/component_map/data_table.yml
+  s_2b905a913f5829::t_1542257a64b5b6 1-35
+audit/component_map/date_picker.yml
+  s_2b905a913f5829::t_edbbeb0ff3dcc4 1-37
+audit/component_map/dialog.yml
+  s_2b905a913f5829::t_0b648bbf5f7a42 1-27
+audit/component_map/dropdown_menu.yml
+  s_2b905a913f5829::t_8c2aa40e0c8de2 1-57
+audit/component_map/empty.yml
+  s_2b905a913f5829::t_f93871bb5a5079 1-20
+audit/component_map/form.yml
+  s_2b905a913f5829::t_e6228cab108df2 1-32
+audit/component_map/hover_card.yml
+  s_2b905a913f5829::t_946f33b0e0c489 1-29
+audit/component_map/input.yml
+  s_2b905a913f5829::t_a8fde17e2fa52b 1-11
+audit/component_map/sheet.yml
+  s_2b905a913f5829::t_de14c72793d506 1-22
+audit/divergences/README.md
+  s_2b905a913f5829::t_92bbc71fd5a4d2 1-17
+audit/divergences/accordion.yml
+  s_2b905a913f5829::t_08080d3c6f7ecc 1-24
+audit/divergences/alert_dialog.yml
+  s_2b905a913f5829::t_52eaacbff52b86 1-30
+audit/divergences/badge.yml
+  s_2b905a913f5829::t_1b64fa70acff34 1-6
+audit/divergences/breadcrumb.yml
+  s_2b905a913f5829::t_663f1442d94dc9 1-6
+audit/divergences/button.yml
+  s_2b905a913f5829::t_2765b4f4e8fd61 1-6
+audit/divergences/calendar.yml
+  s_2b905a913f5829::t_80538a1f9e6dea 1-24
+audit/divergences/card.yml
+  s_2b905a913f5829::t_4dc2a91721d57c 1-6
+audit/divergences/carousel.yml
+  s_2b905a913f5829::t_cbfdc5ae1c1e88 1-6
+audit/divergences/checkbox.yml
+  s_2b905a913f5829::t_0ff33e9b5989dc 1-25
+audit/divergences/collapsible.yml
+  s_2b905a913f5829::t_82d610f37511ff 1-24
+audit/divergences/combobox.yml
+  s_2b905a913f5829::t_e8df8945516e51 1-24
+audit/divergences/command.yml
+  s_2b905a913f5829::t_7c673f8f659770 1-12
+audit/divergences/data_table.yml
+  s_2b905a913f5829::t_d910a2ebfed040 1-6
+audit/divergences/dialog.yml
+  s_2b905a913f5829::t_7a4064230af3b8 7-12
+audit/divergences/dropdown_menu.yml
+  s_2b905a913f5829::t_7bade476b3f748 1-18
+audit/divergences/form.yml
+  s_2b905a913f5829::t_b816ddc72b1138 1-18
+audit/divergences/hover_card.yml
+  s_2b905a913f5829::t_ffc79c88dfd70d 1-12
+audit/docs/2026-11-01-collect-design.md
+  s_2b905a913f5829::t_49c595184e83fe 1-201
+audit/docs/2026-11-01-collect-plan.md
+  s_2b905a913f5829::t_ddd4262427f070 1-251
+audit/fixtures/accordion/content.yml
+  s_2b905a913f5829::t_e018e2b5b3dabc 1-7
+audit/fixtures/accordion/rubyui.rb
+  s_2b905a913f5829::t_0bdf3711778c2f 1-25
+audit/fixtures/accordion/shadcn.tsx
+  s_2b905a913f5829::t_8ee3d165c9ee27 1-25
+audit/fixtures/alert/content.yml
+  s_2b905a913f5829::t_82906f885f2f23 1-8
+audit/fixtures/alert/rubyui.rb
+  s_2b905a913f5829::t_94732983777385 1-45
+audit/fixtures/alert/shadcn.tsx
+  s_2b905a913f5829::t_be4a0950aeefe1 1-28
+audit/fixtures/aspect_ratio/content.yml
+  s_2b905a913f5829::t_5499993c3b4110 1-9
+audit/fixtures/aspect_ratio/rubyui.rb
+  s_2b905a913f5829::t_7c4fd6fabcd39c 1-20
+audit/fixtures/aspect_ratio/shadcn.tsx
+  s_2b905a913f5829::t_b0a713a4f2aad9 1-21
+audit/fixtures/avatar/content.yml
+  s_2b905a913f5829::t_19cbc9c328d9a2 1-21
+audit/fixtures/avatar/rubyui.rb
+  s_2b905a913f5829::t_684862e8b46d9e 1-47
+audit/fixtures/avatar/shadcn.tsx
+  s_2b905a913f5829::t_95efb771b98f62 1-49
+audit/fixtures/badge/content.yml
+  s_2b905a913f5829::t_2ed421de269510 1-10
+audit/fixtures/badge/rubyui.rb
+  s_2b905a913f5829::t_3052ad24a2cea8 1-20
+audit/fixtures/badge/shadcn.tsx
+  s_2b905a913f5829::t_330ba42c38b8ba 1-15
+audit/fixtures/breadcrumb/content.yml
+  s_2b905a913f5829::t_1bd271f39da535 1-8
+audit/fixtures/breadcrumb/rubyui.rb
+  s_2b905a913f5829::t_a3146532d52f83 1-30
+audit/fixtures/breadcrumb/shadcn.tsx
+  s_2b905a913f5829::t_8a4f2e0e4adbbb 1-35
+audit/fixtures/bubble/content.yml
+  s_2b905a913f5829::t_2e8cd2fb773fe3 1-23
+audit/fixtures/bubble/rubyui.rb
+  s_2b905a913f5829::t_5d244fce6e222c 1-49
+audit/fixtures/bubble/shadcn.tsx
+  s_2b905a913f5829::t_9650dd7d154759 1-71
+audit/fixtures/button/content.yml
+  s_2b905a913f5829::t_daf540303cea1a 1-18
+audit/fixtures/button/rubyui.rb
+  s_2b905a913f5829::t_9b0d7542db7ee1 1-39
+audit/fixtures/button/shadcn.tsx
+  s_2b905a913f5829::t_4ac3f4da6dbc29 1-41
+audit/fixtures/calendar/content.yml
+  s_2b905a913f5829::t_ce101ac2d0d51a 1-8
+audit/fixtures/calendar/rubyui.rb
+  s_2b905a913f5829::t_b44b5e8162c5f7 1-16
+audit/fixtures/calendar/shadcn.tsx
+  s_2b905a913f5829::t_a98671d3efc8cf 1-17
+audit/fixtures/card/content.yml
+  s_2b905a913f5829::t_ee5f3aa5e3296c 1-10
+audit/fixtures/card/rubyui.rb
+  s_2b905a913f5829::t_9eee9c7a817dc2 1-24
+audit/fixtures/card/shadcn.tsx
+  s_2b905a913f5829::t_7551dbbd1c912f 1-29
+audit/fixtures/carousel/content.yml
+  s_2b905a913f5829::t_be93e58dd6d57a 1-6
+audit/fixtures/carousel/rubyui.rb
+  s_2b905a913f5829::t_54ad7be23bc960 1-26
+audit/fixtures/carousel/shadcn.tsx
+  s_2b905a913f5829::t_79a5f5df1dc69d 1-27
+audit/fixtures/checkbox/content.yml
+  s_2b905a913f5829::t_4e67d7424755f9 1-7
+audit/fixtures/checkbox/rubyui.rb
+  s_2b905a913f5829::t_3edd646a542a4b 1-31
+audit/fixtures/checkbox/shadcn.tsx
+  s_2b905a913f5829::t_1f63e1faeaa5f0 1-26
+audit/fixtures/codeblock/content.yml
+  s_2b905a913f5829::t_e0adabf3cef9d6 1-11
+audit/fixtures/codeblock/rubyui.rb
+  s_2b905a913f5829::t_e18041b6dc27c7 1-22
+audit/fixtures/codeblock/shadcn.tsx
+  s_2b905a913f5829::t_174709660fc807 1-28
+audit/fixtures/collapsible/content.yml
+  s_2b905a913f5829::t_93aaf135eb6d81 1-8
+audit/fixtures/collapsible/rubyui.rb
+  s_2b905a913f5829::t_ad7dea565db428 1-31
+audit/fixtures/collapsible/shadcn.tsx
+  s_2b905a913f5829::t_164c68207cedc0 1-30
+audit/fixtures/combobox/content.yml
+  s_2b905a913f5829::t_4e4403f67a4372 1-12
+audit/fixtures/combobox/rubyui.rb
+  s_2b905a913f5829::t_6e38536fc78d1a 1-32
+audit/fixtures/combobox/shadcn.tsx
+  s_2b905a913f5829::t_7e7b8cf3be517e 1-49
+audit/fixtures/command/content.yml
+  s_2b905a913f5829::t_785dc6268d4468 1-3
+audit/fixtures/command/rubyui.rb
+  s_2b905a913f5829::t_5455e1e5c1da26 17,19-21
+audit/fixtures/context_menu/content.yml
+  s_2b905a913f5829::t_478e95d5ae558a 1-20
+audit/fixtures/context_menu/rubyui.rb
+  s_2b905a913f5829::t_14eed6a8b33a47 1-57
+audit/fixtures/context_menu/shadcn.tsx
+  s_2b905a913f5829::t_a63f655abb9e98 1-70
+audit/fixtures/data_table/content.yml
+  s_2b905a913f5829::t_ea344879ae15a5 1-13
+audit/fixtures/data_table/rubyui.rb
+  s_2b905a913f5829::t_331b856a70058e 1-68
+audit/fixtures/data_table/shadcn.tsx
+  s_2b905a913f5829::t_3ebbba53468984 1-190
+audit/fixtures/date_picker/content.yml
+  s_2b905a913f5829::t_f6c678ce065316 1-11
+audit/fixtures/date_picker/rubyui.rb
+  s_2b905a913f5829::t_d963e02ecc70e2 1-21
+audit/fixtures/date_picker/shadcn.tsx
+  s_2b905a913f5829::t_763d9880504fb8 1-89
+audit/fixtures/dropdown_menu/content.yml
+  s_2b905a913f5829::t_d552b2c2503e87 1-8
+audit/fixtures/dropdown_menu/rubyui.rb
+  s_2b905a913f5829::t_4278222d3c72c7 1-26
+audit/fixtures/dropdown_menu/shadcn.tsx
+  s_2b905a913f5829::t_fbd3fbd7d799bb 1-35
+audit/fixtures/empty/content.yml
+  s_2b905a913f5829::t_38e25f2150d70e 1-10
+audit/fixtures/empty/rubyui.rb
+  s_2b905a913f5829::t_a53505f96c10da 1-33
+audit/fixtures/empty/shadcn.tsx
+  s_2b905a913f5829::t_1e69b9416d6c9c 1-32
+audit/fixtures/form/content.yml
+  s_2b905a913f5829::t_6f589c2b42833b 1-17
+audit/fixtures/form/rubyui.rb
+  s_2b905a913f5829::t_cf15a37ef1af3a 1-49
+audit/fixtures/form/shadcn.tsx
+  s_2b905a913f5829::t_e3563eb2596d1a 1-61
+audit/fixtures/hover_card/content.yml
+  s_2b905a913f5829::t_4aab49f5a9fd41 1-6
+audit/fixtures/hover_card/rubyui.rb
+  s_2b905a913f5829::t_17a88459566152 1-24
+audit/fixtures/hover_card/shadcn.tsx
+  s_2b905a913f5829::t_6de9b59ad4d064 1-29
+audit/fixtures/input/content.yml
+  s_2b905a913f5829::t_b0493180268c62 1-17
+audit/fixtures/input/rubyui.rb
+  s_2b905a913f5829::t_ca64905829d86c 3-9,11-19,24-28
+audit/fixtures/input/shadcn.tsx
+  s_2b905a913f5829::t_331a8073c51433 1-27
+audit/lib/shadcn_audit.rb
+  s_2b905a913f5829::t_80e5acc3639812 15,21-23,27-31
+audit/lib/shadcn_audit/baseline.rb
+  s_2b905a913f5829::t_4e559509f6e239 1-26
+audit/lib/shadcn_audit/cli.rb
+  s_2b905a913f5829::t_cd9f89745015fb 19-22,27,31-33,40,43,48-49,54,60,117-164
+audit/lib/shadcn_audit/collect/driver.rb
+  s_2b905a913f5829::t_08e00e975d6c5b 1-144
+audit/lib/shadcn_audit/collect/grader.rb
+  s_2b905a913f5829::t_d023b0d67bbcd8 1-194
+audit/lib/shadcn_audit/collect/normalize.rb
+  s_2b905a913f5829::t_0b537e12db6796 1-13
+audit/lib/shadcn_audit/collect/pixel_diff.rb
+  s_2b905a913f5829::t_48a99a64763986 1-40
+audit/lib/shadcn_audit/collect/probes.js
+  s_2b905a913f5829::t_4f339a492168b2 1-58
+audit/lib/shadcn_audit/collect/runner.rb
+  s_2b905a913f5829::t_daa16088bafe3e 1-145
+audit/lib/shadcn_audit/component_map.rb
+  s_2b905a913f5829::t_2ce5dfc5253558 9-10,17-32,34-42,45,47,55-61,91,94-98,105-121,128,132,138-150
+audit/lib/shadcn_audit/divergences.rb
+  s_2b905a913f5829::t_cde6f8e2991c4e 9-28,30-54,57-60,62,66-71,76-86,105-126,129-130,132,138
+audit/lib/shadcn_audit/drift/diff.rb
+  s_2b905a913f5829::t_8e70fc84b8521b 1-56
+audit/lib/shadcn_audit/drift/runner.rb
+  s_2b905a913f5829::t_e1c665d0e12e8b 1-165
+audit/lib/shadcn_audit/renderers/terminal.rb
+  s_2b905a913f5829::t_e9588a4245dcce 48
+audit/lib/shadcn_audit/sandbox.rb
+  s_2b905a913f5829::t_1e3b0ff18a5161 16-19,36,70,78-80,111-117
+audit/lib/shadcn_audit/snapshot.rb
+  s_2b905a913f5829::t_35fc451127924b 1-82
+audit/package.json
+  s_2b905a913f5829::t_c86fcea945dd2d 1-6
+audit/pnpm-lock.yaml
+  s_2b905a913f5829::t_2be45f2c63983d 1-33
+audit/test/baseline_test.rb
+  s_2b905a913f5829::t_4bda68d2734dd0 1-66
+audit/test/cli_collect_test.rb
+  s_2b905a913f5829::t_10a36e1b172519 1-28
+audit/test/cli_drift_test.rb
+  s_2b905a913f5829::t_566460eed0aedf 1-73
+audit/test/cli_map_test.rb
+  s_2b905a913f5829::t_d480532d34ae22 15,17-18
+audit/test/collect/driver_smoke_test.rb
+  s_2b905a913f5829::t_b1808836f1d370 1-104
+audit/test/collect/grader_test.rb
+  s_2b905a913f5829::t_0e03d203f549f8 1-215
+audit/test/collect/normalize_test.rb
+  s_2b905a913f5829::t_48ae7e2cc9f383 1-22
+audit/test/collect/pixel_diff_test.rb
+  s_2b905a913f5829::t_97e979b1f1eb38 1-56
+audit/test/collect/runner_test.rb
+  s_2b905a913f5829::t_a22c7183adbf01 1-137
+audit/test/component_map_test.rb
+  s_2b905a913f5829::t_3879392cd3ee95 74-76,98-117,140-179,185-234
+audit/test/divergences_test.rb
+  s_2b905a913f5829::t_cd9ec25836e29c 73,77-150,168-229
+audit/test/drift/diff_test.rb
+  s_2b905a913f5829::t_b860f21e707d3f 1-55
+audit/test/drift/runner_test.rb
+  s_2b905a913f5829::t_2d345c136b568a 1-321
+audit/test/fixtures/collect/a.html
+  s_2b905a913f5829::t_d1a186bf2a5c3d 1-13
+audit/test/fixtures/collect/b.html
+  s_2b905a913f5829::t_826de403db93ad 1-2
+audit/test/fixtures/collect/c.html
+  s_2b905a913f5829::t_f0670cba1cfe43 1-4
+audit/test/fixtures/collect/d.html
+  s_2b905a913f5829::t_10394206cab6a8 1-19
+audit/test/fixtures/collect/e.html
+  s_2b905a913f5829::t_1e2243af5cfa5b 1-11
+audit/test/fixtures/collect/f.html
+  s_2b905a913f5829::t_9f7cecd97e3557 1-8
+audit/test/renderers_test.rb
+  s_2b905a913f5829::t_cac18113167eeb 26,30
+audit/test/rubyui_preview_test.rb
+  s_2b905a913f5829::t_c248433c875c81 6
+audit/test/sandbox_test.rb
+  s_2b905a913f5829::t_4e6dc01c1c47b3 5-10,97,110-146,162,173-174,179,223
+audit/test/snapshot_test.rb
+  s_2b905a913f5829::t_e212f23b5b4bea 1-86
+design/plans/2026-10-29-dialog-shadcn-parity.md
+  s_2b905a913f5829::t_71e63797881176 1-160
+docs/Gemfile
+  s_2b905a913f5829::t_3680d7b36d9a31 11
+docs/Gemfile.lock
+  s_2b905a913f5829::t_001c0a82ce337d 112,172,180,194-195,307,309-310,355,377
+docs/app/assets/stylesheets/application.tailwind.css
+  s_2b905a913f5829::t_7416412db5b04f 2,37-41,79-83,145-146,167-173
+docs/app/components/shared/head.rb
+  s_2b905a913f5829::t_5bcd0697203d23 26
+docs/app/components/shared/navbar.rb
+  s_2b905a913f5829::t_dd15f2010671b1 65-66,80-84,87,91-93
+docs/app/components/themes/grid/calendar.rb
+  s_2b905a913f5829::t_452ef7fecae82f 7
+docs/app/components/themes/grid/card.rb
+  s_2b905a913f5829::t_e08da13076f568 12,15
+docs/app/components/themes/grid/chart.rb
+  s_2b905a913f5829::t_226b0bd3160f14 8
+docs/app/components/themes/grid/chat.rb
+  s_2b905a913f5829::t_288b1b0389481b 15
+docs/app/components/themes/grid/command.rb
+  s_2b905a913f5829::t_c40b6cafa36bd8 27,38
+docs/app/components/themes/grid/create_event.rb
+  s_2b905a913f5829::t_51b51ff237d24a 8,23,30
+docs/app/components/themes/grid/line_graph.rb
+  s_2b905a913f5829::t_c6a011eed04d6b 8
+docs/app/components/themes/grid/repo_tabs.rb
+  s_2b905a913f5829::t_68ee486a82bee9 22
+docs/app/components/themes/grid/signin.rb
+  s_2b905a913f5829::t_4371112b18dc55 8
+docs/app/javascript/controllers/index.js
+  s_2b905a913f5829::t_5bfb1741880c05 19-21,34-36,43-45,70-72,79-81
+docs/app/javascript/controllers/ruby_ui/button_controller.js
+  s_2b905a913f5829::t_87ed0e63ef2d55 1
+docs/app/javascript/controllers/ruby_ui/checkbox_controller.js
+  s_2b905a913f5829::t_fcb09c06e3cf36 1
+docs/app/javascript/controllers/ruby_ui/codeblock_controller.js
+  s_2b905a913f5829::t_31f8682a7110dd 1
+docs/app/javascript/controllers/ruby_ui/date_picker_controller.js
+  s_2b905a913f5829::t_2bc097e5570569 1
+docs/app/javascript/controllers/ruby_ui/form_controller.js
+  s_2b905a913f5829::t_6ea03fa7f15382 1
+docs/app/lib/site_files.rb
+  s_2b905a913f5829::t_32215a2e722739 91
+docs/app/views/docs/accordion.rb
+  s_2b905a913f5829::t_44acff0d596192 12-74
+docs/app/views/docs/alert.rb
+  s_2b905a913f5829::t_449c57ff72fffc 11,14-16,30,32-35,40,42-45,53,60-90,99-101,104-105,107-121,125-129,133-137,141-144
+docs/app/views/docs/alert_dialog.rb
+  s_2b905a913f5829::t_ec753f103d5660 14,30-79
+docs/app/views/docs/aspect_ratio.rb
+  s_2b905a913f5829::t_15b785c9e89bda 11,13,16,26,29,39,42,52,55,63-72
+docs/app/views/docs/avatar.rb
+  s_2b905a913f5829::t_d55d1cca936a69 11,28,30-35,42-47,49-67,70-71,73-74,76-85
+docs/app/views/docs/badge.rb
+  s_2b905a913f5829::t_fae41bc56f13c7 18,20-26,32-82,86,88-90,97-114,121
+docs/app/views/docs/bubble.rb
+  s_2b905a913f5829::t_b1c098ac5396ac 75-86
+docs/app/views/docs/button.rb
+  s_2b905a913f5829::t_4ba76cae67f350 12,18,20,30,32,36,38,48,50-56,60,62-72,76,78-97,103,105-109,111,116,118-136,142
+docs/app/views/docs/calendar.rb
+  s_2b905a913f5829::t_7e579e22a33d90 7,14,23,32,38-43
+docs/app/views/docs/card.rb
+  s_2b905a913f5829::t_4b5c5b15a4a32f 19,22,28,38-44,49,58,75-114
+docs/app/views/docs/carousel.rb
+  s_2b905a913f5829::t_1bcc8033d57989 11,13,18,35,40,57,62,79,84,99-120
+docs/app/views/docs/chart.rb
+  s_2b905a913f5829::t_2224d929776aa2 20-27,48-64
+docs/app/views/docs/checkbox.rb
+  s_2b905a913f5829::t_06676f2ac9e24a 13-15,22-26,32-76
+docs/app/views/docs/checkbox_group.rb
+  s_2b905a913f5829::t_a632cd3747d63d 8,14-25,28-30,37,39-48,50-55,57-72,74-77,79,82,84-87,89,93-94,97
+docs/app/views/docs/codeblock.rb
+  s_2b905a913f5829::t_95414943956539 7-11,15,18-23,27-33,36-58,60-86,91-105,108-114,119-124
+docs/app/views/docs/collapsible.rb
+  s_2b905a913f5829::t_39d22e4596f8b7 11,13-18,21-24,26-28,30-37,40-44,49,51-54,56-57,59-70,72-79,86-110,119-134,137-143,145
+docs/app/views/docs/combobox.rb
+  s_2b905a913f5829::t_e28c56fd0d44d5 7,11,13-17,19-23,31,33-37,39-49,51-62,64-68,70-75,77-88,96,98-109,111-126,128-144,146-159,162-165,167-183,185-187,189-208,213,215-229,235,237-268,270,275,277
+docs/app/views/docs/command.rb
+  s_2b905a913f5829::t_26d31590c61c55 7,11,13-35,38-51,55-64,69-73,75-92,94-104,114,116-130,134-161,166-168,170-174,176
+docs/app/views/docs/context_menu.rb
+  s_2b905a913f5829::t_c8922a8025210c 11,14-20,26,28-37,39-103,106-121,123-140,142-181
+docs/app/views/docs/data_table.rb
+  s_2b905a913f5829::t_fea31cf7f65cba 22,44,46,48,56,68-71,88,124,133,150,211,244,272
+docs/app/views/docs/data_table_demo/index.rb
+  s_2b905a913f5829::t_812fcd55d5bd9a 56,58,60,78,97-112
+docs/app/views/docs/date_picker.rb
+  s_2b905a913f5829::t_d10052c3261cf7 8,12,14-32
+docs/app/views/docs/dialog.rb
+  s_2b905a913f5829::t_e0db3b62e633c9 24,27,42,55,58,81,84,100-118
+docs/app/views/docs/dropdown_menu.rb
+  s_2b905a913f5829::t_76612f8ef8410c 11,18-27,33,39-48,50-58,65,67-69,71-83,86-88,90-94,96-101,104-106,108-112,114-119,122-124,126-135,137-138,140-142,144-154,156-157,159-161,163-171,173-175,177-197,200-202,204-216,219-221,223-231
+docs/app/views/docs/empty.rb
+  s_2b905a913f5829::t_9125ac38fbcd2c 28,30,49
+docs/app/views/docs/form.rb
+  s_2b905a913f5829::t_2dcb6760f88b3f 15-16,27-29,34,36-42,47,51-53,60,64-67,74-83,87-89,96-181,213,215-216,218-220,223-226,228-232,234-238,329-331
+docs/app/views/docs/getting_started/introduction.rb
+  s_2b905a913f5829::t_dc430294d95850 71-74
+docs/app/views/docs/getting_started/theming.rb
+  s_2b905a913f5829::t_3af5c32f93c609 97
+docs/app/views/docs/hover_card.rb
+  s_2b905a913f5829::t_fd1600a8b4d83a 55-71,74,79
+docs/app/views/docs/input.rb
+  s_2b905a913f5829::t_aae9e793b9aecd 37,39-40
+docs/app/views/docs/installation/rails_bundler.rb
+  s_2b905a913f5829::t_de14caf09c9d08 8,260-264,302-306
+docs/app/views/docs/installation/rails_importmaps.rb
+  s_2b905a913f5829::t_bde686c71d1e76 8,261-265,303-307
+docs/app/views/errors/internal_server_error.rb
+  s_2b905a913f5829::t_f34258dc94e563 5
+docs/app/views/errors/not_found.rb
+  s_2b905a913f5829::t_90387cbb79d26b 5
+docs/app/views/pages/home.rb
+  s_2b905a913f5829::t_51415ab65bd88a 42,94,161,201
+docs/config/initializers/assets.rb
+  s_2b905a913f5829::t_6dce74fa36b645 8-12
+docs/lib/theme/c_s_s.rb
+  s_2b905a913f5829::t_086a1a64cfabf1 77-81,116-120
+docs/package.json
+  s_2b905a913f5829::t_284f5092ae8f89 6,11-12
+docs/pnpm-lock.yaml
+  s_2b905a913f5829::t_2b7af233c2794c 14-16,30-31,33-34,230-232,259-260,266-267,271-272,276-277,279-280,295-296,333-334,361-362,461-462,486,488-489,495,497,499-503,505,507,519,566,589,591
+docs/public/llms-full.txt
+  s_2b905a913f5829::t_1d957155732d7d 134
+docs/public/llms.txt
+  s_2b905a913f5829::t_34e08b966cbab8 33
+gem/AGENTS.md
+  s_2b905a913f5829::t_37bd5b4ad2e7c5 28-29
+gem/lib/generators/ruby_ui/dependencies.yml
+  s_2b905a913f5829::t_83fd3191085f51 28-31,33-34,39-40,50-51,66-69,74-77
+gem/lib/generators/ruby_ui/install/templates/tailwind.css.erb
+  s_2b905a913f5829::t_b2b3d2ed5249c8 31-35,73-77,137-139
+gem/lib/ruby_ui/accordion/accordion.rb
+  s_2b905a913f5829::t_668320aa23bd12 3-4,6-7,9-14,16-20,22-23,30-31
+gem/lib/ruby_ui/accordion/accordion_content.rb
+  s_2b905a913f5829::t_d83db0d7cb2929 4-5,8-10,17
+gem/lib/ruby_ui/accordion/accordion_docs.rb
+  s_2b905a913f5829::t_2bc1c613bc3db8 12-74
+gem/lib/ruby_ui/accordion/accordion_icon.rb
+  s_2b905a913f5829::t_38cdc20fc8ec93 4-5,7-8,10-14,18-20,22,24-30,35-37
+gem/lib/ruby_ui/accordion/accordion_item.rb
+  s_2b905a913f5829::t_753bd6bd6f2dbe 4-6,8,10,15-25,32-38
+gem/lib/ruby_ui/accordion/accordion_trigger.rb
+  s_2b905a913f5829::t_230b1606c54eb1 4-5,7-24,27-28,31-37
+gem/lib/ruby_ui/alert/alert.rb
+  s_2b905a913f5829::t_2e6b1bd6093c7b 4-7,9-19,21-25,36-44
+gem/lib/ruby_ui/alert/alert_action.rb
+  s_2b905a913f5829::t_8ddee1dfd17fed 4-6,15-16
+gem/lib/ruby_ui/alert/alert_description.rb
+  s_2b905a913f5829::t_fc7d8d9499ce35 13-14
+gem/lib/ruby_ui/alert/alert_docs.rb
+  s_2b905a913f5829::t_2b922260d11d8a 11,14-16,30,32-35,40,42-45,53,60-90,99-101,104-105,107-121,125-129,133-137,141-144
+gem/lib/ruby_ui/alert/alert_title.rb
+  s_2b905a913f5829::t_874e0e0f32542c 6,13-14
+gem/lib/ruby_ui/alert_dialog/alert_dialog.rb
+  s_2b905a913f5829::t_c3f5f4174396db 16-17,24
+gem/lib/ruby_ui/alert_dialog/alert_dialog_cancel.rb
+  s_2b905a913f5829::t_317ec40a1c9ccb 16
+gem/lib/ruby_ui/alert_dialog/alert_dialog_content.rb
+  s_2b905a913f5829::t_c1b98f6d75b748 3-4,7,9-13,16-25,30-42,45,47-55
+gem/lib/ruby_ui/alert_dialog/alert_dialog_controller.js
+  s_2b905a913f5829::t_8492afd42764af 1,4-9,11-32,35-114,117-118,121-123
+gem/lib/ruby_ui/alert_dialog/alert_dialog_description.rb
+  s_2b905a913f5829::t_be462b612e4407 5,7-13,20
+gem/lib/ruby_ui/alert_dialog/alert_dialog_docs.rb
+  s_2b905a913f5829::t_d0e6a21f5d81a2 14,30-79
+gem/lib/ruby_ui/alert_dialog/alert_dialog_footer.rb
+  s_2b905a913f5829::t_5be60f5c0a4ed4 13
+gem/lib/ruby_ui/alert_dialog/alert_dialog_header.rb
+  s_2b905a913f5829::t_b490065ea10174 13
+gem/lib/ruby_ui/alert_dialog/alert_dialog_media.rb
+  s_2b905a913f5829::t_f0ea164124a836 1-19
+gem/lib/ruby_ui/alert_dialog/alert_dialog_title.rb
+  s_2b905a913f5829::t_c4a3bea0d97ca4 5,7-13,20
+gem/lib/ruby_ui/alert_dialog/alert_dialog_trigger.rb
+  s_2b905a913f5829::t_70f23206e21882 13-16
+gem/lib/ruby_ui/aspect_ratio/aspect_ratio.rb
+  s_2b905a913f5829::t_e77f7d7c4be0f6 5-10,12-14,16,19-20,25-47,52-53
+gem/lib/ruby_ui/aspect_ratio/aspect_ratio_docs.rb
+  s_2b905a913f5829::t_1b9b89f41911ed 11,13,16,26,29,39,42,52,55,63-72
+gem/lib/ruby_ui/avatar/avatar.rb
+  s_2b905a913f5829::t_7dd58508564659 4-5,8-15,17-20,33-34,37-44
+gem/lib/ruby_ui/avatar/avatar_badge.rb
+  s_2b905a913f5829::t_9eaa53341b9432 1-29
+gem/lib/ruby_ui/avatar/avatar_controller.js
+  s_2b905a913f5829::t_b543baaae4a9e4 3-9,14-20,22,26-28,30,34-39,41,44,46-79,81
+gem/lib/ruby_ui/avatar/avatar_docs.rb
+  s_2b905a913f5829::t_3a22d3acf6993b 11,28,30-35,42-47,49-67,70-71,73-74,76-85
+gem/lib/ruby_ui/avatar/avatar_fallback.rb
+  s_2b905a913f5829::t_f286f2a73db0a4 4-6,8-12,19-20,24-26,28-37
+gem/lib/ruby_ui/avatar/avatar_group.rb
+  s_2b905a913f5829::t_bf60944db40646 4-6,15-16
+gem/lib/ruby_ui/avatar/avatar_group_count.rb
+  s_2b905a913f5829::t_7f195b21d29eef 1-26
+gem/lib/ruby_ui/avatar/avatar_image.rb
+  s_2b905a913f5829::t_e3c6a918793c27 25,29
+gem/lib/ruby_ui/badge/badge.rb
+  s_2b905a913f5829::t_1c832027c5febb 4-7,9-18,20-71,75-79,86-87
+gem/lib/ruby_ui/badge/badge_docs.rb
+  s_2b905a913f5829::t_1c157a5202576d 18,20-26,32-82,86,88-90,97-114,121
+gem/lib/ruby_ui/breadcrumb/breadcrumb.rb
+  s_2b905a913f5829::t_5a4fcbbc92218f 13-14
+gem/lib/ruby_ui/breadcrumb/breadcrumb_ellipsis.rb
+  s_2b905a913f5829::t_81b57e55bf0fc7 22-23,33-35
+gem/lib/ruby_ui/breadcrumb/breadcrumb_item.rb
+  s_2b905a913f5829::t_aecf250748529e 13
+gem/lib/ruby_ui/breadcrumb/breadcrumb_link.rb
+  s_2b905a913f5829::t_3cca3e642fc64e 18
+gem/lib/ruby_ui/breadcrumb/breadcrumb_list.rb
+  s_2b905a913f5829::t_22dbe26f30f610 13-14
+gem/lib/ruby_ui/breadcrumb/breadcrumb_page.rb
+  s_2b905a913f5829::t_1accb8ea8ed80d 11-12,15-16
+gem/lib/ruby_ui/breadcrumb/breadcrumb_separator.rb
+  s_2b905a913f5829::t_af5f008c35852e 25-26,30-32,35-37
+gem/lib/ruby_ui/bubble/bubble.rb
+  s_2b905a913f5829::t_90b3552b44af97 31
+gem/lib/ruby_ui/bubble/bubble_content.rb
+  s_2b905a913f5829::t_809906e8cd7d6e 19
+gem/lib/ruby_ui/bubble/bubble_docs.rb
+  s_2b905a913f5829::t_7f8e84b4aeaa1e 75-86
+gem/lib/ruby_ui/button/button.rb
+  s_2b905a913f5829::t_5547b160e36261 4-15,17-23,25,28-73,75-84,86-89,93-94,96,100,102-104,106-116,118-126,128,131-132,135-138
+gem/lib/ruby_ui/button/button_controller.js
+  s_2b905a913f5829::t_af61d77905155f 1-53
+gem/lib/ruby_ui/button/button_docs.rb
+  s_2b905a913f5829::t_98889a87e0b622 12,18,20,30,32,36,38,48,50-56,60,62-72,76,78-97,103,105-109,111,116,118-136,142
+gem/lib/ruby_ui/calendar/calendar.rb
+  s_2b905a913f5829::t_47041dcadfd3f0 4-8,10-12,17,21-27,31-34,38,47,53
+gem/lib/ruby_ui/calendar/calendar_body.rb
+  s_2b905a913f5829::t_7221d7dae358ef 11,14-15,17-18
+gem/lib/ruby_ui/calendar/calendar_controller.js
+  s_2b905a913f5829::t_d49ef8ccd92472 4-7,36-39,44-59,75-87,89-162,172-175,180-185,197-199,203-208,210-212,214-218,226-229,232-233,237,239-246,248,250-254,256,258-303,306-322,341-343,345-365,393,395
+gem/lib/ruby_ui/calendar/calendar_days.rb
+  s_2b905a913f5829::t_605f400f49accb 4-7,9-13,27,32-33,38-39,45,51,55-68,70
+gem/lib/ruby_ui/calendar/calendar_docs.rb
+  s_2b905a913f5829::t_765b42beddf77a 7,14,23,32,38-43
+gem/lib/ruby_ui/calendar/calendar_header.rb
+  s_2b905a913f5829::t_03e95ef7cce813 13
+gem/lib/ruby_ui/calendar/calendar_next.rb
+  s_2b905a913f5829::t_9a1c9b2b612d15 5,13,17-26,28,32,36-37
+gem/lib/ruby_ui/calendar/calendar_prev.rb
+  s_2b905a913f5829::t_aa4824e58f68d2 5-11,19,23-32,34,38,42-43
+gem/lib/ruby_ui/calendar/calendar_title.rb
+  s_2b905a913f5829::t_f27d6b2ef041d9 18-19
+gem/lib/ruby_ui/calendar/calendar_weekdays.rb
+  s_2b905a913f5829::t_4b84afe30e460c 5-10,14-15,18,31,37
+gem/lib/ruby_ui/card/card.rb
+  s_2b905a913f5829::t_48ce19c4bde9a7 4-7,9-16,25-33
+gem/lib/ruby_ui/card/card_action.rb
+  s_2b905a913f5829::t_8e1bba467240b3 1-20
+gem/lib/ruby_ui/card/card_content.rb
+  s_2b905a913f5829::t_ac545cd6d97417 13-14
+gem/lib/ruby_ui/card/card_description.rb
+  s_2b905a913f5829::t_41efa43f01e5b4 6,13
+gem/lib/ruby_ui/card/card_docs.rb
+  s_2b905a913f5829::t_1e987603b75aac 19,22,28,38-44,49,58,75-114
+gem/lib/ruby_ui/card/card_footer.rb
+  s_2b905a913f5829::t_0143b0db6027b6 13-14
+gem/lib/ruby_ui/card/card_header.rb
+  s_2b905a913f5829::t_72f5b9955bb876 4-5,15-20
+gem/lib/ruby_ui/card/card_title.rb
+  s_2b905a913f5829::t_54946102243921 4-5,8,15-16
+gem/lib/ruby_ui/carousel/carousel.rb
+  s_2b905a913f5829::t_48a5d9402ab3db 4-7,9-10,12-13,20-21,23-24,35
+gem/lib/ruby_ui/carousel/carousel_content.rb
+  s_2b905a913f5829::t_704803fa248b55 5-6,8-9,15-18,20
+gem/lib/ruby_ui/carousel/carousel_controller.js
+  s_2b905a913f5829::t_6c13b20b090878 14,46,48-51
+gem/lib/ruby_ui/carousel/carousel_docs.rb
+  s_2b905a913f5829::t_a7aa5a844b4f5e 11,13,18,35,40,57,62,79,84,99-120
+gem/lib/ruby_ui/carousel/carousel_item.rb
+  s_2b905a913f5829::t_bf16ee8af59572 5-6,8,13-16,21-22
+gem/lib/ruby_ui/carousel/carousel_next.rb
+  s_2b905a913f5829::t_bf83ed24349c2b 5-12,14,20-23,28,37,49-52,54
+gem/lib/ruby_ui/carousel/carousel_previous.rb
+  s_2b905a913f5829::t_c85f858e14fb67 5-12,14,20-23,28,37,49-52,54
+gem/lib/ruby_ui/chart/chart_controller.js
+  s_2b905a913f5829::t_e664d699965e86 35,37,40-57,59-61,85,110,112
+gem/lib/ruby_ui/chart/chart_docs.rb
+  s_2b905a913f5829::t_00bcdb6f818895 20-27,48-64
+gem/lib/ruby_ui/checkbox/checkbox.rb
+  s_2b905a913f5829::t_c6ac478282fd65 4-16,18-50,52-54,63,65,68,70-83
+gem/lib/ruby_ui/checkbox/checkbox_controller.js
+  s_2b905a913f5829::t_7ae0c46f1f1d7d 3,5,7-9,12-14,17-20
+gem/lib/ruby_ui/checkbox/checkbox_docs.rb
+  s_2b905a913f5829::t_f96d6c22a2c55b 13-15,22-26,32-76
+gem/lib/ruby_ui/checkbox/checkbox_group.rb
+  s_2b905a913f5829::t_2cf576958d11d6 4-7,9-13,24-28
+gem/lib/ruby_ui/checkbox/checkbox_group_controller.js
+  s_2b905a913f5829::t_a4abaa8b651c9c 12-20
+gem/lib/ruby_ui/codeblock/codeblock.rb
+  s_2b905a913f5829::t_fbbd456b2eab4a 6-14,16-20,22-26,28-32,36,40-42,48-51,54,57-65
+gem/lib/ruby_ui/codeblock/codeblock_actions.rb
+  s_2b905a913f5829::t_4e7d285203a679 1-28
+gem/lib/ruby_ui/codeblock/codeblock_content.rb
+  s_2b905a913f5829::t_bdba2ea35f04ac 1-97
+gem/lib/ruby_ui/codeblock/codeblock_controller.js
+  s_2b905a913f5829::t_29825e1e76f68d 3-6,8,11-13,16-21,24-26,28-31,34-37,40-42,44-52,54-57,60-64,66-67,70-72
+gem/lib/ruby_ui/codeblock/codeblock_copy_button.rb
+  s_2b905a913f5829::t_e3ab7b4a559a1c 4-19,21-59,70-72
+gem/lib/ruby_ui/codeblock/codeblock_docs.rb
+  s_2b905a913f5829::t_5300b2f610b465 7-11,15,18-23,27-33,36-58,60-86,91-105,108-114,119-124
+gem/lib/ruby_ui/codeblock/codeblock_footer.rb
+  s_2b905a913f5829::t_3dda533de1348c 1-22
+gem/lib/ruby_ui/codeblock/codeblock_header.rb
+  s_2b905a913f5829::t_192434c6c62c73 1-23
+gem/lib/ruby_ui/codeblock/codeblock_line.rb
+  s_2b905a913f5829::t_d666b3c50b44db 1-48
+gem/lib/ruby_ui/codeblock/codeblock_theme.rb
+  s_2b905a913f5829::t_bbe96423287cca 3-4,6-17,20,22-23
+gem/lib/ruby_ui/codeblock/codeblock_title.rb
+  s_2b905a913f5829::t_2bef0b05e0da1d 4-5,14-20
+gem/lib/ruby_ui/collapsible/collapsible.rb
+  s_2b905a913f5829::t_6aaa4432658412 3-4,6-16,18,20-21,26-27,29-30,38,40-44
+gem/lib/ruby_ui/collapsible/collapsible_content.rb
+  s_2b905a913f5829::t_690637655593a1 4-20,22-26,28-33,40-44
+gem/lib/ruby_ui/collapsible/collapsible_controller.js
+  s_2b905a913f5829::t_0f52d88f26527b 3-8,10,12-18,22-50,54-173,176-179,182-184,187-189
+gem/lib/ruby_ui/collapsible/collapsible_docs.rb
+  s_2b905a913f5829::t_b23cbb3bbe837e 11,13-18,21-24,26-28,30-37,40-44,49,51-54,56-57,59-70,72-79,86-110,119-134,137-143,145
+gem/lib/ruby_ui/collapsible/collapsible_trigger.rb
+  s_2b905a913f5829::t_05100443e78ef6 4-9,11-17,19-39,44-50,53,55-56
+gem/lib/ruby_ui/combobox/combobox.rb
+  s_2b905a913f5829::t_63370226bb9819 3-4,6-9,11-16,18-20,25-29,31-32,39,41-46,48-49
+gem/lib/ruby_ui/combobox/combobox_chip.rb
+  s_2b905a913f5829::t_809275c3a8c747 4-8,12,14-15,21-27,36-37,39-40,44-54
+gem/lib/ruby_ui/combobox/combobox_chips.rb
+  s_2b905a913f5829::t_8976bacfecd1e2 4-14,20-23,32-35,37-44
+gem/lib/ruby_ui/combobox/combobox_chips_input.rb
+  s_2b905a913f5829::t_cfcc93892a56a3 4-9,11,16,23-25,27,29-31,33-36
+gem/lib/ruby_ui/combobox/combobox_content.rb
+  s_2b905a913f5829::t_c5c5dddca4dcaa 1-57
+gem/lib/ruby_ui/combobox/combobox_context.rb
+  s_2b905a913f5829::t_0ec4a34c611a5c 1-17
+gem/lib/ruby_ui/combobox/combobox_controller.js
+  s_2b905a913f5829::t_0037ae8ddc9e94 2,5-9,12,14,17-18,20-22,24-29,32-48,52-77,80-81,84-98,100-104,107-115,119-122,125-127,130-134,136-180,182-186,189-206,208-217,219,222-237,239-243,246-248,251-290,292-300,302-305,307-314,316-319,321,323-327,329-331,333-342,344-353,356-368,370-374,376-377,379-386,389-428,430-439,441-451,454-458,460-461,463-473,476-488,490-503,505-549,552-560,563-599,604-641
+gem/lib/ruby_ui/combobox/combobox_docs.rb
+  s_2b905a913f5829::t_e5624701a3527f 7,11,13-17,19-23,31,33-37,39-43,51,53-57,59-62,64-68,77,79-83,85-88,96,98-101,103,113-117,119-126,128-138,146,148-161,163-165,167-183,189,191-211,213-220,222-233,235-247,249-264,268,270
+gem/lib/ruby_ui/combobox/combobox_empty.rb
+  s_2b905a913f5829::t_164a92229ba443 1-22
+gem/lib/ruby_ui/combobox/combobox_group.rb
+  s_2b905a913f5829::t_da8316cce67947 1-35
+gem/lib/ruby_ui/combobox/combobox_input.rb
+  s_2b905a913f5829::t_20873bc3f4ca39 1-120
+gem/lib/ruby_ui/combobox/combobox_item.rb
+  s_2b905a913f5829::t_09452a4045ad19 4-7,9-28,30-34,39-81,85,87-94
+gem/lib/ruby_ui/combobox/combobox_label.rb
+  s_2b905a913f5829::t_e372f74dca2662 1-26
+gem/lib/ruby_ui/combobox/combobox_list.rb
+  s_2b905a913f5829::t_03e1753e169836 5-6,8,15-26
+gem/lib/ruby_ui/combobox/combobox_separator.rb
+  s_2b905a913f5829::t_97757393954328 1-20
+gem/lib/ruby_ui/combobox/combobox_toggle_all.rb
+  s_2b905a913f5829::t_8a2df7e0912e7c 1-41
+gem/lib/ruby_ui/combobox/combobox_trigger.rb
+  s_2b905a913f5829::t_9e206e89c7a4f0 4-7,9,11-18,26-28,31,36,44-47
+gem/lib/ruby_ui/combobox/combobox_value.rb
+  s_2b905a913f5829::t_2e4e0cc07da5b8 4-12,14,21,23-26
+gem/lib/ruby_ui/command/command.rb
+  s_2b905a913f5829::t_be9c6480374e5c 4-7,9-13,17-29
+gem/lib/ruby_ui/command/command_controller.js
+  s_2b905a913f5829::t_06061b198ac5a2 4-6,8-14,16-17,20-28,32-35,38-42,45-47,50-56,59-65,67-69,71-88,91-113,116-143,145-147,149-156,158-160,163-170,173-190,192-197,201-204,206-209,212-213,216-217,220-221,224-225,228-241,244-248,250-251,253-255,258-260,263-265
+gem/lib/ruby_ui/command/command_dialog.rb
+  s_2b905a913f5829::t_57d22e436699af 4-7,9-13,16-21
+gem/lib/ruby_ui/command/command_dialog_content.rb
+  s_2b905a913f5829::t_58861c64e4ee4f 4-5,8-12,14,21
+gem/lib/ruby_ui/command/command_dialog_trigger.rb
+  s_2b905a913f5829::t_970728075ed629 4-5,13,18,24
+gem/lib/ruby_ui/command/command_docs.rb
+  s_2b905a913f5829::t_39e621674b8ef8 7,11,13-35,38-51,55-64,69-73,75-92,94-104,114,116-130,134-161,166-168,170-174,176
+gem/lib/ruby_ui/command/command_empty.rb
+  s_2b905a913f5829::t_c69519e2e08c68 4,15-17
+gem/lib/ruby_ui/command/command_group.rb
+  s_2b905a913f5829::t_ab6f39f05e99c2 4-5,12,14-21,30-31
+gem/lib/ruby_ui/command/command_input.rb
+  s_2b905a913f5829::t_eacc1d42752962 4-6,8-15,22-28,37-44,46-47,53-54,58-59,61-68
+gem/lib/ruby_ui/command/command_item.rb
+  s_2b905a913f5829::t_9b023a7016e18a 4-8,10,12,14,19,27-33,35,37-41
+gem/lib/ruby_ui/command/command_list.rb
+  s_2b905a913f5829::t_e9276336247e4f 4,14-17
+gem/lib/ruby_ui/command/command_separator.rb
+  s_2b905a913f5829::t_f987a381d0c2a2 1-20
+gem/lib/ruby_ui/command/command_shortcut.rb
+  s_2b905a913f5829::t_285c9bcf49bb22 1-19
+gem/lib/ruby_ui/context_menu/context_menu.rb
+  s_2b905a913f5829::t_a5716a3174bbf7 4,6-10,22-23
+gem/lib/ruby_ui/context_menu/context_menu_checkbox_item.rb
+  s_2b905a913f5829::t_93e1cbe3f005ac 1-48
+gem/lib/ruby_ui/context_menu/context_menu_content.rb
+  s_2b905a913f5829::t_152bbb6160fd9a 4-6,8-18,29-51
+gem/lib/ruby_ui/context_menu/context_menu_controller.js
+  s_2b905a913f5829::t_2e004b3600c85f 2-11,14,17-30,34-50,53-54,57-58,61-65,68-87,90-104,106,109-117,120-123,125-130,132-136,139-150,152-154,157,159-174,177-186,189,191-194,198-209,213-221,223-266,268-272,274-287,289-296,298-299,302-361,363-365,368-384
+gem/lib/ruby_ui/context_menu/context_menu_docs.rb
+  s_2b905a913f5829::t_9609bb5b466b92 11,14-20,26,28-37,39-103,106-121,123-140,142-181
+gem/lib/ruby_ui/context_menu/context_menu_group.rb
+  s_2b905a913f5829::t_12ca807bb6a1cc 1-34
+gem/lib/ruby_ui/context_menu/context_menu_item.rb
+  s_2b905a913f5829::t_eacc6eedb93b30 4-8,10-20,22-23,25-27,32-33,36-39,43,50-58
+gem/lib/ruby_ui/context_menu/context_menu_item_indicator.rb
+  s_2b905a913f5829::t_0c4870a13f4ac3 4-17,19,28-29,37-39
+gem/lib/ruby_ui/context_menu/context_menu_label.rb
+  s_2b905a913f5829::t_923aa00d363ad4 4-5,7,9,13-19,26-27
+gem/lib/ruby_ui/context_menu/context_menu_radio_group.rb
+  s_2b905a913f5829::t_1a98e6ba525b3f 1-16
+gem/lib/ruby_ui/context_menu/context_menu_radio_item.rb
+  s_2b905a913f5829::t_e7090a52249b94 1-48
+gem/lib/ruby_ui/context_menu/context_menu_separator.rb
+  s_2b905a913f5829::t_19b6938e7fb101 15-16
+gem/lib/ruby_ui/context_menu/context_menu_shortcut.rb
+  s_2b905a913f5829::t_8a3c158e37674b 4,13-14
+gem/lib/ruby_ui/context_menu/context_menu_trigger.rb
+  s_2b905a913f5829::t_a847228dcdec72 4,15,18-19
+gem/lib/ruby_ui/data_table/data_table_column_toggle.rb
+  s_2b905a913f5829::t_c498a3e3e1282f 16,18,21,23-27,36-55,59-62
+gem/lib/ruby_ui/data_table/data_table_column_visibility_controller.js
+  s_2b905a913f5829::t_1dc33e95fd02ec 4-5,9-10,13,15-16
+gem/lib/ruby_ui/data_table/data_table_controller.js
+  s_2b905a913f5829::t_ebdb6fc2eecb2c 44-51
+gem/lib/ruby_ui/data_table/data_table_docs.rb
+  s_2b905a913f5829::t_a1ee214be1f339 29,31,54-58,80,82,84,92,122,147
+gem/lib/ruby_ui/data_table/data_table_pagination.rb
+  s_2b905a913f5829::t_9d435eb62795c8 10-20,25,32-38,70-76,80-86,88-91,95-99
+gem/lib/ruby_ui/data_table/data_table_pagination_bar.rb
+  s_2b905a913f5829::t_1d2347c0ead762 12
+gem/lib/ruby_ui/data_table/data_table_per_page_select.rb
+  s_2b905a913f5829::t_249bbc751f9124 3-4,7,13-16,24-25,32-38,52
+gem/lib/ruby_ui/data_table/data_table_selection_summary.rb
+  s_2b905a913f5829::t_d81ce4c413145f 20
+gem/lib/ruby_ui/data_table/data_table_sort_head.rb
+  s_2b905a913f5829::t_70925f0cd06ea9 21-22,32-36
+gem/lib/ruby_ui/date_picker/date_picker.rb
+  s_2b905a913f5829::t_68df063ef7644d 3,7-17,19-35,54-57,60,70-80,89-102,104,107-144,149,154-164,168-181,185-210
+gem/lib/ruby_ui/date_picker/date_picker_controller.js
+  s_2b905a913f5829::t_73cbaa2a5462ac 1-169
+gem/lib/ruby_ui/date_picker/date_picker_docs.rb
+  s_2b905a913f5829::t_59f59803269fdb 8,12,14-32
+gem/lib/ruby_ui/dialog/dialog_content.rb
+  s_2b905a913f5829::t_bb9e3a20bb89b9 14-16,18,25,34,36-39,47,52-58,60-61
+gem/lib/ruby_ui/dialog/dialog_controller.js
+  s_2b905a913f5829::t_0dc220f3fae0f8 3-5,8,17,19-21,28,30-31,37-39,42,46-69,73-77,82-156,158-159,161-227
+gem/lib/ruby_ui/dialog/dialog_description.rb
+  s_2b905a913f5829::t_398646a243c79d 13-14
+gem/lib/ruby_ui/dialog/dialog_docs.rb
+  s_2b905a913f5829::t_917bee884c98d2 24,27,42,55,58,81,84,100-118
+gem/lib/ruby_ui/dialog/dialog_footer.rb
+  s_2b905a913f5829::t_ac49940748de66 5-14,21,24-27
+gem/lib/ruby_ui/dialog/dialog_header.rb
+  s_2b905a913f5829::t_ba34906aee017a 13
+gem/lib/ruby_ui/dialog/dialog_middle.rb
+  s_2b905a913f5829::t_3732237e29d1a6 11,13
+gem/lib/ruby_ui/dialog/dialog_title.rb
+  s_2b905a913f5829::t_a6349b1ea681b8 6,13-14
+gem/lib/ruby_ui/dialog/dialog_trigger.rb
+  s_2b905a913f5829::t_979d7c37e6aeae 14
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu.rb
+  s_2b905a913f5829::t_589797f42d4a64 4-8,10-12,26,28-29
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_checkbox_item.rb
+  s_2b905a913f5829::t_679520d5545b79 1-46
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_content.rb
+  s_2b905a913f5829::t_346276c484726f 4-7,9-21,28-30,32-41,44-51
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_controller.js
+  s_2b905a913f5829::t_d39ea35b665b6f 2-20,23,25-28,31-40,42-53,57-63,66-78,81-84,87-89,91-104,107-118,121-180,182,185-206,208,211-220,223-229,231-240,242-252,254-255,257-275,278-284,286-289,291-309,311-318,321-326,330-341,345-355,357-367,369-392,394-405,407-408,410-418,421-490,494-498,502-628,631-636
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_docs.rb
+  s_2b905a913f5829::t_c7f9a3e48fd9a7 11,18-27,33,35-37,39-40,42-58,61-63,65-69,71-83,86-88,90-101,104-106,108-119,122-124,126-135,137-138,140-142,144-157,159-161,163-171,173-175,177-197,200-202,204-216,219-221,223-231
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_group.rb
+  s_2b905a913f5829::t_393b7dc337c3c4 1-34
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_item.rb
+  s_2b905a913f5829::t_5bc09b147abbc0 4-7,9-19,21-25,29,34-39,41-42,45-53
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_item_indicator.rb
+  s_2b905a913f5829::t_1af5df49a27351 1-47
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_label.rb
+  s_2b905a913f5829::t_55c2fd98560e86 4-5,7-11,13-19,26-27
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_radio_group.rb
+  s_2b905a913f5829::t_afd29c7cda941e 1-16
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_radio_item.rb
+  s_2b905a913f5829::t_6aceec92e19472 1-48
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_separator.rb
+  s_2b905a913f5829::t_b2ec9a352f3b77 15-16
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_shortcut.rb
+  s_2b905a913f5829::t_a72bde6cf3a470 1-19
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_sub.rb
+  s_2b905a913f5829::t_2be8a5a3424467 1-28
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_sub_content.rb
+  s_2b905a913f5829::t_c72e16afda80cc 1-60
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_sub_trigger.rb
+  s_2b905a913f5829::t_73a44391af3c8d 1-71
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_trigger.rb
+  s_2b905a913f5829::t_4728d80ab366f7 4-7,17-21
+gem/lib/ruby_ui/empty/empty.rb
+  s_2b905a913f5829::t_bd4117e4dd828b 14
+gem/lib/ruby_ui/empty/empty_docs.rb
+  s_2b905a913f5829::t_72312a48e7f04b 28,30,49
+gem/lib/ruby_ui/empty/empty_media.rb
+  s_2b905a913f5829::t_58b5e23ea65b83 7
+gem/lib/ruby_ui/empty/empty_title.rb
+  s_2b905a913f5829::t_a11fda516f1866 14
+gem/lib/ruby_ui/form/form.rb
+  s_2b905a913f5829::t_265dca46e1840e 12-17
+gem/lib/ruby_ui/form/form_controller.js
+  s_2b905a913f5829::t_ac1d6e0269ae17 1-35
+gem/lib/ruby_ui/form/form_docs.rb
+  s_2b905a913f5829::t_3420ebb7852b95 15-16,27-29,34,36-42,47,51-53,60,64-67,74-83,87-89,96-181,213,215-216,218-220,223-226,228-232,234-238,329-331
+gem/lib/ruby_ui/form/form_field.rb
+  s_2b905a913f5829::t_2b9f8c904fc57e 5-26,35,37-39,41-44
+gem/lib/ruby_ui/form/form_field_content.rb
+  s_2b905a913f5829::t_6b2978a20890a8 4,13-14
+gem/lib/ruby_ui/form/form_field_controller.js
+  s_2b905a913f5829::t_bb81c081497e80 3-4,6,10-13,15,17,19,24-26,43-58,60-92,94,97,100
+gem/lib/ruby_ui/form/form_field_error.rb
+  s_2b905a913f5829::t_182f0b3045454f 5-28,35,37,40
+gem/lib/ruby_ui/form/form_field_group.rb
+  s_2b905a913f5829::t_94084606ccfda1 1-21
+gem/lib/ruby_ui/form/form_field_hint.rb
+  s_2b905a913f5829::t_f68e94f3aa29e5 12-27
+gem/lib/ruby_ui/form/form_field_label.rb
+  s_2b905a913f5829::t_5d5ffcfb2d8d8d 13,15-24
+gem/lib/ruby_ui/form/form_field_legend.rb
+  s_2b905a913f5829::t_95fcadabd705a5 1-27
+gem/lib/ruby_ui/form/form_field_separator.rb
+  s_2b905a913f5829::t_9794626af693d4 4,6-14,18-19,22-23
+gem/lib/ruby_ui/form/form_field_set.rb
+  s_2b905a913f5829::t_9d4ecf028b9762 1-18
+gem/lib/ruby_ui/form/form_field_title.rb
+  s_2b905a913f5829::t_74972bcaea1507 1-20
+gem/lib/ruby_ui/hover_card/hover_card.rb
+  s_2b905a913f5829::t_12cf1c065bd404 4-10,12-13,27,29
+gem/lib/ruby_ui/hover_card/hover_card_content.rb
+  s_2b905a913f5829::t_1007bcdb8a4f9c 4-8,10-20,29,31,33-39,41-48
+gem/lib/ruby_ui/hover_card/hover_card_controller.js
+  s_2b905a913f5829::t_518618248d19bb 2-12,15,23-26,28-30,33,35-67,71-92,99,101-106,108-112,115,117,121,123,127-135,141-146,148-149,151-163,166-169,172-186,188-195,198-202,205-255,259,281-285
+gem/lib/ruby_ui/hover_card/hover_card_docs.rb
+  s_2b905a913f5829::t_e1f8789a65e761 55-71,74,79
+gem/lib/ruby_ui/hover_card/hover_card_trigger.rb
+  s_2b905a913f5829::t_a75080c69dbcf3 4-6,8-13,23-26
+gem/lib/ruby_ui/input/input.rb
+  s_2b905a913f5829::t_4d7fa616fb0b90 5-7,17-28,32,35,37,39-42
+gem/lib/ruby_ui/input/input_docs.rb
+  s_2b905a913f5829::t_f15ad8eed787a0 37,39-40
+gem/lib/ruby_ui/popover/popover_controller.js
+  s_2b905a913f5829::t_ec369ea8cfa544 101,107-110,116,120
+gem/test/generators/component_generator_test.rb
+  s_2b905a913f5829::t_f66a7acfac43df 76
+gem/test/ruby_ui/accordion_test.rb
+  s_2b905a913f5829::t_568f8b0fdafcaa 6-13,15-16,20-23,25-28,31-32,34-44,49,52-56,58,60-61,64-67,70-76,78,81-91,94,96-107,112-137,140-143,146,148,154
+gem/test/ruby_ui/alert_dialog_test.rb
+  s_2b905a913f5829::t_367cc6052dcced 27-227
+gem/test/ruby_ui/alert_test.rb
+  s_2b905a913f5829::t_90e0b11f2126fe 11,15-62
+gem/test/ruby_ui/aspect_ratio_test.rb
+  s_2b905a913f5829::t_602ae1f9e10792 8,19-97
+gem/test/ruby_ui/avatar_test.rb
+  s_2b905a913f5829::t_b7fda2ef7f009c 19,35-137
+gem/test/ruby_ui/badge_test.rb
+  s_2b905a913f5829::t_550df55bbb6427 13-117
+gem/test/ruby_ui/breadcrumb_test.rb
+  s_2b905a913f5829::t_4de638f1bb7d3b 6-7,14-17,28-72,74-77
+gem/test/ruby_ui/bubble_test.rb
+  s_2b905a913f5829::t_dcfb83c3c6e93d 83-101
+gem/test/ruby_ui/button_test.rb
+  s_2b905a913f5829::t_89bab080a4f7bf 6-62,64-142,144-145
+gem/test/ruby_ui/calendar_test.rb
+  s_2b905a913f5829::t_e99696a6af3636 8,23-54
+gem/test/ruby_ui/card_test.rb
+  s_2b905a913f5829::t_39ec5df98e7cb9 12,14-15,20-105
+gem/test/ruby_ui/carousel_test.rb
+  s_2b905a913f5829::t_99bfe1e88b88ec 49-214
+gem/test/ruby_ui/checkbox_group_test.rb
+  s_2b905a913f5829::t_8a14ec2a534d27 1-47
+gem/test/ruby_ui/checkbox_test.rb
+  s_2b905a913f5829::t_ad12f3afd9ca34 13-71
+gem/test/ruby_ui/codeblock_test.rb
+  s_2b905a913f5829::t_1215a6bdf8786f 6-35,37-103,105-119,121-127,129-132
+gem/test/ruby_ui/collapsible_test.rb
+  s_2b905a913f5829::t_31c1ca9b00c7dc 6-10,13-127,129-130
+gem/test/ruby_ui/combobox_test.rb
+  s_2b905a913f5829::t_48646a7ab2151a 6-12,14-17,19,24,26-30,33-34,36-42,44-45,47-57,61,64-65,67-70,73-78,81-88,91-94,97-103,106-109,112-115,118-123,126-131,134-138,141-149,152-159,162-170,173-174,177-185,188-193,196-201,204-207,210-215,218-222,225-229,232-235,238-241,244-254,257-260,263-266,269-272,275-279
+gem/test/ruby_ui/command_test.rb
+  s_2b905a913f5829::t_8e6abe023948a8 6-45,47-51,53-57,61,65,67,74-84,87,89-94,97-101
+gem/test/ruby_ui/context_menu_test.rb
+  s_2b905a913f5829::t_1730b920e0cdf9 6,11-14,16,18-23,29-111,114,116-118,122-123,126-164,166-168,172-198
+gem/test/ruby_ui/data_table_column_toggle_test.rb
+  s_2b905a913f5829::t_d814e8ec16de05 17,38-45
+gem/test/ruby_ui/data_table_pagination_test.rb
+  s_2b905a913f5829::t_04afb5f6fe5764 33-64
+gem/test/ruby_ui/data_table_per_page_select_test.rb
+  s_2b905a913f5829::t_81c2693b7b9f50 50-76
+gem/test/ruby_ui/data_table_sort_head_test.rb
+  s_2b905a913f5829::t_ff2cdf5bfe3032 39-58
+gem/test/ruby_ui/date_picker_test.rb
+  s_2b905a913f5829::t_80e97e2fe8c81f 4,12-62,73-138
+gem/test/ruby_ui/dialog_test.rb
+  s_2b905a913f5829::t_0eec1930a593c9 18,21,78-90,95,104-106,118,122-230,251-319,332-376
+gem/test/ruby_ui/dropdown_menu_item_test.rb
+  s_2b905a913f5829::t_c7d90c5864c058 6-16,19,21,24-25,28,37-60
+gem/test/ruby_ui/dropdown_menu_test.rb
+  s_2b905a913f5829::t_76bf59effb7599 6,9,13-30,35-41,44-90,92-93,95-101,104-111,113-115,119-122,125-161,163-165,169-174,177-178,180-183,186-190
+gem/test/ruby_ui/empty_test.rb
+  s_2b905a913f5829::t_f614e7ea329466 39-62
+gem/test/ruby_ui/form_test.rb
+  s_2b905a913f5829::t_2bd3a9ef976bbe 20-208
+gem/test/ruby_ui/hover_card_test.rb
+  s_2b905a913f5829::t_b950b19fec7e8c 26,28-31,34-43,45-48,51-55,57-71,73-76,79-101,104,107-108,110,113-115,117-118,121,123,125
+gem/test/ruby_ui/input_test.rb
+  s_2b905a913f5829::t_e21d7394de913c 21-69
+mcp/README.md
+  s_2b905a913f5829::t_77eb4ad1f88fa5 22,41
+mcp/Rakefile
+  s_2b905a913f5829::t_dcb7b16c91eabf 17
+mcp/data/registry/components/accordion.json
+  s_2b905a913f5829::t_4827dcfca9633f 1-55
+mcp/data/registry/components/alert.json
+  s_2b905a913f5829::t_5989c97ef2b83b 1-71
+mcp/data/registry/components/alert_dialog.json
+  s_2b905a913f5829::t_5f53d42ccab61c 1-76
+mcp/data/registry/components/aspect_ratio.json
+  s_2b905a913f5829::t_917df35bc2731b 1-44
+mcp/data/registry/components/avatar.json
+  s_2b905a913f5829::t_5f9523e263cff8 1-78
+mcp/data/registry/components/badge.json
+  s_2b905a913f5829::t_71f7daf60ddc6a 1-74
+mcp/data/registry/components/breadcrumb.json
+  s_2b905a913f5829::t_ce3fd749c443d4 1-63
+mcp/data/registry/components/bubble.json
+  s_2b905a913f5829::t_3778278acae467 1-81
+mcp/data/registry/components/button.json
+  s_2b905a913f5829::t_89569223040299 1-98
+mcp/data/registry/components/calendar.json
+  s_2b905a913f5829::t_289d2cfa506709 1-77
+mcp/data/registry/components/card.json
+  s_2b905a913f5829::t_5af5f515a3467e 1-68
+mcp/data/registry/components/carousel.json
+  s_2b905a913f5829::t_b9481ff9507967 1-66
+mcp/data/registry/components/chart.json
+  s_2b905a913f5829::t_b59811ed12424b 1-45
+mcp/data/registry/components/checkbox.json
+  s_2b905a913f5829::t_bf77e74b4bbadd 1-66
+mcp/data/registry/components/clipboard.json
+  s_2b905a913f5829::t_a15fc33f19d648 1-42
+mcp/data/registry/components/codeblock.json
+  s_2b905a913f5829::t_996e3b8ce92d9a 1-104
+mcp/data/registry/components/collapsible.json
+  s_2b905a913f5829::t_3151fdbbdbbe93 1-63
+mcp/data/registry/components/combobox.json
+  s_2b905a913f5829::t_0e12c0104c9b0b 1-147
+mcp/data/registry/components/command.json
+  s_2b905a913f5829::t_bdb2eb90fba444 1-97
+mcp/data/registry/components/context_menu.json
+  s_2b905a913f5829::t_22613db265cb49 1-114
+mcp/data/registry/components/data_table.json
+  s_2b905a913f5829::t_279610bbbb3951 1-127
+mcp/data/registry/components/date_picker.json
+  s_2b905a913f5829::t_76d873373a28d4 1-44
+mcp/data/registry/components/dialog.json
+  s_2b905a913f5829::t_f975e04be821da 1-68
+mcp/data/registry/components/dropdown_menu.json
+  s_2b905a913f5829::t_fd9b05a5de0b41 1-136
+mcp/data/registry/components/empty.json
+  s_2b905a913f5829::t_884eeedd4ac3fd 1-54
+mcp/data/registry/components/form.json
+  s_2b905a913f5829::t_46880adf559b3a 1-134
+mcp/data/registry/components/hover_card.json
+  s_2b905a913f5829::t_276c8e993129bf 1-48
+mcp/data/registry/components/input.json
+  s_2b905a913f5829::t_cb672ad312c8ca 1-49
+mcp/data/registry/components/input_otp.json
+  s_2b905a913f5829::t_dd533a183f6138 1-70
+mcp/data/registry/components/link.json
+  s_2b905a913f5829::t_84c6d38aaecb07 1-59
+mcp/data/registry/components/masked_input.json
+  s_2b905a913f5829::t_6d2e768939d9af 1-42
+mcp/data/registry/components/message.json
+  s_2b905a913f5829::t_0b66d4d5aaf690 1-62
+mcp/data/registry/components/message_scroller.json
+  s_2b905a913f5829::t_c31da90282426d 1-66
+mcp/data/registry/components/native_select.json
+  s_2b905a913f5829::t_147863b32e8f35 1-51
+mcp/data/registry/components/pagination.json
+  s_2b905a913f5829::t_074b35b14d67d8 1-38
+mcp/data/registry/components/popover.json
+  s_2b905a913f5829::t_d121d81386f91d 2-45,47
+mcp/data/registry/components/progress.json
+  s_2b905a913f5829::t_8fd8634b273064 1-29
+mcp/data/registry/components/radio_button.json
+  s_2b905a913f5829::t_c3b4f105593948 1-39
+mcp/data/registry/components/select.json
+  s_2b905a913f5829::t_001b3b368358f3 1-87
+mcp/data/registry/components/separator.json
+  s_2b905a913f5829::t_42c6065c28988e 1-24
+mcp/data/registry/components/sheet.json
+  s_2b905a913f5829::t_82237f4b549a81 1-65
+mcp/data/registry/components/shortcut_key.json
+  s_2b905a913f5829::t_0626f874aec344 1-24
+mcp/data/registry/components/sidebar.json
+  s_2b905a913f5829::t_725c13c9a21e97 1-128
+mcp/data/registry/components/skeleton.json
+  s_2b905a913f5829::t_7985a5bc901d60 1-24
+mcp/data/registry/components/switch.json
+  s_2b905a913f5829::t_8cbc4989a8ff21 1-44
+mcp/data/registry/components/table.json
+  s_2b905a913f5829::t_e478153980d055 1-52
+mcp/data/registry/components/tabs.json
+  s_2b905a913f5829::t_effe826ea834d8 1-60
+mcp/data/registry/components/textarea.json
+  s_2b905a913f5829::t_1d11b39ff4887f 1-39
+mcp/data/registry/components/theme_toggle.json
+  s_2b905a913f5829::t_3f4a76fc317ea0 1-35
+mcp/data/registry/components/toast.json
+  s_2b905a913f5829::t_13eda4d0f86a54 1-58
+mcp/data/registry/components/toggle.json
+  s_2b905a913f5829::t_4579c09d68f9be 1-22
+mcp/data/registry/components/toggle_group.json
+  s_2b905a913f5829::t_6b252a75728922 1-28
+mcp/data/registry/components/tooltip.json
+  s_2b905a913f5829::t_765296b387c3f0 1-45
+mcp/data/registry/components/typography.json
+  s_2b905a913f5829::t_6644120a5430da 1-100
+mcp/data/registry/index.json
+  s_2b905a913f5829::t_b0e71ba54f0a92 1-3
+mcp/exe/ruby-ui-mcp-build
+  s_2b905a913f5829::t_fe64da8370aa1f 8
+mcp/lib/ruby_ui/mcp/builders/registry_builder.rb
+  s_2b905a913f5829::t_34b7a1561acbda 26-40,144-146
+mcp/lib/ruby_ui/mcp/registry.rb
+  s_2b905a913f5829::t_ca4dce17e5636e 16,19-20,22-29
+mcp/test/builders/registry_builder_test.rb
+  s_2b905a913f5829::t_60ebbfcf022194 3,37-38,42-57
+mcp/test/fixtures/fake_gem/lib/ruby_ui/button/button_docs.rb
+  s_2b905a913f5829::t_2fda2117ad6198 7-10
+mcp/test/registry_test.rb
+  s_2b905a913f5829::t_a93f2b30420bf4 2,42-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "43adc9a58be23eeb50827c466e3fcf9871e73402",
+  "prompts": {},
+  "sessions": {
+    "s_2b905a913f5829": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "89d0f25e-263e-434c-905a-518a8e23f95d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}
