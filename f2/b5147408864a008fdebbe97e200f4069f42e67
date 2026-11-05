@@ -1,0 +1,31 @@
+gem/lib/ruby_ui/data_table/data_table_toolbar.rb
+  s_eecd50bda77088::t_5800484545252d 12-14
+gem/test/ruby_ui/data_table_toolbar_test.rb
+  s_eecd50bda77088::t_8278001dc76635 11-15
+mcp/data/registry/components/data_table.json
+  s_d9766ec3c519cc::t_92e649adaf0b15 83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f2b5147408864a008fdebbe97e200f4069f42e67",
+  "prompts": {},
+  "sessions": {
+    "s_d9766ec3c519cc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7b6544dc-658c-4dfc-8e05-488401089923",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    },
+    "s_eecd50bda77088": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7d07b2dd-0779-49d8-bf36-eef23c0b7d94",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}
