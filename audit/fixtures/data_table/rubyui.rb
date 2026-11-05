@@ -44,8 +44,8 @@ module ShadcnAuditFixtures
                     TableRow do
                       TableCell(class: "w-8") { div(class: "flex items-center justify-center") { DataTableRowCheckbox(value: id, label: "Select row") } }
                       TableCell { header }
-                      TableCell(data: {column: "type"}) { Badge(variant: :outline, size: :sm) { type } }
-                      TableCell(data: {column: "status"}) { Badge(variant: :outline, size: :sm) { status } }
+                      TableCell(data: {column: "type"}) { Badge(variant: :outline, class: "px-1.5 text-muted-foreground") { type } }
+                      TableCell(data: {column: "status"}) { Badge(variant: :outline, class: "px-1.5 text-muted-foreground") { status } }
                       TableCell(data: {column: "reviewer"}) { reviewer }
                     end
                   end
