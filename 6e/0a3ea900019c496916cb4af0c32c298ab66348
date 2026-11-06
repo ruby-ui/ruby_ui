@@ -1,0 +1,23 @@
+gem/lib/ruby_ui/data_table/data_table_toolbar.rb
+  s_4417c6fa77e9d3::t_e249f84332736d 12-15
+gem/test/ruby_ui/data_table_toolbar_test.rb
+  s_4417c6fa77e9d3::t_905423e8db1ec4 11-15
+mcp/data/registry/components/data_table.json
+  s_4417c6fa77e9d3::t_a1cbd5c5cdec9e 87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6e0a3ea900019c496916cb4af0c32c298ab66348",
+  "prompts": {},
+  "sessions": {
+    "s_4417c6fa77e9d3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba15bd60-23db-4e75-b814-3d74e31ab601",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
