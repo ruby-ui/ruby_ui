@@ -84,7 +84,7 @@
     },
     {
       "path": "data_table_toolbar.rb",
-      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class DataTableToolbar < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      {class: \"flex items-center justify-between gap-2\"}\n    end\n  end\nend\n"
+      "content": "# frozen_string_literal: true\n\nmodule RubyUI\n  class DataTableToolbar < Base\n    def view_template(&)\n      div(**attrs, &)\n    end\n\n    private\n\n    def default_attrs\n      # mb-6 overrides DataTable's space-y-4 (zero specificity) below the\n      # toolbar: the dashboard-01 block puts 24px (gap-6) between the toolbar\n      # and the table, 16px between the table and the pagination.\n      {class: \"mb-6 flex items-center justify-between gap-2\"}\n    end\n  end\nend\n"
     }
   ],
   "dependencies": {
