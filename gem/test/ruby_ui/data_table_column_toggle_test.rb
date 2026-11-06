@@ -44,4 +44,10 @@ class RubyUI::DataTableColumnToggleTest < ComponentTest
     assert_match(/<svg[^>]*data-icon="inline-start"/, output)
     assert_match(/<svg[^>]*data-icon="inline-end"/, output)
   end
+
+  def test_wrappers_stay_out_of_layout
+    output = phlex { RubyUI.DataTableColumnToggle(columns: [{key: :email, label: "Email"}]) }
+    assert_match(/<div class="contents" data-controller="ruby-ui--data-table-column-visibility"/, output)
+    assert_match(/<div[^>]*class="contents"[^>]*data-slot="dropdown-menu"|<div[^>]*data-slot="dropdown-menu"[^>]*class="contents"/, output)
+  end
 end

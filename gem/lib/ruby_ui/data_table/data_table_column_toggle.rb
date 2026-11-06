@@ -10,7 +10,9 @@ module RubyUI
 
     def view_template
       div(**attrs) do
-        render RubyUI::DropdownMenu.new do
+        # Both wrappers are display: contents so the button is a flex item of
+        # the toolbar, as shadcn's trigger (inline-flex blockifies to flex).
+        render RubyUI::DropdownMenu.new(class: "contents") do
           render RubyUI::DropdownMenuTrigger.new do
             render RubyUI::Button.new(variant: :outline, size: :sm) do
               columns_icon
@@ -55,7 +57,7 @@ module RubyUI
 
     def default_attrs
       {
-        class: "relative",
+        class: "contents",
         data: {
           controller: "ruby-ui--data-table-column-visibility",
           action: "ruby-ui--dropdown-menu:change->ruby-ui--data-table-column-visibility#toggle"
