@@ -1,0 +1,21 @@
+gem/lib/ruby_ui/accordion/accordion_controller.js
+  s_6ac2f984413400::t_6a7e708d11dab0 82-91,99-101,104,109-117
+docs/app/javascript/controllers/ruby_ui/accordion_controller.js
+  s_6ac2f984413400::t_3df8de0dc6beee 82-91,99-101,104,109-117
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "e7f24386dd5b00e73c995459913298a5ca1b9f70",
+  "prompts": {},
+  "sessions": {
+    "s_6ac2f984413400": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1b84d512-bde1-4968-836a-2e985ed8ec26",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

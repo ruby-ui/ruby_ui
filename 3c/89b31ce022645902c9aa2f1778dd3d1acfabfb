@@ -1,0 +1,23 @@
+gem/lib/ruby_ui/combobox/combobox.rb
+  s_effb98306d8c4d::t_8a027063224efd 5,7
+  s_effb98306d8c4d::t_c52de1c9e6d300 23
+gem/lib/ruby_ui/combobox/combobox_controller.js
+  s_effb98306d8c4d::t_f1524e16ff87b9 179
+  s_effb98306d8c4d::t_3a034bad58456a 8-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "3c89b31ce022645902c9aa2f1778dd3d1acfabfb",
+  "prompts": {},
+  "sessions": {
+    "s_effb98306d8c4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "772f46af-ec76-4aa7-893c-8163290f87d1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

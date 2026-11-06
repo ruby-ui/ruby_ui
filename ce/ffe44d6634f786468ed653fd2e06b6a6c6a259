@@ -1,0 +1,19 @@
+audit/fixtures/data_table/rubyui.rb
+  s_eecd50bda77088::t_2017f9865213fd 47-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ceffe44d6634f786468ed653fd2e06b6a6c6a259",
+  "prompts": {},
+  "sessions": {
+    "s_eecd50bda77088": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7d07b2dd-0779-49d8-bf36-eef23c0b7d94",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

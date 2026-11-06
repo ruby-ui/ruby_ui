@@ -1,0 +1,19 @@
+mcp/data/registry.json
+  s_4a8324d76ff0ec::t_f94184c75f5677 1185
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bf60b9864565c189d890c036049387387e787b3d",
+  "prompts": {},
+  "sessions": {
+    "s_4a8324d76ff0ec": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f13fa9cf-d687-4ebf-b34c-7cdc8c36a7c1",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

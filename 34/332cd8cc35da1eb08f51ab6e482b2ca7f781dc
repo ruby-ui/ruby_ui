@@ -1,0 +1,23 @@
+gem/test/ruby_ui/data_table_column_toggle_test.rb
+  s_7ca25beb365ec6::t_a2ea8537968c33 20-39
+gem/lib/ruby_ui/data_table/data_table_column_toggle.rb
+  s_7ca25beb365ec6::t_8095f8cfb36ae1 5,7
+  s_7ca25beb365ec6::t_3ec3079ac2d299 39-43
+  s_7ca25beb365ec6::t_b8583bbff48742 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "34332cd8cc35da1eb08f51ab6e482b2ca7f781dc",
+  "prompts": {},
+  "sessions": {
+    "s_7ca25beb365ec6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a762e233-0568-4f77-8485-d3e44ab477ef",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

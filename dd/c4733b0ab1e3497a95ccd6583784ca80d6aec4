@@ -1,0 +1,25 @@
+gem/lib/ruby_ui/data_table/data_table_column_visibility_controller.js
+  s_f411e5981d98b4::t_c23a24e7eebd07 9
+  s_f411e5981d98b4::t_9595b937165ddb 5-8,10-12,14-17
+docs/app/javascript/controllers/ruby_ui/data_table_column_visibility_controller.js
+  s_f411e5981d98b4::t_2a916e15d7dc18 5-8,10-12,14-17
+  s_f411e5981d98b4::t_0fac964c4477db 9
+mcp/data/registry.json
+  s_f411e5981d98b4::t_34970f6538c20a 1189
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ddc4733b0ab1e3497a95ccd6583784ca80d6aec4",
+  "prompts": {},
+  "sessions": {
+    "s_f411e5981d98b4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "33d59f68-b5af-4ecf-bcdd-f04a9c1c6e0c",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

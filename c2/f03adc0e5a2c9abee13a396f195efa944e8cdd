@@ -1,0 +1,19 @@
+gem/test/ruby_ui/data_table_column_toggle_test.rb
+  s_f411e5981d98b4::t_1a924b45b5d47a 37-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c2f03adc0e5a2c9abee13a396f195efa944e8cdd",
+  "prompts": {},
+  "sessions": {
+    "s_f411e5981d98b4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "33d59f68-b5af-4ecf-bcdd-f04a9c1c6e0c",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+audit/divergences/data_table.yml
+  s_eecd50bda77088::t_3abd5df2992baf 7-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d98aebebac0de19d85a09d48ef345a1a180f62a5",
+  "prompts": {},
+  "sessions": {
+    "s_eecd50bda77088": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7d07b2dd-0779-49d8-bf36-eef23c0b7d94",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

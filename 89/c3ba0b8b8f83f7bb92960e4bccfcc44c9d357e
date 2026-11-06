@@ -1,0 +1,22 @@
+gem/lib/ruby_ui/toast/toaster_controller.js
+  s_2706fc0b0b4047::t_f13ecded343d1e 42-46,49-52
+  s_2706fc0b0b4047::t_03958a33b8b84e 70-73
+docs/app/javascript/controllers/ruby_ui/toaster_controller.js
+  s_2706fc0b0b4047::t_80f85dd9885ec2 42-46,49-52,70-73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "89c3ba0b8b8f83f7bb92960e4bccfcc44c9d357e",
+  "prompts": {},
+  "sessions": {
+    "s_2706fc0b0b4047": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe573c99-eb6d-4a2f-9446-601f57681caa",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

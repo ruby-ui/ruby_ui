@@ -1,0 +1,27 @@
+docs/app/javascript/controllers/index.js
+  s_2b905a913f5829::t_f03946f6115640 61-63
+docs/app/javascript/controllers/ruby_ui/data_table_per_page_select_controller.js
+  s_2b905a913f5829::t_acbfd23d3d6422 1
+gem/lib/ruby_ui/data_table/data_table_per_page_select.rb
+  s_2b905a913f5829::t_7326effc19349c 15,17-18,30-35
+gem/lib/ruby_ui/data_table/data_table_per_page_select_controller.js
+  s_2b905a913f5829::t_7b61c6c184adfd 1-7
+gem/test/ruby_ui/data_table_per_page_select_test.rb
+  s_2b905a913f5829::t_1bc4afb089eb5b 11-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f28cc80e2fa2c3e1edf285359257a6f224ea624e",
+  "prompts": {},
+  "sessions": {
+    "s_2b905a913f5829": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "89d0f25e-263e-434c-905a-518a8e23f95d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

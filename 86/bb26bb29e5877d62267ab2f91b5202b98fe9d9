@@ -1,0 +1,25 @@
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_controller.js
+  s_eecd50bda77088::t_4fe08112d1289d 8-10
+docs/app/views/docs/dropdown_menu.rb
+  s_eecd50bda77088::t_08474e9b656232 11
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_docs.rb
+  s_eecd50bda77088::t_e928fabc630b6e 11
+mcp/data/registry/components/dropdown_menu.json
+  s_eecd50bda77088::t_b20643b418bdd7 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "86bb26bb29e5877d62267ab2f91b5202b98fe9d9",
+  "prompts": {},
+  "sessions": {
+    "s_eecd50bda77088": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7d07b2dd-0779-49d8-bf36-eef23c0b7d94",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

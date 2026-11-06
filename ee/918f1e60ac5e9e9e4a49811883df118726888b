@@ -1,0 +1,26 @@
+gem/lib/ruby_ui/context_menu/context_menu_controller.js
+  s_eecd50bda77088::t_eeb68b46f7a07e 289-290,293
+gem/lib/ruby_ui/dropdown_menu/dropdown_menu_controller.js
+  s_eecd50bda77088::t_18ada5ae5efba1 483-486
+  s_eecd50bda77088::t_e8f0b530c8940b 530-531,534
+mcp/data/registry/components/context_menu.json
+  s_eecd50bda77088::t_244ba92153d57b 19
+mcp/data/registry/components/dropdown_menu.json
+  s_eecd50bda77088::t_f1c60649bd731f 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ee918f1e60ac5e9e9e4a49811883df118726888b",
+  "prompts": {},
+  "sessions": {
+    "s_eecd50bda77088": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7d07b2dd-0779-49d8-bf36-eef23c0b7d94",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}

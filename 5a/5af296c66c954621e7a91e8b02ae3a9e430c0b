@@ -1,0 +1,19 @@
+gem/lib/ruby_ui/native_select/native_select_icon.rb
+  s_7ca25beb365ec6::t_f4d4f1ca001f13 28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5a5af296c66c954621e7a91e8b02ae3a9e430c0b",
+  "prompts": {},
+  "sessions": {
+    "s_7ca25beb365ec6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a762e233-0568-4f77-8485-d3e44ab477ef",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jean Mendonça <pierrybm@gmail.com>"
+    }
+  }
+}
