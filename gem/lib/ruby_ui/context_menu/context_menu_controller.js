@@ -286,10 +286,11 @@ export default class extends Controller {
     if (match) match.focus({ preventScroll: false });
   }
 
-  // The item's own text, without its shortcut or indicator.
+  // The item's own text, without its shortcut or indicator. Comment nodes
+  // (e.g. Rails' annotate_rendered_view_with_filenames) are not text.
   labelOf(item) {
     return [...item.childNodes]
-      .filter((node) => !(node.nodeType === Node.ELEMENT_NODE && node.matches("[data-slot$=-shortcut], [data-slot$=-indicator]")))
+      .filter((node) => node.nodeType === Node.TEXT_NODE || (node.nodeType === Node.ELEMENT_NODE && !node.matches("[data-slot$=-shortcut], [data-slot$=-indicator]")))
       .map((node) => node.textContent)
       .join("")
       .trim();
