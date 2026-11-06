@@ -53,9 +53,29 @@ class RubyUI::CodeblockTest < ComponentTest
     assert_match(/aria-label="Copy"/, output)
     assert_match(/data-value="a < b"/, output)
     assert_match(/data-copied-label="Nice one!"/, output)
-    assert_match(/data-error-label="Copy failed"/, output)
+    refute_match(/data-error-label/, output)
     assert_match(/data-action="ruby-ui--codeblock#copy"/, output)
     assert_match(/<span aria-live="polite" class="sr-only" data-slot="code-block-copy-status"><\/span>/, output)
+  end
+
+  def test_error_labels_are_deprecated_and_ignored
+    output = nil
+    _, err = with_deprecation_warnings do
+      output = phlex { RubyUI.Codeblock(CODE, syntax: :ruby, clipboard_error: "Nope") }
+      phlex { RubyUI.Codeblock { RubyUI.CodeblockCopyButton(value: "x", error_label: "Nope") } }
+    end
+
+    assert_match(/`clipboard_error:` is deprecated/, err)
+    assert_match(/`error_label:` is deprecated/, err)
+    refute_match(/Nope/, output)
+  end
+
+  def test_content_fades_overflowing_edges_with_a_thin_scrollbar
+    output = phlex { RubyUI.CodeblockContent(CODE) }
+
+    assert_match(/scroll-fade-x/, output)
+    assert_match(/scrollbar-thin/, output)
+    assert_match(/data-wrap:scroll-fade-y/, output)
   end
 
   def test_variant_and_size
@@ -130,5 +150,15 @@ class RubyUI::CodeblockTest < ComponentTest
     assert_match(/\[data-slot=code-block-code\] \.k/, output)
     assert_match(/\.dark \[data-slot=code-block-code\] \.k/, output)
     refute_match(/\[data-slot=code-block-code\], \[data-slot=code-block-code\] \.w \{/, output)
+  end
+
+  private
+
+  def with_deprecation_warnings(&)
+    previous = Warning[:deprecated]
+    Warning[:deprecated] = true
+    capture_io(&)
+  ensure
+    Warning[:deprecated] = previous
   end
 end

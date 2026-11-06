@@ -388,6 +388,98 @@ class Views::Docs::Installation::RailsImportmaps < Views::Base
                 }
               }
 
+              /* Scroll fade (Codeblock): scroll-fade-x fades the start/end edges while there
+                 is content to that side; scroll-fade-y the top/bottom edges. From shadcn's
+                 scroll-fade-x / scroll-fade-y (MIT). */
+              @property --scroll-fade-t {
+                syntax: "<length-percentage>";
+                inherits: false;
+                initial-value: 0px;
+              }
+
+              @property --scroll-fade-s {
+                syntax: "<length-percentage>";
+                inherits: false;
+                initial-value: 0px;
+              }
+
+              @property --scroll-fade-e {
+                syntax: "<length-percentage>";
+                inherits: false;
+                initial-value: 0px;
+              }
+
+              @keyframes scroll-fade-reveal-t {
+                from {
+                  --scroll-fade-t: 0px;
+                }
+                to {
+                  --scroll-fade-t: var(--_scroll-fade-size-t);
+                }
+              }
+
+              @keyframes scroll-fade-reveal-s {
+                from {
+                  --scroll-fade-s: 0px;
+                }
+                to {
+                  --scroll-fade-s: var(--_scroll-fade-size-s);
+                }
+              }
+
+              @keyframes scroll-fade-reveal-e {
+                from {
+                  --scroll-fade-e: var(--_scroll-fade-size-e);
+                }
+                to {
+                  --scroll-fade-e: 0px;
+                }
+              }
+
+              @utility scroll-fade-x {
+                --_scroll-fade-size-s: var(--scroll-fade-s-size, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+                --_scroll-fade-size-e: var(--scroll-fade-e-size, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+                --scroll-fade-inline: linear-gradient(to right, transparent 0, #000 var(--scroll-fade-s, 0px), #000 calc(100% - var(--scroll-fade-e, 0px)), transparent 100%);
+                &:where([dir="rtl"], [dir="rtl"] *) {
+                  --scroll-fade-inline: linear-gradient(to left, transparent 0, #000 var(--scroll-fade-s, 0px), #000 calc(100% - var(--scroll-fade-e, 0px)), transparent 100%);
+                }
+                mask-image: var(--scroll-fade-inline);
+                mask-composite: intersect;
+                mask-repeat: no-repeat;
+
+                @supports (animation-timeline: scroll()) {
+                  animation: scroll-fade-reveal-s 1ms ease-in-out, scroll-fade-reveal-e 1ms ease-in-out;
+                  animation-timeline: scroll(self inline), scroll(self inline);
+                  animation-range: 0 calc(var(--spacing) * 24), calc(100% - calc(var(--spacing) * 24)) 100%;
+                  animation-fill-mode: both;
+                }
+
+                @supports not (animation-timeline: scroll()) {
+                  --scroll-fade-s: var(--_scroll-fade-size-s);
+                  --scroll-fade-e: var(--_scroll-fade-size-e);
+                }
+              }
+
+              @utility scroll-fade-y {
+                --_scroll-fade-size-t: var(--scroll-fade-t-size, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+                --_scroll-fade-size-b: var(--scroll-fade-b-size, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+                --scroll-fade-block: linear-gradient(to bottom, transparent 0, #000 var(--scroll-fade-t, 0px), #000 calc(100% - var(--scroll-fade-b, 0px)), transparent 100%);
+                mask-image: var(--scroll-fade-block);
+                mask-composite: intersect;
+                mask-repeat: no-repeat;
+
+                @supports (animation-timeline: scroll()) {
+                  animation: scroll-fade-reveal-t 1ms ease-in-out, scroll-fade-reveal-b 1ms ease-in-out;
+                  animation-timeline: scroll(self y), scroll(self y);
+                  animation-range: 0 calc(var(--spacing) * 24), calc(100% - calc(var(--spacing) * 24)) 100%;
+                  animation-fill-mode: both;
+                }
+
+                @supports not (animation-timeline: scroll()) {
+                  --scroll-fade-t: var(--_scroll-fade-size-t);
+                  --scroll-fade-b: var(--_scroll-fade-size-b);
+                }
+              }
               @layer base {
                 * {
                   @apply border-border outline-ring/50;

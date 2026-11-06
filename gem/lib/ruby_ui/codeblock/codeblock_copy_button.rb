@@ -3,15 +3,20 @@
 module RubyUI
   # Copies value: (or, without it, the block's code) to the clipboard. After
   # copying, the icon turns into a check and the label into copied_label for
-  # two seconds; a polite live region announces it. Needs a Codeblock around
-  # it (its Stimulus controller lives on the root).
+  # two seconds; a polite live region announces it. A failed copy shows
+  # nothing, as in shadcn. Needs a Codeblock around it (its Stimulus
+  # controller lives on the root).
   class CodeblockCopyButton < Base
-    def initialize(value: nil, label: "Copy", copied_label: "Copied", error_label: "Copy failed",
+    # error_label: is deprecated and ignored: a failed copy shows nothing.
+    def initialize(value: nil, label: "Copy", copied_label: "Copied", error_label: nil,
       variant: :ghost, size: :xs, **attrs)
+      unless error_label.nil?
+        Warning.warn("RubyUI::CodeblockCopyButton: `error_label:` is deprecated and ignored " \
+          "(a failed copy shows nothing, as in shadcn)\n", category: :deprecated)
+      end
       @value = value
       @label = label
       @copied_label = copied_label
-      @error_label = error_label
       @variant = variant
       @size = size
       super(**attrs)
@@ -35,8 +40,7 @@ module RubyUI
         slot: "code-block-copy-button",
         action: "ruby-ui--codeblock#copy",
         label: @label,
-        copied_label: @copied_label,
-        error_label: @error_label
+        copied_label: @copied_label
       }
       data[:value] = @value unless @value.nil?
       {aria: {label: @label}, data: data}
