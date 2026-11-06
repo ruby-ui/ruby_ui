@@ -10,3 +10,17 @@
   shadcn: "dashboard-01 block: Select onValueChange calls TanStack Table's setPageSize on the client"
   reason: "RubyUI's DataTable is server-driven, as for pagination: the page size is a query param the server reads, so the list comes back from the server and the URL can be shared. The Select itself (open, arrows, typeahead, Enter, Esc) behaves as shadcn's."
   since: "2026-11-05"
+- component: data_table
+  dimension: Look
+  match: {part: DataTableRowCheckbox, property: display, rubyui: "block", shadcn: "flex"}
+  rubyui: "row checkbox is RubyUI::Checkbox, a native <input type=checkbox> with no children; as a flex item of the cell's div.flex it computes display: block"
+  shadcn: "Base UI Checkbox is a <span class=\"flex\"> that centers its Indicator child"
+  reason: "flex only lays out children, and the native input has none (its check mark is an absolutely positioned ::before), so block and flex render the same box. Adding flex to the input would change nothing on screen."
+  since: "2026-11-06"
+- component: data_table
+  dimension: Look
+  match: {part: DataTableRowCheckbox, property: text-align, rubyui: "start", shadcn: "left"}
+  rubyui: "select-all checkbox (header cell, text-left) is a native input: the browser's form-control defaults reset text-align to start instead of inheriting left"
+  shadcn: "the Base UI <span> inherits text-align: left from the header cell (TableHead text-left); row checkboxes in body cells are start on both sides"
+  reason: "In a left-to-right document start resolves to left, and the input has no text to align either way."
+  since: "2026-11-06"
