@@ -59,9 +59,11 @@ data_table:
     - "Checkbox"
     - "DropdownMenu"
     - "Input"
-    - "NativeSelect"
+    - "Select"
     - "Pagination"
     - "Table"
+  js_packages:
+    - "@floating-ui/dom"
 
 dialog:
   components:

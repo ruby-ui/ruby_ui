@@ -4,7 +4,9 @@ import {
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
+  CircleCheckIcon,
   Columns3Icon,
+  LoaderIcon,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -35,7 +37,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-// JSX and classes from bases/base/blocks/dashboard-01/components/data-table.tsx,
+// JSX and classes from bases/base/blocks/dashboard-01/components/data-table.tsx
+// (status icons: the lucide picks of its IconPlaceholder),
 // without drag-and-drop, tabs, the drawer and the inline target/limit inputs.
 const rows = [
   { id: 1, header: "Cover page", type: "Cover page", status: "In Process", reviewer: "Eddie Lake" },
@@ -125,6 +128,11 @@ export default function DataTableFixture() {
                   {visible.Status && (
                     <TableCell>
                       <Badge variant="outline" className="px-1.5 text-muted-foreground">
+                        {row.status === "Done" ? (
+                          <CircleCheckIcon className="fill-green-500 dark:fill-green-400" />
+                        ) : (
+                          <LoaderIcon />
+                        )}
                         {row.status}
                       </Badge>
                     </TableCell>
