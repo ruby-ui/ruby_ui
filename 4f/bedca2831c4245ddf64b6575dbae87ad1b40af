@@ -1,0 +1,30 @@
+gem/lib/ruby_ui/data_table/data_table_column_toggle.rb
+  s_4417c6fa77e9d3::t_db924771ded30e 13-15,60
+mcp/data/registry/components/data_table.json
+  s_4417c6fa77e9d3::t_8d01b18ff1244f 15
+gem/test/ruby_ui/data_table_column_toggle_test.rb
+  s_4417c6fa77e9d3::t_db924771ded30e 47-52
+audit/divergences/data_table.yml
+  s_4417c6fa77e9d3::t_c9718966ad1289 23-24
+  s_4417c6fa77e9d3::t_a21641c0ba0a6f 13-22,25-26
+audit/fixtures/data_table/shadcn.tsx
+  s_4417c6fa77e9d3::t_a30c0441083347 7,9,40-41,131-135
+audit/fixtures/data_table/rubyui.rb
+  s_4417c6fa77e9d3::t_a30c0441083347 47-55,74-93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4fbedca2831c4245ddf64b6575dbae87ad1b40af",
+  "prompts": {},
+  "sessions": {
+    "s_4417c6fa77e9d3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba15bd60-23db-4e75-b814-3d74e31ab601",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
