@@ -1,0 +1,25 @@
+# One column with: a done attachment (icon media, title, description, a remove
+# action and a button trigger carrying data-audit-trigger); idle/sm,
+# uploading/xs and error states; processing with a link trigger
+# (shadcn render={<a />}, RubyUI as: :a); a vertical tile with an image
+# (inline SVG data URI, so no network) and a secondary action; a vertical tile
+# with content; and an AttachmentGroup with two content-only attachments.
+# Static kind: only the closed state is collected. All text is fictional.
+title_1: quarterly-report.pdf
+description_1: PDF · 2.4 MB
+remove_1: Remove quarterly-report.pdf
+open_1: Open quarterly-report.pdf
+title_2: selected-file.pdf
+description_2: Ready to upload
+title_3: design-system.zip
+description_3: Uploading · 64%
+title_4: financials.xlsx
+description_4: Upload failed. File is too large.
+title_5: market-research.pdf
+description_5: Processing document
+open_5: Open market-research.pdf
+remove_6: Remove office.svg
+title_7: office.svg
+description_7: SVG · 1 KB
+title_8: notes.md
+title_9: roadmap.pdf

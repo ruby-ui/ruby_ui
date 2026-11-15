@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get "alert", to: "docs#alert_component", as: :docs_alert # alert is a reserved word for controller action
     get "alert_dialog", to: "docs#alert_dialog", as: :docs_alert_dialog
     get "aspect_ratio", to: "docs#aspect_ratio", as: :docs_aspect_ratio
+    get "attachment", to: "docs#attachment", as: :docs_attachment
     get "avatar", to: "docs#avatar", as: :docs_avatar
     get "badge", to: "docs#badge", as: :docs_badge
     get "breadcrumb", to: "docs#breadcrumb", as: :docs_breadcrumb

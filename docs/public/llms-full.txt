@@ -103,6 +103,11 @@ This file expands the curated /llms.txt map into a compact reference that can be
 - URL: https://rubyui.com/docs/aspect_ratio
 - Summary: Container for displaying content within a desired ratio.
 
+### Attachment
+
+- URL: https://rubyui.com/docs/attachment
+- Summary: File or image attachment with upload states, actions, triggers, and a scrollable group.
+
 ### Avatar
 
 - URL: https://rubyui.com/docs/avatar

@@ -62,6 +62,10 @@ class DocsController < ApplicationController
     render Views::Docs::AspectRatio.new
   end
 
+  def attachment
+    render Views::Docs::Attachment.new
+  end
+
   def avatar
     render Views::Docs::Avatar.new
   end

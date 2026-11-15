@@ -83,6 +83,7 @@ class SiteFiles
     {title: "Alert", path: "/docs/alert", description: "Callout component for drawing attention to contextual information."},
     {title: "Alert Dialog", path: "/docs/alert_dialog", description: "Modal dialog for interruptive content that expects a response."},
     {title: "Aspect Ratio", path: "/docs/aspect_ratio", description: "Container for displaying content within a desired ratio."},
+    {title: "Attachment", path: "/docs/attachment", description: "File or image attachment with upload states, actions, triggers, and a scrollable group."},
     {title: "Avatar", path: "/docs/avatar", description: "Image and fallback primitives for representing a user."},
     {title: "Badge", path: "/docs/badge", description: "Small status or label element."},
     {title: "Breadcrumb", path: "/docs/breadcrumb", description: "Navigation trail showing the current location in a hierarchy."},

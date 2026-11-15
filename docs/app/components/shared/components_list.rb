@@ -9,6 +9,7 @@ module Components
           {name: "Alert", path: docs_alert_path},
           {name: "Alert Dialog", path: docs_alert_dialog_path},
           {name: "Aspect Ratio", path: docs_aspect_ratio_path},
+          {name: "Attachment", path: docs_attachment_path},
           {name: "Avatar", path: docs_avatar_path},
           {name: "Badge", path: docs_badge_path},
           {name: "Breadcrumb", path: docs_breadcrumb_path},
