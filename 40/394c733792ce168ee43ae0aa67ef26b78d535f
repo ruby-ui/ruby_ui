@@ -1,0 +1,25 @@
+gem/lib/ruby_ui/attachment/attachment_docs.rb
+  s_4ade8b2cd8b900::t_6d1ab29221b431 251-252
+audit/component_map/attachment.yml
+  s_4ade8b2cd8b900::t_6d1ab29221b431 2
+docs/app/views/docs/attachment.rb
+  s_4ade8b2cd8b900::t_6d1ab29221b431 251-252
+audit/fixtures/attachment/rubyui.rb
+  s_4ade8b2cd8b900::t_6d1ab29221b431 90-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "40394c733792ce168ee43ae0aa67ef26b78d535f",
+  "prompts": {},
+  "sessions": {
+    "s_4ade8b2cd8b900": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "948dd358-3909-4ce0-8130-ab17732c4f2f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
