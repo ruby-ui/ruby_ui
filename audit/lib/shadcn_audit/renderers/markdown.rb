@@ -27,6 +27,14 @@ module ShadcnAudit
           #{body}
           #{fence}
         MD
+          .then { |md| videos_line(report) ? md + "\n#{videos_line(report)}\n" : md }
+      end
+
+      # gh appends the uploads after the body, so the line points down.
+      def self.videos_line(report)
+        names = report.videos.map { |v| "#{Terminal.camelize(v["folder"])}, #{v["label"]}" }
+        return nil if names.empty?
+        "#{(names.size == 1) ? "Video" : "Videos"} of RubyUI at the audited head, attached below: #{names.join("; ")}."
       end
     end
   end

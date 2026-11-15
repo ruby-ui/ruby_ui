@@ -4,8 +4,9 @@ require "shadcn_audit/renderers/terminal"
 
 module ShadcnAudit
   module Renderers
-    # Side-by-side screenshot page (design §B). Screenshot paths stay as
-    # written in the report: relative to the run folder (`out_dir`).
+    # Side-by-side screenshot page (design §B), plus each component's
+    # videos. Media paths stay as written in the report: relative to the run
+    # folder (`out_dir`).
     module Html
       TEMPLATE = File.expand_path("report.html.erb", __dir__)
       LOOKISH = %w[Look Behavior Animation].freeze
@@ -24,6 +25,7 @@ module ShadcnAudit
       end
 
       def self.qualifies?(component)
+        return true if Array(component["videos"]).any?
         Array(component["screenshots"]).any? &&
           component["lines"].any? { |l| LOOKISH.include?(l["dimension"]) && l["status"] != "pass" }
       end

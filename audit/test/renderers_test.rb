@@ -137,4 +137,63 @@ class RenderersTest < Minitest::Test
   ensure
     Encoding.default_external = previous
   end
+
+  def with_video(d = JSON.parse(File.read(FIXTURE)))
+    d["components"].first["videos"] = [{"label" => "walkthrough (light)", "rubyui" => "videos/dialog-rubyui-light.mp4"}]
+    d
+  end
+
+  def test_html_shows_the_video_of_a_component
+    Dir.mktmpdir do |dir|
+      html = File.read(ShadcnAudit::Renderers::Html.render(ShadcnAudit::Report.new(with_video), out_dir: dir))
+      assert_includes html, '<video controls muted playsinline src="videos/dialog-rubyui-light.mp4"'
+      assert_includes html, "walkthrough (light)"
+    end
+  end
+
+  def test_html_renders_a_component_whose_lines_all_pass_when_it_has_a_video
+    Dir.mktmpdir do |dir|
+      d = with_video
+      d["components"] = [{"folder" => "badge", "shadcn_file" => nil,
+                          "lines" => [{"dimension" => "Look", "status" => "pass", "basis" => nil, "rubyui" => "x", "shadcn" => "x", "source" => "a:1", "note" => ""}],
+                          "videos" => [{"label" => "walkthrough (light)", "rubyui" => "videos/badge-rubyui-light.mp4"}]}]
+      html = File.read(ShadcnAudit::Renderers::Html.render(ShadcnAudit::Report.new(d), out_dir: dir))
+      assert_includes html, "videos/badge-rubyui-light.mp4"
+    end
+  end
+
+  def test_markdown_names_the_attached_videos
+    body = ShadcnAudit::Renderers::Markdown.render(ShadcnAudit::Report.new(with_video))
+    assert_includes body, "Video of RubyUI at the audited head, attached below: Dialog, walkthrough (light)."
+    refute_includes ShadcnAudit::Renderers::Markdown.render(report), "attached below"
+  end
+
+  def test_cli_comment_post_refuses_when_a_report_video_is_missing
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "report.json")
+      File.write(path, JSON.generate(with_video))
+      shell = ShadcnAudit::FakeShell.new
+      error = assert_raises(ArgumentError) { ShadcnAudit::CLI.comment([path, "--post"], out: StringIO.new, shell: shell) }
+      assert_includes error.message, "videos/dialog-rubyui-light.mp4"
+      assert_empty shell.calls
+    end
+  end
+
+  def test_cli_comment_post_attaches_report_videos_resolved_from_the_report_folder
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "report.json")
+      File.write(path, JSON.generate(with_video))
+      FileUtils.mkdir_p(File.join(dir, "videos"))
+      File.write(File.join(dir, "videos", "dialog-rubyui-light.mp4"), "x")
+      head = JSON.parse(File.read(FIXTURE))["target"]["head_sha"]
+      shell = ShadcnAudit::FakeShell.new
+        .stub(->(a) { a[0, 3] == %w[gh pr view] }, JSON.generate("headRefOid" => head, "state" => "OPEN"))
+        .stub(->(a) { a[0, 3] == %w[gh pr comment] }, "https://github.com/ruby-ui/ruby_ui/pull/572#issuecomment-2\n")
+      result = ShadcnAudit::CLI.comment([path, "--post"], out: StringIO.new, shell: shell)
+      assert_equal "created", result["action"]
+      post = shell.argvs.find { |a| a[0, 3] == %w[gh pr comment] }
+      assert_includes post, "--attach"
+      assert_includes post, File.join(dir, "videos", "dialog-rubyui-light.mp4")
+    end
+  end
 end

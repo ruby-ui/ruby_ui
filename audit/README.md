@@ -20,7 +20,7 @@ Tests use `ShadcnAudit::FakeShell` (`test/test_helper.rb`): stub canned stdout b
 
 ## Prerequisites
 
-Ruby 3.4 (via mise, as below, or an equivalent version manager; without mise, drop `mise exec --`), `gh` authenticated (`gh auth status`), Node and pnpm, Playwright's Chromium for `collect` (above), and, for the remaining browser steps, the chrome-devtools MCP. The audit runs its two dev servers in Herdr panes when `HERDR_ENV=1`, otherwise as background shell processes; either way it stops them at the end. `preview` boot commands use `mise exec --` only when `mise` is on PATH.
+Ruby 3.4 (via mise, as below, or an equivalent version manager; without mise, drop `mise exec --`), `gh` authenticated (`gh auth status`), Node and pnpm, Playwright's Chromium for `collect` (above), and, for the remaining browser steps and the component video, the headless `audit-chrome` MCP declared in the repo's `.mcp.json` (Claude Code asks once to approve it). `comment --post` attaches the report's `videos` with `gh pr comment --attach` (gh >= 2.101). The audit runs its two dev servers in Herdr panes when `HERDR_ENV=1`, otherwise as background shell processes; either way it stops them at the end. `preview` boot commands use `mise exec --` only when `mise` is on PATH.
 
 A component gets its own `component_map/<folder>.yml` (keys in [`component_map/README.md`](component_map/README.md)) and also needs fixtures in `fixtures/<folder>/` (`content.yml`, `shadcn.tsx`, `rubyui.rb`).
 

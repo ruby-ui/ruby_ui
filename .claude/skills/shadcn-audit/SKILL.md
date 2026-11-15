@@ -47,8 +47,18 @@ an error as an empty result. Talk to the user in their language;
   worktree (it installs `audit/node_modules`), then `pnpm exec playwright
   install chromium` (the browser download is shared by every checkout on the
   machine).
-- The chrome-devtools MCP server, for the browser steps `collect` doesn't
-  cover (the kind-specific behavior sequences, animation, exploration).
+- The `audit-chrome` MCP server from the repo's `.mcp.json`, for the browser
+  steps `collect` doesn't cover (the kind-specific behavior sequences,
+  animation, video, exploration). It is chrome-devtools-mcp pinned to the
+  plugin's version and started headless, isolated, at 1280×800, without
+  usage statistics. Claude Code asks once per person to approve it; its
+  tools are `mcp__audit-chrome__*`. Never drive the audit with the
+  chrome-devtools plugin's own server: it opens a visible window, reuses a
+  persistent profile and takes the screen's DPR, so screenshots stop being
+  comparable between people.
+- Google Chrome stable, up to date, for the video: `audit-chrome` records
+  with Chrome's built-in recorder, which 157 has and 151 lacks. No ffmpeg
+  needed.
 - Optional: Herdr. When `HERDR_ENV=1` the servers run in Herdr panes;
   otherwise as background shell processes (step 2.6).
 
@@ -194,7 +204,7 @@ For each folder in `components`:
     in `audit/component_map/<folder>.yml`: tell the user to add them (RubyUI part → CSS
     selector in the rendered fixture; `null` = shadcn renders no element for
     that part). Until they exist, collect that component by hand with the
-    chrome-devtools MCP: for each mapped part, the shadcn classes from
+    `audit-chrome` MCP: for each mapped part, the shadcn classes from
     `[data-slot=<slot>]` against `effective`, the RubyUI element found from
     its Ruby source at `<preview path>/gem/lib/ruby_ui/<folder>/` (tag,
     Stimulus target, class string), look-alikes settled with
@@ -231,13 +241,22 @@ the screenshots. Run the rest of the `kind`'s set from
 `references/interactions.md` (focus trap order, Esc and focus return, outside
 click, scroll lock, arrow keys, typeahead, Enter/Space, animation) on
 both URLs (`url_template`s; `{folder}` = folder, `{light|dark}` = theme), in
-the same viewport on both sides (aim for 1280×800; record the actual size from
-the environment probe), with chrome-devtools MCP. Open by clicking `[data-audit-trigger]`.
+the same viewport on both sides (1280×800, set by `audit-chrome`; the
+environment probe confirms it), with the `audit-chrome` MCP. Open by clicking `[data-audit-trigger]`.
 Read the DOM, `document.activeElement`, `inert`/`aria-hidden`, computed styles;
 screenshot every state into `<run>/screens/`. Do the environment probe first:
 any font/plugin/viewport/global-rule difference goes in `environment_diffs`
 **before** you attribute a visual difference to a component. A state you
 couldn't reach → ⏸ with the reason.
+
+Then record the **video**: the RubyUI side at the audited head, light theme,
+running the `kind`'s script from `references/interactions.md` ("Video"), into
+`<run>/videos/<folder>-rubyui-light.mp4`. It shows a reviewer how the
+component behaves without running the branch. A video that fails to record
+doesn't change any grade; say so and leave `videos` out. When
+`screencast_start` answers that the connected Chrome does not support screen
+recording, Chrome is too old: tell the user to update it
+(`chrome://settings/help`, then restart Chrome) and go on without the video.
 
 ### 6. Native
 
@@ -275,7 +294,8 @@ Write `<run>/report.json`:
                "rubyui": "p-6 gap-4 border shadow-lg", "shadcn": "p-6 gap-6 ring-1 rounded-xl",
                "source": "style-vega.css:468", "note": ""}],
     "screenshots": [{"state": "open (light)", "rubyui": "screens/dialog-open-rubyui-light.png",
-                     "shadcn": "screens/dialog-open-shadcn-light.png"}]
+                     "shadcn": "screens/dialog-open-shadcn-light.png"}],
+    "videos": [{"label": "walkthrough (light)", "rubyui": "videos/dialog-rubyui-light.mp4"}]
   }]
 }
 ```
@@ -290,14 +310,16 @@ Write `<run>/report.json`:
   an `http(s)` source with anchor. Each ❌/⚠️ names concrete values on both sides and a
   `source` (`style-vega.css:<line>`, `bases/base/ui/<name>.tsx:<line>`, a spec
   or MDN URL).
-- Screenshot paths are relative to the run folder.
+- Screenshot and video paths are relative to the run folder. `videos` is
+  optional; each entry needs `label` and `rubyui`, and may add `shadcn`.
 
 Then:
 
 1. `render <report.json>` (always) → show `text` to the user. An `error`
    means the JSON breaks the schema (or isn't valid JSON): fix it and re-run.
 2. `render <report.json> --html` → `html` is the written path, or `null` when
-   no component has screenshots plus a non-pass Look/Behavior/Animation line.
+   no component has a video or screenshots plus a non-pass
+   Look/Behavior/Animation line.
    If there's a path, `open` it.
 3. **Walk through the findings, one item at a time.** Cover every `fail`,
    `warn` and `inconclusive` line, in report order (component, then
@@ -338,15 +360,21 @@ Then:
 4. Only when `target.kind` is `pr` **and** `target.state` is `OPEN`:
    `comment <report.json>` →
    `{"posted": false, "body": …}`. Show the **exact body** and ask for an ok.
+   When the report has `videos`, say that they are uploaded with the comment
+   and become public on the PR; the ok covers both.
    Branch/component targets, or a PR whose `state` isn't `OPEN`: don't offer
    posting. Tell the user why (no PR, or the PR is MERGED/CLOSED).
 5. On an explicit "ok"/"pode mandar" for that body:
-   `comment <report.json> --post` → `action` `created`/`updated` (give the
-   `url`) or `refused` (`reason`): the PR head moved since the audit pinned it
+   `comment <report.json> --post` → `action` `created`/`updated`/`replaced`
+   (give the `url`) or `refused` (`reason`): the PR head moved since the audit pinned it
    (offer a re-run), or the PR is no longer `OPEN`. `posted: false` means
    nothing was sent. Only a marked comment authored by the `gh` user is
    updated; a marked comment by anyone else is left alone and a new one is
-   created.
+   created. With videos, `--post` attaches them through `gh pr comment
+   --attach`, which can only create: it posts the new comment first, then
+   deletes the user's old marked comment (`replaced`). A failed upload leaves
+   the old comment in place. A video listed in the report but missing on disk
+   is an `error` and nothing is posted.
    Without an ok, don't post.
 ### 9. Clean up
 
@@ -354,10 +382,11 @@ Close the browser pages you opened, then stop both servers: `herdr pane close
 <pane>` for each server pane, or kill the background processes you started.
 Tell the user where the run folder is.
 
-## Before/after images for a fix PR
+## Before/after images and video for a fix PR
 
 When the user asks you to fix what the audit found and open a PR, the PR
-shows the fix side by side with `main` and shadcn. The hard rules above still
+shows the fix side by side with `main` and shadcn, plus a video of the fixed
+component. The hard rules above still
 hold for auditing someone else's PR; this section is for the user's own fix.
 
 1. **Keep the "before".** Before fixing anything, copy `report.json` to
@@ -369,48 +398,31 @@ hold for auditing someone else's PR; this section is for the user's own fix.
 3. **Compose one image per state**: three columns, `RubyUI · main`,
    `RubyUI · this PR`, `shadcn · Base UI + vega`. A small HTML page with the
    three screenshots, captured with the browser, is enough. Save them to
-   `<run>/pr-assets/`.
-4. **Publish to `pr-assets`** (only after the user's ok for the PR). GitHub
-   has no API to attach files to a PR, so images go to the orphan branch
-   `pr-assets`, one folder per PR, committed with plumbing so the working
-   tree and index stay untouched:
-
-   ```bash
-   git fetch origin pr-assets 2>/dev/null || true       # absent on the first PR
-   export GIT_INDEX_FILE=$(mktemp -u)
-   git read-tree origin/pr-assets 2>/dev/null || true   # keep earlier PRs' folders
-   for f in <run>/pr-assets/*.png; do
-     git update-index --add --cacheinfo 100644,$(git hash-object -w "$f"),<pr-folder>/$(basename "$f")
-   done
-   tree=$(git write-tree)
-   if parent=$(git rev-parse -q --verify origin/pr-assets); then
-     sha=$(git commit-tree "$tree" -p "$parent" -m "Add images for <pr-folder>")
-   else
-     sha=$(git commit-tree "$tree" -m "Add images for <pr-folder>")
-   fi
-   rm -f "$GIT_INDEX_FILE"; unset GIT_INDEX_FILE
-   git push origin "${sha}:refs/heads/pr-assets"   # braces: zsh reads "$sha:r" as a modifier
-   ```
-
-   Run the whole block in one go, right before the push: parallel audits move
-   `pr-assets` often. If the push is rejected as non-fast-forward, rerun the
-   block from `git fetch` so the commit is rebuilt on the latest tip; never
-   force-push this branch.
-
-   Link each image by commit SHA so the link never moves:
-   `![State](https://github.com/ruby-ui/ruby_ui/blob/<sha>/<pr-folder>/<file>.png?raw=true)`.
-   Check one URL answers `200 image/png` before opening the PR. Never delete
-   the branch: old PRs lose their images.
-5. **Description**: the images, then both checklists (`render` text of
-   `report-main.json` and of the fixed `report.json`) inside `<details>`
-   blocks, and test steps. Show it to the user before opening the PR.
+   `<run>/pr-media/`.
+4. **Record the video** of the fixed RubyUI component with the `kind`'s
+   script ("Video" in `references/interactions.md`) into
+   `<run>/pr-media/<folder>-rubyui-now.mp4`. When the fix touches a Behavior
+   or Animation line, also record the same script on `main` (the audit's
+   preview) as `<folder>-rubyui-main.mp4`, so the change shows in motion. A
+   Look-only fix needs no "before" video: the images cover it.
+5. **Description**: both checklists (`render` text of `report-main.json` and
+   of the fixed `report.json`) inside `<details>` blocks, and test steps,
+   with no image placeholders. Show it to the user before opening the PR.
+6. **Attach the media** (only after the user's ok for the PR) with
+   `gh pr create ... --attach '<run>/pr-media/<file>.png#<State>' --attach
+   <run>/pr-media/<folder>-rubyui-now.mp4`, one `--attach` per file (gh >=
+   2.101). gh uploads them to `github.com/user-attachments` and appends them
+   to the end of the body, inline; video renders as a player. Cubic rewrites the body right after creation: to reorder or edit,
+   re-read it with `gh pr view --json body` and edit on top of that. Don't
+   add to the legacy `pr-assets` branch, and never delete it: older PRs link
+   their images there.
 
 ## References
 
 - `references/grading.md`: statuses, bases, precedence, fixture-originated
   differences, the #572 lines as worked examples. Read before grading.
 - `references/interactions.md`: per-`kind` browser sets (modal, menu, popover,
-  disclosure, form_control, static), probes, screenshot naming.
+  disclosure, form_control, static), probes, screenshot naming, video scripts.
 - `references/spec-sources.md`: spec weights, base URLs, checked anchors,
   citation rule, React Aria as second opinion.
 - `references/native-html.md`: hand-rolled JS → native feature table (MDN), and

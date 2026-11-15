@@ -6,8 +6,8 @@ class PrCommentTest < Minitest::Test
   LIST = %w[gh api repos/ruby-ui/ruby_ui/issues/572/comments --paginate --jq] + [".[] | {id: .id, html_url: .html_url, body: .body, user: .user.login}"]
   ME = "audit-bot"
 
-  def shell(head: HEAD, state: "OPEN", comments: [])
-    ShadcnAudit::FakeShell.new
+  def shell(head: HEAD, state: "OPEN", comments: [], first: ShadcnAudit::FakeShell.new)
+    first
       .stub(%w[gh pr view 572 --repo ruby-ui/ruby_ui --json headRefOid,state], JSON.generate("headRefOid" => head, "state" => state))
       .stub(%w[gh api user --jq .login], "#{ME}\n")
       .stub(LIST, comments.map { |c| JSON.generate({"user" => ME}.merge(c)) }.join("\n"))
@@ -79,5 +79,52 @@ class PrCommentTest < Minitest::Test
       assert_empty writes(s)
       refute s.argvs.any? { |a| a.include?("--paginate") }
     end
+  end
+
+  def post_shell(comments: [])
+    first = ShadcnAudit::FakeShell.new
+      .stub(->(a) { a[0, 3] == %w[gh pr comment] }, "Uploading...\nhttps://github.com/ruby-ui/ruby_ui/pull/572#issuecomment-2\n")
+    shell(comments: comments, first: first)
+  end
+
+  def posts(shell) = shell.argvs.select { |a| a[0, 3] == %w[gh pr comment] }
+
+  def deletes(shell) = shell.argvs.select { |a| a.include?("DELETE") }
+
+  def test_attachments_create_the_comment_with_gh_pr_comment
+    s = post_shell
+    result = ShadcnAudit::PrComment.new(shell: s).upsert(pr: 572, body: "<!-- shadcn-audit -->\nnew", expected_head_sha: HEAD, attachments: ["/run/videos/a.mp4"])
+    assert_equal "created", result["action"]
+    assert_equal "https://github.com/ruby-ui/ruby_ui/pull/572#issuecomment-2", result["url"]
+    post = posts(s).first
+    assert_equal %w[gh pr comment 572 --repo ruby-ui/ruby_ui -F], post[0, 7]
+    assert_equal %w[--attach /run/videos/a.mp4], post[8, 2]
+    assert_empty writes(s).reject { |a| a[0, 3] == %w[gh pr comment] }
+    assert_empty deletes(s)
+  end
+
+  def test_attachments_replace_own_marked_comment_by_creating_before_deleting
+    s = post_shell(comments: [{"id" => 7, "body" => MARKED, "user" => "maintainer"}, {"id" => 9, "body" => MARKED}])
+    result = ShadcnAudit::PrComment.new(shell: s).upsert(pr: 572, body: "<!-- shadcn-audit -->\nnew", expected_head_sha: HEAD, attachments: ["/run/videos/a.mp4"])
+    assert_equal "replaced", result["action"]
+    assert_equal [%w[gh api -X DELETE repos/ruby-ui/ruby_ui/issues/comments/9]], deletes(s)
+    assert_operator s.argvs.index(posts(s).first), :<, s.argvs.index(deletes(s).first)
+    refute s.argvs.any? { |a| a.include?("PATCH") }
+  end
+
+  def test_failed_post_with_attachments_keeps_the_old_comment
+    first = ShadcnAudit::FakeShell.new.stub_error(->(a) { a[0, 3] == %w[gh pr comment] }, "upload failed")
+    s = shell(comments: [{"id" => 9, "body" => MARKED}], first: first)
+    assert_raises(ShadcnAudit::Shell::Error) do
+      ShadcnAudit::PrComment.new(shell: s).upsert(pr: 572, body: "x", expected_head_sha: HEAD, attachments: ["/run/a.mp4"])
+    end
+    assert_empty deletes(s)
+  end
+
+  def test_attachments_still_refused_when_head_moved
+    s = post_shell
+    result = ShadcnAudit::PrComment.new(shell: s).upsert(pr: 572, body: "x", expected_head_sha: "f" * 40, attachments: ["/run/a.mp4"])
+    assert_equal "refused", result["action"]
+    assert_empty posts(s)
   end
 end

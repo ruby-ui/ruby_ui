@@ -109,8 +109,11 @@ module ShadcnAudit
       return {"posted" => false, "body" => body} unless post
 
       pr = report.target["pr"] or raise ArgumentError, "report target is not a PR"
+      videos = report.videos.map { |v| File.expand_path(v["rubyui"], File.dirname(path)) }
+      missing = videos.reject { |v| File.file?(v) }
+      raise ArgumentError, "video not found: #{missing.join(", ")}" unless missing.empty?
       result = PrComment.new(shell: shell)
-        .upsert(pr: pr, body: body, expected_head_sha: report.target["head_sha"])
+        .upsert(pr: pr, body: body, expected_head_sha: report.target["head_sha"], attachments: videos)
       result.merge("posted" => result["action"] != "refused")
     end
 
