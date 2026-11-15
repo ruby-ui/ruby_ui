@@ -36,6 +36,11 @@ module ShadcnAudit
 
     def components = data["components"]
 
+    # Every component video, flattened, with its folder.
+    def videos
+      components.flat_map { |c| Array(c["videos"]).map { |v| {"folder" => c["folder"]}.merge(v) } }
+    end
+
     def header
       {
         "repo" => target["repo"], "pr" => target["pr"],
@@ -70,6 +75,15 @@ module ShadcnAudit
         next if shot.is_a?(Hash) && %w[state rubyui shadcn].all? { |k| shot[k].is_a?(String) }
         raise ReportError, "#{folder}: screenshot needs state, rubyui and shadcn"
       end
+      Array(component["videos"]).each do |video|
+        next if valid_video?(video)
+        raise ReportError, "#{folder}: video needs a label and a rubyui path (shadcn path optional)"
+      end
+    end
+
+    def valid_video?(video)
+      video.is_a?(Hash) && %w[label rubyui].all? { |k| video[k].is_a?(String) && !video[k].strip.empty? } &&
+        (video["shadcn"].nil? || video["shadcn"].is_a?(String))
     end
 
     def validate_line!(folder, line)

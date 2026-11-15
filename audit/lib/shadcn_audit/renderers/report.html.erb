@@ -17,7 +17,7 @@
   .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
   figure { margin: 0; }
   figcaption { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
-  img { max-width: 100%; border: 1px solid var(--border); border-radius: 4px; background: #fff; }
+  img, video { max-width: 100%; border: 1px solid var(--border); border-radius: 4px; background: #fff; }
   .state { font-weight: 600; margin: 0 0 4px; }
   pre { white-space: pre-wrap; overflow-x: auto; margin: 0; }
   @media (max-width: 640px) { .pair { grid-template-columns: 1fr; } }
@@ -32,7 +32,16 @@
 <% components.each do |component| -%>
 <section>
   <h2><%= h.call(t.camelize(component["folder"])) %></h2>
-  <% component["screenshots"].each do |shot| -%>
+  <% Array(component["videos"]).each do |video| -%>
+  <p class="state"><%= h.call(video["label"]) %></p>
+  <div class="pair">
+    <figure><figcaption>RubyUI</figcaption><video controls muted playsinline src="<%= h.call(video["rubyui"]) %>"></video></figure>
+    <% if video["shadcn"] -%>
+    <figure><figcaption>shadcn (Base UI + vega)</figcaption><video controls muted playsinline src="<%= h.call(video["shadcn"]) %>"></video></figure>
+    <% end -%>
+  </div>
+  <% end -%>
+  <% Array(component["screenshots"]).each do |shot| -%>
   <p class="state"><%= h.call(shot["state"]) %></p>
   <div class="pair">
     <figure><figcaption>RubyUI</figcaption><img src="<%= h.call(shot["rubyui"]) %>" alt="RubyUI, <%= h.call(shot["state"]) %>"></figure>

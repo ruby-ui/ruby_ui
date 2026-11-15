@@ -107,4 +107,24 @@ class ReportTest < Minitest::Test
       assert_includes error.message, "folder"
     end
   end
+
+  def test_videos_are_optional_and_need_label_and_rubyui_path
+    d = data
+    d["components"].first["videos"] = [{"label" => "walkthrough (light)", "rubyui" => "videos/dialog-rubyui-light.mp4"}]
+    ShadcnAudit::Report.new(d)
+
+    [{"label" => "x"}, {"rubyui" => "v.mp4"}, "v.mp4", {"label" => "x", "rubyui" => "v.mp4", "shadcn" => 3}].each do |video|
+      d = data
+      d["components"].first["videos"] = [video]
+      error = assert_raises(ShadcnAudit::ReportError, video.inspect) { ShadcnAudit::Report.new(d) }
+      assert_includes error.message, "video needs"
+    end
+  end
+
+  def test_videos_lists_every_component_video_with_its_folder
+    d = data
+    d["components"].first["videos"] = [{"label" => "walkthrough (light)", "rubyui" => "videos/dialog-rubyui-light.mp4"}]
+    report = ShadcnAudit::Report.new(d)
+    assert_equal [{"folder" => "dialog", "label" => "walkthrough (light)", "rubyui" => "videos/dialog-rubyui-light.mp4"}], report.videos
+  end
 end

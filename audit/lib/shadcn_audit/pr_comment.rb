@@ -6,6 +6,11 @@ module ShadcnAudit
   # Keeps one marked audit comment per PR, authored by the authenticated gh
   # user. Refuses when the PR isn't open or its head moved since the audit
   # pinned it. The only code path that writes to GitHub.
+  #
+  # With attachments (videos), the comment goes through `gh pr comment
+  # --attach`, which can only create: the new comment is posted first and
+  # the user's old marked comment is deleted after, so a failed upload never
+  # loses the previous audit.
   class PrComment
     API = "repos/#{Target::REPO}".freeze
 
@@ -13,7 +18,7 @@ module ShadcnAudit
       @shell = shell
     end
 
-    def upsert(pr:, body:, expected_head_sha:)
+    def upsert(pr:, body:, expected_head_sha:, attachments: [])
       head = Target.pr_head(pr, shell: @shell)
       if head["state"] != "OPEN"
         return refused("PR ##{pr} is #{head["state"] || "in an unknown state"}, not OPEN. Nothing was posted.")
@@ -24,6 +29,8 @@ module ShadcnAudit
       end
 
       existing = marked_comment(pr, login)
+      return post_with_attachments(pr, body, attachments, existing) if attachments.any?
+
       with_body_file(body) do |file|
         if existing
           result = JSON.parse(@shell.capture("gh", "api", "-X", "PATCH", "#{API}/issues/comments/#{existing["id"]}", "-F", "body=@#{file}"))
@@ -36,6 +43,17 @@ module ShadcnAudit
     end
 
     private
+
+    def post_with_attachments(pr, body, attachments, existing)
+      url = with_body_file(body) do |file|
+        args = ["gh", "pr", "comment", pr.to_s, "--repo", Target::REPO, "-F", file] + attachments.flat_map { |a| ["--attach", a] }
+        @shell.capture(*args).lines.map(&:strip).reverse.find { |l| l.start_with?("https://") }
+      end
+      return {"action" => "created", "url" => url, "reason" => nil} unless existing
+
+      @shell.capture("gh", "api", "-X", "DELETE", "#{API}/issues/comments/#{existing["id"]}")
+      {"action" => "replaced", "url" => url, "reason" => nil}
+    end
 
     def refused(reason) = {"action" => "refused", "url" => nil, "reason" => reason}
 

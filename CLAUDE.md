@@ -10,7 +10,7 @@ Independent subprojects (gem, docs, mcp, audit), each with its own `Gemfile` and
 | --- | --- |
 | [`gem/`](gem/) | The `ruby_ui` gem — Phlex components, generators, gemspec, Minitest suite. Published to RubyGems from here. |
 | [`docs/`](docs/) | Rails 8 app powering https://rubyui.com. Consumes the local gem via `path: "../gem"`. |
-| [`audit/`](audit/) | shadcn fidelity audit tooling; skills in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/) (audit a PR/component) and [`.claude/skills/shadcn-drift/`](.claude/skills/shadcn-drift/) (weekly upstream watch). |
+| [`audit/`](audit/) | shadcn fidelity audit tooling (its browser steps use the headless `audit-chrome` MCP from [`.mcp.json`](.mcp.json)); skills in [`.claude/skills/shadcn-audit/`](.claude/skills/shadcn-audit/) (audit a PR/component) and [`.claude/skills/shadcn-drift/`](.claude/skills/shadcn-drift/) (weekly upstream watch). |
 | [`mcp/`](mcp/) | MCP server for ruby_ui; `mcp/data/registry/` (one JSON per component plus `index.json`) is generated from the gem's component source and parsed docs. |
 | `.github/workflows/ci.yml` | Unified CI: `gem` tests (Ruby 3.3 + 3.4), `docs` Rails tests, `mcp` tests + registry check, `audit` (shadcn-audit CLI) tests, docker build for the docs devcontainer. |
 
@@ -92,7 +92,7 @@ Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new bac
 - Bracketed prefixes (`[Feature]`, `[Bug Fix]`, `[Documentation]`) or scoped conventional (`feat(scope): ...`).
 - Imperative, focused commits. Reference issues/PRs as `(#123)`.
 - PRs: linked issue, concise description, before/after screenshots for UI changes, explicit test steps.
-- PR images and videos: attach them with `gh pr create|edit|comment --attach <file>` (gh >= 2.101; PNG, MP4, MOV, WebM, up to 50 per command). gh uploads to `github.com/user-attachments` and renders them inline, video as a player. Leave no `![](...)` placeholder in the body: gh only swaps one whose path matches the `--attach` argument exactly, otherwise it appends at the end and the placeholder stays broken. Cubic rewrites the PR body right after creation, so re-read the body before a `gh pr edit --body`. Uploads are public once linked: nothing internal or private in them. Recipe for audit fixes in the shadcn-audit skill, "Before/after images for a fix PR".
+- PR images and videos: attach them with `gh pr create|edit|comment --attach <file>` (gh >= 2.101; PNG, MP4, MOV, WebM, up to 50 per command). gh uploads to `github.com/user-attachments` and renders them inline, video as a player. Leave no `![](...)` placeholder in the body: gh only swaps one whose path matches the `--attach` argument exactly, otherwise it appends at the end and the placeholder stays broken. Cubic rewrites the PR body right after creation, so re-read the body before a `gh pr edit --body`. Uploads are public once linked: nothing internal or private in them. Recipe for audit fixes in the shadcn-audit skill, "Before/after images and video for a fix PR".
 - Legacy `pr-assets` orphan branch: older PRs link their images there by commit SHA. Don't add to it, and never delete it: those PRs lose their images.
 
 ## Don'ts

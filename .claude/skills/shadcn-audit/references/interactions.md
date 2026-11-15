@@ -1,7 +1,9 @@
 # Browser interaction sets
 
 HTML, ARIA, Behavior and Animation verdicts come **only** from these runs, never
-from the `.tsx` or the Ruby source. Run the same set on both URLs:
+from the `.tsx` or the Ruby source. Drive them with the `audit-chrome` MCP
+(`mcp__audit-chrome__*`, from the repo's `.mcp.json`: headless, isolated,
+1280×800), never the chrome-devtools plugin's server. Run the same set on both URLs:
 
 - shadcn: `http://localhost:5179/?c=<folder>&theme=<light|dark>` (sandbox `url_template`)
 - RubyUI: `http://localhost:3179/__audit/<folder>?theme=<light|dark>` (preview `url_template`)
@@ -15,10 +17,10 @@ animations, and any state `collect` reported as not reached.
 
 ## Setup (once per page)
 
-1. `new_page` (one per side), then `resize_page` both to the **same viewport**,
-   1280×800 if it gets there. `resize_page` may not reach that size (window
-   chrome, display limits): record the actual `w`×`h` from the probe in step 3
-   and make sure both sides match; a mismatch goes to `environment_diffs`.
+1. `new_page` (one per side). `audit-chrome` starts every page at 1280×800
+   with DPR 1; don't `resize_page`. The probe in step 3 confirms `w`, `h` and
+   `dpr` on both sides; any mismatch (someone ran the plugin's headed server
+   by mistake, say) goes to `environment_diffs`.
 2. `navigate_page` to the URL; `wait_for` the fixture text (e.g. the trigger label).
 3. Environment probe (`evaluate_script`), on both sides:
    ```js
@@ -43,6 +45,9 @@ Screenshots: `take_screenshot` with `filePath` =
 `<run>/screens/<folder>-<state>-<rubyui|shadcn>-<light|dark>.png`; in
 `report.json` write the path relative to the run folder (`screens/…`).
 Minimum states: closed, open, keyboard focus, after Esc, in light and dark.
+
+Paths for `filePath` must sit under the session's working directory (the
+MCP rejects anything else); the run folder in `.shadcn-audit/runs/` does.
 
 If a step can't be run (trigger not found, state not reachable, page error in
 `list_console_messages`), the lines it feeds are ⏸ with the reason. Never
@@ -162,3 +167,32 @@ Screenshots: default, focused, invalid, disabled; light and dark.
 Render + Look only: load, screenshot light and dark, compare classes per part.
 HTML from the DOM (tags, nesting). Behavior/ARIA lines only if the component has
 interactive parts.
+
+## Video
+
+One video per audited component: the RubyUI side at the audited head, light
+theme, on a fresh load of its preview URL. `screencast_start` with `filePath`
+= `<run>/videos/<folder>-rubyui-light.mp4`, run the `kind`'s script below
+with real `click` and `press_key` calls, wait about 1 s after the last step
+so the closing animation lands, then `screencast_stop`. Pause about 0.5 s
+between steps: the recorder only writes frames when the page repaints, and
+the pauses keep each state on screen long enough to follow. The recorder is
+built into Chrome (157 has it, 151 doesn't); "does not support screen
+recording" means the user's Chrome needs an update, not a missing tool.
+
+| kind | Script |
+| --- | --- |
+| `modal` | click the trigger; Tab twice; Escape; click the trigger again; click Cancel/close |
+| `menu` | click the trigger; ArrowDown ×3; type the first letter of the third item; Enter; click the trigger again; Escape |
+| `popover` | click the trigger; for listbox content, type two letters, ArrowDown, Enter; otherwise Tab once; Escape |
+| `disclosure` | click the trigger; click it again; Tab to it and press Space twice |
+| `form_control` | Tab into the control; operate it (type a value, or Space to toggle); Tab out; when the fixture has an invalid state, enter an invalid value and blur |
+| `static` | no video |
+
+The recorder writes MP4 in AV1, which current Chrome, Firefox and Edge play;
+Safari plays AV1 only on Macs with hardware decoding (M3 and later). When
+`ffmpeg` is on PATH, convert in place for any viewer:
+`ffmpeg -y -i in.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart out.mp4`
+(then replace the original). Without `ffmpeg`, keep the AV1 file. Add the
+video to the component in `report.json`:
+`"videos": [{"label": "walkthrough (light)", "rubyui": "videos/<folder>-rubyui-light.mp4"}]`.
