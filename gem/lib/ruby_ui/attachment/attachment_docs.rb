@@ -203,7 +203,7 @@ class Views::Docs::Attachment < Views::Base
                 AttachmentDescription { "Open preview dialog" }
               end
               AttachmentActions do
-                AttachmentAction(aria_label: "Copy link") { copy_icon }
+                AttachmentAction(aria_label: "Copy link to research-summary.pdf") { copy_icon }
               end
               DialogTrigger(class: "contents") do
                 AttachmentTrigger(aria_label: "Preview research-summary.pdf")
