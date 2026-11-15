@@ -2,6 +2,10 @@ alert_dialog:
   components:
     - "Button"
 
+attachment:
+  components:
+    - "Button"
+
 calendar:
   js_packages:
     - "mustache"

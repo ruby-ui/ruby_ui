@@ -1,0 +1,29 @@
+shadcn: attachment
+shadcn_sha: e62c9435fff729a175f38983dee73b2cb4f6a069
+kind: static
+docs_view: attachment
+parts:
+  AttachmentGroup: attachment-group
+  Attachment: attachment
+  AttachmentMedia: attachment-media
+  AttachmentContent: attachment-content
+  AttachmentTitle: attachment-title
+  AttachmentDescription: attachment-description
+  AttachmentActions: attachment-actions
+  AttachmentAction: attachment-action
+  AttachmentTrigger: attachment-trigger
+selectors:
+  AttachmentGroup: '[data-slot="attachment-group"]'
+  Attachment: '[data-slot="attachment"]'
+  AttachmentMedia: '[data-slot="attachment-media"]'
+  AttachmentContent: '[data-slot="attachment-content"]'
+  AttachmentTitle: '[data-slot="attachment-title"]'
+  AttachmentDescription: '[data-slot="attachment-description"]'
+  AttachmentActions: '[data-slot="attachment-actions"]'
+  AttachmentAction: '[data-slot="attachment-action"]'
+  AttachmentTrigger: '[data-slot="attachment-trigger"]'
+props:
+  Attachment: {state: state, size: size, orientation: orientation}
+  AttachmentMedia: {variant: variant}
+  AttachmentAction: {variant: variant, size: size}
+  AttachmentTrigger: {render: as, type: type}

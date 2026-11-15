@@ -25,6 +25,7 @@ Use the core docs first for installation, theming, dark mode, and customization 
 - [Alert](https://rubyui.com/docs/alert): Callout component for drawing attention to contextual information.
 - [Alert Dialog](https://rubyui.com/docs/alert_dialog): Modal dialog for interruptive content that expects a response.
 - [Aspect Ratio](https://rubyui.com/docs/aspect_ratio): Container for displaying content within a desired ratio.
+- [Attachment](https://rubyui.com/docs/attachment): File or image attachment with upload states, actions, triggers, and a scrollable group.
 - [Avatar](https://rubyui.com/docs/avatar): Image and fallback primitives for representing a user.
 - [Badge](https://rubyui.com/docs/badge): Small status or label element.
 - [Breadcrumb](https://rubyui.com/docs/breadcrumb): Navigation trail showing the current location in a hierarchy.

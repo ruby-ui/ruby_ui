@@ -480,6 +480,61 @@ class Views::Docs::Installation::RailsBundler < Views::Base
                   --scroll-fade-b: var(--_scroll-fade-size-b);
                 }
               }
+              /* Shimmer (Attachment): a highlight that sweeps across text while something
+                 loads; still under prefers-reduced-motion. From shadcn's shimmer (MIT). */
+              @property --shimmer-angle {
+                syntax: "<angle>";
+                inherits: true;
+                initial-value: 20deg;
+              }
+
+              @keyframes tw-shimmer {
+                from {
+                  background-position: 100% 0;
+                }
+                to {
+                  background-position: 0 0;
+                }
+              }
+
+              @utility shimmer {
+                /* Without relative colors the highlight is invalid and the text would vanish. */
+                @supports (color: oklch(from red l c h)) {
+                  --_spread: var(--shimmer-spread, calc(3ch + 40px));
+                  --_base: currentColor;
+                  --_highlight: var(--shimmer-color, oklch(from currentColor l c h / calc(alpha * 0.2)));
+                  background-image: linear-gradient(
+                    calc(90deg + var(--shimmer-angle)),
+                    var(--_base) calc(50% - var(--_spread)),
+                    color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% - var(--_spread) * 0.5),
+                    var(--_highlight) 50%,
+                    color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% + var(--_spread) * 0.5),
+                    var(--_base) calc(50% + var(--_spread))
+                  );
+                  background-repeat: no-repeat;
+                  background-size: calc(200% + var(--_spread) * 2) 100%;
+                  background-position: 0 0;
+                  background-clip: text;
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+
+                  @variant dark {
+                    --_highlight: var(--shimmer-color, oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4)));
+                  }
+
+                  &:where([dir="rtl"], [dir="rtl"] *) {
+                    animation-direction: reverse;
+                  }
+
+                  @media (prefers-reduced-motion: reduce) {
+                    animation: none;
+                    background-image: none;
+                    -webkit-text-fill-color: currentColor;
+                  }
+                }
+              }
+
               @layer base {
                 * {
                   @apply border-border outline-ring/50;
