@@ -1,0 +1,31 @@
+gem/lib/ruby_ui/attachment/attachment_docs.rb
+  s_4ade8b2cd8b900::t_9cecc771acaf8a 206
+mcp/data/registry/components/attachment.json
+  s_4ade8b2cd8b900::t_a82182833f742f 50,89
+docs/app/views/docs/installation/rails_bundler.rb
+  s_4ade8b2cd8b900::t_9cecc771acaf8a 501-534
+docs/app/views/docs/installation/rails_importmaps.rb
+  s_4ade8b2cd8b900::t_9cecc771acaf8a 501-534
+docs/app/assets/stylesheets/application.tailwind.css
+  s_4ade8b2cd8b900::t_9cecc771acaf8a 282-315
+gem/lib/generators/ruby_ui/install/templates/tailwind.css.erb
+  s_4ade8b2cd8b900::t_9cecc771acaf8a 275-294,296-298,300-302,304-308
+docs/app/views/docs/attachment.rb
+  s_4ade8b2cd8b900::t_9cecc771acaf8a 206
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "629efb51d343725c9bd61971ee1d537f662f3443",
+  "prompts": {},
+  "sessions": {
+    "s_4ade8b2cd8b900": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "948dd358-3909-4ce0-8130-ab17732c4f2f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
