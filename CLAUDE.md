@@ -92,7 +92,8 @@ Decide the bump with SemVer against commits since the last `vX.Y.Z` tag: new bac
 - Bracketed prefixes (`[Feature]`, `[Bug Fix]`, `[Documentation]`) or scoped conventional (`feat(scope): ...`).
 - Imperative, focused commits. Reference issues/PRs as `(#123)`.
 - PRs: linked issue, concise description, before/after screenshots for UI changes, explicit test steps.
-- PR images: GitHub has no API to attach files, so they live on the orphan branch `pr-assets` (one folder per PR, linked by commit SHA). Recipe in the shadcn-audit skill, "Before/after images for a fix PR". Never delete `pr-assets`: old PRs lose their images.
+- PR images and videos: attach them with `gh pr create|edit|comment --attach <file>` (gh >= 2.101; PNG, MP4, MOV, WebM, up to 50 per command). gh uploads to `github.com/user-attachments` and renders them inline, video as a player. Leave no `![](...)` placeholder in the body: gh only swaps one whose path matches the `--attach` argument exactly, otherwise it appends at the end and the placeholder stays broken. Cubic rewrites the PR body right after creation, so re-read the body before a `gh pr edit --body`. Uploads are public once linked: nothing internal or private in them. Recipe for audit fixes in the shadcn-audit skill, "Before/after images for a fix PR".
+- Legacy `pr-assets` orphan branch: older PRs link their images there by commit SHA. Don't add to it, and never delete it: those PRs lose their images.
 
 ## Don'ts
 

@@ -370,40 +370,17 @@ hold for auditing someone else's PR; this section is for the user's own fix.
    `RubyUI · this PR`, `shadcn · Base UI + vega`. A small HTML page with the
    three screenshots, captured with the browser, is enough. Save them to
    `<run>/pr-assets/`.
-4. **Publish to `pr-assets`** (only after the user's ok for the PR). GitHub
-   has no API to attach files to a PR, so images go to the orphan branch
-   `pr-assets`, one folder per PR, committed with plumbing so the working
-   tree and index stay untouched:
-
-   ```bash
-   git fetch origin pr-assets 2>/dev/null || true       # absent on the first PR
-   export GIT_INDEX_FILE=$(mktemp -u)
-   git read-tree origin/pr-assets 2>/dev/null || true   # keep earlier PRs' folders
-   for f in <run>/pr-assets/*.png; do
-     git update-index --add --cacheinfo 100644,$(git hash-object -w "$f"),<pr-folder>/$(basename "$f")
-   done
-   tree=$(git write-tree)
-   if parent=$(git rev-parse -q --verify origin/pr-assets); then
-     sha=$(git commit-tree "$tree" -p "$parent" -m "Add images for <pr-folder>")
-   else
-     sha=$(git commit-tree "$tree" -m "Add images for <pr-folder>")
-   fi
-   rm -f "$GIT_INDEX_FILE"; unset GIT_INDEX_FILE
-   git push origin "${sha}:refs/heads/pr-assets"   # braces: zsh reads "$sha:r" as a modifier
-   ```
-
-   Run the whole block in one go, right before the push: parallel audits move
-   `pr-assets` often. If the push is rejected as non-fast-forward, rerun the
-   block from `git fetch` so the commit is rebuilt on the latest tip; never
-   force-push this branch.
-
-   Link each image by commit SHA so the link never moves:
-   `![State](https://github.com/ruby-ui/ruby_ui/blob/<sha>/<pr-folder>/<file>.png?raw=true)`.
-   Check one URL answers `200 image/png` before opening the PR. Never delete
-   the branch: old PRs lose their images.
-5. **Description**: the images, then both checklists (`render` text of
-   `report-main.json` and of the fixed `report.json`) inside `<details>`
-   blocks, and test steps. Show it to the user before opening the PR.
+4. **Description**: both checklists (`render` text of `report-main.json` and
+   of the fixed `report.json`) inside `<details>` blocks, and test steps,
+   with no image placeholders. Show it to the user before opening the PR.
+5. **Attach the images** (only after the user's ok for the PR) with
+   `gh pr create ... --attach '<run>/pr-assets/<file>.png#<State>'`, one
+   `--attach` per image (gh >= 2.101). gh uploads them to
+   `github.com/user-attachments` and appends them to the end of the body,
+   inline. Cubic rewrites the body right after creation: to reorder or edit,
+   re-read it with `gh pr view --json body` and edit on top of that. Don't
+   add to the legacy `pr-assets` branch, and never delete it: older PRs link
+   their images there.
 
 ## References
 
