@@ -118,14 +118,25 @@ class RubyUI::AvatarTest < ComponentTest
     refute_match(/<span[^>]*\shidden[\s>]/, output)
   end
 
+  def test_image_class_overrides_object_fit
+    # As in shadcn, AvatarImage styles itself, so its class wins:
+    # object-contain shows a logo uncropped.
+    output = phlex { RubyUI.Avatar { RubyUI.AvatarImage(src: "/logo.png", class: "object-contain") } }
+    image_class = output[/<img [^<]*?class="([^"]*)"/, 1]
+
+    assert_match(/\bobject-contain\b/, image_class)
+    refute_match(/object-cover/, image_class)
+    refute_match(/\*:\[img\]/, output)
+  end
+
   def test_plain_img_child_is_sized_and_rounded
     # The root no longer clips, so Avatar { img(...) } still renders a round,
     # cropped photo.
     output = phlex { RubyUI.Avatar { |a| a.img(src: "/wide.png") } }
 
-    assert_match(/\*:\[img\]:size-full/, output)
-    assert_match(/\*:\[img\]:rounded-full/, output)
-    assert_match(/\*:\[img\]:object-cover/, output)
+    assert_includes output, "[&>img:not([data-slot])]:size-full"
+    assert_includes output, "[&>img:not([data-slot])]:rounded-full"
+    assert_includes output, "[&>img:not([data-slot])]:object-cover"
   end
 
   def test_badge_keeps_both_ring_and_background

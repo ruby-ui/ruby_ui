@@ -38,8 +38,9 @@ module RubyUI
           "group/avatar relative flex shrink-0 select-none rounded-full",
           "after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken dark:after:mix-blend-lighten",
           # The root doesn't clip (the badge sits on its edge), so a plain <img>
-          # child (instead of AvatarImage) is sized and rounded here.
-          "*:[img]:size-full *:[img]:rounded-full *:[img]:object-cover",
+          # child (instead of AvatarImage) is sized and rounded here. AvatarImage
+          # carries data-slot and styles itself, so its class wins, as in shadcn.
+          "[&>img:not([data-slot])]:size-full [&>img:not([data-slot])]:rounded-full [&>img:not([data-slot])]:object-cover",
           SIZES.fetch(@size)
         ]
       }
