@@ -1,10 +1,11 @@
-# Six avatars and one AvatarGroup, all fictional data (no network):
+# Seven avatars and one AvatarGroup, all fictional data (no network):
 #  1. image (inline SVG data URI) + fallback "CN": the image loads, the fallback hides.
 #  2. fallback only "JD".
 #  3. broken image (undecodable data URI) + fallback "ER": the fallback shows.
 #  4. size sm, fallback "SM".  5. size lg, fallback "LG".
 #  6. fallback "BG" with an AvatarBadge.
 #  7. AvatarGroup of two fallbacks ("AB", "CD") and an AvatarGroupCount "+2".
+#  8. wide logo (4:1 inline SVG, three stripes) with class object-contain on the image: all three stripes show, letterboxed.
 # Static kind: only the closed state is collected; data-audit-trigger sits on the wrapper only to satisfy the fixture contract.
 image_src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' fill='%233b82f6'/%3E%3C/svg%3E"
 image_alt: "@shadcn"
@@ -19,3 +20,6 @@ fallback_badge: BG
 group_1: AB
 group_2: CD
 group_count: "+2"
+logo_src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='32' viewBox='0 0 128 32'%3E%3Crect width='43' height='32' fill='%23ef4444'/%3E%3Crect x='43' width='42' height='32' fill='%233b82f6'/%3E%3Crect x='85' width='43' height='32' fill='%2322c55e'/%3E%3C/svg%3E"
+logo_alt: "@logo"
+fallback_logo: LO
