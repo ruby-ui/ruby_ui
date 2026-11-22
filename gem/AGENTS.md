@@ -28,7 +28,7 @@ RubyUI components mirror shadcn's **Base UI** build with the **vega** style and 
 - **New component in the audit:** create [`audit/component_map/<folder>.yml`](../audit/component_map/README.md) (one file per component, so parallel PRs don't conflict) and add fixtures in `audit/fixtures/<folder>/` (`content.yml`, `shadcn.tsx`, `rubyui.rb`, the same strings on both sides and one `data-audit-trigger`); without fixtures the browser checks have nothing to render. If `shadcn.tsx` renders other shadcn components (e.g. Form's fixture uses Input and Checkbox), list them under `fixture_shadcn` so the sandbox installs them.
 - **Deliberate differences:** register them in the component's file under [`audit/divergences/`](../audit/divergences/) (`<folder>.yml`) in the same PR, with a reason. Unregistered differences show up as findings.
 - **Licensing:** mirror shadcn's classes, structure and behavior (MIT). Port *behavior* from Base UI and React Aria, never their source. If code is ever ported, its license notice goes in alongside it.
-- **Before opening a component PR:** run the audit. In Claude Code, `/shadcn-audit`; in any other agent, read [`SKILL.md`](../.claude/skills/shadcn-audit/SKILL.md) (and its `references/`) and follow that procedure with the CLI in [`audit/`](../audit/README.md). Prerequisites: Ruby 3.4 (via mise or equivalent), `gh` authenticated, Node and pnpm, and the chrome-devtools MCP. Servers run in Herdr panes when `HERDR_ENV=1`, otherwise as background shell processes; stop them at the end.
+- **Before opening a component PR:** run the audit. In Claude Code, `/shadcn-audit`; in any other agent, read [`SKILL.md`](../.claude/skills/shadcn-audit/SKILL.md) (and its `references/`) and follow that procedure with the CLI in [`audit/`](../audit/README.md). Prerequisites: Ruby 4.0 (via mise or equivalent), `gh` authenticated, Node and pnpm, and the chrome-devtools MCP. Servers run in Herdr panes when `HERDR_ENV=1`, otherwise as background shell processes; stop them at the end.
 
 ## Commands
 
@@ -98,7 +98,7 @@ When writing or reviewing a Stimulus controller, follow the **`ruby-ui-stimulus`
 
 ## CI
 
-GitHub Actions (`.github/workflows/ci.yml`) runs `rake test` and `rake standard` against Ruby 3.3 and 3.4 on every push to main and on PRs.
+GitHub Actions (`.github/workflows/ci.yml`) runs `rake test` and `rake standard` against Ruby 3.3, 3.4 and 4.0 on every push to main and on PRs.
 
 ## PR Template
 

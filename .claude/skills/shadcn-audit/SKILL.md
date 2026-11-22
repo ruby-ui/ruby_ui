@@ -29,7 +29,7 @@ judging, and writing `report.json`. Run every CLI call from `audit/`:
 cd audit && mise exec -- bundle exec exe/shadcn-audit <subcommand> …
 ```
 
-(Without mise, drop `mise exec --` and use a Ruby 3.4 on PATH.)
+(Without mise, drop `mise exec --` and use a Ruby 4.0 on PATH.)
 
 Each subcommand prints one JSON object. On failure it is `{"error": "…"}`
 with exit status 1: read the message, fix the cause, and re-run; never treat
@@ -38,7 +38,7 @@ an error as an empty result. Talk to the user in their language;
 
 ## Prerequisites
 
-- Ruby 3.4 (via mise, as in `gem/.tool-versions`, or an equivalent version
+- Ruby 4.0 (via mise, as in `gem/.tool-versions`, or an equivalent version
   manager) with `cd audit && bundle install` done.
 - `gh` authenticated (`gh auth status`) with read access to
   `ruby-ui/ruby_ui`; posting the comment needs write access.
