@@ -1,0 +1,21 @@
+CLAUDE.md
+  s_b49f0a15347e85::t_30a00aca548ae2 15
+README.md
+  s_b49f0a15347e85::t_6e3e3ec8a30941 35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8a683c3554de346997738a949ad0294129ee9656",
+  "prompts": {},
+  "sessions": {
+    "s_b49f0a15347e85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "06d183e2-286a-43cc-8005-47f39bbb8e46",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
