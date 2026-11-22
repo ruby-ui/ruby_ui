@@ -26,13 +26,13 @@ Run every CLI call from `audit/`:
 cd audit && mise exec -- bundle exec exe/shadcn-audit <subcommand> …
 ```
 
-(Without mise, drop `mise exec --` and use a Ruby 3.4 on PATH.) Each call
+(Without mise, drop `mise exec --` and use a Ruby 4.0 on PATH.) Each call
 prints one JSON object; `{"error": …}` with exit 1 is a failure. Report it,
 never treat it as "nothing changed".
 
 ## Prerequisites
 
-Ruby 3.4 with `cd audit && bundle install`, `git`, and `gh` authenticated
+Ruby 4.0 with `cd audit && bundle install`, `git`, and `gh` authenticated
 (read is enough; the commit list comes from the GitHub API). No browser, no
 Node.
 
