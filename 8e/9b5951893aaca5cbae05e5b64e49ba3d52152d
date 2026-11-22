@@ -1,0 +1,23 @@
+.claude/skills/shadcn-audit/SKILL.md
+  s_b49f0a15347e85::t_a03778ef574331 32,41
+gem/AGENTS.md
+  s_b49f0a15347e85::t_a03778ef574331 31,101
+.claude/skills/shadcn-drift/SKILL.md
+  s_b49f0a15347e85::t_a03778ef574331 29,35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8e9b5951893aaca5cbae05e5b64e49ba3d52152d",
+  "prompts": {},
+  "sessions": {
+    "s_b49f0a15347e85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "06d183e2-286a-43cc-8005-47f39bbb8e46",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}

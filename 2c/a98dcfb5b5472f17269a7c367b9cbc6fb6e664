@@ -1,0 +1,25 @@
+audit/README.md
+  s_b49f0a15347e85::t_a1f2ceca3626c9 23
+gem/.devcontainer/Dockerfile
+  s_b49f0a15347e85::t_a1f2ceca3626c9 1-2
+gem/.ruby-version
+  s_b49f0a15347e85::t_a1f2ceca3626c9 1
+docs/.devcontainer/Dockerfile
+  s_b49f0a15347e85::t_a1f2ceca3626c9 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2ca98dcfb5b5472f17269a7c367b9cbc6fb6e664",
+  "prompts": {},
+  "sessions": {
+    "s_b49f0a15347e85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "06d183e2-286a-43cc-8005-47f39bbb8e46",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
