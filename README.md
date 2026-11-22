@@ -32,7 +32,7 @@ ruby_ui/
 | --- | --- |
 | [`gem/`](gem/) | The `ruby_ui` gem (`gem build`, `gem release` from this folder). |
 | [`docs/`](docs/) | Rails 8 app for the documentation site. Consumes the local gem via `path: "../gem"`. |
-| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Unified CI: gem tests on Ruby 3.3 + 3.4, Rails docs app tests, and a docker-build job that publishes the docs devcontainer to ghcr.io. |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Unified CI: gem tests on Ruby 3.3, 3.4 and 4.0, Rails docs app tests, and a docker-build job that publishes the docs devcontainer to ghcr.io. |
 
 ## Development
 
