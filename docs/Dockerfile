@@ -7,7 +7,7 @@
 #   flyctl deploy --config docs/fly.toml --dockerfile docs/Dockerfile .
 
 # Make sure RUBY_VERSION matches the Ruby version in docs/.ruby-version
-ARG RUBY_VERSION=3.4.7
+ARG RUBY_VERSION=4.0.10
 FROM quay.io/evl.ms/fullstaq-ruby:${RUBY_VERSION}-jemalloc-slim AS base
 
 LABEL fly_launch_runtime="rails"

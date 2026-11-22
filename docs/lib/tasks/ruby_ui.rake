@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "fileutils"
-require "pathname"
 
 namespace :ruby_ui do
   desc "Ensure docs/app/javascript/controllers/ruby_ui/ has a symlink for every gem Stimulus controller"

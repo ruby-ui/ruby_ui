@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "fileutils"
-require "pathname"
 
 namespace :site_files do
   desc "Generate llms.txt, llms-full.txt, and sitemap.xml"
