@@ -1,0 +1,35 @@
+gem/.devcontainer/Dockerfile
+  s_b49f0a15347e85::t_02048935e4ea25 2
+gem/.tool-versions
+  s_b49f0a15347e85::t_02048935e4ea25 1
+docs/.devcontainer/Dockerfile
+  s_b49f0a15347e85::t_02048935e4ea25 2
+.github/workflows/ci.yml
+  s_b49f0a15347e85::t_49df697480277d 19,76,98
+docs/Dockerfile
+  s_b49f0a15347e85::t_02048935e4ea25 10
+docs/.ruby-version
+  s_b49f0a15347e85::t_02048935e4ea25 1
+docs/Gemfile
+  s_b49f0a15347e85::t_14bae521543528 4
+audit/.tool-versions
+  s_b49f0a15347e85::t_02048935e4ea25 1
+docs/Gemfile.lock
+  s_b49f0a15347e85::t_7ec45b42dcfd6b 386
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d8e6414643ddd17290e4f1efe054b638a86d35bd",
+  "prompts": {},
+  "sessions": {
+    "s_b49f0a15347e85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "06d183e2-286a-43cc-8005-47f39bbb8e46",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Cirdes <cirdes@linkana.com>"
+    }
+  }
+}
