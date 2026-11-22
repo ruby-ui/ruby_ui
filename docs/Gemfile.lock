@@ -269,7 +269,7 @@ GEM
     regexp_parser (2.13.4)
     reline (0.7.0)
       io-console (~> 0.5)
-    reverse_markdown (3.0.2)
+    reverse_markdown (3.1.0)
       nokogiri
     rexml (3.4.4)
     rouge (5.1.0)
